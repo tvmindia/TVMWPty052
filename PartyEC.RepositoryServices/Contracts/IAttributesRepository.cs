@@ -14,4 +14,12 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertAttributes(Attributes attributesObj);
         OperationsStatus UpdateAttributes(Attributes attributesObj);
     }
+    public interface IAttributeSetRepository
+    {
+
+    }
+    public interface IAttributeToSetLinks
+    {
+
+    }
 }

@@ -49,4 +49,12 @@ namespace PartyEC.RepositoryServices.Services
 
         
     }
+    public class AttributeSetRepository : IAttributeSetRepository
+    {
+
+    }
+    public class AttributeToSetLinks : IAttributeToSetLinks
+    {
+
+    }
 }
