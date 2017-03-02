@@ -42,5 +42,7 @@ namespace PartyEC.UI.Models
         public bool MandatoryYN { get; set; }
         public bool ComparableYN { get; set; }
 
+        public CommonViewModel commonObj { get; set; }
+
     }
 }
