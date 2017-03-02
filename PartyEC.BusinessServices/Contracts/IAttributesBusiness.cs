@@ -13,4 +13,8 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertAttributes(Attributes attributesObj);
         OperationsStatus UpdateAttributes(Attributes attributesObj);
     }
+    public interface IAttributeSetBusiness
+    {
+
+    }
 }

@@ -24,4 +24,20 @@ namespace PartyEC.DataAccessObject.DTO
 
         public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
     }
+    public class AttributeSet
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public AttributeSetLink attributeSetLinkObj;
+        public Common commonObj { get; set; }
+        public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
+    }
+    public class AttributeSetLink
+    {
+        public int ID { get; set; }
+        public int AttributeSetID { get; set; }
+        public int AttributeID { get; set; }
+        public float DisplayOrder { get; set;}
+    }
+
 }

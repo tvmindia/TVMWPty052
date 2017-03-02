@@ -46,4 +46,13 @@ namespace PartyEC.BusinessServices.Services
             return _attributesRepository.UpdateAttributes(attributesObj);
         }
     }
+    public class AttributeSetBusiness:IAttributeSetBusiness
+    {
+        private IAttributeSetRepository _attributeSetRepository;
+        public AttributeSetBusiness (IAttributeSetRepository attributeSetRepository)
+        {
+            _attributeSetRepository = attributeSetRepository;
+        }
+
+    }
 }
