@@ -10,21 +10,21 @@ namespace PartyEC.BusinessServices.Services
 {
     public class DynamicUIBusiness : IDynamicUIBusiness
     {
-        private IDynamicUIRespository _dynamicUIRespository;
+        private IDynamicUIRepository _dynamicUIRepository;
         /// <summary>
         /// Constructor Injection:-Getting IDynamicUIBusiness implementing object
         /// </summary>
         /// <param name="dynamicUIBusiness"></param>
-        public DynamicUIBusiness(IDynamicUIRespository dynamicUIRespository)
+        public DynamicUIBusiness(IDynamicUIRepository dynamicUIRespository)
         {
-            _dynamicUIRespository = dynamicUIRespository;
+            _dynamicUIRepository = dynamicUIRespository;
         }
 
         public List<Menu> GetAllMenues()
         {
             try
             {
-                return _dynamicUIRespository.GetAllMenues();
+                return _dynamicUIRepository.GetAllMenues();
             }
             catch (Exception)
             {

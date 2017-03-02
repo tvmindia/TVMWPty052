@@ -25,20 +25,21 @@ namespace PartyEC.UI.Controllers
         {
             return View();
         }
-        //[HttpGet]
-        //public string GetAllProducts(ProductViewModel productObj)
-        //{
-        //    try
-        //    {
-        //        //_productBusiness.GetAllProducts(Mapper.Map<ProductViewModel, Product>(productObj);
-        //        //Mapper.Map<Product, ProductViewModel>(_productBusiness.GetAllProducts(Mapper.Map<ProductViewModel, Product>(productObj)));
-        //       // return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
-        //    }
-        //    catch(Exception)
-        //    {
+        [HttpGet]
+        public string GetAllProductss(ProductViewModel productObj)
+        {
+            try
+            {
+             //   _productBusiness.GetAllProducts(Mapper.Map<ProductViewModel, Product>(productObj);
+             //   Mapper.Map<Product, ProductViewModel>(_productBusiness.GetAllProducts(Mapper.Map<ProductViewModel, Product>(productObj)));
+            //   return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+            }
+            catch (Exception)
+            {
 
-        //    }
-        //}
+            }
+            return JsonConvert.SerializeObject(new { Result = "OK", Record = "List of objects" });
+        }
 
         [HttpPost]
         public string ProductInsert(ProductViewModel productObj)

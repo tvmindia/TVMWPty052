@@ -10,14 +10,14 @@ using System.Web;
 
 namespace PartyEC.RepositoryServices.Services
 {
-    public class DynamicUIRespository : IDynamicUIRespository
+    public class DynamicUIRepository : IDynamicUIRepository
     {
       private IDatabaseFactory _databaseFactory;
         /// <summary>
       /// Constructor Injection:-Getting IDatabaseFactory implementing object
         /// </summary>
         /// <param name="databaseFactory"></param>
-      public DynamicUIRespository(IDatabaseFactory databaseFactory)
+      public DynamicUIRepository(IDatabaseFactory databaseFactory)
       {
           _databaseFactory = databaseFactory;
       }

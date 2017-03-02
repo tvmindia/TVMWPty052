@@ -1,5 +1,5 @@
 ﻿var DataTables = {};
-var appAddress = window.location.protocol + "//" + window.location.host + "/";   //Retrieving browser Url 
+
 $(document).ready(function () {
    // $("#tblproducts").DataTable();
 
@@ -43,7 +43,7 @@ function GetAllProducts(ProductViewModel)
     debugger;
 try {
         var data = "{'productObj':" + JSON.stringify(ProductViewModel) + "}";
-        var ds = PostDataToServer(appAddress + "Products/GetAllProducts/",data);
+        var ds = GetDataFromServer("Products/GetAllProducts/", data);
         table = JSON.parse(ds.d);
     }
     catch (e) {
