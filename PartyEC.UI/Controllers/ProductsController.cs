@@ -26,19 +26,19 @@ namespace PartyEC.UI.Controllers
             return View();
         }
         [HttpGet]
-        public string GetAllProductss(ProductViewModel productObj)
+        public string GetAllProducts(ProductViewModel productObj)
         {
             try
             {
-             //   _productBusiness.GetAllProducts(Mapper.Map<ProductViewModel, Product>(productObj);
-             //   Mapper.Map<Product, ProductViewModel>(_productBusiness.GetAllProducts(Mapper.Map<ProductViewModel, Product>(productObj)));
-            //   return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
-            }
-            catch (Exception)
-            {
+                List<ProductViewModel> productList = Mapper.Map<List<Product>,List<ProductViewModel>>(_productBusiness.GetAllProducts(Mapper.Map<ProductViewModel, Product>(productObj)));
 
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
             }
-            return JsonConvert.SerializeObject(new { Result = "OK", Record = "List of objects" });
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+           // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
         }
 
         [HttpPost]

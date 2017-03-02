@@ -43,13 +43,14 @@ function GetAllProducts(ProductViewModel)
     debugger;
 try {
         var data = "{'productObj':" + JSON.stringify(ProductViewModel) + "}";
-        var ds = GetDataFromServer("Products/GetAllProducts/", data);
-        table = JSON.parse(ds.d);
+        var ds = {};
+            ds= GetDataFromServer("Products/GetAllProducts/", data);
+       
     }
     catch (e) {
         
     }
-    return table;
+    return ds;
 }
 
 

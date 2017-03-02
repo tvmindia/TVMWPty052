@@ -28,18 +28,19 @@ function PostDataToServer(page,formData)
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
-            jsonResult = JSON.parse(data);
+            jsonResult = data;
         },
         error: function (xmlhttprequest, textstatus, message) {
             //message.code will be:-timeout", "error", "abort", and "parsererror"
-            alert(message.code + ', ' + xmlhttprequest.statusText );
+            alert(errorThrown + ',' + textstatus + ',' + jqXHR.statusText);
         },
         complete:function()
         {
-            alert("hoooory completd");
+           
         }
 
     });
+    return jsonResult;
 }
 
 
@@ -52,19 +53,21 @@ function GetDataFromServer(page, formData) {
         data: formData,
         cache: false,
         contentType: "application/json; charset=utf-8",
-        dataType: "json",
+        //dataType: "json",
         success: function (data) {
-            jsonResult = JSON.parse(data);
+            jsonResult = data;
+            
         },
         error: function (jqXHR, textStatus, errorThrown) {
             //message.code will be:-timeout", "error", "abort", and "parsererror"
             alert(errorThrown + ',' + textstatus + ',' + jqXHR.statusText);
         },
         complete: function () {
-            alert("hoooory completd");
+          
         }
 
     });
+    return jsonResult;
 }
 
 
