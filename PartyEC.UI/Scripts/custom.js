@@ -1,3 +1,4 @@
+var appAddress = window.location.protocol + "//" + window.location.host + "/";   //Retrieving browser Url 
 $(document).ready(function () {
     //menu submenu popup on click 3rd level menus
     $('.navbar a.dropdown-toggle').on('click', function (e) {
@@ -13,14 +14,6 @@ $(document).ready(function () {
 
         return false;
     });
-
-
-
-
-
-
-
-
 });
 
 function PostDataToServer(page,formData)
@@ -28,7 +21,7 @@ function PostDataToServer(page,formData)
     var jsonResult={};
     $.ajax({
         type: "POST",
-        url: page,
+        url: appAddress+page,
         async: true,
         data: formData,
         cache: false,
@@ -39,7 +32,7 @@ function PostDataToServer(page,formData)
         },
         error: function (xmlhttprequest, textstatus, message) {
             //message.code will be:-timeout", "error", "abort", and "parsererror"
-            alert({ text: message.code + ', ' + xmlhttprequest.statusText, type: 'error' });
+            alert(message.code + ', ' + xmlhttprequest.statusText );
         },
         complete:function()
         {
@@ -50,14 +43,29 @@ function PostDataToServer(page,formData)
 }
 
 
+function GetDataFromServer(page, formData) {
+    var jsonResult = {};
+    $.ajax({
+        type: "GET",
+        url: appAddress + page,
+        async: true,
+        data: formData,
+        cache: false,
+        contentType: "application/json; charset=utf-8",
+        dataType: "json",
+        success: function (data) {
+            jsonResult = JSON.parse(data);
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            //message.code will be:-timeout", "error", "abort", and "parsererror"
+            alert(errorThrown + ',' + textstatus + ',' + jqXHR.statusText);
+        },
+        complete: function () {
+            alert("hoooory completd");
+        }
+
+    });
+}
 
 
 
-
-type: "post",
-    url: page,
-data: data,
-delay: 1,
-async: false,
-contentType: "application/json; charset=utf-8",
-dataType: "json",

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace PartyEC.RepositoryServices.Contracts
 {
-    public interface IDynamicUIRespository
+    public interface IDynamicUIRepository
     {
         List<Menu> GetAllMenues();
 
