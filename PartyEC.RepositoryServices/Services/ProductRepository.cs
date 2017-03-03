@@ -21,7 +21,11 @@ namespace PartyEC.RepositoryServices.Services
           _databaseFactory = databaseFactory;
       }
 
-
+        /// <summary>
+        /// Only Header detail list is required here
+        /// </summary>
+        /// <param name="productObj"></param>
+        /// <returns></returns>
       public List<Product> GetAllProducts(Product productObj)
       {
           List<Product> productList = null;
@@ -121,5 +125,64 @@ namespace PartyEC.RepositoryServices.Services
             }
           return operationsStatusObj;
         }
+
+        /// <summary>
+        /// Header and detail will be selected
+        /// </summary>
+        /// <param name="ProductID"></param>
+        /// <param name="Status"></param>
+        /// <returns></returns>
+        public Product GetProduct(int ProductID, OperationsStatus Status)
+        {
+            Product myProduct = null;
+            try
+            {
+                myProduct = GetProductHeader(ProductID);
+                myProduct.ProductDetail = GetProductDetail(ProductID);
+
+            }
+            catch (Exception e)
+            {
+                Status.StatusCode = -1;
+                Status.StatusMessage = e.Message;
+                Status.Exception = e;
+
+            }
+
+            return myProduct;
+        }
+
+
+        private Product GetProductHeader(int ProductID) {
+            Product myProduct = null;
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return myProduct;
+        }
+
+
+        private List<ProductDetail> GetProductDetail(int ProductID)
+        {
+            List<ProductDetail> myProductDetails = null;
+            try
+            {
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+
+            }
+
+            return myProductDetails;
+        }
+
     }
 }
