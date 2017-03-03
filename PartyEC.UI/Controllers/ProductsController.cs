@@ -51,7 +51,6 @@ namespace PartyEC.UI.Controllers
             {
                 try
                 {
-                   
                     productObj.commonObj = new CommonViewModel();
                     //Getting UA
                     productObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName; 

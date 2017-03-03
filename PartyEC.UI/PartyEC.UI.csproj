@@ -444,7 +444,6 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Attributes\Index.cshtml" />
     <Content Include="Views\AttributeSet\Index.cshtml" />
-    <Content Include="Scripts\jstree\jstree.jquery.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
