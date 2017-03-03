@@ -9,8 +9,31 @@ namespace PartyEC.DataAccessObject.DTO
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public string SKU { get; set; }
+        public Boolean Enabled { get; set; }
+        public string Unit { get; set; }      
+        public string URL { get; set; } //partyec web url for this product,share option       
+        public char ActionType { get; set; }//book //buy //Quote
+        public char ProductType { get; set; }//simple //configurable
+        public int AttributeSetID { get; set; }
+
+        public int SupplierID { get; set; }
+        public int ManufacturerID { get; set; }
+        public string SupplierName { get; set; }
+        public string ManufacturerName { get; set; }
+
+        public string TaxClass { get; set; }
+        public decimal BaseSellingPrice { get; set; }
+        public decimal CostPrice { get; set; }
+        public Boolean ShowPrice { get; set; }
+
         public string ShortDescription {get;set;}
-        public char ProductType { get; set; }
+        public string LongDescription { get; set; }
+        public Boolean StockAvailable { get; set; }
+        public Boolean FreeDelivery { get; set; }
+
+        public string HeaderTags { get; set; }
+        public string StickerURL { get; set; }
 
         public List<ProductDetail> ProductDetail { get; set; }
         public LogDetails LogDetails { get; set; }       
@@ -32,6 +55,21 @@ namespace PartyEC.DataAccessObject.DTO
         public DateTime DiscountStartDate{ get; set; }
         public DateTime DiscountEndDate { get; set; }
         public List<ProductAttributeValues> ProductAttributes { get; set; }
+
+        public struct ProductTypes
+        {
+            public const string Simple = "s";
+            public const string Configurable = "c";
+
+        }
+
+        public struct ActionTypes
+        {
+            public const string Book = "b";
+            public const string Buy = "p";
+            public const string Quote = "q";
+
+        }
     }
 
     public class ProductAttributeValues
@@ -42,4 +80,6 @@ namespace PartyEC.DataAccessObject.DTO
         public string DataType { get; set; }
 
     }
+
+    
 }
