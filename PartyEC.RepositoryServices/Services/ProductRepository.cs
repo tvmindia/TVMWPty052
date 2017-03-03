@@ -50,7 +50,7 @@ namespace PartyEC.RepositoryServices.Services
                                       _productObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : productObj.ID);
                                       _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : productObj.Name);
                                       _productObj.ShortDescription = sdr["ShortDescription"].ToString();
-                                      //_productObj.ProductType = Char.Parse(sdr["ProductType"].ToString();
+                                      _productObj.ProductType = Char.Parse(sdr["ProductType"].ToString());
                                     
                                   }
                                   productList.Add(_productObj);

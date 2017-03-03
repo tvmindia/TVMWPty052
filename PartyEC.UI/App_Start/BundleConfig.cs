@@ -19,6 +19,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/datatable").Include("~/Scripts/DataTables/jquery.dataTables.min.js","~/Scripts/DataTables/dataTables.bootstrap.min.js","~/Scripts/DataTables/dataTables.responsive.min.js","~/Scripts/DataTables/responsive.bootstrap.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/userpluginjs").Include("~/Scripts/custom.js"));
             bundles.Add(new ScriptBundle("~/bundles/product").Include("~/Scripts/UserJS/Products.js"));
+            bundles.Add(new ScriptBundle("~/bundles/attributes").Include("~/Scripts/UserJS/Attributes.js"));
         }
     }
 }

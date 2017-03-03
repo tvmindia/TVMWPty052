@@ -91,7 +91,6 @@
     <Compile Include="Services\DynamicUIRepository.cs" />
     <Compile Include="Services\ProductRepository.cs" />
   </ItemGroup>
-  <ItemGroup />
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.DataAccessObject\PartyEC.DataAccessObject.csproj">
       <Project>{0208c772-b06c-4da1-9b91-5cc9efee6b18}</Project>
