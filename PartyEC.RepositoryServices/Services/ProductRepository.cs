@@ -84,6 +84,7 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             con.Open();
                         }
+                        
                         cmd.Connection = con;
                         cmd.CommandText = "[InsertProduct]";
                         cmd.CommandType = CommandType.StoredProcedure;
