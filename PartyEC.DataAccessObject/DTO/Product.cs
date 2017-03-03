@@ -36,9 +36,12 @@ namespace PartyEC.DataAccessObject.DTO
         public string StickerURL { get; set; }
 
         public List<ProductDetail> ProductDetail { get; set; }
-        public LogDetails LogDetails { get; set; }       
+        public LogDetails LogDetails { get; set; }
 
-         
+       public Product() {
+            LogDetails = new LogDetails();
+            ProductDetail = new List<ProductDetail>();
+        }
     }
 
     public class ProductDetail {
