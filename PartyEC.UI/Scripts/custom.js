@@ -49,8 +49,8 @@ function GetDataFromServer(page, formData) {
     $.ajax({
         type: "GET",
         url: appAddress + page,
-        async: true,
         data: formData,
+        async: false,
         cache: false,
         contentType: "application/json; charset=utf-8",
         //dataType: "json",

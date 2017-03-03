@@ -42,5 +42,23 @@ namespace PartyEC.UI.Models
         public bool MandatoryYN { get; set; }
         public bool ComparableYN { get; set; }
 
+        public CommonViewModel commonObj { get; set; }
+
+    }
+    public class AttributeSetViewModel
+    {
+        public int ID { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Attribute set name")]
+        [Display(Name = "Attribute Name")]
+        [MaxLength(50)]
+        public string Name { get; set; }
+    }
+    public class AttributeSetLinkViewModel
+    {
+        public int ID { get; set; }
+        public int AttributeSetID { get; set; }
+        public int AttributeID { get; set; }
+        public float DisplayOrder { get; set; }
     }
 }
