@@ -10,7 +10,7 @@ namespace PartyEC.RepositoryServices.Contracts
     public interface IDynamicUIRepository
     {
         List<Menu> GetAllMenues();
-
+        List<Treeview> GetTreeList();
 
     }
 }

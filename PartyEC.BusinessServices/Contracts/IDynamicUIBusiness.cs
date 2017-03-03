@@ -10,6 +10,7 @@ namespace PartyEC.BusinessServices.Contracts
     public interface IDynamicUIBusiness
     {
         List<Menu> GetAllMenues();
+        List<JsTreeNode> GetTreeList();
 
     }
 }

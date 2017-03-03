@@ -33,6 +33,43 @@ namespace PartyEC.BusinessServices.Services
             
 
         }
+        public List<JsTreeNode> GetTreeList()
+        {
+            List<JsTreeNode> nodesList = new List<JsTreeNode>();
+            try
+            {
+                List<Treeview> TreeViewList = _dynamicUIRepository.GetTreeList();
+
+                foreach (var i in TreeViewList)
+                {
+                    if (i.level.ToString() == "0")
+                    {
+                        JsTreeNode rootNode = new JsTreeNode();
+                        rootNode.id = i.ID.ToString();
+                        rootNode.text = i.Name.ToString();
+                        rootNode.children = new List<JsTreeNode>();
+                        foreach (var j in TreeViewList)
+                        {
+                            if ((j.ParentID.ToString() == i.ID.ToString())&&(j.level.ToString()=="1"))
+                            {
+
+                                JsTreeNode Node = new JsTreeNode();
+                                Node.id = j.ID.ToString();
+                                Node.text = j.Name.ToString();
+                                Node.children = new List<JsTreeNode>();
+                                rootNode.children.Add(Node);
+                            }
+                        }
+                        nodesList.Add(rootNode);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return nodesList;
+        }
 
 
 

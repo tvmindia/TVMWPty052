@@ -86,6 +86,7 @@
     <Compile Include="DTO\Menu.cs" />
     <Compile Include="DTO\OperationsStatus.cs" />
     <Compile Include="DTO\Product.cs" />
+    <Compile Include="DTO\Treeview.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

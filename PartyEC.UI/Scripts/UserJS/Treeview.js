@@ -1,6 +1,26 @@
 ﻿$(document).ready(function () {
     debugger;
-    $('#jstree_DragUpdate,#jstree_Drag').jstree({
+    $('#jstree_Drag').jstree({
+        "core": {
+            "themes": {
+                "responsive": false
+            },
+            // so that create works
+            "check_callback": true,
+            'data': GetTreeData()
+        },
+        "types": {
+            "default": {
+                "icon": "fa fa-folder icon-state-warning icon-lg"
+            },
+            "file": {
+                "icon": "fa fa-file icon-state-warning icon-lg"
+            }
+        },
+        "state": { "key": "demo2" },
+        "plugins": ["contextmenu", "dnd", "state", "types"]
+    });
+    $('#jstree_DragUpdate').jstree({
         "core": {
             "themes": {
                 "responsive": false
@@ -8,47 +28,23 @@
             // so that create works
             "check_callback": true,
             'data': [{
-                "text": "Parent Node",
+                "text": "Cake",
+                "icon":"fa fa-folder-open",
+                "state": {
+                    "selected": true
+                },
                 "children": [{
-                    "text": "Initially selected",
-                    "state": {
-                        "selected": true
-                    }
+                    "text": "Product",
+                    "icon": "fa fa-product-hunt"
                 }, {
-                    "text": "Custom Icon",
-                    "icon": "fa fa-warning icon-state-danger"
+                    "text": "Order",
+                    "icon": "fa fa-first-order",
                 }, {
-                    "text": "Initially open",
-                    "icon": "fa fa-folder icon-state-success",
-                    "state": {
-                        "opened": true
-                    },
-                    "children": [
-                        { "text": "Another node", "icon": "fa fa-file icon-state-warning" }
-                    ]
-                }, {
-                    "text": "Another Custom Icon",
-                    "icon": "fa fa-warning icon-state-warning"
-                }, {
-                    "text": "Disabled Node",
-                    "icon": "fa fa-check icon-state-success",
-                    "state": {
-                        "disabled": true
-                    }
-                }, {
-                    "text": "Sub Nodes",
-                    "icon": "fa fa-folder icon-state-danger",
-                    "children": [
-                        { "text": "Item 1", "icon": "fa fa-file icon-state-warning" },
-                        { "text": "Item 2", "icon": "fa fa-file icon-state-success" },
-                        { "text": "Item 3", "icon": "fa fa-file icon-state-default" },
-                        { "text": "Item 4", "icon": "fa fa-file icon-state-danger" },
-                        { "text": "Item 5", "icon": "fa fa-file icon-state-info" }
-                    ]
+                    "text": "Rating",
+                    "icon": "fa fa-star-half-o"
                 }]
-            },
-                "Another Node"
-            ]
+                    
+                }]
         },
         "types": {
             "default": {
@@ -62,3 +58,26 @@
         "plugins": ["contextmenu", "dnd", "state", "types"]
     });
 });
+
+function GetTreeData() {
+    debugger;
+    try {
+        
+        var ds = {};
+        ds = GetDataFromServer("DynamicUI/GetTreeListForAttributeSet/", "");
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            alert(ds.Message);
+        }
+
+    }
+    catch (e) {
+
+    }
+
+}

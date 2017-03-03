@@ -434,6 +434,7 @@
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\OperationsStatusViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\TreeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

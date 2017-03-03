@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
 using PartyEC.UI.Models;
@@ -27,6 +28,19 @@ namespace PartyEC.UI.Controllers
             dUIObj.MenuViewModelList = Mapper.Map<List<Menu>, List<MenuViewModel>>(menulist);
             return View(dUIObj);
         }
-        
+        [HttpGet]
+        public string GetTreeListForAttributeSet()
+        {
+            try
+            {
+                List<JsTreeNode> NodeList = _dynamicUIBusiness.GetTreeList();
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
+            }
+            catch (Exception ex)
+            {
+                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+            //return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
+        }
     }
 }
