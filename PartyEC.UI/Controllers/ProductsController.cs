@@ -15,15 +15,18 @@ namespace PartyEC.UI.Controllers
     {
 
         IProductBusiness _productBusiness;
-        public ProductsController(IProductBusiness productBusiness)
+        ICommonBusiness _commonBusiness;
+        public ProductsController(IProductBusiness productBusiness, ICommonBusiness commonBusiness)
         {
             _productBusiness = productBusiness;
+            _commonBusiness = commonBusiness;
         }
 
         // GET: Products
         public ActionResult Index()
         {
-            return View();
+         
+               return View();
         }
         [HttpGet]
         public string GetAllProducts(ProductViewModel productObj)
@@ -50,7 +53,8 @@ namespace PartyEC.UI.Controllers
                 {
                    
                     productObj.commonObj = new CommonViewModel();
-                    productObj.commonObj.CreatedBy = "Albert Thomson";
+                    //Getting UA
+                    productObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName; 
                     OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertProduct(Mapper.Map<ProductViewModel, Product>(productObj)));
                     return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                 }

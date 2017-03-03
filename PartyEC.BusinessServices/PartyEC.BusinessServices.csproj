@@ -87,7 +87,9 @@
     <Compile Include="Contracts\IProductBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AttributesBusiness.cs" />
-    <Compile Include="Services\CommonBusiness.cs" />
+    <Compile Include="Services\CommonBusiness.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="Services\DynamicUIBusiness.cs" />
     <Compile Include="Services\ProductBusiness.cs" />
   </ItemGroup>
