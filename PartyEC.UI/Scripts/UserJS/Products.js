@@ -19,7 +19,7 @@ $(document).ready(function () {
                { "data": "Name" },
                { "data": "ShortDescription", "defaultContent": "<i>-</i>" },
                { "data": "ProductType", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a class="circlebtn circlebtn-info" onclick="EditChurch(this)"><i class="halflings-icon white edit""></i></a><a class="circlebtn circlebtn-danger"><i class="halflings-icon white trash" onclick="RemoveChurch(this)"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '-' }
              ],
              columnDefs: [
               {//hiding hidden column field churchid
@@ -44,13 +44,24 @@ function GetAllProducts(ProductViewModel)
 try {
         var data = "{'productObj':" + JSON.stringify(ProductViewModel) + "}";
         var ds = {};
-            ds= GetDataFromServer("Products/GetAllProducts/", data);
+        ds = GetDataFromServer("Products/GetAllProducts/", data);
+        if (ds != '')
+        {
+            ds = JSON.parse(ds);
+        }
+        if(ds.Result=="OK")
+        {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            alert(ds.Message);
+        }
        
     }
     catch (e) {
         
     }
-    return ds;
+    
 }
 
 
