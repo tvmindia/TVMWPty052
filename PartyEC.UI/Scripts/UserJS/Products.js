@@ -17,13 +17,19 @@ $(document).ready(function () {
              columns: [
                { "data": "ID" },
                { "data": "Name" },
-               { "data": "ShortDescription", "defaultContent": "<i>-</i>" },
                { "data": "ProductType", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '-' }
+               { "data": "EnableYN", "defaultContent": "<i>-</i>" },
+               { "data": "SupplierID", "defaultContent": "<i>-</i>" },
+               { "data": "SKU", "defaultContent": "<i>-</i>" },
+               { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
+               { "data": "Qty", "defaultContent": "<i>-</i>" },
+               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
+               { "data": null, "orderable": false, "defaultContent": '<a class="circlebtn circlebtn-info" onclick="EditChurch(this)"><i class="halflings-icon white edit""></i></a><a class="circlebtn circlebtn-danger"><i class="halflings-icon white trash" onclick="RemoveChurch(this)"></i></a>' },
+               { "data": null, "orderable": false, "defaultContent": '<a class="circlebtn circlebtn-info" onclick="EditChurch(this)"><i class="halflings-icon white edit""></i></a><a class="circlebtn circlebtn-danger"><i class="halflings-icon white trash" onclick="RemoveChurch(this)"></i></a>' }
              ],
              columnDefs: [
               {//hiding hidden column field churchid
-                  "targets": [0, 1],
+                  "targets": [0],
                   "visible": false,
                   "searchable": false
               }
