@@ -20,7 +20,7 @@ namespace PartyEC.DataAccessObject.DTO
         public bool MandatoryYN { get; set; }
         public bool ComparableYN { get; set; }
 
-        public Common commonObj { get; set; }
+        public LogDetails commonObj { get; set; }
 
         public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
     }
@@ -29,7 +29,7 @@ namespace PartyEC.DataAccessObject.DTO
         public int ID { get; set; }
         public string Name { get; set; }
         public AttributeSetLink attributeSetLinkObj;
-        public Common commonObj { get; set; }
+        public LogDetails commonObj { get; set; }
         public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
     }
     public class AttributeSetLink
