@@ -39,5 +39,10 @@ namespace PartyEC.BusinessServices.Services
             
         }
 
+        public Product GetProduct(int ProductID, OperationsStatus Status) {
+
+            return _productRepository.GetProduct(ProductID, Status);
+        }
+
     }
 }

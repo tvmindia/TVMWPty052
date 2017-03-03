@@ -11,6 +11,6 @@ namespace PartyEC.BusinessServices.Contracts
     {
         List<Product> GetAllProducts(Product productObj);
         OperationsStatus InsertProduct(Product productObj);
-        
+        Product GetProduct(int ProductID, OperationsStatus Status);
     }
 }

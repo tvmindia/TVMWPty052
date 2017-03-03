@@ -12,16 +12,23 @@ namespace PartyEC.RepositoryServices.Services
     public class ProductRepository:IProductRepository
     {
       private IDatabaseFactory _databaseFactory;
+      private SqlConnection _con;
+        private SqlCommand _cmd;
+
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
         /// <param name="databaseFactory"></param>
-      public ProductRepository(IDatabaseFactory databaseFactory)
+        public ProductRepository(IDatabaseFactory databaseFactory)
       {
           _databaseFactory = databaseFactory;
       }
 
-
+        /// <summary>
+        /// Only Header detail list is required here
+        /// </summary>
+        /// <param name="productObj"></param>
+        /// <returns></returns>
       public List<Product> GetAllProducts(Product productObj)
       {
           List<Product> productList = null;
@@ -84,6 +91,7 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             con.Open();
                         }
+                        
                         cmd.Connection = con;
                         cmd.CommandText = "[InsertProduct]";
                         cmd.CommandType = CommandType.StoredProcedure;
@@ -120,5 +128,119 @@ namespace PartyEC.RepositoryServices.Services
             }
           return operationsStatusObj;
         }
+
+        /// <summary>
+        /// Header and detail will be selected
+        /// </summary>
+        /// <param name="ProductID"></param>
+        /// <param name="Status"></param>
+        /// <returns></returns>
+        public Product GetProduct(int ProductID, OperationsStatus Status)
+        {
+            Product myProduct = null;
+            try
+            {
+                 _con = _databaseFactory.GetDBConnection();
+                if (_con.State == ConnectionState.Closed)
+                {
+                    _con.Open();
+                }
+
+                myProduct = GetProductHeader(ProductID);
+                myProduct.ProductDetail = GetProductDetail(ProductID);
+
+            }
+            catch (Exception e)
+            {
+                Status.StatusCode = -1;
+                Status.StatusMessage = e.Message;
+                Status.Exception = e;
+
+            }
+
+            return myProduct;
+        }
+
+
+        private Product GetProductHeader(int ProductID) {
+            Product myProduct = null;
+            try
+            {
+                _cmd = new SqlCommand();
+                _cmd.Connection = _con;
+                _cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                _cmd.CommandText = "[GetProductHeader]";
+                _cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataReader sdr = _cmd.ExecuteReader())
+                {
+                    if ((sdr != null) && (sdr.HasRows))
+                    {
+                        if (sdr.Read())
+                        {
+                            myProduct = new Product();
+                            myProduct.ID = sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myProduct.ID;
+                            myProduct.Name = sdr["Name"].ToString();
+                            myProduct.SKU = sdr["SKU"].ToString();
+                            myProduct.Enabled = (bool)(sdr["EnableYN"].ToString()!=""? sdr["EnableYN"]:false);
+                            myProduct.Unit = sdr["Unit"].ToString();
+                            myProduct.TaxClass = sdr["TaxClass"].ToString();
+                            myProduct.URL = sdr["URL"].ToString();
+                            myProduct.ShowPrice = (bool)(sdr["ShowPriceYN"].ToString() != "" ? sdr["ShowPriceYN"] : false);
+                            myProduct.ActionType = (sdr["ActionType"].ToString() != "" ? char.Parse(sdr["ActionType"].ToString()): myProduct.ActionType);
+
+                            myProduct.SupplierID = sdr["SupplierID"].ToString() != "" ? Int16.Parse(sdr["SupplierID"].ToString()) : myProduct.SupplierID;
+                            myProduct.SupplierID = sdr["ManufacturerID"].ToString() != "" ? Int16.Parse(sdr["ManufacturerID"].ToString()) : myProduct.ManufacturerID;
+                            myProduct.SupplierName = sdr["SupplierName"].ToString();
+                            myProduct.ManufacturerName = sdr["ManufacturerName"].ToString();
+                            myProduct.BaseSellingPrice = sdr["BaseSellingPrice"].ToString() != "" ? decimal.Parse(sdr["BaseSellingPrice"].ToString()) : myProduct.BaseSellingPrice;
+                            myProduct.CostPrice = sdr["CostPrice"].ToString() != "" ? decimal.Parse(sdr["CostPrice"].ToString()) : myProduct.CostPrice;
+                            myProduct.ShortDescription = sdr["ShortDescription"].ToString();
+                            myProduct.LongDescription = sdr["LongDescription"].ToString();
+                            myProduct.ProductType =   (sdr["ProductType"].ToString() != "" ? char.Parse(sdr["ProductType"].ToString()) : myProduct.ProductType); 
+                            myProduct.StockAvailable = (bool)(sdr["StockAvailableYN"].ToString() != "" ? sdr["StockAvailableYN"] : false);  
+                            myProduct.AttributeSetID = sdr["AttributeSetID"].ToString() != "" ? Int16.Parse(sdr["AttributeSetID"].ToString()) : myProduct.AttributeSetID;
+                            myProduct.FreeDelivery = (bool)(sdr["FreeDeliveryYN"].ToString() != "" ? sdr["FreeDeliveryYN"] : false);  
+                            //HeaderTag myProduct.ManufacturerName = sdr["ManufacturerName"].ToString();
+                            myProduct.HeaderTags = sdr["HeaderTag"].ToString();
+                            myProduct.StickerURL = sdr["StickerURL"].ToString();
+
+                            myProduct.LogDetails.CreatedBy = sdr["CreatedBy"].ToString();
+                            myProduct.LogDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["CreatedDate"].ToString())) : myProduct.LogDetails.CreatedDate);
+                            myProduct.LogDetails.UpdatedBy = sdr["UpdatedBy"].ToString();
+                            myProduct.LogDetails.UpdatedDate = (sdr["UpdatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["UpdatedDate"].ToString())) : myProduct.LogDetails.UpdatedDate);
+
+                        }
+
+                    }
+                }
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+
+            return myProduct;
+        }
+
+
+        private List<ProductDetail> GetProductDetail(int ProductID)
+        {
+            List<ProductDetail> myProductDetails = null;
+            try
+            {
+
+
+            }
+            catch (Exception e)
+            {
+                throw e;
+
+            }
+
+            return myProductDetails;
+        }
+
     }
 }

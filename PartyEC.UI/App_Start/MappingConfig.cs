@@ -16,7 +16,7 @@ namespace PartyEC.UI.App_Start
                 //ReverseMap() makes it possible to map both ways.
                
                 config.CreateMap<MenuViewModel, Menu>().ReverseMap();
-                config.CreateMap<CommonViewModel, Common>().ReverseMap();
+                config.CreateMap<CommonViewModel, LogDetails>().ReverseMap();
                 config.CreateMap<OperationsStatusViewModel, OperationsStatus>().ReverseMap();
                 config.CreateMap<ProductViewModel, Product>().ReverseMap();
                 config.CreateMap<AttributesViewModel, Attributes>().ReverseMap();
