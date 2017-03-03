@@ -288,6 +288,13 @@
     <Content Include="Content\images\reset.PNG" />
     <Content Include="Content\images\save.PNG" />
     <Content Include="Content\images\sentmail.png" />
+    <Content Include="Content\jstree\dist\themes\default\32px.png" />
+    <Content Include="Content\jstree\dist\themes\default\32px_line.png" />
+    <Content Include="Content\jstree\dist\themes\default\32px_original.png" />
+    <Content Include="Content\jstree\dist\themes\default\40px.png" />
+    <Content Include="Content\jstree\dist\themes\default\style.css" />
+    <Content Include="Content\jstree\dist\themes\default\style.min.css" />
+    <Content Include="Content\jstree\dist\themes\default\throbber.gif" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -396,8 +403,11 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
+    <Content Include="Scripts\jstree\dist\jstree.js" />
+    <Content Include="Scripts\jstree\dist\jstree.min.js" />
     <Content Include="Scripts\UserJS\Attributes.js" />
     <Content Include="Scripts\UserJS\Products.js" />
+    <Content Include="Scripts\UserJS\Treeview.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
@@ -434,6 +444,7 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Attributes\Index.cshtml" />
     <Content Include="Views\AttributeSet\Index.cshtml" />
+    <Content Include="Scripts\jstree\jstree.jquery.json" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

@@ -4,7 +4,9 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
-
+@section styles {
+<link href="~/Content/jstree/dist/themes/default/style.css" rel="stylesheet" />
+    }
 <div class="container-fluid">
     <div class="panel with-nav-tabs panel-primary">
             <div class="panel-heading">
@@ -39,7 +41,7 @@
                     </div>
                     <div class="tab-pane fade" id="tab2primary">
                         @*ButtonPatch*@
-                        <div class="col-md-12">
+                        <div class="">
                             <div class="buttonpatch" style="width:273px;float:right;">
                                 <a class="facebook" title="Add New" id="btnAddNew"><img src="~/Content/images/add.PNG" /></a>
                                 <a class="rss" id="NoticeEdit"><img src="~/Content/images/edit.png" /></a>
@@ -55,7 +57,7 @@
                         {
                             @Html.AntiForgeryToken()
                             <div class="col-md-4" id="productUpdateTarget">
-                                <h4>Add Attribute Set</h4>
+                                <h3>Add Attribute Set</h3>
                                 <hr />
                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                 <div class="form-group">
@@ -99,3 +101,8 @@
             </div>
         </div>
  </div>
+
+@section Scripts {
+  <script src="~/Scripts/jstree/dist/jstree.js"></script>
+<script src="~/Scripts/UserJS/Treeview.js"></script>  
+}
