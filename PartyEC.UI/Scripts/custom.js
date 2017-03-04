@@ -53,7 +53,6 @@ function GetDataFromServer(page, formData) {
         async: false,
         cache: false,
         contentType: "application/json; charset=utf-8",
-        //dataType: "json",
         success: function (data) {
             jsonResult = data;
             
