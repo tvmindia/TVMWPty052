@@ -25,12 +25,7 @@ namespace PartyEC.UI.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            //suv test
-            //OperationsStatus myStatus = new OperationsStatus();
-            //Product p = _productBusiness.GetProduct(1001, myStatus);
-            //suv test
-
-            return View();
+           return View();
         }
         [HttpGet]
         public string GetAllProducts(ProductViewModel productObj)
@@ -47,6 +42,23 @@ namespace PartyEC.UI.Controllers
             }
            // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
         }
+
+        //[HttpGet]
+        //public string GetAllProductsByID(int id)
+        //{
+        //    try
+        //    {
+        //        OperationsStatusViewModel operationsStatusstatusObj=new OperationsStatusViewModel();
+        //        List<ProductViewModel> productList = Mapper.Map<List<Product>,List<ProductViewModel>>(_productBusiness.GetProduct(id, Mapper.Map<OperationsStatusViewModel,OperationsStatus>(operationsStatusstatusObj)));
+
+        //        return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+        //    }
+        //    // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+        //}
 
         [HttpPost]
         public string ProductInsert(ProductViewModel productObj)
