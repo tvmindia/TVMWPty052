@@ -13,7 +13,7 @@ namespace PartyEC.RepositoryServices.Services
     {
       private IDatabaseFactory _databaseFactory;
       private SqlConnection _con;
-        private SqlCommand _cmd;
+      private SqlCommand _cmd;
 
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
@@ -228,10 +228,64 @@ namespace PartyEC.RepositoryServices.Services
         private List<ProductDetail> GetProductDetail(int ProductID)
         {
             List<ProductDetail> myProductDetails = null;
+            AttributesRepository myAttributesRepository = new AttributesRepository(_databaseFactory);
+            List<AttributeValues> myAttributeStructure = null;
             try
             {
+                _cmd = new SqlCommand();
+                _cmd.Connection = _con;
+                _cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                _cmd.CommandText = "[GetProductDetail]";
+                _cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataReader sdr = _cmd.ExecuteReader())
+                {
+                    if ((sdr != null) && (sdr.HasRows))
+                    {
+                        myProductDetails = new List<ProductDetail>();
+                        while (sdr.Read())
+                        {
+                            ProductDetail myProductDetail = new ProductDetail();
+                            myProductDetail.ID = sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myProductDetail.ID;
+                            myProductDetail.AttributeSetID = sdr["AttributeSetID"].ToString() != "" ? Int16.Parse(sdr["AttributeSetID"].ToString()) : myProductDetail.AttributeSetID;
+                            myProductDetail.Qty= sdr["Qty"].ToString() != "" ? Int16.Parse(sdr["Qty"].ToString()) : myProductDetail.Qty; //sdr["Qty"].ToString();
+                            myProductDetail.OutOfStockAlertQty = sdr["OutOfStockAlertQty"].ToString() != "" ? Int16.Parse(sdr["OutOfStockAlertQty"].ToString()) : myProductDetail.OutOfStockAlertQty;
+                            myProductDetail.PriceDifference = sdr["PriceDiffAmt"].ToString() != "" ? decimal.Parse(sdr["PriceDiffAmt"].ToString()) : myProductDetail.PriceDifference;
+                            myProductDetail.Enabled= (bool)(sdr["EnableYN"].ToString() != "" ? sdr["EnableYN"] : false);
+                            myProductDetail.DetailTags = sdr["DetailTag"].ToString();
+                            myProductDetail.StockAvailable = (bool)(sdr["StockAvailableYN"].ToString() != "" ? sdr["StockAvailableYN"] : false);
+                            myProductDetail.DiscountAmount= sdr["DiscountAmout"].ToString() != "" ? decimal.Parse(sdr["DiscountAmout"].ToString()) : myProductDetail.DiscountAmount;
+                            myProductDetail.DiscountStartDate = (sdr["DiscountStDate"].ToString() != "" ? (Convert.ToDateTime(sdr["DiscountStDate"].ToString())) : myProductDetail.DiscountStartDate);
+                            myProductDetail.DiscountEndDate = (sdr["DiscountEnDate"].ToString() != "" ? (Convert.ToDateTime(sdr["DiscountEnDate"].ToString())) : myProductDetail.DiscountEndDate);
+
+                            myProductDetail.LogDetails.CreatedBy = sdr["CreatedBy"].ToString();
+                            myProductDetail.LogDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["CreatedDate"].ToString())) : myProductDetail.LogDetails.CreatedDate);
+                            myProductDetail.LogDetails.UpdatedBy = sdr["UpdatedBy"].ToString();
+                            myProductDetail.LogDetails.UpdatedDate = (sdr["UpdatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["UpdatedDate"].ToString())) : myProductDetail.LogDetails.UpdatedDate);
+
+                            if (myAttributeStructure == null){
+                                myAttributeStructure =myAttributesRepository.GetProductAttributeStructure(myProductDetail.AttributeSetID, "Product");
+                            }
+                                                  
+
+                           foreach (AttributeValues att in myAttributeStructure)
+                            {
+                                AttributeValues myAttribute = new AttributeValues(att);//copy the values
+                                try
+                                {
+                                    if(sdr.GetOrdinal(att.Name)>0)
+                                    myAttribute.Value = sdr[att.Name].ToString();
+                                }
+                                catch (Exception)
+                                {}
+                                myProductDetail.ProductAttributes.Add(myAttribute);
+                            }
 
 
+                            myProductDetails.Add(myProductDetail);
+                        }
+                    }
+                }
             }
             catch (Exception e)
             {
@@ -241,6 +295,9 @@ namespace PartyEC.RepositoryServices.Services
 
             return myProductDetails;
         }
+
+
+       
 
     }
 }

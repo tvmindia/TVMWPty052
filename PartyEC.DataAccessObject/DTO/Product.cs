@@ -48,9 +48,10 @@ namespace PartyEC.DataAccessObject.DTO
     public class ProductDetail {
         public int ID { get; set; }
         public int ProductID { get; set; }
+        public int AttributeSetID { get; set; }
         public int Qty { get; set; }
         public int OutOfStockAlertQty { get; set; }
-        public int PriceDifference { get; set; }        
+        public decimal PriceDifference { get; set; }        
         public string DetailTags { get; set; }
         public Boolean Enabled { get; set; }
         public Boolean StockAvailable { get; set; }
@@ -58,11 +59,13 @@ namespace PartyEC.DataAccessObject.DTO
         public decimal DiscountAmount { get; set; }
         public DateTime DiscountStartDate{ get; set; }
         public DateTime DiscountEndDate { get; set; }
-        public List<ProductAttributeValues> ProductAttributes { get; set; }
+        public LogDetails LogDetails { get; set; }
+        public List<AttributeValues> ProductAttributes { get; set; }
         public List<ProductImages> ProductDetailImages { get; set; }
 
         public ProductDetail() {
-            ProductAttributes = new List<ProductAttributeValues>();
+            LogDetails = new LogDetails();
+            ProductAttributes = new List<AttributeValues>();
             ProductDetailImages = new List<ProductImages>();
         }
 
@@ -82,15 +85,7 @@ namespace PartyEC.DataAccessObject.DTO
         }
     }
 
-    public class ProductAttributeValues
-    {
-        public string Name { get; set; }
-        public string Caption { get; set; }
-        public string Value { get; set; }
-        public string DataType { get; set; }
-        
-
-    }
+   
 
     public class ProductImages {
         public string URL { get; set; }

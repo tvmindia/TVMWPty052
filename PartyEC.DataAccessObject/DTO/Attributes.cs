@@ -40,4 +40,24 @@ namespace PartyEC.DataAccessObject.DTO
         public float DisplayOrder { get; set;}
     }
 
+
+    public class AttributeValues
+    {
+        public string Name { get; set; }
+        public string Caption { get; set; }
+        public string Value { get; set; }
+        public string DataType { get; set; }
+
+       public AttributeValues() {
+        }
+
+        public AttributeValues( AttributeValues copy) {
+            Name = copy.Name;
+            Caption = copy.Caption;
+            Value = copy.Value;
+            DataType = copy.DataType;                
+        }
+
+    }
+
 }

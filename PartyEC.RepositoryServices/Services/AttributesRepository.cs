@@ -102,9 +102,53 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-        #endregion Methods
+        public List<AttributeValues> GetProductAttributeStructure(int AttributeSetID,string Type)
+        {
+            List<AttributeValues> myProductAttributeList = null;
+            try
+            {
+                SqlConnection con = _databaseFactory.GetDBConnection();
+                SqlCommand cmd = new SqlCommand();
+                con = _databaseFactory.GetDBConnection();
+                if (con.State == ConnectionState.Closed)
+                {
+                    con.Open();
+                }
 
-        
+                cmd.Connection = con;
+                cmd.Parameters.Add("@AttributeSetID", SqlDbType.Int).Value = AttributeSetID;
+                cmd.Parameters.Add("@EntityType", SqlDbType.NVarChar).Value = Type;
+                cmd.CommandText = "[GetAttributesBySetIdAndEntityType]";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    myProductAttributeList = new List<AttributeValues>();
+                    if ((sdr != null) && (sdr.HasRows))
+                    {
+                        if (sdr.Read())
+                        {
+                            AttributeValues myAttribute = new AttributeValues();
+                            myAttribute.Name = sdr["Name"].ToString();
+                            myAttribute.Caption = sdr["Caption"].ToString();
+                            myAttribute.DataType= sdr["AttributeType"].ToString();
+                            myProductAttributeList.Add(myAttribute);
+                        }
+                    }
+                }
+
+
+
+
+                }
+            catch (Exception)
+            {
+                throw;
+            }
+            return myProductAttributeList;
+        }
+
+        #endregion Methods
     }
     public class AttributeSetRepository : IAttributeSetRepository
     {
@@ -114,4 +158,7 @@ namespace PartyEC.RepositoryServices.Services
     {
 
     }
+
+
+   
 }

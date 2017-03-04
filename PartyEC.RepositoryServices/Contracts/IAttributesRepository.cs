@@ -13,6 +13,7 @@ namespace PartyEC.RepositoryServices.Contracts
         List<Attributes> GetAllAttributes(Attributes attributesObj);
         OperationsStatus InsertAttributes(Attributes attributesObj);
         OperationsStatus UpdateAttributes(Attributes attributesObj);
+        List<AttributeValues> GetProductAttributeStructure(int AttributeSetID, string Type);
     }
     public interface IAttributeSetRepository
     {
