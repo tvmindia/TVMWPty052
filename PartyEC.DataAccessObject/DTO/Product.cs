@@ -37,10 +37,11 @@ namespace PartyEC.DataAccessObject.DTO
 
         public List<ProductDetail> ProductDetail { get; set; }
         public LogDetails LogDetails { get; set; }
-
-       public Product() {
+        public List<ProductImages>ProductHeaderImages { get; set; }
+        public Product() {
             LogDetails = new LogDetails();
             ProductDetail = new List<ProductDetail>();
+            ProductHeaderImages = new List<ProductImages>();
         }
     }
 
@@ -58,6 +59,12 @@ namespace PartyEC.DataAccessObject.DTO
         public DateTime DiscountStartDate{ get; set; }
         public DateTime DiscountEndDate { get; set; }
         public List<ProductAttributeValues> ProductAttributes { get; set; }
+        public List<ProductImages> ProductDetailImages { get; set; }
+
+        public ProductDetail() {
+            ProductAttributes = new List<ProductAttributeValues>();
+            ProductDetailImages = new List<ProductImages>();
+        }
 
         public struct ProductTypes
         {
@@ -81,7 +88,13 @@ namespace PartyEC.DataAccessObject.DTO
         public string Caption { get; set; }
         public string Value { get; set; }
         public string DataType { get; set; }
+        
 
+    }
+
+    public class ProductImages {
+        public string URL { get; set; }
+        public bool isMain { get; set; }
     }
 
     
