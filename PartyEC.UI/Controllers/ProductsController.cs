@@ -45,7 +45,7 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpGet]
-        public string GetAllProductsByID(string id)
+        public string GetProduct(string id)
         {
             try
             {
@@ -60,7 +60,7 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpPost]
-        public string ProductInsert(ProductViewModel productObj)
+        public string ProductInsertUpdate(ProductViewModel productObj)
         {
             if (ModelState.IsValid)
             {

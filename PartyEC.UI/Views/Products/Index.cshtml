@@ -92,7 +92,7 @@
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="general">
                                 <!--Edit form column-->
-                                @using (Ajax.BeginForm("ProductInsert", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "productSaveConfirm", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "onbeginProductSave", OnComplete = "oncomplteProductSave" }, new { @class = "form-horizontal", role = "form" }))
+                                @using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "productSaveConfirm", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "onbeginProductSave", OnComplete = "oncomplteProductSave" }, new { @class = "form-horizontal", role = "form" }))
                                 {
                                     @Html.AntiForgeryToken()
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
