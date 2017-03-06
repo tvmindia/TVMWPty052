@@ -32,9 +32,41 @@ namespace PartyEC.UI.Controllers
         #endregion Index
 
         #region GetAllAttributes
-
+        [HttpGet]
+        public string GetAllAttributes(AttributesViewModel attributesObj)
+        {
+            try
+            {
+                List<AttributesViewModel> attributeList = Mapper.Map<List<Attributes>, List<AttributesViewModel>>(_attributeBusiness.GetAllAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = attributeList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }            
+        }
 
         #endregion  GetAllAttributes
+
+        #region GetAttributesByID
+
+        [HttpGet]
+        public string GetAttributes(string id)
+        {
+            try
+            {
+                OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                AttributesViewModel attribute = Mapper.Map<Attributes,AttributesViewModel>(_attributeBusiness.GetAttributes(Int32.Parse(id), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = attribute });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+
+
+        #endregion GetAttributesByID
 
         #region InsertUpdateAttributes
 

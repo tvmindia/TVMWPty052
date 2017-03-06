@@ -36,6 +36,21 @@ namespace PartyEC.BusinessServices.Services
             return attributelist;
         }
 
+        public Attributes GetAttributes(int AttributeID, OperationsStatus Status)
+        {
+            Attributes myattribute = null;
+            try
+            {
+                myattribute = _attributesRepository.GetAttributes(AttributeID, Status);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return myattribute;
+        }
+
         public OperationsStatus InsertAttributes(Attributes attributesObj)
         {
             return _attributesRepository.InsertAttributes(attributesObj);

@@ -11,6 +11,7 @@ namespace PartyEC.RepositoryServices.Contracts
     {
 
         List<Attributes> GetAllAttributes(Attributes attributesObj);
+        Attributes GetAttributes(int attributeID, OperationsStatus Status);
         OperationsStatus InsertAttributes(Attributes attributesObj);
         OperationsStatus UpdateAttributes(Attributes attributesObj);
         List<AttributeValues> GetAttributeContainer(int AttributeSetID, string Type);
