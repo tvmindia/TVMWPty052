@@ -15,10 +15,12 @@ namespace PartyEC.UI.Controllers
     {
         #region Constructor_Injection
         IAttributesBusiness _attributeBusiness;
-        public AttributesController(IAttributesBusiness attributeBusiness)
+        ICommonBusiness _commonBusiness;
+        public AttributesController(IAttributesBusiness attributeBusiness, ICommonBusiness commonBusiness)
         {
             _attributeBusiness = attributeBusiness;
-        }
+            _commonBusiness = commonBusiness;
+        } 
         #endregion Constructor_Injection
 
         // GET: Attributes
@@ -37,31 +39,73 @@ namespace PartyEC.UI.Controllers
         #region InsertAttributes
 
         [HttpPost]
-        public string InsertAttributes(AttributesViewModel attributesObj)
+        public string InsertUpdateAttributes(AttributesViewModel attributesObj)
         {
             if (ModelState.IsValid)
-            {
-                try
+            {                
+                if (attributesObj.ID == 0)
                 {
+                    //Create Attribute
+                    try
+                    {
 
-                    attributesObj.commonObj = new CommonViewModel();
-                    attributesObj.commonObj.CreatedBy = "Albert Thomson";
-                    OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.InsertAttributes(Mapper.Map<AttributesViewModel,Attributes>(attributesObj)));
-                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        attributesObj.commonObj = new CommonViewModel();
+                        attributesObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                        attributesObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime().ToString();
+                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.InsertAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
+                        return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                    }
+                    catch (Exception ex)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    //Update Attribute
+                    try
+                    {
+                        attributesObj.commonObj = new CommonViewModel();
+                        attributesObj.commonObj.CreatedBy = "Albert";
+                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.UpdateAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
+                        return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                    }
+                    catch (Exception ex)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    }
+
                 }
+               
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
 
         #endregion InsertAttributes
 
-        #region UpdateAttributes
+        //#region UpdateAttributes
+        //[HttpPost]
+        //public string UpdateAttributes(AttributesViewModel attributesObj)
+        //{
+        //    if (ModelState.IsValid)
+        //    { 
+        //        try
+        //        {
+        //            attributesObj.commonObj = new CommonViewModel();
+        //            attributesObj.commonObj.CreatedBy = "Albert";
+        //            OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.UpdateAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
+        //            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+        //        }
+        //        catch (Exception ex)
+        //        {
+        //            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+        //        }
+        //    }
+        //    ModelState.Clear();
+        //    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        //}
 
 
-        #endregion UpdateAttributes
+        //#endregion UpdateAttributes
     }
 }
