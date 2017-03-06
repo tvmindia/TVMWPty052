@@ -10,8 +10,11 @@ namespace PartyEC.BusinessServices.Contracts
     public interface IAttributesBusiness
     {
         List<Attributes> GetAllAttributes(Attributes attributesObj);
+        Attributes GetAttributes(int ProductID, OperationsStatus Status);
         OperationsStatus InsertAttributes(Attributes attributesObj);
         OperationsStatus UpdateAttributes(Attributes attributesObj);
+       
+        
     }
     public interface IAttributeSetBusiness
     {
