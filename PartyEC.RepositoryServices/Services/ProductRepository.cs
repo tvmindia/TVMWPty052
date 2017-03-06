@@ -205,6 +205,8 @@ namespace PartyEC.RepositoryServices.Services
                             myProduct.HeaderTags = sdr["HeaderTag"].ToString();
                             myProduct.StickerURL = sdr["StickerURL"].ToString();
 
+                            myProduct.ProductHeaderImages = GetProductImages(myProduct.ID);
+
                             myProduct.LogDetails.CreatedBy = sdr["CreatedBy"].ToString();
                             myProduct.LogDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["CreatedDate"].ToString())) : myProduct.LogDetails.CreatedDate);
                             myProduct.LogDetails.UpdatedBy = sdr["UpdatedBy"].ToString();
@@ -223,7 +225,6 @@ namespace PartyEC.RepositoryServices.Services
 
             return myProduct;
         }
-
 
         private List<ProductDetail> GetProductDetail(int ProductID)
         {
@@ -246,6 +247,7 @@ namespace PartyEC.RepositoryServices.Services
                         while (sdr.Read())
                         {
                             ProductDetail myProductDetail = new ProductDetail();
+                            myProductDetail.ProductID = ProductID;
                             myProductDetail.ID = sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myProductDetail.ID;
                             myProductDetail.AttributeSetID = sdr["AttributeSetID"].ToString() != "" ? Int16.Parse(sdr["AttributeSetID"].ToString()) : myProductDetail.AttributeSetID;
                             myProductDetail.Qty= sdr["Qty"].ToString() != "" ? Int16.Parse(sdr["Qty"].ToString()) : myProductDetail.Qty; //sdr["Qty"].ToString();
@@ -280,9 +282,9 @@ namespace PartyEC.RepositoryServices.Services
                                 {}
                                 myProductDetail.ProductAttributes.Add(myAttribute);
                             }
-
-
                             myProductDetails.Add(myProductDetail);
+                            myProductDetail.ProductDetailImages = GetProductImages(myProductDetail.ProductID,myProductDetail.ID);
+                            
                         }
                     }
                 }
@@ -296,7 +298,74 @@ namespace PartyEC.RepositoryServices.Services
             return myProductDetails;
         }
 
+        private List<ProductImages> GetProductImages(int ProductID) {
+            List<ProductImages> myImages = null;
+            try
+            {
+                myImages= GetPrdImg(ProductID, -1);
+            }
+            catch (Exception e)
+            {
+                throw e;
+            }
+            return myImages;
+        }
+        private List<ProductImages> GetProductImages(int ProductID, int ProductDetailID)
+        {
+            List<ProductImages> myImages = null;
+            try
+            {
+                myImages= GetPrdImg(ProductID, ProductDetailID);
+            }
+            catch (Exception e)
+            {
 
+                throw e;
+            }
+            return myImages;
+
+        }      
+
+        private List<ProductImages> GetPrdImg(int ProductID, int ProductDetailID = -1) {
+            List<ProductImages> myImagesList = null;
+            try
+            {
+                SqlConnection myCon;
+                myCon = _databaseFactory.GetDBConnection();
+                if (myCon.State == ConnectionState.Closed)
+                {
+                    myCon.Open();
+                }
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = myCon;
+                cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                cmd.Parameters.Add("@ProductDetailID", SqlDbType.Int).Value = ProductDetailID;
+                cmd.CommandText = "[GetProductImages]";
+                cmd.CommandType = CommandType.StoredProcedure;
+
+                using (SqlDataReader sdr = cmd.ExecuteReader())
+                {
+                    if ((sdr != null) && (sdr.HasRows))
+                    {
+                        myImagesList = new List<ProductImages>();
+                        while (sdr.Read())
+                        {
+                            ProductImages myImage = new ProductImages();
+                            myImage.URL = sdr["ImageURL"].ToString();
+                            myImage.isMain = (bool)(sdr["MainImageYN"].ToString() != "" ? sdr["MainImageYN"] : false);
+                            myImagesList.Add(myImage);
+                        }
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return myImagesList;
+        }
        
 
     }
