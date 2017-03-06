@@ -201,6 +201,38 @@ namespace PartyEC.RepositoryServices.Services
             return myProductAttributeList;
         }
 
+
+        public string GetAttributeXML(List<AttributeValues> AttributeContainerWithValues) {
+           
+            string myXML = "";
+            try
+            {
+                const string start = "<options>";
+                const string end = "</options>";
+
+                myXML = start;
+                if (AttributeContainerWithValues != null) {
+
+                    foreach (AttributeValues att in AttributeContainerWithValues) {
+
+                        myXML += "<" + att.Name + ">";
+                        myXML += "<" + att.Value + ">";
+                        myXML += "</" + att.Name + ">";
+                    }
+
+                }
+                myXML += end;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return myXML;
+        }
+
+
         #endregion Methods
     }
     public class AttributeSetRepository : IAttributeSetRepository
