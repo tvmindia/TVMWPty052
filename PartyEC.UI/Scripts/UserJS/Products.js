@@ -50,7 +50,7 @@ function Edit(currentObj)
     if ((rowData != null) && (rowData.ID != null))
     {
         alert(rowData.Name);
-        GetProductDetailsByID(id);
+        GetProductDetailsByID(rowData.ID);
     }
 
    
@@ -59,7 +59,7 @@ function Edit(currentObj)
 function GetProductDetailsByID(id)
 {
     try {
-        var data = "{ID:" + id + "}";
+        var data = "{id:" + id + "}";
         var ds = {};
         ds = GetDataFromServer("Products/GetAllProductsByID/", data);
         if (ds != '') {

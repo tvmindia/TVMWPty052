@@ -59,7 +59,7 @@ function GetDataFromServer(page, formData) {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             //message.code will be:-timeout", "error", "abort", and "parsererror"
-            alert(errorThrown + ',' + textstatus + ',' + jqXHR.statusText);
+            alert(errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
         },
         complete: function () {
           
