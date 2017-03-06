@@ -16,6 +16,18 @@ $(document).ready(function () {
     });
 });
 
+function notyAlert(type,msgtxt) {
+    var n = noty({
+        text: msgtxt,
+        type: type,//'alert','information','error','warning','notification','success'
+        dismissQueue: true,
+        timeout: 3000,
+        layout: 'top',
+        theme: 'defaultTheme',
+        maxVisible: 5
+    });
+   
+}
 function PostDataToServer(page,formData)
 {
     var jsonResult={};
@@ -30,9 +42,9 @@ function PostDataToServer(page,formData)
         success: function (data) {
             jsonResult = data;
         },
-        error: function (xmlhttprequest, textstatus, message) {
+        error: function (jqXHR, textStatus, errorThrown) {
             //message.code will be:-timeout", "error", "abort", and "parsererror"
-            alert(errorThrown + ',' + textstatus + ',' + jqXHR.statusText);
+            notyAlert('error', errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
         },
         complete:function()
         {
@@ -59,7 +71,7 @@ function GetDataFromServer(page, formData) {
         },
         error: function (jqXHR, textStatus, errorThrown) {
             //message.code will be:-timeout", "error", "abort", and "parsererror"
-            alert(errorThrown + ',' + textstatus + ',' + jqXHR.statusText);
+            notyAlert('error',errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
         },
         complete: function () {
           

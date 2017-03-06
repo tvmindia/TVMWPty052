@@ -21,25 +21,31 @@ namespace PartyEC.UI.Models
         public string Caption { get; set; }
 
 
-        [Required(ErrorMessage = "Please Enter Attribute Type")]
-        [Display(Name = "Attribute Type")]
+        [Required(ErrorMessage = "Please Enter Data Type")]
+        [Display(Name = "Data Type")]
         [MaxLength(250)]
         public string AttributeType { get; set; }
 
         [Required(ErrorMessage = "Please Enter Configurable Values")]
-        [Display(Name = "Configurable Values  ")]
+        [Display(Name = "Configurable Values")]
         [MaxLength(250)]
         public string CSValues { get; set; }
 
         [Required(ErrorMessage = "Please Enter Entity Type")]
-        [Display(Name = "Entity Type  ")]
+        [Display(Name = "Entity Type")]
         [MaxLength(250)]
         public string EntityType { get; set; }
 
-
+        [Display(Name = "Attribute Type")]
         public bool ConfigurableYN { get; set; }
+
+        [Display(Name = "Use for Filter")]
         public bool FilterYN { get; set; }
+
+        [Display(Name = "Is Mandatory")]
         public bool MandatoryYN { get; set; }
+
+        [Display(Name = "Is Comparable")]
         public bool ComparableYN { get; set; }
 
         public CommonViewModel commonObj { get; set; }
