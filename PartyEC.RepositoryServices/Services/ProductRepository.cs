@@ -140,14 +140,15 @@ namespace PartyEC.RepositoryServices.Services
             Product myProduct = null;
             try
             {
-                 _con = _databaseFactory.GetDBConnection();
-                if (_con.State == ConnectionState.Closed)
-                {
-                    _con.Open();
-                }
+                using (_con = _databaseFactory.GetDBConnection()) { 
+                    if (_con.State == ConnectionState.Closed)
+                    {
+                        _con.Open();
+                    }
 
-                myProduct = GetProductHeader(ProductID);
-                myProduct.ProductDetail = GetProductDetail(ProductID);
+                    myProduct = GetProductHeader(ProductID);
+                    myProduct.ProductDetail = GetProductDetail(ProductID);
+                }
 
             }
             catch (Exception e)
@@ -157,6 +158,7 @@ namespace PartyEC.RepositoryServices.Services
                 Status.Exception = e;
 
             }
+            
 
             return myProduct;
         }
@@ -328,32 +330,34 @@ namespace PartyEC.RepositoryServices.Services
 
         private List<ProductImages> GetPrdImg(int ProductID, int ProductDetailID = -1) {
             List<ProductImages> myImagesList = null;
+            SqlConnection myCon;
             try
             {
-                SqlConnection myCon;
-                myCon = _databaseFactory.GetDBConnection();
-                if (myCon.State == ConnectionState.Closed)
-                {
-                    myCon.Open();
-                }
-                SqlCommand cmd = new SqlCommand();
-                cmd.Connection = myCon;
-                cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
-                cmd.Parameters.Add("@ProductDetailID", SqlDbType.Int).Value = ProductDetailID;
-                cmd.CommandText = "[GetProductImages]";
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader sdr = cmd.ExecuteReader())
-                {
-                    if ((sdr != null) && (sdr.HasRows))
+               
+                using(myCon = _databaseFactory.GetDBConnection()){
+                    if (myCon.State == ConnectionState.Closed)
                     {
-                        myImagesList = new List<ProductImages>();
-                        while (sdr.Read())
+                        myCon.Open();
+                    }
+                    SqlCommand cmd = new SqlCommand();
+                    cmd.Connection = myCon;
+                    cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                    cmd.Parameters.Add("@ProductDetailID", SqlDbType.Int).Value = ProductDetailID;
+                    cmd.CommandText = "[GetProductImages]";
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        if ((sdr != null) && (sdr.HasRows))
                         {
-                            ProductImages myImage = new ProductImages();
-                            myImage.URL = sdr["ImageURL"].ToString();
-                            myImage.isMain = (bool)(sdr["MainImageYN"].ToString() != "" ? sdr["MainImageYN"] : false);
-                            myImagesList.Add(myImage);
+                            myImagesList = new List<ProductImages>();
+                            while (sdr.Read())
+                            {
+                                ProductImages myImage = new ProductImages();
+                                myImage.URL = sdr["ImageURL"].ToString();
+                                myImage.isMain = (bool)(sdr["MainImageYN"].ToString() != "" ? sdr["MainImageYN"] : false);
+                                myImagesList.Add(myImage);
+                            }
                         }
                     }
                 }
@@ -362,8 +366,9 @@ namespace PartyEC.RepositoryServices.Services
             catch (Exception)
             {
 
-                throw;
+                throw;  
             }
+             
             return myImagesList;
         }
        
