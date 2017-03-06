@@ -1,3 +1,9 @@
+/*menu hover*/
+@media (min-width: 768px) {
+  ul.nav li:hover > ul.dropdown-menu {
+    display: block;
+    }
+}  
  
 
 /*Nav bar brand logo */
