@@ -3,14 +3,14 @@
 $(document).ready(function () {
    // $("#tblproducts").DataTable();
    try {
-        var ProductViewModel = new Object();
+       
         DataTables.productTable = $('#tblproducts').DataTable(
          {
              dom: '<"top"f>rt<"bottom"ip><"clear">',
              order: [],
              searching: true,
              paging: true,
-             data: GetAllProducts(ProductViewModel),
+             data: GetAllProducts(),
              columns: [
                { "data": "ID" },
                { "data": "Name" },
@@ -38,7 +38,7 @@ $(document).ready(function () {
         alert(e.message);
     }
 
- 
+   
 });
 
 function Edit(currentObj)
@@ -49,24 +49,26 @@ function Edit(currentObj)
     var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null))
     {
-        notyAlert('success',rowData.Name);
-        GetProductDetailsByID(rowData.ID);
+        var thisproduct = GetProduct(rowData.ID);
+        $("#Name").val(thisproduct.Name);
+        $("#ShortDescription").val(thisproduct.ShortDescription);
+        $("#ProductType").val(thisproduct.ProductType);
     }
 
    
 }
 
-function GetProductDetailsByID(id)
+function GetProduct(id)
 {
     try {
-        var data = "{id:" + id + "}";
+        var data = id;
         var ds = {};
-        ds = GetDataFromServer("Products/GetAllProductsByID/", data);
+        ds = GetDataFromServer("Products/GetProduct/", data);
         if (ds != '') {
             ds = JSON.parse(ds);
         }
         if (ds.Result == "OK") {
-            return ds.Records;
+            return ds.Record;
         }
         if (ds.Result == "ERROR") {
             notyAlert('error',ds.Message);
@@ -78,11 +80,11 @@ function GetProductDetailsByID(id)
     }
 }
 
-function GetAllProducts(ProductViewModel)
+function GetAllProducts()
 {
    
 try {
-        var data = "{'productObj':" + JSON.stringify(ProductViewModel) + "}";
+        var data = "";
         var ds = {};
         ds = GetDataFromServer("Products/GetAllProducts/", data);
         if (ds != '')

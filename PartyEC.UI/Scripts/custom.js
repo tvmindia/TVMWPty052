@@ -14,6 +14,8 @@ $(document).ready(function () {
 
         return false;
     });
+
+   
 });
 
 function notyAlert(type,msgtxt) {
@@ -43,7 +45,6 @@ function PostDataToServer(page,formData)
             jsonResult = data;
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            //message.code will be:-timeout", "error", "abort", and "parsererror"
             notyAlert('error', errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
         },
         complete:function()
@@ -60,18 +61,16 @@ function GetDataFromServer(page, formData) {
     var jsonResult = {};
     $.ajax({
         type: "GET",
-        url: appAddress + page,
-        data: formData,
+        url: appAddress + page + formData,
         async: false,
         cache: false,
         contentType: "application/json; charset=utf-8",
         success: function (data) {
-            jsonResult = data;
+         jsonResult = data;
             
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            //message.code will be:-timeout", "error", "abort", and "parsererror"
-            notyAlert('error',errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
+          notyAlert('error',errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
         },
         complete: function () {
           
