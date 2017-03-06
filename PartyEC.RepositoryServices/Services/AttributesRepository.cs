@@ -155,42 +155,42 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-        public List<AttributeValues> GetProductAttributeStructure(int AttributeSetID,string Type)
+        public List<AttributeValues> GetAttributeContainer(int AttributeSetID,string Type)
         {
             List<AttributeValues> myProductAttributeList = null;
             try
             {
-                SqlConnection con = _databaseFactory.GetDBConnection();
-                SqlCommand cmd = new SqlCommand();
-                con = _databaseFactory.GetDBConnection();
-                if (con.State == ConnectionState.Closed)
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
-                    con.Open();
-                }
-
-                cmd.Connection = con;
-                cmd.Parameters.Add("@AttributeSetID", SqlDbType.Int).Value = AttributeSetID;
-                cmd.Parameters.Add("@EntityType", SqlDbType.NVarChar).Value = Type;
-                cmd.CommandText = "[GetAttributesBySetIdAndEntityType]";
-                cmd.CommandType = CommandType.StoredProcedure;
-
-                using (SqlDataReader sdr = cmd.ExecuteReader())
-                {
-                    myProductAttributeList = new List<AttributeValues>();
-                    if ((sdr != null) && (sdr.HasRows))
+                    SqlCommand cmd = new SqlCommand();                    
+                    if (con.State == ConnectionState.Closed)
                     {
-                        if (sdr.Read())
+                        con.Open();
+                    }
+
+                    cmd.Connection = con;
+                    cmd.Parameters.Add("@AttributeSetID", SqlDbType.Int).Value = AttributeSetID;
+                    cmd.Parameters.Add("@EntityType", SqlDbType.NVarChar).Value = Type;
+                    cmd.CommandText = "[GetAttributesBySetIdAndEntityType]";
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        myProductAttributeList = new List<AttributeValues>();
+                        if ((sdr != null) && (sdr.HasRows))
                         {
-                            AttributeValues myAttribute = new AttributeValues();
-                            myAttribute.Name = sdr["Name"].ToString();
-                            myAttribute.Caption = sdr["Caption"].ToString();
-                            myAttribute.DataType= sdr["AttributeType"].ToString();
-                            myProductAttributeList.Add(myAttribute);
+                            if (sdr.Read())
+                            {
+                                AttributeValues myAttribute = new AttributeValues();
+                                myAttribute.Name = sdr["Name"].ToString();
+                                myAttribute.Caption = sdr["Caption"].ToString();
+                                myAttribute.DataType = sdr["AttributeType"].ToString();
+                                myProductAttributeList.Add(myAttribute);
+                            }
                         }
                     }
+
                 }
-
-
 
 
                 }
