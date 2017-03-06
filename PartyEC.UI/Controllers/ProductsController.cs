@@ -25,10 +25,7 @@ namespace PartyEC.UI.Controllers
         // GET: Products
         public ActionResult Index()
         {
-            //suv test
-            //OperationsStatus myStatus = new OperationsStatus();
-            //Product p = _productBusiness.GetProduct(1001, myStatus);
-            //suv test
+            
             return View();
         }
         [HttpGet]
