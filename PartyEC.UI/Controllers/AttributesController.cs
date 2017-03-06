@@ -36,7 +36,7 @@ namespace PartyEC.UI.Controllers
 
         #endregion  GetAllAttributes
 
-        #region InsertAttributes
+        #region InsertUpdateAttributes
 
         [HttpPost]
         public string InsertUpdateAttributes(AttributesViewModel attributesObj)
@@ -74,38 +74,11 @@ namespace PartyEC.UI.Controllers
                     {
                         return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                     }
-
-                }
-               
+                }               
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
 
-        #endregion InsertAttributes
-
-        //#region UpdateAttributes
-        //[HttpPost]
-        //public string UpdateAttributes(AttributesViewModel attributesObj)
-        //{
-        //    if (ModelState.IsValid)
-        //    { 
-        //        try
-        //        {
-        //            attributesObj.commonObj = new CommonViewModel();
-        //            attributesObj.commonObj.CreatedBy = "Albert";
-        //            OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.UpdateAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
-        //            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
-        //        }
-        //        catch (Exception ex)
-        //        {
-        //            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
-        //        }
-        //    }
-        //    ModelState.Clear();
-        //    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
-        //}
-
-
-        //#endregion UpdateAttributes
+        #endregion InsertUpdateAttributes
     }
 }
