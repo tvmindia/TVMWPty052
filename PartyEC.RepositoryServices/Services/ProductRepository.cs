@@ -268,7 +268,7 @@ namespace PartyEC.RepositoryServices.Services
                             myProductDetail.LogDetails.UpdatedDate = (sdr["UpdatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["UpdatedDate"].ToString())) : myProductDetail.LogDetails.UpdatedDate);
 
                             if (myAttributeStructure == null){
-                                myAttributeStructure =myAttributesRepository.GetProductAttributeStructure(myProductDetail.AttributeSetID, "Product");
+                                myAttributeStructure =myAttributesRepository.GetAttributeContainer(myProductDetail.AttributeSetID, "Product");
                             }
                                                   
 
