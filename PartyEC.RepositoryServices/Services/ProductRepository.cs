@@ -54,7 +54,6 @@ namespace PartyEC.RepositoryServices.Services
                               {
                                   Product _productObj = new Product();
                                   {
-
                                         _productObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _productObj.ID);
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.SKU = (sdr["SKU"].ToString() != "" ? sdr["SKU"].ToString() : _productObj.SKU);
@@ -75,8 +74,8 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.AttributeSetID = (sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : _productObj.AttributeSetID);
                                         _productObj.FreeDelivery = (sdr["FreeDeliveryYN"].ToString() != "" ? bool.Parse(sdr["FreeDeliveryYN"].ToString()) : _productObj.FreeDelivery);
                                         _productObj.HeaderTags = (sdr["HeaderTag"].ToString() != "" ? sdr["HeaderTag"].ToString() : _productObj.HeaderTags);
-                                        //_productObj.at
-
+                                        _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.SupplierName);
+                                        _productObj.ManufacturerName = (sdr["ManufacturerName"].ToString() != "" ? sdr["ManufacturerName"].ToString() : _productObj.ManufacturerName);
                                         _productObj.StickerURL = (sdr["URL"].ToString() != "" ? sdr["URL"].ToString() : _productObj.StickerURL);
                                   }
                                   productList.Add(_productObj);

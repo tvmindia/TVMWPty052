@@ -27,8 +27,8 @@ $(document).ready(function () {
              columnDefs: [
               {//hiding hidden column field churchid
                   "targets": [0],
-                  "visible": false,
-                  "searchable": false
+                  "visible": true,
+                  "searchable": true
               }
              ]
          });
@@ -61,7 +61,7 @@ function Edit(currentObj)
 function GetProduct(id)
 {
     try {
-        var data = id;
+        var data = { "ID": id };
         var ds = {};
         ds = GetDataFromServer("Products/GetProduct/", data);
         if (ds != '') {
@@ -83,7 +83,8 @@ function GetProduct(id)
 function GetAllProducts()
 {
    
-try {
+    try {
+        debugger;
         var data = "";
         var ds = {};
         ds = GetDataFromServer("Products/GetAllProducts/", data);

@@ -68,7 +68,8 @@ function GetDataFromServer(page, formData) {
     var jsonResult = {};
     $.ajax({
         type: "GET",
-        url: appAddress + page + formData,
+        url: appAddress + page,
+        data:formData,
         async: false,
         cache: false,
         contentType: "application/json; charset=utf-8",
