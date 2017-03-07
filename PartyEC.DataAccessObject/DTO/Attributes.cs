@@ -32,6 +32,7 @@ namespace PartyEC.DataAccessObject.DTO
         public LogDetails commonObj { get; set; }
         public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
     }
+
     public class AttributeSetLink
     {
         public int ID { get; set; }
