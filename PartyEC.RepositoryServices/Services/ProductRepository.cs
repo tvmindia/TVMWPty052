@@ -54,6 +54,7 @@ namespace PartyEC.RepositoryServices.Services
                               {
                                   Product _productObj = new Product();
                                   {
+
                                         _productObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _productObj.ID);
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.SKU = (sdr["SKU"].ToString() != "" ? sdr["SKU"].ToString() : _productObj.SKU);
