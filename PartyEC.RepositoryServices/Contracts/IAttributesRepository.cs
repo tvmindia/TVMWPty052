@@ -16,10 +16,11 @@ namespace PartyEC.RepositoryServices.Contracts
     }
     public interface IAttributeSetRepository
     {
-
+        
     }
-    public interface IAttributeToSetLinks
+    public interface IAttributeToSetLinksRepository
     {
-
+        OperationsStatus InsertAttributeSetLink(AttributeSetLink obj);
+        OperationsStatus DeleteAttributeSetLink(string ID);
     }
 }

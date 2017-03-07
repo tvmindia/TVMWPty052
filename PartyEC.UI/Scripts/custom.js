@@ -18,6 +18,7 @@ $(document).ready(function () {
 
 function PostDataToServer(page,formData)
 {
+    debugger;
     var jsonResult={};
     $.ajax({
         type: "POST",

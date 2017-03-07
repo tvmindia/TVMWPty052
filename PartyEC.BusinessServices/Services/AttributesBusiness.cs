@@ -53,6 +53,31 @@ namespace PartyEC.BusinessServices.Services
         {
             _attributeSetRepository = attributeSetRepository;
         }
+      
+
+    }
+    public class AttributeToSetLinks : IAttributeToSetLinks
+    {
+        private IAttributeToSetLinksRepository _attributeToSetLinksRepository;
+        public AttributeToSetLinks(IAttributeToSetLinksRepository attributeToSetLinksRepository)
+        {
+            _attributeToSetLinksRepository = attributeToSetLinksRepository;
+        }
+        public OperationsStatus TreeViewUpdateAttributeSetLink(List<AttributeSetLink> TreeViewData,string ID)
+        {
+            OperationsStatus OPObj = new OperationsStatus();
+            _attributeToSetLinksRepository.DeleteAttributeSetLink(ID);
+            foreach(AttributeSetLink i in TreeViewData)
+            {
+                if(i.AttributeSetID!=0)
+                {
+
+                    _attributeToSetLinksRepository.InsertAttributeSetLink(i);
+                }
+            }
+            //return _attributeToSetLinksRepository.InsertAttributeSetLink();
+            return OPObj;
+        }
 
     }
 }

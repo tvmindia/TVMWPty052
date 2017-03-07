@@ -407,7 +407,7 @@
     <Content Include="Scripts\jstree\dist\jstree.min.js" />
     <Content Include="Scripts\UserJS\Attributes.js" />
     <Content Include="Scripts\UserJS\Products.js" />
-    <Content Include="Scripts\UserJS\Treeview.js" />
+    <Content Include="Scripts\UserJS\AttributeSet.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
@@ -422,6 +422,7 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\AttributesController.cs" />
     <Compile Include="Controllers\AttributeSetController.cs" />
+    <Compile Include="Controllers\AttributeSetLinkController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DynamicUIController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -455,6 +456,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Content\UserCSS\" />
+    <Folder Include="Views\AttributeSetLink\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

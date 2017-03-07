@@ -108,10 +108,30 @@ namespace PartyEC.RepositoryServices.Services
     }
     public class AttributeSetRepository : IAttributeSetRepository
     {
-
+        
     }
-    public class AttributeToSetLinks : IAttributeToSetLinks
+    public class AttributeToSetLinks : IAttributeToSetLinksRepository
     {
-
+        #region DataBaseFactory
+        private IDatabaseFactory _databaseFactory;
+        /// <summary>
+        /// Constructor Injection:-Getting IDatabaseFactory implemented object
+        /// </summary>
+        /// <param name="databaseFactory"></param>
+        public AttributeToSetLinks(IDatabaseFactory databaseFactory)
+        {
+            _databaseFactory = databaseFactory;
+        }
+        #endregion DataBaseFactory
+        public OperationsStatus InsertAttributeSetLink(AttributeSetLink AttrSetLinkObj)
+        {
+            OperationsStatus OPObj = new OperationsStatus();
+            return OPObj;
+        }
+        public OperationsStatus DeleteAttributeSetLink(string ID)
+        {
+            OperationsStatus OPObj = new OperationsStatus();
+            return OPObj;
+        }
     }
 }

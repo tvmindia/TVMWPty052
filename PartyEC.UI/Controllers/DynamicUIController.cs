@@ -29,11 +29,16 @@ namespace PartyEC.UI.Controllers
             return View(dUIObj);
         }
         [HttpGet]
-        public string GetTreeListForAttributeSet()
+        public string GetTreeListForAttributeSet(string ID)
         {
             try
             {
-                List<JsTreeNode> NodeList = _dynamicUIBusiness.GetTreeList();
+                List<JsTreeNode> NodeList = null;
+                if (ID!="")
+                {
+                    NodeList = _dynamicUIBusiness.GetTreeListAttributeSet(ID);
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
+                }
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
             }
             catch (Exception ex)
@@ -41,6 +46,20 @@ namespace PartyEC.UI.Controllers
                  return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
             //return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
+        }
+
+        [HttpGet]
+        public string GetTreeListAttributes()
+        {
+            try
+            {
+                List<JsTreeNode> NodeList = _dynamicUIBusiness.GetTreeListAttributes();
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
         }
     }
 }

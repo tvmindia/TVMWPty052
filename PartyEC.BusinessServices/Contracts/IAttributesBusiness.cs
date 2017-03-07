@@ -15,6 +15,11 @@ namespace PartyEC.BusinessServices.Contracts
     }
     public interface IAttributeSetBusiness
     {
-
+        
     }
+    public interface IAttributeToSetLinks
+    {
+        OperationsStatus TreeViewUpdateAttributeSetLink(List<AttributeSetLink> TreeView,string ID);
+    }
+
 }

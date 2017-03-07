@@ -33,12 +33,12 @@ namespace PartyEC.BusinessServices.Services
             
 
         }
-        public List<JsTreeNode> GetTreeList()
+        public List<JsTreeNode> GetTreeListAttributes()
         {
             List<JsTreeNode> nodesList = new List<JsTreeNode>();
             try
             {
-                List<Treeview> TreeViewList = _dynamicUIRepository.GetTreeList();
+                List<Treeview> TreeViewList = _dynamicUIRepository.GetTreeListForAttr();
 
                 foreach (var i in TreeViewList)
                 {
@@ -47,6 +47,7 @@ namespace PartyEC.BusinessServices.Services
                         JsTreeNode rootNode = new JsTreeNode();
                         rootNode.id = i.ID.ToString();
                         rootNode.text = i.Name.ToString();
+                        rootNode.icon = i.icon.ToString();
                         rootNode.children = new List<JsTreeNode>();
                         foreach (var j in TreeViewList)
                         {
@@ -56,6 +57,47 @@ namespace PartyEC.BusinessServices.Services
                                 JsTreeNode Node = new JsTreeNode();
                                 Node.id = j.ID.ToString();
                                 Node.text = j.Name.ToString();
+                                Node.icon = j.icon.ToString();
+                                Node.children = new List<JsTreeNode>();
+                                rootNode.children.Add(Node);
+                            }
+                        }
+                        nodesList.Add(rootNode);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return nodesList;
+        }
+
+        public List<JsTreeNode> GetTreeListAttributeSet(string ID)
+        {
+            List<JsTreeNode> nodesList = new List<JsTreeNode>();
+            try
+            {
+                List<Treeview> TreeViewList = _dynamicUIRepository.GetTreeListForAttrSet(ID);
+
+                foreach (var i in TreeViewList)
+                {
+                    if (i.level.ToString() == "0")
+                    {
+                        JsTreeNode rootNode = new JsTreeNode();
+                        rootNode.id = i.ID.ToString();
+                        rootNode.text = i.Name.ToString();
+                        rootNode.icon = i.icon.ToString();
+                        rootNode.children = new List<JsTreeNode>();
+                        foreach (var j in TreeViewList)
+                        {
+                            if ((j.ParentID.ToString() == i.ID.ToString()) && (j.level.ToString() == "1"))
+                            {
+
+                                JsTreeNode Node = new JsTreeNode();
+                                Node.id = j.ID.ToString();
+                                Node.text = j.Name.ToString();
+                                Node.icon = j.icon.ToString();
                                 Node.children = new List<JsTreeNode>();
                                 rootNode.children.Add(Node);
                             }

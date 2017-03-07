@@ -27,7 +27,11 @@ namespace PartyEC.DataAccessObject.DTO
             get;
             set;
         }
-        
+        public string icon
+        {
+            get;
+            set;
+        }
     }
     public class JsTreeNode
     {
@@ -40,6 +44,11 @@ namespace PartyEC.DataAccessObject.DTO
             set;
         }
         public string id
+        {
+            get;
+            set;
+        }
+        public string icon
         {
             get;
             set;
