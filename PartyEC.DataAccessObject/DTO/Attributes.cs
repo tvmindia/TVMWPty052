@@ -38,6 +38,9 @@ namespace PartyEC.DataAccessObject.DTO
         public int AttributeSetID { get; set; }
         public int AttributeID { get; set; }
         public float DisplayOrder { get; set;}
+        public LogDetails commonObj { get; set; }
+
+        public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
     }
 
 

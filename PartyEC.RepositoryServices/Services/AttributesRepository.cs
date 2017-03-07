@@ -350,15 +350,109 @@ namespace PartyEC.RepositoryServices.Services
             _databaseFactory = databaseFactory;
         }
         #endregion DataBaseFactory
-        public OperationsStatus InsertAttributeSetLink(AttributeSetLink AttrSetLinkObj)
+        public OperationsStatus InsertAttributeSetLink(AttributeSetLink attrSetLinkObj)
         {
-            OperationsStatus OPObj = new OperationsStatus();
-            return OPObj;
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertAttributeSetLink]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@AttributeID", SqlDbType.Int).Value = attrSetLinkObj.AttributeID;
+                        cmd.Parameters.Add("@AttributeSetID", SqlDbType.Int).Value = attrSetLinkObj.AttributeSetID;
+                        cmd.Parameters.Add("@DisplayOrder", SqlDbType.Float).Value = attrSetLinkObj.DisplayOrder;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = attrSetLinkObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = attrSetLinkObj.commonObj.CreatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
+
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
         }
         public OperationsStatus DeleteAttributeSetLink(string ID)
         {
-            OperationsStatus OPObj = new OperationsStatus();
-            return OPObj;
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteAttributeSetLinkDataUsingAttributeSetID]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@AttributeSetID", SqlDbType.VarChar, 50).Value = ID;
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // Delete not Successfull
+
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Deletion Not Successfull!";
+                                break;
+                            case "1":
+                                //Delete Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Deletion Successfull!";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
         }
     }
 
