@@ -14,8 +14,28 @@ $(document).ready(function () {
 
         return false;
     });
+   
+    $(".dropdown, .btn-group").hover(function () {
+        var dropdownMenu = $(this).children(".dropdown-menu");
+        if (dropdownMenu.is(":visible")) {
+            dropdownMenu.parent().toggleClass("open");
+        }
+    });
+   
 });
 
+function notyAlert(type,msgtxt) {
+    var n = noty({
+        text: msgtxt,
+        type: type,//'alert','information','error','warning','notification','success'
+        dismissQueue: true,
+        timeout: 3000,
+        layout: 'top',
+        theme: 'defaultTheme',
+        maxVisible: 5
+    });
+   
+}
 function PostDataToServer(page,formData)
 {
     debugger;
@@ -31,9 +51,8 @@ function PostDataToServer(page,formData)
         success: function (data) {
             jsonResult = data;
         },
-        error: function (xmlhttprequest, textstatus, message) {
-            //message.code will be:-timeout", "error", "abort", and "parsererror"
-            alert(errorThrown + ',' + textstatus + ',' + jqXHR.statusText);
+        error: function (jqXHR, textStatus, errorThrown) {
+            notyAlert('error', errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
         },
         complete:function()
         {
@@ -49,19 +68,16 @@ function GetDataFromServer(page, formData) {
     var jsonResult = {};
     $.ajax({
         type: "GET",
-        url: appAddress + page,
-        data: formData,
+        url: appAddress + page + formData,
         async: false,
         cache: false,
         contentType: "application/json; charset=utf-8",
-        //dataType: "json",
         success: function (data) {
-            jsonResult = data;
+         jsonResult = data;
             
         },
         error: function (jqXHR, textStatus, errorThrown) {
-            //message.code will be:-timeout", "error", "abort", and "parsererror"
-            alert(errorThrown + ',' + textstatus + ',' + jqXHR.statusText);
+          notyAlert('error',errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
         },
         complete: function () {
           

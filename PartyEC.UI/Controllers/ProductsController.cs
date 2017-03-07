@@ -48,8 +48,23 @@ namespace PartyEC.UI.Controllers
            // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
         }
 
+        [HttpGet]
+        public string GetProduct(string id)
+        {
+            try
+            {
+                OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                ProductViewModel product = Mapper.Map<Product,ProductViewModel>(_productBusiness.GetProduct(Int32.Parse(id), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = product });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+
         [HttpPost]
-        public string ProductInsert(ProductViewModel productObj)
+        public string ProductInsertUpdate(ProductViewModel productObj)
         {
             if (ModelState.IsValid)
             {

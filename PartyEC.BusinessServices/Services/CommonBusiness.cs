@@ -30,5 +30,12 @@ namespace PartyEC.BusinessServices.Services
         {
             _uaObj.UserName = uaObj.UserName;
         }
+        public DateTime GetCurrentDateTime()
+        {
+            string tz = System.Web.Configuration.WebConfigurationManager.AppSettings["TimeZone"];
+            DateTime DateNow = DateTime.SpecifyKind(DateTime.Now, DateTimeKind.Local);
+            return (TimeZoneInfo.ConvertTimeBySystemTimeZoneId(DateNow, tz));
+        }
+      
     }
 }

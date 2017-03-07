@@ -16,8 +16,8 @@
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1primary" data-toggle="tab">Primary 1</a></li>
-                <li><a href="#tab2primary" data-toggle="tab">Primary 2</a></li>
+                <li class="active"><a href="#productList" data-toggle="tab" id="tabproductList">Product List</a></li>
+                <li><a href="#productDetails" data-toggle="tab" id="tabproductDetails">Product Details</a></li>
               @*<li class="dropdown">
                     <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
                     <ul class="dropdown-menu" role="menu">
@@ -29,96 +29,137 @@
         </div>
         <div class="panel-body">
             <div class="tab-content">
-                <div class="tab-pane fade in active" id="tab1primary">
-                  
-                   
-                        @*table*@
-                        <table id="tblproducts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>ProductID</th>
-                                    <th>Name</th>
-                                    <th>ProductType</th>
-                                    <th>Active(Yes/No)</th>
-                                    <th>Supplier</th>
-                                    <th>SKU</th>
-                                    <th>Selling Price</th>
-                                    <th>Qty</th>
-                                    <th>Stock Status</th>
-                                    <th>Product Rating</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                        </table>
-                        @*table*@
-                   
-                    
-                 
+                <div class="tab-pane fade in active" id="productList">
+
+                    <h4>Product List</h4>
+
+                    @*table*@
+                    <table id="tblproducts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>ProductID</th>
+                                <th>Name</th>
+                                <th>ProductType</th>
+                                <th>Active(Yes/No)</th>
+                                <th>Supplier</th>
+                                <th>SKU</th>
+                                <th>Selling Price</th>
+                                <th>Qty</th>
+                                <th>Stock Status</th>
+                                <th>Product Rating</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    @*table*@
+
+
+
                 </div>
-                <div class="tab-pane fade" id="tab2primary">
+                <div class="tab-pane fade" id="productDetails">
+                    <h4>Product Details</h4>
+                    <hr>
                     @*ButtonPatch*@
                     <div class="col-md-12">
-                       button patch here
+                        button patch here
                     </div>
-               
-                   @*EditArea*@
-                   <div class="col-md-2">
-                       <div class="list-group">
-                           <a href="#" class="list-group-item"><span class="badge">E</span>General</a>
-                           <a href="#" class="list-group-item">Price</a>
-                           <a href="#" class="list-group-item">Discription</a>
-                           <a href="#" class="list-group-item active"><span class="badge">E</span>Images</a>
-                           <a href="#" class="list-group-item">Associated Prdoucts</a>
-                           <a href="#" class="list-group-item"><span class="badge">E</span>Other Attributes</a>
-                       </div>
-                   </div>
-                    <div class="col-md-6" id="productUpdateTarget">
-                    <h4>Customize Product</h4>
-                    <hr>
-                        <!--Edit form column-->
-                                  @using (Ajax.BeginForm("ProductInsert", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "productSaveConfirm", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "onbeginProductSave", OnComplete = "oncomplteProductSave" }, new { @class = "form-horizontal", role = "form" }))
-                                   {
+
+                    @*EditArea*@
+                    <div class="col-md-2">
+                        <div class="panel with-nav-tabs js panel-primary">
+                            <div class="panel-heading">
+                                <ul class="nav nav-tabs nav-stacked">
+                                    <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General</a></li>
+                                    <li><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
+                                    <li><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
+                                    <li><a href="#discription" data-toggle="tab" id="tabDiscrption">Discription</a></li>
+                                    
+                                    <li><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory</a></li>
+                                    <li><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
+                                </ul>
+                             </div>
+                            </div>
+                  
+              @*<div class="list-group">
+                <a href="#" class="list-group-item"><span class="badge">E</span>General</a>
+                <a href="#" class="list-group-item">Price</a>
+                <a href="#" class="list-group-item">Discription</a>
+                <a href="#" class="list-group-item active"><span class="badge">E</span>Images</a>
+                <a href="#" class="list-group-item">Associated Prdoucts</a>
+                <a href="#" class="list-group-item"><span class="badge">E</span>Other Attributes</a>
+                </div>*@
+                    </div>
+                    <div class="col-md-6">
+                        <div class="tab-content">
+                            <div class="tab-pane fade in active" id="general">
+                                <!--Edit form column-->
+                                @using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "productSaveConfirm", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "onbeginProductSave", OnComplete = "oncomplteProductSave" }, new { @class = "form-horizontal", role = "form" }))
+                                {
                                     @Html.AntiForgeryToken()
-                                        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                            <div class="col-lg-8">
-                                                @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                                            </div>
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <div class="col-lg-8">
+                                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                            <div class="col-lg-8">
-                                                @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
-                                            </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <div class="col-lg-8">
+                                            @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
                                         </div>
+                                    </div>
 
-                                        <div class="form-group">
-                                            @Html.LabelFor(model => model.ProductType, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                            <div class="col-lg-8">
-                                                @Html.EditorFor(model => model.ProductType, new { htmlAttributes = new { @class = "form-control" } })
-                                                @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
-                                            </div>
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.ProductType, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <div class="col-lg-8">
+                                            @Html.EditorFor(model => model.ProductType, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
                                         </div>
+                                    </div>
 
-                                       
 
-                                        <div class="form-group">
-                                            <div class="col-md-offset-2 col-md-10">
-                                                <input type="submit" value="Create" class="btn btn-default" />
-                                            </div>
+
+                                    <div class="form-group">
+                                        <div class="col-md-offset-2 col-md-10">
+                                            <input type="submit" value="Create" class="btn btn-default" />
                                         </div>
-                                   
-                                   }
-                    </div>
+                                    </div>
+
+                                }
+                            </div>
+                            <div class="tab-pane fade" id="price">
+                                price
+                            </div>
+                            <div class="tab-pane fade" id="images">
+                                8
+                            </div>
+                            <div class="tab-pane fade" id="discription">
+                                5
+                            </div>
+                           
+                            <div class="tab-pane fade" id="inventory">
+                                9
+                            </div>
+                            <div class="tab-pane fade" id="relatedProducts">
+                                43
+                            </div>
+
+                            </div>
+
+
+                          
+                        </div>
                     <div class="col-md-4">
-
+                        sdfdsfdsf
                     </div>
 
                 </div>
+
+
              
             </div>
         </div>

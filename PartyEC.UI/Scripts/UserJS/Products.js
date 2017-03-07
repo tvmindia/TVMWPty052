@@ -2,18 +2,15 @@
 
 $(document).ready(function () {
    // $("#tblproducts").DataTable();
-
-    try {
-
-        var ProductViewModel = new Object();
+   try {
+       
         DataTables.productTable = $('#tblproducts').DataTable(
          {
-            
              dom: '<"top"f>rt<"bottom"ip><"clear">',
              order: [],
              searching: true,
              paging: true,
-             data: GetAllProducts(ProductViewModel),
+             data: GetAllProducts(),
              columns: [
                { "data": "ID" },
                { "data": "Name" },
@@ -24,8 +21,8 @@ $(document).ready(function () {
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "Qty", "defaultContent": "<i>-</i>" },
                { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a class="circlebtn circlebtn-info" onclick="EditChurch(this)"><i class="halflings-icon white edit""></i></a><a class="circlebtn circlebtn-danger"><i class="halflings-icon white trash" onclick="RemoveChurch(this)"></i></a>' },
-               { "data": null, "orderable": false, "defaultContent": '<a class="circlebtn circlebtn-info" onclick="EditChurch(this)"><i class="halflings-icon white edit""></i></a><a class="circlebtn circlebtn-danger"><i class="halflings-icon white trash" onclick="RemoveChurch(this)"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a onclick="RatingPopup(this)">Rating</a>' },
+               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [
               {//hiding hidden column field churchid
@@ -35,20 +32,59 @@ $(document).ready(function () {
               }
              ]
          });
-
     }
-    catch (e) {
+    catch (e)
+    {
         alert(e.message);
     }
 
- 
+   
 });
 
-function GetAllProducts(ProductViewModel)
+function Edit(currentObj)
 {
+   //Tab Change
+    $('#tabproductDetails').trigger('click');
     debugger;
+    var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
+    if ((rowData != null) && (rowData.ID != null))
+    {
+        var thisproduct = GetProduct(rowData.ID);
+        $("#Name").val(thisproduct.Name);
+        $("#ShortDescription").val(thisproduct.ShortDescription);
+        $("#ProductType").val(thisproduct.ProductType);
+    }
+
+   
+}
+
+function GetProduct(id)
+{
+    try {
+        var data = id;
+        var ds = {};
+        ds = GetDataFromServer("Products/GetProduct/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Record;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error',ds.Message);
+        }
+
+    }
+    catch (e) {
+
+    }
+}
+
+function GetAllProducts()
+{
+   
 try {
-        var data = "{'productObj':" + JSON.stringify(ProductViewModel) + "}";
+        var data = "";
         var ds = {};
         ds = GetDataFromServer("Products/GetAllProducts/", data);
         if (ds != '')
@@ -60,7 +96,7 @@ try {
             return ds.Records;
         }
         if (ds.Result == "ERROR") {
-            alert(ds.Message);
+            notyAlert('error', ds.Message);
         }
        
     }
