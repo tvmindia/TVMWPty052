@@ -10,7 +10,7 @@ namespace PartyEC.RepositoryServices.Contracts
     public interface IAttributesRepository
     {
 
-        List<Attributes> GetAllAttributes(Attributes attributesObj);
+        List<Attributes> GetAllAttributes();
         Attributes GetAttributes(int attributeID, OperationsStatus Status);
         OperationsStatus InsertAttributes(Attributes attributesObj);
         OperationsStatus UpdateAttributes(Attributes attributesObj);

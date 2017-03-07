@@ -33,20 +33,19 @@ $(document).ready(function ()
 });
 
 function Edit(currentObj) {
-    //Tab Change
+    //Tab Change on edit click
     $('#tabattributeDetails').trigger('click');
     debugger;
     var rowData = DataTables.attributeTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
-        alert(rowData.ID + rowData.Name);
+
         var thisattribute = GetAttributesDetailsByID(rowData.ID);
         $("#ID").val(thisattribute.ID)
         $("#Name").val(thisattribute.Name);
         $("#Caption").val(thisattribute.Caption)       
         $("#AttributeType").val(thisattribute.AttributeType)        
         $("#CSValues").val(thisattribute.CSValues)
-        $("#EntityType").val(thisattribute.EntityType)
-        
+        $("#EntityType").val(thisattribute.EntityType)        
         if (thisattribute.ConfigurableYN == false) {
             $("#married-false").attr('checked', true);
         }
@@ -74,6 +73,7 @@ function Edit(currentObj) {
         }      
     }
 }
+
 function GetAttributesDetailsByID(id) {
     try {
         debugger;

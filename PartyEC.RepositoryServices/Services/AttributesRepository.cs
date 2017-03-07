@@ -27,7 +27,7 @@ namespace PartyEC.RepositoryServices.Services
         #region Methods
 
 
-        public List<Attributes> GetAllAttributes(Attributes attributesObj)
+        public List<Attributes> GetAllAttributes()
         {
             List<Attributes> AttributesList = null;
 
@@ -53,16 +53,16 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Attributes _attributesObj = new Attributes();
                                     {
-                                        _attributesObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : attributesObj.ID);
-                                        _attributesObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : attributesObj.Name);
-                                        _attributesObj.Caption = (sdr["Caption"].ToString() != "" ? sdr["Caption"].ToString() : attributesObj.Caption);
-                                        _attributesObj.AttributeType = (sdr["AttributeType"].ToString() != "" ? sdr["AttributeType"].ToString() : attributesObj.AttributeType);
-                                        _attributesObj.ConfigurableYN = (sdr["ConfigurableYN"].ToString() != "" ? Boolean.Parse(sdr["ConfigurableYN"].ToString()) : attributesObj.ConfigurableYN);
-                                        _attributesObj.FilterYN = (sdr["FilterYN"].ToString() != "" ? Boolean.Parse(sdr["FilterYN"].ToString()) : attributesObj.FilterYN);
-                                        _attributesObj.CSValues = (sdr["CSValues"].ToString() != "" ? sdr["CSValues"].ToString() : attributesObj.CSValues);
-                                        _attributesObj.EntityType = (sdr["EntityType"].ToString() != "" ? sdr["EntityType"].ToString() : attributesObj.EntityType);
-                                        _attributesObj.MandatoryYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["MandatoryYN"].ToString()) : attributesObj.MandatoryYN);
-                                        _attributesObj.ComparableYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["ComparableYN"].ToString()) : attributesObj.ComparableYN);
+                                        _attributesObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _attributesObj.ID);
+                                        _attributesObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _attributesObj.Name);
+                                        _attributesObj.Caption = (sdr["Caption"].ToString() != "" ? sdr["Caption"].ToString() : _attributesObj.Caption);
+                                        _attributesObj.AttributeType = (sdr["AttributeType"].ToString() != "" ? sdr["AttributeType"].ToString() : _attributesObj.AttributeType);
+                                        _attributesObj.ConfigurableYN = (sdr["ConfigurableYN"].ToString() != "" ? Boolean.Parse(sdr["ConfigurableYN"].ToString()) : _attributesObj.ConfigurableYN);
+                                        _attributesObj.FilterYN = (sdr["FilterYN"].ToString() != "" ? Boolean.Parse(sdr["FilterYN"].ToString()) : _attributesObj.FilterYN);
+                                        _attributesObj.CSValues = (sdr["CSValues"].ToString() != "" ? sdr["CSValues"].ToString() : _attributesObj.CSValues);
+                                        _attributesObj.EntityType = (sdr["EntityType"].ToString() != "" ? sdr["EntityType"].ToString() : _attributesObj.EntityType);
+                                        _attributesObj.MandatoryYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["MandatoryYN"].ToString()) : _attributesObj.MandatoryYN);
+                                        _attributesObj.ComparableYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["ComparableYN"].ToString()) : _attributesObj.ComparableYN);
                                     }
                                     AttributesList.Add(_attributesObj);
                                 }

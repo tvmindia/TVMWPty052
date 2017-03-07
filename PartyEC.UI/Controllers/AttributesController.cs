@@ -37,7 +37,7 @@ namespace PartyEC.UI.Controllers
         {
             try
             {
-                List<AttributesViewModel> attributeList = Mapper.Map<List<Attributes>, List<AttributesViewModel>>(_attributeBusiness.GetAllAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
+                List<AttributesViewModel> attributeList = Mapper.Map<List<Attributes>, List<AttributesViewModel>>(_attributeBusiness.GetAllAttributes());
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = attributeList });
             }
             catch (Exception ex)
