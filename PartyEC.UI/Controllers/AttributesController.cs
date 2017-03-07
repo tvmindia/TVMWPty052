@@ -80,10 +80,9 @@ namespace PartyEC.UI.Controllers
                     //Create Attribute
                     try
                     {
-
                         attributesObj.commonObj = new CommonViewModel();
                         attributesObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
-                        attributesObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime().ToString();
+                        attributesObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
                         OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.InsertAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
                         return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                     }
@@ -98,8 +97,8 @@ namespace PartyEC.UI.Controllers
                     try
                     {
                         attributesObj.commonObj = new CommonViewModel();
-                        attributesObj.commonObj.UpdatedBy = "Albert";
-                        attributesObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime().ToString();
+                        attributesObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                        attributesObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
                         OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.UpdateAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
                         return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                     }
