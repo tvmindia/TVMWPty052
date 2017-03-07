@@ -39,7 +39,39 @@ function Edit(currentObj) {
     var rowData = DataTables.attributeTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         alert(rowData.ID + rowData.Name);
-        GetAttributesDetailsByID(rowData.ID);
+        var thisattribute = GetAttributesDetailsByID(rowData.ID);
+        $("#ID").val(thisattribute.ID)
+        $("#Name").val(thisattribute.Name);
+        $("#Caption").val(thisattribute.Caption)       
+        $("#AttributeType").val(thisattribute.AttributeType)        
+        $("#CSValues").val(thisattribute.CSValues)
+        $("#EntityType").val(thisattribute.EntityType)
+        
+        if (thisattribute.ConfigurableYN == false) {
+            $("#married-false").attr('checked', true);
+        }
+        else {
+            $("#married-true").attr('checked', true);
+        }
+
+        if (thisattribute.FilterYN == false) {
+            $("#FilterYN").attr('checked', false);
+        }
+        else {
+            $("#FilterYN").attr('checked', true);         
+        }
+        if (thisattribute.MandatoryYN == false) {
+            $("#MandatoryYN").attr('checked', false);
+        }
+        else {
+            $("#MandatoryYN").attr('checked', true);
+        }
+        if (thisattribute.ComparableYN == false) {
+            $("#ComparableYN").attr('checked', false);
+        }
+        else {
+            $("#ComparableYN").attr('checked', true);
+        }      
     }
 }
 function GetAttributesDetailsByID(id) {
@@ -80,11 +112,19 @@ function GetAllAttributes(id) {
     catch (e) { }
 }
 
+function BindAllAttributes() {
+    try {
+        DataTables.attributeTable.clear().rows.add(GetAllAttributes()).draw(false);
+    }
+    catch (e) {
 
+    }
+}
 
 
 function attributeSaveSuccess() {
     alert("success");
+    BindAllAttributes();
 }
 function attributeSaveFailure() {
     alert("Failure");

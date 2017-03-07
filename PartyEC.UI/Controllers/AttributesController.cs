@@ -98,7 +98,8 @@ namespace PartyEC.UI.Controllers
                     try
                     {
                         attributesObj.commonObj = new CommonViewModel();
-                        attributesObj.commonObj.CreatedBy = "Albert";
+                        attributesObj.commonObj.UpdatedBy = "Albert";
+                        attributesObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime().ToString();
                         OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.UpdateAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
                         return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                     }

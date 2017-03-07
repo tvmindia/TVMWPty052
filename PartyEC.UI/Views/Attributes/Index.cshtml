@@ -12,7 +12,7 @@
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tabAttibutesList" data-toggle="tab">Attibutes List</a></li>
+                <li class="active"><a href="#attibutesList"  data-toggle="tab">Attibutes List</a></li>
                 <li><a href="#attributeDetails" id="tabattributeDetails" data-toggle="tab">Attribute Details</a></li>
             </ul>
         </div>
@@ -126,8 +126,8 @@
                                         @Html.LabelFor(model => model.ConfigurableYN, htmlAttributes: new { @class = "control-label col-md-4" })
                                         <div class="col-md-8">
                                             <div class="checkbox col-md-8">
-                                                @Html.RadioButtonFor(model => model.ConfigurableYN, true) Configurable
-                                                @Html.RadioButtonFor(model => model.ConfigurableYN, false) Simple
+                                                @Html.RadioButtonFor(model => model.ConfigurableYN, true, new { id = "married-true" }) Configurable
+                                                @Html.RadioButtonFor(model => model.ConfigurableYN, false, new { id = "married-false" }) Simple
                                                 @Html.ValidationMessageFor(model => model.ConfigurableYN, "", new { @class = "text-danger" })
                                             </div>
                                         </div>
