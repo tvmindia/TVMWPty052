@@ -11,10 +11,9 @@
  {
   max-width:100px;
  }
- .navbar
- {
-     margin-bottom:1px;
- }
+.container-fluid{
+    margin-bottom:2%;
+}
 
  /*breadcrumb*/
  .breadcrumb
@@ -95,9 +94,9 @@ background-color: #fff;
 
 /* Set black background color, white text and some padding */
     footer {
-      background-color: #555;
+      background-color: rgb(89, 29, 54);
       color: white;
-      padding: 15px;
+      padding: 6px;
       bottom: 0;
      
     }
