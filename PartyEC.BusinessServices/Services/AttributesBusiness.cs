@@ -21,12 +21,12 @@ namespace PartyEC.BusinessServices.Services
         }
         #endregion ConstructorInjection
 
-        public List<Attributes> GetAllAttributes(Attributes attributesObj)
+        public List<Attributes> GetAllAttributes()
         {
             List<Attributes> attributelist = null;
                  try
             {
-                attributelist = _attributesRepository.GetAllAttributes(attributesObj);
+                attributelist = _attributesRepository.GetAllAttributes();
 
             }
             catch (Exception)
