@@ -38,7 +38,6 @@ function notyAlert(type,msgtxt) {
 }
 function PostDataToServer(page,formData)
 {
-    debugger;
     var jsonResult={};
     $.ajax({
         type: "POST",
@@ -75,7 +74,6 @@ function GetDataFromServer(page, formData) {
         contentType: "application/json; charset=utf-8",
         success: function (data) {
          jsonResult = data;
-            
         },
         error: function (jqXHR, textStatus, errorThrown) {
           notyAlert('error',errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
