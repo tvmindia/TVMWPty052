@@ -32,9 +32,41 @@ namespace PartyEC.UI.Controllers
         #endregion Index
 
         #region GetAllAttributes
-
+        [HttpGet]
+        public string GetAllAttributes(AttributesViewModel attributesObj)
+        {
+            try
+            {
+                List<AttributesViewModel> attributeList = Mapper.Map<List<Attributes>, List<AttributesViewModel>>(_attributeBusiness.GetAllAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = attributeList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }            
+        }
 
         #endregion  GetAllAttributes
+
+        #region GetAttributesByID
+
+        [HttpGet]
+        public string GetAttributes(string id)
+        {
+            try
+            {
+                OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                AttributesViewModel attribute = Mapper.Map<Attributes,AttributesViewModel>(_attributeBusiness.GetAttributes(Int32.Parse(id), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = attribute });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+
+
+        #endregion GetAttributesByID
 
         #region InsertUpdateAttributes
 
@@ -66,7 +98,8 @@ namespace PartyEC.UI.Controllers
                     try
                     {
                         attributesObj.commonObj = new CommonViewModel();
-                        attributesObj.commonObj.CreatedBy = "Albert";
+                        attributesObj.commonObj.UpdatedBy = "Albert";
+                        attributesObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime().ToString();
                         OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.UpdateAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
                         return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                     }

@@ -1280,7 +1280,7 @@
 		 * @param  {Boolean} force_processing internal param - do not set
 		 * @trigger model.jstree, changed.jstree
 		 */
-		_append_json_data : function (dom, data, cb, force_processing) {
+		_append_json_data: function (dom, data, cb, force_processing) {
 			dom = this.get_node(dom);
 			dom.children = [];
 			dom.children_d = [];
@@ -1868,13 +1868,15 @@
 		 * @param  {Array} ps list of all parents
 		 * @return {String} the ID of the object added to the model
 		 */
-		_parse_model_from_json : function (d, p, ps) {
+		_parse_model_from_json: function (d, p, ps,oldid) {
+		    debugger;
 			if(!ps) { ps = []; }
 			else { ps = ps.concat(); }
 			if(p) { ps.unshift(p); }
 			var tid = false, i, j, c, e, m = this._model.data, df = this._model.default_state, tmp;
 			do {
-				tid = 'j' + this._id + '_' + (++this._cnt);
+			    //tid = 'j' + this._id + '_' + (++this._cnt);
+			    tid = oldid;
 			} while(m[tid]);
 
 			tmp = {
@@ -1943,7 +1945,7 @@
 			}
 			if(d && d.children && d.children.length) {
 				for(i = 0, j = d.children.length; i < j; i++) {
-					c = this._parse_model_from_json(d.children[i], tmp.id, ps);
+					c = this._parse_model_from_json(d.children[i], tmp.id, ps,oldid);
 					e = m[c];
 					tmp.children.push(c);
 					if(e.children_d.length) {
@@ -2650,7 +2652,7 @@
 		 * @param {Boolean} prevent_open if set to `true` parents of the selected node won't be opened
 		 * @trigger select_node.jstree, changed.jstree
 		 */
-		select_node : function (obj, supress_event, prevent_open, e) {
+		select_node: function (obj, supress_event, prevent_open, e) {
 			var dom, t1, t2, th;
 			if($.isArray(obj)) {
 				obj = obj.slice();
@@ -3162,7 +3164,7 @@
 		 * @param  {Boolean} options.flat return flat JSON instead of nested
 		 * @return {Object}
 		 */
-		get_json : function (obj, options, flat) {
+		get_json: function (obj, options, flat) {
 			obj = this.get_node(obj || '#');
 			if(!obj) { return false; }
 			if(options && options.flat && !flat) { flat = []; }
@@ -3265,8 +3267,9 @@
 				this.settings.core.error.call(this, this._data.core.last_error);
 				return false;
 			}
-			if(node.id === true) { delete node.id; }
-			node = this._parse_model_from_json(node, par.id, par.parents.concat());
+			if (node.id === true) { delete node.id; }
+			debugger;
+			node = this._parse_model_from_json(node, par.id, par.parents.concat(), par.id);
 			if(!node) { return false; }
 			tmp = this.get_node(node);
 			dpc = [];
@@ -3601,7 +3604,8 @@
 		 * @param  {Boolean} internal parameter indicating if the parent node has been loaded
 		 * @trigger model.jstree copy_node.jstree
 		 */
-		copy_node : function (obj, par, pos, callback, is_loaded) {
+		copy_node: function (obj, par, pos, callback, is_loaded) {
+		    debugger;
 			var t1, t2, dpc, tmp, i, j, node, old_par, new_par, old_ins, is_multi;
 
 			par = this.get_node(par);
@@ -3654,8 +3658,9 @@
 			}
 			node = old_ins ? old_ins.get_json(obj, { no_id : true, no_data : true, no_state : true }) : obj;
 			if(!node) { return false; }
-			if(node.id === true) { delete node.id; }
-			node = this._parse_model_from_json(node, new_par.id, new_par.parents.concat());
+			if (node.id === true) { delete node.id; }
+			debugger;
+			node = this._parse_model_from_json(node, new_par.id, new_par.parents.concat(),obj.id);
 			if(!node) { return false; }
 			tmp = this.get_node(node);
 			if(obj && obj.state && obj.state.loaded === false) { tmp.state.loaded = false; }
@@ -6366,7 +6371,6 @@
 		 * @plugin state
 		 */
 		this.save_state = function () {
-		    debugger;
 			var st = { 'state' : this.get_state(), 'ttl' : this.settings.state.ttl, 'sec' : +(new Date()) };
 			$.vakata.storage.set(this.settings.state.key, JSON.stringify(st));
 		};

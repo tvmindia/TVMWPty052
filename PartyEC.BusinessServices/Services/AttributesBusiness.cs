@@ -36,6 +36,21 @@ namespace PartyEC.BusinessServices.Services
             return attributelist;
         }
 
+        public Attributes GetAttributes(int AttributeID, OperationsStatus Status)
+        {
+            Attributes myattribute = null;
+            try
+            {
+                myattribute = _attributesRepository.GetAttributes(AttributeID, Status);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return myattribute;
+        }
+
         public OperationsStatus InsertAttributes(Attributes attributesObj)
         {
             return _attributesRepository.InsertAttributes(attributesObj);
@@ -52,6 +67,31 @@ namespace PartyEC.BusinessServices.Services
         public AttributeSetBusiness (IAttributeSetRepository attributeSetRepository)
         {
             _attributeSetRepository = attributeSetRepository;
+        }
+      
+
+    }
+    public class AttributeToSetLinks : IAttributeToSetLinks
+    {
+        private IAttributeToSetLinksRepository _attributeToSetLinksRepository;
+        public AttributeToSetLinks(IAttributeToSetLinksRepository attributeToSetLinksRepository)
+        {
+            _attributeToSetLinksRepository = attributeToSetLinksRepository;
+        }
+        public OperationsStatus TreeViewUpdateAttributeSetLink(List<AttributeSetLink> TreeViewData,string ID)
+        {
+            OperationsStatus OPObj = new OperationsStatus();
+            _attributeToSetLinksRepository.DeleteAttributeSetLink(ID);
+            foreach(AttributeSetLink i in TreeViewData)
+            {
+                if(i.AttributeSetID!=0)
+                {
+
+                    _attributeToSetLinksRepository.InsertAttributeSetLink(i);
+                }
+            }
+            //return _attributeToSetLinksRepository.InsertAttributeSetLink();
+            return OPObj;
         }
 
     }

@@ -26,12 +26,110 @@ namespace PartyEC.RepositoryServices.Services
 
         #region Methods
 
+
         public List<Attributes> GetAllAttributes(Attributes attributesObj)
         {
             List<Attributes> AttributesList = null;
 
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetAllAttributes]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                AttributesList = new List<Attributes>();
+                                while (sdr.Read())
+                                {
+                                    Attributes _attributesObj = new Attributes();
+                                    {
+                                        _attributesObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : attributesObj.ID);
+                                        _attributesObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : attributesObj.Name);
+                                        _attributesObj.Caption = (sdr["Caption"].ToString() != "" ? sdr["Caption"].ToString() : attributesObj.Caption);
+                                        _attributesObj.AttributeType = (sdr["AttributeType"].ToString() != "" ? sdr["AttributeType"].ToString() : attributesObj.AttributeType);
+                                        _attributesObj.ConfigurableYN = (sdr["ConfigurableYN"].ToString() != "" ? Boolean.Parse(sdr["ConfigurableYN"].ToString()) : attributesObj.ConfigurableYN);
+                                        _attributesObj.FilterYN = (sdr["FilterYN"].ToString() != "" ? Boolean.Parse(sdr["FilterYN"].ToString()) : attributesObj.FilterYN);
+                                        _attributesObj.CSValues = (sdr["CSValues"].ToString() != "" ? sdr["CSValues"].ToString() : attributesObj.CSValues);
+                                        _attributesObj.EntityType = (sdr["EntityType"].ToString() != "" ? sdr["EntityType"].ToString() : attributesObj.EntityType);
+                                        _attributesObj.MandatoryYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["MandatoryYN"].ToString()) : attributesObj.MandatoryYN);
+                                        _attributesObj.ComparableYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["ComparableYN"].ToString()) : attributesObj.ComparableYN);
+                                    }
+                                    AttributesList.Add(_attributesObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            } 
             return AttributesList;
         }
+
+        public Attributes GetAttributes(int AttributeID, OperationsStatus Status)
+        {
+
+            Attributes myAttribute = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = AttributeID;
+                        cmd.CommandText = "[GetAttributes]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                if (sdr.Read())
+                                {
+                                    myAttribute = new Attributes();
+
+                                    myAttribute.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myAttribute.ID);
+                                    myAttribute.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : myAttribute.Name);
+                                    myAttribute.Caption = (sdr["Caption"].ToString() != "" ? sdr["Caption"].ToString() : myAttribute.Caption);
+                                    myAttribute.AttributeType = (sdr["AttributeType"].ToString() != "" ? sdr["AttributeType"].ToString() : myAttribute.AttributeType);
+                                    myAttribute.ConfigurableYN = (sdr["ConfigurableYN"].ToString() != "" ? Boolean.Parse(sdr["ConfigurableYN"].ToString()) : myAttribute.ConfigurableYN);
+                                    myAttribute.FilterYN = (sdr["FilterYN"].ToString() != "" ? Boolean.Parse(sdr["FilterYN"].ToString()) : myAttribute.FilterYN);
+                                    myAttribute.CSValues = (sdr["CSValues"].ToString() != "" ? sdr["CSValues"].ToString() : myAttribute.CSValues);
+                                    myAttribute.EntityType = (sdr["EntityType"].ToString() != "" ? sdr["EntityType"].ToString() : myAttribute.EntityType);
+                                    myAttribute.MandatoryYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["MandatoryYN"].ToString()) : myAttribute.MandatoryYN);
+                                    myAttribute.ComparableYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["ComparableYN"].ToString()) : myAttribute.ComparableYN);
+
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return myAttribute;
+        } 
 
         public OperationsStatus InsertAttributes(Attributes attributesObj)
         {
@@ -201,15 +299,67 @@ namespace PartyEC.RepositoryServices.Services
             return myProductAttributeList;
         }
 
+
+        public string GetAttributeXML(List<AttributeValues> AttributeContainerWithValues) {
+           
+            string myXML = "";
+            try
+            {
+                const string start = "<options>";
+                const string end = "</options>";
+
+                myXML = start;
+                if (AttributeContainerWithValues != null) {
+
+                    foreach (AttributeValues att in AttributeContainerWithValues) {
+
+                        myXML += "<" + att.Name + ">";
+                        myXML += "<" + att.Value + ">";
+                        myXML += "</" + att.Name + ">";
+                    }
+
+                }
+                myXML += end;
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return myXML;
+        }
+
+
         #endregion Methods
     }
     public class AttributeSetRepository : IAttributeSetRepository
     {
-
+        
     }
-    public class AttributeToSetLinks : IAttributeToSetLinks
+    public class AttributeToSetLinks : IAttributeToSetLinksRepository
     {
-
+        #region DataBaseFactory
+        private IDatabaseFactory _databaseFactory;
+        /// <summary>
+        /// Constructor Injection:-Getting IDatabaseFactory implemented object
+        /// </summary>
+        /// <param name="databaseFactory"></param>
+        public AttributeToSetLinks(IDatabaseFactory databaseFactory)
+        {
+            _databaseFactory = databaseFactory;
+        }
+        #endregion DataBaseFactory
+        public OperationsStatus InsertAttributeSetLink(AttributeSetLink AttrSetLinkObj)
+        {
+            OperationsStatus OPObj = new OperationsStatus();
+            return OPObj;
+        }
+        public OperationsStatus DeleteAttributeSetLink(string ID)
+        {
+            OperationsStatus OPObj = new OperationsStatus();
+            return OPObj;
+        }
     }
 
 

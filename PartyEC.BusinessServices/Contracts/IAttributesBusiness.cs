@@ -10,11 +10,19 @@ namespace PartyEC.BusinessServices.Contracts
     public interface IAttributesBusiness
     {
         List<Attributes> GetAllAttributes(Attributes attributesObj);
+        Attributes GetAttributes(int ProductID, OperationsStatus Status);
         OperationsStatus InsertAttributes(Attributes attributesObj);
         OperationsStatus UpdateAttributes(Attributes attributesObj);
+       
+        
     }
     public interface IAttributeSetBusiness
     {
-
+        
     }
+    public interface IAttributeToSetLinks
+    {
+        OperationsStatus TreeViewUpdateAttributeSetLink(List<AttributeSetLink> TreeView,string ID);
+    }
+
 }
