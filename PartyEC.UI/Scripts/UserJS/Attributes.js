@@ -1,6 +1,7 @@
 ﻿var DataTables = {};
+//---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function ()
-{
+{ 
     try {
         debugger;
         var AttributesViewModel = new Object();
@@ -32,52 +33,99 @@ $(document).ready(function ()
     }
 });
 
+//---------------------------------------Fuctions---------------------------------------------------------//
+
+//---------------------------------------Edit Attributes--------------------------------------------------//
 function Edit(currentObj) {
     //Tab Change on edit click
     $('#tabattributeDetails').trigger('click');
-    debugger;
     var rowData = DataTables.attributeTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
-
-        var thisattribute = GetAttributesDetailsByID(rowData.ID);
-        $("#ID").val(thisattribute.ID)
-        $("#Name").val(thisattribute.Name);
-        $("#Caption").val(thisattribute.Caption)       
-        $("#AttributeType").val(thisattribute.AttributeType)        
-        $("#CSValues").val(thisattribute.CSValues)
-        $("#EntityType").val(thisattribute.EntityType)        
-        if (thisattribute.ConfigurableYN == false) {
-            $("#married-false").attr('checked', true);
-        }
-        else {
-            $("#married-true").attr('checked', true);
-        }
-
-        if (thisattribute.FilterYN == false) {
-            $("#FilterYN").attr('checked', false);
-        }
-        else {
-            $("#FilterYN").attr('checked', true);         
-        }
-        if (thisattribute.MandatoryYN == false) {
-            $("#MandatoryYN").attr('checked', false);
-        }
-        else {
-            $("#MandatoryYN").attr('checked', true);
-        }
-        if (thisattribute.ComparableYN == false) {
-            $("#ComparableYN").attr('checked', false);
-        }
-        else {
-            $("#ComparableYN").attr('checked', true);
-        }      
+        fillAttributes(rowData.ID);
     }
 }
-
+//---------------------------------------Fill Attributes--------------------------------------------------//
+function fillAttributes(ID)
+{
+    debugger;
+    var thisattribute = GetAttributesDetailsByID(ID); //Binding Data
+    //Hidden
+    $("#ID").val(thisattribute.ID)
+    //Textboxes
+    $("#Name").val(thisattribute.Name);
+    $("#Caption").val(thisattribute.Caption)
+    $("#AttributeType").val(thisattribute.AttributeType)
+    $("#CSValues").val(thisattribute.CSValues)
+    //Dropdown
+    $("#EntityType").val(thisattribute.EntityType) 
+    //Radiobutton
+    if (thisattribute.ConfigurableYN == false)
+    { $("#married-false").prop('checked', true); }
+    else { $("#married-true").prop('checked', true); }
+    //CheckBoxes
+    if (thisattribute.FilterYN == false)
+    { $("#FilterYN").prop('checked', false); }
+    else { $("#FilterYN").prop('checked', true); }
+    if (thisattribute.MandatoryYN == false)
+    { $("#MandatoryYN").prop('checked', false); }
+    else { $("#MandatoryYN").prop('checked', true); }
+    if (thisattribute.ComparableYN == false)
+    { $("#ComparableYN").prop('checked', false); }
+    else { $("#ComparableYN").prop('checked', true); }
+}
+//---------------------------------------Clear Fields-----------------------------------------------------//
+function clearfields() {
+    debugger;
+    $("#ID").val("0")//ID is zero for New
+    $("#Name").val("")
+    $("#Caption").val("")
+    $("#AttributeType").val("")
+    $("#CSValues").val("")
+    $("#EntityType").val("")
+    $("#ComparableYN").prop('checked', false);
+    $("#MandatoryYN").prop('checked', false);
+    $("#FilterYN").prop('checked', false);
+    $("#married-false").prop('checked', false);
+    $("#married-true").prop('checked', false);
+}
+//---------------------------------------Reset the  Feilds------------------------------------------------//
+function btnreset() {
+    if ($("#ID").val() == 0) {
+        clearfields();
+    }
+    else {
+        fillAttributes($("#ID").val())
+    }
+}
+//---------------------------------------Save Click-------------------------------------------------------//
+function clicksave() {
+    $("#btnFormSave").click();
+}
+//---------------------------------------Add New Click----------------------------------------------------//
+function btnAddNew() {
+    $('#tabattributeDetails').trigger('click');
+    clearfields();
+}
+//---------------------------------------Delete Click-----------------------------------------------------//
+function btndelete()
+{
+// delete codes go here
+}
+//---------------------------------------Save Click alerts------------------------------------------------//
+function attributeSaveSuccess() {
+    alert("success");
+    BindAllAttributes();
+}
+function attributeSaveFailure() {
+    alert("Failure");
+}
+function attributeSaveConfirm() {
+    alert("Save Confirm");
+}
+//---------------------------------------Get Attributes Details By ID-------------------------------------//
 function GetAttributesDetailsByID(id) {
     try {
-        debugger;
-        var data = id;
+        var data = { "ID":id };
         var ds = {};
         ds = GetDataFromServer("Attributes/GetAttributes/", data);
         if (ds != '') {
@@ -92,10 +140,9 @@ function GetAttributesDetailsByID(id) {
     }
     catch (e) { }
 }
-
+//---------------------------------------Get All Attributes-----------------------------------------------//
 function GetAllAttributes(id) {
     try {
-        debugger;
         var data = id;
         var ds = {};
         ds = GetDataFromServer("Attributes/GetAllAttributes/", data);
@@ -111,7 +158,7 @@ function GetAllAttributes(id) {
     }
     catch (e) { }
 }
-
+//---------------------------------------Bind All Attributes----------------------------------------------//
 function BindAllAttributes() {
     try {
         DataTables.attributeTable.clear().rows.add(GetAllAttributes()).draw(false);
@@ -122,13 +169,3 @@ function BindAllAttributes() {
 }
 
 
-function attributeSaveSuccess() {
-    alert("success");
-    BindAllAttributes();
-}
-function attributeSaveFailure() {
-    alert("Failure");
-}
-function attributeSaveConfirm() {
-    alert("Save Confirm"); 
-}
