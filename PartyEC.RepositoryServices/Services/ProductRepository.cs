@@ -134,7 +134,7 @@ namespace PartyEC.RepositoryServices.Services
                 operationsStatusObjH.Exception = e;
             }
           return operationsStatusObjH;
-        }
+        }       
 
         private OperationsStatus InsertProductHeader(Product productObj) {
             OperationsStatus operationsStatusObj = null;
@@ -299,8 +299,8 @@ namespace PartyEC.RepositoryServices.Services
                                     //Insert Successfull
                                     operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                     operationsStatusObj.StatusMessage = "Detail Insertion Successfull!";
-                                    operationsStatusObj.ReturnValues = DetailID.Value;
-                                    detail.ID = DetailID.Value;
+                                    operationsStatusObj.ReturnValues = (int)(DetailID.Value);
+                                    detail.ID = (int)(DetailID.Value);
                                     break;
                                 default:
                                     break;
@@ -320,7 +320,14 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
 
         }
-        
+
+        //update product
+        //insert productimage
+        //delete productimage
+        //delete product
+        //delete product detail
+
+
         public Product GetProduct(int ProductID, OperationsStatus Status)
         {
             Product myProduct = null;
