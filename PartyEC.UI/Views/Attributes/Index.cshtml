@@ -19,6 +19,13 @@
         <div class="panel-body">
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="attibutesList">
+                    <h4>
+                        Attributes List
+                        <div class="buttonpatch" style="width:200px;float:right;">
+                            <a class="facebook" title="Add New" onclick="btnAddNew()"  id="btnAddNew"><img src="~/Content/images/add.PNG" /></a>
+                        </div>
+                    </h4>
+                    <hr>
                     @*table*@
                     <table id="tblattributes" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                         <thead>
@@ -36,51 +43,35 @@
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>Attribute ID</th>
-                                <th>Attribute Name</th>
-                                <th>Attribute Caption</th>
-                                <th>Data Type</th>
-                                <th>Attribute Type</th>
-                                <th>Use for Filter</th>
-                                <th>Configurable Values</th>
-                                <th>Applicable To</th>
-                                <th>Is Mandatory</th>
-                                <th>Is Comparable</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
                     </table>
                     @*table*@
                 </div>
-                <div class="tab-pane fade" id="attributeDetails">                  
-                    <div class="col-md-12">
-                       @*ButtonPatch*@
-                    <div class="">
-                        <div class="buttonpatch" style="width:273px;float:right;">
-                            @*<a class="facebook" title="Add New" id="btnAddNew"><img src="~/Content/images/add.PNG" /></a>
-                            <a class="rss" id="NoticeEdit"><img src="~/Content/images/edit.png" /></a>*@
-                            <a class="facebook" id="btnSave"><img src="~/Content/images/save.png" /></a>
-                            <a class="facebook" id="btnReset"><img src="~/Content/images/reset.png" /></a>
-                            <a class="facebook" id="btnDelete"><img src="~/Content/images/delete.png" /></a>                            
+                <div class="tab-pane fade" id="attributeDetails">
+                    <h4>Attributes Details
+                        <div class="buttonpatch" style="width:200px;float:right;">                         
+                            <a class="facebook" id="btnSave" onclick="clicksave()"><img src="~/Content/images/save.png" /> </a>
+                            <a class="facebook" id="btnReset" onclick="btnreset()"><img src="~/Content/images/reset.png" /></a>
+                            <a class="facebook" id="btnDelete" onclick="btndelete()"><img src="~/Content/images/delete.png" /></a>
                         </div>
-                    </div>
-                    </div>
+                    </h4>
+                    <hr>
                     <div class="col-md-12" id="InsertAttribute">
                         <div class="col-md-2">
                             @* left hand side Tab  *@
+                            <div class="panel with-nav-tabs js panel-primary">
+                                <div class="panel-heading" style="min-height:300px">
+                                    <ul class="nav nav-tabs nav-stacked">
+                                        <li class="active"><a id="tabGeneral">General</a></li>                                       
+                                    </ul>
+                                </div>
+                            </div>
                         </div>
-                        <div class="col-md-6 ">
-                            <h4>Customize Attributes Details</h4>
-                            <hr>
-                            @using (Ajax.BeginForm("InsertUpdateAttributes", "Attributes", new AjaxOptions { HttpMethod = "POST", Confirm = "attributeSaveConfirm", OnSuccess = "attributeSaveSuccess", OnFailure = "attributeSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
+                        <div class="col-md-6 ">                            
+                            @using (Ajax.BeginForm("InsertUpdateAttributes", "Attributes", new AjaxOptions { HttpMethod = "POST", Confirm = "attributeSaveConfirm", OnSuccess = "attributeSaveSuccess", OnFailure = "attributeSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form",id="formIns_Up" }))
                             {
                                 @Html.AntiForgeryToken()
-
                                 <div class="form-horizontal">
-
-                                    @Html.ValidationSummary(false, "", new { @class = "text-danger" })
+                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                     <div class="form-group">
                                         @*<input type="hidden" id="ID" value="0" name="hiddenId" />*@
                                         @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4",Value = "0" })
@@ -126,56 +117,51 @@
                                                 listItems.Add(new SelectListItem
                                                 {   Text = "Rating",Value = "Rating"});
                                             }
-                                            @Html.DropDownListFor(model => model.EntityType, listItems, "-- Select Type --", new { @class = " " })
+                                            @Html.DropDownListFor(model => model.EntityType, listItems, "-- Select Entity Type --", new { @class = "form-control" })
                                             @Html.ValidationMessageFor(model => model.EntityType, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ConfigurableYN, htmlAttributes: new { @class = "control-label col-md-4" })
-                                        <div class="col-md-8">
-                                            <div class="checkbox col-md-8">
+                                        <div class="col-md-8">                                            
                                                 @Html.RadioButtonFor(model => model.ConfigurableYN, true, new { id = "married-true" }) Configurable
                                                 @Html.RadioButtonFor(model => model.ConfigurableYN, false, new { id = "married-false" }) Simple
-                                                @Html.ValidationMessageFor(model => model.ConfigurableYN, "", new { @class = "text-danger" })
-                                            </div>
+                                                @Html.ValidationMessageFor(model => model.ConfigurableYN, "", new { @class = "text-danger" })                                           
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.FilterYN, htmlAttributes: new { @class = "control-label col-md-4" })
                                         <div class="col-md-8">
-                                            <div class="checkbox col-md-8">
+                                            @*<div class="checkbox col-md-8">*@
                                                 @Html.EditorFor(model => model.FilterYN)
                                                 @Html.ValidationMessageFor(model => model.FilterYN, "", new { @class = "text-danger" })
-                                            </div>
+                                            @*</div>*@
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.MandatoryYN, htmlAttributes: new { @class = "control-label col-md-4" })
-                                        <div class="col-md-8">
-                                            <div class="checkbox col-md-8">
+                                        <div class="col-md-8">                                             
                                                 @Html.EditorFor(model => model.MandatoryYN)
-                                                @Html.ValidationMessageFor(model => model.MandatoryYN, "", new { @class = "text-danger" })
-                                            </div>
+                                                @Html.ValidationMessageFor(model => model.MandatoryYN, "", new { @class = "text-danger" })                                           
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ComparableYN, htmlAttributes: new { @class = "control-label col-md-4" })
-                                        <div class="col-md-8">
-                                            <div class="checkbox col-md-8">
+                                        <div class="col-md-8">                                             
                                                 @Html.EditorFor(model => model.ComparableYN)
-                                                @Html.ValidationMessageFor(model => model.ComparableYN, "", new { @class = "text-danger" })
-                                            </div>
+                                                @Html.ValidationMessageFor(model => model.ComparableYN, "", new { @class = "text-danger" })                                            
                                         </div>
                                     </div>
-                                    <div class="form-group">
+                            @* Button create div is hidden here Click Event called from Button Patch Above *@
+                                    <div class="form-group" hidden="hidden">
                                         <div class="col-md-offset-4 col-md-10">
-                                            <input type="submit" value="Create" class="btn btn-default" />
+                                            <input id="btnFormSave" type="submit" value="Create" class="btn btn-default" />
                                         </div>
                                     </div>
                                 </div>                                                }
                         </div>
                         <div class="col-md-4">
-                            @* Right hand side Space  *@
+                            @* Right hand side Space  *@                            
                         </div>
                     </div>
                 </div>
