@@ -9,10 +9,6 @@
    
 }
 <div class="container-fluid">
-   
-        
-
- 
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
@@ -69,13 +65,17 @@
                         <div class="panel with-nav-tabs js panel-primary">
                             <div class="panel-heading">
                                 <ul class="nav nav-tabs nav-stacked">
-                                    <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General</a></li>
+                                    <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="badge alert-danger">E</span></a></li>
                                     <li><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
                                     <li><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
                                     <li><a href="#discription" data-toggle="tab" id="tabDiscrption">Discription</a></li>
-                                    
-                                    <li><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory</a></li>
+                                    <li><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="badge alert-danger">E</span></a></li>
                                     <li><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
+                                    <li><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
+                                    <li><a href="#productTags" data-toggle="tab" id="tabproducttags">Product Tags</a></li>
+                                    <li><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
+                                    <li><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
+                                    
                                 </ul>
                              </div>
                             </div>
@@ -89,7 +89,7 @@
                 <a href="#" class="list-group-item"><span class="badge">E</span>Other Attributes</a>
                 </div>*@
                     </div>
-                    <div class="col-md-6">
+                    <div class="col-md-10">
                         <div class="tab-content">
                             <div class="tab-pane fade in active" id="general">
                                 <!--Edit form column-->
@@ -139,23 +139,54 @@
                             </div>
                             <div class="tab-pane fade" id="discription">
                                 5
-                            </div>
-                           
+                            </div>                    
                             <div class="tab-pane fade" id="inventory">
                                 9
                             </div>
                             <div class="tab-pane fade" id="relatedProducts">
-                                43
+                          
+                                                <h4>Related Products List</h4>
+                                                @*table*@
+                                                <table id="" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                            <th>ProductID</th>
+                                                            <th>Name</th>
+                                                            <th>ProductType</th>
+                                                            <th>Active(Yes/No)</th>
+                                                            <th>Supplier</th>
+                                                            <th>SKU</th>
+                                                            <th>Selling Price</th>
+                                                            <th>Qty</th>
+                                                            <th>Stock Status</th>
+                                                            <th>Actions</th>
+                                                        </tr>
+                                                    </thead>
+                                                </table>
+                                                @*table*@
+                        
+                                </div>
+                            <div class="tab-pane fade" id="ratingAndReviews">
+                              Rating and reviews
                             </div>
-
+                            <div class="tab-pane fade" id="productTags">
+                               product tags
                             </div>
+                            <div class="tab-pane fade" id="productTags">
+                                product tags
+                            </div>
+                            <div class="tab-pane fade" id="otherAttributes">
+                                other Attributes
+                            </div>
+                            <div class="tab-pane fade" id="associatedProducts">
+                                Associated products
+                            </div>
+                        </div>
 
 
                           
                         </div>
-                    <div class="col-md-4">
-                        sdfdsfdsf
-                    </div>
+                   
 
                 </div>
 
@@ -164,12 +195,7 @@
             </div>
         </div>
     </div>
-  
-   
-      
-   
-  
-   
+
 </div>
 
 @section Scripts {
