@@ -31,6 +31,7 @@ namespace PartyEC.DataAccessObject.DTO
         public Boolean FreeDelivery { get; set; }
 
         public string HeaderTags { get; set; }
+        public Guid StickerID { get; set; }
         public string StickerURL { get; set; }
 
         public List<ProductDetail> ProductDetail { get; set; }

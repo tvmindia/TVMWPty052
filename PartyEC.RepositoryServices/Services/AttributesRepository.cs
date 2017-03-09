@@ -381,9 +381,180 @@ namespace PartyEC.RepositoryServices.Services
     }
     public class AttributeSetRepository : IAttributeSetRepository
     {
-        
+        #region DataBaseFactory
+        private IDatabaseFactory _databaseFactory;
+        /// <summary>
+        /// Constructor Injection:-Getting IDatabaseFactory implemented object
+        /// </summary>
+        /// <param name="databaseFactory"></param>
+        public AttributeSetRepository(IDatabaseFactory databaseFactory)
+        {
+            _databaseFactory = databaseFactory;
+        }
+        #endregion DataBaseFactory
+        public List<AttributeSet> GetAllAttributeSet()
+        {
+            List<AttributeSet> AttributeList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetAllAttributeSet]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                AttributeList = new List<AttributeSet>();
+                                while (sdr.Read())
+                                {
+                                    AttributeSet attributeSetObj = new AttributeSet();
+                                    {
+                                        attributeSetObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : attributeSetObj.ID);
+                                        attributeSetObj.Name = sdr["Name"].ToString();
+                                       
+                                    }
+                                    AttributeList.Add(attributeSetObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return AttributeList;
+        }
+        public OperationsStatus InsertAttributeSet(AttributeSet attributeSetObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertAttributeSet]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = attributeSetObj.Name;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = attributeSetObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = attributeSetObj.commonObj.CreatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
+
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                break;
+                            case "2":
+                                //Duplicate Entry
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Duplicate Entry!";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
+        public OperationsStatus UpdateAttributeSet(AttributeSet attributeSetObj,int ID)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateAttributeSet]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ID;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = attributeSetObj.Name;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = attributeSetObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = attributeSetObj.commonObj.UpdatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
+
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                break;
+                            case "2":
+                                //Duplicate Entry
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Duplicate Entry!";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
     }
-    public class AttributeToSetLinks : IAttributeToSetLinksRepository
+    public class AttributeToSetLinksRepository : IAttributeToSetLinksRepository
     {
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
@@ -391,7 +562,7 @@ namespace PartyEC.RepositoryServices.Services
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
         /// <param name="databaseFactory"></param>
-        public AttributeToSetLinks(IDatabaseFactory databaseFactory)
+        public AttributeToSetLinksRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }
@@ -451,7 +622,7 @@ namespace PartyEC.RepositoryServices.Services
 
             return operationsStatusObj;
         }
-        public OperationsStatus DeleteAttributeSetLink(string ID)
+        public OperationsStatus DeleteAttributeSetLink(int ID)
         {
             OperationsStatus operationsStatusObj = null;
             try

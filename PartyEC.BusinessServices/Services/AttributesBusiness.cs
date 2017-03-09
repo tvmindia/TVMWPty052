@@ -80,8 +80,18 @@ namespace PartyEC.BusinessServices.Services
         {
             _attributeSetRepository = attributeSetRepository;
         }
-      
-
+        public List<AttributeSet> GetAllAttributeSet()
+        {
+            return _attributeSetRepository.GetAllAttributeSet();
+        }
+        public OperationsStatus InsertAttributeSet(AttributeSet attributeSetObj)
+        {
+            return _attributeSetRepository.InsertAttributeSet(attributeSetObj);
+        }
+        public OperationsStatus UpdateAttributeSet(AttributeSet attributeSetObj, int ID)
+        {
+            return _attributeSetRepository.UpdateAttributeSet(attributeSetObj, ID);
+        }
     }
     public class AttributeToSetLinks : IAttributeToSetLinks
     {
@@ -90,7 +100,7 @@ namespace PartyEC.BusinessServices.Services
         {
             _attributeToSetLinksRepository = attributeToSetLinksRepository;
         }
-        public OperationsStatus TreeViewUpdateAttributeSetLink(List<AttributeSetLink> TreeViewData,string ID)
+        public OperationsStatus TreeViewUpdateAttributeSetLink(List<AttributeSetLink> TreeViewData,int ID)
         {
             OperationsStatus OPObj = new OperationsStatus();
             _attributeToSetLinksRepository.DeleteAttributeSetLink(ID);
@@ -98,7 +108,7 @@ namespace PartyEC.BusinessServices.Services
             {
                 if(i.AttributeSetID!=0)
                 {
-
+                    i.AttributeSetID = ID;
                     _attributeToSetLinksRepository.InsertAttributeSetLink(i);
                 }
             }

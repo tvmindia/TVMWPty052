@@ -14,10 +14,12 @@ namespace PartyEC.UI.Controllers
     public class AttributeSetController : Controller
     {
         IAttributeSetBusiness _attributeSetBusiness;
+        IAttributeToSetLinks _attributeToSetLinks;
         ICommonBusiness _commonBusiness;
-        public AttributeSetController(IAttributeSetBusiness attributeSetBusiness, ICommonBusiness commonBusiness)
+        public AttributeSetController(IAttributeSetBusiness attributeSetBusiness,IAttributeToSetLinks attributeToSetLinks, ICommonBusiness commonBusiness)
         {
             _attributeSetBusiness = attributeSetBusiness;
+            _attributeToSetLinks = attributeToSetLinks;
             _commonBusiness = commonBusiness;
         }
         // GET: AttributeSet
@@ -25,7 +27,59 @@ namespace PartyEC.UI.Controllers
         {
             return View();
         }
-       
+        [HttpGet]
+        public string GetAllAttributeSet()
+        {
+            try
+            {
+                List<AttributeSetViewModel> AttributeSetViewList = Mapper.Map<List<AttributeSet>, List<AttributeSetViewModel>>(_attributeSetBusiness.GetAllAttributeSet());
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = AttributeSetViewList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+            // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+        }
+        [HttpPost]
+        public string PostTreeOrder(AttributeSetViewModel attributeSetViewModelObj)
+        {
+            try
+            {
+                attributeSetViewModelObj.commonObj = new CommonViewModel();
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                if (attributeSetViewModelObj.ID ==0)
+                {
+                    
+                    attributeSetViewModelObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                    attributeSetViewModelObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeSetBusiness.InsertAttributeSet((Mapper.Map<AttributeSetViewModel, AttributeSet>(attributeSetViewModelObj))));
+
+                }
+                else
+                {
+                    attributeSetViewModelObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                    attributeSetViewModelObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                    attributeSetViewModelObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                    attributeSetViewModelObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeSetBusiness.UpdateAttributeSet((Mapper.Map<AttributeSetViewModel, AttributeSet>(attributeSetViewModelObj)), attributeSetViewModelObj.ID));
+                }
+                
+                List<AttributeSetLinkViewModel> TreeViewOrder = JsonConvert.DeserializeObject<List<AttributeSetLinkViewModel>>(attributeSetViewModelObj.TreeList);
+                foreach (var i in TreeViewOrder)
+                {
+                    i.commonObj = attributeSetViewModelObj.commonObj;
+                }
+                
+                _attributeToSetLinks.TreeViewUpdateAttributeSetLink((Mapper.Map<List<AttributeSetLinkViewModel>, List<AttributeSetLink>>(TreeViewOrder)), attributeSetViewModelObj.ID);
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+            //return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
+        }
 
     }
 }

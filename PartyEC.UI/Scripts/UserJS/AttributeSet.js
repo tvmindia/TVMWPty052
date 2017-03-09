@@ -1,4 +1,5 @@
-﻿$(document).ready(function () {
+﻿var DataTables = {};
+$(document).ready(function () {
     debugger;
     //Tree bind into right side container
     $('#jstree_Drag').jstree({
@@ -19,11 +20,106 @@
             }
         },
         "state": { "key": "demo2" },
-        "plugins": ["contextmenu", "dnd", "state", "types"]
+        "plugins": ["dnd", "state", "types"]
     });
+    //Tree bind into the right side container
+
+    $('#jstree_DragUpdate').jstree({
+        "core": {
+            "themes": {
+                "responsive": false
+            },
+            // so that create works
+            "check_callback": true,
+            'data': GetTreeDataRight(0)
+        },
+        "types": {
+            "default": {
+                "icon": "fa fa-folder icon-state-warning icon-lg"
+            },
+            "file": {
+                "icon": "fa fa-file icon-state-warning icon-lg"
+            }
+        },
+        "state": { "key": "demo2" },
+        "plugins": ["dnd", "state", "types"]
+    });
+    DataTables.attributeSetTable = $('#tblAttributeSet').DataTable(
+    {
+        dom: '<"top"f>rt<"bottom"ip><"clear">',
+        order: [],
+        searching: true,
+        paging: true,
+        data: GetAllAttributeSet(),
+        columns: [
+          { "data": "ID" },
+          { "data": "Name" },
+          { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+        ],
+        columnDefs: [
+         {
+             "targets": [0],
+             "visible": true,
+             "searchable": true
+         }
+        ]
+    });
+   
+    $('#tabattributeSetDetails').click(function (e) {
+        $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft();
+        $('#jstree_Drag').jstree(true).refresh(true);
+
+        $('#jstree_DragUpdate').jstree(true).settings.core.data = GetTreeDataRight(0);
+        $('#jstree_DragUpdate').jstree(true).refresh(true);
+
+        $('#Name').val('');
+        $('#ID').val(0);
+        $('#TreeList').val('');
+    });
+   
     
 });
+function MainClick()
+{
+    debugger;
+    $('#btnFormSave').click();
+}
+function Edit(currentObj) {
+    //Tab Change on edit click
+    $('#tabattributeSetDetails').trigger('click');
+    debugger;
+    var rowData = DataTables.attributeSetTable.row($(currentObj).parents('tr')).data();
+    if ((rowData != null) && (rowData.ID != null)) {
 
+        EditAttibuteSet(rowData.ID);
+        $("#ID").val(rowData.ID)
+        $("#Name").val(rowData.Name);
+    }
+}
+
+function GetAllAttributeSet() {
+
+    try {
+        debugger;
+        var data = "";
+        var ds = {};
+        ds = GetDataFromServer("AttributeSet/GetAllAttributeSet/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+
+    }
+    catch (e) {
+
+    }
+
+}
 function GetTreeDataRight(id) {
     debugger;
     try {
@@ -90,39 +186,22 @@ function PostSaveOrder(AttributeSetLinkViewModel,id)
 
     }
 }
-function EditAttibuteSet()
+function EditAttibuteSet(id)
 {
     debugger;
     try
     {
-        var id = $('#Name').val();
-        //Tree bind into the right side container
+        $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft();
+        $('#jstree_Drag').jstree(true).refresh(true);
 
-        $('#jstree_DragUpdate').jstree({
-            "core": {
-                "themes": {
-                    "responsive": false
-                },
-                // so that create works
-                "check_callback": true,
-                'data': GetTreeDataRight(id)
-            },
-            "types": {
-                "default": {
-                    "icon": "fa fa-folder icon-state-warning icon-lg"
-                },
-                "file": {
-                    "icon": "fa fa-file icon-state-warning icon-lg"
-                }
-            },
-            "state": { "key": "demo2" },
-            "plugins": ["contextmenu", "dnd", "state", "types"]
-        });
+        $('#jstree_DragUpdate').jstree(true).settings.core.data = GetTreeDataRight(id);
+        $('#jstree_DragUpdate').jstree(true).refresh(true);
     }
     catch(e)
     {
 
     }
+    
 }
 function SaveOrder()
 {
@@ -133,8 +212,8 @@ function SaveOrder()
     for (var i = 0; i < TreeOrder.length; i++) {
 
         var AttributeSetLinkViewModel = new Object();
-        AttributeSetLinkViewModel.AttributeID = $.trim(TreeOrder[i].id.replace('C', ''));
-        AttributeSetLinkViewModel.AttributeSetID = TreeOrder[i].parent;
+        AttributeSetLinkViewModel.AttributeID = parseInt($.trim(TreeOrder[i].id.replace('C', '')));
+        AttributeSetLinkViewModel.AttributeSetID = parseInt(TreeOrder[i].parent!='#'?TreeOrder[i].parent:0);
         if (TreeOrder[i].parent == "#")
         {
             AttributeSetLinkViewModel.DisplayOrder = TreeOrder[i].id;
@@ -148,5 +227,5 @@ function SaveOrder()
         //AttributeSetLinkViewModel.text = TreeOrder[i].text;
         TreeOrderFormatted.push(AttributeSetLinkViewModel);
     }
-    PostSaveOrder(TreeOrderFormatted,id=1);
+    $('#TreeList').val(JSON.stringify(TreeOrderFormatted));
 }
