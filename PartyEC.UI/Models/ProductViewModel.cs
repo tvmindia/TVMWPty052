@@ -66,10 +66,12 @@ namespace PartyEC.UI.Models
         [Display(Name = "Cost Price")]
         [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Number")]
         public decimal CostPrice { get; set; }
+
         [Required(ErrorMessage = "Please enter Selling Price ")]
         [Display(Name = "Selling Price")]
         [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Number")]
         public decimal BaseSellingPrice { get; set; }
+
         [Required(ErrorMessage = "Please enter Show Price  ")]
         [Display(Name = "Show Price")]
         public Boolean ShowPrice { get; set; }
@@ -80,9 +82,11 @@ namespace PartyEC.UI.Models
         [Display(Name = "Discount Price")]
         [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Number")]
         public decimal DiscountAmount { get; set; }
+
         [DataType(DataType.Date,ErrorMessage ="Must be a Date")]
         [Display(Name = "Discount Start Date")]
         public DateTime DiscountStartDate { get; set; }
+
         [DataType(DataType.Date, ErrorMessage = "Must be a Date")]
         [Display(Name = "Discount End Date")]
         public DateTime DiscountEndDate { get; set; }

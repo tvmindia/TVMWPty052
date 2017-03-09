@@ -6,7 +6,7 @@ $(document).ready(function () {
        
         DataTables.productTable = $('#tblproducts').DataTable(
          {
-             dom: '<"top"f>rt<"bottom"ip><"clear">',
+             dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
              order: [],
              searching: true,
              paging: true,
