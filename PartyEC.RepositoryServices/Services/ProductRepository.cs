@@ -101,11 +101,15 @@ namespace PartyEC.RepositoryServices.Services
         {
             OperationsStatus operationsStatusObjH = null;
             OperationsStatus operationsStatusObjD = null;
-            try
-            {
+            
 
-                //------------transaction need to be put here ----------------------
-                operationsStatusObjH=InsertProductHeader(productObj);
+             //------------transaction need to be put here ----------------------  
+            _con = _databaseFactory.GetDBConnection();
+            SqlTransaction transaction;
+            transaction = _con.BeginTransaction("InsertProduct");
+
+            try { 
+                operationsStatusObjH =InsertProductHeader(productObj);
                 if (operationsStatusObjH.StatusCode == 1)
                 {
                     operationsStatusObjD = InsertUpdateProductDetails(productObj);
@@ -113,16 +117,18 @@ namespace PartyEC.RepositoryServices.Services
                     {
                         operationsStatusObjH.StatusCode = 0;
                         operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
+                        transaction.Rollback();
                     }
                     else if (operationsStatusObjD.StatusCode == 1)
                     {
                         operationsStatusObjH.StatusCode = 1;
                         operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
+                        transaction.Commit();
 
                     }
                 }
 
-                //---------------------------------------------------------------------
+               
 
 
             }
@@ -132,6 +138,7 @@ namespace PartyEC.RepositoryServices.Services
                 operationsStatusObjH.StatusCode = -1;
                 operationsStatusObjH.StatusMessage = e.Message;
                 operationsStatusObjH.Exception = e;
+                transaction.Rollback();
             }
           return operationsStatusObjH;
         }       
@@ -143,7 +150,7 @@ namespace PartyEC.RepositoryServices.Services
                 SqlParameter statusCode = null;
                 SqlParameter ProductID = null;
 
-                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                using (SqlConnection con = _con)
                 {
                     using (SqlCommand cmd = new SqlCommand())
                     {
@@ -233,7 +240,7 @@ namespace PartyEC.RepositoryServices.Services
                 SqlParameter DetailID = null;
                 AttributesRepository myAttributesRepository = new AttributesRepository(_databaseFactory);
 
-                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                using (SqlConnection con = _con)
                 {
                     if (con.State == ConnectionState.Closed)
                     {
@@ -321,7 +328,156 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
-        //update product
+        public OperationsStatus UpdateProduct(Product productObj) {
+            OperationsStatus operationsStatusObjH = null;
+            OperationsStatus operationsStatusObjD = null;
+           
+
+            //------------transaction need to be put here ----------------------
+            _con = _databaseFactory.GetDBConnection();
+            SqlTransaction transaction;
+            transaction = _con.BeginTransaction("UpdateProduct");
+
+            try
+            {
+
+                operationsStatusObjH = UpdateProductHeader(productObj);
+                if (operationsStatusObjH.StatusCode == 1)
+                {
+                    operationsStatusObjD = InsertUpdateProductDetails(productObj);
+                    if (operationsStatusObjD.StatusCode == 0)
+                    {
+                        operationsStatusObjH.StatusCode = 0;
+                        operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
+                        transaction.Rollback();
+                    }
+                    else if (operationsStatusObjD.StatusCode == 1)
+                    {
+                        operationsStatusObjH.StatusCode = 1;
+                        operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
+                        transaction.Commit();
+
+                    }
+                }
+                else {
+
+                    transaction.Rollback();
+                }
+
+
+            //---------------------------------------------------------------------
+
+            }
+            catch (Exception)
+            {
+            transaction.Rollback();
+              
+            }
+            return operationsStatusObjH;
+        }
+
+        private OperationsStatus UpdateProductHeader(Product productObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+               
+
+                using (SqlConnection con = _con)
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateProductHeader]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = productObj.ID;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = productObj.Name;
+                        cmd.Parameters.Add("@SKU", SqlDbType.NVarChar, 250).Value = productObj.SKU;
+                        cmd.Parameters.Add("@EnableYN", SqlDbType.Bit).Value = productObj.Enabled;
+                        cmd.Parameters.Add("@Unit", SqlDbType.VarChar, 10).Value = productObj.Unit;
+                        cmd.Parameters.Add("@TaxClass", SqlDbType.NVarChar, 20).Value = productObj.TaxClass;
+                        cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1).Value = productObj.URL;
+                        cmd.Parameters.Add("@ShowPriceYN", SqlDbType.Bit).Value = productObj.ShowPrice;
+                        cmd.Parameters.Add("@ActionType", SqlDbType.NVarChar, 1).Value = productObj.ActionType;
+                        cmd.Parameters.Add("@SupplierID", SqlDbType.Int).Value = productObj.SupplierID;
+                        cmd.Parameters.Add("@ManufacturerID", SqlDbType.Int).Value = productObj.ManufacturerID;
+                        cmd.Parameters.Add("@BaseSellingPrice", SqlDbType.Decimal).Value = productObj.BaseSellingPrice;
+                        cmd.Parameters.Add("@CostPrice", SqlDbType.Decimal).Value = productObj.CostPrice;
+                        cmd.Parameters.Add("@ShortDescription", SqlDbType.VarChar, 250).Value = productObj.ShortDescription;
+                        cmd.Parameters.Add("@LongDescription", SqlDbType.NVarChar, -1).Value = productObj.LongDescription;
+                       //cannot edit type- cmd.Parameters.Add("@ProductType", SqlDbType.VarChar, 1).Value = productObj.ProductType;
+                        cmd.Parameters.Add("@StockAvailableYN", SqlDbType.Bit).Value = productObj.StockAvailable;
+                        cmd.Parameters.Add("@AttributeSetID", SqlDbType.Int).Value = productObj.AttributeSetID;
+                        cmd.Parameters.Add("@FreeDeliveryYN", SqlDbType.Bit).Value = productObj.FreeDelivery;
+                        cmd.Parameters.Add("@HeaderTag", SqlDbType.NVarChar, -1).Value = productObj.HeaderTags;
+                        cmd.Parameters.Add("@StickerID", SqlDbType.UniqueIdentifier).Value = productObj.StickerID;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = productObj.LogDetails.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.NVarChar, 1).Value = productObj.LogDetails.UpdatedDate;
+
+
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;               
+                       
+
+
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+
+
+
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "updation Not Successfull!";
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "updation Successfull!";
+                               
+                                break;
+                            default:
+                                break;
+                        }
+
+
+
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return operationsStatusObj;
+
+        }
+
+        private bool InsertProductImage() {
+            bool result= false;
+            try
+            {
+
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return result;
+        }
+
         //insert productimage
         //delete productimage
         //delete product
