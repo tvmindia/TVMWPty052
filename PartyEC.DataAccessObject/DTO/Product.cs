@@ -87,6 +87,7 @@ namespace PartyEC.DataAccessObject.DTO
    
 
     public class ProductImages {
+        public int ID { get; set; }
         public string URL { get; set; }
         public bool isMain { get; set; }
     }

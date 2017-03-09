@@ -185,7 +185,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@HeaderTag", SqlDbType.NVarChar, -1).Value = productObj.HeaderTags;
                         cmd.Parameters.Add("@StickerID", SqlDbType.UniqueIdentifier).Value = productObj.StickerID;
                         cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = productObj.LogDetails.CreatedBy;
-                        cmd.Parameters.Add("@CreatedDate", SqlDbType.NVarChar, 1).Value = productObj.LogDetails.CreatedDate;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = productObj.LogDetails.CreatedDate;
 
 
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
@@ -278,9 +278,9 @@ namespace PartyEC.RepositoryServices.Services
                             cmd.Parameters.Add("@DefaultOptionYN", SqlDbType.Bit).Value = detail.DefaultOption;
 
                             cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = detail.LogDetails.CreatedBy;
-                            cmd.Parameters.Add("@CreatedDate", SqlDbType.NVarChar, 1).Value = detail.LogDetails.CreatedDate;
+                            cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = detail.LogDetails.CreatedDate;
                             cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = detail.LogDetails.UpdatedBy;
-                            cmd.Parameters.Add("@UpdatedDate", SqlDbType.NVarChar, 1).Value = detail.LogDetails.UpdatedDate;
+                            cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = detail.LogDetails.UpdatedDate;
 
 
                             statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
@@ -419,7 +419,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@HeaderTag", SqlDbType.NVarChar, -1).Value = productObj.HeaderTags;
                         cmd.Parameters.Add("@StickerID", SqlDbType.UniqueIdentifier).Value = productObj.StickerID;
                         cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = productObj.LogDetails.UpdatedBy;
-                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.NVarChar, 1).Value = productObj.LogDetails.UpdatedDate;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = productObj.LogDetails.UpdatedDate;
 
 
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
@@ -464,12 +464,42 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
-        private bool InsertProductImage() {
+        private bool InsertProductImage(List<ProductImages> ImageList, LogDetails LogDetails,int ProductID,int DetailID=-1) {
             bool result= false;
             try
             {
+                using (SqlConnection con = _con)
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
 
-            }
+                    foreach (ProductImages image in ImageList)
+                    {
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            cmd.Connection = con;
+                            cmd.CommandText = "[InsertProductImage]";
+
+                            cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                            cmd.Parameters.Add("@DetailID", SqlDbType.Int).Value = DetailID;
+                            cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1).Value = image.URL;
+                            cmd.Parameters.Add("@isMain", SqlDbType.Bit).Value = image.isMain;
+                            cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value =  LogDetails.CreatedBy;
+                            cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value =  LogDetails.CreatedDate;
+                        
+
+                            cmd.ExecuteNonQuery();
+
+                        }
+                    }
+
+                    result = true;
+
+
+                }
+             }
             catch (Exception)
             {
 
@@ -478,9 +508,45 @@ namespace PartyEC.RepositoryServices.Services
             return result;
         }
 
-        //insert productimage
-        //delete productimage
-        //delete product
+        public OperationsStatus DeleteProductImage(int ID, int ProductID, int DetailID = -1)
+        {
+            OperationsStatus operationsStatusObj = null;
+            SqlParameter statusCode = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+
+                  
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteProductImage]";
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ID;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                        cmd.Parameters.Add("@DetailID", SqlDbType.Int).Value = DetailID;
+
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+
+                    }                
+                        
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+            return operationsStatusObj;
+        }
+       
+         //delete product
         //delete product detail
 
 
@@ -702,6 +768,7 @@ namespace PartyEC.RepositoryServices.Services
                             while (sdr.Read())
                             {
                                 ProductImages myImage = new ProductImages();
+                                myImage.ID = (int)(sdr["ID"]);
                                 myImage.URL = sdr["ImageURL"].ToString();
                                 myImage.isMain = (bool)(sdr["MainImageYN"].ToString() != "" ? sdr["MainImageYN"] : false);
                                 myImagesList.Add(myImage);

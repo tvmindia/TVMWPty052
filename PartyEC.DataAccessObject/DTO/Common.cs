@@ -13,6 +13,21 @@ namespace PartyEC.DataAccessObject.DTO
         public DateTime UpdatedDate { get; set; }       
        
     }
-    
 
+    public class OtherImages {
+
+        public Guid ID { get; set; }
+        public string ImageType { get; set; }
+        public string URL { get; set; }
+        public LogDetails LogDetails { get; set; }
+
+        public struct ImageTypes
+        {
+            public const string Sticker = "Sticker";
+            public const string ProfileImage = "Profile";
+            public const string CategoryImage = "Category";
+            public const string EventTypeImage = "EventType";
+
+        }
+    }
 }
