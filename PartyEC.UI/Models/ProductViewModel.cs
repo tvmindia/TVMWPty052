@@ -116,6 +116,7 @@ namespace PartyEC.UI.Models
         [Required(ErrorMessage = "Please enter Long Description")]
         [Display(Name = "Long Description")]
         [MaxLength(250)]
+        [DataType(DataType.MultilineText)]
         public string LongDescription { get; set; }
         #endregion Description
 
