@@ -33,7 +33,7 @@ $(document).ready(function ()
     }
 });
 
-//---------------------------------------Fuctions---------------------------------------------------------//
+//------------------------------$$$$$----FUNCTIONS----$$$$$-----------------------------------------------//
 
 //---------------------------------------Edit Attributes--------------------------------------------------//
 function Edit(currentObj) {
@@ -51,6 +51,8 @@ function fillAttributes(ID)
     var thisattribute = GetAttributesDetailsByID(ID); //Binding Data
     //Hidden
     $("#ID").val(thisattribute.ID)
+    $("#deleteId").val(thisattribute.ID)//for delete action
+    
     //Textboxes
     $("#Name").val(thisattribute.Name);
     $("#Caption").val(thisattribute.Caption)
@@ -99,23 +101,44 @@ function btnreset() {
 }
 //---------------------------------------Save Click-------------------------------------------------------//
 function clicksave() {
-    $("#btnFormSave").click();
+    debugger;
+    var res = Validation();
+    if (res) {
+        $("#btnFormSave").click();
+    }
+    else {
+      
+    }
 }
+
+function clickdelete() {
+    debugger;
+
+    $("#btnFormDelete").click();
+}
+//---------------------------------------Validation-------------------------------------------------------//
+function Validation() {
+
+//client side validation
+    return true;
+}
+
+
 //---------------------------------------Add New Click----------------------------------------------------//
 function btnAddNew() {
     $('#tabattributeDetails').trigger('click');
     clearfields();
 }
-//---------------------------------------Delete Click-----------------------------------------------------//
-function btndelete()
-{
-// delete codes go here
-}
 //---------------------------------------Save Click alerts------------------------------------------------//
 function attributeSaveSuccess() {
-    alert("success");
+    //alert("success");
     BindAllAttributes();
 }
+function attributeDeleteSuccess() {
+    //alert("success");
+    BindAllAttributes();
+}
+
 function attributeSaveFailure() {
     alert("Failure");
 }
@@ -143,7 +166,7 @@ function GetAttributesDetailsByID(id) {
 //---------------------------------------Get All Attributes-----------------------------------------------//
 function GetAllAttributes(id) {
     try {
-        var data = id;
+        var data = { "ID": id };
         var ds = {};
         ds = GetDataFromServer("Attributes/GetAllAttributes/", data);
         if (ds != '') {
