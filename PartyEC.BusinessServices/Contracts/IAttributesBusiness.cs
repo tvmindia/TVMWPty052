@@ -18,11 +18,13 @@ namespace PartyEC.BusinessServices.Contracts
     }
     public interface IAttributeSetBusiness
     {
-        
+        List<AttributeSet> GetAllAttributeSet();
+        OperationsStatus InsertAttributeSet(AttributeSet attributeSetObj);
+        OperationsStatus UpdateAttributeSet(AttributeSet attributeSetObj,int ID);
     }
     public interface IAttributeToSetLinks
     {
-        OperationsStatus TreeViewUpdateAttributeSetLink(List<AttributeSetLink> TreeView,string ID);
+        OperationsStatus TreeViewUpdateAttributeSetLink(List<AttributeSetLink> TreeView,int ID);
     }
 
 }

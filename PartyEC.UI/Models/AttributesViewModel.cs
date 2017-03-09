@@ -59,6 +59,8 @@ namespace PartyEC.UI.Models
         [Display(Name = "Attribute Name")]
         [MaxLength(50)]
         public string Name { get; set; }
+        public string TreeList { get; set; }
+        public CommonViewModel commonObj { get; set; }
     }
     public class AttributeSetLinkViewModel
     {
@@ -66,5 +68,6 @@ namespace PartyEC.UI.Models
         public int AttributeSetID { get; set; }
         public int AttributeID { get; set; }
         public float DisplayOrder { get; set; }
+        public CommonViewModel commonObj { get; set; }
     }
 }

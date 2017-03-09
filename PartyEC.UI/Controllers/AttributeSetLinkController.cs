@@ -26,11 +26,12 @@ namespace PartyEC.UI.Controllers
             return View();
         }
         [HttpPost]
-        public string PostTreeOrder(List<AttributeSetLinkViewModel> Treeview,String ID)
+        public string PostTreeOrder(AttributeSetViewModel attributeSetViewModelObj)
         {
             try
             {
-                _attributeToSetLinks.TreeViewUpdateAttributeSetLink((Mapper.Map<List<AttributeSetLinkViewModel>, List<AttributeSetLink>>(Treeview)),ID);
+                
+                //_attributeToSetLinks.TreeViewUpdateAttributeSetLink((Mapper.Map<List<AttributeSetLinkViewModel>, List<AttributeSetLink>>(Treeview)),ID);
 
                 //return _attributeSetBusiness.InsertAttributeSetLink(Treeview);
                 //return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });

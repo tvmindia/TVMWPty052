@@ -18,11 +18,13 @@ namespace PartyEC.RepositoryServices.Contracts
     }
     public interface IAttributeSetRepository
     {
-        
+        List<AttributeSet> GetAllAttributeSet();
+        OperationsStatus InsertAttributeSet(AttributeSet obj);
+        OperationsStatus UpdateAttributeSet(AttributeSet obj,int ID);
     }
     public interface IAttributeToSetLinksRepository
     {
         OperationsStatus InsertAttributeSetLink(AttributeSetLink obj);
-        OperationsStatus DeleteAttributeSetLink(string ID);
+        OperationsStatus DeleteAttributeSetLink(int ID);
     }
 }
