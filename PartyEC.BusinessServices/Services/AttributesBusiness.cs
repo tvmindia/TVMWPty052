@@ -60,6 +60,18 @@ namespace PartyEC.BusinessServices.Services
         {
             return _attributesRepository.UpdateAttributes(attributesObj);
         }
+
+        public OperationsStatus DeleteAttributes(int AttributeID, OperationsStatus Status)
+        {
+            try
+            {
+                _attributesRepository.DeleteAttributes(AttributeID, Status);
+            }
+            catch (Exception)
+            {
+            }
+            return Status;
+        }
     }
     public class AttributeSetBusiness:IAttributeSetBusiness
     {
@@ -90,18 +102,29 @@ namespace PartyEC.BusinessServices.Services
         }
         public OperationsStatus TreeViewUpdateAttributeSetLink(List<AttributeSetLink> TreeViewData,int ID)
         {
-            OperationsStatus OPObj = new OperationsStatus();
-            _attributeToSetLinksRepository.DeleteAttributeSetLink(ID);
-            foreach(AttributeSetLink i in TreeViewData)
+
+            OperationsStatus operationsStatusObj = new OperationsStatus();
+            try
             {
-                if(i.AttributeSetID!=0)
+                //Delete the link data usng AttributeSet ID
+                _attributeToSetLinksRepository.DeleteAttributeSetLink(ID);
+                //
+                foreach (AttributeSetLink i in TreeViewData)
                 {
-                    i.AttributeSetID = ID;
-                    _attributeToSetLinksRepository.InsertAttributeSetLink(i);
+                    if (i.AttributeSetID != 0)
+                    {
+                        i.AttributeSetID = ID;
+                        operationsStatusObj=_attributeToSetLinksRepository.InsertAttributeSetLink(i);
+                    }
                 }
+
             }
-            //return _attributeToSetLinksRepository.InsertAttributeSetLink();
-            return OPObj;
+            catch(Exception ex)
+            {
+                operationsStatusObj.StatusMessage = ex.Message;
+                operationsStatusObj.StatusCode = 0;
+            }
+            return operationsStatusObj;
         }
 
     }

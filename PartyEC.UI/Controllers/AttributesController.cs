@@ -51,12 +51,12 @@ namespace PartyEC.UI.Controllers
         #region GetAttributesByID
 
         [HttpGet]
-        public string GetAttributes(string id)
+        public string GetAttributes(string ID)
         {
             try
             {
                 OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                AttributesViewModel attribute = Mapper.Map<Attributes,AttributesViewModel>(_attributeBusiness.GetAttributes(Int32.Parse(id), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                AttributesViewModel attribute = Mapper.Map<Attributes,AttributesViewModel>(_attributeBusiness.GetAttributes(Int32.Parse(ID), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = attribute });
             }
             catch (Exception ex)
@@ -112,5 +112,32 @@ namespace PartyEC.UI.Controllers
         }
 
         #endregion InsertUpdateAttributes
+
+        #region DeleteAttributes
+
+
+        [HttpPost]
+        public string DeleteAttributes([Bind(Exclude = "Name,Caption,AttributeType,CSValues,EntityType,ConfigurableYN,FilterYN,MandatoryYN,ComparableYN")] AttributesViewModel attributesObj)
+        {
+            if (!ModelState.IsValid)
+            {
+                if (attributesObj.ID != 0)
+                {
+                    try
+                    {
+                        OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.DeleteAttributes(attributesObj.ID, Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                        return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                    }
+                    catch (Exception ex)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    }
+                }              
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select attribute" });
+        }
+
+        #endregion DeleteAttributes
     }
 }

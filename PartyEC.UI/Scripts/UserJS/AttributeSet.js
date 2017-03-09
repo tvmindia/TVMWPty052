@@ -46,7 +46,7 @@ $(document).ready(function () {
     });
     DataTables.attributeSetTable = $('#tblAttributeSet').DataTable(
     {
-        dom: '<"top"f>rt<"bottom"ip><"clear">',
+        dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
         order: [],
         searching: true,
         paging: true,
@@ -228,4 +228,8 @@ function SaveOrder()
         TreeOrderFormatted.push(AttributeSetLinkViewModel);
     }
     $('#TreeList').val(JSON.stringify(TreeOrderFormatted));
+}
+function CouponSubmitted(data) { //function CouponSubmitted(data) in the question
+    var i = JSON.parse(data.responseText)
+    notyAlert('success', i.Records.StatusMessage);
 }

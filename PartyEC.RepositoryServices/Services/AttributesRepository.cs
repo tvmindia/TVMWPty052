@@ -253,6 +253,53 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
+        public OperationsStatus DeleteAttributes(int AttributeID, OperationsStatus Status)
+        { 
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteAttributes]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.VarChar, 50).Value =AttributeID;                       
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();                        
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
+                                Status.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                Status.StatusMessage = "Deletion Not Successfull!";
+                                break;
+                            case "1":
+                                //  Successfull
+                                Status.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                Status.StatusMessage = "Deletion Successfull!";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Status;
+        }
+
+
         public List<AttributeValues> GetAttributeContainer(int AttributeSetID,string Type)
         {
             List<AttributeValues> myProductAttributeList = null;
@@ -298,8 +345,7 @@ namespace PartyEC.RepositoryServices.Services
             }
             return myProductAttributeList;
         }
-
-
+        
         public string GetAttributeXML(List<AttributeValues> AttributeContainerWithValues) {
            
             string myXML = "";
@@ -397,6 +443,7 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter outparameter = null;
+                SqlParameter outparameterID = null;
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
                     using (SqlCommand cmd = new SqlCommand())
@@ -414,6 +461,8 @@ namespace PartyEC.RepositoryServices.Services
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
+                        outparameterID = cmd.Parameters.Add("@ID", SqlDbType.Int);
+                        outparameterID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
@@ -428,6 +477,7 @@ namespace PartyEC.RepositoryServices.Services
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.ReturnValues = Int16.Parse(outparameterID.Value.ToString());
                                 break;
                             case "2":
                                 //Duplicate Entry
