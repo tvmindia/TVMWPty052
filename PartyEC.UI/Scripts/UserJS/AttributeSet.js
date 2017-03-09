@@ -46,7 +46,7 @@ $(document).ready(function () {
     });
     DataTables.attributeSetTable = $('#tblAttributeSet').DataTable(
     {
-        dom: '<"top"f>rt<"bottom"ip><"clear">',
+        dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
         order: [],
         searching: true,
         paging: true,
