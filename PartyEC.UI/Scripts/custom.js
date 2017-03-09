@@ -31,7 +31,7 @@ function notyAlert(type,msgtxt) {
         dismissQueue: true,
         timeout: 3000,
         layout: 'top',
-        theme: 'defaultTheme',
+        theme: 'defaultTheme',//closeWith: ['click'],
         maxVisible: 5
     });
    

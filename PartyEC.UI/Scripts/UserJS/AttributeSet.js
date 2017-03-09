@@ -229,3 +229,7 @@ function SaveOrder()
     }
     $('#TreeList').val(JSON.stringify(TreeOrderFormatted));
 }
+function CouponSubmitted(data) { //function CouponSubmitted(data) in the question
+    var i = JSON.parse(data.responseText)
+    notyAlert('success', i.Records.StatusMessage);
+}

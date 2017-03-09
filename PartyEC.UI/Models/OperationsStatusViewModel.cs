@@ -8,5 +8,6 @@ namespace PartyEC.UI.Models
     public class OperationsStatusViewModel
     {
         public string StatusMessage { get; set; }
+        public object ReturnValues { get; set; }
     }
 }
