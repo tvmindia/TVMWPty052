@@ -51,7 +51,7 @@
                         <div class="buttonpatch" style="width:200px;float:right;">                         
                             <a class="facebook" id="btnSave" onclick="clicksave()"><img src="~/Content/images/save.png" /> </a>
                             <a class="facebook" id="btnReset" onclick="btnreset()"><img src="~/Content/images/reset.png" /></a>
-                            <a class="facebook" id="btnDelete" onclick="btndelete()"><img src="~/Content/images/delete.png" /></a>
+                            <a class="facebook" id="btnDelete" onclick="clickdelete()"><img src="~/Content/images/delete.png" /></a>
                         </div>
                     </h4>
                     <hr>
@@ -165,6 +165,19 @@
                         </div>
                     </div>
                 </div>
+                  
+                <div id="attributedelete" hidden="hidden" >
+                   @using (Ajax.BeginForm("DeleteAttributes", "Attributes", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "attributeDeleteSuccess", OnFailure = "", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
+                   {
+                        @Html.AntiForgeryToken()
+                        <div class="form-actions no-color">
+                            @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0",id="deleteId" })
+                            <input id="btnFormDelete" type="submit" value="Delete" class="btn btn-default" />                            
+                        </div>
+                    }
+                </div>
+                
+
             </div>
         </div>
     </div>

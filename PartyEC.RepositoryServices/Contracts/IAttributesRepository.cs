@@ -14,6 +14,7 @@ namespace PartyEC.RepositoryServices.Contracts
         Attributes GetAttributes(int attributeID, OperationsStatus Status);
         OperationsStatus InsertAttributes(Attributes attributesObj);
         OperationsStatus UpdateAttributes(Attributes attributesObj);
+        OperationsStatus DeleteAttributes(int attributeID, OperationsStatus Status);
         List<AttributeValues> GetAttributeContainer(int AttributeSetID, string Type);
     }
     public interface IAttributeSetRepository
