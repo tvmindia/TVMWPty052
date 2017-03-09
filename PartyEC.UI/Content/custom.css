@@ -178,9 +178,9 @@ background-color: #fff;
 
 .twitter img { vertical-align: -8px;position:relative;left:6px }
 .dribble img { vertical-align: -8px;position:relative;left:6px }
-.facebook img { vertical-align: -11px;position:relative;left:6px}
-.rss img { vertical-align: -9px;position:relative;left:6px}
-.facebook{cursor:pointer!important;opacity:1!important;}
+.thr_btn img { vertical-align: -11px;position:relative;left:6px}
+.thr_disbtn img { vertical-align: -9px;position:relative;left:6px}
+.thr_btn{cursor:pointer!important;opacity:1!important;}
 .buttonpatch a img { border: 0; }
 
 

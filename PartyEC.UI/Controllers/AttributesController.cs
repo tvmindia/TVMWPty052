@@ -27,7 +27,8 @@ namespace PartyEC.UI.Controllers
         #region Index
         public ActionResult Index()
         {
-            return View();
+            AttributesViewModel attributesViewModelObj = new AttributesViewModel();
+            return View(attributesViewModelObj);
         }
         #endregion Index
 

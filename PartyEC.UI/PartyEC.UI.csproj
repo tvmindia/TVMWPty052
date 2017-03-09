@@ -437,6 +437,7 @@
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\OperationsStatusViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\ToolboxViewModel.cs" />
     <Compile Include="Models\TreeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -448,6 +449,7 @@
     <Content Include="Views\Products\Index.cshtml" />
     <Content Include="Views\Attributes\Index.cshtml" />
     <Content Include="Views\AttributeSet\Index.cshtml" />
+    <Content Include="Views\Shared\_ToolboxView.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

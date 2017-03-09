@@ -1,0 +1,98 @@
+﻿@model PartyEC.UI.Models.ToolboxViewModel
+<div class="buttonpatch" style="width:auto;float:right;">
+    @*<a class="facebook" title="Add New" id="btnAddNew"><img src="~/Content/images/add.PNG" /></a>*@
+   @if (Model.backbtn.Visible)
+   {
+       if (Model.backbtn.Disable)
+       {
+        <a title="" class="thr_disbtn" onclick="">
+            <img src="@Url.Content("~/Content/images/back.PNG")">
+        </a>
+       }
+       else
+       {
+        <a title=@Model.backbtn.Title class="thr_btn" onclick=@Model.backbtn.Event>
+            <img src="@Url.Content("~/Content/images/back.PNG")">
+        </a>
+       }
+
+   }
+    @if (Model.addbtn.Visible)
+   {
+       if (Model.addbtn.Disable)
+       {
+        <a title="" class="thr_disbtn" onclick="">
+            <img src="@Url.Content("~/Content/images/add.PNG")">
+        </a>
+       }
+       else
+       {
+        <a title=@Model.addbtn.Title class="thr_btn" onclick=@Model.addbtn.Event>
+            <img src="@Url.Content("~/Content/images/add.PNG")">
+        </a>
+       }
+
+   }
+    @if (Model.editbtn.Visible)
+    {
+        if (Model.editbtn.Disable)
+        {
+            <a title="" class="thr_disbtn" onclick="">
+                <img src="@Url.Content("~/Content/images/edit.PNG")">
+            </a>
+        }
+        else
+        {
+            <a title=@Model.editbtn.Title class="thr_btn" onclick=@Model.editbtn.Event>
+                <img src="@Url.Content("~/Content/images/edit.PNG")">
+            </a>
+        }
+    }
+    @if (Model.savebtn.Visible)
+    {
+        if (Model.savebtn.Disable)
+        {
+            <a title="" class="thr_disbtn" onclick="">
+                <img src="@Url.Content("~/Content/images/save.PNG")">
+            </a>
+        }
+        else
+        {
+            <a title=@Model.savebtn.Title class="thr_btn" onclick=@Model.savebtn.Event>
+                <img src="@Url.Content("~/Content/images/save.PNG")">
+            </a>
+        }
+    }
+    @if (Model.resetbtn.Visible)
+    {
+        if (Model.resetbtn.Disable)
+        {
+            <a title="" class="thr_disbtn" onclick="">
+                <img src="@Url.Content("~/Content/images/reset.PNG")">
+            </a>
+        }
+        else
+        {
+            <a title=@Model.resetbtn.Title class="thr_btn" onclick=@Model.resetbtn.Event>
+                <img src="@Url.Content("~/Content/images/reset.PNG")">
+            </a>
+        }
+    }
+    @if (Model.deletebtn.Visible)
+    {
+        if (Model.deletebtn.Disable)
+        {
+            <a title="" class="thr_disbtn" onclick="">
+                <img src="@Url.Content("~/Content/images/delete.PNG")">
+            </a>
+        }
+        else
+        {
+        <a title=@Model.deletebtn.Title class="thr_btn" onclick=@Model.deletebtn.Event>
+            <img src="@Url.Content("~/Content/images/delete.PNG")">
+        </a>
+        }
+    }
+   
+
+</div>
