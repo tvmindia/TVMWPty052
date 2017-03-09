@@ -25,23 +25,6 @@ namespace PartyEC.UI.Controllers
         {
             return View();
         }
-        [HttpPost]
-        public string PostTreeOrder(AttributeSetViewModel attributeSetViewModelObj)
-        {
-            try
-            {
-                
-                //_attributeToSetLinks.TreeViewUpdateAttributeSetLink((Mapper.Map<List<AttributeSetLinkViewModel>, List<AttributeSetLink>>(Treeview)),ID);
-
-                //return _attributeSetBusiness.InsertAttributeSetLink(Treeview);
-                //return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
-                return JsonConvert.SerializeObject(new { Result = "OK", Records = "" });
-            }
-            catch (Exception ex)
-            {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
-            }
-            //return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
-        }
+       
     }
 }

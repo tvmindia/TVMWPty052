@@ -443,6 +443,7 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter outparameter = null;
+                SqlParameter outparameterID = null;
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
                     using (SqlCommand cmd = new SqlCommand())
@@ -460,6 +461,8 @@ namespace PartyEC.RepositoryServices.Services
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
+                        outparameterID = cmd.Parameters.Add("@ID", SqlDbType.Int);
+                        outparameterID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
@@ -474,6 +477,7 @@ namespace PartyEC.RepositoryServices.Services
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.ReturnValues = Int16.Parse(outparameterID.Value.ToString());
                                 break;
                             case "2":
                                 //Duplicate Entry

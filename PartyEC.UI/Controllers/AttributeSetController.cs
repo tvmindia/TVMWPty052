@@ -48,13 +48,14 @@ namespace PartyEC.UI.Controllers
             {
                 attributeSetViewModelObj.commonObj = new CommonViewModel();
                 OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                //Checking ID empty or not
                 if (attributeSetViewModelObj.ID ==0)
                 {
                     
                     attributeSetViewModelObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                     attributeSetViewModelObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
                     OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeSetBusiness.InsertAttributeSet((Mapper.Map<AttributeSetViewModel, AttributeSet>(attributeSetViewModelObj))));
-
+                    attributeSetViewModelObj.ID = int.Parse(OperationsStatusViewModelObj.ReturnValues.ToString());
                 }
                 else
                 {
@@ -64,21 +65,21 @@ namespace PartyEC.UI.Controllers
                     attributeSetViewModelObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
                     OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeSetBusiness.UpdateAttributeSet((Mapper.Map<AttributeSetViewModel, AttributeSet>(attributeSetViewModelObj)), attributeSetViewModelObj.ID));
                 }
-                
+                //Deserialize the string to object
                 List<AttributeSetLinkViewModel> TreeViewOrder = JsonConvert.DeserializeObject<List<AttributeSetLinkViewModel>>(attributeSetViewModelObj.TreeList);
+                //Adding Created date and Createdby 
                 foreach (var i in TreeViewOrder)
                 {
                     i.commonObj = attributeSetViewModelObj.commonObj;
                 }
-                
-                _attributeToSetLinks.TreeViewUpdateAttributeSetLink((Mapper.Map<List<AttributeSetLinkViewModel>, List<AttributeSetLink>>(TreeViewOrder)), attributeSetViewModelObj.ID);
+
+                OperationsStatusViewModelObj= Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeToSetLinks.TreeViewUpdateAttributeSetLink((Mapper.Map<List<AttributeSetLinkViewModel>, List<AttributeSetLink>>(TreeViewOrder)), attributeSetViewModelObj.ID));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
             }
             catch (Exception ex)
             {
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
-            //return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
         }
 
     }

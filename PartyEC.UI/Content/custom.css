@@ -101,6 +101,10 @@ background-color: #fff;
      
     }
    /* On small screens, set height to 'auto' for sidenav and grid */   
+   .tab-content h4{
+      left:45%!important;
+      position:absolute!important;
+   }
    .buttonpatch a {
 	margin-right: 15px;
 	width: 28px;
