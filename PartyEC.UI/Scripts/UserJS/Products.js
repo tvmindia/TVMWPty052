@@ -47,7 +47,7 @@ function Edit(currentObj)
 {
    //Tab Change
     $('#tabproductDetails').trigger('click');
-    debugger;
+  
     var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null))
     {

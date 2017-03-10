@@ -9,6 +9,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/jstree").Include("~/Content/jstree/dist/themes/default/style.css"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css", "~/Content/bootstrap-theme.min.css", "~/Content/font-awesome.min.css", "~/Content/custom.css"));
             bundles.Add(new StyleBundle("~/Content/datatable").Include("~/Content/DataTables/css/dataTables.bootstrap.min.css","~/Content/DataTables/css/responsive.bootstrap.min.css"));
+            bundles.Add(new StyleBundle("~/Content/product").Include("~/Content/UserCSS/Product.css"));
             //jquery bundles
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-3.1.1.min.js"));
             //jquery unobtrusive ajax

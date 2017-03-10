@@ -6,7 +6,7 @@
 
 @section styles {
    @Styles.Render("~/Content/datatable")
-   
+    @Styles.Render("~/Content/product")   
 }
 <div class="container-fluid">
     <div class="panel with-nav-tabs panel-primary">
@@ -54,7 +54,7 @@
                 </div>
                 <div class="tab-pane fade" id="productDetails">
                    
-                        <h4 class="badge alert-danger">Product Details</h4>
+                        <h4 class="badge alert-success">Product Details</h4>
                     
                    
                     @*ButtonPatch*@
@@ -97,7 +97,7 @@
 @using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "productSaveConfirm", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "onbeginProductSave", OnComplete = "oncomplteProductSave" }, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-                        <div class="tab-content">
+                        <div class="tab-content productTabContent">
 
                             <div class="tab-pane fade in active" id="general">
                                 <!--Edit form column-->
@@ -271,7 +271,161 @@
                                 </div>
                             </div>
                             <div class="tab-pane fade" id="images">
-                                8
+                              <div class="col-lg-12">
+                                  <h2>Product Images</h2>
+                                  <hr />
+                                  <div class="col-sm-6 col-md-4">
+                                      <div class="thumbnail">
+                                       
+                                          <div class="caption">
+                                              <p>@Html.LabelFor(model => model.ProdutMainImageUpload, new { @class = "control-label" })</p>
+                                              <p>@Html.TextBoxFor(model => model.ProdutMainImageUpload, new { type = "file", @class = "btn btn-default" })</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-8">
+                                      <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="">
+                                  </div>
+                              </div>
+                                <div class="col-lg-12">
+                                    <h2>Other Images</h2>
+                                    <hr />
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="thumbnail">
+                                         
+                                            <div class="caption">
+                                                <p>@Html.LabelFor(model => model.OtherImagesUpload, new { @class = "control-label" })</p>
+                                                <p>@Html.TextBoxFor(model => model.OtherImagesUpload, new { type = "file", @class = "btn btn-default" })</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <ul class="hide-bullets">
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-0">
+                                                    <img src="http://placehold.it/150x150&text=zero">
+                                                </a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-1"><img src="http://placehold.it/150x150&text=1"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-2"><img src="http://placehold.it/150x150&text=2"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-3"><img src="http://placehold.it/150x150&text=3"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-4"><img src="http://placehold.it/150x150&text=4"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-5"><img src="http://placehold.it/150x150&text=5"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-6"><img src="http://placehold.it/150x150&text=6"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-7"><img src="http://placehold.it/150x150&text=7"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-8"><img src="http://placehold.it/150x150&text=8"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-9"><img src="http://placehold.it/150x150&text=9"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-10"><img src="http://placehold.it/150x150&text=10"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-11"><img src="http://placehold.it/150x150&text=11"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-12"><img src="http://placehold.it/150x150&text=12"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-13"><img src="http://placehold.it/150x150&text=13"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-14"><img src="http://placehold.it/150x150&text=14"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-15"><img src="http://placehold.it/150x150&text=15"></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <h2>Stickers</h2>
+                                    <hr />
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="thumbnail">
+                                          
+                                            <div class="caption">
+
+                                                <p>@Html.LabelFor(model => model.ProductStickerUpload, new { @class = "control-label" })</p>
+
+                                                <p>@Html.TextBoxFor(model => model.ProductStickerUpload, new { type = "file", @class = "btn btn-default" })</p>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <ul class="hide-bullets">
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-0">
+                                                    <img src="http://placehold.it/150x150&text=zero">
+                                                </a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-1"><img src="http://placehold.it/150x150&text=1"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-2"><img src="http://placehold.it/150x150&text=2"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-3"><img src="http://placehold.it/150x150&text=3"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-4"><img src="http://placehold.it/150x150&text=4"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-5"><img src="http://placehold.it/150x150&text=5"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-6"><img src="http://placehold.it/150x150&text=6"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-7"><img src="http://placehold.it/150x150&text=7"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-8"><img src="http://placehold.it/150x150&text=8"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-9"><img src="http://placehold.it/150x150&text=9"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-10"><img src="http://placehold.it/150x150&text=10"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-11"><img src="http://placehold.it/150x150&text=11"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-12"><img src="http://placehold.it/150x150&text=12"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-13"><img src="http://placehold.it/150x150&text=13"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-14"><img src="http://placehold.it/150x150&text=14"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-15"><img src="http://placehold.it/150x150&text=15"></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                  
                             </div>
                             <div class="tab-pane fade" id="discription">
                                 <div class="form-group">
