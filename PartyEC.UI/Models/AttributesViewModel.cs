@@ -26,8 +26,7 @@ namespace PartyEC.UI.Models
         [Display(Name = "Data Type")]
         [MaxLength(1)]
         public string AttributeType { get; set; }
-
-        [Required(ErrorMessage = "Please Enter Configurable Values")]
+        
         [Display(Name = "Configurable Values")]
         [MaxLength(250)]
         public string CSValues { get; set; }
