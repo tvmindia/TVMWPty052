@@ -13,6 +13,7 @@ namespace PartyEC.UI.Models
         [Required(ErrorMessage = "Please Enter Attribute name")]
         [Display(Name = "Attribute Name")]
         [MaxLength(50)]
+        [RegularExpression("^([a-zA-Z9 .&'-]+)$", ErrorMessage = "Invalid Attribute Name")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please Enter Attribute Caption")]
@@ -23,17 +24,16 @@ namespace PartyEC.UI.Models
 
         [Required(ErrorMessage = "Please Enter Data Type")]
         [Display(Name = "Data Type")]
-        [MaxLength(250)]
+        [MaxLength(1)]
         public string AttributeType { get; set; }
-
-        [Required(ErrorMessage = "Please Enter Configurable Values")]
+        
         [Display(Name = "Configurable Values")]
         [MaxLength(250)]
         public string CSValues { get; set; }
 
         [Required(ErrorMessage = "Please Enter Entity Type")]
         [Display(Name = "Entity Type")]
-        [MaxLength(250)]
+        [MaxLength(10)]
         public string EntityType { get; set; }
 
         [Display(Name = "Attribute Type")]

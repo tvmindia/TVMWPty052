@@ -6,7 +6,7 @@
 
 @section styles {
    @Styles.Render("~/Content/datatable")
-   
+    @Styles.Render("~/Content/product")   
 }
 <div class="container-fluid">
     <div class="panel with-nav-tabs panel-primary">
@@ -53,48 +53,56 @@
 
                 </div>
                 <div class="tab-pane fade" id="productDetails">
-                    <h4>Product Details</h4>
-                    <hr>
+                   
+                        <h4 class="badge alert-success">Product Details</h4>
+                    
+                   
                     @*ButtonPatch*@
-                    <div class="col-md-12">
-                        button patch here
-                    </div>
-
+                   <div class="col-md-12">
+                      
+                      @{
+                          PartyEC.UI.Models.ToolboxViewModel ToolBoxControl = new PartyEC.UI.Models.ToolboxViewModel();
+                          ToolBoxControl.addbtn.Visible = true;
+                          ToolBoxControl.deletebtn.Visible = true;
+                          ToolBoxControl.editbtn.Visible = false;
+                          ToolBoxControl.deletebtn.Disable = false;
+                          Html.RenderPartial("_ToolboxView", ToolBoxControl);
+                      }
+                   </div>
+                  <div class="col-lg-12">
+                      <hr />
+                  </div>
                     @*EditArea*@
                     <div class="col-md-2">
                         <div class="panel with-nav-tabs js panel-primary">
                             <div class="panel-heading">
                                 <ul class="nav nav-tabs nav-stacked">
-                                    <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="badge alert-danger">E</span></a></li>
+                                    <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="label label-danger">E</span></a></li>
                                     <li><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
                                     <li><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
                                     <li><a href="#discription" data-toggle="tab" id="tabDiscrption">Discription</a></li>
-                                    <li><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="badge alert-danger">E</span></a></li>
+                                    <li><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
                                     <li><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
                                     <li><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
-                                    <li><a href="#productTags" data-toggle="tab" id="tabproducttags">Product Tags <span class="label label-danger">Danger</span></a></li>
+                                    <li><a href="#productTags" data-toggle="tab" id="tabproducttags">Product Tags <span class="label label-danger">E</span></a></li>
                                     <li><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
                                     <li><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
                                  </ul>
                              </div>
                             </div>
                   
-              @*<div class="list-group">
-                <a href="#" class="list-group-item"><span class="badge">E</span>General</a>
-                <a href="#" class="list-group-item">Price</a>
-                <a href="#" class="list-group-item">Discription</a>
-                <a href="#" class="list-group-item active"><span class="badge">E</span>Images</a>
-                <a href="#" class="list-group-item">Associated Prdoucts</a>
-                <a href="#" class="list-group-item"><span class="badge">E</span>Other Attributes</a>
-                </div>*@
+           
                     </div>
                     <div class="col-md-10">
-                        <div class="tab-content">
+@using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "productSaveConfirm", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "onbeginProductSave", OnComplete = "oncomplteProductSave" }, new { @class = "form-horizontal", role = "form" }))
+{
+    @Html.AntiForgeryToken()
+                        <div class="tab-content productTabContent">
+
                             <div class="tab-pane fade in active" id="general">
                                 <!--Edit form column-->
-                                @using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "productSaveConfirm", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "onbeginProductSave", OnComplete = "oncomplteProductSave" }, new { @class = "form-horizontal", role = "form" }))
-                                {
-                                    @Html.AntiForgeryToken()
+                                
+                                   
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-lg-2" })
@@ -204,19 +212,267 @@
                                         </div>
                                     </div>
 
-                                }
+                                
                             </div>
                             <div class="tab-pane fade" id="price">
-                                price
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.CostPrice, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.CostPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.CostPrice, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.BaseSellingPrice, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.BaseSellingPrice, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BaseSellingPrice, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ShowPrice, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        <div>
+                                            @Html.EditorFor(model => model.ShowPrice)
+                                            @Html.ValidationMessageFor(model => model.ShowPrice, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.TaxClass, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.TaxClass, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.TaxClass, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                 
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DiscountAmount, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.DiscountAmount, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.DiscountAmount, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DiscountStartDate, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.DiscountStartDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.DiscountStartDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.DiscountEndDate, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.DiscountEndDate, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.DiscountEndDate, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="images">
-                                8
+                              <div class="col-lg-12">
+                                  <h2>Product Images</h2>
+                                  <hr />
+                                  <div class="col-sm-6 col-md-4">
+                                      <div class="thumbnail">
+                                       
+                                          <div class="caption">
+                                              <p>@Html.LabelFor(model => model.ProdutMainImageUpload, new { @class = "control-label" })</p>
+                                              <p>@Html.TextBoxFor(model => model.ProdutMainImageUpload, new { type = "file", @class = "btn btn-default" })</p>
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-8">
+                                      <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="">
+                                  </div>
+                              </div>
+                                <div class="col-lg-12">
+                                    <h2>Other Images</h2>
+                                    <hr />
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="thumbnail">
+                                         
+                                            <div class="caption">
+                                                <p>@Html.LabelFor(model => model.OtherImagesUpload, new { @class = "control-label" })</p>
+                                                <p>@Html.TextBoxFor(model => model.OtherImagesUpload, new { type = "file", @class = "btn btn-default" })</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <ul class="hide-bullets">
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-0">
+                                                    <img src="http://placehold.it/150x150&text=zero">
+                                                </a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-1"><img src="http://placehold.it/150x150&text=1"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-2"><img src="http://placehold.it/150x150&text=2"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-3"><img src="http://placehold.it/150x150&text=3"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-4"><img src="http://placehold.it/150x150&text=4"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-5"><img src="http://placehold.it/150x150&text=5"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-6"><img src="http://placehold.it/150x150&text=6"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-7"><img src="http://placehold.it/150x150&text=7"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-8"><img src="http://placehold.it/150x150&text=8"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-9"><img src="http://placehold.it/150x150&text=9"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-10"><img src="http://placehold.it/150x150&text=10"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-11"><img src="http://placehold.it/150x150&text=11"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-12"><img src="http://placehold.it/150x150&text=12"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-13"><img src="http://placehold.it/150x150&text=13"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-14"><img src="http://placehold.it/150x150&text=14"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-15"><img src="http://placehold.it/150x150&text=15"></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12">
+                                    <h2>Stickers</h2>
+                                    <hr />
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="thumbnail">
+                                          
+                                            <div class="caption">
+
+                                                <p>@Html.LabelFor(model => model.ProductStickerUpload, new { @class = "control-label" })</p>
+
+                                                <p>@Html.TextBoxFor(model => model.ProductStickerUpload, new { type = "file", @class = "btn btn-default" })</p>
+
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <ul class="hide-bullets">
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-0">
+                                                    <img src="http://placehold.it/150x150&text=zero">
+                                                </a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-1"><img src="http://placehold.it/150x150&text=1"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-2"><img src="http://placehold.it/150x150&text=2"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-3"><img src="http://placehold.it/150x150&text=3"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-4"><img src="http://placehold.it/150x150&text=4"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-5"><img src="http://placehold.it/150x150&text=5"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-6"><img src="http://placehold.it/150x150&text=6"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-7"><img src="http://placehold.it/150x150&text=7"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-8"><img src="http://placehold.it/150x150&text=8"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-9"><img src="http://placehold.it/150x150&text=9"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-10"><img src="http://placehold.it/150x150&text=10"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-11"><img src="http://placehold.it/150x150&text=11"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-12"><img src="http://placehold.it/150x150&text=12"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-13"><img src="http://placehold.it/150x150&text=13"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-14"><img src="http://placehold.it/150x150&text=14"></a>
+                                            </li>
+                                            <li class="col-sm-3">
+                                                <a class="thumbnail" id="carousel-selector-15"><img src="http://placehold.it/150x150&text=15"></a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
+                                  
                             </div>
                             <div class="tab-pane fade" id="discription">
-                                5
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LongDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-6">
+                                        @Html.EditorFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
                             </div>                    
                             <div class="tab-pane fade" id="inventory">
-                                9
+                         
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StockAvailable, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        <div>
+                                            @Html.EditorFor(model => model.StockAvailable)
+                                            @Html.ValidationMessageFor(model => model.StockAvailable, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.OutOfStockAlertQty, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.OutOfStockAlertQty, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.OutOfStockAlertQty, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
                             </div>
                             <div class="tab-pane fade" id="relatedProducts">
                           
@@ -247,19 +503,18 @@
                             <div class="tab-pane fade" id="productTags">
                                product tags
                             </div>
-                            <div class="tab-pane fade" id="productTags">
-                                product tags
-                            </div>
+                           
                             <div class="tab-pane fade" id="otherAttributes">
                                 other Attributes
                             </div>
                             <div class="tab-pane fade" id="associatedProducts">
                                 Associated products
                             </div>
+
                         </div>
+}
 
 
-                          
                         </div>
                    
 

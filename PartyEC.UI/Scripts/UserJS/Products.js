@@ -1,7 +1,8 @@
 ﻿var DataTables = {};
 
 $(document).ready(function () {
-   // $("#tblproducts").DataTable();
+    // $("#tblproducts").DataTable();
+   
    try {
        
         DataTables.productTable = $('#tblproducts').DataTable(
@@ -21,11 +22,11 @@ $(document).ready(function () {
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "Qty", "defaultContent": "<i>-</i>" },
                { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="RatingPopup(this)">Rating</a>' },
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" data-toggle="Ratingpopover" title="Rating" data-trigger="focus" data-content="Some content inside the popover">Rating</a>' },
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [
-              {//hiding hidden column field churchid
+              {//hiding hidden column field churchid//data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Toggle popover
                   "targets": [0],
                   "visible": true,
                   "searchable": true
@@ -37,7 +38,8 @@ $(document).ready(function () {
     {
         alert(e.message);
     }
-
+    //Rating Popover
+   $('[data-toggle="Ratingpopover"]').popover();
    
 });
 
@@ -45,7 +47,7 @@ function Edit(currentObj)
 {
    //Tab Change
     $('#tabproductDetails').trigger('click');
-    debugger;
+  
     var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null))
     {

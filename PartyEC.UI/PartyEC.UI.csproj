@@ -283,6 +283,7 @@
     <Content Include="Content\images\closemodel.png" />
     <Content Include="Content\images\delete.PNG" />
     <Content Include="Content\images\edit.png" />
+    <Content Include="Content\images\NoImageFound.png" />
     <Content Include="Content\images\notyfi.png" />
     <Content Include="Content\images\partyEClogo.png" />
     <Content Include="Content\images\push.png" />
@@ -296,6 +297,7 @@
     <Content Include="Content\jstree\dist\themes\default\style.css" />
     <Content Include="Content\jstree\dist\themes\default\style.min.css" />
     <Content Include="Content\jstree\dist\themes\default\throbber.gif" />
+    <Content Include="Content\UserCSS\Product.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\fontawesome-webfont.woff" />
@@ -459,7 +461,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\UserCSS\" />
     <Folder Include="Views\AttributeSetLink\" />
   </ItemGroup>
   <ItemGroup>

@@ -96,16 +96,16 @@ namespace PartyEC.UI.Models
 
         #region Images
         [DataType(DataType.Upload)]
-        [Display(Name = "Product Main Image")]
-        HttpPostedFileBase ProdutMainImageUpload { get; set; }
+        [Display(Name = "Choose Product Main Image")]
+        public HttpPostedFileBase ProdutMainImageUpload { get; set; }
 
         [DataType(DataType.Upload)]
-        [Display(Name = "Product Other Image")]
-        HttpPostedFileBase OtherImagesUpload { get; set; }
+        [Display(Name = "Choose Product Other Image")]
+        public HttpPostedFileBase OtherImagesUpload { get; set; }
 
         [DataType(DataType.Upload)]
-        [Display(Name = "Product Sticker")]
-        HttpPostedFileBase ProductStickerUpload { get; set; }
+        [Display(Name = "Choose Product Sticker")]
+        public HttpPostedFileBase ProductStickerUpload { get; set; }
 
         #endregion Images
         #region Description
@@ -116,6 +116,7 @@ namespace PartyEC.UI.Models
         [Required(ErrorMessage = "Please enter Long Description")]
         [Display(Name = "Long Description")]
         [MaxLength(250)]
+        [DataType(DataType.MultilineText)]
         public string LongDescription { get; set; }
         #endregion Description
 
