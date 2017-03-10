@@ -1,9 +1,9 @@
 ﻿var DataTables = {};
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function ()
-{ 
-    try {
-        debugger;
+{
+    clearfields();
+    try {       
         var AttributesViewModel = new Object();
         DataTables.attributeTable = $('#tblattributes').DataTable(
          {
@@ -39,7 +39,8 @@ $(document).ready(function ()
          });
     }
     catch (e) {
-        alert(e.message);
+        notyAlert('error', e.message);
+      
     }
 });
 
@@ -84,9 +85,9 @@ function fillAttributes(ID)
     if (thisattribute.ComparableYN == false)
     { $("#ComparableYN").prop('checked', false); }
     else { $("#ComparableYN").prop('checked', true); }
-    if (thisattribute.AttributeType == 'C' || thisattribute.AttributeType == 'c') {
-        FixAttributeTyp();
-    }    
+    
+    DataTypeOnChange();
+  
 }
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
@@ -104,27 +105,31 @@ function clearfields() {
     $("#married-false").prop('checked', false);
     $("#married-true").prop('checked', false);
 }
-//---------------------------------------Reset the  Feilds------------------------------------------------//
+//---------------------------------------Button Patch Click Events------------------------------------------------//
 function btnreset() {
+    debugger;
     if ($("#ID").val() == 0) {
         clearfields();
     }
-    else {
+    else { 
+        if ($("#AttributeType").val() != 'C') {
+            $("#AttributeType").attr('disabled', false);
+        }
         fillAttributes($("#ID").val())
     }
 }
-//---------------------------------------Save Click-------------------------------------------------------//
+//---------------------------------------Save-------------------------------------------------------//
 function clicksave() {
     var res = Validation();
     if (res) {
         $("#btnFormSave").click();
     }  
 }
-
+//---------------------------------------Back-------------------------------------------------------//
 function goback() {    
     $('#tabattibutesList').trigger('click');
 }
-
+//---------------------------------------Delete-------------------------------------------------------//
 function clickdelete() {
     debugger;
     var id = $("#ID").val();
@@ -132,39 +137,48 @@ function clickdelete() {
         $("#btnFormDelete").click();
     }
     else {
-        //Error message no attributes Selected
-    }
-    
+        notyAlert('error', 'Please Select Attributes');       
+    }    
 }
-//---------------------------------------Validation-------------------------------------------------------//
-function FixAttributeTyp() {
+//---------------------------------------Validation Functions---------------------------------------------//
+function DataTypeOnChange(){
     debugger;
     var DataType = $("#AttributeType").val()
     if (DataType == "C") {
         $("#CSValues").attr('disabled', false);
+        if ($("#AttributeType").val()==true)
         $("#AttributeType").attr('disabled', true);
     }
     else {
         $("#CSValues").attr('disabled', true);
     }
 }
-function FixDataType() {
+function ConfigurableOnChange() {
     debugger;
     $("#AttributeType").val("C");
     $("#AttributeType").attr('disabled', true);
     $("#CSValues").attr('disabled', false);
 }
 
-function FixCsValues() {
+function SimpleOnChange() {
     debugger; 
     $("#AttributeType").attr('disabled', false);
 }
 
 function Validation() {
-    debugger;
-    $("#AttributeType").attr('disabled', false);
-    $("#CSValues").attr('disabled', false);
-    return true;
+    debugger;   
+    if ($("#CSValues").val() == "")
+    {
+        if ($("#married-true").is(":checked"))
+        {
+            $("#CSValues").focus();
+            notyAlert('error', 'Please Enter Configurable Values');
+            return false;
+        }     
+    }  
+        $("#AttributeType").attr('disabled', false);
+        $("#CSValues").attr('disabled', false);
+        return true; 
 }
 
 
@@ -174,18 +188,21 @@ function btnAddNew() {
     clearfields();
 }
 //---------------------------------------Save Click alerts------------------------------------------------//
-function attributeSaveSuccess() { 
+function attributeSaveSuccess(data, status, xhr) {
     BindAllAttributes();
+    var i = JSON.parse(data)
+    notyAlert('success', i.Record.StatusMessage);
 }
-function attributeDeleteSuccess() {
-    //alert("success");
-
+function attributeDeleteSuccess(data, status, xhr) {
     BindAllAttributes();
     clearfields();
+    var i = JSON.parse(data)
+    notyAlert('success', i.Record.StatusMessage);
 }
 
-function attributeSaveFailure() {
-    alert("Failure");
+function attributeSaveFailure(data, status, xhr) {
+    var i = JSON.parse(data)
+    notyAlert('error', i.Record.StatusMessage);
 }
 function attributeSaveConfirm() {
     alert("Save Confirm");
@@ -210,7 +227,9 @@ function GetAttributesDetailsByID(id) {
             alert(ds.Message);
         }
     }
-    catch (e) { }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
 }
 //---------------------------------------Get All Attributes-----------------------------------------------//
 function GetAllAttributes(id) {
@@ -228,7 +247,9 @@ function GetAllAttributes(id) {
             alert(ds.Message);
         }
     }
-    catch (e) { }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
 }
 //---------------------------------------Bind All Attributes----------------------------------------------//
 function BindAllAttributes() {
@@ -236,16 +257,6 @@ function BindAllAttributes() {
         DataTables.attributeTable.clear().rows.add(GetAllAttributes()).draw(false);
     }
     catch (e) {
-
+        notyAlert('error', e.message);
     }
-}
-
-//---------------------------------------Noty   Messages----------------------------------------------//
-
-//function NotyMessages(data) { //function CouponSubmitted(data) in the question
-//    debugger;
-//    var i = JSON.parse(data.responseText)
-//    notyAlert('success', i.Records.StatusMessage);
-//}
-
-
+} 
