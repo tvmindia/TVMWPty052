@@ -91,7 +91,11 @@ function GetDataFromServer(page, formData) {
 function ChangeButtonPatchView(Controller,Dom, Action) {
     var data = { ActionType: Action };
     var ds = {};
-    ds = GetDataFromServer(Controller+ "/ChangeButtonStyle/", data);
+    ds = GetDataFromServer(Controller + "/ChangeButtonStyle/", data);
+    if (ds == "Nochange")
+    {
+        return;
+    }
     $("#" + Dom).empty();
     $("#" + Dom).html(ds);
 }

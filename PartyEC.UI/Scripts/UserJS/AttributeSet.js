@@ -67,7 +67,7 @@ $(document).ready(function () {
    
     $('#tabattributeSetDetails').click(function (e) {
         //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
-        ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
+        //ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
         $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft();
         $('#jstree_Drag').jstree(true).refresh(true);
 
@@ -98,7 +98,7 @@ function Edit(currentObj) {
         $("#Name").val(rowData.Name);
     }
     //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
-    ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Edit");
+    ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Hello");
 }
 
 function GetAllAttributeSet() {

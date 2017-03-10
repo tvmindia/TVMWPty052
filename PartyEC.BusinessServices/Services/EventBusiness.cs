@@ -24,27 +24,74 @@ namespace PartyEC.BusinessServices.Services
 
         public List<Event> GetAllEvents()
         {
-            throw new NotImplementedException();
+            List<Event> Eventlist = null;
+            try
+            {
+                Eventlist = _eventRepository.GetAllEvents();
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return Eventlist;
         }
 
         public Event GetEvent(int EventID, OperationsStatus Status)
         {
-            throw new NotImplementedException();
+            Event myEvent = null;
+            try
+            {
+                myEvent = _eventRepository.GetEvent(EventID, Status);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return myEvent;
         }
 
         public OperationsStatus InsertEvent(Event EventObj)
         {
-            throw new NotImplementedException();
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                operationsStatusObj= _eventRepository.InsertEvent(EventObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
         }
 
         public OperationsStatus UpdateEvent(Event EventObj)
         {
-            throw new NotImplementedException();
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                operationsStatusObj = _eventRepository.UpdateEvent(EventObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
         }
 
         public OperationsStatus DeleteEvent(int EventID, OperationsStatus Status)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _eventRepository.DeleteEvent(EventID, Status);
+            }
+            catch (Exception)
+            {
+            }
+            return Status;
         }
 
         #endregion Method

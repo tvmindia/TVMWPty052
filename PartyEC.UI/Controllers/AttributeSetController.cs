@@ -85,20 +85,22 @@ namespace PartyEC.UI.Controllers
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
-            if (ActionType == "Edit")
+            switch (ActionType)
             {
-                ToolboxViewModelObj.deletebtn.Visible = true;
-                ToolboxViewModelObj.savebtn.Visible = true;
-                ToolboxViewModelObj.savebtn.Event = "MainClick()";
+                case "Edit":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "MainClick()";
+                    break;
+                case "Add":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "MainClick()";
+                    break;
+                default:
+                    return Content("Nochange");
             }
-            else if (ActionType == "Add")
-            {
-                ToolboxViewModelObj.deletebtn.Visible = true;
-                ToolboxViewModelObj.deletebtn.Disable = true;
-                ToolboxViewModelObj.savebtn.Visible = true;
-                ToolboxViewModelObj.savebtn.Event = "MainClick()";
-            }
-
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
     }
