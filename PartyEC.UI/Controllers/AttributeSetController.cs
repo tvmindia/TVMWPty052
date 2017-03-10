@@ -81,6 +81,25 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        [HttpGet]
+        public ActionResult ChangeButtonStyle(string ActionType)
+        {
+            ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
+            if (ActionType == "Edit")
+            {
+                ToolboxViewModelObj.deletebtn.Visible = true;
+                ToolboxViewModelObj.savebtn.Visible = true;
+                ToolboxViewModelObj.savebtn.Event = "MainClick()";
+            }
+            else if (ActionType == "Add")
+            {
+                ToolboxViewModelObj.deletebtn.Visible = true;
+                ToolboxViewModelObj.deletebtn.Disable = true;
+                ToolboxViewModelObj.savebtn.Visible = true;
+                ToolboxViewModelObj.savebtn.Event = "MainClick()";
+            }
 
+            return PartialView("_ToolboxView", ToolboxViewModelObj);
+        }
     }
 }

@@ -23,7 +23,7 @@ namespace PartyEC.UI.Controllers
         // GET: DynamicUI
         public ActionResult _MenuNavBar()
         {
-            List<Menu> menulist=_dynamicUIBusiness.GetAllMenues();
+            List<Menu> menulist = _dynamicUIBusiness.GetAllMenues();
             DynamicUIViewModel dUIObj = new DynamicUIViewModel();
             dUIObj.MenuViewModelList = Mapper.Map<List<Menu>, List<MenuViewModel>>(menulist);
             return View(dUIObj);
@@ -34,7 +34,7 @@ namespace PartyEC.UI.Controllers
             try
             {
                 List<JsTreeNode> NodeList = null;
-                if (ID!="")
+                if (ID != "")
                 {
                     NodeList = _dynamicUIBusiness.GetTreeListAttributeSet(ID);
                     return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
@@ -43,7 +43,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
             //return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
         }
@@ -61,5 +61,26 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+       
+        //[HttpGet]
+        //public ActionResult ChangeButtonStyle(string ActionType)
+        //{
+        //    ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
+        //    if (ActionType=="Edit")
+        //    {
+        //        ToolboxViewModelObj.deletebtn.Visible = true;
+        //        ToolboxViewModelObj.savebtn.Visible = true;
+        //        ToolboxViewModelObj.savebtn.Event = "MainClick()";
+        //    }
+        //    else if(ActionType == "Add")
+        //    {
+        //        ToolboxViewModelObj.deletebtn.Visible = true;
+        //        ToolboxViewModelObj.deletebtn.Disable = true;
+        //        ToolboxViewModelObj.savebtn.Visible = true;
+        //        ToolboxViewModelObj.savebtn.Event = "MainClick()";
+        //    }
+            
+        //     return PartialView("_ToolboxView", ToolboxViewModelObj);
+        //}
     }
 }

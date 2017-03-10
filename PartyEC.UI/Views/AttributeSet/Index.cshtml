@@ -22,9 +22,6 @@
                             @{
                                 PartyEC.UI.Models.ToolboxViewModel ToolBoxControl = new PartyEC.UI.Models.ToolboxViewModel();
                                 ToolBoxControl.addbtn.Visible = true;
-                                ToolBoxControl.deletebtn.Visible = true;
-                                ToolBoxControl.editbtn.Visible = false;
-                                ToolBoxControl.deletebtn.Disable = false;
                                 Html.RenderPartial("_ToolboxView", ToolBoxControl);
                             }
                         </div>
@@ -48,21 +45,19 @@
                     </div>
                     <div class="tab-pane fade" id="tab2primary">
                         @*ButtonPatch*@
-                        <div class="">
+                        <div class="" id="btnPatchAttributeSettab2">
                             @{
                                 PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab2 = new PartyEC.UI.Models.ToolboxViewModel();
-                                ToolBoxControltab2.addbtn.Visible = true;
                                 ToolBoxControltab2.deletebtn.Visible = true;
-                                ToolBoxControltab2.editbtn.Visible = true;
-                                ToolBoxControltab2.resetbtn.Visible = true;
+                                ToolBoxControltab2.deletebtn.Disable = true;
                                 ToolBoxControltab2.savebtn.Visible = true;
-                                ToolBoxControltab2.backbtn.Visible = true;
+                                ToolBoxControltab2.savebtn.Event = "MainClick()";
                                 Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
                             }
                         </div>
                         
 
-                        @using (Ajax.BeginForm("PostTreeOrder", "AttributeSet", new AjaxOptions { HttpMethod = "POST",AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "CouponSubmitted" }, new { @class = "form-horizontal", role = "form" }))
+                        @using (Ajax.BeginForm("PostTreeOrder", "AttributeSet", new AjaxOptions { HttpMethod = "POST",AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "CheckSubmitted" }, new { @class = "form-horizontal", role = "form" }))
                         {
                             @Html.AntiForgeryToken()
                             <div class="col-md-4" id="productUpdateTarget">

@@ -66,6 +66,8 @@ $(document).ready(function () {
     });
    
     $('#tabattributeSetDetails').click(function (e) {
+        //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
+        ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
         $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft();
         $('#jstree_Drag').jstree(true).refresh(true);
 
@@ -95,12 +97,13 @@ function Edit(currentObj) {
         $("#ID").val(rowData.ID)
         $("#Name").val(rowData.Name);
     }
+    //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
+    ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Edit");
 }
 
 function GetAllAttributeSet() {
 
     try {
-        debugger;
         var data = "";
         var ds = {};
         ds = GetDataFromServer("AttributeSet/GetAllAttributeSet/", data);
@@ -121,7 +124,6 @@ function GetAllAttributeSet() {
 
 }
 function GetTreeDataRight(id) {
-    debugger;
     try {
         var data = {"ID":id};
         var ds = {};
@@ -144,7 +146,6 @@ function GetTreeDataRight(id) {
 }
 function GetTreeDataLeft()
 {
-    debugger;
     try {
 
         var ds = {};
@@ -166,8 +167,8 @@ function GetTreeDataLeft()
 }
 function PostSaveOrder(AttributeSetLinkViewModel,id)
 {
-    debugger;
     try {
+        debugger;
         var data = "{'Treeview':" + JSON.stringify(AttributeSetLinkViewModel) + ",'ID':"+id+"}";
         var ds = {};
         ds = PostDataToServer("AttributeSetLink/PostTreeOrder/", data);
@@ -188,7 +189,6 @@ function PostSaveOrder(AttributeSetLinkViewModel,id)
 }
 function EditAttibuteSet(id)
 {
-    debugger;
     try
     {
         $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft();
@@ -229,7 +229,19 @@ function SaveOrder()
     }
     $('#TreeList').val(JSON.stringify(TreeOrderFormatted));
 }
-function CouponSubmitted(data) { //function CouponSubmitted(data) in the question
+function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
     var i = JSON.parse(data.responseText)
-    notyAlert('success', i.Records.StatusMessage);
+    switch(i.Result)
+    {
+        case "OK":
+            notyAlert('success', i.Records.StatusMessage);
+            //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
+            ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Edit");
+            break;
+        case "ERROR":
+            notyAlert('success', i.Records.StatusMessage);
+            break;
+            
+    }
+    
 }
