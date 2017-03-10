@@ -7,7 +7,7 @@ $(document).ready(function ()
         var AttributesViewModel = new Object();
         DataTables.attributeTable = $('#tblattributes').DataTable(
          {
-             dom: '<"top"f>rt<"bottom"ip><"clear">',
+             dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
              order: [],
              searching: true,
              paging: true,
@@ -16,16 +16,26 @@ $(document).ready(function ()
                { "data": "ID" },
                { "data": "Name" },
                { "data": "Caption", "defaultContent": "<i>-</i>" },
-               { "data": "AttributeType", "defaultContent": "<i>-</i>" },
+               { "data": "AttributeType", "defaultContent": "<i>-</i>" },            
+               { "data": "ConfigurableYN", "defaultContent": "<i>-</i>" },//simple,configurable
+               { "data": "FilterYN", "defaultContent": "<i>-</i>" },
                { "data": "CSValues", "defaultContent": "<i>-</i>" },
                { "data": "EntityType", "defaultContent": "<i>-</i>" },
-               { "data": "ConfigurableYN", "defaultContent": "<i>-</i>" },
-               { "data": "FilterYN", "defaultContent": "<i>-</i>" },
                { "data": "MandatoryYN", "defaultContent": "<i>-</i>" },
                { "data": "ComparableYN", "defaultContent": "<i>-</i>" },                 
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
-             columnDefs: [{ "targets": [0], "visible": false, "searchable": false }]
+             columnDefs: [{ "targets": [0], "visible": false, "searchable": false }, {
+                 "render": function (data, type, row) {
+                     if (row.ConfigurableYN == true) {
+                         return 'configurable';
+                     }
+                     else{
+                         return 'simple';
+                     }
+                 },
+                 "targets": 4
+             }]
          });
     }
     catch (e) {
@@ -74,11 +84,15 @@ function fillAttributes(ID)
     if (thisattribute.ComparableYN == false)
     { $("#ComparableYN").prop('checked', false); }
     else { $("#ComparableYN").prop('checked', true); }
+    if (thisattribute.AttributeType == 'C' || thisattribute.AttributeType == 'c') {
+        FixAttributeTyp();
+    }    
 }
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
     debugger;
     $("#ID").val("0")//ID is zero for New
+    $("#deleteId").val("0")
     $("#Name").val("")
     $("#Caption").val("")
     $("#AttributeType").val("")
@@ -101,25 +115,55 @@ function btnreset() {
 }
 //---------------------------------------Save Click-------------------------------------------------------//
 function clicksave() {
-    debugger;
     var res = Validation();
     if (res) {
         $("#btnFormSave").click();
-    }
-    else {
-      
-    }
+    }  
+}
+
+function goback() {    
+    $('#tabattibutesList').trigger('click');
 }
 
 function clickdelete() {
     debugger;
-
-    $("#btnFormDelete").click();
+    var id = $("#ID").val();
+    if (id != 0) {
+        $("#btnFormDelete").click();
+    }
+    else {
+        //Error message no attributes Selected
+    }
+    
 }
 //---------------------------------------Validation-------------------------------------------------------//
-function Validation() {
+function FixAttributeTyp() {
+    debugger;
+    var DataType = $("#AttributeType").val()
+    if (DataType == "C") {
+        $("#CSValues").attr('disabled', false);
+        $("#AttributeType").attr('disabled', true);
+    }
+    else {
+        $("#CSValues").attr('disabled', true);
+    }
+}
+function FixDataType() {
+    debugger;
+    $("#AttributeType").val("C");
+    $("#AttributeType").attr('disabled', true);
+    $("#CSValues").attr('disabled', false);
+}
 
-//client side validation
+function FixCsValues() {
+    debugger; 
+    $("#AttributeType").attr('disabled', false);
+}
+
+function Validation() {
+    debugger;
+    $("#AttributeType").attr('disabled', false);
+    $("#CSValues").attr('disabled', false);
     return true;
 }
 
@@ -130,13 +174,14 @@ function btnAddNew() {
     clearfields();
 }
 //---------------------------------------Save Click alerts------------------------------------------------//
-function attributeSaveSuccess() {
-    //alert("success");
+function attributeSaveSuccess() { 
     BindAllAttributes();
 }
 function attributeDeleteSuccess() {
     //alert("success");
+
     BindAllAttributes();
+    clearfields();
 }
 
 function attributeSaveFailure() {
@@ -145,6 +190,10 @@ function attributeSaveFailure() {
 function attributeSaveConfirm() {
     alert("Save Confirm");
 }
+function attributeDeleteConfirm() {
+    alert("Save Confirm");
+}
+
 //---------------------------------------Get Attributes Details By ID-------------------------------------//
 function GetAttributesDetailsByID(id) {
     try {
@@ -190,5 +239,13 @@ function BindAllAttributes() {
 
     }
 }
+
+//---------------------------------------Noty   Messages----------------------------------------------//
+
+//function NotyMessages(data) { //function CouponSubmitted(data) in the question
+//    debugger;
+//    var i = JSON.parse(data.responseText)
+//    notyAlert('success', i.Records.StatusMessage);
+//}
 
 
