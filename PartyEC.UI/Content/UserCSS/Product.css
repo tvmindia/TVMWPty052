@@ -3,3 +3,12 @@
     margin-left: -40px;
     margin-top:20px;
 }
+.rating-num { margin-top:0px;font-size: 100px; }
+.rating .glyphicon {font-size: 25px;}
+
+.rating-block{
+	
+	text-align: left;
+    margin-bottom: 5px
+	
+}

@@ -137,6 +137,13 @@ namespace PartyEC.UI.Models
 
         #endregion Inventory
 
+        #region ProductTags
+     
+        [Display(Name = "New Tags")]
+        [MaxLength(250)]
+        public string HeaderTag { get; set; }
+        #endregion ProductTags
+
         public CommonViewModel commonObj { get; set; }
 
         

@@ -26,7 +26,7 @@ $(document).ready(function () {
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [
-              {//hiding hidden column field churchid//data-toggle="popover" title="Popover Header" data-content="Some content inside the popover">Toggle popover
+              {//hiding hidden column 
                   "targets": [0],
                   "visible": true,
                   "searchable": true
