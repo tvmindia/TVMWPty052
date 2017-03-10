@@ -88,4 +88,11 @@ function GetDataFromServer(page, formData) {
 }
 
 
+function NetworkFailure(data, status, xhr) {
+    var i = JSON.parse(data)
+    notyAlert('error', status);
+}
+
+
+
 

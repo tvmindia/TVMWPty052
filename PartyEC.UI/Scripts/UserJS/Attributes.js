@@ -150,6 +150,7 @@ function DataTypeOnChange(){
         $("#AttributeType").attr('disabled', true);
     }
     else {
+        $("#CSValues").val("");
         $("#CSValues").attr('disabled', true);
     }
 }
@@ -159,12 +160,10 @@ function ConfigurableOnChange() {
     $("#AttributeType").attr('disabled', true);
     $("#CSValues").attr('disabled', false);
 }
-
 function SimpleOnChange() {
     debugger; 
     $("#AttributeType").attr('disabled', false);
 }
-
 function Validation() {
     debugger;   
     if ($("#CSValues").val() == "")
@@ -181,7 +180,6 @@ function Validation() {
         return true; 
 }
 
-
 //---------------------------------------Add New Click----------------------------------------------------//
 function btnAddNew() {
     $('#tabattributeDetails').trigger('click');
@@ -189,21 +187,36 @@ function btnAddNew() {
 }
 //---------------------------------------Save Click alerts------------------------------------------------//
 function attributeSaveSuccess(data, status, xhr) {
+    debugger;
     BindAllAttributes();
     var i = JSON.parse(data)
-    notyAlert('success', i.Record.StatusMessage);
+    switch(i.Result){
+        case "OK":
+            notyAlert('success', i.Record.StatusMessage);
+            break;
+        case "ERROR":
+            notyAlert('error', i.Message);
+            break;
+        default:
+            break;
+    }
+  
 }
 function attributeDeleteSuccess(data, status, xhr) {
     BindAllAttributes();
     clearfields();
     var i = JSON.parse(data)
-    notyAlert('success', i.Record.StatusMessage);
+    switch(i.Result){
+        case "OK":
+            notyAlert('success', i.Record.StatusMessage);
+            break;
+        case "ERROR":
+            notyAlert('error', i.Message);
+            break;
+        default:
+            break;
 }
 
-function attributeSaveFailure(data, status, xhr) {
-    var i = JSON.parse(data)
-    notyAlert('error', i.Record.StatusMessage);
-}
 function attributeSaveConfirm() {
     alert("Save Confirm");
 }
