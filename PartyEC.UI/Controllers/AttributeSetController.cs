@@ -42,6 +42,7 @@ namespace PartyEC.UI.Controllers
             // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public string PostTreeOrder(AttributeSetViewModel attributeSetViewModelObj)
         {
             try
@@ -81,6 +82,28 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string DeleteAttributeSet(AttributeSetViewModel attributeSetObj)
+        {
+            if (!ModelState.IsValid)
+            {
+                if (attributeSetObj.ID != 0)
+                {
+                    try
+                    {
+                        OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeSetBusiness.DeleteAttributeSet(attributeSetObj.ID));
+                        return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+                    }
+                    catch (Exception ex)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    }
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select Attribute Set" });
+        }
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
@@ -89,14 +112,18 @@ namespace PartyEC.UI.Controllers
             {
                 case "Edit":
                     ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Event = "Delete()";
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Event = "MainClick()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
                     break;
                 case "Add":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Disable = true;
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Event = "MainClick()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
                     break;
                 default:
                     return Content("Nochange");

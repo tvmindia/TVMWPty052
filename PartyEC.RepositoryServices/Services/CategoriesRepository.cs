@@ -7,7 +7,7 @@ using PartyEC.RepositoryServices.Contracts;
 
 namespace PartyEC.RepositoryServices.Services
 {
-    public class CategoryRepository :ICategoryRepository
+    public class CategoriesRepository :ICategoriesRepository
     {
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
@@ -15,7 +15,7 @@ namespace PartyEC.RepositoryServices.Services
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
         /// <param name="databaseFactory"></param>
-        public CategoryRepository(IDatabaseFactory databaseFactory)
+        public CategoriesRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }
@@ -24,9 +24,9 @@ namespace PartyEC.RepositoryServices.Services
         #region Methods
       
 
-        public List<Category> GetAllCategory()
+        public List<Categories> GetAllCategory()
         {
-            List<Category> Categorylist = null;
+            List<Categories> Categorylist = null;
             try
             {
 
@@ -39,9 +39,9 @@ namespace PartyEC.RepositoryServices.Services
             return Categorylist;
         }
 
-        public Category GetCategory(int CategoryID, OperationsStatus Status)
+        public Categories GetCategory(int CategoryID, OperationsStatus Status)
         {
-            Category myCategory = null;
+            Categories myCategory = null;
             try
             {
 
@@ -53,7 +53,7 @@ namespace PartyEC.RepositoryServices.Services
             return myCategory;
         }
 
-        public OperationsStatus InsertCategory(Category CategoryObj)
+        public OperationsStatus InsertCategory(Categories CategoryObj)
         {
             OperationsStatus operationsStatusObj = null;
             try
@@ -68,7 +68,7 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-        public OperationsStatus UpdateCategory(Category CategoryObj)
+        public OperationsStatus UpdateCategory(Categories CategoryObj)
         {
             OperationsStatus operationsStatusObj = null;
             try

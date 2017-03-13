@@ -92,6 +92,10 @@ namespace PartyEC.BusinessServices.Services
         {
             return _attributeSetRepository.UpdateAttributeSet(attributeSetObj, ID);
         }
+        public OperationsStatus DeleteAttributeSet(int ID)
+        {
+                return _attributeSetRepository.DeleteAttributeSet(ID);
+        }
     }
     public class AttributeToSetLinks : IAttributeToSetLinks
     {

@@ -410,6 +410,7 @@
     <Content Include="Scripts\jstree\dist\jstree.js" />
     <Content Include="Scripts\jstree\dist\jstree.min.js" />
     <Content Include="Scripts\UserJS\Attributes.js" />
+    <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
     <Content Include="Web.config" />
@@ -427,16 +428,19 @@
     <Compile Include="Controllers\AttributesController.cs" />
     <Compile Include="Controllers\AttributeSetController.cs" />
     <Compile Include="Controllers\AttributeSetLinkController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DynamicUIController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AttributesViewModel.cs" />
+    <Compile Include="Models\CategoriesViewModel.cs" />
     <Compile Include="Models\CommonViewModel.cs" />
     <Compile Include="Models\DynamicUIViewModel.cs" />
-    <Compile Include="Models\MasterViewModel.cs" />
+    <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\OperationsStatusViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
@@ -453,6 +457,7 @@
     <Content Include="Views\Attributes\Index.cshtml" />
     <Content Include="Views\AttributeSet\Index.cshtml" />
     <Content Include="Views\Shared\_ToolboxView.cshtml" />
+    <Content Include="Views\Event\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -463,6 +468,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
+    <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

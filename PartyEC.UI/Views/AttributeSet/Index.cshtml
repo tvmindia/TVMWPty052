@@ -22,6 +22,8 @@
                             @{
                                 PartyEC.UI.Models.ToolboxViewModel ToolBoxControl = new PartyEC.UI.Models.ToolboxViewModel();
                                 ToolBoxControl.addbtn.Visible = true;
+                                ToolBoxControl.addbtn.Event = "AddNew()";
+                                ToolBoxControl.addbtn.Title = "Add New";
                                 Html.RenderPartial("_ToolboxView", ToolBoxControl);
                             }
                         </div>
@@ -52,6 +54,7 @@
                                 ToolBoxControltab2.deletebtn.Disable = true;
                                 ToolBoxControltab2.savebtn.Visible = true;
                                 ToolBoxControltab2.savebtn.Event = "MainClick()";
+                                ToolBoxControltab2.savebtn.Title = "Save";
                                 Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
                             }
                         </div>
@@ -84,6 +87,16 @@
                             </div>
 
                         }
+                        <div id="attributeSetDelete" hidden="hidden">
+                            @using (Ajax.BeginForm("DeleteAttributeSet", "AttributeSet", new AjaxOptions { HttpMethod = "POST", Confirm = "Are you Sure?", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "CheckSubmittedDelete" }, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-actions no-color">
+                                    @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0",id="hdnDelete" })
+                                    <input id="btnFormDelete" type="submit" value="Delete" class="btn btn-default" />
+                                </div>
+                            }
+                        </div>
                         <div class="col-lg-6" style="margin-top:2%">
                             <div class="col-lg-6">
                                 <div class="panel panel-default panel-info">
