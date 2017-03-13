@@ -410,6 +410,7 @@
     <Content Include="Scripts\jstree\dist\jstree.js" />
     <Content Include="Scripts\jstree\dist\jstree.min.js" />
     <Content Include="Scripts\UserJS\Attributes.js" />
+    <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
     <Content Include="Web.config" />
