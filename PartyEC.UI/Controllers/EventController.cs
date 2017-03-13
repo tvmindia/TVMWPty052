@@ -30,14 +30,14 @@ namespace PartyEC.UI.Controllers
         public ActionResult Index()
         {
             EventViewModel catobj = new EventViewModel();
-                catobj.CategoryList = new List<CategoryViewModel>
+                catobj.CategoryList = new List<CategoriesViewModel>
             {
-                 new CategoryViewModel{ID = 1, Name = "Category1", Checked = false},
-                 new CategoryViewModel{ID = 2, Name = "Category2", Checked = false},
-                 new CategoryViewModel{ID = 3, Name = "Category3", Checked = false},
-                 new CategoryViewModel{ID = 4, Name = "Category4", Checked = false},
-                 new CategoryViewModel{ID = 5, Name = "Category5", Checked = false},
-                 new CategoryViewModel{ID = 6, Name = "Category6", Checked = false}, 
+                 new CategoriesViewModel{ID = 1, Name = "Category1", Checked = false},
+                 new CategoriesViewModel{ID = 2, Name = "Category2", Checked = false},
+                 new CategoriesViewModel{ID = 3, Name = "Category3", Checked = false},
+                 new CategoriesViewModel{ID = 4, Name = "Category4", Checked = false},
+                 new CategoriesViewModel{ID = 5, Name = "Category5", Checked = false},
+                 new CategoriesViewModel{ID = 6, Name = "Category6", Checked = false}, 
             };
             return View(catobj);
 

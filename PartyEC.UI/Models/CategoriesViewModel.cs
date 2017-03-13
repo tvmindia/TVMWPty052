@@ -6,7 +6,7 @@ using System.Web;
 
 namespace PartyEC.UI.Models
 {
-    public class CategoryViewModel
+    public class CategoriesViewModel
     {
         public int ID { get; set; } 
 

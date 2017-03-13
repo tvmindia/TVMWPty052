@@ -22,7 +22,7 @@ namespace PartyEC.UI.Models
         [Display(Name = "Event Image")]
         public string EventImage { get; set; }
 
-        public List<CategoryViewModel> CategoryList { get; set;}
+        public List<CategoriesViewModel> CategoryList { get; set;}
 
         //category view
 

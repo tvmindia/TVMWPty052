@@ -7,7 +7,7 @@ using PartyEC.BusinessServices.Contracts;
 
 namespace PartyEC.UI.Controllers
 {
-    public class CategoryController : Controller
+    public class CategoriesController : Controller
     {
 
         #region Constructor_Injection
@@ -15,7 +15,7 @@ namespace PartyEC.UI.Controllers
         ICategoriesBusiness _categoryBusiness;
         ICommonBusiness _commonBusiness;
 
-        public CategoryController(ICategoriesBusiness categoryBusiness, ICommonBusiness commonBusiness)
+        public CategoriesController(ICategoriesBusiness categoryBusiness, ICommonBusiness commonBusiness)
         {
             _categoryBusiness = categoryBusiness;
             _commonBusiness = commonBusiness;
