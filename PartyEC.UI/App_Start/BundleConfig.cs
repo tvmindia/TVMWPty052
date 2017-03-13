@@ -24,6 +24,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/product").Include("~/Scripts/UserJS/Products.js"));
             bundles.Add(new ScriptBundle("~/bundles/attributes").Include("~/Scripts/UserJS/Attributes.js"));
             bundles.Add(new ScriptBundle("~/bundles/AttributeSet").Include("~/Scripts/UserJS/AttributeSet.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Event").Include("~/Scripts/UserJS/Event.js"));
         }
     }
 }

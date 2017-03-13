@@ -22,6 +22,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<AttributesViewModel, Attributes>().ReverseMap();
                 config.CreateMap<AttributeSetViewModel, AttributeSet>().ReverseMap();
                 config.CreateMap<AttributeSetLinkViewModel, AttributeSetLink>().ReverseMap();
+                config.CreateMap<EventViewModel, Event>().ReverseMap();
             });
         }
 
