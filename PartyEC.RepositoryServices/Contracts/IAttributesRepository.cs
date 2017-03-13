@@ -22,6 +22,7 @@ namespace PartyEC.RepositoryServices.Contracts
         List<AttributeSet> GetAllAttributeSet();
         OperationsStatus InsertAttributeSet(AttributeSet obj);
         OperationsStatus UpdateAttributeSet(AttributeSet obj,int ID);
+        OperationsStatus DeleteAttributeSet(int ID);
     }
     public interface IAttributeToSetLinksRepository
     {

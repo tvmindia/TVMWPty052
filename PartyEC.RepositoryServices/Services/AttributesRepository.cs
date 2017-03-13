@@ -383,13 +383,16 @@ namespace PartyEC.RepositoryServices.Services
     {
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
+        private IAttributeToSetLinksRepository _attributeSetLinkRepository;
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
         /// <param name="databaseFactory"></param>
-        public AttributeSetRepository(IDatabaseFactory databaseFactory)
+        public AttributeSetRepository(IDatabaseFactory databaseFactory,IAttributeToSetLinksRepository attributeSetLinkRepository)
         {
             _databaseFactory = databaseFactory;
+            _attributeSetLinkRepository = attributeSetLinkRepository;
+
         }
         #endregion DataBaseFactory
         public List<AttributeSet> GetAllAttributeSet()
@@ -555,6 +558,57 @@ namespace PartyEC.RepositoryServices.Services
                 throw ex;
             }
 
+            return operationsStatusObj;
+        }
+        public OperationsStatus DeleteAttributeSet(int ID)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+               operationsStatusObj = _attributeSetLinkRepository.DeleteAttributeSetLink(ID);
+                if (operationsStatusObj.StatusCode == 1|| operationsStatusObj.StatusCode == 0)
+                {
+                    SqlParameter outparameter = null;
+                    using (SqlConnection con = _databaseFactory.GetDBConnection())
+                    {
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            if (con.State == ConnectionState.Closed)
+                            {
+                                con.Open();
+                            }
+                            cmd.Connection = con;
+                            cmd.CommandText = "[DeleteAttributeSet]";
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add("@ID", SqlDbType.VarChar, 50).Value = ID;
+                            outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                            outparameter.Direction = ParameterDirection.Output;
+                            cmd.ExecuteNonQuery();
+                            operationsStatusObj = new OperationsStatus();
+                            switch (outparameter.Value.ToString())
+                            {
+                                case "0":
+                                    // Delete not Successfull
+
+                                    operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Deletion Not Successfull!";
+                                    break;
+                                case "1":
+                                    //Delete Successfull
+                                    operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Deletion Successfull!";
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
             return operationsStatusObj;
         }
     }

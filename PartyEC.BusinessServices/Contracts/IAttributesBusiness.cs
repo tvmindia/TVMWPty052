@@ -22,6 +22,7 @@ namespace PartyEC.BusinessServices.Contracts
         List<AttributeSet> GetAllAttributeSet();
         OperationsStatus InsertAttributeSet(AttributeSet attributeSetObj);
         OperationsStatus UpdateAttributeSet(AttributeSet attributeSetObj,int ID);
+        OperationsStatus DeleteAttributeSet(int ID);
     }
     public interface IAttributeToSetLinks
     {
