@@ -23,6 +23,7 @@
                                 PartyEC.UI.Models.ToolboxViewModel ToolBoxControl = new PartyEC.UI.Models.ToolboxViewModel();
                                 ToolBoxControl.addbtn.Visible = true;
                                 ToolBoxControl.addbtn.Event = "AddNew()";
+                                ToolBoxControl.addbtn.Title = "Add New";
                                 Html.RenderPartial("_ToolboxView", ToolBoxControl);
                             }
                         </div>
@@ -53,6 +54,7 @@
                                 ToolBoxControltab2.deletebtn.Disable = true;
                                 ToolBoxControltab2.savebtn.Visible = true;
                                 ToolBoxControltab2.savebtn.Event = "MainClick()";
+                                ToolBoxControltab2.savebtn.Title = "Save";
                                 Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
                             }
                         </div>

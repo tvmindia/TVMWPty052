@@ -113,14 +113,17 @@ namespace PartyEC.UI.Controllers
                 case "Edit":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Event = "Delete()";
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Event = "MainClick()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
                     break;
                 case "Add":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Disable = true;
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Event = "MainClick()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
                     break;
                 default:
                     return Content("Nochange");
