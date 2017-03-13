@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartyEC.UI.Models
 {
-    public class ProductViewModel
+  public class ProductViewModel
     {
         #region General
         public int ID { get; set; }
@@ -42,10 +43,12 @@ namespace PartyEC.UI.Models
         [Required(ErrorMessage = "Please enter Supplier")]
         [Display(Name = "Supplier")]
         public int SupplierID { get; set; }
-        
+        public List<SelectListItem> suppliers { get; set; }
+        //  public List<SupplierViewModel> suppliers { get; set; }
+
         [Display(Name = "Manufacturer")]
         public int ManufacturerID { get; set; }
-
+        public List<SelectListItem> manufacturers { get; set; }
         [Required(ErrorMessage = "Please enter Product Type")]
         [Display(Name = "Product Type")]
         public char ProductType { get; set; }//simple //configurable
@@ -148,4 +151,6 @@ namespace PartyEC.UI.Models
 
         
     }
+
+
 }

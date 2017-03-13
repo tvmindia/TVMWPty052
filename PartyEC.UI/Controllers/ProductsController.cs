@@ -16,9 +16,11 @@ namespace PartyEC.UI.Controllers
 
         IProductBusiness _productBusiness;
         ICommonBusiness _commonBusiness;
-        public ProductsController(IProductBusiness productBusiness, ICommonBusiness commonBusiness)
+        IMasterBusiness _masterBusiness;
+        public ProductsController(IProductBusiness productBusiness,IMasterBusiness masterBusiness,ICommonBusiness commonBusiness)
         {
             _productBusiness = productBusiness;
+            _masterBusiness = masterBusiness;
             _commonBusiness = commonBusiness;
         }
 
@@ -29,8 +31,45 @@ namespace PartyEC.UI.Controllers
             //OperationsStatus myStatus = new OperationsStatus();
             //Product p = _productBusiness.GetProduct(1001, myStatus);
             //suv test
+            ProductViewModel product = null;
+            try
+            {
+                product = new ProductViewModel();
+                List<SelectListItem> selectListItem = new List<SelectListItem>();
+                List<SupplierViewModel> supplierListVM=Mapper.Map<List<Supplier>, List<SupplierViewModel>>(_masterBusiness.GetAllSuppliers());
+                foreach(SupplierViewModel svm in supplierListVM)
+                {
+                    selectListItem.Add(new SelectListItem
+                    {
+                        Text = svm.Name,
+                        Value = svm.ID.ToString(),
+                        Selected = false
+                    });
+                }
+                product.suppliers = selectListItem;
+                List<ManufacturerViewModel> manfactureListVM=Mapper.Map<List<Manufacturer>,List<ManufacturerViewModel>>(_masterBusiness.GetAllManufacturers());
+                selectListItem = null;
+                selectListItem = new List<SelectListItem>();
+                foreach (ManufacturerViewModel mvm in manfactureListVM)
+                {
+                    selectListItem.Add(new SelectListItem
+                    {
+                        Text = mvm.Name,
+                        Value = mvm.ID.ToString(),
+                        Selected = false
+                    });
+                }
+                product.manufacturers = selectListItem;
 
-            return View();
+
+            }
+            catch(Exception ex)
+            {
+
+            }
+            
+
+            return View(product);
         }
         [HttpGet]
         public string GetAllProducts(ProductViewModel productObj)

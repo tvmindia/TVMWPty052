@@ -436,6 +436,7 @@
     <Compile Include="Models\AttributesViewModel.cs" />
     <Compile Include="Models\CommonViewModel.cs" />
     <Compile Include="Models\DynamicUIViewModel.cs" />
+    <Compile Include="Models\MasterViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\OperationsStatusViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />

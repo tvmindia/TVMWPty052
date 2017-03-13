@@ -85,6 +85,7 @@
     <Compile Include="DTO\Category.cs" />
     <Compile Include="DTO\Common.cs" />
     <Compile Include="DTO\Event.cs" />
+    <Compile Include="DTO\Master.cs" />
     <Compile Include="DTO\Menu.cs" />
     <Compile Include="DTO\OperationsStatus.cs" />
     <Compile Include="DTO\Product.cs" />
