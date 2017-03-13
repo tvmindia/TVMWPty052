@@ -82,7 +82,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DTO\Attributes.cs" />
-    <Compile Include="DTO\Category.cs" />
+    <Compile Include="DTO\Categories.cs" />
     <Compile Include="DTO\Common.cs" />
     <Compile Include="DTO\Event.cs" />
     <Compile Include="DTO\Menu.cs" />

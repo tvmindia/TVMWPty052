@@ -12,10 +12,10 @@ namespace PartyEC.UI.Controllers
 
         #region Constructor_Injection
 
-        ICategoryBusiness _categoryBusiness;
+        ICategoriesBusiness _categoryBusiness;
         ICommonBusiness _commonBusiness;
 
-        public CategoryController(ICategoryBusiness categoryBusiness, ICommonBusiness commonBusiness)
+        public CategoryController(ICategoriesBusiness categoryBusiness, ICommonBusiness commonBusiness)
         {
             _categoryBusiness = categoryBusiness;
             _commonBusiness = commonBusiness;
