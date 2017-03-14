@@ -206,7 +206,7 @@ function attributeDeleteSuccess(data, status, xhr) {
     BindAllAttributes();
     clearfields();
     var i = JSON.parse(data)
-    switch(i.Result){
+    switch (i.Result) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
             break;
@@ -215,61 +215,62 @@ function attributeDeleteSuccess(data, status, xhr) {
             break;
         default:
             break;
+    }
 }
 
-function attributeSaveConfirm() {
-    alert("Save Confirm");
-}
-function attributeDeleteConfirm() {
-    alert("Save Confirm");
-}
+    function attributeSaveConfirm() {
+        alert("Save Confirm");
+    }
+    function attributeDeleteConfirm() {
+        alert("Save Confirm");
+    }
 
-//---------------------------------------Get Attributes Details By ID-------------------------------------//
-function GetAttributesDetailsByID(id) {
-    try {
-        var data = { "ID":id };
-        var ds = {};
-        ds = GetDataFromServer("Attributes/GetAttributes/", data);
-        if (ds != '') {
-            ds = JSON.parse(ds);
+    //---------------------------------------Get Attributes Details By ID-------------------------------------//
+    function GetAttributesDetailsByID(id) {
+        try {
+            var data = { "ID": id };
+            var ds = {};
+            ds = GetDataFromServer("Attributes/GetAttributes/", data);
+            if (ds != '') {
+                ds = JSON.parse(ds);
+            }
+            if (ds.Result == "OK") {
+                return ds.Records;
+            }
+            if (ds.Result == "ERROR") {
+                alert(ds.Message);
+            }
         }
-        if (ds.Result == "OK") {
-            return ds.Records;
-        }
-        if (ds.Result == "ERROR") {
-            alert(ds.Message);
-        }
-    }
-    catch (e) {
-        notyAlert('error', e.message);
-    }
-}
-//---------------------------------------Get All Attributes-----------------------------------------------//
-function GetAllAttributes(id) {
-    try {
-        var data = { "ID": id };
-        var ds = {};
-        ds = GetDataFromServer("Attributes/GetAllAttributes/", data);
-        if (ds != '') {
-            ds = JSON.parse(ds);
-        }
-        if (ds.Result == "OK") {
-            return ds.Records;
-        }
-        if (ds.Result == "ERROR") {
-            alert(ds.Message);
+        catch (e) {
+            notyAlert('error', e.message);
         }
     }
-    catch (e) {
-        notyAlert('error', e.message);
+    //---------------------------------------Get All Attributes-----------------------------------------------//
+    function GetAllAttributes(id) {
+        try {
+            var data = { "ID": id };
+            var ds = {};
+            ds = GetDataFromServer("Attributes/GetAllAttributes/", data);
+            if (ds != '') {
+                ds = JSON.parse(ds);
+            }
+            if (ds.Result == "OK") {
+                return ds.Records;
+            }
+            if (ds.Result == "ERROR") {
+                alert(ds.Message);
+            }
+        }
+        catch (e) {
+            notyAlert('error', e.message);
+        }
     }
-}
-//---------------------------------------Bind All Attributes----------------------------------------------//
-function BindAllAttributes() {
-    try {
-        DataTables.attributeTable.clear().rows.add(GetAllAttributes()).draw(false);
+    //---------------------------------------Bind All Attributes----------------------------------------------//
+    function BindAllAttributes() {
+        try {
+            DataTables.attributeTable.clear().rows.add(GetAllAttributes()).draw(false);
+        }
+        catch (e) {
+            notyAlert('error', e.message);
+        }
     }
-    catch (e) {
-        notyAlert('error', e.message);
-    }
-} 

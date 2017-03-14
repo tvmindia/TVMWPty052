@@ -51,15 +51,17 @@ namespace PartyEC.DataAccessObject.DTO
         public string Caption { get; set; }
         public string Value { get; set; }
         public string DataType { get; set; }
-
-       public AttributeValues() {
+        public bool Isconfigurable { get; set; }//false
+       public AttributeValues()
+        {
         }
 
         public AttributeValues( AttributeValues copy) {
             Name = copy.Name;
             Caption = copy.Caption;
             Value = copy.Value;
-            DataType = copy.DataType;                
+            DataType = copy.DataType;
+            Isconfigurable = copy.Isconfigurable;
         }
 
     }
