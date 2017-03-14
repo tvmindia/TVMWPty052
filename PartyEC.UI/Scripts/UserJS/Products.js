@@ -93,6 +93,8 @@ function Edit(currentObj)
     {
         var thisproduct = GetProduct(rowData.ID);
         $("#Name").val(thisproduct.Name);
+        $("#SKU").val(thisproduct.SKU);
+        //$("").val();
         $("#ShortDescription").val(thisproduct.ShortDescription);
         $("#ProductType").val(thisproduct.ProductType);
         $("#hdfproductID").val(thisproduct.ID);
@@ -169,7 +171,7 @@ function GetRelatedProducts(id) {
 
     }
     catch (e) {
-
+        notyAlert('error', e.message);
     }
 
 }

@@ -31,6 +31,8 @@ namespace PartyEC.UI.Controllers
             //OperationsStatus myStatus = new OperationsStatus();
             //Product p = _productBusiness.GetProduct(1001, myStatus);
             //suv test
+
+            //Drop BInd
             ProductViewModel product = null;
             try
             {
