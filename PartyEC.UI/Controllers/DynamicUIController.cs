@@ -61,7 +61,20 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
-       
+        [HttpGet]
+        public string GetTreeListCategories()
+        {
+            try
+            {
+                List<JsTreeNode> NodeList = _dynamicUIBusiness.GetTreeListCategories();
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+
         //[HttpGet]
         //public ActionResult ChangeButtonStyle(string ActionType)
         //{
@@ -79,7 +92,7 @@ namespace PartyEC.UI.Controllers
         //        ToolboxViewModelObj.savebtn.Visible = true;
         //        ToolboxViewModelObj.savebtn.Event = "MainClick()";
         //    }
-            
+
         //     return PartialView("_ToolboxView", ToolboxViewModelObj);
         //}
     }

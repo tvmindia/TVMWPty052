@@ -9,6 +9,7 @@ namespace PartyEC.UI.Models
     {
       
         public ToolBoxStructure addbtn;
+        public ToolBoxStructure addsubbtn;
         public ToolBoxStructure editbtn;
         public ToolBoxStructure deletebtn;
         public ToolBoxStructure savebtn;

@@ -33,6 +33,22 @@
        }
 
    }
+    @if (Model.addsubbtn.Visible)
+    {
+        if (Model.addsubbtn.Disable)
+        {
+            <a class="thr_disbtn">
+                <img src="@Url.Content("~/Content/images/add.PNG")">
+            </a>
+        }
+        else
+        {
+            <a title="Add Sub Category" class="thr_btn" onclick=@Model.addsubbtn.Event>
+                <img src="@Url.Content("~/Content/images/add.PNG")">
+            </a>
+        }
+
+    }
     @if (Model.editbtn.Visible)
     {
         if (Model.editbtn.Disable)

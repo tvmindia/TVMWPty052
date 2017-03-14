@@ -22,6 +22,7 @@ $(document).ready(function () {
         "state": { "key": "demo2" },
         "plugins": ["dnd", "state", "types"]
     });
+
     //Tree bind into the right side container
 
     $('#jstree_DragUpdate').jstree({

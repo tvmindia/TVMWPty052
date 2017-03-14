@@ -410,6 +410,7 @@
     <Content Include="Scripts\jstree\dist\jstree.js" />
     <Content Include="Scripts\jstree\dist\jstree.min.js" />
     <Content Include="Scripts\UserJS\Attributes.js" />
+    <Content Include="Scripts\UserJS\Categories.js" />
     <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
@@ -458,6 +459,7 @@
     <Content Include="Views\AttributeSet\Index.cshtml" />
     <Content Include="Views\Shared\_ToolboxView.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -468,7 +470,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
-    <Folder Include="Views\Category\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

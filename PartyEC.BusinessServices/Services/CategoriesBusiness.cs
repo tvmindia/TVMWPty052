@@ -38,12 +38,12 @@ namespace PartyEC.BusinessServices.Services
             return Categorylist;
         }
 
-        public Categories GetCategory(int CategoryID, OperationsStatus Status)
+        public Categories GetCategory(int CategoryID)
         {
             Categories myCategory = null;
             try
             {
-                myCategory= _categoryRepository.GetCategory(CategoryID,Status);
+                myCategory= _categoryRepository.GetCategory(CategoryID);
             }
             catch (Exception)
             {

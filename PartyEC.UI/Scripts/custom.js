@@ -1,19 +1,8 @@
 var appAddress = window.location.protocol + "//" + window.location.host + "/";   //Retrieving browser Url 
-var status = false;
-var defer = new $.deferred();
+
 $(document).ready(function () {
     
-    defer.progress(function (status) {
-        status = status;
-        if (status != undefined) {
-            defer.resolver();
-            if (!status) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-    });
+    
     //menu submenu popup on click 3rd level menus
     $('.navbar a.dropdown-toggle').on('click', function (e) {
         var $el = $(this);
