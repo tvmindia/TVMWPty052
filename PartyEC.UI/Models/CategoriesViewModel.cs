@@ -29,6 +29,7 @@ namespace PartyEC.UI.Models
         public float CategoryOrder { get; set; }
         public string ImageID { get; set; }
         public bool Checked  { get; set; }
+        public HttpPostedFile CategoryImageUpload { get; set; }
 
 
     }
