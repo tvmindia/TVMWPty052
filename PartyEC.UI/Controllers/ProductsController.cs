@@ -31,6 +31,8 @@ namespace PartyEC.UI.Controllers
             //OperationsStatus myStatus = new OperationsStatus();
             //Product p = _productBusiness.GetProduct(1001, myStatus);
             //suv test
+
+            //Drop BInd
             ProductViewModel product = null;
             try
             {
@@ -84,7 +86,27 @@ namespace PartyEC.UI.Controllers
             {
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
-           // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+         
+        }
+
+        [HttpGet]
+        public string GetRelatedProducts(string id)
+        {
+            try
+            {
+                if(!string.IsNullOrEmpty(id))
+                {
+                    List<ProductViewModel> productList = Mapper.Map<List<Product>, List<ProductViewModel>>(_productBusiness.GetRelatedProducts(int.Parse(id)));
+
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+                }
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "id is empty" });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+           
         }
 
         [HttpGet]

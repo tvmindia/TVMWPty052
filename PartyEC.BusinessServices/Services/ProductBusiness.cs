@@ -32,6 +32,22 @@ namespace PartyEC.BusinessServices.Services
             return productlist;
         }
 
+         public List<Product> GetRelatedProducts(int productID)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetRelatedProducts(productID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return productlist;
+        }
+
+
         public OperationsStatus InsertProduct(Product productObj)
         {
             
