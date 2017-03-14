@@ -19,6 +19,7 @@ namespace PartyEC.DataAccessObject.DTO
         public bool Enable { get; set; }
         public float CategoryOrder { get; set; }
         public string ImageID { get; set; }
+        public string URL { get; set; }
         public LogDetails commonObj { get; set; }
         public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
     }

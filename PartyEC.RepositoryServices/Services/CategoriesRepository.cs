@@ -70,6 +70,7 @@ namespace PartyEC.RepositoryServices.Services
                                         myCategory.Description = sdr["Description"].ToString();
                                         myCategory.ParentID=(sdr["ParentID"].ToString() != "" ? Int16.Parse(sdr["ParentID"].ToString()) : myCategory.ParentID);
                                     myCategory.ImageID = sdr["ImageID"].ToString();
+                                    myCategory.URL= sdr["URL"].ToString();
                                     myCategory.Navigation = sdr["Navigation"].ToString()!=""?bool.Parse(sdr["Navigation"].ToString()):false;
                                     myCategory.System= sdr["System"].ToString() != "" ? bool.Parse(sdr["System"].ToString()):false;
                                     myCategory.Filter= sdr["Filter"].ToString() != "" ? bool.Parse(sdr["Filter"].ToString()):false;

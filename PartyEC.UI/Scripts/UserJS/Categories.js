@@ -114,6 +114,8 @@ function myFunction(e,data)
     $("#Navigation").prop('checked', results.Navigation);
     $("#Filter").prop('checked', results.Filter);
     $("#Enable").prop('checked', results.Enable);
+    $("#ImageID").val(results.ImageID);
+    $("#imgCategory").attr('src', (results.URL != "" ? results.URL : "/Content/images/NoImageFound.png"));
     ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "AddSub");
 }
 function GetCategoryDetails(id)
