@@ -15,12 +15,14 @@ namespace PartyEC.UI.Controllers
     {
         #region Constructor_Injection
         IEventBusiness _eventBusiness;
+        ICategoriesBusiness _categoryBusiness;
         ICommonBusiness _commonBusiness;
 
-        public EventController(IEventBusiness eventBusiness, ICommonBusiness commonBusiness)
+        public EventController(IEventBusiness eventBusiness, ICommonBusiness commonBusiness,ICategoriesBusiness categoryBusiness)
         {    
-            _eventBusiness = eventBusiness;
+            _eventBusiness = eventBusiness;            
             _commonBusiness = commonBusiness;
+            _categoryBusiness = categoryBusiness;
         }
         #endregion Constructor_Injection
 
@@ -30,15 +32,7 @@ namespace PartyEC.UI.Controllers
         public ActionResult Index()
         {
             EventViewModel catobj = new EventViewModel();
-            catobj.CategoryList = new List<CategoriesViewModel>
-            {
-                 new CategoriesViewModel{ID = 1, Name = "Category1"},
-                 new CategoriesViewModel{ID = 2, Name = "Category2"},
-                 new CategoriesViewModel{ID = 3, Name = "Category3"},
-                 new CategoriesViewModel{ID = 4, Name = "Category4"},
-                 new CategoriesViewModel{ID = 5, Name = "Category5"},
-                 new CategoriesViewModel{ID = 6, Name = "Category6"}, 
-            };
+            catobj.CategoryList = Mapper.Map<List<Categories>, List<CategoriesViewModel>>(_categoryBusiness.GetAllCategory());
             return View(catobj);       
         }
         #endregion Index
@@ -58,7 +52,6 @@ namespace PartyEC.UI.Controllers
             }
         }
         #endregion  GetAllEvents
-
 
         #region GetEventByID
 
@@ -148,6 +141,6 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select attribute" });
         }
 
-        #endregion DeleteEvent
+        #endregion DeleteEvent    
     }
 }

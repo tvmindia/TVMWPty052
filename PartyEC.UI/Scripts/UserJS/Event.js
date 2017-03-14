@@ -15,7 +15,7 @@ $(document).ready(function ()
              columns: [
                { "data": "ID" },
                { "data": "Name" }, 
-               { "data": "RelatedCategories", "defaultContent": "<i>-</i>" },
+               { "data": "RelatedCategoriesCSV", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [{ "targets": [0], "visible": true, "searchable": false }]
@@ -30,8 +30,7 @@ $(document).ready(function ()
 //------------------------------$$$$$----FUNCTIONS----$$$$$-----------------------------------------------//
 
 //---------------------------------------Edit Events--------------------------------------------------//
-function Edit(currentObj) {
-    
+function Edit(currentObj) {    
     debugger;
     $('#tabeventDetails').trigger('click');
     var rowData = DataTables.eventTable.row($(currentObj).parents('tr')).data();
@@ -45,20 +44,26 @@ function fillevent(ID)
     debugger;
     var thisevent = GetEventDetailsByID(ID); //Binding Data
     $("#ID").val(thisevent.ID)
-    $("#deleteId").val(thisevent.ID)//for delete action    
-     
+    $("#deleteId").val(thisevent.ID)//for delete action 
     $("#Name").val(thisevent.Name);
-    $("RelatedCategories").val(thisevent.RelatedCategories);
-   //bind check boxes here by spliting Related
-    
-}
+    $("#RelatedCategoriesCSV").val(thisevent.RelatedCategoriesCSV);
+    //bind check boxes here, by spliting Related Categories CSV
+    var CSVarray=  thisevent.RelatedCategoriesCSV.split(",");
+    for (var i = 0 ; i<CSVarray.length;i++)
+    {
+    $("#"+CSVarray[i]).prop('checked', true);
+    }   
+} 
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
     debugger;
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
-    $("RelatedCategories").val("")
+    $("#RelatedCategoriesCSV").val("") 
+    $('input:checkbox').prop('checked', false);
+    $("#EventImageUpload").val("")
+  
   
 }
 //---------------------------------------Button Patch Click Events------------------------------------------------//
@@ -93,13 +98,28 @@ function clickdelete() {
         notyAlert('error', 'Please Select Event');       
     }    
 }
-//---------------------------------------Validation Functions---------------------------------------------//
-  
+//---------------------------------------Validation Functions---------------------------------------------//  
 function Validation() {
-    debugger; 
-    return true; 
+    debugger;
+/*--------------Checking the Checkboxes Checked 
+    and ID's saved in array. array value filled in RelatedCategoriesCSV---------------------*/
+    var checkboxCount = $("input:checked").length;
+    if (checkboxCount > 0){
+        var checked = [];
+        $(":checkbox").each(function () {
+            if (this.checked) {
+                checked.push(this.id);
+            }
+        });
+        var CSV = checked.toString();
+        $("#RelatedCategoriesCSV").val(CSV);
+        return true;
+    }
+    else {
+        notyAlert('error', 'Please Checked Related Categories');
+        return false;
+    }  
 }
-
 //---------------------------------------Add New Click----------------------------------------------------//
 function btnAddNew() {
     $('#tabeventDetails').trigger('click');
@@ -144,7 +164,6 @@ function DeleteSuccess(data, status, xhr) {
     function DeleteConfirm() {
         alert("Save Confirm");
     }
-
     //---------------------------------------Get Events Details By ID-------------------------------------//
     function GetEventDetailsByID(id) {
         try {

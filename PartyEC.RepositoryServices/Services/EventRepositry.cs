@@ -129,8 +129,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandText = "[InsertEvents]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = EventObj.Name;
-                        cmd.Parameters.Add("@Caption", SqlDbType.NVarChar, 250).Value = EventObj.RelatedCategoriesCSV;
-                        cmd.Parameters.Add("@EventImageID", SqlDbType.UniqueIdentifier).Value = EventObj.EventImageID;
+                        cmd.Parameters.Add("@RelatedCategoriesCSV", SqlDbType.NVarChar, 250).Value = EventObj.RelatedCategoriesCSV;
+                        cmd.Parameters.Add("@EventImageID", SqlDbType.UniqueIdentifier).Value = null;//EventObj.EventImageID;
                         cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 10).Value = EventObj.commonObj.CreatedBy;
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = EventObj.commonObj.CreatedDate;
 
@@ -182,9 +182,10 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[UpdateEvents]";
                         cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = EventObj.ID;
                         cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = EventObj.Name;
-                        cmd.Parameters.Add("@Caption", SqlDbType.NVarChar, 250).Value = EventObj.RelatedCategoriesCSV;
-                        cmd.Parameters.Add("@EventImageID", SqlDbType.UniqueIdentifier).Value = EventObj.EventImageID;
+                        cmd.Parameters.Add("@RelatedCategoriesCSV", SqlDbType.NVarChar, 250).Value = EventObj.RelatedCategoriesCSV;
+                        cmd.Parameters.Add("@EventImageID", SqlDbType.UniqueIdentifier).Value = null; //EventObj.EventImageID;
                         cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 10).Value = EventObj.commonObj.UpdatedBy;
                         cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = EventObj.commonObj.UpdatedDate;
 
