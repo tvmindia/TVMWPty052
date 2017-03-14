@@ -786,7 +786,76 @@ namespace PartyEC.RepositoryServices.Services
              
             return myImagesList;
         }
-       
+        public List<Product> GetRelatedProducts(int productID)
+        {
+            List<Product> productList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetRelatedProductsByProduct]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = productID;
+                      
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                productList = new List<Product>();
+                                while (sdr.Read())
+                                {
+                                    Product _productObj = new Product();
+                                    {
+                                        _productObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _productObj.ID);
+                                        _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
+                                        _productObj.SKU = (sdr["SKU"].ToString() != "" ? sdr["SKU"].ToString() : _productObj.SKU);
+                                        _productObj.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : _productObj.Enabled);
+                                        _productObj.Unit = (sdr["Unit"].ToString() != "" ? sdr["Unit"].ToString() : _productObj.Unit);
+                                        _productObj.TaxClass = (sdr["TaxClass"].ToString() != "" ? sdr[""].ToString() : _productObj.TaxClass);
+                                        _productObj.URL = (sdr["URL"].ToString() != "" ? sdr["URL"].ToString() : _productObj.URL);
+                                        _productObj.ShowPrice = (sdr["ShowPriceYN"].ToString() != "" ? bool.Parse(sdr["ShowPriceYN"].ToString()) : _productObj.ShowPrice);
+                                        _productObj.ActionType = (sdr["ActionType"].ToString() != "" ? char.Parse(sdr["ActionType"].ToString()) : _productObj.ActionType);
+                                        _productObj.SupplierID = (sdr["SupplierID"].ToString() != "" ? int.Parse(sdr["SupplierID"].ToString()) : _productObj.SupplierID);
+                                        _productObj.ManufacturerID = (sdr["ManufacturerID"].ToString() != "" ? int.Parse(sdr["ManufacturerID"].ToString()) : _productObj.ManufacturerID);
+                                        _productObj.BaseSellingPrice = (sdr["BaseSellingPrice"].ToString() != "" ? decimal.Parse(sdr["BaseSellingPrice"].ToString()) : _productObj.BaseSellingPrice);
+                                        _productObj.CostPrice = (sdr["CostPrice"].ToString() != "" ? decimal.Parse(sdr["CostPrice"].ToString()) : _productObj.CostPrice);
+                                        _productObj.ShortDescription = (sdr["ShortDescription"].ToString() != "" ? sdr["ShortDescription"].ToString() : _productObj.ShortDescription);
+                                        _productObj.LongDescription = (sdr["LongDescription"].ToString() != "" ? sdr["LongDescription"].ToString() : _productObj.LongDescription);
+                                        _productObj.ProductType = (sdr["ProductType"].ToString() != "" ? char.Parse(sdr["ProductType"].ToString()) : _productObj.ProductType);
+                                        _productObj.StockAvailable = (sdr["StockAvailableYN"].ToString() != "" ? bool.Parse(sdr["StockAvailableYN"].ToString()) : _productObj.StockAvailable);
+                                        _productObj.AttributeSetID = (sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : _productObj.AttributeSetID);
+                                        _productObj.FreeDelivery = (sdr["FreeDeliveryYN"].ToString() != "" ? bool.Parse(sdr["FreeDeliveryYN"].ToString()) : _productObj.FreeDelivery);
+                                        _productObj.HeaderTags = (sdr["HeaderTag"].ToString() != "" ? sdr["HeaderTag"].ToString() : _productObj.HeaderTags);
+                                        _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.SupplierName);
+                                        _productObj.ManufacturerName = (sdr["ManufacturerName"].ToString() != "" ? sdr["ManufacturerName"].ToString() : _productObj.ManufacturerName);
+                                        _productObj.StickerURL = (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : _productObj.StickerURL);
+                                        
+                                    }
+                                    productList.Add(_productObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return productList;
+
+
+        }
 
     }
 }
