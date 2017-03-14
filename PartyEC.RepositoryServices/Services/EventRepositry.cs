@@ -141,12 +141,10 @@ namespace PartyEC.RepositoryServices.Services
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                // not Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
                                 break;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = "Insertion Successfull!";
                                 break;
@@ -155,13 +153,11 @@ namespace PartyEC.RepositoryServices.Services
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
                 throw ex;
             }
-
             return operationsStatusObj;
         }
 
@@ -195,15 +191,13 @@ namespace PartyEC.RepositoryServices.Services
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
                         {
-                            case "0":
-                                // not Successfull
+                            case "0":                                
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = "Updation Not Successfull!";
                                 break;
-                            case "1":
-                                //Insert Successfull
+                            case "1":                               
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = "Updation Successfull!";
                                 break;
                             default:
                                 break;
@@ -216,7 +210,6 @@ namespace PartyEC.RepositoryServices.Services
             {
                 throw ex;
             }
-
             return operationsStatusObj;
         }
 
@@ -225,7 +218,6 @@ namespace PartyEC.RepositoryServices.Services
             OperationsStatus operationsStatusObj = null;
             try
             {
-
                 SqlParameter outparameter = null;
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
@@ -246,12 +238,10 @@ namespace PartyEC.RepositoryServices.Services
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                // not Successfull
                                 Status.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 Status.StatusMessage = "Deletion Not Successfull!";
                                 break;
                             case "1":
-                                //  Successfull
                                 Status.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 Status.StatusMessage = "Deletion Successfull!";
                                 break;
@@ -266,7 +256,6 @@ namespace PartyEC.RepositoryServices.Services
             {
                 throw ex;
             }
-
             return operationsStatusObj;
         }
 

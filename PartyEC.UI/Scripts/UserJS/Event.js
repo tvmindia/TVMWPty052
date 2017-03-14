@@ -48,7 +48,8 @@ function fillevent(ID)
     $("#Name").val(thisevent.Name);
     $("#RelatedCategoriesCSV").val(thisevent.RelatedCategoriesCSV);
     //bind check boxes here, by spliting Related Categories CSV
-    var CSVarray=  thisevent.RelatedCategoriesCSV.split(",");
+    var CSVarray = thisevent.RelatedCategoriesCSV.split(",");
+    $('input:checkbox').prop('checked', false);
     for (var i = 0 ; i<CSVarray.length;i++)
     {
     $("#"+CSVarray[i]).prop('checked', true);
@@ -129,6 +130,7 @@ function btnAddNew() {
 function SaveSuccess(data, status, xhr) {
     debugger;
     BindAllEvent();
+    clearfields();
     var i = JSON.parse(data)
     switch(i.Result){
         case "OK":
@@ -207,7 +209,7 @@ function DeleteSuccess(data, status, xhr) {
     //---------------------------------------Bind All Events----------------------------------------------//
     function BindAllEvent() {
         try {
-            DataTables.attributeTable.clear().rows.add(GetAllEvents()).draw(false);
+            DataTables.eventTable.clear().rows.add(GetAllEvents()).draw(false);
         }
         catch (e) {
             notyAlert('error', e.message);

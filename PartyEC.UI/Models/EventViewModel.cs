@@ -23,7 +23,7 @@ namespace PartyEC.UI.Models
         public List<CategoriesViewModel> CategoryList { get; set; }
 
         [Display(Name = "Event Image")]
-        public string EventImage { get; set; }
+        public string EventImageID { get; set; }
 
         public CommonViewModel commonObj { get; set; }
 
