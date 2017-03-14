@@ -31,7 +31,45 @@ namespace PartyEC.RepositoryServices.Services
             List<Categories> Categorylist = null;
             try
             {
-
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetCategories]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                Categorylist = new List<Categories>();
+                                while (sdr.Read())
+                                {
+                                    Categories categoriesObj = new Categories();
+                                    {
+                                        categoriesObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : categoriesObj.ID);
+                                        categoriesObj.Name = sdr["Name"].ToString();
+                                        categoriesObj.Description = sdr["Description"].ToString();
+                                        categoriesObj.ParentID = (sdr["ParentID"].ToString() != "" ? Int16.Parse(sdr["ParentID"].ToString()) : categoriesObj.ParentID);
+                                        categoriesObj.ImageID = sdr["ImageID"].ToString();
+                                        categoriesObj.URL = sdr["URL"].ToString();
+                                        categoriesObj.Navigation = sdr["Navigation"].ToString() != "" ? bool.Parse(sdr["Navigation"].ToString()) : false;
+                                        categoriesObj.System = sdr["System"].ToString() != "" ? bool.Parse(sdr["System"].ToString()) : false;
+                                        categoriesObj.Filter = sdr["Filter"].ToString() != "" ? bool.Parse(sdr["Filter"].ToString()) : false;
+                                        categoriesObj.Enable = sdr["Enable"].ToString() != "" ? bool.Parse(sdr["Enable"].ToString()) : false;
+                                        categoriesObj.ChildrenCount= (sdr["ChildrenCount"].ToString() != "" ? Int16.Parse(sdr["ChildrenCount"].ToString()) : categoriesObj.ChildrenCount);
+                                        categoriesObj.CategoryOrder= (sdr["CategoryOrder"].ToString() != "" ? float.Parse(sdr["CategoryOrder"].ToString()) : categoriesObj.ChildrenCount);
+                                    }
+                                    Categorylist.Add(categoriesObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
