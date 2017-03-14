@@ -55,7 +55,7 @@ namespace PartyEC.RepositoryServices.Services
                             con.Open();
                         }
                         cmd.Connection = con;
-                        cmd.CommandText = "[GetCategoryDetailByID]";
+                        cmd.CommandText = "[GetCategory]";
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = CategoryID;
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
