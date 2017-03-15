@@ -1,7 +1,15 @@
 var appAddress = window.location.protocol + "//" + window.location.host + "/";   //Retrieving browser Url 
 
 $(document).ready(function () {
-    
+  
+    $('input[type="date"]').datepicker({
+        format: "dd-M-yyyy",
+        maxViewMode: 0,
+        todayBtn: "linked",
+        clearBtn: true,
+        autoclose: true,
+        todayHighlight: true
+    });
     
     //menu submenu popup on click 3rd level menus
     $('.navbar a.dropdown-toggle').on('click', function (e) {

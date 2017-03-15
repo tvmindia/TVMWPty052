@@ -74,9 +74,6 @@ $(document).ready(function () {
     catch (e) {
         notyAlert('errror', e.message);
     }
-
-
-   
 });
 
 
