@@ -33,7 +33,9 @@ namespace PartyEC.DataAccessObject.DTO
         public string HeaderTags { get; set; }
         public Guid StickerID { get; set; }
         public string StickerURL { get; set; }
-
+        public bool IsCategorized { get; set; }
+        public int CategoryID { get; set; }
+        public float PositionNo { get; set; }
         public List<ProductDetail> ProductDetail { get; set; }
         public LogDetails LogDetails { get; set; }
         public List<ProductImages>ProductHeaderImages { get; set; }
