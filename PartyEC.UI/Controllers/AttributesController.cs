@@ -140,5 +140,51 @@ namespace PartyEC.UI.Controllers
         }
 
         #endregion DeleteAttributes
+        
+        #region ChangeButtonStyle
+        [HttpGet]
+        public ActionResult ChangeButtonStyle(string ActionType)
+        {
+            ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
+            switch (ActionType)
+            {
+                case "Edit":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Event = "clickdelete()";
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
+
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "clicksave()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    ToolboxViewModelObj.resetbtn.Visible = true;
+                    ToolboxViewModelObj.resetbtn.Event = "btnreset()";
+
+                    ToolboxViewModelObj.backbtn.Visible = true; 
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+
+                    break;
+                case "Add":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "clicksave()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    ToolboxViewModelObj.resetbtn.Visible = true;
+                    ToolboxViewModelObj.resetbtn.Event = "btnreset()";
+                    ToolboxViewModelObj.resetbtn.Title = "Reset";
+
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
+                default:
+                    return Content("Nochange");
+            }
+            return PartialView("_ToolboxView", ToolboxViewModelObj);
+        }
+        #endregion ChangeButtonStyle
     }
 }
