@@ -78,7 +78,6 @@
                         </div>
                         <div class="col-md-8 ">
                           @using (Ajax.BeginForm("InsertUpdateEvent", "Event", new AjaxOptions { HttpMethod = "POST", Confirm = "SaveConfirm", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
-                          
                           {
                             @Html.AntiForgeryToken()
                             <div class="tab-content EventTabContent">
@@ -95,16 +94,14 @@
                                             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                         </div>
-                                    </div>
-
+                                    </div> 
 
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.CategoryList, htmlAttributes: new { @class = "control-label col-md-4" })
                                         <div class="col-md-8 " style="height:200px; overflow-y:auto">
 
                                             @for (int i = 0; i < Model.CategoryList.Count; i++)
-                                        {
-                                        @*@Html.HiddenFor(x => x.CategoryList[i].Name)*@
+                                        { 
                                         @Html.CheckBox(Model.CategoryList[i].Name, false, new { id = Model.CategoryList[i].Name })
                                         @Html.LabelFor(x => x.CategoryList[i].Name, Model.CategoryList[i].Name)
                                         <br />
@@ -114,8 +111,6 @@
                                             @Html.EditorFor(model => model.RelatedCategoriesCSV, new { htmlAttributes = new { @class = "form-control" } })
                                         </div>
                                     </div>
-
-
 
                                     @*<div class="form-group">
                                         @Html.LabelFor(model => model.EventImageID, htmlAttributes: new { @class = "control-label col-md-4" })
@@ -150,7 +145,6 @@
                                 </div>
                             </div>
                           }
-
                         </div>
                         <div class="col-md-4">
                             @* Right hand side Space  *@
@@ -168,15 +162,10 @@
                         </div>
                     }
                 </div>
-
-
             </div>
         </div>
     </div>
 </div>
-
-
-
 
 @section Scripts {
     @Scripts.Render("~/bundles/datatable")

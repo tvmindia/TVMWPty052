@@ -2,7 +2,7 @@
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function ()
 {
-    ChangeButtonPatchView("Attributes", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Event", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
     try {       
         var EventViewModel = new Object();
@@ -19,7 +19,7 @@ $(document).ready(function ()
                { "data": "RelatedCategoriesCSV", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
-             columnDefs: [{ "targets": [0], "visible": true, "searchable": false }]
+             columnDefs: [{ "targets": [0], "visible": true, "searchable": true }]
          });
     }
     catch (e) {
@@ -33,7 +33,7 @@ $(document).ready(function ()
 //---------------------------------------Edit Events--------------------------------------------------//
 function Edit(currentObj) {    
     debugger;
-    ChangeButtonPatchView("Attributes", "btnPatchEdittab2", "Edit"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Event", "btnPatchEdittab2", "Edit"); //ControllerName,id of the container div,Name of the action
     $('#tabeventDetails').trigger('click');
     var rowData = DataTables.eventTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -126,7 +126,7 @@ function Validation() {
 //---------------------------------------Add New Click----------------------------------------------------//
 function btnAddNew() {
     $('#tabeventDetails').trigger('click');
-    ChangeButtonPatchView("Attributes", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Event", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
 }
 //---------------------------------------Save Click alerts------------------------------------------------//
@@ -134,7 +134,7 @@ function SaveSuccess(data, status, xhr) {
     debugger;
     BindAllEvent();
     clearfields();
-    ChangeButtonPatchView("Attributes", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Event", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
     var i = JSON.parse(data)
     switch(i.Result){
         case "OK":
@@ -151,7 +151,7 @@ function SaveSuccess(data, status, xhr) {
 function DeleteSuccess(data, status, xhr) {
     BindAllEvent();
     clearfields();
-    ChangeButtonPatchView("Attributes", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Event", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
     var i = JSON.parse(data)
     switch (i.Result) {
         case "OK":
