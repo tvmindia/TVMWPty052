@@ -3,7 +3,7 @@ var appAddress = window.location.protocol + "//" + window.location.host + "/";  
 $(document).ready(function () {
   
     $('input[type="date"]').datepicker({
-        format: "dd-M-yyyy",
+        format: "yyyy-mm-dd",//dd-M-yyyy",
         maxViewMode: 0,
         todayBtn: "linked",
         clearBtn: true,

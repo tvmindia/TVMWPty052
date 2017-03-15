@@ -88,12 +88,12 @@ namespace PartyEC.UI.Models
         public decimal DiscountAmount { get; set; }
 
         [DataType(DataType.Date,ErrorMessage ="Must be a Date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Discount Start Date")]
         public DateTime? DiscountStartDate { get; set; }
 
         [DataType(DataType.Date, ErrorMessage = "Must be a Date")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Discount End Date")]
         public DateTime? DiscountEndDate { get; set; }
 
