@@ -17,13 +17,13 @@ namespace PartyEC.UI.Models
         public string Name { get; set; }
 
         [Display(Name = "Related Categories")]
-        public string RelatedCategories { get; set; }
+        public string RelatedCategoriesCSV { get; set; }
 
         [Display(Name = "Related Categories")]
         public List<CategoriesViewModel> CategoryList { get; set; }
 
         [Display(Name = "Event Image")]
-        public string EventImage { get; set; }
+        public string EventImageID { get; set; }
 
         public CommonViewModel commonObj { get; set; }
 

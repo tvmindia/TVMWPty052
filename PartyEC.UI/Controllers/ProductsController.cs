@@ -17,11 +17,13 @@ namespace PartyEC.UI.Controllers
         IProductBusiness _productBusiness;
         ICommonBusiness _commonBusiness;
         IMasterBusiness _masterBusiness;
-        public ProductsController(IProductBusiness productBusiness,IMasterBusiness masterBusiness,ICommonBusiness commonBusiness)
+        IAttributeSetBusiness _attributeSetBusiness;
+        public ProductsController(IProductBusiness productBusiness,IMasterBusiness masterBusiness,ICommonBusiness commonBusiness, IAttributeSetBusiness attributeSetBusiness)
         {
             _productBusiness = productBusiness;
             _masterBusiness = masterBusiness;
             _commonBusiness = commonBusiness;
+            _attributeSetBusiness = attributeSetBusiness;
         }
 
         // GET: Products
@@ -31,11 +33,14 @@ namespace PartyEC.UI.Controllers
             //OperationsStatus myStatus = new OperationsStatus();
             //Product p = _productBusiness.GetProduct(1001, myStatus);
             //suv test
+
+            //Drop BInd
             ProductViewModel product = null;
             try
             {
                 product = new ProductViewModel();
                 List<SelectListItem> selectListItem = new List<SelectListItem>();
+                //Supplier Drop down bind
                 List<SupplierViewModel> supplierListVM=Mapper.Map<List<Supplier>, List<SupplierViewModel>>(_masterBusiness.GetAllSuppliers());
                 foreach(SupplierViewModel svm in supplierListVM)
                 {
@@ -47,6 +52,7 @@ namespace PartyEC.UI.Controllers
                     });
                 }
                 product.suppliers = selectListItem;
+                //Manufacturer Drop down bind
                 List<ManufacturerViewModel> manfactureListVM=Mapper.Map<List<Manufacturer>,List<ManufacturerViewModel>>(_masterBusiness.GetAllManufacturers());
                 selectListItem = null;
                 selectListItem = new List<SelectListItem>();
@@ -61,7 +67,20 @@ namespace PartyEC.UI.Controllers
                 }
                 product.manufacturers = selectListItem;
 
-
+                //AttributeSet Drop down bind
+                List<AttributeSetViewModel> AttributeSetListVM = Mapper.Map<List<AttributeSet>, List<AttributeSetViewModel>>(_attributeSetBusiness.GetAllAttributeSet());
+                selectListItem = null;
+                selectListItem = new List<SelectListItem>();
+                foreach (AttributeSetViewModel avm in AttributeSetListVM)
+                {
+                    selectListItem.Add(new SelectListItem
+                    {
+                        Text = avm.Name,
+                        Value = avm.ID.ToString(),
+                        Selected = false
+                    });
+                }
+                product.AttributeSets = selectListItem;
             }
             catch(Exception ex)
             {
@@ -84,7 +103,27 @@ namespace PartyEC.UI.Controllers
             {
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
-           // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+         
+        }
+
+        [HttpGet]
+        public string GetRelatedProducts(string id)
+        {
+            try
+            {
+                if(!string.IsNullOrEmpty(id))
+                {
+                    List<ProductViewModel> productList = Mapper.Map<List<Product>, List<ProductViewModel>>(_productBusiness.GetRelatedProducts(int.Parse(id)));
+
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+                }
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "id is empty" });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+           
         }
         [HttpGet]
         public string GetAllProductswithCategory(ProductViewModel productObj)

@@ -1,7 +1,15 @@
 var appAddress = window.location.protocol + "//" + window.location.host + "/";   //Retrieving browser Url 
 
 $(document).ready(function () {
-    
+  
+    $('input[type="date"]').datepicker({
+        format: "dd-M-yyyy",
+        maxViewMode: 0,
+        todayBtn: "linked",
+        clearBtn: true,
+        autoclose: true,
+        todayHighlight: true
+    });
     
     //menu submenu popup on click 3rd level menus
     $('.navbar a.dropdown-toggle').on('click', function (e) {
@@ -41,7 +49,7 @@ function notyAlert(type,msgtxt) {
 }
 function PostDataToServer(page,formData)
 {
-    debugger;
+   
     var jsonResult={};
     $.ajax({
         type: "POST",
@@ -68,7 +76,7 @@ function PostDataToServer(page,formData)
 
 
 function GetDataFromServer(page, formData) {
-    debugger;
+   
     var jsonResult = {};
     $.ajax({
         

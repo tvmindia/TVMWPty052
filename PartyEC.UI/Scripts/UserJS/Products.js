@@ -36,15 +36,52 @@ $(document).ready(function () {
     }
     catch (e)
     {
-        alert(e.message);
+        notyAlert('errror', e.message);
     }
     //Rating Popover
    $('[data-toggle="Ratingpopover"]').popover();
-   
+    try {
+
+        DataTables.RelatedproductsTable = $('#tblRelatedproducts').DataTable(
+         {
+             dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+             order: [],
+             searching: true,
+             paging: true,
+             data: null,
+             columns: [
+               { "data": "ID" },
+               { "data": "Name" },
+               { "data": "ProductType", "defaultContent": "<i>-</i>" },
+               { "data": "EnableYN", "defaultContent": "<i>-</i>" },
+               { "data": "SupplierID", "defaultContent": "<i>-</i>" },
+               { "data": "SKU", "defaultContent": "<i>-</i>" },
+               { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
+               { "data": "Qty", "defaultContent": "<i>-</i>" },
+               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
+         
+               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+             ],
+             columnDefs: [
+              {//hiding hidden column 
+                  "targets": [0],
+                  "visible": true,
+                  "searchable": true
+              }
+             ]
+         });
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
 });
+
+
+
 
 function Edit(currentObj)
 {
+  
    //Tab Change
     $('#tabproductDetails').trigger('click');
   
@@ -53,8 +90,12 @@ function Edit(currentObj)
     {
         var thisproduct = GetProduct(rowData.ID);
         $("#Name").val(thisproduct.Name);
+        $("#SKU").val(thisproduct.SKU);
+        //$("").val();
         $("#ShortDescription").val(thisproduct.ShortDescription);
         $("#ProductType").val(thisproduct.ProductType);
+        $("#hdfproductID").val(thisproduct.ID);
+        RefreshRelatedProducts(thisproduct.ID);
     }
 
    
@@ -84,9 +125,8 @@ function GetProduct(id)
 
 function GetAllProducts()
 {
-   
-    try {
-        debugger;
+  try {
+    
         var data = "";
         var ds = {};
         ds = GetDataFromServer("Products/GetAllProducts/", data);
@@ -109,7 +149,38 @@ function GetAllProducts()
     
 }
 
+function GetRelatedProducts(id) {
 
+    try {
+        
+        var data = {"id":id};
+        var ds = {};
+        ds = GetDataFromServer("Products/GetRelatedProducts/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+
+}
+
+function RefreshRelatedProducts(id) {
+    try {
+        DataTables.RelatedproductsTable.clear().rows.add(GetRelatedProducts(id)).draw(false);
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
 
 function productSaveSuccess()
 {

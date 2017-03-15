@@ -2,6 +2,7 @@
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function ()
 {
+    ChangeButtonPatchView("Event", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
     try {       
         var EventViewModel = new Object();
@@ -15,10 +16,10 @@ $(document).ready(function ()
              columns: [
                { "data": "ID" },
                { "data": "Name" }, 
-               { "data": "RelatedCategories", "defaultContent": "<i>-</i>" },
+               { "data": "RelatedCategoriesCSV", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
-             columnDefs: [{ "targets": [0], "visible": true, "searchable": false }]
+             columnDefs: [{ "targets": [0], "visible": true, "searchable": true }]
          });
     }
     catch (e) {
@@ -30,9 +31,9 @@ $(document).ready(function ()
 //------------------------------$$$$$----FUNCTIONS----$$$$$-----------------------------------------------//
 
 //---------------------------------------Edit Events--------------------------------------------------//
-function Edit(currentObj) {
-    
+function Edit(currentObj) {    
     debugger;
+    ChangeButtonPatchView("Event", "btnPatchEdittab2", "Edit"); //ControllerName,id of the container div,Name of the action
     $('#tabeventDetails').trigger('click');
     var rowData = DataTables.eventTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -45,20 +46,27 @@ function fillevent(ID)
     debugger;
     var thisevent = GetEventDetailsByID(ID); //Binding Data
     $("#ID").val(thisevent.ID)
-    $("#deleteId").val(thisevent.ID)//for delete action    
-     
+    $("#deleteId").val(thisevent.ID)//for delete action 
     $("#Name").val(thisevent.Name);
-    $("RelatedCategories").val(thisevent.RelatedCategories);
-   //bind check boxes here by spliting Related
-    
-}
+    $("#RelatedCategoriesCSV").val(thisevent.RelatedCategoriesCSV);
+    //bind check boxes here, by spliting Related Categories CSV
+    var CSVarray = thisevent.RelatedCategoriesCSV.split(",");
+    $('input:checkbox').prop('checked', false);
+    for (var i = 0 ; i<CSVarray.length;i++)
+    {
+    $("#"+CSVarray[i]).prop('checked', true);
+    }   
+} 
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
     debugger;
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
-    $("RelatedCategories").val("")
+    $("#RelatedCategoriesCSV").val("") 
+    $('input:checkbox').prop('checked', false);
+    $("#EventImageID").val("")
+  
   
 }
 //---------------------------------------Button Patch Click Events------------------------------------------------//
@@ -93,22 +101,40 @@ function clickdelete() {
         notyAlert('error', 'Please Select Event');       
     }    
 }
-//---------------------------------------Validation Functions---------------------------------------------//
-  
+//---------------------------------------Validation Functions---------------------------------------------//  
 function Validation() {
-    debugger; 
-    return true; 
+    debugger;
+/*--------------Checking the Checkboxes Checked 
+    and ID's saved in array. array value filled in RelatedCategoriesCSV---------------------*/
+    var checkboxCount = $("input:checked").length;
+    if (checkboxCount > 0){
+        var checked = [];
+        $(":checkbox").each(function () {
+            if (this.checked) {
+                checked.push(this.id);
+            }
+        });
+        var CSV = checked.toString();
+        $("#RelatedCategoriesCSV").val(CSV);
+        return true;
+    }
+    else {
+        notyAlert('error', 'Please Checked Related Categories');
+        return false;
+    }  
 }
-
 //---------------------------------------Add New Click----------------------------------------------------//
 function btnAddNew() {
     $('#tabeventDetails').trigger('click');
+    ChangeButtonPatchView("Event", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
 }
 //---------------------------------------Save Click alerts------------------------------------------------//
 function SaveSuccess(data, status, xhr) {
     debugger;
     BindAllEvent();
+    clearfields();
+    ChangeButtonPatchView("Event", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
     var i = JSON.parse(data)
     switch(i.Result){
         case "OK":
@@ -125,6 +151,7 @@ function SaveSuccess(data, status, xhr) {
 function DeleteSuccess(data, status, xhr) {
     BindAllEvent();
     clearfields();
+    ChangeButtonPatchView("Event", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
     var i = JSON.parse(data)
     switch (i.Result) {
         case "OK":
@@ -144,7 +171,6 @@ function DeleteSuccess(data, status, xhr) {
     function DeleteConfirm() {
         alert("Save Confirm");
     }
-
     //---------------------------------------Get Events Details By ID-------------------------------------//
     function GetEventDetailsByID(id) {
         try {
@@ -188,7 +214,7 @@ function DeleteSuccess(data, status, xhr) {
     //---------------------------------------Bind All Events----------------------------------------------//
     function BindAllEvent() {
         try {
-            DataTables.attributeTable.clear().rows.add(GetAllEvents()).draw(false);
+            DataTables.eventTable.clear().rows.add(GetAllEvents()).draw(false);
         }
         catch (e) {
             notyAlert('error', e.message);

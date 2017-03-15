@@ -2,6 +2,7 @@
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function ()
 {
+    ChangeButtonPatchView("Attributes", "btnPatchAttributestab2", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
     try {       
         var AttributesViewModel = new Object();
@@ -50,6 +51,7 @@ $(document).ready(function ()
 function Edit(currentObj) {
     //Tab Change on edit click
     $('#tabattributeDetails').trigger('click');
+    ChangeButtonPatchView("Attributes", "btnPatchAttributestab2", "Edit"); //ControllerName,id of the container div,Name of the action
     var rowData = DataTables.attributeTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         fillAttributes(rowData.ID);
@@ -58,12 +60,10 @@ function Edit(currentObj) {
 //---------------------------------------Fill Attributes--------------------------------------------------//
 function fillAttributes(ID)
 {
-    debugger;
     var thisattribute = GetAttributesDetailsByID(ID); //Binding Data
     //Hidden
     $("#ID").val(thisattribute.ID)
-    $("#deleteId").val(thisattribute.ID)//for delete action
-    
+    $("#deleteId").val(thisattribute.ID)//for delete action    
     //Textboxes
     $("#Name").val(thisattribute.Name);
     $("#Caption").val(thisattribute.Caption)
@@ -86,12 +86,10 @@ function fillAttributes(ID)
     { $("#ComparableYN").prop('checked', false); }
     else { $("#ComparableYN").prop('checked', true); }
     
-    DataTypeOnChange();
-  
+    DataTypeOnChange();  
 }
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
-    debugger;
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
@@ -104,10 +102,10 @@ function clearfields() {
     $("#FilterYN").prop('checked', false);
     $("#married-false").prop('checked', false);
     $("#married-true").prop('checked', false);
+    $("#AttributeType").attr('disabled', false);
 }
 //---------------------------------------Button Patch Click Events------------------------------------------------//
 function btnreset() {
-    debugger;
     if ($("#ID").val() == 0) {
         clearfields();
     }
@@ -131,7 +129,6 @@ function goback() {
 }
 //---------------------------------------Delete-------------------------------------------------------//
 function clickdelete() {
-    debugger;
     var id = $("#ID").val();
     if (id != 0) {
         $("#btnFormDelete").click();
@@ -142,7 +139,6 @@ function clickdelete() {
 }
 //---------------------------------------Validation Functions---------------------------------------------//
 function DataTypeOnChange(){
-    debugger;
     var DataType = $("#AttributeType").val()
     if (DataType == "C") {
         $("#CSValues").attr('disabled', false);
@@ -155,17 +151,14 @@ function DataTypeOnChange(){
     }
 }
 function ConfigurableOnChange() {
-    debugger;
     $("#AttributeType").val("C");
     $("#AttributeType").attr('disabled', true);
     $("#CSValues").attr('disabled', false);
 }
 function SimpleOnChange() {
-    debugger; 
     $("#AttributeType").attr('disabled', false);
 }
 function Validation() {
-    debugger;   
     if ($("#CSValues").val() == "")
     {
         if ($("#married-true").is(":checked"))
@@ -182,13 +175,14 @@ function Validation() {
 
 //---------------------------------------Add New Click----------------------------------------------------//
 function btnAddNew() {
-    $('#tabattributeDetails').trigger('click');
+    $('#tabattributeDetails').trigger('click');    
+    ChangeButtonPatchView("Attributes", "btnPatchAttributestab2", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
 }
 //---------------------------------------Save Click alerts------------------------------------------------//
 function attributeSaveSuccess(data, status, xhr) {
-    debugger;
     BindAllAttributes();
+    clearfields();
     var i = JSON.parse(data)
     switch(i.Result){
         case "OK":
@@ -205,6 +199,8 @@ function attributeSaveSuccess(data, status, xhr) {
 function attributeDeleteSuccess(data, status, xhr) {
     BindAllAttributes();
     clearfields();
+    ChangeButtonPatchView("Attributes", "btnPatchAttributestab2", "Add"); //ControllerName,id of the container div,Name of the action
+
     var i = JSON.parse(data)
     switch (i.Result) {
         case "OK":

@@ -15,5 +15,7 @@ namespace PartyEC.BusinessServices.Contracts
         List<Product> GetUnAssignedPro(string CategoryID);
         OperationsStatus InsertProduct(Product productObj);
         Product GetProduct(int ProductID, OperationsStatus Status);
+        List<Product> GetRelatedProducts(int productID);
+
     }
 }
