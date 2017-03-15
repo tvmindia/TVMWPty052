@@ -62,8 +62,7 @@ namespace PartyEC.UI.Models
         [Display(Name = "Free Delivery(Y/N)")]
         public Boolean FreeDelivery { get; set; }
 
-        [Display(Name = "Search Tags")]
-        public string HeaderTags { get; set; }
+
         #endregion General
         #region Prices
         [Required(ErrorMessage = "Please enter Cost Price")]
@@ -88,12 +87,12 @@ namespace PartyEC.UI.Models
         public decimal DiscountAmount { get; set; }
 
         [DataType(DataType.Date,ErrorMessage ="Must be a Date")]
-        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:dd-M-yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Discount Start Date")]
         public DateTime? DiscountStartDate { get; set; }
 
         [DataType(DataType.Date, ErrorMessage = "Must be a Date")]
-        //[DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}", ApplyFormatInEditMode = true)]
+        //[DisplayFormat(DataFormatString = "{0:dd-M-yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Discount End Date")]
         public DateTime? DiscountEndDate { get; set; }
 
@@ -154,7 +153,7 @@ namespace PartyEC.UI.Models
         public bool IsCategorized { get; set; }
         public int CategoryID { get; set; }
         public float PositionNo { get; set; }
-        public CommonViewModel commonObj { get; set; }
+        public CommonViewModel logDetails { get; set; }
 
         
     }

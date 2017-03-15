@@ -1,8 +1,38 @@
 ﻿var DataTables = {};
 
 $(document).ready(function () {
-    // $("#tblproducts").DataTable();
-   
+
+
+    $("#HeaderTag").on({
+
+        focusout: function () {
+            var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, ''); // allowed characters
+            if (txt) $("<span/>", { text: txt.toLowerCase(), insertAfter: this }).attr({ 'class': 'Htags','onclick':'removeme(this)' });
+            this.value = "";
+        },
+        keypress: function (ev) {
+            if (ev.keyCode == 13) {
+                if (/(188|13)/.test(ev.which)) $(this).focusout();
+                var callbacks = $.Callbacks();
+                callbacks.disable();
+                return false;
+            }
+        }
+    });
+    //$(".Htags").on('click', 'span', function () {
+    //    alert("clciked");
+    //    $(this).remove();
+    //});
+    //spanTag.onclick = function () {
+    //    this.parentNode.removeChild(this);
+    //};
+    //$(".Htags").on('click', 'span', function () {
+    //    alert("clciked");
+    //    $(this).remove();
+    //});
+    //$('.Htags').click(function () {
+    //    alert('hohoho');
+    //});
    try {
        
         DataTables.productTable = $('#tblproducts').DataTable(
@@ -75,7 +105,11 @@ $(document).ready(function () {
         notyAlert('errror', e.message);
     }
 });
-
+//remove header tags
+function removeme(current)
+{
+    $(current).remove();
+}
 
 
 
