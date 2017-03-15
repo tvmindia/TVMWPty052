@@ -37,11 +37,12 @@ namespace PartyEC.DataAccessObject.DTO
         public int CategoryID { get; set; }
         public float PositionNo { get; set; }
         public List<ProductDetail> ProductDetail { get; set; }
-        public LogDetails LogDetails { get; set; }
+        public ProductDetail productDetail { get; set; }
+        public LogDetails logDetails { get; set; }
         public List<ProductImages>ProductHeaderImages { get; set; }
         public Product() {
-            LogDetails = new LogDetails();
-            ProductDetail = new List<ProductDetail>();
+            //LogDetails = new LogDetails();
+           // ProductDetail = new List<ProductDetail>();
             ProductHeaderImages = new List<ProductImages>();
         }
     }
@@ -60,12 +61,12 @@ namespace PartyEC.DataAccessObject.DTO
         public decimal DiscountAmount { get; set; }
         public DateTime DiscountStartDate{ get; set; }
         public DateTime DiscountEndDate { get; set; }
-        public LogDetails LogDetails { get; set; }
+        public LogDetails logDetails { get; set; }
         public List<AttributeValues> ProductAttributes { get; set; }
         public List<ProductImages> ProductDetailImages { get; set; }
 
         public ProductDetail() {
-            LogDetails = new LogDetails();
+            //logDetails = new LogDetails();
             ProductAttributes = new List<AttributeValues>();
             ProductDetailImages = new List<ProductImages>();
         }
