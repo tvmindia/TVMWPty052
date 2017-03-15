@@ -174,6 +174,7 @@ namespace PartyEC.UI.Controllers
 
                     ToolboxViewModelObj.resetbtn.Visible = true;
                     ToolboxViewModelObj.resetbtn.Event = "btnreset()";
+                    ToolboxViewModelObj.resetbtn.Title = "Reset";
 
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";
