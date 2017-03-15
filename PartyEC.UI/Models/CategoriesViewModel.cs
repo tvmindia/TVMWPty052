@@ -30,7 +30,10 @@ namespace PartyEC.UI.Models
         public string ImageID { get; set; }
         public bool Checked  { get; set; }
         public string URL { get; set; }
+        public string TableDataAdd { get; set; }
+        public string TableDataDelete { get; set; }
         public HttpPostedFile CategoryImageUpload { get; set; }
+        public CommonViewModel commonObj { get; set; }
 
 
     }

@@ -27,6 +27,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<SupplierViewModel,Supplier>().ReverseMap();
                 config.CreateMap<CountryViewModel, Country>().ReverseMap();
                 config.CreateMap<EventViewModel, Event>().ReverseMap();
+                config.CreateMap<ProductCategoryLinkViewModel, ProductCategoryLink>().ReverseMap();
             });
         }
 

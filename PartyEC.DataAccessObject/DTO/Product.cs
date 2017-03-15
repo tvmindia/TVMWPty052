@@ -33,7 +33,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string HeaderTags { get; set; }
         public Guid StickerID { get; set; }
         public string StickerURL { get; set; }
-        public bool IsCategorized { get; set; }
+        public int LinkID { get; set; }
         public int CategoryID { get; set; }
         public float PositionNo { get; set; }
         public List<ProductDetail> ProductDetail { get; set; }
@@ -92,6 +92,13 @@ namespace PartyEC.DataAccessObject.DTO
         public int ID { get; set; }
         public string URL { get; set; }
         public bool isMain { get; set; }
+    }
+    public class ProductCategoryLink
+    {
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int CategoryID { get; set; }
+        public LogDetails commonObj { get; set; }
     }
 
     

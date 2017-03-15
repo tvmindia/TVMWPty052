@@ -151,13 +151,21 @@ namespace PartyEC.UI.Models
         [MaxLength(250)]
         public string HeaderTag { get; set; }
         #endregion ProductTags
-        public bool IsCategorized { get; set; }
+        public int LinkID { get; set; }
         public int CategoryID { get; set; }
         public float PositionNo { get; set; }
         public CommonViewModel commonObj { get; set; }
 
         
     }
+    public class ProductCategoryLinkViewModel
+    {
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int CategoryID {get;set;}
+        public CommonViewModel commonObj { get; set; }
+    }
+
 
 
 }

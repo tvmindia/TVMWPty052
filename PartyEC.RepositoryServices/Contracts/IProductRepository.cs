@@ -10,11 +10,12 @@ namespace PartyEC.RepositoryServices.Contracts
    public interface IProductRepository
    {
        List<Product> GetAllProducts(Product productObj);
-        List<Product> GetAllProductswithCategory(Product ProductObj);
+        List<Product> GetAllProductswithCategory(string CategoryID);
         List<Product> GetAssignedPro(string CategoryID);
         List<Product> GetUnAssignedPro(string CategoryID);
         OperationsStatus InsertProduct(Product productObj);
-       Product GetProduct(int ProductID, OperationsStatus Status);
+        OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList, List<ProductCategoryLink> DeleteList);
+        Product GetProduct(int ProductID, OperationsStatus Status);
        OperationsStatus UpdateProduct(Product productObj);
        List<Product> GetRelatedProducts(int productID);
 

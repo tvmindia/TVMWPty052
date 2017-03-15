@@ -31,12 +31,12 @@ namespace PartyEC.BusinessServices.Services
             }
             return productlist;
         }
-        public List<Product> GetAllProductswithCategory(Product productObj)
+        public List<Product> GetAllProductswithCategory(string CategoryID)
         {
             List<Product> productlist = null;
             try
             {
-                productlist = _productRepository.GetAllProductswithCategory(productObj);
+                productlist = _productRepository.GetAllProductswithCategory(CategoryID);
 
             }
             catch (Exception)
@@ -100,6 +100,13 @@ namespace PartyEC.BusinessServices.Services
         public Product GetProduct(int ProductID, OperationsStatus Status) {
 
             return _productRepository.GetProduct(ProductID, Status);
+        }
+
+        public OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList, List<ProductCategoryLink> DeleteList)
+        {
+
+            return _productRepository.AddOrRemoveProductCategoryLink(AddList,DeleteList);
+
         }
 
     }
