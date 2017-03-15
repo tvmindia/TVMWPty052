@@ -10,7 +10,10 @@ namespace PartyEC.RepositoryServices.Contracts
    public interface IProductRepository
    {
        List<Product> GetAllProducts(Product productObj);
-       OperationsStatus InsertProduct(Product productObj);
+        List<Product> GetAllProductswithCategory(Product ProductObj);
+        List<Product> GetAssignedPro(string CategoryID);
+        List<Product> GetUnAssignedPro(string CategoryID);
+        OperationsStatus InsertProduct(Product productObj);
        Product GetProduct(int ProductID, OperationsStatus Status);
        OperationsStatus UpdateProduct(Product productObj);
 

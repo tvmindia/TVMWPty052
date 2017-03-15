@@ -86,6 +86,51 @@ namespace PartyEC.UI.Controllers
             }
            // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
         }
+        [HttpGet]
+        public string GetAllProductswithCategory(ProductViewModel productObj)
+        {
+            try
+            {
+                List<ProductViewModel> productList = Mapper.Map<List<Product>, List<ProductViewModel>>(_productBusiness.GetAllProductswithCategory(Mapper.Map<ProductViewModel, Product>(productObj)));
+
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+            // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+        }
+        [HttpGet]
+        public string GetAssignedPro(string CategoryID)
+        {
+            try
+            {
+                List<ProductViewModel> productList = Mapper.Map<List<Product>, List<ProductViewModel>>(_productBusiness.GetAssignedPro(CategoryID));
+
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+            // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+        }
+        [HttpGet]
+        public string GetUnAssignedPro(string CategoryID)
+        {
+            try
+            {
+                List<ProductViewModel> productList = Mapper.Map<List<Product>, List<ProductViewModel>>(_productBusiness.GetUnAssignedPro(CategoryID));
+
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+            // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+        }
 
         [HttpGet]
         public string GetProduct(string id)

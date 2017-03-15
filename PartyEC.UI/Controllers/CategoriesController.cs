@@ -51,27 +51,50 @@ namespace PartyEC.UI.Controllers
             {
                 case "Edit":
                     ToolboxViewModelObj.deletebtn.Visible = true;
-                    ToolboxViewModelObj.deletebtn.Event = "Delete()";
                     ToolboxViewModelObj.deletebtn.Title = "Delete";
+
+
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Event = "MainClick()";
                     ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    ToolboxViewModelObj.addsubbtn.Visible = true;
+                    ToolboxViewModelObj.addsubbtn.Event = "AddNewSubCategory()";
+
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+                    ToolboxViewModelObj.addbtn.Event = "AddCategory()";
+
                     break;
                 case "Add":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Disable = true;
+
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Event = "MainClick()";
                     ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    ToolboxViewModelObj.addsubbtn.Visible = true;
+                    ToolboxViewModelObj.addsubbtn.Disable = true;
+
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+                    ToolboxViewModelObj.addbtn.Event = "AddCategory()";
                     break;
                 case "AddSub":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Disable = true;
+
                     ToolboxViewModelObj.savebtn.Visible = true;
-                    ToolboxViewModelObj.savebtn.Disable = true;
+                    ToolboxViewModelObj.savebtn.Event = "MainClick()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+
                     ToolboxViewModelObj.addsubbtn.Visible = true;
                     ToolboxViewModelObj.addsubbtn.Event = "AddNewSubCategory()";
+
                     ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+                    ToolboxViewModelObj.addbtn.Event = "AddCategory()";
                     break;
                 default:
                     return Content("Nochange");

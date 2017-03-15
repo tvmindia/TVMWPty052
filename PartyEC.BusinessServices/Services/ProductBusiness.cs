@@ -31,6 +31,48 @@ namespace PartyEC.BusinessServices.Services
             }
             return productlist;
         }
+        public List<Product> GetAllProductswithCategory(Product productObj)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetAllProductswithCategory(productObj);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return productlist;
+        }
+        public List<Product> GetAssignedPro(string CategoryID)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetAssignedPro(CategoryID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return productlist;
+        }
+        public List<Product> GetUnAssignedPro(string CategoryID)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetUnAssignedPro(CategoryID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return productlist;
+        }
 
         public OperationsStatus InsertProduct(Product productObj)
         {

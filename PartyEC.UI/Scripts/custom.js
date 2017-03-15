@@ -108,31 +108,20 @@ function NetworkFailure(data, status, xhr) {
     notyAlert('error', status);
 }
 
-function showConfirm(defer)
-{
-    var _self = this;
-    var status = undefined;
-    var n = noty({
-        text: 'Are you sure you want to delete?',
-        type: 'confirm',
-        dismissQueue: false,
-        layout: 'topRight',
-        theme: 'metroui',
-        buttons: [{addClass: 'btn btn-primary', text: 'Ok', onClick: function($noty) {
-            _self.status = true;
-            $noty.close();
-            // return true;
-            defer.notify(_self.status);
-    }
-},
-{addClass: 'btn btn-danger', text: 'Cancel', onClick: function($noty) {
-    $noty.close();
-    // return false
-    defer.notify(_self.status);
-}
-}
-        ]
-    })
-}
+//Common function for clearing input fields
+function ClearFields() {
+    $(':input').each(function () {
 
+        if (this.type == 'text' || this.type == 'textarea' || this.type == 'file'|| this.type == 'search') {
+            this.value = '';
+        }
+        else if (this.type == 'checkbox') {
+            this.checked = false;
+        }
+        else if (this.type == 'select-one' || this.type == 'select-multiple') {
+            this.value = '-1';
+        }
+    });
+
+}
 
