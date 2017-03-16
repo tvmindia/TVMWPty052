@@ -38,6 +38,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/AttributeSet").Include("~/Scripts/UserJS/AttributeSet.js"));
             bundles.Add(new ScriptBundle("~/bundles/Event").Include("~/Scripts/UserJS/Event.js"));
             bundles.Add(new ScriptBundle("~/bundles/Categories").Include("~/Scripts/UserJS/Categories.js"));
+            bundles.Add(new ScriptBundle("~/bundles/EventRequests").Include("~/Scripts/UserJS/EventRequests.js"));
         }
     }
 }

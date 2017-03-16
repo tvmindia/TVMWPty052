@@ -81,15 +81,15 @@ namespace PartyEC.UI.Controllers
         {
             if (ModelState.IsValid)
             {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
                 if (EventObj.ID == 0)
                 { 
                     try
                     {
-                        EventObj.commonObj = new CommonViewModel();
+                        EventObj.commonObj = new LogDetailsViewModel();
                         EventObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                         EventObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
-                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.InsertEvent(Mapper.Map<EventViewModel, Event>(EventObj)));
-                        return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.InsertEvent(Mapper.Map<EventViewModel, Event>(EventObj)));                      
                     }
                     catch (Exception ex)
                     {
@@ -100,16 +100,23 @@ namespace PartyEC.UI.Controllers
                 { 
                     try
                     {
-                        EventObj.commonObj = new CommonViewModel();
+                        EventObj.commonObj = new LogDetailsViewModel();
                         EventObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                         EventObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
-                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.UpdateEvent(Mapper.Map<EventViewModel, Event>(EventObj)));
-                        return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.UpdateEvent(Mapper.Map<EventViewModel, Event>(EventObj)));                       
                     }
                     catch (Exception ex)
                     {
                         return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                     }
+                }
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
                 }
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
@@ -121,7 +128,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpPost]
-        public string DeleteEvent([Bind(Exclude = "Name,RelatedCategories,")] AttributesViewModel attributesObj)
+        public string DeleteEvent([Bind(Exclude = "Name,RelatedCategories")] AttributesViewModel attributesObj)
         {
             if (!ModelState.IsValid)
             {
@@ -130,8 +137,15 @@ namespace PartyEC.UI.Controllers
                     try
                     {
                         OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.DeleteEvent(attributesObj.ID, Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
-                        return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.DeleteEvent(attributesObj.ID));
+                        if (OperationsStatusViewModelObj.StatusCode == 1)
+                        {
+                            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        }
+                        else
+                        {
+                            return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                        }                     
                     }
                     catch (Exception ex)
                     {

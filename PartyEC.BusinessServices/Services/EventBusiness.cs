@@ -13,10 +13,12 @@ namespace PartyEC.BusinessServices.Services
         #region ConstructorInjection
 
         private IEventRepositry _eventRepository;
+        private ICategoriesRepository _categoryRepositry;
 
-        public EventBusiness(IEventRepositry eventRepository)
+        public EventBusiness(IEventRepositry eventRepository,ICategoriesRepository categoryRepositry)
         {
             _eventRepository = eventRepository;
+            _categoryRepositry = categoryRepositry;
         }
         #endregion ConstructorInjection
 
@@ -25,14 +27,33 @@ namespace PartyEC.BusinessServices.Services
         public List<Event> GetAllEvents()
         {
             List<Event> Eventlist = null;
+            List<Categories> Categorylist = null;
             try
             {
                 Eventlist = _eventRepository.GetAllEvents();
+                Categorylist = _categoryRepositry.GetAllCategory();//All Category List for Id and Name  
+
+                foreach (Event eventObj in Eventlist)
+                {
+                    string CategoryNames = "";
+                    int[] Cat_Id = eventObj.RelatedCategoriesCSV.Split(',').Select(Int32.Parse).ToArray();
+                    foreach (int Id in Cat_Id)
+                    {
+                        List<Categories> CategoryResult = null;
+                        CategoryResult = Categorylist.Where(t => t.ID == Id).ToList(); //Find category with Id
+                        if (CategoryResult.Count>0)
+                        {
+                            CategoryNames = CategoryNames + CategoryResult[0].Name + ",";//Adding Category Name to String
+                        }
+                    }
+                    //Removing the last ',' character and assigning values to EventList Object
+                    eventObj.RelatedCategoriesCSV=CategoryNames.TrimEnd(',');
+                }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return Eventlist;
         }
@@ -82,16 +103,17 @@ namespace PartyEC.BusinessServices.Services
             return operationsStatusObj;
         }
 
-        public OperationsStatus DeleteEvent(int EventID, OperationsStatus Status)
+        public OperationsStatus DeleteEvent(int EventID)
         {
+            OperationsStatus operationsStatusObj = null;
             try
             {
-                _eventRepository.DeleteEvent(EventID, Status);
+                operationsStatusObj = _eventRepository.DeleteEvent(EventID);
             }
             catch (Exception)
             {
             }
-            return Status;
+            return operationsStatusObj;
         }
 
         #endregion Method

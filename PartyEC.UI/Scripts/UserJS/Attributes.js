@@ -183,6 +183,7 @@ function btnAddNew() {
 function attributeSaveSuccess(data, status, xhr) {
     BindAllAttributes();
     clearfields();
+    goback();
     var i = JSON.parse(data)
     switch(i.Result){
         case "OK":
@@ -199,8 +200,8 @@ function attributeSaveSuccess(data, status, xhr) {
 function attributeDeleteSuccess(data, status, xhr) {
     BindAllAttributes();
     clearfields();
+    goback();
     ChangeButtonPatchView("Attributes", "btnPatchAttributestab2", "Add"); //ControllerName,id of the container div,Name of the action
-
     var i = JSON.parse(data)
     switch (i.Result) {
         case "OK":
@@ -214,11 +215,8 @@ function attributeDeleteSuccess(data, status, xhr) {
     }
 }
 
-    function attributeSaveConfirm() {
-        alert("Save Confirm");
-    }
     function attributeDeleteConfirm() {
-        alert("Save Confirm");
+        alert("Delete Confirm");
     }
 
     //---------------------------------------Get Attributes Details By ID-------------------------------------//

@@ -53,15 +53,15 @@ namespace PartyEC.UI.Models
         [Display(Name = "Product Type")]
         public char? ProductType { get; set; }//simple //configurable
 
-       
+
         [Display(Name = "Attribute Set")]
         public int AttributeSetID { get; set; }
 
         public List<SelectListItem> AttributeSets { get; set; }
-        [Required(ErrorMessage = "Please enter Free Delivery")]
-        [Display(Name = "Free Delivery(Y/N)")]
+        
         public Boolean FreeDelivery { get; set; }
 
+        public string productDetailhdf { get; set; }
 
         #endregion General
         #region Prices
@@ -153,18 +153,48 @@ namespace PartyEC.UI.Models
         public int LinkID { get; set; }
         public int CategoryID { get; set; }
         public float PositionNo { get; set; }
-        public CommonViewModel logDetails { get; set; }
+        public LogDetailsViewModel logDetails { get; set; }
+        public List<ProductDetailViewModel> ProductDetails { get;set;}
+        public ProductDetailViewModel ProductDetailObj { get; set; }
 
-        
+
+    }
+  public class ProductDetailViewModel
+  {
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+
+      
+
+        public int Qty { get; set; }
+        public int OutOfStockAlertQty { get; set; }
+        public decimal PriceDifference { get; set; }
+        public string DetailTags { get; set; }
+        public Boolean Enabled { get; set; }
+        public Boolean StockAvailable { get; set; }
+        public Boolean DefaultOption { get; set; }
+        public decimal DiscountAmount { get; set; }
+        public DateTime? DiscountStartDate { get; set; }
+        public DateTime? DiscountEndDate { get; set; }
+        public LogDetailsViewModel logDetails { get; set; }
+        public List<AttributeValuesViewModel> ProductAttributes { get; set; }
+        public List<ProductImagesViewModel> ProductDetailImages { get; set; }
+
+
     }
     public class ProductCategoryLinkViewModel
     {
         public int ID { get; set; }
         public int ProductID { get; set; }
         public int CategoryID {get;set;}
-        public CommonViewModel commonObj { get; set; }
+        public LogDetailsViewModel commonObj { get; set; }
     }
 
-
+    public class ProductImagesViewModel
+    {
+        public int ID { get; set; }
+        public string URL { get; set; }
+        public bool isMain { get; set; }
+    }
 
 }

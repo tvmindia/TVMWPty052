@@ -191,14 +191,33 @@ namespace PartyEC.UI.Controllers
         {
             if (ModelState.IsValid)
             {
+
                 try
                 {
-                    productObj.logDetails = new CommonViewModel();
-                    //Getting UA
-                    productObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
-                    productObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
-                    OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertProduct(Mapper.Map<ProductViewModel, Product>(productObj)));
-                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                    OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                    switch (productObj.ID)
+                    {
+                        //INSERT
+                        case 0:
+                            productObj.logDetails = new LogDetailsViewModel();
+                            //Getting UA
+                            productObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                            productObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                            productObj.ProductDetails = JsonConvert.DeserializeObject<List<ProductDetailViewModel>>(productObj.productDetailhdf);
+                            OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertProduct(Mapper.Map<ProductViewModel, Product>(productObj)));
+                            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        default:
+                            productObj.logDetails = new LogDetailsViewModel();
+                            //Getting UA
+                            productObj.logDetails.UpdatedBy = _commonBusiness.GetUA().UserName;
+                            productObj.logDetails.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                            productObj.ProductDetails = JsonConvert.DeserializeObject<List<ProductDetailViewModel>>(productObj.productDetailhdf);
+                            OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.UpdateProduct(Mapper.Map<ProductViewModel, Product>(productObj)));
+
+                            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+
+                    }
+                   
                 }
                 catch (Exception ex)
                 {

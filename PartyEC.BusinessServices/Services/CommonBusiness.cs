@@ -12,12 +12,12 @@ namespace PartyEC.BusinessServices.Services
         private UA _uaObj;
         public CommonBusiness()
         {
-            var uaObj = (UA)HttpContext.Current.Session["SessVal"];
+            UA uaObj = null;//need to find proper implementation , time being commenting for api calls-- (UA)HttpContext.Current.Session["SessVal"];
             if (uaObj == null)
             {
                 uaObj = new UA();
                 uaObj.UserName = "Albert Thomson";
-                HttpContext.Current.Session["SessVal"] = uaObj;
+                //need to find proper implementation , time being commenting for api calls--  HttpContext.Current.Session["SessVal"] = uaObj;
             }
             _uaObj = uaObj;
         }

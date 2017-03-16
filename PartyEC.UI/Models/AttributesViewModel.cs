@@ -48,7 +48,7 @@ namespace PartyEC.UI.Models
         [Display(Name = "Is Comparable")]
         public bool ComparableYN { get; set; }
 
-        public CommonViewModel commonObj { get; set; }
+        public LogDetailsViewModel commonObj { get; set; }
 
     }
     public class AttributeSetViewModel
@@ -60,7 +60,7 @@ namespace PartyEC.UI.Models
         [MaxLength(50)]
         public string Name { get; set; }
         public string TreeList { get; set; }
-        public CommonViewModel commonObj { get; set; }
+        public LogDetailsViewModel commonObj { get; set; }
     }
     public class AttributeSetLinkViewModel
     {
@@ -68,6 +68,14 @@ namespace PartyEC.UI.Models
         public int AttributeSetID { get; set; }
         public int AttributeID { get; set; }
         public float DisplayOrder { get; set; }
-        public CommonViewModel commonObj { get; set; }
+        public LogDetailsViewModel commonObj { get; set; }
+    }
+    public class AttributeValuesViewModel
+    {
+        public string Name { get; set; }
+        public string Caption { get; set; }
+        public string Value { get; set; }
+        public string DataType { get; set; }
+        public bool Isconfigurable { get; set; }//false
     }
 }

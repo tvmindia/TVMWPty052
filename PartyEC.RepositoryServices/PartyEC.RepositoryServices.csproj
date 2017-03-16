@@ -86,6 +86,7 @@
     <Compile Include="Contracts\IDatabaseFactory.cs" />
     <Compile Include="Contracts\IDynamicUIRepository.cs" />
     <Compile Include="Contracts\IEventRepositry.cs" />
+    <Compile Include="Contracts\IEventRequestsRepositry.cs" />
     <Compile Include="Contracts\IMasterRepository.cs" />
     <Compile Include="Contracts\IProductRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -94,6 +95,7 @@
     <Compile Include="Services\DatabaseFactory.cs" />
     <Compile Include="Services\DynamicUIRepository.cs" />
     <Compile Include="Services\EventRepositry.cs" />
+    <Compile Include="Services\EventRequestsRepositry.cs" />
     <Compile Include="Services\MasterRepository.cs" />
     <Compile Include="Services\ProductRepository.cs" />
   </ItemGroup>

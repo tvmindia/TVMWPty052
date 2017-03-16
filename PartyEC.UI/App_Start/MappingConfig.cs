@@ -16,9 +16,12 @@ namespace PartyEC.UI.App_Start
                 //ReverseMap() makes it possible to map both ways.
                
                 config.CreateMap<MenuViewModel, Menu>().ReverseMap();
-                config.CreateMap<CommonViewModel, LogDetails>().ReverseMap();
+                config.CreateMap<LogDetailsViewModel, LogDetails>().ReverseMap();
                 config.CreateMap<OperationsStatusViewModel, OperationsStatus>().ReverseMap();
                 config.CreateMap<ProductViewModel, Product>().ReverseMap();
+                config.CreateMap<ProductDetailViewModel, ProductDetail>().ReverseMap();
+                config.CreateMap<AttributeValuesViewModel, AttributeValues>().ReverseMap();
+                config.CreateMap<ProductImagesViewModel, ProductImages>().ReverseMap();
                 config.CreateMap<AttributesViewModel, Attributes>().ReverseMap();
                 config.CreateMap<AttributeSetViewModel, AttributeSet>().ReverseMap();
                 config.CreateMap<AttributeSetLinkViewModel, AttributeSetLink>().ReverseMap();
@@ -28,6 +31,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<CountryViewModel, Country>().ReverseMap();
                 config.CreateMap<EventViewModel, Event>().ReverseMap();
                 config.CreateMap<ProductCategoryLinkViewModel, ProductCategoryLink>().ReverseMap();
+                config.CreateMap<EventRequestsViewModel, EventRequests>().ReverseMap();
             });
         }
 

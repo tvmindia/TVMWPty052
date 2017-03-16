@@ -96,8 +96,13 @@ namespace PartyEC.BusinessServices.Services
               return _productRepository.InsertProduct(productObj);
             
         }
+        public OperationsStatus UpdateProduct(Product productObj)
+        {
+            return _productRepository.UpdateProduct(productObj);
+        }
 
-        public Product GetProduct(int ProductID, OperationsStatus Status) {
+        public Product GetProduct(int ProductID, OperationsStatus Status)
+        {
 
             return _productRepository.GetProduct(ProductID, Status);
         }

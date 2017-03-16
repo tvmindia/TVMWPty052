@@ -5,12 +5,11 @@ using System.Web;
 
 namespace PartyEC.UI.Models
 {
-    public class CommonViewModel
-    {
+    public class LogDetailsViewModel    {
         public string CreatedBy { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public DateTime? CreatedDate { get; set; }
         public string UpdatedBy { get; set; }
-        public DateTime UpdatedDate { get; set; }
+        public DateTime? UpdatedDate { get; set; }
       
     }
 }
