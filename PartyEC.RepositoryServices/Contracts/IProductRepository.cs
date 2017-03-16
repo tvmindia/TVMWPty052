@@ -16,11 +16,6 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertProduct(Product productObj);
         OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList, List<ProductCategoryLink> DeleteList);
         Product GetProduct(int ProductID, OperationsStatus Status);
-       List<Product> GetAllProductswithCategory(Product ProductObj);
-       List<Product> GetAssignedPro(string CategoryID);
-       List<Product> GetUnAssignedPro(string CategoryID);
-       OperationsStatus InsertProduct(Product productObj);
-       Product GetProduct(int ProductID, OperationsStatus Status);
        OperationsStatus UpdateProduct(Product productObj);
        List<Product> GetRelatedProducts(int productID);
 
