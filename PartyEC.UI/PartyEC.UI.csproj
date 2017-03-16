@@ -462,6 +462,7 @@
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DynamicUIController.cs" />
     <Compile Include="Controllers\EventController.cs" />
+    <Compile Include="Controllers\EventRequestsController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -470,6 +471,7 @@
     <Compile Include="Models\CategoriesViewModel.cs" />
     <Compile Include="Models\CommonViewModel.cs" />
     <Compile Include="Models\DynamicUIViewModel.cs" />
+    <Compile Include="Models\EventRequestsViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\MasterViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
@@ -490,6 +492,7 @@
     <Content Include="Views\Shared\_ToolboxView.cshtml" />
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
+    <Content Include="Views\EventRequests\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
