@@ -87,7 +87,6 @@
     <Compile Include="Contracts\ICommonBusiness.cs" />
     <Compile Include="Contracts\IDynamicUIBusiness.cs" />
     <Compile Include="Contracts\IEventBusiness.cs" />
-    <Compile Include="Contracts\IEventRequestsBusiness.cs" />
     <Compile Include="Contracts\IMasterBusiness.cs" />
     <Compile Include="Contracts\IProductBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -98,7 +97,6 @@
     </Compile>
     <Compile Include="Services\DynamicUIBusiness.cs" />
     <Compile Include="Services\EventBusiness.cs" />
-    <Compile Include="Services\EventRequestsBusiness.cs" />
     <Compile Include="Services\MasterBusiness.cs" />
     <Compile Include="Services\ProductBusiness.cs" />
   </ItemGroup>
