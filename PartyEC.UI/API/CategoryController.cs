@@ -1,0 +1,49 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Net.Http;
+using System.Web.Http;
+using PartyEC.UI.Models;
+using PartyEC.BusinessServices.Contracts;
+using Newtonsoft.Json;
+using AutoMapper;
+using PartyEC.DataAccessObject.DTO;
+
+namespace PartyEC.UI.API
+{
+    public class CategoryController : ApiController
+    {
+
+        #region Constructor_Injection
+
+        ICategoriesBusiness _categoryBusiness;
+        ICommonBusiness _commonBusiness;
+        IProductBusiness _productBusiness;
+
+        public CategoryController(ICategoriesBusiness categoryBusiness, ICommonBusiness commonBusiness, IProductBusiness productBusiness)
+        {
+            _categoryBusiness = categoryBusiness;
+            _commonBusiness = commonBusiness;
+            _productBusiness = productBusiness;
+        }
+        #endregion Constructor_Injection
+
+        [HttpGet]
+        public object GetCategoryByID(int ID)
+        {
+            try
+            {
+                CategoriesViewModel CategoryList = Mapper.Map<Categories, CategoriesViewModel>(_categoryBusiness.GetCategory(ID));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = CategoryList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+
+
+
+    }
+}

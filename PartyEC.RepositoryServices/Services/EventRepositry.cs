@@ -12,6 +12,7 @@ namespace PartyEC.RepositoryServices.Services
     public class EventRepositry : IEventRepositry
 
     {
+        Const ConstObj = new Const();
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
         /// <summary>
@@ -54,7 +55,6 @@ namespace PartyEC.RepositoryServices.Services
                                         eventObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : eventObj.ID);
                                         eventObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : eventObj.Name);
                                         eventObj.RelatedCategoriesCSV= (sdr["RelatedCategoriesCSV"].ToString() != "" ? sdr["RelatedCategoriesCSV"].ToString() : eventObj.RelatedCategoriesCSV);
-
                                     }
                                     Eventlist.Add(eventObj);
                                 }
@@ -142,11 +142,11 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             case "0":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
                                 break;
                             case "1":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
                                 break;
                             default:
                                 break;
@@ -193,18 +193,17 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             case "0":                                
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Updation Not Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
                                 break;
                             case "1":                               
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Updation Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
                                 break;
                             default:
                                 break;
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -213,7 +212,7 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-        public OperationsStatus DeleteEvent(int EventID, OperationsStatus Status)
+        public OperationsStatus DeleteEvent(int EventID)
         {
             OperationsStatus operationsStatusObj = null;
             try
@@ -235,22 +234,26 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                Status.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                Status.StatusMessage = "Deletion Not Successfull!";
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
                                 break;
                             case "1":
-                                Status.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                Status.StatusMessage = "Deletion Successfull!";
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
+                                break;
+                            case "2":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.FKviolation;
                                 break;
                             default:
                                 break;
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
