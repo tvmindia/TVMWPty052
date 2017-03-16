@@ -158,7 +158,7 @@ namespace PartyEC.UI.Controllers
             try
             {
                 OperationsStatusViewModel OperationsStatusViewModelObj = new OperationsStatusViewModel();
-                categoriesViewModelObj.commonObj = new CommonViewModel();
+                categoriesViewModelObj.commonObj = new LogDetailsViewModel();
                 if (categoriesViewModelObj.ID==0)
                 {
                     categoriesViewModelObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
