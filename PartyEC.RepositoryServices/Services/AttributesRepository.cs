@@ -61,7 +61,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _attributesObj.CSValues = (sdr["CSValues"].ToString() != "" ? sdr["CSValues"].ToString() : _attributesObj.CSValues);
                                         _attributesObj.EntityType = (sdr["EntityType"].ToString() != "" ? sdr["EntityType"].ToString() : _attributesObj.EntityType);
                                         _attributesObj.MandatoryYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["MandatoryYN"].ToString()) : _attributesObj.MandatoryYN);
-                                        _attributesObj.ComparableYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["ComparableYN"].ToString()) : _attributesObj.ComparableYN);
+                                        _attributesObj.ComparableYN = (sdr["ComparableYN"].ToString() != "" ? Boolean.Parse(sdr["ComparableYN"].ToString()) : _attributesObj.ComparableYN);
                                     }
                                     AttributesList.Add(_attributesObj);
                                 }
