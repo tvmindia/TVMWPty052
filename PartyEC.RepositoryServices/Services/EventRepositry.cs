@@ -12,6 +12,7 @@ namespace PartyEC.RepositoryServices.Services
     public class EventRepositry : IEventRepositry
 
     {
+        Const ConstObj = new Const();
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
         /// <summary>
@@ -54,7 +55,6 @@ namespace PartyEC.RepositoryServices.Services
                                         eventObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : eventObj.ID);
                                         eventObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : eventObj.Name);
                                         eventObj.RelatedCategoriesCSV= (sdr["RelatedCategoriesCSV"].ToString() != "" ? sdr["RelatedCategoriesCSV"].ToString() : eventObj.RelatedCategoriesCSV);
-
                                     }
                                     Eventlist.Add(eventObj);
                                 }
@@ -142,11 +142,11 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             case "0":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
                                 break;
                             case "1":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
                                 break;
                             default:
                                 break;
@@ -193,18 +193,17 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             case "0":                                
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Updation Not Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
                                 break;
                             case "1":                               
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Updation Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
                                 break;
                             default:
                                 break;
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {
@@ -240,22 +239,21 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             case "0":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Deletion Not Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
                                 break;
                             case "1":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Deletion Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
                                 break;
                             case "2":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = " Foreign key violation-Deletion Not Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.FKviolation;
                                 break;
                             default:
                                 break;
                         }
                     }
                 }
-
             }
             catch (Exception ex)
             {

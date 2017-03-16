@@ -145,8 +145,7 @@ namespace PartyEC.UI.Controllers
                         else
                         {
                             return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
-                        }
-                     
+                        }                     
                     }
                     catch (Exception ex)
                     {

@@ -61,16 +61,17 @@ namespace PartyEC.BusinessServices.Services
             return _attributesRepository.UpdateAttributes(attributesObj);
         }
 
-        public OperationsStatus DeleteAttributes(int AttributeID, OperationsStatus Status)
+        public OperationsStatus DeleteAttributes(int AttributeID)
         {
+            OperationsStatus OperationsStatusObj = null;
             try
             {
-                _attributesRepository.DeleteAttributes(AttributeID, Status);
+                OperationsStatusObj= _attributesRepository.DeleteAttributes(AttributeID);
             }
             catch (Exception)
             {
             }
-            return Status;
+            return OperationsStatusObj;
         }
     }
     public class AttributeSetBusiness:IAttributeSetBusiness
