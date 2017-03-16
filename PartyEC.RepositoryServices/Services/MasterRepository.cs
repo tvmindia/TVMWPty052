@@ -118,7 +118,61 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
+        public OperationsStatus InsertImage(OtherImages otherimgObj)
+        {
+            OperationsStatus operrationstatusObj = null;
+            try
+            {
+                SqlParameter outparameter = null;
+                SqlParameter outparameterID = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertOtherImage]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ImageType", SqlDbType.NVarChar, 250).Value = otherimgObj.ImageType;
+                        cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1).Value = otherimgObj.URL;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = otherimgObj.LogDetails.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = otherimgObj.LogDetails.CreatedDate;
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameterID = cmd.Parameters.Add("@ID", SqlDbType.UniqueIdentifier);
+                        outparameter.Direction = ParameterDirection.Output;
+                        outparameterID.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operrationstatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
 
+                                operrationstatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operrationstatusObj.StatusMessage = "Insertion Not Successfull!";
+
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operrationstatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operrationstatusObj.StatusMessage = "Insertion Successfull!";
+                                operrationstatusObj.ReturnValues = Guid.Parse(outparameterID.Value.ToString());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operrationstatusObj;
+        }
 
 
     }

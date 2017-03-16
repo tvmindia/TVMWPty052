@@ -13,10 +13,12 @@ namespace PartyEC.BusinessServices.Services
         #region ConstructorInjection
 
         private ICategoriesRepository _categoryRepository;
+        private IMasterRepository _masterRepository;
 
-        public CategoriesBusiness(ICategoriesRepository categoryRepository)
+        public CategoriesBusiness(ICategoriesRepository categoryRepository,IMasterRepository masterRepository)
         {
             _categoryRepository = categoryRepository;
+            _masterRepository = masterRepository;
         }
 
         #endregion ConstructorInjection      
@@ -57,7 +59,18 @@ namespace PartyEC.BusinessServices.Services
             OperationsStatus operationsStatusObj = null;
             try
             {
-                operationsStatusObj = _categoryRepository.InsertCategory(CategoryObj);
+                if(CategoryObj.URL!=""&& CategoryObj.URL !=null)
+                {
+                    OtherImages otherImgObj = new OtherImages();
+                    otherImgObj.URL = CategoryObj.URL;
+                    otherImgObj.ImageType = "Category";
+                    otherImgObj.LogDetails = CategoryObj.commonObj;
+                    operationsStatusObj = _masterRepository.InsertImage(otherImgObj);
+                    CategoryObj.ImageID = operationsStatusObj.ReturnValues.ToString();
+                }
+                   operationsStatusObj = _categoryRepository.InsertCategory(CategoryObj);
+
+                
             }
             catch (Exception)
             {
@@ -71,7 +84,7 @@ namespace PartyEC.BusinessServices.Services
             OperationsStatus operationsStatusObj = null;
             try
             {
-                _categoryRepository.UpdateCategory(CategoryObj);
+                operationsStatusObj=_categoryRepository.UpdateCategory(CategoryObj);
             }
             catch (Exception)
             {

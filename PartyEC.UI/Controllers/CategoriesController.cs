@@ -151,5 +151,43 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string SaveOrUpdateCategory(CategoriesViewModel categoriesViewModelObj)
+        {
+            try
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = new OperationsStatusViewModel();
+                categoriesViewModelObj.commonObj = new CommonViewModel();
+                if (categoriesViewModelObj.ID==0)
+                {
+                    categoriesViewModelObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                    categoriesViewModelObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_categoryBusiness.InsertCategory(Mapper.Map<CategoriesViewModel, Categories>(categoriesViewModelObj)));
+                }
+                else
+                {
+
+                    categoriesViewModelObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                    categoriesViewModelObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_categoryBusiness.UpdateCategory(Mapper.Map<CategoriesViewModel,Categories>(categoriesViewModelObj)));
+                }
+                
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        public ActionResult Upload()
+        {
+            var file = Request.Files["Filedata"];
+            string savePath = Server.MapPath(@"~\Content\OtherImages\" + file.FileName);
+            file.SaveAs(savePath);
+            return Content(Url.Content(@"~\Content\OtherImages\" + file.FileName));
+        }
     }
 }

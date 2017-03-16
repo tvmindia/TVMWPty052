@@ -2,6 +2,7 @@
 $(document).ready(function () {
     try
     {
+       
         //$("input:checkbox").change(function () {
         //    $(this).closest('tr').toggleClass('selected');
         //});
@@ -109,6 +110,37 @@ function onSelectNode(e, data)
     $("#ImageID").val(results.ImageID);
     $("#imgCategory").attr('src', (results.URL != "" ? results.URL : "/Content/images/NoImageFound.png"));
     ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "Edit");
+    //var TreeOrder = $("#jstree_Categories").jstree(true).get_json('#', { 'flat': true });
+    var loMainSelected = data;
+    uiGetParents(loMainSelected);
+}
+function uiGetParents(loSelectedNode, TreeOrder) {
+    try {
+        debugger;
+        var lnLevel = loSelectedNode.node.parents.length;
+        var lsSelectedID = loSelectedNode.node.id;
+        var loParent = $('#jstree_Categories').jstree(true).get_node(lsSelectedID);;
+        var lsParents = '<li class="active">'+loSelectedNode.node.text + ' </li>';
+        var loParent = loParent.parents;
+        for (var ln = 0; ln <= lnLevel - 1 ; ln++) {
+            if(loParent[ln]!='#')
+            {
+                lsParents = '<li><a href="#">' + ($('#jstree_Categories').jstree(true).get_node(loParent[ln])).text + "</a></li> " + lsParents;
+            }
+            if(loParent[ln]=='#')
+            {
+                lsParents = '<li><a href="#"><i class="fa fa fa-list"></i></a></li>' + lsParents;
+            }
+        }
+        if (lsParents.length > 0) {
+            lsParents = lsParents.substring(0, lsParents.length - 1);
+        }
+        $('#olCategory').empty();
+        $('#olCategory').append(lsParents);
+    }
+    catch (err) {
+        alert('Error in uiGetParents');
+    }
 }
 //Get category for Edit using ID
 function GetCategoryDetails(id)
@@ -216,11 +248,13 @@ function GetCategoriesTree() {
 function AddNewSubCategory()
 {
     ClearFields();
+    $('#ParentID').val($('#ID').val());
     $('#imgCategory').attr('src', '/Content/images/NoImageFound.png');
     var fluCategory = document.getElementById('CategoryImageUpload');
     fluCategory.value = "";
     fluCategory.innerHTML = "No file chosen";
     ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "AddSub");
+    $('#ID').val(0);
 }
 function AddCategory() {
     debugger;
@@ -230,9 +264,9 @@ function AddCategory() {
     $('#imgCategory').attr('src', '/Content/images/NoImageFound.png');
     var fluCategory = document.getElementById('CategoryImageUpload');
     fluCategory.value = "";
-    fluCategory.innerHTML = "No file chosen";
-    $('#jstree_Categories').jstree("deselect_all");
+    fluCategory.innerHTML = "No file chosen";   
     ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "Add");
+    $('#jstree_Categories').jstree("deselect_all");
 }
 function MainClick()
 {
@@ -295,6 +329,7 @@ function TabRedirect()
     ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "tab1");
     $('#divOverlay').hide();
 }
+
 function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the question
     debugger;
     var i = JSON.parse(data.responseText)
@@ -311,5 +346,33 @@ function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the qu
             break;
 
     }
+
+}
+function CheckSubmittedInsertCategory(data) { //function CouponSubmitted(data) in the question
+    debugger;
+    var i = JSON.parse(data.responseText)
+    switch (i.Result) {
+        case "OK":
+            notyAlert('success', i.Records.StatusMessage);
+            $('#jstree_Categories').jstree(true).settings.core.data = GetCategoriesTree();
+            $('#jstree_Categories').jstree(true).refresh(true);
+            //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
+            ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "Edit");
+            if (i.Records.ReturnValues != null)
+            {
+                $('#ID').val(i.Records.ReturnValues);
+            }
+            
+            break;
+        case "ERROR":
+            notyAlert('error', i.Records.StatusMessage);
+            break;
+
+    }
+
+}
+function UploadImageClick() {
+    debugger;
+    
 
 }

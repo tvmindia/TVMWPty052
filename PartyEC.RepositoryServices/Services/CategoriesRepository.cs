@@ -130,10 +130,70 @@ namespace PartyEC.RepositoryServices.Services
         public OperationsStatus InsertCategory(Categories CategoryObj)
         {
             OperationsStatus operationsStatusObj = null;
+
             try
             {
+                SqlParameter outparameter = null;
+                SqlParameter outparameterID = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertCategory]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar,250).Value = CategoryObj.Name;
+                        if(CategoryObj.ParentID!=0)
+                        {
+                            cmd.Parameters.Add("@ParentID", SqlDbType.Int).Value = CategoryObj.ParentID;
+                        }
+                        cmd.Parameters.Add("@FilterYN", SqlDbType.Bit).Value = CategoryObj.Filter;
+                        cmd.Parameters.Add("@NavigationYN", SqlDbType.Bit).Value = CategoryObj.Navigation;
+                        cmd.Parameters.Add("@EnableYN", SqlDbType.Bit).Value = CategoryObj.Enable;
+                        cmd.Parameters.Add("@Description", SqlDbType.NVarChar, -1).Value = CategoryObj.Description;
+                        if(CategoryObj.ImageID!=null&& CategoryObj.ImageID!=""&& CategoryObj.ImageID!="0")
+                        {
+                            cmd.Parameters.Add("@ImageID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(CategoryObj.ImageID);
+                        }
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = CategoryObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = CategoryObj.commonObj.CreatedDate;
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameterID = cmd.Parameters.Add("@ID", SqlDbType.Int);
+                        outparameter.Direction = ParameterDirection.Output;
+                        outparameterID.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
 
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.ReturnValues = Int16.Parse(outparameterID.Value.ToString());
+                                break;
+                            case "2":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Duplicate Entry";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
             }
+
             catch (Exception ex)
             {
                 throw ex;
@@ -145,10 +205,61 @@ namespace PartyEC.RepositoryServices.Services
         public OperationsStatus UpdateCategory(Categories CategoryObj)
         {
             OperationsStatus operationsStatusObj = null;
+
             try
             {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateCategory]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = CategoryObj.ID;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = CategoryObj.Name;
+                        if(CategoryObj.ParentID!=0)
+                        {
+                            cmd.Parameters.Add("@ParentID", SqlDbType.Int).Value = CategoryObj.ParentID;
+                        }                        
+                        cmd.Parameters.Add("@FilterYN", SqlDbType.Bit).Value = CategoryObj.Filter;
+                        cmd.Parameters.Add("@NavigationYN", SqlDbType.Bit).Value = CategoryObj.Navigation;
+                        cmd.Parameters.Add("@EnableYN", SqlDbType.Bit).Value = CategoryObj.Enable;
+                        cmd.Parameters.Add("@Description", SqlDbType.NVarChar, -1).Value = CategoryObj.Description;
+                        if (CategoryObj.ImageID != null && CategoryObj.ImageID != "")
+                        {
+                            cmd.Parameters.Add("@ImageID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(CategoryObj.ImageID);
+                        }
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = CategoryObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = CategoryObj.commonObj.UpdatedDate;
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
 
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Updation Not Successfull!";
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Updation Successfull!";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
             }
+
             catch (Exception ex)
             {
                 throw ex;

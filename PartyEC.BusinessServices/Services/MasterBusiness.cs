@@ -5,11 +5,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PartyEC.DataAccessObject.DTO;
+using System.Data.SqlClient;
+using System.Data;
 
 namespace PartyEC.BusinessServices.Services
 {
     public class MasterBusiness: IMasterBusiness
     {
+        
         private IMasterRepository _masterRepository;
 
         public MasterBusiness(IMasterRepository masterRepository)
