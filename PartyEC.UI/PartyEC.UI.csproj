@@ -139,6 +139,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\bootstrap-datepicker3.min.css" />
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -184,6 +185,7 @@
     <Content Include="Content\DataTables\css\dataTables.bootstrap.min.css" />
     <Content Include="Content\DataTables\css\dataTables.bootstrap4.css" />
     <Content Include="Content\DataTables\css\dataTables.bootstrap4.min.css" />
+    <Content Include="Content\DataTables\css\dataTables.checkboxes.css" />
     <Content Include="Content\DataTables\css\dataTables.foundation.css" />
     <Content Include="Content\DataTables\css\dataTables.foundation.min.css" />
     <Content Include="Content\DataTables\css\dataTables.jqueryui.css" />
@@ -310,6 +312,9 @@
     <Content Include="Content\jstree\dist\themes\default\style.css" />
     <Content Include="Content\jstree\dist\themes\default\style.min.css" />
     <Content Include="Content\jstree\dist\themes\default\throbber.gif" />
+    <Content Include="Content\OtherImages\Birthdaycake.jpg" />
+    <Content Include="Content\OtherImages\Cake.png" />
+    <Content Include="Content\OtherImages\weddigcake.jpg" />
     <Content Include="Content\UserCSS\Product.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -331,6 +336,7 @@
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\custom.js" />
@@ -370,6 +376,7 @@
     <Content Include="Scripts\DataTables\dataTables.bootstrap4.min.js" />
     <Content Include="Scripts\DataTables\dataTables.buttons.js" />
     <Content Include="Scripts\DataTables\dataTables.buttons.min.js" />
+    <Content Include="Scripts\DataTables\dataTables.checkboxes.js" />
     <Content Include="Scripts\DataTables\dataTables.colReorder.js" />
     <Content Include="Scripts\DataTables\dataTables.colReorder.min.js" />
     <Content Include="Scripts\DataTables\dataTables.fixedColumns.js" />
@@ -423,6 +430,9 @@
     <Content Include="Scripts\jstree\dist\jstree.js" />
     <Content Include="Scripts\jstree\dist\jstree.min.js" />
     <Content Include="Scripts\UserJS\Attributes.js" />
+    <Content Include="Scripts\UserJS\Categories.js" />
+    <Content Include="Scripts\UserJS\Event.js" />
+    <Content Include="Scripts\UserJS\EventRequests.js" />
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
     <Content Include="Web.config" />
@@ -443,15 +453,20 @@
     <Compile Include="Controllers\AttributesController.cs" />
     <Compile Include="Controllers\AttributeSetController.cs" />
     <Compile Include="Controllers\AttributeSetLinkController.cs" />
+    <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DynamicUIController.cs" />
+    <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AttributesViewModel.cs" />
+    <Compile Include="Models\CategoriesViewModel.cs" />
     <Compile Include="Models\CommonViewModel.cs" />
     <Compile Include="Models\DynamicUIViewModel.cs" />
+    <Compile Include="Models\EventViewModel.cs" />
+    <Compile Include="Models\MasterViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\OperationsStatusViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
@@ -468,6 +483,8 @@
     <Content Include="Views\Attributes\Index.cshtml" />
     <Content Include="Views\AttributeSet\Index.cshtml" />
     <Content Include="Views\Shared\_ToolboxView.cshtml" />
+    <Content Include="Views\Event\Index.cshtml" />
+    <Content Include="Views\Categories\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

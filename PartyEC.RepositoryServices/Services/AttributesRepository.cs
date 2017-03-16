@@ -11,6 +11,7 @@ namespace PartyEC.RepositoryServices.Services
 {
     public class AttributesRepository : IAttributesRepository
     {
+        Const constObj = new Const();
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
         /// <summary>
@@ -22,10 +23,8 @@ namespace PartyEC.RepositoryServices.Services
             _databaseFactory = databaseFactory;
         }
         #endregion DataBaseFactory
-
-
+        
         #region Methods
-
 
         public List<Attributes> GetAllAttributes()
         {
@@ -134,7 +133,6 @@ namespace PartyEC.RepositoryServices.Services
         public OperationsStatus InsertAttributes(Attributes attributesObj)
         {
             OperationsStatus operationsStatusObj = null;
-
             try
             {
                 SqlParameter outparameter = null;
@@ -167,16 +165,13 @@ namespace PartyEC.RepositoryServices.Services
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
                         {
-                            case "0":
-                                // not Successfull
-
+                            case "0": 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
                                 break;
-                            case "1":
-                                //Insert Successfull
+                            case "1": 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
                                 break;
                             default:
                                 break;
@@ -230,15 +225,13 @@ namespace PartyEC.RepositoryServices.Services
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
                         {
-                            case "0":
-                                // not Successfull
+                            case "0": 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
                                 break;
-                            case "1":
-                                //Insert Successfull
+                            case "1": 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
                                 break;
                             default:
                                 break;
@@ -253,8 +246,9 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-        public OperationsStatus DeleteAttributes(int AttributeID, OperationsStatus Status)
-        { 
+        public OperationsStatus DeleteAttributes(int AttributeID)
+        {
+            OperationsStatus OperationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter outparameter = null;
@@ -276,15 +270,13 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.ExecuteNonQuery();                        
                         switch (outparameter.Value.ToString())
                         {
-                            case "0":
-                                // not Successfull
-                                Status.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                Status.StatusMessage = "Deletion Not Successfull!";
+                            case "0": 
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = constObj.DeleteFailure;
                                 break;
-                            case "1":
-                                //  Successfull
-                                Status.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                Status.StatusMessage = "Deletion Successfull!";
+                            case "1": 
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = constObj.DeleteSuccess;
                                 break;
                             default:
                                 break;
@@ -296,10 +288,9 @@ namespace PartyEC.RepositoryServices.Services
             {
                 throw ex;
             }
-            return Status;
+            return OperationsStatusObj;
         }
-
-
+        
         public List<AttributeValues> GetAttributeContainer(int AttributeSetID,string Type)
         {
             List<AttributeValues> myProductAttributeList = null;
@@ -375,21 +366,23 @@ namespace PartyEC.RepositoryServices.Services
             }
             return myXML;
         }
-
-
+        
         #endregion Methods
     }
     public class AttributeSetRepository : IAttributeSetRepository
     {
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
+        private IAttributeToSetLinksRepository _attributeSetLinkRepository;
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
         /// <param name="databaseFactory"></param>
-        public AttributeSetRepository(IDatabaseFactory databaseFactory)
+        public AttributeSetRepository(IDatabaseFactory databaseFactory,IAttributeToSetLinksRepository attributeSetLinkRepository)
         {
             _databaseFactory = databaseFactory;
+            _attributeSetLinkRepository = attributeSetLinkRepository;
+
         }
         #endregion DataBaseFactory
         public List<AttributeSet> GetAllAttributeSet()
@@ -555,6 +548,57 @@ namespace PartyEC.RepositoryServices.Services
                 throw ex;
             }
 
+            return operationsStatusObj;
+        }
+        public OperationsStatus DeleteAttributeSet(int ID)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+               operationsStatusObj = _attributeSetLinkRepository.DeleteAttributeSetLink(ID);
+                if (operationsStatusObj.StatusCode == 1|| operationsStatusObj.StatusCode == 0)
+                {
+                    SqlParameter outparameter = null;
+                    using (SqlConnection con = _databaseFactory.GetDBConnection())
+                    {
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            if (con.State == ConnectionState.Closed)
+                            {
+                                con.Open();
+                            }
+                            cmd.Connection = con;
+                            cmd.CommandText = "[DeleteAttributeSet]";
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add("@ID", SqlDbType.VarChar, 50).Value = ID;
+                            outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                            outparameter.Direction = ParameterDirection.Output;
+                            cmd.ExecuteNonQuery();
+                            operationsStatusObj = new OperationsStatus();
+                            switch (outparameter.Value.ToString())
+                            {
+                                case "0":
+                                    // Delete not Successfull
+
+                                    operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Deletion Not Successfull!";
+                                    break;
+                                case "1":
+                                    //Delete Successfull
+                                    operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Deletion Successfull!";
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+
+            }
             return operationsStatusObj;
         }
     }

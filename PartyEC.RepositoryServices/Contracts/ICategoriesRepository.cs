@@ -8,12 +8,12 @@ using PartyEC.DataAccessObject.DTO;
 
 namespace PartyEC.RepositoryServices.Contracts
 {
-    public interface ICategoryRepository
+    public interface ICategoriesRepository
     {
-        List<Category> GetAllCategory();
-        Category GetCategory(int CategoryID, OperationsStatus Status);
-        OperationsStatus InsertCategory(Category CategoryObj);
-        OperationsStatus UpdateCategory(Category CategoryObj);
+        List<Categories> GetAllCategory();
+        Categories GetCategory(int CategoryID);
+        OperationsStatus InsertCategory(Categories CategoryObj);
+        OperationsStatus UpdateCategory(Categories CategoryObj);
         OperationsStatus DeleteCategory(int CategoryID, OperationsStatus Status);
     }
 }

@@ -30,4 +30,44 @@ namespace PartyEC.DataAccessObject.DTO
 
         }
     }
+
+    public class Const
+    {
+        #region Messages
+
+        public string InsertFailure
+        {
+            get { return "Insertion Not Successfull! "; }
+        }
+
+        public string InsertSuccess
+        {
+            get { return "Insertion Successfull! "; }
+        }
+
+        public string  UpdateFailure
+        {
+            get { return "Updation Not Successfull! "; }
+        }
+
+        public string UpdateSuccess
+        {
+            get { return "Updation Successfull! "; }
+        }
+
+        public string DeleteFailure
+        {
+            get { return "Deletion Not Successfull! "; }
+        }
+        public string DeleteSuccess
+        {
+            get { return "Deletion Successfull! "; }
+        }
+        public string FKviolation
+        {
+            get { return "Foreign key violation-Deletion Not Successfull!"; }
+        }
+        #endregion Messages
+
+    }
 }

@@ -10,7 +10,13 @@ namespace PartyEC.BusinessServices.Contracts
     public interface IProductBusiness
     {
         List<Product> GetAllProducts(Product productObj);
+        List<Product> GetAllProductswithCategory(string CategoryID);
+        List<Product> GetAssignedPro(string CategoryID);
+        List<Product> GetUnAssignedPro(string CategoryID);
         OperationsStatus InsertProduct(Product productObj);
+        OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList,List<ProductCategoryLink> DeleteList);
         Product GetProduct(int ProductID, OperationsStatus Status);
+        List<Product> GetRelatedProducts(int productID);
+
     }
 }

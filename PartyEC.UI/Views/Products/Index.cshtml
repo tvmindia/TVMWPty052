@@ -6,6 +6,7 @@
 
 @section styles {
    @Styles.Render("~/Content/datatable")
+   @Styles.Render("~/Content/bootstrapdatepicker")
     @Styles.Render("~/Content/product")   
 }
 <div class="container-fluid">
@@ -148,15 +149,27 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ActionType, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-4">
-                                            @Html.EditorFor(model => model.ActionType, new { htmlAttributes = new { @class = "form-control" } })
+                                            @{
+                                                List<SelectListItem> actionTypeList = new List<SelectListItem>();
+                                                actionTypeList.Add(new SelectListItem
+                                                { Text ="Buy", Value = "A" });
+                                                actionTypeList.Add(new SelectListItem
+                                                { Text = "Book", Value = "B" });
+                                                actionTypeList.Add(new SelectListItem
+                                                { Text = "Quotation", Value = "Q" });
+                                            }
+                                       
+                                            @Html.DropDownListFor(model => model.ActionType, actionTypeList, "-- Select Action Type --", new { @class = "form-control", @onchange = "ActionTypeOnChange()" })
                                             @Html.ValidationMessageFor(model => model.ActionType, "", new { @class = "text-danger" })
+                   
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.SupplierID, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-4">
-                                            @Html.EditorFor(model => model.SupplierID, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.DropDownListFor(model => model.SupplierID, Model.suppliers, "--Select Supplier--", new { @class = "form-control", @onchange = "supplierOnChange()" })
+                                          
                                             @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -164,7 +177,7 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ManufacturerID, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-4">
-                                            @Html.EditorFor(model => model.ManufacturerID, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.DropDownListFor(model => model.ManufacturerID, Model.manufacturers, "--Select Manufacturers--", new { @class = "form-control", @onchange = "manufacturerOnChange()" })
                                             @Html.ValidationMessageFor(model => model.ManufacturerID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -172,7 +185,15 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ProductType, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-4">
-                                            @Html.EditorFor(model => model.ProductType, new { htmlAttributes = new { @class = "form-control" } })
+                                            @{
+                                                List<SelectListItem> productTypeList = new List<SelectListItem>();
+                                                productTypeList.Add(new SelectListItem
+                                                { Text = "Configurable", Value = "C" });
+                                                productTypeList.Add(new SelectListItem
+                                                { Text = "Simple", Value = "S" });
+                                            }
+                                        
+                                            @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange()" })
                                             @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -180,7 +201,8 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-4">
-                                            @Html.EditorFor(model => model.AttributeSetID, new { htmlAttributes = new { @class = "form-control" } })
+                                            @*@Html.EditorFor(model => model.AttributeSetID, new { htmlAttributes = new { @class = "form-control" } })*@
+                                            @Html.DropDownListFor(model => model.AttributeSetID, Model.AttributeSets, "--Select AttributeSets--", new { @class = "form-control", @onchange = "attributeSetOnChange()" })
                                             @Html.ValidationMessageFor(model => model.AttributeSetID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -196,18 +218,13 @@
                                         </div>
                                     </div>
 
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.HeaderTags, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                        <div class="col-lg-4">
-                                            @Html.EditorFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.HeaderTags, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
+                                   
 
-                                    
+                                 
 
                                     <div class="form-group">
                                         <div class="col-md-offset-2 col-md-10">
+                                           
                                             <input type="submit" value="Create" class="btn btn-default" />
                                         </div>
                                     </div>
@@ -243,7 +260,7 @@
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.TaxClass, htmlAttributes: new { @class = "control-label col-lg-2" })
                                     <div class="col-lg-4">
-                                        @Html.EditorFor(model => model.TaxClass, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.EditorFor(model => model.TaxClass, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } } )
                                         @Html.ValidationMessageFor(model => model.TaxClass, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -255,10 +272,12 @@
                                         @Html.ValidationMessageFor(model => model.DiscountAmount, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
+
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.DiscountStartDate, htmlAttributes: new { @class = "control-label col-lg-2" })
                                     <div class="col-lg-4">
-                                        @Html.EditorFor(model => model.DiscountStartDate, new { htmlAttributes = new { @class = "form-control" } })
+                                       
+                                        @Html.EditorFor(model => model.DiscountStartDate, new { htmlAttributes = new { @class = "form-control"} })
                                         @Html.ValidationMessageFor(model => model.DiscountStartDate, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
@@ -476,9 +495,9 @@
                             </div>
                             <div class="tab-pane fade" id="relatedProducts">
                           
-                                                <h4>Related Products List</h4>
+                                             
                                                 @*table*@
-                                                <table id="" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                                <table id="tblRelatedproducts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                                     <thead>
                                                         <tr>
                                                             <th>ProductID</th>
@@ -736,13 +755,14 @@
                                 </div> 
                             </div>
                             <div class="tab-pane fade" id="productTags">
-                                <div class="col-lg-6">
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Search for...">
-                                        <span class="input-group-btn">
-                                            <button class="btn btn-default" type="button">Search Tags</button>
-                                        </span>
-                                    </div><!-- /input-group -->
+                                <div class="col-lg-8">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.HeaderTag, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <div class="col-lg-6">
+                                            @Html.EditorFor(model => model.HeaderTag, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.HeaderTag, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
                                 </div><!-- /.col-lg-6 -->
                             </div>
                            
@@ -769,10 +789,11 @@
     </div>
 
 </div>
-
+<input type="hidden" id="hdfproductID" />
 @section Scripts {
 @Scripts.Render("~/bundles/datatable")
 @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
+@Scripts.Render("~/bundles/bootstrapdatepicker")
 @Scripts.Render("~/bundles/product")
 }
 

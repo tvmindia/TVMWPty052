@@ -113,6 +113,52 @@ namespace PartyEC.BusinessServices.Services
             return nodesList;
         }
 
+        public List<JsTreeNode> GetTreeListCategories()
+        {
+            List<JsTreeNode> nodesList = new List<JsTreeNode>();
+            try
+            {
+                List<Treeview> TreeViewList = _dynamicUIRepository.GetTreeListForCategories();
+
+                foreach (var i in TreeViewList)
+                {
+                    if (i.level.ToString() == "0")
+                    {
+                        JsTreeNode rootNode = new JsTreeNode();
+                        rootNode.id = i.ID.ToString();
+                        rootNode.text = i.Name.ToString();
+                        rootNode.icon = "fa fa fa-list";
+                        rootNode.children = new List<JsTreeNode>();
+                        LookForChildNode(TreeViewList, rootNode, i);                       
+                        nodesList.Add(rootNode);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return nodesList;
+        }
+        private void LookForChildNode(List<Treeview> TreeViewList,JsTreeNode rootNode,Treeview i)
+        {
+            foreach (var j in TreeViewList)
+            {
+                if (j.ParentID.ToString() == i.ID.ToString())
+                {
+
+                    JsTreeNode Node = new JsTreeNode();
+                    Node.id = j.ID.ToString();
+                    Node.text = j.Name.ToString();
+                    Node.icon = "fa fa-tags";
+                    Node.children = new List<JsTreeNode>();
+                    
+                    rootNode.children.Add(Node);
+                    LookForChildNode(TreeViewList, Node, j);
+                }
+                
+            }
+        }
 
 
 

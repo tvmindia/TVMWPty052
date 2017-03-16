@@ -61,16 +61,17 @@ namespace PartyEC.BusinessServices.Services
             return _attributesRepository.UpdateAttributes(attributesObj);
         }
 
-        public OperationsStatus DeleteAttributes(int AttributeID, OperationsStatus Status)
+        public OperationsStatus DeleteAttributes(int AttributeID)
         {
+            OperationsStatus OperationsStatusObj = null;
             try
             {
-                _attributesRepository.DeleteAttributes(AttributeID, Status);
+                OperationsStatusObj= _attributesRepository.DeleteAttributes(AttributeID);
             }
             catch (Exception)
             {
             }
-            return Status;
+            return OperationsStatusObj;
         }
     }
     public class AttributeSetBusiness:IAttributeSetBusiness
@@ -91,6 +92,10 @@ namespace PartyEC.BusinessServices.Services
         public OperationsStatus UpdateAttributeSet(AttributeSet attributeSetObj, int ID)
         {
             return _attributeSetRepository.UpdateAttributeSet(attributeSetObj, ID);
+        }
+        public OperationsStatus DeleteAttributeSet(int ID)
+        {
+                return _attributeSetRepository.DeleteAttributeSet(ID);
         }
     }
     public class AttributeToSetLinks : IAttributeToSetLinks

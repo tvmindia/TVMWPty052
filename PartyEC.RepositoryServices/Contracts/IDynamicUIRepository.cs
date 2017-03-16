@@ -12,6 +12,7 @@ namespace PartyEC.RepositoryServices.Contracts
         List<Menu> GetAllMenues();
         List<Treeview> GetTreeListForAttrSet(string ID);
         List<Treeview> GetTreeListForAttr();
+        List<Treeview> GetTreeListForCategories();
 
     }
 }

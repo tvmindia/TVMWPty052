@@ -12,3 +12,59 @@
     margin-bottom: 5px
 	
 }
+.review-block{
+	background-color:#FAFAFA;
+	border:1px solid #EFEFEF;
+	padding:15px;
+	border-radius:3px;
+	margin-bottom:15px;
+}
+.review-block-name{
+	font-size:12px;
+	margin:10px 0;
+}
+.review-block-date{
+	font-size:12px;
+}
+.review-block-rate{
+	font-size:13px;
+	margin-bottom:15px;
+}
+.review-block-title{
+	font-size:15px;
+	font-weight:700;
+	margin-bottom:10px;
+}
+.review-block-description{
+	font-size:13px;
+}
+
+
+.Htags{
+  float:left;
+  border:1px none;
+  padding:5px;
+  font-family:Arial;
+}
+.Htags{
+  cursor:pointer;
+  display:block;
+  float:left;
+  color:#fff;
+  background:#21939e;
+  padding:5px;
+  padding-bottom: 5px;
+  padding-right:25px;
+  margin:3px;
+}
+.Htags:hover{
+  opacity:0.7;
+}
+.Htags:after{
+ position:absolute;
+ content:"×";
+ border:0px solid;
+ padding:2px 3px;
+ margin-left:3px;
+ font-size:15px;
+}

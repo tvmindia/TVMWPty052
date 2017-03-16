@@ -8,13 +8,13 @@ using PartyEC.RepositoryServices.Contracts;
 
 namespace PartyEC.BusinessServices.Services
 {
-    public class CategoryBusiness : ICategoryBusiness
+    public class CategoriesBusiness : ICategoriesBusiness
     {
         #region ConstructorInjection
 
-        private ICategoryRepository _categoryRepository;
+        private ICategoriesRepository _categoryRepository;
 
-        public CategoryBusiness(ICategoryRepository categoryRepository)
+        public CategoriesBusiness(ICategoriesRepository categoryRepository)
         {
             _categoryRepository = categoryRepository;
         }
@@ -23,9 +23,9 @@ namespace PartyEC.BusinessServices.Services
 
 
        
-        public List<Category> GetAllCategory()
+        public List<Categories> GetAllCategory()
         {
-            List<Category> Categorylist = null;
+            List<Categories> Categorylist = null;
 
             try {
 
@@ -38,12 +38,12 @@ namespace PartyEC.BusinessServices.Services
             return Categorylist;
         }
 
-        public Category GetCategory(int CategoryID, OperationsStatus Status)
+        public Categories GetCategory(int CategoryID)
         {
-            Category myCategory = null;
+            Categories myCategory = null;
             try
             {
-                myCategory= _categoryRepository.GetCategory(CategoryID,Status);
+                myCategory= _categoryRepository.GetCategory(CategoryID);
             }
             catch (Exception)
             {
@@ -52,7 +52,7 @@ namespace PartyEC.BusinessServices.Services
             return myCategory;
         }
 
-        public OperationsStatus InsertCategory(Category CategoryObj)
+        public OperationsStatus InsertCategory(Categories CategoryObj)
         {
             OperationsStatus operationsStatusObj = null;
             try
@@ -66,7 +66,7 @@ namespace PartyEC.BusinessServices.Services
             return operationsStatusObj;
         }
 
-        public OperationsStatus UpdateCategory(Category CategoryObj)
+        public OperationsStatus UpdateCategory(Categories CategoryObj)
         {
             OperationsStatus operationsStatusObj = null;
             try

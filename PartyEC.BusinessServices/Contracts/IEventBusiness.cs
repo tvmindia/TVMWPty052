@@ -13,6 +13,6 @@ namespace PartyEC.BusinessServices.Contracts
         Event GetEvent(int EventID, OperationsStatus Status);
         OperationsStatus InsertEvent(Event EventObj);
         OperationsStatus UpdateEvent(Event EventObj);
-        OperationsStatus DeleteEvent(int EventID, OperationsStatus Status);
+        OperationsStatus DeleteEvent(int EventID);
     }
 }

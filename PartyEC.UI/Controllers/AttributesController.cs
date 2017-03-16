@@ -75,39 +75,44 @@ namespace PartyEC.UI.Controllers
         public string InsertUpdateAttributes(AttributesViewModel attributesObj)
         {
             if (ModelState.IsValid)
-            {                
-                if (attributesObj.ID == 0)
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                if (attributesObj.ID == 0) //Create Attribute
                 {
-                    //Create Attribute
                     try
                     {
                         attributesObj.commonObj = new CommonViewModel();
                         attributesObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                         attributesObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
-                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.InsertAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
-                        return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.InsertAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
                     }
                     catch (Exception ex)
                     {
                         return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                     }
                 }
-                else
+                else //Update Attribute
                 {
-                    //Update Attribute
                     try
                     {
                         attributesObj.commonObj = new CommonViewModel();
                         attributesObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                         attributesObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
-                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.UpdateAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
-                        return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.UpdateAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));                        
                     }
                     catch (Exception ex)
                     {
                         return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                     }
-                }               
+                }
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
@@ -127,8 +132,15 @@ namespace PartyEC.UI.Controllers
                     try
                     {
                         OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.DeleteAttributes(attributesObj.ID, Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
-                        return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.DeleteAttributes(attributesObj.ID));
+                        if (OperationsStatusViewModelObj.StatusCode == 1)
+                        {
+                            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        }
+                        else
+                        {
+                            return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -140,5 +152,51 @@ namespace PartyEC.UI.Controllers
         }
 
         #endregion DeleteAttributes
+        
+        #region ChangeButtonStyle
+        [HttpGet]
+        public ActionResult ChangeButtonStyle(string ActionType)
+        {
+            ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
+            switch (ActionType)
+            {
+                case "Edit":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Event = "clickdelete()";
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
+
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "clicksave()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    ToolboxViewModelObj.resetbtn.Visible = true;
+                    ToolboxViewModelObj.resetbtn.Event = "btnreset()";
+
+                    ToolboxViewModelObj.backbtn.Visible = true; 
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+
+                    break;
+                case "Add":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "clicksave()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    ToolboxViewModelObj.resetbtn.Visible = true;
+                    ToolboxViewModelObj.resetbtn.Event = "btnreset()";
+                    ToolboxViewModelObj.resetbtn.Title = "Reset";
+
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
+                default:
+                    return Content("Nochange");
+            }
+            return PartialView("_ToolboxView", ToolboxViewModelObj);
+        }
+        #endregion ChangeButtonStyle
     }
 }

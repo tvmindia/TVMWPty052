@@ -22,6 +22,7 @@ $(document).ready(function () {
         "state": { "key": "demo2" },
         "plugins": ["dnd", "state", "types"]
     });
+
     //Tree bind into the right side container
 
     $('#jstree_DragUpdate').jstree({
@@ -67,7 +68,7 @@ $(document).ready(function () {
    
     $('#tabattributeSetDetails').click(function (e) {
         //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
-        //ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
+        ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
         $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft();
         $('#jstree_Drag').jstree(true).refresh(true);
 
@@ -86,6 +87,10 @@ function MainClick()
     debugger;
     $('#btnFormSave').click();
 }
+function AddNew()
+{
+    $('#tabattributeSetDetails').trigger('click');
+}
 function Edit(currentObj) {
     //Tab Change on edit click
     $('#tabattributeSetDetails').trigger('click');
@@ -94,11 +99,12 @@ function Edit(currentObj) {
     if ((rowData != null) && (rowData.ID != null)) {
 
         EditAttibuteSet(rowData.ID);
-        $("#ID").val(rowData.ID)
+        $("#ID").val(rowData.ID);
+        $("#hdnDelete").val(rowData.ID);
         $("#Name").val(rowData.Name);
     }
     //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
-    ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Hello");
+    ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Edit");
 }
 
 function GetAllAttributeSet() {
@@ -230,6 +236,7 @@ function SaveOrder()
     $('#TreeList').val(JSON.stringify(TreeOrderFormatted));
 }
 function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
+    debugger;
     var i = JSON.parse(data.responseText)
     switch(i.Result)
     {
@@ -244,4 +251,26 @@ function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
             
     }
     
+}
+function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the question
+    debugger;
+    var i = JSON.parse(data.responseText)
+    switch (i.Result) {
+        case "OK":
+            notyAlert('success', i.Records.StatusMessage);
+            DataTables.attributeSetTable.clear().rows.add(GetAllAttributeSet()).draw(false);
+            //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
+            ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
+            $('#tabattributeSetDetails').trigger('click');
+            break;
+        case "ERROR":
+            notyAlert('success', i.Records.StatusMessage);
+            break;
+
+    }
+
+}
+function Delete()
+{
+    $('#btnFormDelete').click();
 }

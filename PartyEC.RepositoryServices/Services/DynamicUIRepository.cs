@@ -164,6 +164,50 @@ namespace PartyEC.RepositoryServices.Services
             }
             return TreeListData;
         }
+        public List<Treeview> GetTreeListForCategories()
+        {
+            List<Treeview> TreeListData = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetTreeListForCategories]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                TreeListData = new List<Treeview>();
+                                while (sdr.Read())
+                                {
+                                    Treeview TreeviewObj = new Treeview();
+                                    {
+                                        TreeviewObj.ID = sdr["ID"].ToString();
+                                        TreeviewObj.ParentID = (sdr["ParentID"].ToString() != "" ? Int16.Parse(sdr["ParentID"].ToString()) : TreeviewObj.ParentID);
+                                        TreeviewObj.Name = sdr["Name"].ToString();
+                                        TreeviewObj.level = sdr["level"].ToString();
+                                    }
+                                    TreeListData.Add(TreeviewObj);
+                                }
+
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return TreeListData;
+        }
 
     }
 }

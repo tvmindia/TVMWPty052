@@ -33,13 +33,16 @@ namespace PartyEC.DataAccessObject.DTO
         public string HeaderTags { get; set; }
         public Guid StickerID { get; set; }
         public string StickerURL { get; set; }
-
+        public int LinkID { get; set; }
+        public int CategoryID { get; set; }
+        public float PositionNo { get; set; }
         public List<ProductDetail> ProductDetail { get; set; }
-        public LogDetails LogDetails { get; set; }
+        public ProductDetail productDetail { get; set; }
+        public LogDetails logDetails { get; set; }
         public List<ProductImages>ProductHeaderImages { get; set; }
         public Product() {
-            LogDetails = new LogDetails();
-            ProductDetail = new List<ProductDetail>();
+            //LogDetails = new LogDetails();
+           // ProductDetail = new List<ProductDetail>();
             ProductHeaderImages = new List<ProductImages>();
         }
     }
@@ -58,12 +61,12 @@ namespace PartyEC.DataAccessObject.DTO
         public decimal DiscountAmount { get; set; }
         public DateTime DiscountStartDate{ get; set; }
         public DateTime DiscountEndDate { get; set; }
-        public LogDetails LogDetails { get; set; }
+        public LogDetails logDetails { get; set; }
         public List<AttributeValues> ProductAttributes { get; set; }
         public List<ProductImages> ProductDetailImages { get; set; }
 
         public ProductDetail() {
-            LogDetails = new LogDetails();
+            //logDetails = new LogDetails();
             ProductAttributes = new List<AttributeValues>();
             ProductDetailImages = new List<ProductImages>();
         }
@@ -90,6 +93,13 @@ namespace PartyEC.DataAccessObject.DTO
         public int ID { get; set; }
         public string URL { get; set; }
         public bool isMain { get; set; }
+    }
+    public class ProductCategoryLink
+    {
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int CategoryID { get; set; }
+        public LogDetails commonObj { get; set; }
     }
 
     

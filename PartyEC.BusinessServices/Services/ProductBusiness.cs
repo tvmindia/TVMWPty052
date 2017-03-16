@@ -31,6 +31,64 @@ namespace PartyEC.BusinessServices.Services
             }
             return productlist;
         }
+        public List<Product> GetAllProductswithCategory(string CategoryID)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetAllProductswithCategory(CategoryID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return productlist;
+        }
+        public List<Product> GetAssignedPro(string CategoryID)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetAssignedPro(CategoryID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return productlist;
+        }
+        public List<Product> GetUnAssignedPro(string CategoryID)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetUnAssignedPro(CategoryID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return productlist;
+        }
+
+         public List<Product> GetRelatedProducts(int productID)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetRelatedProducts(productID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return productlist;
+        }
+
 
         public OperationsStatus InsertProduct(Product productObj)
         {
@@ -42,6 +100,13 @@ namespace PartyEC.BusinessServices.Services
         public Product GetProduct(int ProductID, OperationsStatus Status) {
 
             return _productRepository.GetProduct(ProductID, Status);
+        }
+
+        public OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList, List<ProductCategoryLink> DeleteList)
+        {
+
+            return _productRepository.AddOrRemoveProductCategoryLink(AddList,DeleteList);
+
         }
 
     }

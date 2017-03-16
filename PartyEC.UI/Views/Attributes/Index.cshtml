@@ -13,13 +13,13 @@
         <div class="panel-heading">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#attibutesList" id="tabattibutesList"  data-toggle="tab">Attibutes List</a></li>
-                <li><a href="#attributeDetails" id="tabattributeDetails" data-toggle="tab">Attribute Details</a></li>
+                <li><a href="#attributeDetails" onclick=" clearfields()" id="tabattributeDetails" data-toggle="tab">Attribute Details</a></li>
             </ul>
         </div>
         <div class="panel-body">
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="attibutesList">
-                    <div class="">
+                    <div class="" id="btnPatchAttributestab1">
                         @{
                             PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab1 = new PartyEC.UI.Models.ToolboxViewModel();
                             ToolBoxControltab1.addbtn.Visible = true;                          
@@ -49,7 +49,7 @@
                     @*table*@
                 </div>
                 <div class="tab-pane fade" id="attributeDetails">
-                    <div class="">
+                    <div class="" id="btnPatchAttributestab2">
                         @{
                             PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab2 = new PartyEC.UI.Models.ToolboxViewModel();
                             ToolBoxControltab2.deletebtn.Visible = true;
@@ -76,7 +76,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 ">                            
-                            @using (Ajax.BeginForm("InsertUpdateAttributes", "Attributes", new AjaxOptions { HttpMethod = "POST", Confirm = "attributeSaveConfirm", OnSuccess = "attributeSaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form",id="formIns_Up" }))
+                            @using (Ajax.BeginForm("InsertUpdateAttributes", "Attributes", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "attributeSaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form",id="formIns_Up" }))
                             {
                                 @Html.AntiForgeryToken()
                                 <div class="form-horizontal">

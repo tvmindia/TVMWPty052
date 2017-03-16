@@ -7,12 +7,12 @@ using System.Threading.Tasks;
 
 namespace PartyEC.BusinessServices.Contracts
 {
-   public interface ICategoryBusiness
+   public interface ICategoriesBusiness
     {
-        List<Category> GetAllCategory();
-        Category GetCategory(int CategoryID, OperationsStatus Status);
-        OperationsStatus InsertCategory(Category CategoryObj);
-        OperationsStatus UpdateCategory(Category CategoryObj);
+        List<Categories> GetAllCategory();
+        Categories GetCategory(int CategoryID);
+        OperationsStatus InsertCategory(Categories CategoryObj);
+        OperationsStatus UpdateCategory(Categories CategoryObj);
         OperationsStatus DeleteCategory(int CategoryID, OperationsStatus Status);
     }
 }

@@ -13,7 +13,7 @@ namespace PartyEC.BusinessServices.Contracts
         Attributes GetAttributes(int AttributeID, OperationsStatus Status);
         OperationsStatus InsertAttributes(Attributes attributesObj);
         OperationsStatus UpdateAttributes(Attributes attributesObj);
-        OperationsStatus DeleteAttributes(int AttributeID, OperationsStatus Status);
+        OperationsStatus DeleteAttributes(int AttributeID);
 
 
     }
@@ -22,6 +22,7 @@ namespace PartyEC.BusinessServices.Contracts
         List<AttributeSet> GetAllAttributeSet();
         OperationsStatus InsertAttributeSet(AttributeSet attributeSetObj);
         OperationsStatus UpdateAttributeSet(AttributeSet attributeSetObj,int ID);
+        OperationsStatus DeleteAttributeSet(int ID);
     }
     public interface IAttributeToSetLinks
     {

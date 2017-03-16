@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartyEC.UI.Models
 {
-    public class ProductViewModel
+  public class ProductViewModel
     {
         #region General
         public int ID { get; set; }
@@ -42,34 +43,36 @@ namespace PartyEC.UI.Models
         [Required(ErrorMessage = "Please enter Supplier")]
         [Display(Name = "Supplier")]
         public int SupplierID { get; set; }
-        
+        public List<SelectListItem> suppliers { get; set; }
+        //  public List<SupplierViewModel> suppliers { get; set; }
+
         [Display(Name = "Manufacturer")]
         public int ManufacturerID { get; set; }
-
+        public List<SelectListItem> manufacturers { get; set; }
         [Required(ErrorMessage = "Please enter Product Type")]
         [Display(Name = "Product Type")]
-        public char ProductType { get; set; }//simple //configurable
+        public char? ProductType { get; set; }//simple //configurable
 
        
         [Display(Name = "Attribute Set")]
         public int AttributeSetID { get; set; }
 
+        public List<SelectListItem> AttributeSets { get; set; }
         [Required(ErrorMessage = "Please enter Free Delivery")]
         [Display(Name = "Free Delivery(Y/N)")]
         public Boolean FreeDelivery { get; set; }
 
-        [Display(Name = "Search Tags")]
-        public string HeaderTags { get; set; }
+
         #endregion General
         #region Prices
         [Required(ErrorMessage = "Please enter Cost Price")]
         [Display(Name = "Cost Price")]
-        [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Number")]
+        [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Decimal ie:(85.50)")]
         public decimal CostPrice { get; set; }
 
         [Required(ErrorMessage = "Please enter Selling Price ")]
         [Display(Name = "Selling Price")]
-        [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Number")]
+        [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Decimal ie:(85.50)")]
         public decimal BaseSellingPrice { get; set; }
 
         [Required(ErrorMessage = "Please enter Show Price  ")]
@@ -80,16 +83,18 @@ namespace PartyEC.UI.Models
         public string TaxClass { get; set; }
        
         [Display(Name = "Discount Price")]
-        [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Number")]
+        [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Decimal ie:(85.50)")]
         public decimal DiscountAmount { get; set; }
 
         [DataType(DataType.Date,ErrorMessage ="Must be a Date")]
+        //[DisplayFormat(DataFormatString = "{0:dd-M-yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Discount Start Date")]
-        public DateTime DiscountStartDate { get; set; }
+        public DateTime? DiscountStartDate { get; set; }
 
         [DataType(DataType.Date, ErrorMessage = "Must be a Date")]
+        //[DisplayFormat(DataFormatString = "{0:dd-M-yyyy}", ApplyFormatInEditMode = true)]
         [Display(Name = "Discount End Date")]
-        public DateTime DiscountEndDate { get; set; }
+        public DateTime? DiscountEndDate { get; set; }
 
         #endregion Prices
 
@@ -127,12 +132,14 @@ namespace PartyEC.UI.Models
         [Required(ErrorMessage = "Please enter Quantity")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Must be number")]
         [Display(Name = "Qty")]
-        public int Qty { get; set; }
+        public decimal? Qty { get; set; }
+
+        
 
         [Required(ErrorMessage = "Please enter Reorder Alert Qty")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Must be number")]
         [Display(Name = "Reorder Alert Qty")]
-        public int OutOfStockAlertQty { get; set; }
+        public decimal? OutOfStockAlertQty { get; set; }
 
 
         #endregion Inventory
@@ -143,9 +150,21 @@ namespace PartyEC.UI.Models
         [MaxLength(250)]
         public string HeaderTag { get; set; }
         #endregion ProductTags
-
-        public CommonViewModel commonObj { get; set; }
+        public int LinkID { get; set; }
+        public int CategoryID { get; set; }
+        public float PositionNo { get; set; }
+        public CommonViewModel logDetails { get; set; }
 
         
     }
+    public class ProductCategoryLinkViewModel
+    {
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int CategoryID {get;set;}
+        public CommonViewModel commonObj { get; set; }
+    }
+
+
+
 }
