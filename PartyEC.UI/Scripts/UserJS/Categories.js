@@ -2,6 +2,10 @@
 $(document).ready(function () {
     try
     {
+        //$("input:checkbox").change(function () {
+        //    $(this).closest('tr').toggleClass('selected');
+        //});
+        
         //Tree bind into LHS side container with category
         $('#jstree_Categories').jstree({
             "core": {
@@ -72,41 +76,9 @@ $(document).ready(function () {
                   }
                  ]
              });
-            //table = $('#tblCategoryProduct').DataTable({
-            //    'dom': '<"pull-left"f>rt<"bottom"ip><"clear">',
-            //    'searching': true,
-            //    'paging': true,
-            //    'data': GetAllProducts(),
-            //    'columns': [
-            //       {"data":"ID"},
-            //       { "data": "ID" },
-            //       { "data": "Name" },
-            //       { "data": "EnableYN", "defaultContent": "<i>-</i>" },
-            //       { "data": "SupplierID", "defaultContent": "<i>-</i>" },
-            //       { "data": "SKU", "defaultContent": "<i>-</i>" },
-            //       { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
-            //       { "data": "Qty", "defaultContent": "<i>-</i>" },
-            //       { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
-            //       { "data": null, "defaultContent": "<input type='text' class='col-lg-3'></input>" }
-
-            //    ],
-            //    'columnDefs': [
-            //       {
-
-            //           'targets': 0,
-            //           'checkboxes': {
-            //               'selectRow': true
-            //           }
-
-
-            //       }
-
-            //    ],
-            //    'select': {
-            //        'style': 'multi'
-            //    },
-            //    'order': []
-            //});
+            $('#tblCategoryProduct').on('change', 'input[type="checkbox"]', function () {
+                $(this).closest('tr').toggleClass('selected');
+            });
     }
     catch(e)
     {
@@ -202,11 +174,11 @@ function GetUnAssignedProWithID(id) {
 
 }
 //Get Products for Table binding fro tab2
-function GetAllProducts() {
+function GetAllProducts(id) {
 
     try {
         debugger;
-        var data = "";
+        var data = {"CategoryID":id};
         var ds = {};
         ds = GetDataFromServer("Products/GetAllProductswithCategory/", data);
         if (ds != '') {
@@ -266,38 +238,78 @@ function MainClick()
 {
     $('#btnFormSave').click();
 }
-
+function SaveAddorRemove()
+{
+    $('#btnFormTableData').click();
+}
+function AddProductLink()
+{
+    debugger;
+    var AddList = [];
+    var DeleteList = [];
+    var tabledata = DataTables.productTable.rows('.selected').data();
+    for (var i = 0; i < tabledata.length; i++) {
+        if (tabledata[i].LinkID == 0)
+        {
+            var ProductCategoryLinkViewModel = new Object();
+            ProductCategoryLinkViewModel.ProductID = tabledata[i].ID;
+            ProductCategoryLinkViewModel.CategoryID = $('#ID').val();
+            AddList.push(ProductCategoryLinkViewModel);
+        }
+        else if (tabledata[i].LinkID != 0)
+        {
+            var ProductCategoryLinkViewModel = new Object();
+            ProductCategoryLinkViewModel.ID = tabledata[i].LinkID;
+            ProductCategoryLinkViewModel.ProductID = tabledata[i].ID;
+            ProductCategoryLinkViewModel.CategoryID = tabledata[i].CategoryID;
+            DeleteList.push(ProductCategoryLinkViewModel);
+        }
+    }
+    $('#hdnTableDataAdd').val(JSON.stringify(AddList));
+    $('#hdnTableDataDelete').val(JSON.stringify(DeleteList));
+}
 ////////////////////////////////////////Onclick for Radio button
 function GetAssignedPro()
 {
     debugger;
     var id=$('#ID').val()!="0"?$('#ID').val():"";
     DataTables.productTable.clear().rows.add(GetAssignedProWithID(id)).draw(false);
+    $("#rdoproductAssigned").prop("checked", true);
+    ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "tab2");
+    $('#divOverlay').show();
 }
 function GetUnAssignedPro()
 {
     debugger;
     var id = $('#ID').val() != "0" ? $('#ID').val() : "";
     DataTables.productTable.clear().rows.add(GetUnAssignedProWithID(id)).draw(false);
-    $(':input').each(function () {
-
-        if (this.type == 'checkbox') {
-            this.checked = false;
-        }
-    });
 }
 function GetAllPro()
 {
     debugger;
-    DataTables.productTable.clear().rows.add(GetAllProducts()).draw(false);
+    var id = $('#ID').val();
+    DataTables.productTable.clear().rows.add(GetAllProducts(id)).draw(false);
 }
-function findcheck()
+function TabRedirect()
 {
+    ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "tab1");
+    $('#divOverlay').hide();
+}
+function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the question
     debugger;
-    var checkIds = [];
-    $('input[type="checkbox"]:checked', productTable.fnGetNodes()).each(function (i) {
-        debugger;
-        var tr = $(this).closest('tr');
-        checkIds.push(tr);
-    });
+    var i = JSON.parse(data.responseText)
+    switch (i.Result) {
+        case "OK":
+            notyAlert('success', i.Records.StatusMessage);
+            DataTables.attributeSetTable.clear().rows.add(GetAllAttributeSet()).draw(false);
+            //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
+            ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
+            $('#tabattributeSetDetails').trigger('click');
+            break;
+        case "ERROR":
+            notyAlert('success', i.Records.StatusMessage);
+            break;
+
+    }
+
 }

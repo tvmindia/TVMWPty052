@@ -8,11 +8,22 @@
     @Styles.Render("~/Content/datatable")
     @Styles.Render("~/Content/jstree")
 }
+<style>
+    .overlay {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:9999;
+    color:white;
+}
+</style>
 <div class="container-fluid">
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1primary" data-toggle="tab">General Information</a></li>
+                <li class="active"><a href="#tab1primary" data-toggle="tab" onclick="TabRedirect()">General Information</a></li>
                 <li><a href="#tab2CategoryProducts" data-toggle="tab" id="tabCategoryTable" onclick="GetAssignedPro();">Category Products</a></li>
             </ul>
         </div>
@@ -24,6 +35,8 @@
                 <div class="panel panel-default panel-info">
                     <div class="panel-body" id="jstree_Categories">
 
+                    </div>
+                    <div class="overlay" id="divOverlay" style="display:none;">
                     </div>
                 </div>
             </div>
@@ -170,6 +183,18 @@
                             </thead>
 
                         </table>
+                    <div id="attributeSetDelete" hidden="hidden">
+                        @using (Ajax.BeginForm("AddorRemoveLinks", "Categories", new AjaxOptions { HttpMethod = "POST", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "CheckSubmittedDelete" }, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-actions no-color">
+                                @Html.HiddenFor(model => model.TableDataAdd, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnTableDataAdd" })
+                                 @Html.HiddenFor(model => model.TableDataDelete, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnTableDataDelete" })
+                                <input id="btnFormTableData" onclick="AddProductLink()" type="submit" value="Delete" class="btn btn-default" />
+                            </div>
+                        }
+                    </div>
+
 </div>
                 </div>
             </div>

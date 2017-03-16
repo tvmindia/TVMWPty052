@@ -18,11 +18,13 @@ namespace PartyEC.UI.Controllers
 
         ICategoriesBusiness _categoryBusiness;
         ICommonBusiness _commonBusiness;
+        IProductBusiness _productBusiness;
 
-        public CategoriesController(ICategoriesBusiness categoryBusiness, ICommonBusiness commonBusiness)
+        public CategoriesController(ICategoriesBusiness categoryBusiness, ICommonBusiness commonBusiness,IProductBusiness productBusiness)
         {
             _categoryBusiness = categoryBusiness;
             _commonBusiness = commonBusiness;
+            _productBusiness = productBusiness;
         }
         #endregion Constructor_Injection
         // GET: Category
@@ -96,10 +98,58 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.addbtn.Title = "Add";
                     ToolboxViewModelObj.addbtn.Event = "AddCategory()";
                     break;
+                case "tab1":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "MainClick()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    ToolboxViewModelObj.addsubbtn.Visible = true;
+                    ToolboxViewModelObj.addsubbtn.Event = "AddNewSubCategory()";
+
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+                    ToolboxViewModelObj.addbtn.Event = "AddCategory()";
+                    break;
+                case "tab2":
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "SaveAddorRemove()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    break;
                 default:
                     return Content("Nochange");
             }
             return PartialView("_ToolboxView", ToolboxViewModelObj);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string AddorRemoveLinks(CategoriesViewModel categoriesViewModelObj)
+        {
+            try
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = new OperationsStatusViewModel();
+                categoriesViewModelObj.commonObj = new CommonViewModel();
+                categoriesViewModelObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                categoriesViewModelObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                //Deserialize the string to object
+                List<ProductCategoryLinkViewModel> ProductList = JsonConvert.DeserializeObject<List<ProductCategoryLinkViewModel>>(categoriesViewModelObj.TableDataAdd);
+                List<ProductCategoryLinkViewModel> ProductListDelete = JsonConvert.DeserializeObject<List<ProductCategoryLinkViewModel>>(categoriesViewModelObj.TableDataDelete);
+                //Adding Created date and Createdby 
+                foreach (var i in ProductList)
+                {
+                    i.commonObj = categoriesViewModelObj.commonObj;
+                }
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.AddOrRemoveProductCategoryLink((Mapper.Map<List<ProductCategoryLinkViewModel>, List<ProductCategoryLink>>(ProductList)), (Mapper.Map<List<ProductCategoryLinkViewModel>, List<ProductCategoryLink>>(ProductListDelete))));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
         }
     }
 }

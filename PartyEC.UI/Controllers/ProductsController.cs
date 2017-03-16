@@ -126,11 +126,11 @@ namespace PartyEC.UI.Controllers
            
         }
         [HttpGet]
-        public string GetAllProductswithCategory(ProductViewModel productObj)
+        public string GetAllProductswithCategory(string CategoryID)
         {
             try
             {
-                List<ProductViewModel> productList = Mapper.Map<List<Product>, List<ProductViewModel>>(_productBusiness.GetAllProductswithCategory(Mapper.Map<ProductViewModel, Product>(productObj)));
+                List<ProductViewModel> productList = Mapper.Map<List<Product>, List<ProductViewModel>>(_productBusiness.GetAllProductswithCategory(CategoryID));
 
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
             }
@@ -193,9 +193,10 @@ namespace PartyEC.UI.Controllers
             {
                 try
                 {
-                    productObj.commonObj = new CommonViewModel();
+                    productObj.logDetails = new CommonViewModel();
                     //Getting UA
-                    productObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName; 
+                    productObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                    productObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
                     OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertProduct(Mapper.Map<ProductViewModel, Product>(productObj)));
                     return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                 }
