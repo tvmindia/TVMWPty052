@@ -131,7 +131,7 @@ namespace PartyEC.UI.Controllers
             try
             {
                 OperationsStatusViewModel OperationsStatusViewModelObj = new OperationsStatusViewModel();
-                categoriesViewModelObj.commonObj = new CommonViewModel();
+                categoriesViewModelObj.commonObj = new LogDetailsViewModel();
                 categoriesViewModelObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                 categoriesViewModelObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
                 //Deserialize the string to object

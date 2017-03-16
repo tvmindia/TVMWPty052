@@ -12,6 +12,7 @@ namespace PartyEC.RepositoryServices.Services
     public class ProductRepository : IProductRepository
     {
         private IDatabaseFactory _databaseFactory;
+        private IAttributesRepository _attributesRepository;
         private SqlConnection _con;
         private SqlCommand _cmd;
 
@@ -19,9 +20,10 @@ namespace PartyEC.RepositoryServices.Services
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
         /// <param name="databaseFactory"></param>
-        public ProductRepository(IDatabaseFactory databaseFactory)
+        public ProductRepository(IDatabaseFactory databaseFactory, IAttributesRepository attributesRepository)
         {
             _databaseFactory = databaseFactory;
+            _attributesRepository = attributesRepository;
         }
         /// <summary>
         /// Only Header detail list is required here
@@ -324,7 +326,7 @@ namespace PartyEC.RepositoryServices.Services
                 operationsStatusObjH = InsertProductHeader(productObj);
                 if (operationsStatusObjH.StatusCode == 1)
                 {
-                  //  operationsStatusObjD = InsertUpdateProductDetails(productObj);
+                      operationsStatusObjD = InsertUpdateProductDetails(productObj);
                     if (operationsStatusObjD.StatusCode == 0)
                     {
                         operationsStatusObjH.StatusCode = 0;
@@ -338,12 +340,7 @@ namespace PartyEC.RepositoryServices.Services
                     //    transaction.Commit();
                     }
                 }
-
-               
-
-
             }
-
             catch (Exception e)
             {
                 operationsStatusObjH.StatusCode = -1;
@@ -358,7 +355,7 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter statusCode = null;
-                SqlParameter ProductID = null;
+                SqlParameter outparamID = null;
                 SqlConnection con = _con;
                 //using (SqlConnection con = _con)
                 // {
@@ -395,8 +392,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = productObj.logDetails.CreatedDate;
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
-                        ProductID = cmd.Parameters.Add("@ProductID", SqlDbType.SmallInt);
-                        ProductID.Direction = ParameterDirection.Output;
+                        outparamID = cmd.Parameters.Add("@ProductID", SqlDbType.SmallInt);
+                        outparamID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (statusCode.Value.ToString())
@@ -410,7 +407,8 @@ namespace PartyEC.RepositoryServices.Services
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "Insertion Successfull!";
-                                operationsStatusObj.ReturnValues = ProductID.Value;
+                                productObj.ID= int.Parse(outparamID.Value.ToString());
+                                operationsStatusObj.ReturnValues = productObj.ID;
                                 break;
                             default:
                                 break;
@@ -436,8 +434,7 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter statusCode = null;
-                SqlParameter DetailID = null;
-                AttributesRepository myAttributesRepository = new AttributesRepository(_databaseFactory);
+                SqlParameter outparamID = null;
                 SqlConnection con = _con;
                 //using (SqlConnection con = _con)
                 //{
@@ -445,13 +442,11 @@ namespace PartyEC.RepositoryServices.Services
                     {
                         con.Open();
                     }
-
-                    foreach (ProductDetail detail in productObj.ProductDetail)
+                List<int> detailIDList = null;
+                    foreach (ProductDetail detail in productObj.ProductDetails)
                     {
                         using (SqlCommand cmd = new SqlCommand())
                         {
-                            
-
                             cmd.Connection = con;
                             if (detail.ID == 0)
                             {
@@ -469,7 +464,7 @@ namespace PartyEC.RepositoryServices.Services
                             cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = detail.Qty;
                             cmd.Parameters.Add("@OutOfStockAlertQty", SqlDbType.Int).Value = detail.OutOfStockAlertQty;
                             cmd.Parameters.Add("@PriceDiffAmt", SqlDbType.Decimal).Value = detail.PriceDifference;
-                            cmd.Parameters.Add("@AttributeXML", SqlDbType.Xml).Value = myAttributesRepository.GetAttributeXML(detail.ProductAttributes);
+                            cmd.Parameters.Add("@AttributeXML", SqlDbType.Xml).Value = _attributesRepository.GetAttributeXML(detail.ProductAttributes);
                             cmd.Parameters.Add("@DetailTag", SqlDbType.NVarChar, -1).Value = detail.DetailTags;
                             cmd.Parameters.Add("@EnableYN", SqlDbType.Bit).Value = detail.Enabled;
                             cmd.Parameters.Add("@StockAvailableYN", SqlDbType.Bit).Value = detail.StockAvailable;
@@ -477,24 +472,16 @@ namespace PartyEC.RepositoryServices.Services
                             cmd.Parameters.Add("@DiscountStDate", SqlDbType.SmallDateTime).Value = detail.DiscountStartDate;
                             cmd.Parameters.Add("@DiscountEnDate", SqlDbType.SmallDateTime).Value = detail.DiscountEndDate;
                             cmd.Parameters.Add("@DefaultOptionYN", SqlDbType.Bit).Value = detail.DefaultOption;
-
-                            cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = detail.logDetails.CreatedBy;
-                            cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = detail.logDetails.CreatedDate;
-                            cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = detail.logDetails.UpdatedBy;
-                            cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = detail.logDetails.UpdatedDate;
-
-
+                            cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = productObj.logDetails.CreatedBy;
+                            cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = productObj.logDetails.CreatedDate;
+                            cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = productObj.logDetails.UpdatedBy;
+                            cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = productObj.logDetails.UpdatedDate;
                             statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                             statusCode.Direction = ParameterDirection.Output;
-                            DetailID = cmd.Parameters.Add("@DetailID", SqlDbType.SmallInt);
-                            DetailID.Direction = ParameterDirection.Output;
-
-
+                            outparamID = cmd.Parameters.Add("@DetailID", SqlDbType.SmallInt);
+                            outparamID.Direction = ParameterDirection.Output;
                             cmd.ExecuteNonQuery();
                             operationsStatusObj = new OperationsStatus();
-
-
-
                             switch (statusCode.Value.ToString())
                             {
                                 case "0":
@@ -507,16 +494,18 @@ namespace PartyEC.RepositoryServices.Services
                                     //Insert Successfull
                                     operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                     operationsStatusObj.StatusMessage = "Detail Insertion Successfull!";
-                                    operationsStatusObj.ReturnValues = (int)(DetailID.Value);
-                                    detail.ID = (int)(DetailID.Value);
-                                    break;
+                                    detail.ID = int.Parse(outparamID.Value.ToString());
+                                detailIDList = new List<int>();
+                                detailIDList.Add(detail.ID);
+                                    
+                                break;
                                 default:
-                                    break;
+                                break;
                             }
-
-
                         }
-                    }
+                    
+                }
+                operationsStatusObj.ReturnValues = detailIDList;
                 //}
             }
             catch (Exception)
@@ -526,7 +515,6 @@ namespace PartyEC.RepositoryServices.Services
             }
 
             return operationsStatusObj;
-
         }
 
         public OperationsStatus UpdateProduct(Product productObj) {
@@ -536,12 +524,11 @@ namespace PartyEC.RepositoryServices.Services
 
             //------------transaction need to be put here ----------------------
             _con = _databaseFactory.GetDBConnection();
-            SqlTransaction transaction;
-            transaction = _con.BeginTransaction("UpdateProduct");
+           // SqlTransaction transaction;
+            //transaction = _con.BeginTransaction("UpdateProduct");
 
             try
             {
-
                 operationsStatusObjH = UpdateProductHeader(productObj);
                 if (operationsStatusObjH.StatusCode == 1)
                 {
@@ -550,20 +537,20 @@ namespace PartyEC.RepositoryServices.Services
                     {
                         operationsStatusObjH.StatusCode = 0;
                         operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
-                        transaction.Rollback();
+                       // transaction.Rollback();
                     }
                     else if (operationsStatusObjD.StatusCode == 1)
                     {
                         operationsStatusObjH.StatusCode = 1;
                         operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
-                        transaction.Commit();
+                        //transaction.Commit();
 
                     }
                 }
                 else
                 {
 
-                    transaction.Rollback();
+                    //transaction.Rollback();
                 }
 
 
@@ -572,7 +559,7 @@ namespace PartyEC.RepositoryServices.Services
             }
             catch (Exception)
             {
-                transaction.Rollback();
+              //  transaction.Rollback();
 
             }
             return operationsStatusObjH;
@@ -583,21 +570,18 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter statusCode = null;
-
-
-                using (SqlConnection con = _con)
-                {
-                    using (SqlCommand cmd = new SqlCommand())
+                SqlConnection con = _con;
+                //  using (SqlConnection con = _con)
+            //  {
+                using (SqlCommand cmd = new SqlCommand())
                     {
                         if (con.State == ConnectionState.Closed)
                         {
                             con.Open();
                         }
-
                         cmd.Connection = con;
                         cmd.CommandText = "[UpdateProductHeader]";
                         cmd.CommandType = CommandType.StoredProcedure;
-
                         cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = productObj.ID;
                         cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = productObj.Name;
                         cmd.Parameters.Add("@SKU", SqlDbType.NVarChar, 250).Value = productObj.SKU;
@@ -618,21 +602,13 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@AttributeSetID", SqlDbType.Int).Value = productObj.AttributeSetID;
                         cmd.Parameters.Add("@FreeDeliveryYN", SqlDbType.Bit).Value = productObj.FreeDelivery;
                         cmd.Parameters.Add("@HeaderTag", SqlDbType.NVarChar, -1).Value = productObj.HeaderTags;
-                        cmd.Parameters.Add("@StickerID", SqlDbType.UniqueIdentifier).Value = productObj.StickerID;
+                        cmd.Parameters.Add("@StickerID", SqlDbType.UniqueIdentifier).Value = DBNull.Value; ;//productObj.StickerID;
                         cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = productObj.logDetails.UpdatedBy;
                         cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = productObj.logDetails.UpdatedDate;
-
-
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
-
-
-
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
-
-
-
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -649,16 +625,13 @@ namespace PartyEC.RepositoryServices.Services
                             default:
                                 break;
                         }
-
-
-
                     }
-                }
+              //  }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
 
             return operationsStatusObj;
@@ -681,7 +654,6 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             cmd.Connection = con;
                             cmd.CommandText = "[InsertProductImage]";
-
                             cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
                             cmd.Parameters.Add("@DetailID", SqlDbType.Int).Value = DetailID;
                             cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1).Value = image.URL;
@@ -762,7 +734,7 @@ namespace PartyEC.RepositoryServices.Services
                     }
 
                     myProduct = GetProductHeader(ProductID);
-                    myProduct.ProductDetail = GetProductDetail(ProductID);
+                    myProduct.ProductDetails = GetProductDetail(ProductID);
                 }
 
             }
@@ -823,10 +795,10 @@ namespace PartyEC.RepositoryServices.Services
 
                             myProduct.ProductHeaderImages = GetProductImages(myProduct.ID);
 
-                            myProduct.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
-                            myProduct.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["CreatedDate"].ToString())) : myProduct.logDetails.CreatedDate);
-                            myProduct.logDetails.UpdatedBy = sdr["UpdatedBy"].ToString();
-                            myProduct.logDetails.UpdatedDate = (sdr["UpdatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["UpdatedDate"].ToString())) : myProduct.logDetails.UpdatedDate);
+                            //myProduct.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
+                            //myProduct.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["CreatedDate"].ToString())) : myProduct.logDetails.CreatedDate);
+                            //myProduct.logDetails.UpdatedBy = sdr["UpdatedBy"].ToString();
+                            //myProduct.logDetails.UpdatedDate = (sdr["UpdatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["UpdatedDate"].ToString())) : myProduct.logDetails.UpdatedDate);
 
                         }
 
@@ -876,10 +848,10 @@ namespace PartyEC.RepositoryServices.Services
                             myProductDetail.DiscountStartDate = (sdr["DiscountStDate"].ToString() != "" ? (Convert.ToDateTime(sdr["DiscountStDate"].ToString())) : myProductDetail.DiscountStartDate);
                             myProductDetail.DiscountEndDate = (sdr["DiscountEnDate"].ToString() != "" ? (Convert.ToDateTime(sdr["DiscountEnDate"].ToString())) : myProductDetail.DiscountEndDate);
 
-                            myProductDetail.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
-                            myProductDetail.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["CreatedDate"].ToString())) : myProductDetail.logDetails.CreatedDate);
-                            myProductDetail.logDetails.UpdatedBy = sdr["UpdatedBy"].ToString();
-                            myProductDetail.logDetails.UpdatedDate = (sdr["UpdatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["UpdatedDate"].ToString())) : myProductDetail.logDetails.UpdatedDate);
+                            //myProductDetail.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
+                            //myProductDetail.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["CreatedDate"].ToString())) : myProductDetail.logDetails.CreatedDate);
+                            //myProductDetail.logDetails.UpdatedBy = sdr["UpdatedBy"].ToString();
+                            //myProductDetail.logDetails.UpdatedDate = (sdr["UpdatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["UpdatedDate"].ToString())) : myProductDetail.logDetails.UpdatedDate);
 
                             if (myAttributeStructure == null)
                             {

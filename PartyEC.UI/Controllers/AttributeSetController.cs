@@ -47,7 +47,7 @@ namespace PartyEC.UI.Controllers
         {
             try
             {
-                attributeSetViewModelObj.commonObj = new CommonViewModel();
+                attributeSetViewModelObj.commonObj = new LogDetailsViewModel();
                 OperationsStatusViewModel OperationsStatusViewModelObj = null;
                 //Checking ID empty or not
                 if (attributeSetViewModelObj.ID ==0)

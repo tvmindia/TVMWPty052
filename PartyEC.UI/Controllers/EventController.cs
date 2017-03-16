@@ -85,7 +85,7 @@ namespace PartyEC.UI.Controllers
                 { 
                     try
                     {
-                        EventObj.commonObj = new CommonViewModel();
+                        EventObj.commonObj = new LogDetailsViewModel();
                         EventObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                         EventObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
                         OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.InsertEvent(Mapper.Map<EventViewModel, Event>(EventObj)));
@@ -100,7 +100,7 @@ namespace PartyEC.UI.Controllers
                 { 
                     try
                     {
-                        EventObj.commonObj = new CommonViewModel();
+                        EventObj.commonObj = new LogDetailsViewModel();
                         EventObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                         EventObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
                         OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.UpdateEvent(Mapper.Map<EventViewModel, Event>(EventObj)));

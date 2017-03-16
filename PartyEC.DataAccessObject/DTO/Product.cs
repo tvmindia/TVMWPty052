@@ -36,17 +36,13 @@ namespace PartyEC.DataAccessObject.DTO
         public int LinkID { get; set; }
         public int CategoryID { get; set; }
         public float PositionNo { get; set; }
-        public List<ProductDetail> ProductDetail { get; set; }
-        public ProductDetail productDetail { get; set; }
-        public LogDetails logDetails { get; set; }
+        public List<ProductDetail> ProductDetails { get; set; }
+      
+        
         public List<ProductImages>ProductHeaderImages { get; set; }
-        public Product() {
-            //LogDetails = new LogDetails();
-           // ProductDetail = new List<ProductDetail>();
-            ProductHeaderImages = new List<ProductImages>();
-        }
+        public LogDetails logDetails { get; set; }
+       
     }
-
     public class ProductDetail {
         public int ID { get; set; }
         public int ProductID { get; set; }
@@ -59,17 +55,13 @@ namespace PartyEC.DataAccessObject.DTO
         public Boolean StockAvailable { get; set; }
         public Boolean DefaultOption { get; set; }
         public decimal DiscountAmount { get; set; }
-        public DateTime DiscountStartDate{ get; set; }
-        public DateTime DiscountEndDate { get; set; }
+        public DateTime? DiscountStartDate{ get; set; }
+        public DateTime? DiscountEndDate { get; set; }
         public LogDetails logDetails { get; set; }
         public List<AttributeValues> ProductAttributes { get; set; }
         public List<ProductImages> ProductDetailImages { get; set; }
 
-        public ProductDetail() {
-            //logDetails = new LogDetails();
-            ProductAttributes = new List<AttributeValues>();
-            ProductDetailImages = new List<ProductImages>();
-        }
+       
 
         public struct ProductTypes
         {
@@ -86,9 +78,6 @@ namespace PartyEC.DataAccessObject.DTO
 
         }
     }
-
-   
-
     public class ProductImages {
         public int ID { get; set; }
         public string URL { get; set; }

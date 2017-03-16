@@ -81,7 +81,7 @@ namespace PartyEC.UI.Controllers
                     //Create Attribute
                     try
                     {
-                        attributesObj.commonObj = new CommonViewModel();
+                        attributesObj.commonObj = new LogDetailsViewModel();
                         attributesObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                         attributesObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
                         OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.InsertAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));
@@ -97,7 +97,7 @@ namespace PartyEC.UI.Controllers
                     //Update Attribute
                     try
                     {
-                        attributesObj.commonObj = new CommonViewModel();
+                        attributesObj.commonObj = new LogDetailsViewModel();
                         attributesObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                         attributesObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
                         OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeBusiness.UpdateAttributes(Mapper.Map<AttributesViewModel, Attributes>(attributesObj)));

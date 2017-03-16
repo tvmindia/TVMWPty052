@@ -6,7 +6,7 @@ $(document).ready(function () {
     $("#HeaderTag").on({
 
         focusout: function () {
-            var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, ''); // allowed characters
+            var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
             if (txt) $("<span/>", { text: txt.toLowerCase(), insertAfter: this }).attr({ 'class': 'Htags','onclick':'removeme(this)' });
             this.value = "";
         },
@@ -19,20 +19,7 @@ $(document).ready(function () {
             }
         }
     });
-    //$(".Htags").on('click', 'span', function () {
-    //    alert("clciked");
-    //    $(this).remove();
-    //});
-    //spanTag.onclick = function () {
-    //    this.parentNode.removeChild(this);
-    //};
-    //$(".Htags").on('click', 'span', function () {
-    //    alert("clciked");
-    //    $(this).remove();
-    //});
-    //$('.Htags').click(function () {
-    //    alert('hohoho');
-    //});
+  
    try {
        
         DataTables.productTable = $('#tblproducts').DataTable(
@@ -123,13 +110,19 @@ function Edit(currentObj)
     if ((rowData != null) && (rowData.ID != null))
     {
         var thisproduct = GetProduct(rowData.ID);
-        $("#Name").val(thisproduct.Name);
-        $("#SKU").val(thisproduct.SKU);
-        //$("").val();
-        $("#ShortDescription").val(thisproduct.ShortDescription);
-        $("#ProductType").val(thisproduct.ProductType);
-        $("#hdfproductID").val(thisproduct.ID);
-        RefreshRelatedProducts(thisproduct.ID);
+        if (thisproduct != null)
+        {
+            $("#Name").val(thisproduct.Name);
+            $("#SKU").val(thisproduct.SKU);
+            if (thisproduct.ConfigurableYN == false)
+            { $("#married-false").prop('checked', true); }
+            else { $("#married-true").prop('checked', true); }
+            $("#ShortDescription").val(thisproduct.ShortDescription);
+            $("#ProductType").val(thisproduct.ProductType);
+            $("#ID").val(thisproduct.ID);
+            RefreshRelatedProducts(thisproduct.ID);
+        }
+       
     }
 
    
@@ -206,7 +199,14 @@ function GetRelatedProducts(id) {
     }
 
 }
-
+function RefreshProducts() {
+    try {
+        DataTables.productTable.clear().rows.add(GetAllProducts()).draw(false);
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
 function RefreshRelatedProducts(id) {
     try {
         DataTables.RelatedproductsTable.clear().rows.add(GetRelatedProducts(id)).draw(false);
@@ -216,9 +216,46 @@ function RefreshRelatedProducts(id) {
     }
 }
 
-function productSaveSuccess()
+function ConstructproductDetailObject()
 {
-    alert("success");
+    $('.Htags').each(function () {
+        debugger;
+        var tagval = [];
+        tagval.push(this.innerHTML);
+    });
+
+
+    
+    var ProductDetailViewModel = new Object();
+    ProductDetailViewModel.Qty =$.parseJSON($('#productform :input[name="Qty"]').serializeArray()[0].value);
+    ProductDetailViewModel.OutOfStockAlertQty = $.parseJSON($('#productform :input[name="OutOfStockAlertQty"]').serializeArray()[0].value);
+    ProductDetailViewModel.StockAvailable = $.parseJSON($('#productform :input[name="StockAvailable"]').serializeArray()[0].value);
+    ProductDetailViewModel.DiscountAmount = $.parseJSON($('#productform :input[name="DiscountAmount"]').serializeArray()[0].value);
+    ProductDetailViewModel.DiscountStartDate = $('#productform :input[name="DiscountStartDate"]').serializeArray()[0].value;
+    ProductDetailViewModel.DiscountEndDate = $('#productform :input[name="DiscountEndDate"]').serializeArray()[0].value;
+    ProductDetailViewModel.Enabled = $.parseJSON($('#productform :input[name="Enabled"]').serializeArray()[0].value);
+    var ar = [];
+    ar.push(ProductDetailViewModel);
+    $("#productDetailhdf").val(JSON.stringify(ar));
+    
+}
+
+function productSaveSuccess(data, status, xhr)
+{
+    debugger;
+    var JsonResult=JSON.parse(data)
+    switch (JsonResult.Result) {
+        case "OK":
+            notyAlert('success', JsonResult.Record.StatusMessage);
+            $("#ID").val(JsonResult.Record.ReturnValues);
+            RefreshProducts();
+            break;
+        case "ERROR":
+            notyAlert('error', JsonResult.Record.StatusMessage);
+            break;
+        default:
+            break;
+    }
 }
 function productSaveFailure()
 {
@@ -226,14 +263,10 @@ function productSaveFailure()
 }
 function onbeginProductSave()
 {
-    alert("onbegin");
-    $('#loadingDisplay').show();
-   
-
 }
 function oncomplteProductSave()
 {
     alert("oncomplete");
-    $('#loadProgressBar').hide();
+   // $('#loadProgressBar').hide();
     
 }
