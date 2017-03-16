@@ -31,7 +31,7 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 Eventlist = _eventRepository.GetAllEvents();
-                Categorylist = _categoryRepositry.GetAllCategory();//Category List 
+                Categorylist = _categoryRepositry.GetAllCategory();//All Category List for Id and Name  
 
                 foreach (Event eventObj in Eventlist)
                 {
@@ -103,16 +103,17 @@ namespace PartyEC.BusinessServices.Services
             return operationsStatusObj;
         }
 
-        public OperationsStatus DeleteEvent(int EventID, OperationsStatus Status)
+        public OperationsStatus DeleteEvent(int EventID)
         {
+            OperationsStatus operationsStatusObj = null;
             try
             {
-                _eventRepository.DeleteEvent(EventID, Status);
+                operationsStatusObj = _eventRepository.DeleteEvent(EventID);
             }
             catch (Exception)
             {
             }
-            return Status;
+            return operationsStatusObj;
         }
 
         #endregion Method

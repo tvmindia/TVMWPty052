@@ -142,11 +142,15 @@ function SaveSuccess(data, status, xhr) {
     debugger;
     BindAllEvent();
     clearfields();
+    goback();
     ChangeButtonPatchView("Event", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
     var i = JSON.parse(data)
     switch(i.Result){
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
+            break;
+        case "Error":
+            notyAlert('error', i.Record.StatusMessage);
             break;
         case "ERROR":
             notyAlert('error', i.Message);
@@ -159,11 +163,16 @@ function SaveSuccess(data, status, xhr) {
 function DeleteSuccess(data, status, xhr) {
     BindAllEvent();
     clearfields();
+    goback();
+
     ChangeButtonPatchView("Event", "btnPatchEdittab2", "Add"); //ControllerName,id of the container div,Name of the action
     var i = JSON.parse(data)
     switch (i.Result) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
+            break;
+        case "Error":
+            notyAlert('error', i.Record.StatusMessage);
             break;
         case "ERROR":
             notyAlert('error', i.Message);
@@ -174,10 +183,10 @@ function DeleteSuccess(data, status, xhr) {
 }
 
     function SaveConfirm() {
-        alert("Save Confirm");
+       // alert("Save Confirm");
     }
     function DeleteConfirm() {
-        alert("Save Confirm");
+        alert("Delete Confirm");
     }
     //---------------------------------------Get Events Details By ID-------------------------------------//
     function GetEventDetailsByID(id) {

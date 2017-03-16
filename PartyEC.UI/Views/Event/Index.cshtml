@@ -77,7 +77,7 @@
                             </div>
                         </div>
                         <div class="col-md-8 ">
-                          @using (Ajax.BeginForm("InsertUpdateEvent", "Event", new AjaxOptions { HttpMethod = "POST", Confirm = "SaveConfirm", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
+                          @using (Ajax.BeginForm("InsertUpdateEvent", "Event", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
                           {
                             @Html.AntiForgeryToken()
                             <div class="tab-content EventTabContent">

@@ -213,7 +213,7 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-        public OperationsStatus DeleteEvent(int EventID, OperationsStatus Status)
+        public OperationsStatus DeleteEvent(int EventID)
         {
             OperationsStatus operationsStatusObj = null;
             try
@@ -235,15 +235,20 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                Status.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                Status.StatusMessage = "Deletion Not Successfull!";
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Deletion Not Successfull!";
                                 break;
                             case "1":
-                                Status.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                Status.StatusMessage = "Deletion Successfull!";
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Deletion Successfull!";
+                                break;
+                            case "2":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = " Foreign key violation-Deletion Not Successfull!";
                                 break;
                             default:
                                 break;
