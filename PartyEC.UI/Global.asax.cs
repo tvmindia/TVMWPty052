@@ -6,6 +6,7 @@ using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
 using System.Web.Optimization;
+using System.Web.Http;
 namespace PartyEC.UI
 {
     public class MvcApplication : System.Web.HttpApplication
@@ -16,6 +17,7 @@ namespace PartyEC.UI
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             MappingConfig.RegisterMaps();
             BundleConfig.RegisterBundles(BundleTable.Bundles);
+            GlobalConfiguration.Configure(WebApiConfig.Register);
         }
     }
 }

@@ -747,7 +747,9 @@ namespace PartyEC.RepositoryServices.Services
 
         //delete product
         //delete product detail
-
+        //Add related Products
+        //Get related Products
+        //Remove related Products
 
         public Product GetProduct(int ProductID, OperationsStatus Status)
         {
