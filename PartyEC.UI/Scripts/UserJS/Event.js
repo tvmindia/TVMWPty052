@@ -54,7 +54,7 @@ function fillevent(ID)
     $('input:checkbox').prop('checked', false);
     for (var i = 0 ; i<CSVarray.length;i++)
     {
-    $("#"+CSVarray[i]).prop('checked', true);
+    $("#Cat_"+CSVarray[i]).prop('checked', true);
     }   
 } 
 //---------------------------------------Clear Fields-----------------------------------------------------//
@@ -70,6 +70,12 @@ function clearfields() {
   
 }
 //---------------------------------------Button Patch Click Events------------------------------------------------//
+//tab clicks
+function TabeventDetails() {
+   // ChangeButtonPatchView("Event", "btnPatchEdittab2", "Edit"); //ControllerName,id of the container div,Name of the action
+    clearfields();
+}
+
 function btnreset() {
     debugger;
     if ($("#ID").val() == 0) {
@@ -110,11 +116,13 @@ function Validation() {
     if (checkboxCount > 0){
         var checked = [];
         $(":checkbox").each(function () {
-            if (this.checked) {
-                checked.push(this.id);
+            if (this.checked) { 
+                var cat_Id = new Array();
+                cat_Id = this.id.split("_");
+                checked.push(cat_Id[1]);
             }
         });
-        var CSV = checked.toString();
+        var CSV = checked.toString(); 
         $("#RelatedCategoriesCSV").val(CSV);
         return true;
     }
