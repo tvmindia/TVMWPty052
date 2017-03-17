@@ -32,7 +32,7 @@ namespace PartyEC.DataAccessObject.DTO
         public decimal TotalDiscountAmt  { get; set; }
 
 
-        public LogDetails commonObj { get; set; }
+        public LogDetails logDetailsObj { get; set; }
 
         public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
     }

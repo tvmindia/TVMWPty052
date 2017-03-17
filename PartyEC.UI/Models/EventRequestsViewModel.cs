@@ -102,5 +102,7 @@ namespace PartyEC.UI.Models
 
         [Display(Name = "Discount Amount")]
         public decimal TotalDiscountAmt { get; set; }
+
+        public LogDetailsViewModel logDetailsObj { get; set; } 
     }
 }
