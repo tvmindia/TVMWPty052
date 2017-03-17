@@ -233,9 +233,9 @@ namespace PartyEC.UI.Controllers
             switch (ActionType)
             {
                 case "Edit":
-                    ToolboxViewModelObj.deletebtn.Visible = true;
-                    ToolboxViewModelObj.deletebtn.Event = "Productdelete()";
-                    ToolboxViewModelObj.deletebtn.Title = "Delete";
+                    //ToolboxViewModelObj.deletebtn.Visible = true;
+                    //ToolboxViewModelObj.deletebtn.Event = "Productdelete()";
+                    //ToolboxViewModelObj.deletebtn.Title = "Delete";
 
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Event = "ProductSave()";

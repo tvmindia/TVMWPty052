@@ -135,9 +135,9 @@ function Edit(currentObj)
             { $("#ShowPrice").prop('checked', true); }
             else { $("#ShowPrice").prop('checked', false); }
 
-            $("#DiscountAmount").val(thisproduct.ProductDetails[0].DiscountAmount);
-            $("#DiscountStartDate").val(thisproduct.ProductDetails[0].DiscountStartDate);
-            $("#DiscountEndDate").val(thisproduct.ProductDetails[0].DiscountEndDate);
+            $("#DiscountAmount").val((thisproduct.ProductDetails.length!=0?thisproduct.ProductDetails[0].DiscountAmount:0.00));
+            $("#DiscountStartDate").val((thisproduct.ProductDetails.length!=0?thisproduct.ProductDetails[0].DiscountStartDate:""));
+            $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0?thisproduct.ProductDetails[0].DiscountEndDate:""));
 
             $("#ShortDescription").val(thisproduct.ShortDescription);
 
@@ -146,8 +146,8 @@ function Edit(currentObj)
             { $("#StockAvailable").prop('checked', true); }
             else { $("#StockAvailable").prop('checked', false); }
           
-            $("#Qty").val(thisproduct.ProductDetails[0].Qty);
-            $("#OutOfStockAlertQty").val(thisproduct.ProductDetails[0].OutOfStockAlertQty);
+            $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
+            $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
             //Tags
             if (thisproduct.HeaderTags != null)
             {
@@ -168,7 +168,7 @@ function Edit(currentObj)
             //ProductID
             $("#ID").val(thisproduct.ID);
             //ProductDetailID
-            $("#productdetailsID").val(thisproduct.ProductDetails[0].ID);
+            $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
             RefreshRelatedProducts(thisproduct.ID);
         }
        
@@ -349,4 +349,10 @@ function clearform()
     $('#productform')[0].reset();
     //Clear Hidden form fields
     $("#productform input:hidden").val('').trigger('change');
+}
+
+function RelatedProductsModel()
+{
+    //popsup the model
+    $('#btnmodelrelproduct').trigger('click');
 }
