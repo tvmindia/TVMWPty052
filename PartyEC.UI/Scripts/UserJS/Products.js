@@ -103,7 +103,10 @@ function removeme(current)
 function Edit(currentObj)
 {
     //Tab Change
-    $('#tabproductDetails').trigger('click');
+    ChangeButtonPatchView("Products", "btnPatchProductDetails", "Edit"); //ControllerName,id of the container div,Name of the action
+    //$('#tabproductDetails').removeClass('disabled');
+    //$('#tabproductDetails a').attr('data-toggle', 'tab');
+    $('#tabproductDetails a').trigger('click');
   
     var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null))
@@ -269,18 +272,22 @@ function ConstructproductDetailObject()
              
         tagval.push(this.innerHTML);
     });
-
+    debugger;
     $("#HeaderTags").val(tagval);
     
     var ProductDetailViewModel = new Object();
-    ProductDetailViewModel.ID = $.parseJSON($('#productform :input[name="ProductDetailObj.ID"]').serializeArray()[0].value);
-    ProductDetailViewModel.Qty =$.parseJSON($('#productform :input[name="Qty"]').serializeArray()[0].value);
-    ProductDetailViewModel.OutOfStockAlertQty = $.parseJSON($('#productform :input[name="OutOfStockAlertQty"]').serializeArray()[0].value);
-    ProductDetailViewModel.StockAvailable = $.parseJSON($('#productform :input[name="StockAvailable"]').serializeArray()[0].value);
-    ProductDetailViewModel.DiscountAmount = $.parseJSON($('#productform :input[name="DiscountAmount"]').serializeArray()[0].value);
-    ProductDetailViewModel.DiscountStartDate = $('#productform :input[name="DiscountStartDate"]').serializeArray()[0].value;
+   
+    ProductDetailViewModel.ID = ($('#productform :input[name="ProductDetailObj.ID"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="ProductDetailObj.ID"]').serializeArray()[0].value) :"");
+    ProductDetailViewModel.Qty = ($('#productform :input[name="Qty"]').serializeArray()[0].value!=""?$.parseJSON($('#productform :input[name="Qty"]').serializeArray()[0].value): "");
+  
+   
+    ProductDetailViewModel.OutOfStockAlertQty = ($('#productform :input[name="OutOfStockAlertQty"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="OutOfStockAlertQty"]').serializeArray()[0].value) : "");
+    ProductDetailViewModel.StockAvailable = ($('#productform :input[name="StockAvailable"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="StockAvailable"]').serializeArray()[0].value) : "");
+
+    ProductDetailViewModel.DiscountAmount =($('#productform :input[name="DiscountAmount"]').serializeArray()[0].value!=""?$.parseJSON($('#productform :input[name="DiscountAmount"]').serializeArray()[0].value):"");
+    ProductDetailViewModel.DiscountStartDate =$('#productform :input[name="DiscountStartDate"]').serializeArray()[0].value;
     ProductDetailViewModel.DiscountEndDate = $('#productform :input[name="DiscountEndDate"]').serializeArray()[0].value;
-    ProductDetailViewModel.Enabled = $.parseJSON($('#productform :input[name="Enabled"]').serializeArray()[0].value);
+    ProductDetailViewModel.Enabled =($('#productform :input[name="Enabled"]').serializeArray()[0].value!=""?$.parseJSON($('#productform :input[name="Enabled"]').serializeArray()[0].value):"");
     var ar = [];
     ar.push(ProductDetailViewModel);
     $("#productDetailhdf").val(JSON.stringify(ar));
@@ -316,4 +323,30 @@ function oncomplteProductSave()
    // alert("oncomplete");
    //// $('#loadProgressBar').hide();
     
+}
+function ProductSave()
+{
+    $('#btnProductSubmit').trigger('click');
+}
+
+function btnAddNewProduct()
+{
+    //$('#tabproductDetails').removeClass('disabled');
+    //$('#tabproductDetails a').attr('data-toggle', 'tab');
+    //$('#tabproductList').addClass('disabled');
+    //$('#tabproductList a').attr('data-toggle', '');
+    $('#tabproductDetails a').trigger('click');
+    clearform();
+}
+function goback()
+{
+    alert('hi');
+   // tabproductList
+}
+function clearform()
+{
+    //Clear form
+    $('#productform')[0].reset();
+    //Clear Hidden form fields
+    $("#productform input:hidden").val('').trigger('change');
 }

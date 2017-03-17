@@ -336,7 +336,7 @@ namespace PartyEC.RepositoryServices.Services
                     else if (operationsStatusObjD.StatusCode == 1)
                     {
                         operationsStatusObjH.StatusCode = 1;
-                        operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
+                      //  operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
                     //    transaction.Commit();
                     }
                 }
