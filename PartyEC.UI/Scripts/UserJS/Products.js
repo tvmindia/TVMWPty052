@@ -3,7 +3,7 @@
 $(document).ready(function () {
 
 
-    $("#HeaderTag").on({
+    $("#HeaderTags").on({
 
         focusout: function () {
             var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
@@ -102,8 +102,7 @@ function removeme(current)
 
 function Edit(currentObj)
 {
-  
-   //Tab Change
+    //Tab Change
     $('#tabproductDetails').trigger('click');
   
     var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
@@ -114,12 +113,59 @@ function Edit(currentObj)
         {
             $("#Name").val(thisproduct.Name);
             $("#SKU").val(thisproduct.SKU);
-            if (thisproduct.ConfigurableYN == false)
-            { $("#married-false").prop('checked', true); }
-            else { $("#married-true").prop('checked', true); }
-            $("#ShortDescription").val(thisproduct.ShortDescription);
+            if (thisproduct.Enabled == true)
+            { $("#Enabled").prop('checked', true); }
+            else { $("#Enabled").prop('checked', false); }
+            $("#Unit").val(thisproduct.Unit);
+            $("#URL").val(thisproduct.URL);
+            $("#ActionType").val(thisproduct.ActionType);
+            $("#SupplierID").val(thisproduct.SupplierID);
+            $("#ManufacturerID").val(thisproduct.ManufacturerID);
             $("#ProductType").val(thisproduct.ProductType);
+            $("#AttributeSetID").val(thisproduct.AttributeSetID);
+            if (thisproduct.FreeDelivery == true)
+            { $("#FreeDelivery").prop('checked', true); }
+            else { $("#FreeDelivery").prop('checked', false); }
+            $("#CostPrice").val(thisproduct.CostPrice);
+            $("#BaseSellingPrice").val(thisproduct.BaseSellingPrice);
+            if (thisproduct.ShowPrice == true)
+            { $("#ShowPrice").prop('checked', true); }
+            else { $("#ShowPrice").prop('checked', false); }
+
+            $("#DiscountAmount").val(thisproduct.ProductDetails[0].DiscountAmount);
+            $("#DiscountStartDate").val(thisproduct.ProductDetails[0].DiscountStartDate);
+            $("#DiscountEndDate").val(thisproduct.ProductDetails[0].DiscountEndDate);
+
+            $("#ShortDescription").val(thisproduct.ShortDescription);
+
+            $("#LongDescription").val(thisproduct.LongDescription);
+            if (thisproduct.StockAvailable == true)
+            { $("#StockAvailable").prop('checked', true); }
+            else { $("#StockAvailable").prop('checked', false); }
+          
+            $("#Qty").val(thisproduct.ProductDetails[0].Qty);
+            $("#OutOfStockAlertQty").val(thisproduct.ProductDetails[0].OutOfStockAlertQty);
+            //Tags
+            if (thisproduct.HeaderTags != null)
+            {
+                $('.Htags').remove();
+                var tagar = thisproduct.HeaderTags.split(",");
+                for (index = 0; index < tagar.length; ++index) {
+                    //Tag creation when binding
+                    $("#headertagsdiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'Htags', 'onclick': 'removeme(this)' }));
+                }
+            }
+            else
+            {
+                //Removes span tags
+                $('.Htags').remove();
+            }
+            
+
+            //ProductID
             $("#ID").val(thisproduct.ID);
+            //ProductDetailID
+            $("#productdetailsID").val(thisproduct.ProductDetails[0].ID);
             RefreshRelatedProducts(thisproduct.ID);
         }
        
@@ -218,15 +264,16 @@ function RefreshRelatedProducts(id) {
 
 function ConstructproductDetailObject()
 {
+    var tagval = [];
     $('.Htags').each(function () {
-        debugger;
-        var tagval = [];
+             
         tagval.push(this.innerHTML);
     });
 
-
+    $("#HeaderTags").val(tagval);
     
     var ProductDetailViewModel = new Object();
+    ProductDetailViewModel.ID = $.parseJSON($('#productform :input[name="ProductDetailObj.ID"]').serializeArray()[0].value);
     ProductDetailViewModel.Qty =$.parseJSON($('#productform :input[name="Qty"]').serializeArray()[0].value);
     ProductDetailViewModel.OutOfStockAlertQty = $.parseJSON($('#productform :input[name="OutOfStockAlertQty"]').serializeArray()[0].value);
     ProductDetailViewModel.StockAvailable = $.parseJSON($('#productform :input[name="StockAvailable"]').serializeArray()[0].value);
@@ -242,7 +289,7 @@ function ConstructproductDetailObject()
 
 function productSaveSuccess(data, status, xhr)
 {
-    debugger;
+  
     var JsonResult=JSON.parse(data)
     switch (JsonResult.Result) {
         case "OK":
@@ -259,14 +306,14 @@ function productSaveSuccess(data, status, xhr)
 }
 function productSaveFailure()
 {
-    alert("Failure");
+    notyAlert('error', 'Network Failure!');
 }
 function onbeginProductSave()
 {
 }
 function oncomplteProductSave()
 {
-    alert("oncomplete");
-   // $('#loadProgressBar').hide();
+   // alert("oncomplete");
+   //// $('#loadProgressBar').hide();
     
 }

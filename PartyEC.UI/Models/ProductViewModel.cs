@@ -111,7 +111,7 @@ namespace PartyEC.UI.Models
         [DataType(DataType.Upload)]
         [Display(Name = "Choose Product Sticker")]
         public HttpPostedFileBase ProductStickerUpload { get; set; }
-
+        public Guid? StickerID { get; set; }
         #endregion Images
         #region Description
         [Required(ErrorMessage = "Please enter Short Description")]
@@ -132,14 +132,14 @@ namespace PartyEC.UI.Models
         [Required(ErrorMessage = "Please enter Quantity")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Must be number")]
         [Display(Name = "Qty")]
-        public decimal? Qty { get; set; }
+        public int? Qty { get; set; }
 
         
 
         [Required(ErrorMessage = "Please enter Reorder Alert Qty")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Must be number")]
         [Display(Name = "Reorder Alert Qty")]
-        public decimal? OutOfStockAlertQty { get; set; }
+        public int? OutOfStockAlertQty { get; set; }
 
 
         #endregion Inventory
@@ -148,7 +148,7 @@ namespace PartyEC.UI.Models
      
         [Display(Name = "New Tags")]
         [MaxLength(250)]
-        public string HeaderTag { get; set; }
+        public string HeaderTags { get; set; }
         #endregion ProductTags
         public int LinkID { get; set; }
         public int CategoryID { get; set; }

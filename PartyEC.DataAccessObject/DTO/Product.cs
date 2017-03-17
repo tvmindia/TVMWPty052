@@ -31,7 +31,7 @@ namespace PartyEC.DataAccessObject.DTO
         public Boolean FreeDelivery { get; set; }
 
         public string HeaderTags { get; set; }
-        public Guid StickerID { get; set; }
+        public Guid? StickerID { get; set; }
         public string StickerURL { get; set; }
         public int LinkID { get; set; }
         public int CategoryID { get; set; }
@@ -47,8 +47,8 @@ namespace PartyEC.DataAccessObject.DTO
         public int ID { get; set; }
         public int ProductID { get; set; }
         public int AttributeSetID { get; set; }
-        public int Qty { get; set; }
-        public int OutOfStockAlertQty { get; set; }
+        public int? Qty { get; set; }
+        public int? OutOfStockAlertQty { get; set; }
         public decimal PriceDifference { get; set; }        
         public string DetailTags { get; set; }
         public Boolean Enabled { get; set; }

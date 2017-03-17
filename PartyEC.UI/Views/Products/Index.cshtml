@@ -760,10 +760,10 @@
                             <div class="tab-pane fade" id="productTags">
                                 <div class="col-lg-8">
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.HeaderTag, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                        <div class="col-lg-6">
-                                            @Html.EditorFor(model => model.HeaderTag, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.HeaderTag, "", new { @class = "text-danger" })
+                                        @Html.LabelFor(model => model.HeaderTags, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <div class="col-lg-6" id="headertagsdiv">
+                                            @Html.EditorFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.HeaderTags, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                 </div><!-- /.col-lg-6 -->

@@ -213,9 +213,7 @@ namespace PartyEC.UI.Controllers
                             productObj.logDetails.UpdatedDate = _commonBusiness.GetCurrentDateTime();
                             productObj.ProductDetails = JsonConvert.DeserializeObject<List<ProductDetailViewModel>>(productObj.productDetailhdf);
                             OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.UpdateProduct(Mapper.Map<ProductViewModel, Product>(productObj)));
-
                             return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
-
                     }
                    
                 }
