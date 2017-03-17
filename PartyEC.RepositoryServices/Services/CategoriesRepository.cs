@@ -268,12 +268,66 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-        public OperationsStatus DeleteCategory(int CategoryID, OperationsStatus Status)
+        public OperationsStatus DeleteCategory(int CategoryID)
         {
             OperationsStatus operationsStatusObj = null;
             try
             {
+                    SqlParameter outparameter = null;
+                SqlParameter OutparameterURL = null;
+                    using (SqlConnection con = _databaseFactory.GetDBConnection())
+                    {
+                        using (SqlCommand cmd = new SqlCommand())
+                        {
+                            if (con.State == ConnectionState.Closed)
+                            {
+                                con.Open();
+                            }
+                            cmd.Connection = con;
+                            cmd.CommandText = "[DeleteCategoryWithChild]";
+                            cmd.CommandType = CommandType.StoredProcedure;
+                            cmd.Parameters.Add("@ID", SqlDbType.VarChar, 50).Value = CategoryID;
+                            outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                            OutparameterURL = cmd.Parameters.Add("@ImageURL", SqlDbType.NVarChar,-1);
+                            outparameter.Direction = ParameterDirection.Output;
+                            OutparameterURL.Direction = ParameterDirection.Output;
+                            cmd.ExecuteNonQuery();
+                            operationsStatusObj = new OperationsStatus();
+                            switch (outparameter.Value.ToString())
+                            {
+                                case "0":
+                                    // Delete not Successfull
 
+                                    operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Deletion Not Successfull!";
+                                    break;
+                                case "1":
+                                //Delete Successfull
+                                if (outparameter.Value.ToString() == "1")
+                                {
+                                    try
+                                    {
+                                        if (OutparameterURL.Value.ToString() != "")
+                                        {
+                                            System.IO.File.Delete(HttpContext.Current.Server.MapPath(OutparameterURL.Value.ToString()));
+                                        }
+
+
+                                    }
+                                    catch (System.IO.IOException e)
+                                    {
+                                        throw e;
+
+                                    }
+                                }
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Deletion Successfull!";
+                                    break;
+                                default:
+                                    break;
+                            }
+                        }
+                    }
             }
             catch (Exception ex)
             {
@@ -283,7 +337,38 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
         #endregion Methods
+        public bool ExistOrNot(int CategoryID)
+        {
+            SqlParameter outparameter = null;
+            try
+            {
+               
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[ChildExistOrNot]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = CategoryID;
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.Bit);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                    }
+                }
+                        
+            }
 
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return bool.Parse(outparameter.Value.ToString());
+        }
 
     }
 }

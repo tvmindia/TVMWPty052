@@ -212,3 +212,12 @@ background-image: -o-linear-gradient(top, #ffffff, #eeeeee);
  table.dataTable tbody tr.selected {
   background-color: #B0BED9;
 }
+  .overlay {
+    position:absolute;
+    top:0;
+    left:0;
+    right:0;
+    bottom:0;
+    z-index:9999;
+    color:white;
+}

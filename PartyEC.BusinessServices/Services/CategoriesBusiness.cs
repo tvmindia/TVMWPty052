@@ -53,13 +53,12 @@ namespace PartyEC.BusinessServices.Services
             }
             return myCategory;
         }
-
-        public OperationsStatus InsertCategory(Categories CategoryObj)
+        public OperationsStatus InsertImageCategory(Categories CategoryObj)
         {
             OperationsStatus operationsStatusObj = null;
             try
             {
-                if(CategoryObj.URL!=""&& CategoryObj.URL !=null)
+                if (CategoryObj.URL != "" && CategoryObj.URL != null)
                 {
                     OtherImages otherImgObj = new OtherImages();
                     otherImgObj.URL = CategoryObj.URL;
@@ -68,8 +67,21 @@ namespace PartyEC.BusinessServices.Services
                     operationsStatusObj = _masterRepository.InsertImage(otherImgObj);
                     CategoryObj.ImageID = operationsStatusObj.ReturnValues.ToString();
                 }
-                   operationsStatusObj = _categoryRepository.InsertCategory(CategoryObj);
+                operationsStatusObj = _categoryRepository.UpdateCategory(CategoryObj);
 
+            }
+            catch (Exception)
+            {
+
+            }
+            return operationsStatusObj;
+        }
+        public OperationsStatus InsertCategory(Categories CategoryObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                   operationsStatusObj = _categoryRepository.InsertCategory(CategoryObj);
                 
             }
             catch (Exception)
@@ -93,16 +105,29 @@ namespace PartyEC.BusinessServices.Services
             return operationsStatusObj;
         }
 
-        public OperationsStatus DeleteCategory(int CategoryID, OperationsStatus Status)
+        public OperationsStatus DeleteCategory(int CategoryID)
         {
+            OperationsStatus operationsStatusObj = null;
             try
             {
+                bool ExistOrNot = _categoryRepository.ExistOrNot(CategoryID);
+                if(ExistOrNot)
+                {
+                    operationsStatusObj = new OperationsStatus();
+                    operationsStatusObj.StatusMessage = "Can't Delete, Child Exist!";
+                    operationsStatusObj.StatusCode = 0;
+                }
+                else
+                {
+                    operationsStatusObj = _categoryRepository.DeleteCategory(CategoryID);
+                }
+                
             }
             catch (Exception)
             {
 
             }
-            return Status;
+            return operationsStatusObj;
         }
 
     }

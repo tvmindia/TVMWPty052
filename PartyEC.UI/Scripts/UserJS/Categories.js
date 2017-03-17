@@ -2,10 +2,6 @@
 $(document).ready(function () {
     try
     {
-       
-        //$("input:checkbox").change(function () {
-        //    $(this).closest('tr').toggleClass('selected');
-        //});
         
         //Tree bind into LHS side container with category
         $('#jstree_Categories').jstree({
@@ -80,6 +76,7 @@ $(document).ready(function () {
             $('#tblCategoryProduct').on('change', 'input[type="checkbox"]', function () {
                 $(this).closest('tr').toggleClass('selected');
             });
+            $('#divOverlayimage').show();
     }
     catch(e)
     {
@@ -91,32 +88,40 @@ $(document).ready(function () {
 //on-select function for treenodes
 function onSelectNode(e, data)
 {
-    debugger;
-    if (data.node.parent == "#")
+    try
     {
-        $('#ParentID').val(0);
+        if (data.node.parent == "#")
+        {
+            $('#ParentID').val(0);
+        }
+        else
+        {
+            $('#ParentID').val(data.node.parent);
+        }
+        $('#ID').val(data.node.id);
+        $('#hdnDeleteCatID').val(data.node.id);
+        var results = GetCategoryDetails(data.node.id);
+        $('#Name').val(results.Name);
+        $('#Description').val(results.Description);
+        $("#Navigation").prop('checked', results.Navigation);
+        $("#Filter").prop('checked', results.Filter);
+        $("#Enable").prop('checked', results.Enable);
+        $("#ImageID").val(results.ImageID);
+        $("#imgCategory").attr('src', (results.URL != "" ? (results.URL + '?' + new Date().getTime()) : "/Content/images/NoImageFound.png"));
+        ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "Edit");
+        $('#divOverlayimage').hide();
+        //var TreeOrder = $("#jstree_Categories").jstree(true).get_json('#', { 'flat': true });
+        var loMainSelected = data;
+        uiGetParents(loMainSelected);
     }
-    else
+    catch(e)
     {
-        $('#ParentID').val(data.node.parent);
+
     }
-    $('#ID').val(data.node.id);
-    var results = GetCategoryDetails(data.node.id);
-    $('#Name').val(results.Name);
-    $('#Description').val(results.Description);
-    $("#Navigation").prop('checked', results.Navigation);
-    $("#Filter").prop('checked', results.Filter);
-    $("#Enable").prop('checked', results.Enable);
-    $("#ImageID").val(results.ImageID);
-    $("#imgCategory").attr('src', (results.URL != "" ? results.URL : "/Content/images/NoImageFound.png"));
-    ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "Edit");
-    //var TreeOrder = $("#jstree_Categories").jstree(true).get_json('#', { 'flat': true });
-    var loMainSelected = data;
-    uiGetParents(loMainSelected);
 }
+//Function for binding breadcrum
 function uiGetParents(loSelectedNode, TreeOrder) {
     try {
-        debugger;
         var lnLevel = loSelectedNode.node.parents.length;
         var lsSelectedID = loSelectedNode.node.id;
         var loParent = $('#jstree_Categories').jstree(true).get_node(lsSelectedID);;
@@ -247,26 +252,51 @@ function GetCategoriesTree() {
 /////////////////////////////Button Patch onclick functions
 function AddNewSubCategory()
 {
-    ClearFields();
-    $('#ParentID').val($('#ID').val());
-    $('#imgCategory').attr('src', '/Content/images/NoImageFound.png');
-    var fluCategory = document.getElementById('CategoryImageUpload');
-    fluCategory.value = "";
-    fluCategory.innerHTML = "No file chosen";
-    ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "AddSub");
-    $('#ID').val(0);
+    try
+    {
+        $('#divOverlayimage').show();
+        ClearFields();
+        $('#ParentID').val($('#ID').val());
+        $('#imgCategory').attr('src', '/Content/images/NoImageFound.png');
+        ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "AddSub");
+        
+        $('#ID').val(0);
+        var fluCategory = document.getElementById('CategoryImageUpload');
+        fluCategory.value = "";
+        fluCategory.innerHTML = "No file chosen";
+        
+
+    }
+    catch(e)
+    {
+
+    }
+    
 }
 function AddCategory() {
-    debugger;
-    ClearFields();
-    $('#ID').val(0);
-    $('#ParentID').val(0);
-    $('#imgCategory').attr('src', '/Content/images/NoImageFound.png');
-    var fluCategory = document.getElementById('CategoryImageUpload');
-    fluCategory.value = "";
-    fluCategory.innerHTML = "No file chosen";   
-    ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "Add");
-    $('#jstree_Categories').jstree("deselect_all");
+    try
+    {
+        debugger;
+        $('#divOverlayimage').show();
+        ClearFields();
+        $('#ID').val(0);
+        $('#ParentID').val(0);
+        $('#imgCategory').attr('src', '/Content/images/NoImageFound.png');
+        ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "Add");
+        $('#jstree_Categories').jstree("deselect_all");
+        $('#olCategory').empty();
+        $('#olCategory').append('<li><a href="#"><i class="fa fa fa-list"></i></a></li>');
+        var fluCategory = document.getElementById('CategoryImageUpload');
+        fluCategory.value = "";
+        fluCategory.innerHTML = "No file chosen";
+        
+
+    }
+    catch(e)
+    {
+
+    }
+   
 }
 function MainClick()
 {
@@ -278,29 +308,35 @@ function SaveAddorRemove()
 }
 function AddProductLink()
 {
-    debugger;
-    var AddList = [];
-    var DeleteList = [];
-    var tabledata = DataTables.productTable.rows('.selected').data();
-    for (var i = 0; i < tabledata.length; i++) {
-        if (tabledata[i].LinkID == 0)
-        {
-            var ProductCategoryLinkViewModel = new Object();
-            ProductCategoryLinkViewModel.ProductID = tabledata[i].ID;
-            ProductCategoryLinkViewModel.CategoryID = $('#ID').val();
-            AddList.push(ProductCategoryLinkViewModel);
+    try
+    {
+        debugger;
+        var AddList = [];
+        var DeleteList = [];
+        var tabledata = DataTables.productTable.rows('.selected').data();
+        for (var i = 0; i < tabledata.length; i++) {
+            if (tabledata[i].LinkID == 0) {
+                var ProductCategoryLinkViewModel = new Object();
+                ProductCategoryLinkViewModel.ProductID = tabledata[i].ID;
+                ProductCategoryLinkViewModel.CategoryID = $('#ID').val();
+                AddList.push(ProductCategoryLinkViewModel);
+            }
+            else if (tabledata[i].LinkID != 0) {
+                var ProductCategoryLinkViewModel = new Object();
+                ProductCategoryLinkViewModel.ID = tabledata[i].LinkID;
+                ProductCategoryLinkViewModel.ProductID = tabledata[i].ID;
+                ProductCategoryLinkViewModel.CategoryID = tabledata[i].CategoryID;
+                DeleteList.push(ProductCategoryLinkViewModel);
+            }
         }
-        else if (tabledata[i].LinkID != 0)
-        {
-            var ProductCategoryLinkViewModel = new Object();
-            ProductCategoryLinkViewModel.ID = tabledata[i].LinkID;
-            ProductCategoryLinkViewModel.ProductID = tabledata[i].ID;
-            ProductCategoryLinkViewModel.CategoryID = tabledata[i].CategoryID;
-            DeleteList.push(ProductCategoryLinkViewModel);
-        }
+        $('#hdnTableDataAdd').val(JSON.stringify(AddList));
+        $('#hdnTableDataDelete').val(JSON.stringify(DeleteList));
     }
-    $('#hdnTableDataAdd').val(JSON.stringify(AddList));
-    $('#hdnTableDataDelete').val(JSON.stringify(DeleteList));
+    catch(e)
+    {
+
+    }
+    
 }
 ////////////////////////////////////////Onclick for Radio button
 function GetAssignedPro()
@@ -328,6 +364,10 @@ function TabRedirect()
 {
     ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "tab1");
     $('#divOverlay').hide();
+}
+function DeleteCategory()
+{
+    $('#btnFormDeleteCategory').click();
 }
 
 function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the question
@@ -362,7 +402,7 @@ function CheckSubmittedInsertCategory(data) { //function CouponSubmitted(data) i
             {
                 $('#ID').val(i.Records.ReturnValues);
             }
-            
+            $('#divOverlayimage').hide();
             break;
         case "ERROR":
             notyAlert('error', i.Records.StatusMessage);
@@ -371,8 +411,18 @@ function CheckSubmittedInsertCategory(data) { //function CouponSubmitted(data) i
     }
 
 }
-function UploadImageClick() {
-    debugger;
-    
-
+function CheckSubmittedDeleteCategory(data) {
+    var i = JSON.parse(data.responseText)
+    switch (i.Result) {
+        case "OK":
+            notyAlert('success', i.Records.StatusMessage);
+            $('#jstree_Categories').jstree(true).settings.core.data = GetCategoriesTree();
+            $('#jstree_Categories').jstree(true).refresh(true);
+            AddCategory();
+            break;
+        case "ERROR":
+            notyAlert('error', i.Records.StatusMessage);
+            break;
+    }
 }
+

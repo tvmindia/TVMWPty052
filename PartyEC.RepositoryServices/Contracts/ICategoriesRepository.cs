@@ -14,6 +14,7 @@ namespace PartyEC.RepositoryServices.Contracts
         Categories GetCategory(int CategoryID);
         OperationsStatus InsertCategory(Categories CategoryObj);
         OperationsStatus UpdateCategory(Categories CategoryObj);
-        OperationsStatus DeleteCategory(int CategoryID, OperationsStatus Status);
+        OperationsStatus DeleteCategory(int CategoryID);
+        bool ExistOrNot(int CategoryID);
     }
 }

@@ -7,20 +7,9 @@
 @section styles {
     @Styles.Render("~/Content/datatable")
     @Styles.Render("~/Content/jstree")
-    <link href="~/Content/uploadify.css" rel="stylesheet" />
-
-}
+    @Styles.Render("~/Content/Uplodify")
 <style>
-    .overlay {
-    position:absolute;
-    top:0;
-    left:0;
-    right:0;
-    bottom:0;
-    z-index:9999;
-    color:white;
-}
-    .uploadify-button {
+        .uploadify-button {
         background-color: transparent;
         border: none;
         padding: 0;
@@ -29,6 +18,8 @@
         background-color: transparent;
     }
 </style>
+}
+
 <div class="container-fluid">
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
@@ -140,16 +131,18 @@
                             <div class="" id="images">
                                 <div class="col-lg-12">
                                     <hr />
-                                    <div class="col-md-12">
+                                    <div class="col-md-12" id="divImageUpload">
                                             <div>
                                                 <input type="file" class="uploadify" name="file_upload" id="file_upload" />
                                                 <a id="alinkUpload" style="display:none" class="btn btn-info" href="javascript:$('#file_upload').uploadify('upload','*')">Upload</a>
                                             </div>
                                             <div id="uploaded">
                                             </div>
+                                        <div class="overlay" id="divOverlayimage" style="display:none;">
+                                        </div>
                                     </div>
                                     <div class="col-lg-12" style="object-fit:fill;">
-                                        <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="" id="imgCategory">
+                                        <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="" id="imgCategory" width="100%">
                                     </div>
                                 </div>
                                 </div>
@@ -165,13 +158,12 @@
                             </div>
                     }
                     <div id="CategoryDelete" hidden="hidden">
-                        @using (Ajax.BeginForm("AddorRemoveLinks", "Categories", new AjaxOptions { HttpMethod = "POST", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "CheckSubmittedDelete" }, new { @class = "form-horizontal", role = "form" }))
+                        @using (Ajax.BeginForm("DeleteCategory", "Categories", new AjaxOptions { HttpMethod = "POST", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "CheckSubmittedDeleteCategory" }, new { @class = "form-horizontal", role = "form" }))
                         {
                             @Html.AntiForgeryToken()
                             <div class="form-actions no-color">
-                                @Html.HiddenFor(model => model.TableDataAdd, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnTableDataAdd" })
-                                @Html.HiddenFor(model => model.TableDataDelete, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnTableDataDelete" })
-                                <input id="btnFormTableData" onclick="AddProductLink()" type="submit" value="Delete" class="btn btn-default" />
+                                @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnDeleteCatID" })
+                                <input id="btnFormDeleteCategory" type="submit" value="Delete" class="btn btn-default" />
                             </div>
                         }
                     </div>
@@ -229,24 +221,29 @@
     @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
     @Scripts.Render("~/bundles/jstreeScript")
     @Scripts.Render("~/bundles/Categories")
-    <script src="~/Scripts/jquery.uploadify.js"></script>
-    
-<script type="text/javascript">
+    @Scripts.Render("~/bundles/Uploadify")
+    <script type="text/javascript">
     $(function () {
         $('#file_upload').uploadify({
             'auto': false,
+            'formData': {
+                'Name': '','ID':'','ImageID':''
+            },
             'buttonImage': '/Content/images/browse-btn.png',
                 'swf': "@Url.Content("~/Content/uploadify.swf")",
                 //this is where the file posts when it uploads.
-                'uploader': "@Url.Action("Upload", "Categories")",
+            'uploader': "@Url.Action("Upload", "Categories")",
+            'onUploadStart': function (file) {
+                $('#file_upload').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'ImageID': $('#ImageID').val() });
+            },
                 'onUploadSuccess': function (file, data, response) {
-                debugger;
                   //data is whatever you return from the server
                   //we're sending the URL from the server so we append this as an image to the #uploaded div
-                $('#URL').val(data);
-                $('#imgCategory').attr({ 'src': data, 'width':'100%'});
+                //$('#URL').val(data);
+                    $('#imgCategory').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
                 $('#alinkUpload').hide();
                 }
+
         });
         
     });

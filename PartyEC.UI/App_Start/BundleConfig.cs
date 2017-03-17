@@ -14,7 +14,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/datatable").Include("~/Content/DataTables/css/dataTables.bootstrap.min.css", "~/Content/DataTables/css/responsive.bootstrap.min.css"));
             bundles.Add(new StyleBundle("~/Content/datatablecheckbox").Include("~/Content/DataTables/css/dataTables.bootstrap.min.css", "~/Content/DataTables/css/responsive.bootstrap.min.css", "~/Content/DataTables/css/dataTables.checkboxes.css"));
             bundles.Add(new StyleBundle("~/Content/product").Include("~/Content/UserCSS/Product.css"));
-
+            bundles.Add(new StyleBundle("~/Content/Uplodify").Include("~/Content/uploadify.css"));
 
 
 
@@ -39,6 +39,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/Event").Include("~/Scripts/UserJS/Event.js"));
             bundles.Add(new ScriptBundle("~/bundles/Categories").Include("~/Scripts/UserJS/Categories.js"));
             bundles.Add(new ScriptBundle("~/bundles/EventRequests").Include("~/Scripts/UserJS/EventRequests.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Uploadify").Include("~/Scripts/jquery.uploadify.js"));
         }
     }
 }

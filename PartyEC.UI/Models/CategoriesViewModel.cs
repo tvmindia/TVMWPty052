@@ -19,12 +19,15 @@ namespace PartyEC.UI.Models
 
         public bool System { get; set; }
         public int ChildrenCount { get; set; }
+        [Display(Name= "Use for Filter (Yes/No)")]
         public bool Filter { get; set; }
+        [Display(Name = "Use for Navigation (Yes/No)")]
         public bool Navigation { get; set; }
         [Display(Name = "Description")]
         [MaxLength(250)]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
+        [Display(Name="Is Active")]
         public bool Enable { get; set; }
         public float CategoryOrder { get; set; }
         public string ImageID { get; set; }
