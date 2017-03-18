@@ -6,7 +6,18 @@
 } 
 @section styles {
     @Styles.Render("~/Content/datatable")
+    @Styles.Render("~/Content/Uplodify")
+    <style>
+        .uploadify-button {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+        }
 
+        .uploadify:hover .uploadify-button {
+            background-color: transparent;
+        }
+    </style>
 }
 @* ---------------------------------- *@
 
@@ -123,6 +134,8 @@
                                     <div class="form-group" hidden="hidden">
                                         <div class="col-md-offset-2 col-md-10">
                                             <input id="btnFormSave" type="submit" value="Create" class="btn btn-default" />
+                                            @Html.HiddenFor(model => model.EventImageID, htmlAttributes: new { @class = "control-label col-md-4", Value = "" })
+                                            
                                         </div>
                                     </div>
                                 </div>
@@ -130,7 +143,7 @@
                                     <div class="col-lg-12">
                                         <h2>Event Images</h2>
                                         <hr />
-                                        <div class="col-md-6 col-md-4">
+                                        @*<div class="col-md-6 col-md-4">
                                             <div class="thumbnail">
                                                 <div class="caption">
                                                     <p>@Html.LabelFor(model => model.EventImageID, new { @class = "control-label" })</p>
@@ -140,6 +153,19 @@
                                         </div>
                                         <div class="col-lg-8">
                                             <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="">
+                                        </div>*@
+                                        <div class="col-md-12" id="divImageUpload">
+                                            <div>
+                                                <input type="file" class="uploadify" name="file_upload" id="file_upload" />
+                                                <a id="alinkUpload" style="display:none" class="btn btn-info" href="javascript:$('#file_upload').uploadify('upload','*')">Upload</a>
+                                            </div>
+                                            <div id="uploaded">
+                                            </div>
+                                            <div class="overlay" id="divOverlayimage" style="display:none;">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12" style="object-fit:fill;">
+                                            <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="" id="imgEvents" width="100%">
                                         </div>
                                     </div>
                                 </div>
@@ -171,4 +197,32 @@
     @Scripts.Render("~/bundles/datatable")
     @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
     @Scripts.Render("~/bundles/Event")
+    @Scripts.Render("~/bundles/Uploadify")
+    <script type="text/javascript">
+    $(function () {
+        $('#file_upload').uploadify({
+            'auto': false,
+            'formData': {
+                'Name': '', 'ID': '', 'EventImageID': ''
+            },
+            'buttonImage': '/Content/images/browse-btn.png',
+                'swf': "@Url.Content("~/Content/uploadify.swf")",
+                //this is where the file posts when it uploads.
+            'uploader': "@Url.Action("Upload", "Event")",
+            'onUploadStart': function (file) {
+                $('#file_upload').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'EventImageID': $('#EventImageID').val() });
+            },
+                'onUploadSuccess': function (file, data, response) {
+                  //data is whatever you return from the server
+                  //we're sending the URL from the server so we append this as an image to the #uploaded div
+                //$('#URL').val(data);
+                    $('#imgEvents').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
+                    $('#alinkUpload').hide();
+                }
+
+        });
+
+    });
+
+    </script>
 }
