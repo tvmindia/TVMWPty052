@@ -10,7 +10,15 @@ $(document).ready(function () {
                     "responsive": false
                 },
                 // so that create works
-                "check_callback": true,
+                "check_callback": function(operation, node, node_parent, node_position, more) {
+                    // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
+                    // in case of 'rename_node' node_position is filled with the new node name
+                    debugger;
+                    if (operation === "move_node") {
+                        return node.state.selected === true; //only allow dropping if node is selected
+                    }
+                    return true;  //allow all other operations
+                },
                 'data': GetCategoriesTree()
             },
             "types": {
@@ -126,7 +134,7 @@ function uiGetParents(loSelectedNode, TreeOrder) {
     try {
         var lnLevel = loSelectedNode.node.parents.length;
         var lsSelectedID = loSelectedNode.node.id;
-        var loParent = $('#jstree_Categories').jstree(true).get_node(lsSelectedID);;
+        var loParent = $('#jstree_Categories').jstree(true).get_node(lsSelectedID);
         var lsParents = '<li class="active">'+loSelectedNode.node.text + ' </li>';
         var loParent = loParent.parents;
         for (var ln = 0; ln <= lnLevel - 1 ; ln++) {
@@ -302,6 +310,8 @@ function AddCategory() {
 }
 function MainClick()
 {
+    var loParent = $('#jstree_Categories').jstree(true).get_node($('#ID').val());
+    $('#ParentID').val(loParent.parent);
     $('#btnFormSave').click();
 }
 function SaveAddorRemove()
