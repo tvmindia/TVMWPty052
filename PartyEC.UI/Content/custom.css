@@ -218,6 +218,11 @@ background-image: -o-linear-gradient(top, #ffffff, #eeeeee);
     left:0;
     right:0;
     bottom:0;
-    z-index:9999;
+    z-index:199;
     color:white;
 }
+  #alinkUpload
+  {
+      position:absolute;
+      left:34%;
+  }

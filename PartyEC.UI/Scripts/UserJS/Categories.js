@@ -108,6 +108,8 @@ function onSelectNode(e, data)
         $("#Enable").prop('checked', results.Enable);
         $("#ImageID").val(results.ImageID);
         $("#imgCategory").attr('src', (results.URL != "" ? (results.URL + '?' + new Date().getTime()) : "/Content/images/NoImageFound.png"));
+        $("#imgDefaultCat").attr('src', (results.URL != "" ? (results.URL + '?' + new Date().getTime()) : "/Content/images/NoImageFound.png"));
+        
         ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "Edit");
         $('#divOverlayimage').hide();
         //var TreeOrder = $("#jstree_Categories").jstree(true).get_json('#', { 'flat': true });
@@ -376,6 +378,7 @@ function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the qu
     switch (i.Result) {
         case "OK":
             notyAlert('success', i.Records.StatusMessage);
+            $('#jstree_Categories').jstree("deselect_all");
             DataTables.attributeSetTable.clear().rows.add(GetAllAttributeSet()).draw(false);
             //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
             ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
@@ -394,8 +397,10 @@ function CheckSubmittedInsertCategory(data) { //function CouponSubmitted(data) i
     switch (i.Result) {
         case "OK":
             notyAlert('success', i.Records.StatusMessage);
+            $('#jstree_Categories').jstree("deselect_all");
             $('#jstree_Categories').jstree(true).settings.core.data = GetCategoriesTree();
             $('#jstree_Categories').jstree(true).refresh(true);
+
             //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
             ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "Edit");
             if (i.Records.ReturnValues != null)
@@ -416,6 +421,7 @@ function CheckSubmittedDeleteCategory(data) {
     switch (i.Result) {
         case "OK":
             notyAlert('success', i.Records.StatusMessage);
+            $('#jstree_Categories').jstree("deselect_all");
             $('#jstree_Categories').jstree(true).settings.core.data = GetCategoriesTree();
             $('#jstree_Categories').jstree(true).refresh(true);
             AddCategory();
