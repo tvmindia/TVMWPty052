@@ -97,7 +97,9 @@ namespace PartyEC.RepositoryServices.Services
                                     myEvent = new Event();
                                     myEvent.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myEvent.ID);
                                     myEvent.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : myEvent.Name);
-                                    myEvent.RelatedCategoriesCSV = (sdr["RelatedCategoriesCSV"].ToString() != "" ? sdr["RelatedCategoriesCSV"].ToString() : myEvent.RelatedCategoriesCSV);                              
+                                    myEvent.RelatedCategoriesCSV = (sdr["RelatedCategoriesCSV"].ToString() != "" ? sdr["RelatedCategoriesCSV"].ToString() : myEvent.RelatedCategoriesCSV);
+                                    myEvent.URL = sdr["URL"].ToString();
+                                    myEvent.EventImageID = sdr["EventImageID"].ToString();                             
                                 }
                             }//if
                         }

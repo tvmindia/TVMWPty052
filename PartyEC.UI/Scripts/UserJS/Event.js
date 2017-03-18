@@ -49,13 +49,16 @@ function fillevent(ID)
     $("#deleteId").val(thisevent.ID)//for delete action 
     $("#Name").val(thisevent.Name);
     $("#RelatedCategoriesCSV").val(thisevent.RelatedCategoriesCSV);
+    $("#EventImageID").val(thisevent.EventImageID);
+    $("#imgEvents").attr('src', (thisevent.URL != "" ? (thisevent.URL + '?' + new Date().getTime()) : "/Content/images/NoImageFound.png"));
     //bind check boxes here, by spliting Related Categories CSV
     var CSVarray = thisevent.RelatedCategoriesCSV.split(",");
     $('input:checkbox').prop('checked', false);
     for (var i = 0 ; i<CSVarray.length;i++)
     {
     $("#Cat_"+CSVarray[i]).prop('checked', true);
-    }   
+    }
+    $('#divOverlayimage').hide();
 } 
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
@@ -66,7 +69,8 @@ function clearfields() {
     $("#RelatedCategoriesCSV").val("") 
     $('input:checkbox').prop('checked', false);
     $("#EventImageID").val("")
-  
+    $("#imgEvents").attr('src', "/Content/images/NoImageFound.png");
+    $('#divOverlayimage').show();
   
 }
 //---------------------------------------Button Patch Click Events------------------------------------------------//
@@ -148,6 +152,7 @@ function SaveSuccess(data, status, xhr) {
     switch(i.Result){
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
+            $('#divOverlayimage').hide();
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -170,6 +175,7 @@ function DeleteSuccess(data, status, xhr) {
     switch (i.Result) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
+            $('#divOverlayimage').show();
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
