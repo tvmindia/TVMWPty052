@@ -81,8 +81,9 @@ namespace PartyEC.UI.Models
      
 
         [Display(Name = "Admin Remarks")]
-        public string AdminRemarks { get; set; }  
+        public string AdminRemarks { get; set; }
 
+        [DataType(DataType.Date, ErrorMessage = "Must be a Date")]
         [Display(Name = "FollowUp Date")]
         public DateTime? FollowUpDate { get; set; }
 
