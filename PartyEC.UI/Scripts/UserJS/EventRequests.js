@@ -82,7 +82,7 @@ function Edit(currentObj) {
             document.getElementById('lblContactType').innerHTML = thisEvent.ContactType; 
         }
         if ((rowData.CustomerID != null)) {
-            var thisEvent = GetCustomer(rowData.CustomerID);
+          //  var thisEvent = GetCustomer(rowData.CustomerID);
             if (thisEvent != null) {
 
                 $("#CustomerID").val(thisEvent.CustomerID);
