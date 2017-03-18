@@ -14,5 +14,6 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertEvent(Event EventObj);
         OperationsStatus UpdateEvent(Event EventObj);
         OperationsStatus DeleteEvent(int EventID);
+        OperationsStatus InsertImageEvents(Event EventObj);
     }
 }

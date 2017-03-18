@@ -14,11 +14,12 @@ namespace PartyEC.BusinessServices.Services
 
         private IEventRepositry _eventRepository;
         private ICategoriesRepository _categoryRepositry;
-
-        public EventBusiness(IEventRepositry eventRepository,ICategoriesRepository categoryRepositry)
+        private IMasterRepository _masterRepository;
+        public EventBusiness(IEventRepositry eventRepository,ICategoriesRepository categoryRepositry,IMasterRepository masterRepository)
         {
             _eventRepository = eventRepository;
             _categoryRepositry = categoryRepositry;
+            _masterRepository = masterRepository;
         }
         #endregion ConstructorInjection
 
@@ -116,6 +117,30 @@ namespace PartyEC.BusinessServices.Services
             return operationsStatusObj;
         }
 
+        public OperationsStatus InsertImageEvents(Event EventObj)
+        {
+
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                if (EventObj.URL != "" && EventObj.URL != null)
+                {
+                    OtherImages otherImgObj = new OtherImages();
+                    otherImgObj.URL = EventObj.URL;
+                    otherImgObj.ImageType = "Event";
+                    otherImgObj.LogDetails = EventObj.commonObj;
+                    operationsStatusObj = _masterRepository.InsertImage(otherImgObj);
+                    EventObj.EventImageID = operationsStatusObj.ReturnValues.ToString();
+                }
+                operationsStatusObj = _eventRepository.UpdateEvent(EventObj);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return operationsStatusObj;
+        }
         #endregion Method
     }
 }
