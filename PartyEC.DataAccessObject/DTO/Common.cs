@@ -69,7 +69,7 @@ namespace PartyEC.DataAccessObject.DTO
         }
         public string Duplicate
         {
-            get { return "Allready Exist.."}
+            get { return "Allready Exist.."; }
         }
         #endregion Messages
 
