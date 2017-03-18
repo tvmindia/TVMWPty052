@@ -8,6 +8,7 @@
 @section styles {
     @Styles.Render("~/Content/datatable")
 @Styles.Render("~/Content/bootstrapdatepicker")
+@Styles.Render("~/Content/EventRequest")
 
 }
 
@@ -17,8 +18,8 @@
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#eventRequestsList" id="tabeventRequestsList" data-toggle="tab">Event Requests List</a></li>
-                <li><a href="#eventRequestsDetails" id="tabeventRequestDetails" data-toggle="tab">Event Requests Details</a></li>
+                <li class="active"><a href="#eventRequestsList" id="tabeventRequestsList" onclick="tabeventRequestListClick()" data-toggle="tab">Event Requests List</a></li>
+                <li id="tabeventRequestDetails" class="disabled"><a href="#eventRequestsDetails" >Event Requests Details</a></li>
             </ul>
         </div>
         <div class="panel-body">
@@ -33,7 +34,7 @@
                             Html.RenderPartial("_ToolboxView", ToolBoxControltab1);
                         }
                     </div>*@
-                    <h4>   Event List </h4>
+                    <h4>   Event Requests List </h4>
                     @*table*@
                     <table id="tbleventRequest" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                         <thead>
@@ -59,82 +60,82 @@
  
                         <div class="col-md-12">
                             <div class="col-md-6">
-                                <div class="panel panel-default" style="min-height:250px">
+                                <div class="panel panel-default" style="min-height:200px">
                                     <div class="panel-heading">General Information</div>
                                     <div class="panel-body">
-                                        @Html.HiddenFor(model => model.ID, new { htmlAttributes = new { @class = "form-control" } })
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.EventReqNo, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        @Html.HiddenFor(model => model.ID)
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.EventReqNo, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8"> 
-                                                <label id="lblEventReqNo">-</label> 
+                                                <label id="lblEventReqNo" class="h4 label-display">-</label> 
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.EventTypeID, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.EventType, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblEventTypeID">-</label>
+                                                <label id="lblEventType" class="h4 label-display">-</label>
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.EventTitle, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.EventTitle, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblEventTitle">-</label>
+                                                <label id="lblEventTitle" class="h4 label-display">-</label>
                                               
                                             </div>
                                         </div>
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.EventDateTime, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.EventDateTime, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblEventDateTime">-</label>
+                                                <label id="lblEventDateTime" class="h4 label-display">-</label>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.EventStatus, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.EventStatus, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblEventStatus">-</label>
+                                                <label id="lblEventStatus" class="h4 label-display">-</label>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="panel panel-default" style="min-height:250px">
+                                <div class="panel panel-default" style="min-height:200px">
                                     <div class="panel-heading">Requirement Details</div>
                                     <div class="panel-body">
 
-                                        <div class="form-group  col-md-12">
-                                            @Html.LabelFor(model => model.LookingFor, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.LookingFor, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblLookingFor">-</label>
+                                                <label id="lblLookingFor" class="h4 label-display">-</label>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.RequirementSpec, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.RequirementSpec, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblRequirementSpec">-</label>
+                                                <label id="lblRequirementSpec" class="h4 label-display">-</label>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblMessage">-</label>
+                                                <label id="lblMessage" class="h4 label-display">-</label>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.NoOfPersons, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.NoOfPersons, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblNoOfPersons">-</label>
+                                                <label id="lblNoOfPersons" class="h4 label-display">-</label>
                                             </div>
                                         </div>
 
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.Budget, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.Budget, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblBudget">-</label>
+                                                <label id="lblBudget" class="h4 label-display">-</label>
                                             </div>
                                         </div>
 
@@ -144,48 +145,66 @@
                         </div>
                         <div class="col-md-12">
                             <div class="col-md-6">
-                                <div class="panel panel-default" style="min-height:250px">
+                                <div class="panel panel-default" style="min-height:200px">
                                     <div class="panel-heading">Account Info</div>
                                     <div class="panel-body">
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.CustomerID, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                           
+                                            @Html.LabelFor(model => model.Customerlist.ID, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                @Html.HiddenFor(model => model.CustomerID, new { htmlAttributes = new { @class = "form-control" } })
+                                                @*style="font-weight:bold"*@
+                                                 <label id="lblcust_ID" class="h4 label-display">-</label>  
                                             </div>
                                         </div>
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.Customerlist.Name, htmlAttributes: new { @class = "h4 col-md-4" })
+                                            <div class="col-md-8">                                               
+                                                <label id="lblName" class="h4 label-display" >-</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.Customerlist.Mobile, htmlAttributes: new { @class = "h4 col-md-4" })
+                                            <div class="col-md-8">
+                                                <label id="lblCust_No" class="h4 label-display">-</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.Customerlist.Email, htmlAttributes: new { @class = "h4 col-md-4" })
+                                            <div class="h5 col-md-8">
+                                                <label id="lblCust_Email" class="h4 label-display">-</label>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
                             <div class="col-md-6">
-                                <div class="panel panel-default" style="min-height:250px">
+                                <div class="panel panel-default" style="min-height:200px">
                                     <div class="panel-heading">Contact Info</div>
                                     <div class="panel-body">
 
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.ContactName, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.ContactName, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblContactName">-</label>
+                                                <label id="lblContactName" class="h4 label-display">-</label>
                                             </div>
                                         </div>
-
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblEmail">-</label>
+                                                <label id="lblEmail" class="h4 label-display">-</label>
                                             </div>
                                         </div>
-
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.Phone, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblPhone">-</label>
+                                                <label id="lblPhone" class="h4 label-display">-</label>
                                             </div>
                                         </div>
-
-                                        <div class="form-group col-md-12">
-                                            @Html.LabelFor(model => model.ContactType, htmlAttributes: new { @class = "control-label col-md-4" })
+                                        <div class="col-md-12">
+                                            @Html.LabelFor(model => model.ContactType, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblContactType">-</label>
+                                                <label id="lblContactType" class="h4 label-display">-</label>
                                             </div>
                                         </div>
 

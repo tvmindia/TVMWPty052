@@ -179,7 +179,7 @@ namespace PartyEC.UI.Controllers
 
                     categoriesViewModelObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                     categoriesViewModelObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
-
+                    categoriesViewModelObj.ImageID = null;
                     OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_categoryBusiness.UpdateCategory(Mapper.Map<CategoriesViewModel,Categories>(categoriesViewModelObj)));
                 }
 

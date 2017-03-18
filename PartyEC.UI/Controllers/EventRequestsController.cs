@@ -14,12 +14,16 @@ namespace PartyEC.UI.Controllers
     public class EventRequestsController : Controller
     {
         #region Constructor_Injection
+
         IEventRequestBusiness _eventRequestsBusiness;
+        ICustomerBusiness _customerBusiness;
         ICommonBusiness _commonBusiness;
-        public EventRequestsController(IEventRequestBusiness eventRequestsBusiness, ICommonBusiness commonBusiness)
+
+        public EventRequestsController(IEventRequestBusiness eventRequestsBusiness, ICommonBusiness commonBusiness, ICustomerBusiness customerBusiness)
         {
             _eventRequestsBusiness = eventRequestsBusiness;           
             _commonBusiness = commonBusiness;
+            _customerBusiness = customerBusiness;
         }
         #endregion Constructor_Injection
         // GET: EventRequests

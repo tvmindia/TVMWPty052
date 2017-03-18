@@ -33,13 +33,16 @@
             <div class="col-lg-3">
                 <h4>..</h4>
                 <hr />
-                <div class="panel panel-default panel-info">
-                    <div class="panel-body" id="jstree_Categories">
+                    <div class="col-lg-12 panel panel-default panel-info">
+                        <div class="panel-body" id="jstree_Categories">
 
+
+                        </div>
+                        <div class="overlay" id="divOverlay" style="display:none;background:white;">
+                            <img src="~/Content/OtherImages/Cake.png" id="imgDefaultCat" style="object-fit:cover;width:100%;height:100%"/>
+                        </div>
                     </div>
-                    <div class="overlay" id="divOverlay" style="display:none;">
-                    </div>
-                </div>
+                
             </div>
             <div class="tab-content">
                 <ol class="breadcrumb" id="olCategory" style="position:absolute;">
@@ -133,12 +136,14 @@
                                     <hr />
                                     <div class="col-md-12" id="divImageUpload">
                                             <div>
-                                                <input type="file" class="uploadify" name="file_upload" id="file_upload" />
                                                 <a id="alinkUpload" style="display:none" class="btn btn-info" href="javascript:$('#file_upload').uploadify('upload','*')">Upload</a>
+                                                <input type="file" class="uploadify" name="file_upload" id="file_upload" />
+                                                
                                             </div>
                                             <div id="uploaded">
                                             </div>
                                         <div class="overlay" id="divOverlayimage" style="display:none;">
+                                            <div class="uploadify-button  disabled" title="Save Category to enable file browse" style="height: 30px; line-height: 30px; width: 120px;margin-left:1.55%;cursor:not-allowed;"><span class="uploadify-button-text">SELECT FILES</span></div>
                                         </div>
                                     </div>
                                     <div class="col-lg-12" style="object-fit:fill;">
@@ -236,6 +241,7 @@
             'onUploadStart': function (file) {
                 $('#file_upload').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'ImageID': $('#ImageID').val() });
             },
+            'uploadLimit': 1,
                 'onUploadSuccess': function (file, data, response) {
                   //data is whatever you return from the server
                   //we're sending the URL from the server so we append this as an image to the #uploaded div

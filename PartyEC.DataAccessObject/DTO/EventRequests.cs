@@ -9,7 +9,7 @@ namespace PartyEC.DataAccessObject.DTO
     {
         public int ID { get; set; }
         public string EventReqNo { get; set; }
-        public int EventTypeID { get; set; }
+        public string EventType { get; set; }
         public string EventTitle  { get; set; }
         public DateTime EventDateTime { get; set; }
         public   int NoOfPersons { get; set; }
@@ -17,6 +17,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string LookingFor  { get; set; }
         public string RequirementSpec  { get; set; }
         public int CustomerID { get; set; }
+        public string CustomerName { get; set; }
         public string ContactName  { get; set; }
         public string Email  { get; set; }
         public string Phone  { get; set; }

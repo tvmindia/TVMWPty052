@@ -103,6 +103,7 @@ namespace PartyEC.UI.Controllers
                         EventObj.commonObj = new LogDetailsViewModel();
                         EventObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                         EventObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                        EventObj.EventImageID = null;
                         OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.UpdateEvent(Mapper.Map<EventViewModel, Event>(EventObj)));                       
                     }
                     catch (Exception ex)

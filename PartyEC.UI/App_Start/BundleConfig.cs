@@ -17,7 +17,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/datatableSelect").Include("~/Content/DataTables/css/select.dataTables.min.css"));
             bundles.Add(new StyleBundle("~/Content/product").Include("~/Content/UserCSS/Product.css"));
             bundles.Add(new StyleBundle("~/Content/Uplodify").Include("~/Content/uploadify.css"));
-
+            bundles.Add(new StyleBundle("~/Content/EventRequest").Include("~/Content/UserCSS/EventRequests.css"));
 
 
 

@@ -156,12 +156,14 @@
                                         </div>*@
                                         <div class="col-md-12" id="divImageUpload">
                                             <div>
+                                                <a id="alinkUpload" style="display:none;left:39%;" class="btn btn-info" href="javascript:$('#file_upload').uploadify('upload','*')">Upload</a>
                                                 <input type="file" class="uploadify" name="file_upload" id="file_upload" />
-                                                <a id="alinkUpload" style="display:none" class="btn btn-info" href="javascript:$('#file_upload').uploadify('upload','*')">Upload</a>
+                                                
                                             </div>
                                             <div id="uploaded">
                                             </div>
                                             <div class="overlay" id="divOverlayimage" style="display:none;">
+                                                <div class="uploadify-button  disabled" title="Save Event Type for enable file browse" style="height: 30px; line-height: 30px; width: 120px;margin-left:2%;cursor:not-allowed;"><span class="uploadify-button-text">SELECT FILES</span></div>
                                             </div>
                                         </div>
                                         <div class="col-lg-12" style="object-fit:fill;">
@@ -212,6 +214,7 @@
             'onUploadStart': function (file) {
                 $('#file_upload').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'EventImageID': $('#EventImageID').val() });
             },
+            'uploadLimit' : 1,
                 'onUploadSuccess': function (file, data, response) {
                   //data is whatever you return from the server
                   //we're sending the URL from the server so we append this as an image to the #uploaded div

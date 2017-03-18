@@ -18,7 +18,7 @@ namespace PartyEC.UI.Models
 
         [ReadOnly(true)]
         [Display(Name = "Event Type")]
-        public int EventTypeID { get; set; }
+        public string EventType { get; set; }
 
         [ReadOnly(true)]
         [Display(Name = "Event Title")]
@@ -33,10 +33,13 @@ namespace PartyEC.UI.Models
         public int EventStatus { get; set; }
 
 
+        public CustomerViewModel Customerlist { get; set; }
 
         [Display(Name = "Customer ID")]
         [ScaffoldColumn(true)]
         public int CustomerID { get; set; }
+
+        public string CustomerName { get; set; }
 
 
 
