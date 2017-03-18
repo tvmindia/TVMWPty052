@@ -12,15 +12,16 @@ $(document).ready(function () {
              data: GetAllEventRequests(),
              columns: [
                { "data": "ID" },
-                { "data": "CustomerID" },
+               { "data": "CustomerID" },
                { "data": "EventReqNo" },
                { "data": "EventTitle", "defaultContent": "<i>-</i>" },
-               { "data": "EventTypeID", "defaultContent": "<i>-</i>" },
+               { "data": "EventType", "defaultContent": "<i>-</i>" },
                { "data": "EventDateTime", "defaultContent": "<i>-</i>" },
-                { "data": "ContactName", "defaultContent": "<i>-</i>" },
-                 { "data": "Phone", "defaultContent": "<i>-</i>" },
-                 { "data": "EventStatus", "defaultContent": "<i>-</i>" },
-                 { "data": "FollowUpDate", "defaultContent": "<i>-</i>" },
+               { "data": "CustomerName", "defaultContent": "<i>-</i>" },
+               { "data": "ContactName", "defaultContent": "<i>-</i>" },
+               { "data": "Phone", "defaultContent": "<i>-</i>" },
+               { "data": "EventStatus", "defaultContent": "<i>-</i>" },
+               { "data": "FollowUpDate", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [{ "targets": [0], "visible": false, "searchable": false },
@@ -31,11 +32,15 @@ $(document).ready(function () {
         notyAlert('error', e.message);
 
     }
+    //----------------------------------------Disabling controls-------------------//
+    $("#CurrencyCode").attr('disabled', true);
+    $("#CurrencyRate").attr('disabled', true);
 });
 
 //---------------------------------------Get All Events-----------------------------------------------//
 function GetAllEventRequests() {
     try {
+        debugger;
         var data = {};
         var ds = {};
         ds = GetDataFromServer("EventRequests/GetAllEventRequests/", data);
@@ -54,10 +59,18 @@ function GetAllEventRequests() {
     }
 }
 
+function tabeventRequestListClick()
+{
+    $('#tabeventRequestDetails').addClass('disabled');
+    $('#tabeventRequestDetails a').attr('data-toggle', '');
+}
+
 
 function Edit(currentObj) {   
     //Tab Change
-    $('#tabeventRequestDetails').trigger('click');
+    $('#tabeventRequestDetails').removeClass('disabled');
+    $('#tabeventRequestDetails a').attr('data-toggle', 'tab');
+    $('#tabeventRequestDetails a').trigger('click');
     var rowData = DataTables.eventTable.row($(currentObj).parents('tr')).data();
     //Event Request Case
     if ((rowData != null) && (rowData.ID != null)) {

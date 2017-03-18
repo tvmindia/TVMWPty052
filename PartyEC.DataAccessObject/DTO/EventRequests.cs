@@ -17,6 +17,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string LookingFor  { get; set; }
         public string RequirementSpec  { get; set; }
         public int CustomerID { get; set; }
+        public string CustomerName { get; set; }
         public string ContactName  { get; set; }
         public string Email  { get; set; }
         public string Phone  { get; set; }

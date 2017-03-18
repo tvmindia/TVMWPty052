@@ -53,9 +53,10 @@ namespace PartyEC.RepositoryServices.Services
                                     {
                                         _eventRequestsObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _eventRequestsObj.ID);
                                         _eventRequestsObj.EventReqNo = (sdr["EventReqNo"].ToString() != "" ? sdr["EventReqNo"].ToString() : _eventRequestsObj.EventReqNo);
-                                        _eventRequestsObj.EventType = (sdr["EventTypeID"].ToString() != "" ? sdr["EventTypeID"].ToString() : _eventRequestsObj.EventType);
+                                        _eventRequestsObj.EventType = (sdr["EventType"].ToString() != "" ? sdr["EventType"].ToString() : _eventRequestsObj.EventType);
                                         _eventRequestsObj.EventTitle = (sdr["EventTitle"].ToString() != "" ? sdr["EventTitle"].ToString() : _eventRequestsObj.EventTitle);
                                         _eventRequestsObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? Int16.Parse(sdr["CustomerID"].ToString()) : _eventRequestsObj.CustomerID);
+                                        _eventRequestsObj.CustomerName = (sdr["CustomerName"].ToString() != "" ?sdr["CustomerName"].ToString() : _eventRequestsObj.CustomerName);
                                         _eventRequestsObj.ContactName = (sdr["ContactName"].ToString() != "" ? sdr["ContactName"].ToString() : _eventRequestsObj.ContactName);
                                         _eventRequestsObj.EventDateTime = (sdr["EventDateTime"].ToString() != "" ? DateTime.Parse(sdr["EventDateTime"].ToString()) : _eventRequestsObj.EventDateTime);
                                         _eventRequestsObj.Phone = (sdr["Phone"].ToString() != "" ? sdr["Phone"].ToString() : _eventRequestsObj.Phone);

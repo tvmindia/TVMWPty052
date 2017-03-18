@@ -18,8 +18,8 @@
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#eventRequestsList" id="tabeventRequestsList" data-toggle="tab">Event Requests List</a></li>
-                <li><a href="#eventRequestsDetails" id="tabeventRequestDetails" data-toggle="tab">Event Requests Details</a></li>
+                <li class="active"><a href="#eventRequestsList" id="tabeventRequestsList" onclick="tabeventRequestListClick()" data-toggle="tab">Event Requests List</a></li>
+                <li id="tabeventRequestDetails" class="disabled"><a href="#eventRequestsDetails" >Event Requests Details</a></li>
             </ul>
         </div>
         <div class="panel-body">
@@ -34,7 +34,7 @@
                             Html.RenderPartial("_ToolboxView", ToolBoxControltab1);
                         }
                     </div>*@
-                    <h4>   Event List </h4>
+                    <h4>   Event Requests List </h4>
                     @*table*@
                     <table id="tbleventRequest" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                         <thead>

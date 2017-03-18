@@ -39,6 +39,8 @@ namespace PartyEC.UI.Models
         [ScaffoldColumn(true)]
         public int CustomerID { get; set; }
 
+        public string CustomerName { get; set; }
+
 
 
         [ReadOnly(true)]
