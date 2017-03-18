@@ -336,6 +336,7 @@ namespace PartyEC.RepositoryServices.Services
             }
             return myProductAttributeList;
         }
+
         
         public string GetAttributeXML(List<AttributeValues> AttributeContainerWithValues) {
            
@@ -366,7 +367,55 @@ namespace PartyEC.RepositoryServices.Services
             }
             return myXML;
         }
-        
+
+
+        public List<Attributes> GetAllAttributeBySet(int AttributeSetID)
+        {
+            List<Attributes> AttributeList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    SqlCommand cmd = new SqlCommand();
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+
+                    cmd.Connection = con;
+                    cmd.Parameters.Add("@AttributeSetID", SqlDbType.Int).Value = AttributeSetID;
+                    
+                    cmd.CommandText = "[GetAllAttributesBySetID]";
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader sdr = cmd.ExecuteReader())
+                    {
+                        AttributeList = new List<Attributes>();
+                        if ((sdr != null) && (sdr.HasRows))
+                        {
+                            if (sdr.Read())
+                            {
+                                //Attributes myAttribute = new Attributes();
+                                //myAttribute.attributeSetLinkObj = new AttributeSetLink();
+                                //myAttribute.attributeSetLinkObj.ID = int.Parse(sdr["ID"].ToString());
+                                //myAttribute.Caption = sdr["Caption"].ToString();
+                                //myAttribute.DataType = sdr["AttributeType"].ToString();
+                                //myProductAttributeList.Add(myAttribute);
+                            }
+                        }
+                    }
+
+                }
+
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            return AttributeList;
+        }
+
         #endregion Methods
     }
     public class AttributeSetRepository : IAttributeSetRepository

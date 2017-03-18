@@ -47,7 +47,7 @@ namespace PartyEC.UI.Models
 
         [Display(Name = "Is Comparable")]
         public bool ComparableYN { get; set; }
-
+        public AttributeSetLinkViewModel attributeSetLinkObj { get; set; }
         public LogDetailsViewModel commonObj { get; set; }
 
     }

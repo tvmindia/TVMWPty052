@@ -19,7 +19,7 @@ namespace PartyEC.DataAccessObject.DTO
         public bool FilterYN { get; set; }      
         public bool MandatoryYN { get; set; }
         public bool ComparableYN { get; set; }
-
+        public AttributeSetLink attributeSetLinkObj { get; set; }
         public LogDetails commonObj { get; set; }
 
         public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
