@@ -108,6 +108,8 @@ function onSelectNode(e, data)
         $("#Enable").prop('checked', results.Enable);
         $("#ImageID").val(results.ImageID);
         $("#imgCategory").attr('src', (results.URL != "" ? (results.URL + '?' + new Date().getTime()) : "/Content/images/NoImageFound.png"));
+        $("#imgDefaultCat").attr('src', (results.URL != "" ? (results.URL + '?' + new Date().getTime()) : "/Content/images/NoImageFound.png"));
+        
         ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "Edit");
         $('#divOverlayimage').hide();
         //var TreeOrder = $("#jstree_Categories").jstree(true).get_json('#', { 'flat': true });
