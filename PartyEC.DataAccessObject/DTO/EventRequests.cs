@@ -9,7 +9,7 @@ namespace PartyEC.DataAccessObject.DTO
     {
         public int ID { get; set; }
         public string EventReqNo { get; set; }
-        public int EventTypeID { get; set; }
+        public string EventType { get; set; }
         public string EventTitle  { get; set; }
         public DateTime EventDateTime { get; set; }
         public   int NoOfPersons { get; set; }

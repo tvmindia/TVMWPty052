@@ -43,9 +43,9 @@ namespace PartyEC.BusinessServices.Services
                 EventRequestsObj = _eventRequestsRepositry.GetEventRequest(EventRequestsID, Status);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return EventRequestsObj;
         }

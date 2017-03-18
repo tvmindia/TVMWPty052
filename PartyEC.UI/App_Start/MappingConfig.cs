@@ -32,6 +32,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<EventViewModel, Event>().ReverseMap();
                 config.CreateMap<ProductCategoryLinkViewModel, ProductCategoryLink>().ReverseMap();
                 config.CreateMap<EventRequestsViewModel, EventRequests>().ReverseMap();
+                config.CreateMap<CustomerViewModel, Customer>().ReverseMap();
             });
         }
 
