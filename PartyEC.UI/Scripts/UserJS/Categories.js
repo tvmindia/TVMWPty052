@@ -1,4 +1,5 @@
 ﻿var DataTables = {};
+var Radioselected = "";
 $(document).ready(function () {
     try
     {
@@ -47,7 +48,7 @@ $(document).ready(function () {
                  paging: true,
                  data: GetAllProducts(),
                  columns: [
-                   { "data": null },
+                   { "data": null, "defaultContent": "" },
                    {"data":"ID"},
                    { "data": "Name" },
                    { "data": "EnableYN", "defaultContent": "<i>-</i>" },
@@ -359,18 +360,21 @@ function GetAssignedPro()
     $("#rdoproductAssigned").prop("checked", true);
     ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "tab2");
     $('#divOverlay').show();
+    Radioselected = "1";
 }
 function GetUnAssignedPro()
 {
     debugger;
     var id = $('#ID').val() != "0" ? $('#ID').val() : "";
     DataTables.productTable.clear().rows.add(GetUnAssignedProWithID(id)).draw(false);
+    Radioselected = "2";
 }
 function GetAllPro()
 {
     debugger;
     var id = $('#ID').val();
     DataTables.productTable.clear().rows.add(GetAllProducts(id)).draw(false);
+    Radioselected = "3";
 }
 function TabRedirect()
 {
@@ -388,11 +392,12 @@ function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the qu
     switch (i.Result) {
         case "OK":
             notyAlert('success', i.Records.StatusMessage);
-            $('#jstree_Categories').jstree("deselect_all");
-            DataTables.attributeSetTable.clear().rows.add(GetAllAttributeSet()).draw(false);
-            //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
-            ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
-            $('#tabattributeSetDetails').trigger('click');
+            if (Radioselected == "1")
+                DataTables.productTable.clear().rows.add(GetAssignedProWithID($('#ID').val())).draw(false);
+                if (Radioselected == "2")
+                    DataTables.productTable.clear().rows.add(GetUnAssignedProWithID($('#ID').val())).draw(false);
+                    if (Radioselected == "3")
+                        DataTables.productTable.clear().rows.add(GetAllAttributeSet($('#ID').val())).draw(false);
             break;
         case "ERROR":
             notyAlert('success', i.Records.StatusMessage);
