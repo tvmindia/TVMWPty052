@@ -24,7 +24,7 @@ namespace PartyEC.UI.Models
 
         [Display(Name = "Event Image")]
         public string EventImageID { get; set; }
-
+        public string URL { get; set; }
         public LogDetailsViewModel commonObj { get; set; }
 
 

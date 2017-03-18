@@ -204,5 +204,27 @@ namespace PartyEC.UI.Controllers
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
         #endregion ChangeButtonStyle
+
+        public ActionResult Upload(EventViewModel eventViewObj)
+        {
+            OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+
+            var file = Request.Files["Filedata"];
+            var FileNameCustom = eventViewObj.Name + ".png";
+            string savePath = Server.MapPath(@"~\Content\OtherImages\" + FileNameCustom);
+            file.SaveAs(savePath);
+            eventViewObj.URL = "/Content/OtherImages/" + FileNameCustom;
+            if (eventViewObj.EventImageID == null)
+            {
+                eventViewObj.commonObj = new LogDetailsViewModel();
+                eventViewObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                eventViewObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                eventViewObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                eventViewObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                operationsStatus = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.InsertImageEvents(Mapper.Map<EventViewModel, Event>(eventViewObj)));
+
+            }
+            return Content(Url.Content(@"~\Content\OtherImages\" + FileNameCustom));
+        }
     }
 }
