@@ -18,7 +18,10 @@ namespace PartyEC.RepositoryServices.Contracts
         Product GetProduct(int ProductID, OperationsStatus Status);
        OperationsStatus UpdateProduct(Product productObj);
        List<Product> GetRelatedProducts(int productID);
+        List<Product> GetUNRelatedProducts(int productID);
+        OperationsStatus InsertRelatedProducts(Product productObj,string IDList);
+        OperationsStatus DeleteRelatedProducts(Product productObj, string IDList);
 
 
-   }
+    }
 }

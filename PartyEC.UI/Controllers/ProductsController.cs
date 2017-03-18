@@ -125,6 +125,28 @@ namespace PartyEC.UI.Controllers
             }
            
         }
+
+        [HttpGet]
+        public string GetUNRelatedProducts(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    List<ProductViewModel> productList = Mapper.Map<List<Product>, List<ProductViewModel>>(_productBusiness.GetUNRelatedProducts(int.Parse(id)));
+
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+                }
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "id is empty" });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
+
+
         [HttpGet]
         public string GetAllProductswithCategory(string CategoryID)
         {
@@ -187,6 +209,7 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public string ProductInsertUpdate(ProductViewModel productObj)
         {
             if (ModelState.IsValid)
@@ -224,6 +247,59 @@ namespace PartyEC.UI.Controllers
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
+
+
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string RelatedProductsInsert(ProductViewModel productObj)
+        {
+            if ((!ModelState.IsValid)&&(!string.IsNullOrEmpty(productObj.IDList)))
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                try
+                {
+                    productObj.logDetails = new LogDetailsViewModel();
+                    //Getting UA
+                    productObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                    productObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertRelatedProducts(Mapper.Map<ProductViewModel, Product>(productObj), productObj.IDList));
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                catch(Exception ex)
+                {
+                   
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string DeleteRelatedProducts(ProductViewModel productObj)
+        {
+            if ((!ModelState.IsValid) && (!string.IsNullOrEmpty(productObj.IDList)))
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                try
+                {
+                    productObj.logDetails = new LogDetailsViewModel();
+                    //Getting UA
+                    productObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                    productObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.DeleteRelatedProducts(Mapper.Map<ProductViewModel, Product>(productObj), productObj.IDList));
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                catch (Exception ex)
+                {
+
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+
 
         #region ChangeButtonStyle
         [HttpGet]

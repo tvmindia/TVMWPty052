@@ -67,6 +67,7 @@ $(document).ready(function () {
              paging: true,
              data: null,
              columns: [
+               { "data": null,"defaultContent":'' },
                { "data": "ID" },
                { "data": "Name" },
                { "data": "ProductType", "defaultContent": "<i>-</i>" },
@@ -79,18 +80,70 @@ $(document).ready(function () {
          
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
-             columnDefs: [
-              {//hiding hidden column 
-                  "targets": [0],
-                  "visible": true,
-                  "searchable": true
-              }
-             ]
+             columnDefs: [{
+                 orderable: false,
+                 className: 'select-checkbox',
+                 targets: 0
+             }],
+             select: {
+                 style: 'multi',
+                 selector: 'td:first-child'
+             },
+             order: [[1, 'asc']]
+
          });
+      
     }
     catch (e) {
         notyAlert('errror', e.message);
     }
+
+    try {
+
+        DataTables.UNRelatedproductsTable = $('#tblUNRelatedproducts').DataTable(
+         {
+             dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+             order: [],
+             searching: true,
+             paging: true,
+             data: null,
+             columns: [
+               {"data":null},
+               { "data": "ID" },
+               { "data": "Name" },
+               { "data": "ProductType", "defaultContent": "<i>-</i>" },
+               { "data": "EnableYN", "defaultContent": "<i>-</i>" },
+               { "data": "SupplierID", "defaultContent": "<i>-</i>" },
+               { "data": "SKU", "defaultContent": "<i>-</i>" },
+               { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
+               { "data": "Qty", "defaultContent": "<i>-</i>" },
+               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
+               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+             ],
+             columnDefs: [
+              {//hiding hidden column 
+                  "targets": [0],
+                  "visible": true,
+                  "searchable": false,
+                  "render": function (data, type, full, meta) {
+                      if (type === 'display') {
+                          data = '<input type="checkbox" class="dt-checkboxes">';
+                      }
+                      return data;
+                  }
+              }
+             ]
+         });
+
+        $('#tblUNRelatedproducts').on('change', 'input[type="checkbox"]', function () {
+            $(this).closest('tr').toggleClass('selected');
+        });
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
+
+
 });
 //remove header tags
 function removeme(current)
@@ -138,9 +191,7 @@ function Edit(currentObj)
             $("#DiscountAmount").val((thisproduct.ProductDetails.length!=0?thisproduct.ProductDetails[0].DiscountAmount:0.00));
             $("#DiscountStartDate").val((thisproduct.ProductDetails.length!=0?thisproduct.ProductDetails[0].DiscountStartDate:""));
             $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0?thisproduct.ProductDetails[0].DiscountEndDate:""));
-
             $("#ShortDescription").val(thisproduct.ShortDescription);
-
             $("#LongDescription").val(thisproduct.LongDescription);
             if (thisproduct.StockAvailable == true)
             { $("#StockAvailable").prop('checked', true); }
@@ -166,10 +217,11 @@ function Edit(currentObj)
             
 
             //ProductID
-            $("#ID").val(thisproduct.ID);
+            $(".productID").val(thisproduct.ID);
             //ProductDetailID
             $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
             RefreshRelatedProducts(thisproduct.ID);
+            RefreshUNRelatedProducts(thisproduct.ID);
         }
        
     }
@@ -226,10 +278,8 @@ function GetAllProducts()
 }
 
 function GetRelatedProducts(id) {
-
     try {
-        
-        var data = {"id":id};
+         var data = {"id":id};
         var ds = {};
         ds = GetDataFromServer("Products/GetRelatedProducts/", data);
         if (ds != '') {
@@ -241,7 +291,26 @@ function GetRelatedProducts(id) {
         if (ds.Result == "ERROR") {
             notyAlert('error', ds.Message);
         }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
 
+function GetUNRelatedProducts(id) {
+    try {
+        var data = { "id": id };
+        var ds = {};
+        ds = GetDataFromServer("Products/GetUNRelatedProducts/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -259,6 +328,15 @@ function RefreshProducts() {
 function RefreshRelatedProducts(id) {
     try {
         DataTables.RelatedproductsTable.clear().rows.add(GetRelatedProducts(id)).draw(false);
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
+function RefreshUNRelatedProducts(id) {
+    try {
+        DataTables.UNRelatedproductsTable.clear().rows.add(GetUNRelatedProducts(id)).draw(false);
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -301,7 +379,7 @@ function productSaveSuccess(data, status, xhr)
     switch (JsonResult.Result) {
         case "OK":
             notyAlert('success', JsonResult.Record.StatusMessage);
-            $("#ID").val(JsonResult.Record.ReturnValues);
+            $(".productID").val(JsonResult.Record.ReturnValues);
             RefreshProducts();
             break;
         case "ERROR":
@@ -318,12 +396,7 @@ function productSaveFailure()
 function onbeginProductSave()
 {
 }
-function oncomplteProductSave()
-{
-   // alert("oncomplete");
-   //// $('#loadProgressBar').hide();
-    
-}
+
 function ProductSave()
 {
     $('#btnProductSubmit').trigger('click');
@@ -355,4 +428,90 @@ function RelatedProductsModel()
 {
     //popsup the model
     $('#btnmodelrelproduct').trigger('click');
+}
+
+function ConstructRelatdProductIDList()
+{
+    
+    try {
+        var AddList = [];
+        var tabledata = DataTables.UNRelatedproductsTable.rows('.selected').data();
+        if (tabledata.length > 0)
+        {
+            for (var i = 0; i < tabledata.length; i++) {
+                AddList.push(tabledata[i].ID);
+            }
+            $(".IDList").val(AddList);
+        }
+        
+    }
+    catch (e) {
+
+    }
+}
+function CallbtnRelatedProductSubmit()
+{
+    $('#btnRelatedProductSubmit').trigger('click');
+}
+function CallbtnDeleteRelatedProductSubmit()
+{
+    $('#btnDeleteRelatedProductSubmit').trigger('click');
+}
+
+function RelatedproductSaveSuccess(data, status, xhr)
+{
+    var JsonResult = JSON.parse(data)
+    switch (JsonResult.Result)
+    {
+        case "OK":
+            notyAlert('success', JsonResult.Record.StatusMessage);
+            var id= $(".productID").val();
+            RefreshRelatedProducts(id);
+            RefreshUNRelatedProducts(id);
+            RelatedProductsModel();
+            break;
+        case "ERROR":
+            notyAlert('error', JsonResult.Record.StatusMessage);
+            break;
+        default:
+            break;
+    }
+
+}
+
+function ConstructRelatdProductIDListForDelete()
+{
+    debugger;
+    try {
+        var AddList = [];
+        var tabledata = DataTables.RelatedproductsTable.rows('.selected').data();
+        if (tabledata.length > 0) {
+            for (var i = 0; i < tabledata.length; i++) {
+                AddList.push(tabledata[i].ID);
+            }
+            $("#relatedproductlistID").val(AddList);
+        }
+
+    }
+    catch (e) {
+
+    }
+}
+
+function RelatedproductDeleteSuccess(data, status, xhr)
+{
+    var JsonResult = JSON.parse(data)
+    switch (JsonResult.Result) {
+        case "OK":
+            notyAlert('success', JsonResult.Record.StatusMessage);
+            var id = $(".productID").val();
+            RefreshRelatedProducts(id);
+            RefreshUNRelatedProducts(id);
+            break;
+        case "ERROR":
+            notyAlert('error', JsonResult.Record.StatusMessage);
+            break;
+        default:
+            break;
+    }
 }

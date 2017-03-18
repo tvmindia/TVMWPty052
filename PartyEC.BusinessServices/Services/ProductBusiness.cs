@@ -89,6 +89,21 @@ namespace PartyEC.BusinessServices.Services
             return productlist;
         }
 
+        public List<Product> GetUNRelatedProducts(int productID)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetUNRelatedProducts(productID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return productlist;
+        }
+
 
         public OperationsStatus InsertProduct(Product productObj)
         {
@@ -112,6 +127,34 @@ namespace PartyEC.BusinessServices.Services
 
             return _productRepository.AddOrRemoveProductCategoryLink(AddList,DeleteList);
 
+        }
+
+        public OperationsStatus InsertRelatedProducts(Product productObj, string IDList)
+        {
+            try
+            {
+                return _productRepository.InsertRelatedProducts(productObj, IDList);
+            }
+            catch (Exception ex)
+            {
+                OperationsStatus OS = new OperationsStatus();
+                OS.StatusMessage = ex.Message.ToString();
+                return OS;
+            }
+        }
+
+        public OperationsStatus DeleteRelatedProducts(Product productObj, string IDList)
+        {
+            try
+            {
+                return _productRepository.DeleteRelatedProducts(productObj, IDList);
+            }
+            catch (Exception ex)
+            {
+                OperationsStatus OS = new OperationsStatus();
+                OS.StatusMessage = ex.Message.ToString();
+                return OS;
+            }
         }
 
     }

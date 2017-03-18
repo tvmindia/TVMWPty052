@@ -150,13 +150,16 @@ namespace PartyEC.UI.Models
         [MaxLength(250)]
         public string HeaderTags { get; set; }
         #endregion ProductTags
+
+
         public int LinkID { get; set; }
         public int CategoryID { get; set; }
         public float PositionNo { get; set; }
         public LogDetailsViewModel logDetails { get; set; }
         public List<ProductDetailViewModel> ProductDetails { get;set;}
         public ProductDetailViewModel ProductDetailObj { get; set; }
-
+        //collection of related products ids
+        public string IDList { get; set; }
 
     }
   public class ProductDetailViewModel

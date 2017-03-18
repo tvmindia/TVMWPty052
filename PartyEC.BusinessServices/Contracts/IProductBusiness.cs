@@ -18,6 +18,9 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList,List<ProductCategoryLink> DeleteList);
         Product GetProduct(int ProductID, OperationsStatus Status);
         List<Product> GetRelatedProducts(int productID);
+        List<Product> GetUNRelatedProducts(int productID);
+        OperationsStatus InsertRelatedProducts(Product productObj, string IDList);
+        OperationsStatus DeleteRelatedProducts(Product productObj, string IDList);
 
     }
 }
