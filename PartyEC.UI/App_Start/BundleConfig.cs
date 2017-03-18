@@ -15,7 +15,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/datatablecheckbox").Include("~/Content/DataTables/css/dataTables.bootstrap.min.css", "~/Content/DataTables/css/responsive.bootstrap.min.css", "~/Content/DataTables/css/dataTables.checkboxes.css"));
             bundles.Add(new StyleBundle("~/Content/product").Include("~/Content/UserCSS/Product.css"));
             bundles.Add(new StyleBundle("~/Content/Uplodify").Include("~/Content/uploadify.css"));
-
+            bundles.Add(new StyleBundle("~/Content/EventRequest").Include("~/Content/UserCSS/EventRequests.css"));
 
 
 

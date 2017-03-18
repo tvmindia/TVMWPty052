@@ -55,8 +55,7 @@ function GetAllEventRequests() {
 }
 
 
-function Edit(currentObj) {
-   
+function Edit(currentObj) {   
     //Tab Change
     $('#tabeventRequestDetails').trigger('click');
     var rowData = DataTables.eventTable.row($(currentObj).parents('tr')).data();
@@ -67,7 +66,7 @@ function Edit(currentObj) {
             debugger;
             $("#ID").val(thisEvent.ID);
             document.getElementById('lblEventReqNo').innerHTML = thisEvent.EventReqNo;
-           // document.getElementById('').innerHTML = thisEvent.;
+            document.getElementById('lblEventType').innerHTML = thisEvent.EventType;
             document.getElementById('lblEventTitle').innerHTML = thisEvent.EventTitle;
             document.getElementById('lblEventDateTime').innerHTML = thisEvent.EventDateTime;
             document.getElementById('lblEventStatus').innerHTML = thisEvent.lblEventStatus;
@@ -82,26 +81,45 @@ function Edit(currentObj) {
             document.getElementById('lblContactType').innerHTML = thisEvent.ContactType; 
         }
         if ((rowData.CustomerID != null)) {
-          //  var thisEvent = GetCustomer(rowData.CustomerID);
+            debugger;
+            var thisEvent = GetCustomer(rowData.CustomerID);
             if (thisEvent != null) {
-
-                $("#CustomerID").val(thisEvent.CustomerID);
-
+                
+                document.getElementById('lblcust_ID').innerHTML = thisEvent.ID;
+                document.getElementById('lblName').innerHTML = thisEvent.Name;
+                document.getElementById('lblCust_No').innerHTML = thisEvent.Mobile;
+                document.getElementById('lblCust_Email').innerHTML = thisEvent.Email;
+                
             }
-
         }
-
     }
-     
-
 }
-
 //---------------------------------------Get Events Request Details By ID-------------------------------------//
 function GetEventRequest(id) {
     try {
         var data = { "ID": id };
         var ds = {};
         ds = GetDataFromServer("EventRequests/GetEventRequest/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            alert(ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+//---------------------------------------Get Customer Details By ID-------------------------------------//
+function GetCustomer(id) {
+    try {
+        var data = { "ID": id };
+        var ds = {};
+        ds = GetDataFromServer("Customer/GetCustomer/", data);
         if (ds != '') {
             ds = JSON.parse(ds);
         }

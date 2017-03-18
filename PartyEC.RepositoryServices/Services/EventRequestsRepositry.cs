@@ -53,7 +53,7 @@ namespace PartyEC.RepositoryServices.Services
                                     {
                                         _eventRequestsObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _eventRequestsObj.ID);
                                         _eventRequestsObj.EventReqNo = (sdr["EventReqNo"].ToString() != "" ? sdr["EventReqNo"].ToString() : _eventRequestsObj.EventReqNo);
-                                        _eventRequestsObj.EventTypeID = (sdr["EventTypeID"].ToString() != "" ? Int16.Parse(sdr["EventTypeID"].ToString()) : _eventRequestsObj.EventTypeID);
+                                        _eventRequestsObj.EventType = (sdr["EventTypeID"].ToString() != "" ? sdr["EventTypeID"].ToString() : _eventRequestsObj.EventType);
                                         _eventRequestsObj.EventTitle = (sdr["EventTitle"].ToString() != "" ? sdr["EventTitle"].ToString() : _eventRequestsObj.EventTitle);
                                         _eventRequestsObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? Int16.Parse(sdr["CustomerID"].ToString()) : _eventRequestsObj.CustomerID);
                                         _eventRequestsObj.ContactName = (sdr["ContactName"].ToString() != "" ? sdr["ContactName"].ToString() : _eventRequestsObj.ContactName);
@@ -103,7 +103,7 @@ namespace PartyEC.RepositoryServices.Services
                                     myEventRequests = new EventRequests();
                                     myEventRequests.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myEventRequests.ID);
                                     myEventRequests.EventReqNo = (sdr["EventReqNo"].ToString() != "" ? sdr["EventReqNo"].ToString() : myEventRequests.EventReqNo);
-                                    myEventRequests.EventTypeID = (sdr["EventTypeID"].ToString() != "" ? Int16.Parse(sdr["EventTypeID"].ToString()) : myEventRequests.EventTypeID);
+                                    myEventRequests.EventType = (sdr["EventType"].ToString() != "" ? sdr["EventType"].ToString() : myEventRequests.EventType);
                                     myEventRequests.EventTitle = (sdr["EventTitle"].ToString() != "" ? sdr["EventTitle"].ToString() : myEventRequests.EventTitle);
                                    // myEventRequests.CustomerID = (sdr["CustomerID"].ToString() != "" ? Int16.Parse(sdr["CustomerID"].ToString()) : myEventRequests.CustomerID);
                                     myEventRequests.ContactName = (sdr["ContactName"].ToString() != "" ? sdr["ContactName"].ToString() : myEventRequests.ContactName);
