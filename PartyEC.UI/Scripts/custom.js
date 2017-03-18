@@ -76,7 +76,7 @@ function PostDataToServer(page,formData)
 
 
 function GetDataFromServer(page, formData) {
-   
+    debugger;
     var jsonResult = {};
     $.ajax({
         

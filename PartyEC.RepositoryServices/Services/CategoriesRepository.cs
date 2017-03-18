@@ -156,10 +156,6 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@NavigationYN", SqlDbType.Bit).Value = CategoryObj.Navigation;
                         cmd.Parameters.Add("@EnableYN", SqlDbType.Bit).Value = CategoryObj.Enable;
                         cmd.Parameters.Add("@Description", SqlDbType.NVarChar, -1).Value = CategoryObj.Description;
-                        if(CategoryObj.ImageID!=null&& CategoryObj.ImageID!=""&& CategoryObj.ImageID!="0")
-                        {
-                            cmd.Parameters.Add("@ImageID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(CategoryObj.ImageID);
-                        }
                         cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = CategoryObj.commonObj.CreatedBy;
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = CategoryObj.commonObj.CreatedDate;
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
