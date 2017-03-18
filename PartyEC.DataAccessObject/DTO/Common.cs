@@ -67,6 +67,10 @@ namespace PartyEC.DataAccessObject.DTO
         {
             get { return "Foreign key violation-Deletion Not Successfull!"; }
         }
+        public string Duplicate
+        {
+            get { return "Allready Exist.."}
+        }
         #endregion Messages
 
     }

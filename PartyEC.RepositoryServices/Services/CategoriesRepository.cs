@@ -11,6 +11,7 @@ namespace PartyEC.RepositoryServices.Services
 {
     public class CategoriesRepository :ICategoriesRepository
     {
+        Const ConstObj = new Const();
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
         /// <summary>
@@ -173,19 +174,19 @@ namespace PartyEC.RepositoryServices.Services
                                 // not Successfull
 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
                                 
                                 break;
                             case "1":
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
                                 operationsStatusObj.ReturnValues = Int16.Parse(outparameterID.Value.ToString());
                                 break;
                             case "2":
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Duplicate Entry";
+                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
                                 break;
                             default:
                                 break;
@@ -246,12 +247,12 @@ namespace PartyEC.RepositoryServices.Services
                                 // not Successfull
 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Updation Not Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
                                 break;
                             case "1":
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Updation Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
                                 break;
                             default:
                                 break;
@@ -299,7 +300,7 @@ namespace PartyEC.RepositoryServices.Services
                                     // Delete not Successfull
 
                                     operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                    operationsStatusObj.StatusMessage = "Deletion Not Successfull!";
+                                    operationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
                                     break;
                                 case "1":
                                 //Delete Successfull
@@ -321,7 +322,7 @@ namespace PartyEC.RepositoryServices.Services
                                     }
                                 }
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Deletion Successfull!";
+                                operationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
                                     break;
                                 default:
                                     break;
