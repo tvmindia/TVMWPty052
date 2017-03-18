@@ -223,6 +223,7 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter outparameter = null;
+                SqlParameter OutparameterURL = null;
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
                     using (SqlCommand cmd = new SqlCommand())
@@ -237,7 +238,9 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@ID", SqlDbType.VarChar, 50).Value = EventID;
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        OutparameterURL=cmd.Parameters.Add("@ImageURL", SqlDbType.NVarChar,-1);
                         outparameter.Direction = ParameterDirection.Output;
+                        OutparameterURL.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
@@ -247,6 +250,23 @@ namespace PartyEC.RepositoryServices.Services
                                 operationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
                                 break;
                             case "1":
+                                if (outparameter.Value.ToString() == "1")
+                                {
+                                    try
+                                    {
+                                        if (OutparameterURL.Value.ToString() != "")
+                                        {
+                                            System.IO.File.Delete(HttpContext.Current.Server.MapPath(OutparameterURL.Value.ToString()));
+                                        }
+
+
+                                    }
+                                    catch (System.IO.IOException e)
+                                    {
+                                        throw e;
+
+                                    }
+                                }
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
                                 break;
