@@ -40,6 +40,34 @@ namespace PartyEC.BusinessServices.Services
             return Categorylist;
         }
 
+        /// <summary>
+        /// To display main categories in app's categories screen
+        /// </summary>
+        /// <returns>List of main categories</returns>
+        public List<Categories> GetAllMainCategories()
+        {
+            List<Categories> AllCategorylist = null;
+            List<Categories> MainCategorylist = new List<Categories>();
+
+            try
+            {
+                AllCategorylist = _categoryRepository.GetAllCategory();
+                for (int i=0;i< AllCategorylist.Count;i++)
+                {
+                    if (AllCategorylist[i].ParentID == 0 && AllCategorylist[i].Enable==true)
+                    {
+                        MainCategorylist.Add(AllCategorylist[i]);
+                    }
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return MainCategorylist;
+        }
+
         public Categories GetCategory(int CategoryID)
         {
             Categories myCategory = null;

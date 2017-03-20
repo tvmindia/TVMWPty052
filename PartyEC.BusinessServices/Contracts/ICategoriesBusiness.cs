@@ -10,6 +10,7 @@ namespace PartyEC.BusinessServices.Contracts
    public interface ICategoriesBusiness
     {
         List<Categories> GetAllCategory();
+        List<Categories> GetAllMainCategories();
         Categories GetCategory(int CategoryID);
         OperationsStatus InsertCategory(Categories CategoryObj);
         OperationsStatus UpdateCategory(Categories CategoryObj);
