@@ -393,14 +393,24 @@ namespace PartyEC.RepositoryServices.Services
                         AttributeList = new List<Attributes>();
                         if ((sdr != null) && (sdr.HasRows))
                         {
-                            if (sdr.Read())
+                            while(sdr.Read())
                             {
-                                //Attributes myAttribute = new Attributes();
-                                //myAttribute.attributeSetLinkObj = new AttributeSetLink();
-                                //myAttribute.attributeSetLinkObj.ID = int.Parse(sdr["ID"].ToString());
-                                //myAttribute.Caption = sdr["Caption"].ToString();
-                                //myAttribute.DataType = sdr["AttributeType"].ToString();
-                                //myProductAttributeList.Add(myAttribute);
+                                Attributes myAttribute = new Attributes();
+                                myAttribute.attributeSetLinkObj = new AttributeSetLink();
+                                myAttribute.attributeSetLinkObj.ID=(sdr["AttributeSetLinkID"].ToString()!=""? int.Parse(sdr["AttributeSetLinkID"].ToString()):myAttribute.attributeSetLinkObj.ID);
+                                myAttribute.attributeSetLinkObj.AttributeSetID=(sdr["AttributeSetID"].ToString()!=""? int.Parse(sdr["AttributeSetID"].ToString()):myAttribute.attributeSetLinkObj.AttributeSetID) ;
+                                myAttribute.attributeSetLinkObj.DisplayOrder=(sdr["DisplayOrder"].ToString()!=""? float.Parse(sdr["DisplayOrder"].ToString()):myAttribute.attributeSetLinkObj.DisplayOrder);
+                                myAttribute.ID =(sdr["AttributeID"].ToString()!=""?int.Parse(sdr["AttributeID"].ToString()):myAttribute.ID);
+                                myAttribute.Name =(sdr["Name"].ToString()!=""? sdr["Name"].ToString():myAttribute.Name);
+                                myAttribute.Caption = (sdr["Caption"].ToString()!=""? sdr["Caption"].ToString():myAttribute.Caption);
+                                myAttribute.AttributeType = (sdr["AttributeType"].ToString() != "" ? sdr["AttributeType"].ToString() : myAttribute.AttributeType);
+                                myAttribute.ConfigurableYN = (sdr["ConfigurableYN"].ToString() != "" ? bool.Parse(sdr["ConfigurableYN"].ToString()) : myAttribute.ConfigurableYN);
+                                myAttribute.FilterYN = (sdr["FilterYN"].ToString()!="" ? bool.Parse(sdr["FilterYN"].ToString()):myAttribute.FilterYN);
+                                myAttribute.CSValues = (sdr["CSValues"].ToString() != "" ? sdr["CSValues"].ToString() : myAttribute.CSValues);
+                                myAttribute.EntityType = (sdr["EntityType"].ToString() != "" ? sdr["EntityType"].ToString() : myAttribute.EntityType);
+                                myAttribute.MandatoryYN = (sdr["MandatoryYN"].ToString() != "" ? bool.Parse(sdr["MandatoryYN"].ToString()) : myAttribute.MandatoryYN);
+                                myAttribute.ComparableYN = (sdr["ComparableYN"].ToString() != "" ? bool.Parse(sdr["ComparableYN"].ToString()) : myAttribute.ComparableYN);
+                                AttributeList.Add(myAttribute);
                             }
                         }
                     }
@@ -409,9 +419,9 @@ namespace PartyEC.RepositoryServices.Services
 
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
             return AttributeList;
         }

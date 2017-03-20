@@ -24,6 +24,7 @@ namespace PartyEC.UI.Controllers
             _masterBusiness = masterBusiness;
             _commonBusiness = commonBusiness;
             _attributeSetBusiness = attributeSetBusiness;
+           
         }
 
         // GET: Products
@@ -33,6 +34,9 @@ namespace PartyEC.UI.Controllers
             //OperationsStatus myStatus = new OperationsStatus();
             //Product p = _productBusiness.GetProduct(1001, myStatus);
             //suv test
+
+
+            //_attributeBusiness.GetAllAttributeBySet(1,true);
 
             //Drop BInd
             ProductViewModel product = null;
@@ -347,6 +351,9 @@ namespace PartyEC.UI.Controllers
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
         #endregion ChangeButtonStyle
+
+
+
 
     }
 }

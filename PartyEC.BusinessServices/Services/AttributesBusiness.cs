@@ -73,6 +73,21 @@ namespace PartyEC.BusinessServices.Services
             }
             return OperationsStatusObj;
         }
+        
+        public List<Attributes> GetAllAttributeBySet(int AttributeSetID,bool IsConfigurable)
+        {
+            List<Attributes> attributelist = null;
+            try
+            {
+                attributelist = _attributesRepository.GetAllAttributeBySet(AttributeSetID).Where(attr => attr.ConfigurableYN == IsConfigurable).ToList();
+            }
+            catch (Exception)
+            {
+
+            }
+            return attributelist;
+        }
+
     }
     public class AttributeSetBusiness:IAttributeSetBusiness
     {

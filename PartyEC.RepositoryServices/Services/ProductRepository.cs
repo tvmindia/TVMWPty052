@@ -630,7 +630,8 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
 
         }
-        private bool InsertProductImage(List<ProductImages> ImageList, LogDetails LogDetails,int ProductID,int DetailID=-1) {
+        private bool InsertProductImage(List<ProductImages> ImageList, LogDetails LogDetails,int ProductID,int DetailID=-1)
+        {
             bool result= false;
             try
             {

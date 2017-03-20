@@ -515,3 +515,67 @@ function RelatedproductDeleteSuccess(data, status, xhr)
             break;
     }
 }
+
+function HideProductDetalsToolBox()
+{
+    $('#btnPatchProductDetails').hide();
+}
+function ShowProductDetalsToolBox()
+{
+    $('#btnPatchProductDetails').show();
+}
+function RenderContentsForAttributes()
+{
+    HideProductDetalsToolBox();
+    try {
+        debugger;
+        var atsetID = $("#AttributeSetID").val();
+        if (atsetID) {
+            var Isconfig = false;
+            var partalview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
+            $("#otherAttributes").empty();
+            $("#otherAttributes").html(partalview);
+        }
+    }
+    catch (e) {
+
+    }
+
+}
+
+
+
+function RenderPartialTemplateForAttributes(atsetID, Isconfig) {
+    var data = { setID: atsetID, Isconfigurable: Isconfig };
+    var ds = {};
+    ds = GetDataFromServer("Attributes/EditTemplateForAttributes/", data);
+    if (ds != '') {
+        return ds;
+    }
+    // $("#" + Dom).empty();
+    //  $("#" + Dom).html(ds);
+
+}
+
+//function dfd() {
+//    try {
+
+//        var data = "";
+//        var ds = {};
+//        ds = GetDataFromServer("Products/GetAllProducts/", data);
+//        if (ds != '') {
+//            ds = JSON.parse(ds);
+//        }
+//        if (ds.Result == "OK") {
+//            return ds.Records;
+//        }
+//        if (ds.Result == "ERROR") {
+//            notyAlert('error', ds.Message);
+//        }
+
+//    }
+//    catch (e) {
+
+//    }
+
+//}
