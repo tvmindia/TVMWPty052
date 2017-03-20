@@ -78,13 +78,13 @@ $(document).ready(function () {
                      {
                          'targets': 9,
                          'render': function (data, type, full, meta) {
-                             if (data.PositionNo == 0)
+                             if (data.CategoryID == 0)
                              {
                                  var txtbox = '--'
                              }
                              else
                              {
-                                 var txtbox = '<input class="col-lg-4" type="text" id="txt' + data.ID + '" value="' + (data.PositionNo) + '"></input> <a onclick="GetValue(this)" id="' + data.ID + '"><img src="/Content/images/updateButton.png" /></a> '
+                                 var txtbox = '<input class="col-lg-4" type="text" id="txt' + data.ID + '" value="' + (data.PositionNo) + '"></input> <a class="btn" onclick="GetValue(this)" id="' + data.ID + '">Change Order</a> '
                              }
                              
                              return txtbox
@@ -136,6 +136,7 @@ function onSelectNode(e, data)
         $('#hdnDeleteCatID').val(data.node.id);
         var results = GetCategoryDetails(data.node.id);
         $('#Name').val(results.Name);
+        $('#lblHead').html(results.Name);
         $('#Description').val(results.Description);
         $("#Navigation").prop('checked', results.Navigation);
         $("#Filter").prop('checked', results.Filter);
@@ -166,11 +167,11 @@ function uiGetParents(loSelectedNode, TreeOrder) {
         for (var ln = 0; ln <= lnLevel - 1 ; ln++) {
             if(loParent[ln]!='#')
             {
-                lsParents = '<li><a href="#">' + ($('#jstree_Categories').jstree(true).get_node(loParent[ln])).text + "</a></li> " + lsParents;
+                lsParents = '<li><a>' + ($('#jstree_Categories').jstree(true).get_node(loParent[ln])).text + "</a></li> " + lsParents;
             }
             if(loParent[ln]=='#')
             {
-                lsParents = '<li><a href="#"><i class="fa fa fa-list"></i></a></li>' + lsParents;
+                lsParents = '<li><a><i class="fa fa fa-list"></i></a></li>' + lsParents;
             }
         }
         if (lsParents.length > 0) {
@@ -338,7 +339,11 @@ function MainClick()
 {
     debugger;
     var loParent = $('#jstree_Categories').jstree(true).get_node($('#ID').val());
-    $('#ParentID').val((loParent.parent!='#'?loParent.parent:0));
+    if (loParent)
+    {
+        $('#ParentID').val((loParent.parent != '#' ? loParent.parent : 0));
+    }
+    
     $('#btnFormSave').click();
 }
 function SaveAddorRemove()
@@ -394,6 +399,7 @@ function GetAssignedPro()
     $("#rdoproductAssigned").prop("checked", true);
     ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "tab2");
     $('#divOverlay').show();
+    $('#lblHead').show();
     Radioselected = "1";
 }
 function GetUnAssignedPro()
@@ -414,6 +420,7 @@ function TabRedirect()
 {
     ChangeButtonPatchView("Categories", "btnPatchAttributeSettab", "tab1");
     $('#divOverlay').hide();
+    $('#lblHead').hide();
 }
 function DeleteCategory()
 {
@@ -431,7 +438,7 @@ function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the qu
                 if (Radioselected == "2")
                     DataTables.productTable.clear().rows.add(GetUnAssignedProWithID($('#ID').val())).draw(false);
                     if (Radioselected == "3")
-                        DataTables.productTable.clear().rows.add(GetAllAttributeSet($('#ID').val())).draw(false);
+                        DataTables.productTable.clear().rows.add(GetAllProducts($('#ID').val())).draw(false);
             break;
         case "ERROR":
             notyAlert('success', i.Records.StatusMessage);

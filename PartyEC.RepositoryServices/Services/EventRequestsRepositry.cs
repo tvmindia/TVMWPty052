@@ -143,7 +143,124 @@ namespace PartyEC.RepositoryServices.Services
             } 
             return myEventRequests;
         }
+
+        public OperationsStatus UpdateEventRequests(EventRequests eventObj)
+        { 
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateEventRequests]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                      
+                        cmd.Parameters.Add("@ID", SqlDbType.SmallInt).Value = eventObj.ID;
+                        cmd.Parameters.Add("@Updateflag", SqlDbType.SmallInt).Value = eventObj.Updateflag;
+
+                        cmd.Parameters.Add("@CurrencyCode", SqlDbType.NVarChar, 3).Value = eventObj.CurrencyCode;
+                        cmd.Parameters.Add("@CurrencyRate", SqlDbType.Decimal).Value = eventObj.CurrencyRate;
+                        cmd.Parameters.Add("@TotalAmt", SqlDbType.Decimal).Value = eventObj.TotalAmt;
+                        cmd.Parameters.Add("@TotalTaxAmt", SqlDbType.Decimal).Value = eventObj.TotalTaxAmt;
+                        cmd.Parameters.Add("@TotalDiscountAmt", SqlDbType.Decimal).Value = eventObj.TotalDiscountAmt;
+
+                        cmd.Parameters.Add("@AdminRemarks", SqlDbType.NVarChar,-1).Value = eventObj.AdminRemarks;
+                        cmd.Parameters.Add("@EventStatus", SqlDbType.SmallInt).Value = eventObj.EventStatus;
+                        cmd.Parameters.Add("@FollowUpDate", SqlDbType.DateTime).Value = eventObj.FollowUpDate;
+
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 10).Value = eventObj.logDetailsObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = eventObj.logDetailsObj.UpdatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;        
+    }
         
+        //InsertEventsLog
+
+        public OperationsStatus InsertEventsLog(EventRequests eventObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertEventsLog]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@ParentID", SqlDbType.SmallInt).Value = eventObj.ID;
+                        cmd.Parameters.Add("@ParentType", SqlDbType.NVarChar, 20).Value = eventObj.ParentType;
+                        cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, -1).Value = eventObj.Comments;
+                        cmd.Parameters.Add("@CustomerNotifiedYN", SqlDbType.Bit).Value = null;
+
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 20).Value = eventObj.logDetailsObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = eventObj.logDetailsObj.CreatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
         #endregion Methods
 
     }
