@@ -15,5 +15,6 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus UpdateCategory(Categories CategoryObj);
         OperationsStatus DeleteCategory(int CategoryID);
         OperationsStatus InsertImageCategory(Categories CategoryObj);
+        OperationsStatus UpdatePositionNo(Categories CategoryObj);
     }
 }

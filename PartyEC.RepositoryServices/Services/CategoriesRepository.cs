@@ -265,6 +265,61 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
+        public OperationsStatus UpdatePositionNo(Categories CategoryObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateCategoryLink]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = CategoryObj.ID;
+                        cmd.Parameters.Add("@PositionNo", SqlDbType.Float).Value = CategoryObj.PositionNo;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = CategoryObj.ProductID;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = CategoryObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = CategoryObj.commonObj.UpdatedDate;
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
+
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
+
         public OperationsStatus DeleteCategory(int CategoryID)
         {
             OperationsStatus operationsStatusObj = null;
@@ -366,6 +421,7 @@ namespace PartyEC.RepositoryServices.Services
             }
             return bool.Parse(outparameter.Value.ToString());
         }
+        
 
     }
 }

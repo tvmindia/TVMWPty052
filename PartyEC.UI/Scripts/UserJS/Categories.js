@@ -57,7 +57,7 @@ $(document).ready(function () {
                    { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                    { "data": "Qty", "defaultContent": "<i>-</i>" },
                    { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
-                   { "data": null, "defaultContent": "<input type='text'></input>" }
+                   { "data": null }
                  ],
                  columnDefs: [
                      {
@@ -73,6 +73,21 @@ $(document).ready(function () {
                                  checkbox.addClass("checkbox_unchecked");
                              }
                              return checkbox.prop("outerHTML")
+                         }
+                     },
+                     {
+                         'targets': 9,
+                         'render': function (data, type, full, meta) {
+                             if (data.PositionNo == 0)
+                             {
+                                 var txtbox = '--'
+                             }
+                             else
+                             {
+                                 var txtbox = '<input class="col-lg-4" type="text" id="txt' + data.ID + '" value="' + (data.PositionNo) + '"></input> <a onclick="GetValue(this)" id="' + data.ID + '"><img src="/Content/images/updateButton.png" /></a> '
+                             }
+                             
+                             return txtbox
                          }
                      },
                   {//hiding hidden column 
@@ -94,6 +109,16 @@ $(document).ready(function () {
    
 
 });
+function GetValue(value)
+{
+    debugger;
+    var Value = $("#txt" + value.id).val();
+    $('#hdnOrderRowid').val($('#ID').val());
+    $('#hdnOrderValue').val(Value);
+    $('#hdnProductID').val(value.id);
+    $('#btnFormUpdateOrder').click();
+
+}
 //on-select function for treenodes
 function onSelectNode(e, data)
 {
@@ -311,13 +336,22 @@ function AddCategory() {
 }
 function MainClick()
 {
+    debugger;
     var loParent = $('#jstree_Categories').jstree(true).get_node($('#ID').val());
-    $('#ParentID').val(loParent.parent);
+    $('#ParentID').val((loParent.parent!='#'?loParent.parent:0));
     $('#btnFormSave').click();
 }
 function SaveAddorRemove()
 {
-    $('#btnFormTableData').click();
+    if ($('#ID').val() == 0)
+    {
+        notyAlert('error', 'Please Select a category for updation');
+    }
+    else
+    {
+        $('#btnFormTableData').click();
+    }
+    
 }
 function AddProductLink()
 {

@@ -129,6 +129,19 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationsStatusObj;
         }
+        public OperationsStatus UpdatePositionNo(Categories CategoryObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                operationsStatusObj = _categoryRepository.UpdatePositionNo(CategoryObj);
+            }
+            catch (Exception)
+            {
+
+            }
+            return operationsStatusObj;
+        }
 
     }
 }

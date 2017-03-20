@@ -241,5 +241,30 @@ namespace PartyEC.UI.Controllers
             }
             return Content(Url.Content(@"~\Content\OtherImages\" + FileNameCustom));
         }
+
+        public string UpdatePositionNo(CategoriesViewModel categoryViewObj)
+        {
+            try
+            {
+                OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                categoryViewObj.commonObj = new LogDetailsViewModel();
+                categoryViewObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                categoryViewObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_categoryBusiness.UpdatePositionNo(Mapper.Map<CategoriesViewModel, Categories>(categoryViewObj)));
+                if (OperationsStatusViewModelObj.StatusCode == 0)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Records = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
     }
 }

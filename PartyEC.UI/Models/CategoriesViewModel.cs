@@ -24,7 +24,6 @@ namespace PartyEC.UI.Models
         [Display(Name = "Use for Navigation (Yes/No)")]
         public bool Navigation { get; set; }
         [Display(Name = "Description")]
-        [MaxLength(250)]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
         [Display(Name="Is Active")]
@@ -35,6 +34,8 @@ namespace PartyEC.UI.Models
         public string URL { get; set; }
         public string TableDataAdd { get; set; }
         public string TableDataDelete { get; set; }
+        public float PositionNo { get; set; }
+        public int ProductID { get; set; }
         public HttpPostedFile CategoryImageUpload { get; set; }
         public LogDetailsViewModel commonObj { get; set; }
 

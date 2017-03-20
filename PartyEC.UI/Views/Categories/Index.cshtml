@@ -215,6 +215,18 @@
                             </div>
                         }
                     </div>
+                    <div id="categoryLinkUpdate" hidden="hidden">
+                        @using (Ajax.BeginForm("UpdatePositionNo", "Categories", new AjaxOptions { HttpMethod = "POST", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "CheckSubmittedDelete" }, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div class="form-actions no-color">
+                                <input type="submit" value="Create" class="btn btn-default" id="btnFormUpdateOrder" />
+                                @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnOrderRowid" })
+                                @Html.HiddenFor(model=>model.ProductID,htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnProductID" })
+                                @Html.HiddenFor(model => model.PositionNo, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnOrderValue" })
+                            </div>
+                        }
+                    </div>
 
 </div>
                 </div>
