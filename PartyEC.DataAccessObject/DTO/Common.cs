@@ -71,6 +71,10 @@ namespace PartyEC.DataAccessObject.DTO
         {
             get { return "Allready Exist.."; }
         }
+        public string NoItems
+        {
+            get { return "No items"; }
+        }
         #endregion Messages
 
     }
