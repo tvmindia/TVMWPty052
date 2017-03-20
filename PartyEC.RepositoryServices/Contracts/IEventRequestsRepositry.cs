@@ -11,5 +11,6 @@ namespace PartyEC.RepositoryServices.Contracts
     {
         List<EventRequests> GetAllEventRequests();
         EventRequests GetEventRequest(int EventRequestsID, OperationsStatus Status);
+        OperationsStatus UpdateEventRequests(EventRequests eventObj);
     }
 }

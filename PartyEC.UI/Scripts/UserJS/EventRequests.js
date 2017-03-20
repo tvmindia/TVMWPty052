@@ -78,11 +78,22 @@ function Edit(currentObj) {
         if (thisEvent != null) {
             debugger;
             $("#ID").val(thisEvent.ID);
+            $(".UpdateId").val(thisEvent.ID);
+            //$("#CurrencyCode").val(thisEvent.CurrencyCode);
+            //$("#CurrencyRate").val(thisEvent.CurrencyRate);
+            $("#TotalAmt").val(thisEvent.TotalAmt);
+            $("#TotalTaxAmt").val(thisEvent.TotalTaxAmt);
+            $("#TotalDiscountAmt").val(thisEvent.TotalDiscountAmt);
+
+            $("#EventStatus").val(thisEvent.EventStatus);
+            $("#AdminRemarks").val(thisEvent.AdminRemarks);
+            $("#FollowUpDate").val(thisEvent.FollowUpDate);
+
             document.getElementById('lblEventReqNo').innerHTML = thisEvent.EventReqNo;
             document.getElementById('lblEventType').innerHTML = thisEvent.EventType;
             document.getElementById('lblEventTitle').innerHTML = thisEvent.EventTitle;
             document.getElementById('lblEventDateTime').innerHTML = thisEvent.EventDateTime;
-            document.getElementById('lblEventStatus').innerHTML = thisEvent.lblEventStatus;
+            document.getElementById('lblEventStatus').innerHTML = thisEvent.EventStatus;
             document.getElementById('lblLookingFor').innerHTML = thisEvent.LookingFor;
             document.getElementById('lblRequirementSpec').innerHTML = thisEvent.RequirementSpec;
             document.getElementById('lblMessage').innerHTML = thisEvent.Message;
@@ -147,3 +158,12 @@ function GetCustomer(id) {
         notyAlert('error', e.message);
     }
 }
+
+function ValidationCommercialInfo() {
+    debugger;
+    $("#CurrencyCode").attr('disabled', false);
+    $("#CurrencyRate").attr('disabled', false);
+    $("#Updateflag").val(1);//setting Update Flag as 1 indicating that  Update called from Commercial Info on save click
+}
+
+ 

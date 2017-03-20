@@ -29,6 +29,7 @@ namespace PartyEC.UI.Controllers
         // GET: EventRequests
         public ActionResult Index()
         {
+
             return View();
         }
 
@@ -67,5 +68,41 @@ namespace PartyEC.UI.Controllers
 
 
         #endregion GetEventRequestsByID
+
+        //UpdateEventR_CommercialInfo
+        #region UpdateEventRequest
+
+        [HttpPost]
+        public string UpdateEventRequests(EventRequestsViewModel EventObj)
+        {
+            if (ModelState.IsValid)
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                try
+                {
+                    EventObj.logDetailsObj = new LogDetailsViewModel();
+                    EventObj.logDetailsObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                    EventObj.logDetailsObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventRequestsBusiness.UpdateEventRequests(Mapper.Map<EventRequestsViewModel, EventRequests>(EventObj)));
+                }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+
+        
+#endregion UpdateeventRequest
     }
 }
