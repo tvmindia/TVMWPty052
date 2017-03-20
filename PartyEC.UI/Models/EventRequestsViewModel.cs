@@ -28,7 +28,7 @@ namespace PartyEC.UI.Models
         [Display(Name = "Event Date")]
         public DateTime EventDateTime { get; set; }
 
-        [ReadOnly(true)]
+      
         [Display(Name = "Event Status")]
         public int EventStatus { get; set; }
 
@@ -80,8 +80,15 @@ namespace PartyEC.UI.Models
         [Display(Name = "Budget")]
         public decimal Budget { get; set; }
 
-     
-     
+        
+
+        [Display(Name = "Comments")]
+        public string Comments { get; set; }
+
+        public string CommentDate { get; set; }
+
+        public string PrevComment { get; set; }
+
 
         [Display(Name = "Admin Remarks")]
         public string AdminRemarks { get; set; }
@@ -107,6 +114,9 @@ namespace PartyEC.UI.Models
         [Display(Name = "Discount Amount")]
         public decimal TotalDiscountAmt { get; set; }
 
-        public LogDetailsViewModel logDetailsObj { get; set; } 
+        public LogDetailsViewModel logDetailsObj { get; set; }
+
+        //--Updateflag indicating that  Update called from Commercial Info on save click
+        public int Updateflag { get; set; }
     }
 }

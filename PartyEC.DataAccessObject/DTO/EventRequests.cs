@@ -32,6 +32,8 @@ namespace PartyEC.DataAccessObject.DTO
         public decimal TotalTaxAmt  { get; set; }
         public decimal TotalDiscountAmt  { get; set; }
 
+        public string Comments { get; set; }
+        public int Updateflag { get; set; }
 
         public LogDetails logDetailsObj { get; set; }
 
