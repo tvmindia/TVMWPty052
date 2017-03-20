@@ -89,6 +89,8 @@ namespace PartyEC.UI.Models
 
         public string PrevComment { get; set; }
 
+        public string ParentType { get; set; }
+
 
         [Display(Name = "Admin Remarks")]
         public string AdminRemarks { get; set; }

@@ -102,7 +102,88 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
 
-        
-#endregion UpdateeventRequest
+
+        #endregion UpdateeventRequest
+        //UpdateEventsLog
+        #region UpdateEventsLog
+
+        [HttpPost]
+        public string UpdateEventsLog(EventRequestsViewModel EventObj)
+        {
+            if (ModelState.IsValid)
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                try
+                {
+                    EventObj.logDetailsObj = new LogDetailsViewModel();
+                    EventObj.logDetailsObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                    EventObj.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventRequestsBusiness.InsertEventsLog(Mapper.Map<EventRequestsViewModel, EventRequests>(EventObj)));
+                }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+
+
+        #endregion UpdateEventsLog
+
+        #region ChangeButtonStyle
+        [HttpGet]
+        public ActionResult ChangeButtonStyle(string ActionType)
+        {
+            ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
+            switch (ActionType)
+            {
+                case "Edit":
+                    //ToolboxViewModelObj.deletebtn.Visible = true;
+                    //ToolboxViewModelObj.deletebtn.Event = "clickdelete()";
+                    //ToolboxViewModelObj.deletebtn.Title = "Delete";
+
+                    //ToolboxViewModelObj.savebtn.Visible = true;
+                    //ToolboxViewModelObj.savebtn.Event = "clicksave()";
+                    //ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    //ToolboxViewModelObj.resetbtn.Visible = true;
+                    //ToolboxViewModelObj.resetbtn.Event = "btnreset()";
+
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+
+                    break;
+                case "Add":
+                    //ToolboxViewModelObj.deletebtn.Visible = true;
+                    //ToolboxViewModelObj.deletebtn.Disable = true;
+                    //ToolboxViewModelObj.savebtn.Visible = true;
+                    //ToolboxViewModelObj.savebtn.Event = "clicksave()";
+                    //ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    //ToolboxViewModelObj.resetbtn.Visible = true;
+                    //ToolboxViewModelObj.resetbtn.Event = "btnreset()";
+                    //ToolboxViewModelObj.resetbtn.Title = "Reset";
+
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
+                default:
+                    return Content("Nochange");
+            }
+            return PartialView("_ToolboxView", ToolboxViewModelObj);
+        }
+        #endregion ChangeButtonStyle
     }
 }
