@@ -53,12 +53,28 @@ namespace PartyEC.BusinessServices.Services
 
         public OperationsStatus InsertAttributes(Attributes attributesObj)
         {
-            return _attributesRepository.InsertAttributes(attributesObj);
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _attributesRepository.InsertAttributes(attributesObj);
+            }
+            catch (Exception)
+            {
+            }
+            return OperationsStatusObj; 
         }
 
         public OperationsStatus UpdateAttributes(Attributes attributesObj)
         {
-            return _attributesRepository.UpdateAttributes(attributesObj);
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _attributesRepository.UpdateAttributes(attributesObj);
+            }
+            catch (Exception)
+            {
+            }
+            return OperationsStatusObj; 
         }
 
         public OperationsStatus DeleteAttributes(int AttributeID)

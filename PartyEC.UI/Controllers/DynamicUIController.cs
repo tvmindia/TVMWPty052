@@ -49,11 +49,11 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpGet]
-        public string GetTreeListAttributes()
+        public string GetTreeListAttributes(string ID)
         {
             try
             {
-                List<JsTreeNode> NodeList = _dynamicUIBusiness.GetTreeListAttributes();
+                List<JsTreeNode> NodeList = _dynamicUIBusiness.GetTreeListAttributes(ID);
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
             }
             catch (Exception ex)

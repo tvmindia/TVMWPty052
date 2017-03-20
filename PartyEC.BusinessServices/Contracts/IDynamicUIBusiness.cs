@@ -11,7 +11,7 @@ namespace PartyEC.BusinessServices.Contracts
     {
         List<Menu> GetAllMenues();
         List<JsTreeNode> GetTreeListAttributeSet(string ID);
-        List<JsTreeNode> GetTreeListAttributes();
+        List<JsTreeNode> GetTreeListAttributes(string ID);
         List<JsTreeNode> GetTreeListCategories();
 
     }

@@ -28,18 +28,20 @@ namespace PartyEC.UI.API
             _productBusiness = productBusiness;
         }
         #endregion Constructor_Injection
+        Const messages= new Const();
 
-        [HttpGet]
-        public object GetCategoryByID(int ID)
+        [HttpPost]
+        public object GetMainCategories()
         {
             try
-            {
-                CategoriesViewModel CategoryList = Mapper.Map<Categories, CategoriesViewModel>(_categoryBusiness.GetCategory(ID));
-                return JsonConvert.SerializeObject(new { Result = "OK", Records = CategoryList });
+            {                
+                List<CategoriesAppViewModel> CategoryList = Mapper.Map<List<Categories>, List< CategoriesAppViewModel >> (_categoryBusiness.GetAllMainCategories());
+                if (CategoryList.Count==0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CategoryList });
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
 

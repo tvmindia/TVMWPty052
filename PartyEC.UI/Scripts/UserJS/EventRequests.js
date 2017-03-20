@@ -1,7 +1,7 @@
 ﻿var DataTables = {};
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () { 
-    try {
+    try { 
         var EventRequestsViewModel = new Object();
         DataTables.eventTable = $('#tbleventRequest').DataTable(
          {
@@ -37,7 +37,7 @@ $(document).ready(function () {
     $("#CurrencyRate").attr('disabled', true);
 });
 
-//---------------------------------------Get All Events-----------------------------------------------//
+//---------------------------------------Get All Events Requests-----------------------------------------------//
 function GetAllEventRequests() {
     try {
         debugger;
@@ -59,6 +59,10 @@ function GetAllEventRequests() {
     }
 }
 
+function goback() {
+    $('#tabeventRequestsList').trigger('click');
+}
+
 function tabeventRequestListClick()
 {
     $('#tabeventRequestDetails').addClass('disabled');
@@ -68,6 +72,7 @@ function tabeventRequestListClick()
 
 function Edit(currentObj) {   
     //Tab Change
+    ChangeButtonPatchView("EventRequests", "btnPatcheventRequeststab2", "Edit"); //ControllerName,id of the container div,Name of the action
     $('#tabeventRequestDetails').removeClass('disabled');
     $('#tabeventRequestDetails a').attr('data-toggle', 'tab');
     $('#tabeventRequestDetails a').trigger('click');
@@ -78,11 +83,22 @@ function Edit(currentObj) {
         if (thisEvent != null) {
             debugger;
             $("#ID").val(thisEvent.ID);
+            $(".UpdateId").val(thisEvent.ID);
+            //$("#CurrencyCode").val(thisEvent.CurrencyCode);
+            //$("#CurrencyRate").val(thisEvent.CurrencyRate);
+            $("#TotalAmt").val(thisEvent.TotalAmt);
+            $("#TotalTaxAmt").val(thisEvent.TotalTaxAmt);
+            $("#TotalDiscountAmt").val(thisEvent.TotalDiscountAmt);
+
+            $("#EventStatus").val(thisEvent.EventStatus);
+            $("#AdminRemarks").val(thisEvent.AdminRemarks);
+            $("#FollowUpDate").val(thisEvent.FollowUpDate);
+
             document.getElementById('lblEventReqNo').innerHTML = thisEvent.EventReqNo;
             document.getElementById('lblEventType').innerHTML = thisEvent.EventType;
             document.getElementById('lblEventTitle').innerHTML = thisEvent.EventTitle;
             document.getElementById('lblEventDateTime').innerHTML = thisEvent.EventDateTime;
-            document.getElementById('lblEventStatus').innerHTML = thisEvent.lblEventStatus;
+            document.getElementById('lblEventStatus').innerHTML = thisEvent.EventStatus;
             document.getElementById('lblLookingFor').innerHTML = thisEvent.LookingFor;
             document.getElementById('lblRequirementSpec').innerHTML = thisEvent.RequirementSpec;
             document.getElementById('lblMessage').innerHTML = thisEvent.Message;
@@ -147,3 +163,14 @@ function GetCustomer(id) {
         notyAlert('error', e.message);
     }
 }
+
+function ValidationCommercialInfo() {
+    debugger;
+    $("#CurrencyCode").attr('disabled', false);
+    $("#CurrencyRate").attr('disabled', false);
+    $("#Updateflag").val(1);//setting Update Flag as 1 indicating that  Update called from Commercial Info on save click
+}
+
+ 
+
+ 

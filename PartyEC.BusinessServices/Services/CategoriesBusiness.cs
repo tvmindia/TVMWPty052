@@ -33,11 +33,39 @@ namespace PartyEC.BusinessServices.Services
 
                 Categorylist = _categoryRepository.GetAllCategory();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return Categorylist;
+        }
+
+        /// <summary>
+        /// To display main categories in app's categories screen
+        /// </summary>
+        /// <returns>List of main categories</returns>
+        public List<Categories> GetAllMainCategories()
+        {
+            List<Categories> AllCategorylist = null;
+            List<Categories> MainCategorylist = new List<Categories>();
+
+            try
+            {
+                AllCategorylist = _categoryRepository.GetAllCategory();
+                for (int i=0;i< AllCategorylist.Count;i++)
+                {
+                    if (AllCategorylist[i].ParentID == 0 && AllCategorylist[i].Enable==true)
+                    {
+                        MainCategorylist.Add(AllCategorylist[i]);
+                    }
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return MainCategorylist;
         }
 
         public Categories GetCategory(int CategoryID)
@@ -47,9 +75,9 @@ namespace PartyEC.BusinessServices.Services
             {
                 myCategory= _categoryRepository.GetCategory(CategoryID);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return myCategory;
         }
@@ -70,9 +98,9 @@ namespace PartyEC.BusinessServices.Services
                 operationsStatusObj = _categoryRepository.UpdateCategory(CategoryObj);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatusObj;
         }
@@ -84,9 +112,9 @@ namespace PartyEC.BusinessServices.Services
                    operationsStatusObj = _categoryRepository.InsertCategory(CategoryObj);
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatusObj;
         }
@@ -98,9 +126,9 @@ namespace PartyEC.BusinessServices.Services
             {
                 operationsStatusObj=_categoryRepository.UpdateCategory(CategoryObj);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatusObj;
         }
@@ -123,9 +151,9 @@ namespace PartyEC.BusinessServices.Services
                 }
                 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatusObj;
         }
@@ -136,9 +164,9 @@ namespace PartyEC.BusinessServices.Services
             {
                 operationsStatusObj = _categoryRepository.UpdatePositionNo(CategoryObj);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatusObj;
         }

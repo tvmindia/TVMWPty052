@@ -10,6 +10,9 @@ namespace PartyEC.BusinessServices.Contracts
     public interface IEventRequestBusiness
     {
         List<EventRequests> GetAllEventRequests();
-        EventRequests GetEventRequest(int EventRequestsID, OperationsStatus Status); 
+        EventRequests GetEventRequest(int EventRequestsID, OperationsStatus Status);
+        OperationsStatus UpdateEventRequests(EventRequests eventObj);
+        OperationsStatus InsertEventsLog(EventRequests eventObj);
+        
     }
 }
