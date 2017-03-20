@@ -33,12 +33,12 @@ namespace PartyEC.BusinessServices.Services
             
 
         }
-        public List<JsTreeNode> GetTreeListAttributes()
+        public List<JsTreeNode> GetTreeListAttributes(string ID)
         {
             List<JsTreeNode> nodesList = new List<JsTreeNode>();
             try
             {
-                List<Treeview> TreeViewList = _dynamicUIRepository.GetTreeListForAttr();
+                List<Treeview> TreeViewList = _dynamicUIRepository.GetTreeListForAttr(ID);
 
                 foreach (var i in TreeViewList)
                 {

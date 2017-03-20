@@ -9,7 +9,7 @@ $(document).ready(function () {
             },
             // so that create works
             "check_callback": true,
-            'data': GetTreeDataLeft()
+            'data': GetTreeDataLeft(0)
         },
         "types": {
             "default": {
@@ -31,7 +31,16 @@ $(document).ready(function () {
                 "responsive": false
             },
             // so that create works
-            "check_callback": true,
+            //"check_callback": true,
+            'check_callback': function (operation, node, node_parent, node_position, more) {
+                // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
+                // in case of 'rename_node' node_position is filled with the new node name
+                debugger;
+                if (operation === "move_node") {
+                    return node_parent.id === node.parent; //only allow dropping inside nodes of type 'Parent'
+                }
+                return true;  //allow all other operations
+            },
             'data': GetTreeDataRight(0)
         },
         "types": {
@@ -42,8 +51,28 @@ $(document).ready(function () {
                 "icon": "fa fa-file icon-state-warning icon-lg"
             }
         },
+        "contextmenu" : {
+            "items" : function ($node) {
+                return {
+                    
+                    "Delete" : {
+                        "label" : "Delete",
+                        "action": function (data) {
+                            var inst = $.jstree.reference(data.reference),
+                                obj = inst.get_node(data.reference);
+                            if (inst.is_selected(obj)) {
+                                inst.delete_node(inst.get_selected());
+                            }
+                            else {
+                                inst.delete_node(obj);
+                            }
+                        }
+                    }
+                };
+            }
+        },
         "state": { "key": "demo2" },
-        "plugins": ["dnd", "state", "types"]
+        "plugins": ["dnd", "state", "types", "contextmenu"]
     });
     DataTables.attributeSetTable = $('#tblAttributeSet').DataTable(
     {
@@ -69,7 +98,7 @@ $(document).ready(function () {
     $('#tabattributeSetDetails').click(function (e) {
         //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
         ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
-        $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft();
+        $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft(0);
         $('#jstree_Drag').jstree(true).refresh(true);
 
         $('#jstree_DragUpdate').jstree(true).settings.core.data = GetTreeDataRight(0);
@@ -150,12 +179,13 @@ function GetTreeDataRight(id) {
     }
 
 }
-function GetTreeDataLeft()
+function GetTreeDataLeft(id)
 {
     try {
 
         var ds = {};
-        ds = GetDataFromServer("DynamicUI/GetTreeListAttributes/", "");
+        data = { "ID": id };
+        ds = GetDataFromServer("DynamicUI/GetTreeListAttributes/", data);
         if (ds != '') {
             ds = JSON.parse(ds);
         }
@@ -197,7 +227,7 @@ function EditAttibuteSet(id)
 {
     try
     {
-        $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft();
+        $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft(id);
         $('#jstree_Drag').jstree(true).refresh(true);
 
         $('#jstree_DragUpdate').jstree(true).settings.core.data = GetTreeDataRight(id);
@@ -244,6 +274,11 @@ function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
             notyAlert('success', i.Records.StatusMessage);
             //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
             ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Edit");
+            $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft($("#ID").val());
+            $('#jstree_Drag').jstree(true).refresh(true);
+
+            $('#jstree_DragUpdate').jstree(true).settings.core.data = GetTreeDataRight($("#ID").val());
+            $('#jstree_DragUpdate').jstree(true).refresh(true);
             break;
         case "ERROR":
             notyAlert('success', i.Records.StatusMessage);

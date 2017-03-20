@@ -119,7 +119,7 @@ namespace PartyEC.RepositoryServices.Services
             }
             return TreeListData;
         }
-        public List<Treeview> GetTreeListForAttr()
+        public List<Treeview> GetTreeListForAttr(string ID)
         {
             List<Treeview> TreeListData = null;
             try
@@ -135,6 +135,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[GetAttributesforTreeRootEntitytype]";
                         cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = int.Parse(ID);
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
                             if ((sdr != null) && (sdr.HasRows))
