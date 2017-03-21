@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartyEC.UI.Models
 {
@@ -120,5 +121,7 @@ namespace PartyEC.UI.Models
 
         //--Updateflag indicating that  Update called from Commercial Info on save click
         public int Updateflag { get; set; }
+
+        public List<SelectListItem> OrderList { get; set; }
     }
 }

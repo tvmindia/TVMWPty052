@@ -18,19 +18,35 @@ namespace PartyEC.UI.Controllers
         IEventRequestBusiness _eventRequestsBusiness;
         ICustomerBusiness _customerBusiness;
         ICommonBusiness _commonBusiness;
+        IMasterBusiness _masterBusiness;
 
-        public EventRequestsController(IEventRequestBusiness eventRequestsBusiness, ICommonBusiness commonBusiness, ICustomerBusiness customerBusiness)
+        public EventRequestsController(IEventRequestBusiness eventRequestsBusiness, ICommonBusiness commonBusiness, ICustomerBusiness customerBusiness, IMasterBusiness masterBusiness)
         {
             _eventRequestsBusiness = eventRequestsBusiness;           
             _commonBusiness = commonBusiness;
             _customerBusiness = customerBusiness;
+            _masterBusiness = masterBusiness;
         }
         #endregion Constructor_Injection
         // GET: EventRequests
         public ActionResult Index()
         {
+            EventRequestsViewModel ordrsat_obj = new EventRequestsViewModel();
+            List<SelectListItem> selectListItem = new List<SelectListItem>();
 
-            return View();
+            List<OrderStatusViewModel> orderstatusListVM = Mapper.Map<List<OrderStatusMaster>, List<OrderStatusViewModel>>(_masterBusiness.GetAllOrderStatus());
+            foreach (OrderStatusViewModel ovm in orderstatusListVM)
+            {
+                selectListItem.Add(new SelectListItem
+                {
+                    Text = ovm.Description,
+                    Value = ovm.Code.ToString(),
+                    Selected = false
+                });
+            }
+            ordrsat_obj.OrderList = selectListItem;
+            return View(ordrsat_obj);
+           
         }
 
         #region GetAllEventRequests

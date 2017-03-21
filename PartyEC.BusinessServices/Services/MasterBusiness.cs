@@ -49,5 +49,19 @@ namespace PartyEC.BusinessServices.Services
             }
             return supplierlist;
         }
+        public List<OrderStatusMaster> GetAllOrderStatus()
+        {
+            List<OrderStatusMaster> orderStatuslist = null;
+            try
+            {
+                orderStatuslist = _masterRepository.GetAllOrderStatus();
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return orderStatuslist;
+        }
     }
 }

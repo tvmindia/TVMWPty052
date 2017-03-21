@@ -26,4 +26,9 @@ namespace PartyEC.UI.Models
         public int ID { get; set; }
         public string Name { get; set; }
     }
+    public class OrderStatusViewModel
+    {
+        public int Code { get; set; }
+        public string Description { get; set; }
+    }
 }
