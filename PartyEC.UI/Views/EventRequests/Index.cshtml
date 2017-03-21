@@ -91,9 +91,9 @@
                                             </div>
                                         </div>
                                         <div class="col-md-12">
-                                            @Html.LabelFor(model => model.EventDateTime, htmlAttributes: new { @class = "h4 col-md-4" })
+                                            @Html.LabelFor(model => model.EventDateTime , htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblEventDate" class="h4 label-display">-</label> 
+                                                <label id="lblEventDate" class="h4 label-display">-</label>                                                    
                                             </div>
                                         </div>
                                         <div class="col-md-12">
@@ -228,7 +228,7 @@
                         <div class="col-md-12">
                             <div class="col-md-4 ">
                                     @Html.HiddenFor(model => model.ID)
-                                    @using (Ajax.BeginForm("UpdateEventRequests", "EventRequests", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSucess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formIns_Up" }))
+                                    @using (Ajax.BeginForm("UpdateEventRequests", "EventRequests", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "UpdateEvntRq_OnBegin", OnComplete = "UpdateEvntRq_Complete" }, new { @class = "form-horizontal", role = "form", id = "formCommercial" }))
                                     {
                                         @Html.AntiForgeryToken()
                                         <div class="form-horizontal">
@@ -303,7 +303,7 @@
                                 </div>
 
                             <div class="col-md-4">
-                              @using (Ajax.BeginForm("UpdateEventsLog", "EventRequests", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSucess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formIns_Up" }))
+                              @using (Ajax.BeginForm("UpdateEventsLog", "EventRequests", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "BindComments" }, new { @class = "form-horizontal", role = "form", id = "formComments" }))
                               {
                                 @Html.AntiForgeryToken()
 
@@ -341,7 +341,7 @@
                             </div>
 
                             <div class="col-md-4">
-                              @using (Ajax.BeginForm("UpdateEventRequests", "EventRequests", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSucess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formIns_Up" }))
+                              @using (Ajax.BeginForm("UpdateEventRequests", "EventRequests", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "BindEvntRq_Remarks" }, new { @class = "form-horizontal", role = "form", id = "formAdminRemarks" }))
                               {
                                 @Html.AntiForgeryToken()
 
@@ -359,16 +359,7 @@
 
                                                 <div class="form-group col-md-12">
                                                     @Html.LabelFor(model => model.EventStatus, htmlAttributes: new { @class = "control-label col-md-4"})
-                                                    <div class="col-md-8">
-                                                        @*@{
-                                                            //binding from 
-                                                            List<SelectListItem> listStatus = new List<SelectListItem>();
-                                                            listStatus.Add(new SelectListItem
-                                                            { Text = "Pending", Value = "1" });
-                                                            listStatus.Add(new SelectListItem
-                                                            { Text = "Closed", Value = "2" });
-
-                                                        }*@
+                                                    <div class="col-md-8">                                                      
                                                         @Html.DropDownListFor(model => model.EventStatus,Model.OrderList, "-- Select Status --", new { @class = "form-control eventstatus" })
                                                         @Html.ValidationMessageFor(model => model.EventStatus, "", new { @class = "text-danger" })
                                                     </div>
@@ -384,7 +375,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-offset-2 col-md-10">
                                                         @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4 UpdateId", Value = "0" })
-                                                        <input type="submit" value="Save" class="btn btn-default btn-right" />
+                                                        <input type="submit" value="Save"  class="btn btn-default btn-right" />
                                                     </div>
                                                 </div>
                                             </div>

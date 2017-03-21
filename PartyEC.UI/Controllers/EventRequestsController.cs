@@ -110,7 +110,7 @@ namespace PartyEC.UI.Controllers
         [HttpPost]
         public string UpdateEventRequests(EventRequestsViewModel EventObj)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 OperationsStatusViewModel OperationsStatusViewModelObj = null;
                 try

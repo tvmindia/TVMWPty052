@@ -242,11 +242,11 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             case "0":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
+                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
                                 break;
                             case "1":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
                                 break;
                             default:
                                 break;

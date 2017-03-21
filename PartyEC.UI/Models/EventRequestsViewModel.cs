@@ -85,6 +85,7 @@ namespace PartyEC.UI.Models
         
 
         [Display(Name = "Comments")]
+        [Required]
         public string Comments { get; set; }
 
         public string CommentDate { get; set; }
@@ -105,10 +106,10 @@ namespace PartyEC.UI.Models
         public DateTime? FollowUpDate { get; set; }
 
 
-
+         
         [Display(Name = "Currency Code")]
         public string CurrencyCode { get; set; }
-
+                
         [Display(Name = "Currency Rate")]
         public decimal CurrencyRate { get; set; }
 
