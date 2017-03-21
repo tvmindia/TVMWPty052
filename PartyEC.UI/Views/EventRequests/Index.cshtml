@@ -57,7 +57,14 @@
                     @*table*@
                 </div>
                 <div class="tab-pane fade" id="eventRequestsDetails">              
- 
+                    <div class="" id="btnPatcheventRequeststab2">
+                        @{
+                            PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab2 = new PartyEC.UI.Models.ToolboxViewModel();
+                            ToolBoxControltab2.backbtn.Visible = true;
+                            ToolBoxControltab2.backbtn.Event = "goback()";
+                            Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
+                        }
+                    </div> 
 
                         <div class="col-md-12">
                             <div class="col-md-6">
@@ -214,76 +221,85 @@
                         </div>
                         <div class="col-md-12">
                             <div class="col-md-4 ">
-                                @Html.HiddenFor(model => model.ID)
-                              @using (Ajax.BeginForm("UpdateEventRequests", "EventRequests", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSucess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formIns_Up" }))
-                              {
-                                @Html.AntiForgeryToken()
-                                    <div class="form-horizontal">
-                                        <div class="panel panel-default" style="min-height:250px">
-                                            <div class="panel-heading">Commercial Info</div>
-                                            <div class="panel-body">
-                                                <div class="form-group col-md-12">
-                                                    @Html.LabelFor(model => model.CurrencyCode, htmlAttributes: new { @class = "control-label col-md-4" })
-                                                    <div class="col-md-8">
+                                    @Html.HiddenFor(model => model.ID)
+                                    @using (Ajax.BeginForm("UpdateEventRequests", "EventRequests", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSucess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formIns_Up" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        <div class="form-horizontal">
+                                            <div class="panel panel-default" style="min-height:250px">
+                                                <div class="panel-heading">Commercial Info</div>
+                                                <div class="panel-body">
+                                                    <div class="" id="btnPatchCommercial">
                                                         @{
-                                                            List<SelectListItem> listCurrencyCode = new List<SelectListItem>();
-                                                            listCurrencyCode.Add(new SelectListItem
-                                                            { Text = "QAR", Value = "QAR" }); 
-
+                                                            PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab1 = new PartyEC.UI.Models.ToolboxViewModel();
+                                                            ToolBoxControltab1.savebtn.Visible = true;
+                                                            ToolBoxControltab1.savebtn.Event = "btnSave()";
+                                                            ToolBoxControltab1.savebtn.Title = "Save";
+                                                            Html.RenderPartial("_ToolboxView", ToolBoxControltab1);
                                                         }
-                                                        @Html.DropDownListFor(model => model.CurrencyCode, listCurrencyCode, new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(model => model.CurrencyCode, "", new { @class = "text-danger" })
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group col-md-12">
-                                                    @Html.LabelFor(model => model.CurrencyRate, htmlAttributes: new { @class = "control-label col-md-4" })
-                                                    <div class="col-md-8">
-                                                        @Html.EditorFor(model => model.CurrencyRate, new { htmlAttributes = new { @class = "form-control",Value=1 } })
-                                                        @Html.ValidationMessageFor(model => model.CurrencyRate, "", new { @class = "text-danger" })
+                                                    <div class="form-group col-md-12">
+                                                        @Html.LabelFor(model => model.CurrencyCode, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @{
+                                                                List<SelectListItem> listCurrencyCode = new List<SelectListItem>();
+                                                                listCurrencyCode.Add(new SelectListItem
+                                                                { Text = "QAR", Value = "QAR" });
+                                                            }
+                                                            @Html.DropDownListFor(model => model.CurrencyCode, listCurrencyCode, new { @class = "form-control" })
+                                                            @Html.ValidationMessageFor(model => model.CurrencyCode, "", new { @class = "text-danger" })
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group col-md-12">
-                                                    @Html.LabelFor(model => model.TotalAmt, htmlAttributes: new { @class = "control-label col-md-4" })
-                                                    <div class="col-md-8">
-                                                        @Html.EditorFor(model => model.TotalAmt, new { htmlAttributes = new { @class = "form-control" } })
-                                                        @Html.ValidationMessageFor(model => model.TotalAmt, "", new { @class = "text-danger" })
+                                                    <div class="form-group col-md-12">
+                                                        @Html.LabelFor(model => model.CurrencyRate, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.EditorFor(model => model.CurrencyRate, new { htmlAttributes = new { @class = "form-control", Value = 1 } })
+                                                            @Html.ValidationMessageFor(model => model.CurrencyRate, "", new { @class = "text-danger" })
+                                                        </div>
                                                     </div>
-                                                </div>
 
-                                                <div class="form-group col-md-12">
-                                                    @Html.LabelFor(model => model.TotalTaxAmt, htmlAttributes: new { @class = "control-label col-md-4" })
-                                                    <div class="col-md-8">
-                                                        @Html.EditorFor(model => model.TotalTaxAmt, new { htmlAttributes = new { @class = "form-control" } })
-                                                        @Html.ValidationMessageFor(model => model.TotalTaxAmt, "", new { @class = "text-danger" })
+                                                    <div class="form-group col-md-12">
+                                                        @Html.LabelFor(model => model.TotalAmt, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.EditorFor(model => model.TotalAmt, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TotalAmt, "", new { @class = "text-danger" })
+                                                        </div>
                                                     </div>
-                                                </div>
-
-                                                <div class="form-group col-md-12">
-                                                    @Html.LabelFor(model => model.TotalDiscountAmt, htmlAttributes: new { @class = "control-label col-md-4" })
-                                                    <div class="col-md-8">
-                                                        @Html.EditorFor(model => model.TotalDiscountAmt, new { htmlAttributes = new { @class = "form-control" } })
-                                                        @Html.ValidationMessageFor(model => model.TotalDiscountAmt, "", new { @class = "text-danger" })
+                                                    
+                                                    <div class="form-group col-md-12">
+                                                        @Html.LabelFor(model => model.TotalTaxAmt, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.EditorFor(model => model.TotalTaxAmt, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TotalTaxAmt, "", new { @class = "text-danger" })
+                                                        </div>
                                                     </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4 UpdateId", Value = "0" })
-                                                    @Html.HiddenFor(model => model.Updateflag ,htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
-                                                    <div class="col-md-offset-2 col-md-10">
-                                                        <input type="submit" value="Save" onclick="ValidationCommercialInfo()" class="btn btn-default" />
+                                                                                                        
+                                                    <div class="form-group col-md-12">
+                                                        @Html.LabelFor(model => model.TotalDiscountAmt, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                        <div class="col-md-8">
+                                                            @Html.EditorFor(model => model.TotalDiscountAmt, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.TotalDiscountAmt, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>                                                    
+                                                    <div class="form-group">
+                                                        @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4 UpdateId", Value = "0" })
+                                                        @Html.HiddenFor(model => model.Updateflag, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
+                                                        <div class="col-md-offset-2 col-md-10">
+                                                            <input type="submit" value="Save" onclick="ValidationCommercialInfo()" class="btn btn-default btn-right" />
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>                                        
-                                    </div>
-                                }                              
-                            </div>
+                                        </div>
+                                                                }
+                                </div>
 
                             <div class="col-md-4">
-                                @using (Html.BeginForm())
-                                {
-                                    @Html.AntiForgeryToken()
+                              @using (Ajax.BeginForm("UpdateEventsLog", "EventRequests", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSucess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formIns_Up" }))
+                              {
+                                @Html.AntiForgeryToken()
 
                                     <div class="form-horizontal">
                                         <div class="panel panel-default" style="min-height:250px">
@@ -291,9 +307,9 @@
                                             <div class="panel-body">
 
                                                 <div class="form-group col-md-12">
-                                                    @Html.LabelFor(model => model.AdminRemarks, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                    @Html.LabelFor(model => model.Comments, htmlAttributes: new { @class = "control-label col-md-4" })
                                                     <div class="col-md-8">
-                                                        @Html.TextAreaFor(model => model.Comments, new { style = "width: 220px; height: 150px;" })
+                                                        @Html.TextAreaFor(model => model.Comments, new { style = "width: 220px; height: 50px;" })
                                                         @Html.ValidationMessageFor(model => model.Comments, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -301,18 +317,19 @@
 
                                                 <div class="form-group">
                                                     <div class="col-md-offset-2 col-md-10">
+                                                        @Html.HiddenFor(model => model.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "EventRequests" })
                                                         @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4 UpdateId", Value = "0" })
-                                                        <input type="submit" value="Submit Comment" class="btn btn-default" />
+                                                        <input type="submit" value="Submit Comment" class="btn btn-default btn-right"   />
                                                     </div>
                                                 </div>
                                                  <div class="form-group col-md-12">
                                                      <label id="lblHistroy" class="control-label">Earlier Comments</label>
                                                    
-                                                    <div >
+                                                    <div id="CommentsDisplay"  style="height:50px; overflow-y:auto"> 
                                                         @Html.LabelFor(model => model.CommentDate, htmlAttributes: new { @class = "control-label col-md-4" }) 
                                                         @Html.LabelFor(model => model.PrevComment, htmlAttributes: new { @class = "control-label col-md-8" })
-
-                                                    </div>
+                                                        //comments binding
+                                                    </div>                                                     
                                                 </div>
 
                                             </div>
@@ -341,7 +358,7 @@
                                                 <div class="form-group col-md-12">
                                                     @Html.LabelFor(model => model.EventStatus, htmlAttributes: new { @class = "control-label col-md-4"})
                                                     <div class="col-md-8">
-                                                        @{
+                                                        @*@{
                                                             //binding from 
                                                             List<SelectListItem> listStatus = new List<SelectListItem>();
                                                             listStatus.Add(new SelectListItem
@@ -349,8 +366,8 @@
                                                             listStatus.Add(new SelectListItem
                                                             { Text = "Closed", Value = "2" });
 
-                                                        }
-                                                        @Html.DropDownListFor(model => model.EventStatus, listStatus, "-- Select Status --", new { @class = "form-control eventstatus" })
+                                                        }*@
+                                                        @Html.DropDownListFor(model => model.EventStatus,Model.OrderList, "-- Select Status --", new { @class = "form-control eventstatus" })
                                                         @Html.ValidationMessageFor(model => model.EventStatus, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -365,7 +382,7 @@
                                                 <div class="form-group">
                                                     <div class="col-md-offset-2 col-md-10">
                                                         @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4 UpdateId", Value = "0" })
-                                                        <input type="submit" value="Save" class="btn btn-default" />
+                                                        <input type="submit" value="Save" class="btn btn-default btn-right" />
                                                     </div>
                                                 </div>
                                             </div>

@@ -1,3 +1,7 @@
 ﻿.label-display{
     font-weight:bold
 }
+.btn-right{
+    float:right;
+    margin-right:50px
+}

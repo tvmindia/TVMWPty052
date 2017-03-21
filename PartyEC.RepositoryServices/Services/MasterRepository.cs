@@ -173,7 +173,53 @@ namespace PartyEC.RepositoryServices.Services
             }
             return operrationstatusObj;
         }
+        
+        // List<OrderStatusMaster> GetAllOrderStatus();
+        public List<OrderStatusMaster> GetAllOrderStatus()
+        {
+            List<OrderStatusMaster> orderstatusList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetMasterOrderStatus]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                orderstatusList = new List<OrderStatusMaster>();
+                                while (sdr.Read())
+                                {
+                                    OrderStatusMaster _orderstatus = new OrderStatusMaster();
+                                    {
+                                        _orderstatus.Code = (sdr["Code"].ToString() != "" ? Int16.Parse(sdr["Code"].ToString()) : _orderstatus.Code);
+                                        _orderstatus.Description = (sdr["Description"].ToString() != "" ? sdr["Description"].ToString() : _orderstatus.Description);
+
+                                    }
+                                    orderstatusList.Add(_orderstatus);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return orderstatusList;
 
 
+        }
     }
 }

@@ -96,26 +96,27 @@
                         <div class="panel with-nav-tabs js panel-primary">
                             <div class="panel-heading">
                                 <ul class="nav nav-tabs nav-stacked">
-                                    <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="label label-danger">E</span></a></li>
-                                    <li><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
-                                    <li><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
-                                    <li><a href="#discription" data-toggle="tab" id="tabDiscrption">Discription</a></li>
-                                    <li><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
-                                    <li><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
-                                    <li><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
-                                    <li><a href="#productTags" data-toggle="tab" id="tabproducttags">Product Tags <span class="label label-danger">E</span></a></li>
-                                    <li><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
-                                    <li><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
+                                    <li onclick="ShowProductDetalsToolBox()" class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="label label-danger">E</span></a></li>
+                                    <li onclick="ShowProductDetalsToolBox()"><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
+                                    <li onclick="ShowProductDetalsToolBox()"><a href="#discription" data-toggle="tab" id="tabDiscrption">Discription</a></li>
+                                    <li onclick="ShowProductDetalsToolBox()"><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
+                                    <li onclick="ShowProductDetalsToolBox()"><a href="#productTags" data-toggle="tab" id="tabproducttags">Product Tags <span class="label label-danger">E</span></a></li>
+                                    <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
+                                    <li onclick="HideProductDetalsToolBox()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
+                                    <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
+                                    <li onclick="HideProductDetalsToolBox()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
+                                    <li onclick="HideProductDetalsToolBox()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
                                  </ul>
                              </div>
                             </div>
-                  
-           
+   
                     </div>
+
                     <div class="col-md-10">
-@using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "Are You Sure?...", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "onbeginProductSave", OnComplete = "oncomplteProductSave" }, new { @class = "form-horizontal", role = "form" ,id="productform" }))
+@using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "Are You Sure?...", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "onbeginProductSave", OnComplete = "oncomplteProductSave" }, new { @class = "form-horizontal", role = "form", id = "productform" }))
 {
     @Html.AntiForgeryToken()
+
                         <div class="tab-content productTabContent">
 
                             <div class="tab-pane fade in active" id="general">
@@ -310,29 +311,133 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="tab-pane fade" id="discription">
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.LongDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-6">
+                                        @Html.EditorFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                            </div>     
+                            <div class="tab-pane fade" id="inventory">
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.StockAvailable, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        <div>
+                                            @Html.EditorFor(model => model.StockAvailable)
+                                            @Html.ValidationMessageFor(model => model.StockAvailable, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.OutOfStockAlertQty, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="col-lg-4">
+                                        @Html.EditorFor(model => model.OutOfStockAlertQty, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.OutOfStockAlertQty, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+
+                            </div>
+                            <div class="tab-pane fade" id="productTags">
+                                <div class="col-lg-8">
+                                    <div class="form-group">
+                                        @Html.LabelFor(model => model.HeaderTags, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <div class="col-lg-6" id="headertagsdiv">
+                                            @Html.EditorFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.HeaderTags, "", new { @class = "text-danger" })
+                                        </div>
+                                    </div>
+                                </div><!-- /.col-lg-6 -->
+                            </div>
+                       
+
+                            <div class="tab-pane fade" id="relatedProducts">
+
+                                <div>
+                                    @{
+                                        PartyEC.UI.Models.ToolboxViewModel ToolBoxControlRelProduct = new PartyEC.UI.Models.ToolboxViewModel();
+                                        ToolBoxControlRelProduct.addbtn.Visible = true;
+                                        ToolBoxControlRelProduct.addbtn.Event = "RelatedProductsModel()";
+                                        ToolBoxControlRelProduct.addbtn.Title = "Add";
+                                        ToolBoxControlRelProduct.deletebtn.Visible = true;
+                                        ToolBoxControlRelProduct.deletebtn.Event = "CallbtnDeleteRelatedProductSubmit()";
+                                        ToolBoxControlRelProduct.deletebtn.Title = "Delete";
+                                        Html.RenderPartial("_ToolboxView", ToolBoxControlRelProduct);
+                                    }
+
+                                </div>
+
+                                @*table*@
+                                <table id="tblRelatedproducts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                    <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>ProductID</th>
+                                            <th>Name</th>
+                                            <th>ProductType</th>
+                                            <th>Active(Yes/No)</th>
+                                            <th>Supplier</th>
+                                            <th>SKU</th>
+                                            <th>Selling Price</th>
+                                            <th>Qty</th>
+                                            <th>Stock Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                </table>
+                                @*table*@
+                                <div class="form-group" hidden="hidden">
+                                    <div class="col-md-offset-2 col-md-10">
+
+                                        <button id="btnmodelrelproduct" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ModelRelatedProducts"></button>
+
+                                    </div>
+                                </div>
+
+                            </div>
                             <div class="tab-pane fade" id="images">
-                              <div class="col-lg-12">
-                                  <h2>Product Images</h2>
-                                  <hr />
-                                  <div class="col-sm-6 col-md-4">
-                                      <div class="thumbnail">
-                                       
-                                          <div class="caption">
-                                              <p>@Html.LabelFor(model => model.ProdutMainImageUpload, new { @class = "control-label" })</p>
-                                              <p>@Html.TextBoxFor(model => model.ProdutMainImageUpload, new { type = "file", @class = "btn btn-default" })</p>
-                                          </div>
-                                      </div>
-                                  </div>
-                                  <div class="col-lg-8">
-                                      <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="">
-                                  </div>
-                              </div>
+                                <div class="col-lg-12">
+                                    <h2>Product Images</h2>
+                                    <hr />
+                                    <div class="col-sm-6 col-md-4">
+                                        <div class="thumbnail">
+
+                                            <div class="caption">
+                                                <p>@Html.LabelFor(model => model.ProdutMainImageUpload, new { @class = "control-label" })</p>
+                                                <p>@Html.TextBoxFor(model => model.ProdutMainImageUpload, new { type = "file", @class = "btn btn-default" })</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-lg-8">
+                                        <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="">
+                                    </div>
+                                </div>
                                 <div class="col-lg-12">
                                     <h2>Other Images</h2>
                                     <hr />
                                     <div class="col-sm-6 col-md-4">
                                         <div class="thumbnail">
-                                         
+
                                             <div class="caption">
                                                 <p>@Html.LabelFor(model => model.OtherImagesUpload, new { @class = "control-label" })</p>
                                                 <p>@Html.TextBoxFor(model => model.OtherImagesUpload, new { type = "file", @class = "btn btn-default" })</p>
@@ -399,7 +504,7 @@
                                     <hr />
                                     <div class="col-sm-6 col-md-4">
                                         <div class="thumbnail">
-                                          
+
                                             <div class="caption">
 
                                                 <p>@Html.LabelFor(model => model.ProductStickerUpload, new { @class = "control-label" })</p>
@@ -465,99 +570,33 @@
                                         </ul>
                                     </div>
                                 </div>
-                                  
-                            </div>
-                            <div class="tab-pane fade" id="discription">
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                    <div class="col-lg-4">
-                                        @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.LongDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                    <div class="col-lg-6">
-                                        @Html.EditorFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
-                            </div>                    
-                            <div class="tab-pane fade" id="inventory">
-                         
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.StockAvailable, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                    <div class="col-lg-4">
-                                        <div>
-                                            @Html.EditorFor(model => model.StockAvailable)
-                                            @Html.ValidationMessageFor(model => model.StockAvailable, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                    <div class="col-lg-4">
-                                        @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-                                <div class="form-group">
-                                    @Html.LabelFor(model => model.OutOfStockAlertQty, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                    <div class="col-lg-4">
-                                        @Html.EditorFor(model => model.OutOfStockAlertQty, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.OutOfStockAlertQty, "", new { @class = "text-danger" })
-                                    </div>
-                                </div>
-
 
                             </div>
-                            <div class="tab-pane fade" id="relatedProducts">
-                          
-                                <div>
-                                    @{
-                                        PartyEC.UI.Models.ToolboxViewModel ToolBoxControlRelProduct = new PartyEC.UI.Models.ToolboxViewModel();
-                                        ToolBoxControlRelProduct.addbtn.Visible = true;
-                                        ToolBoxControlRelProduct.addbtn.Event = "RelatedProductsModel()";
-                                        ToolBoxControlRelProduct.addbtn.Title = "Add";
-                                        ToolBoxControlRelProduct.deletebtn.Visible = true;
-                                        ToolBoxControlRelProduct.deletebtn.Event = "CallbtnDeleteRelatedProductSubmit()";
-                                        ToolBoxControlRelProduct.deletebtn.Title = "Delete";
-                                        Html.RenderPartial("_ToolboxView", ToolBoxControlRelProduct);
-                                    }
-
-                                </div>
+                            <div class="tab-pane fade" id="otherAttributes">
                                
-                                                @*table*@
-                                                <table id="tblRelatedproducts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-                                                    <thead>
-                                                        <tr>
-                                                            <th></th>
-                                                            <th>ProductID</th>
-                                                            <th>Name</th>
-                                                            <th>ProductType</th>
-                                                            <th>Active(Yes/No)</th>
-                                                            <th>Supplier</th>
-                                                            <th>SKU</th>
-                                                            <th>Selling Price</th>
-                                                            <th>Qty</th>
-                                                            <th>Stock Status</th>
-                                                            <th>Actions</th>
-                                                        </tr>
-                                                    </thead>
-                                                </table>
-                                                @*table*@
-                                <div class="form-group" hidden="hidden">
-                                    <div class="col-md-offset-2 col-md-10">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="alert-message alert-message-success">
+                                               
+                                                <p>Please Create a product from general section and come back:).</p>
+                                            </div>
+                                        </div>
+                                   
+                              
+                              
 
-                                        <button id="btnmodelrelproduct" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ModelRelatedProducts"></button>                                
-                                       
+
+
+
+
+                            </div>
+                            <div class="tab-pane fade" id="associatedProducts">
+                                <div class="col-sm-6 col-md-6">
+                                    <div class="alert-message alert-message-success">
+
+                                        <p>Please Create a product from general section and come back:).</p>
                                     </div>
                                 </div>
-                        
-                                </div>
+                            </div>
                             <div class="tab-pane fade" id="ratingAndReviews">
                                 <div class="well well-sm">
                                     <div class="row">
@@ -577,10 +616,10 @@
                                         <div class="col-xs-12 col-md-6">
                                             <div class="row rating-desc">
                                                 <div class="col-xs-3 col-md-3 text-right">
-                                                   Taste
+                                                    Taste
                                                 </div>
                                                 <div class="col-xs-8 col-md-9">
-                                                    
+
                                                     <div class="rating-block">
 
                                                         <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
@@ -602,7 +641,7 @@
                                                 </div>
                                                 <!-- end 5 -->
                                                 <div class="col-xs-3 col-md-3 text-right">
-                                                   Delivery
+                                                    Delivery
                                                 </div>
                                                 <div class="col-xs-8 col-md-9">
                                                     <div class="rating-block">
@@ -622,7 +661,8 @@
                                                         <button type="button" class="btn btn-danger btn-grey btn-sm" aria-label="Left Align">
                                                             <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
                                                         </button>
-                                                    </div>                                                </div>
+                                                    </div>
+                                                </div>
                                                 <!-- end 4 -->
                                                 <div class="col-xs-3 col-md-3 text-right">
                                                     Ease of Use
@@ -649,7 +689,7 @@
                                                 </div>
                                                 <!-- end 3 -->
                                                 <div class="col-xs-3 col-md-3 text-right">
-                                                   Brand Reputation
+                                                    Brand Reputation
                                                 </div>
                                                 <div class="col-xs-8 col-md-9">
                                                     <div class="rating-block">
@@ -673,7 +713,7 @@
                                                 </div>
                                                 <!-- end 2 -->
                                                 <div class="col-xs-3 col-md-3 text-right">
-                                                  Value for Money
+                                                    Value for Money
                                                 </div>
                                                 <div class="col-xs-8 col-md-9">
                                                     <div class="rating-block">
@@ -701,7 +741,7 @@
                                         </div>
                                     </div>
                                 </div>
-                               
+
                                 <div class="row">
                                     <div class="col-sm-7">
                                         <hr />
@@ -794,32 +834,13 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
-                            <div class="tab-pane fade" id="productTags">
-                                <div class="col-lg-8">
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.HeaderTags, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                        <div class="col-lg-6" id="headertagsdiv">
-                                            @Html.EditorFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.HeaderTags, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div>
-                                </div><!-- /.col-lg-6 -->
-                            </div>
-                           
-                            <div class="tab-pane fade" id="otherAttributes">
-                                other Attributes
-                            </div>
-                            <div class="tab-pane fade" id="associatedProducts">
-                                Associated products
-                            </div>
-
                         </div>
-                        @Html.HiddenFor(model=>model.productDetailhdf)
-                       
-}
+                        @Html.HiddenFor(model => model.productDetailhdf)
+                  }
 
+                      
 
                         </div>
                    

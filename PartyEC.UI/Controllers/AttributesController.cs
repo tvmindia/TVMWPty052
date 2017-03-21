@@ -198,5 +198,29 @@ namespace PartyEC.UI.Controllers
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
         #endregion ChangeButtonStyle
+
+
+        #region OtherAttributeTemplate
+        [HttpGet]
+        public ActionResult EditTemplateForAttributes(string setID,string Isconfigurable)
+        {
+            try
+            {
+                List<AttributesViewModel> attributesList = null;
+                if ((!string.IsNullOrEmpty(setID))&&(!string.IsNullOrEmpty(Isconfigurable)))
+                {
+                    attributesList = Mapper.Map<List<Attributes>, List<AttributesViewModel>>(_attributeBusiness.GetAllAttributeBySet(int.Parse(setID),bool.Parse(Isconfigurable)));
+                }
+              
+                return View("_EditTemplateForAttributes", attributesList);
+            }
+            catch(Exception ex)
+            {
+                return View("_EditTemplateForAttributes");
+            }
+            
+           
+        }
+        #endregion OtherAttributeTemplate
     }
 }

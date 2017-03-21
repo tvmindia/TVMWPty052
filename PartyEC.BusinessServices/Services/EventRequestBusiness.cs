@@ -62,6 +62,20 @@ namespace PartyEC.BusinessServices.Services
             }
             return OperationsStatusObj;
         }
+
+        public OperationsStatus InsertEventsLog(EventRequests eventObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _eventRequestsRepositry.InsertEventsLog(eventObj);
+            }
+            catch (Exception)
+            {
+            }
+            return OperationsStatusObj;
+        }
+
         
         #endregion Methods
     }

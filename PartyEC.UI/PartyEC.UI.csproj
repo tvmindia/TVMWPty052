@@ -515,6 +515,7 @@
     <Content Include="Views\Event\Index.cshtml" />
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\EventRequests\Index.cshtml" />
+    <Content Include="Views\Shared\_EditTemplateForAttributes.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
