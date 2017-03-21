@@ -95,9 +95,13 @@ namespace PartyEC.BusinessServices.Services
             List<Attributes> attributelist = null;
             try
             {
-                attributelist = _attributesRepository.GetAllAttributeBySet(AttributeSetID).Where(attr => attr.ConfigurableYN == IsConfigurable).ToList();
+                //Filters the list with  IsConfigurable boolean,
+                //sorts the list by  DisplayOrder
+                attributelist = _attributesRepository.GetAllAttributeBySet(AttributeSetID)
+                .Where(attr => attr.ConfigurableYN == IsConfigurable)
+                .OrderBy(attr => attr.attributeSetLinkObj.DisplayOrder).ToList();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
             }

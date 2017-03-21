@@ -432,8 +432,7 @@ function RelatedProductsModel()
 
 function ConstructRelatdProductIDList()
 {
-    
-    try {
+  try {
         var AddList = [];
         var tabledata = DataTables.UNRelatedproductsTable.rows('.selected').data();
         if (tabledata.length > 0)
@@ -446,7 +445,7 @@ function ConstructRelatdProductIDList()
         
     }
     catch (e) {
-
+        notyAlert('error', e.Message);
     }
 }
 function CallbtnRelatedProductSubmit()
@@ -481,8 +480,7 @@ function RelatedproductSaveSuccess(data, status, xhr)
 
 function ConstructRelatdProductIDListForDelete()
 {
-    debugger;
-    try {
+   try {
         var AddList = [];
         var tabledata = DataTables.RelatedproductsTable.rows('.selected').data();
         if (tabledata.length > 0) {
@@ -491,10 +489,9 @@ function ConstructRelatdProductIDListForDelete()
             }
             $("#relatedproductlistID").val(AddList);
         }
-
     }
     catch (e) {
-
+        notyAlert('error', e.Message);
     }
 }
 
@@ -532,19 +529,35 @@ function RenderContentsForAttributes()
         var atsetID = $("#AttributeSetID").val();
         if (atsetID) {
             var Isconfig = false;
-            var partalview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
+            var pview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
+            //clear otherattributes div
             $("#otherAttributes").empty();
-            $("#otherAttributes").html(partalview);
+            //append dynamic html to div from partialview
+            $("#otherAttributes").html(pview);
+            //date picker reloading
+            $('input[type="date"]').datepicker({
+                format: "yyyy-mm-dd",//dd-M-yyyy",
+                maxViewMode: 0,
+                todayBtn: "linked",
+                clearBtn: true,
+                autoclose: true,
+                todayHighlight: true
+            });
+        }
+        else
+        {
+            //clear otherattributes div
+            $("#otherAttributes").empty();
+            //append dynamic html to div from partialview
+            $("#otherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-success"> <p>Please Create a product from general section and come back:).</p></div></div>');
+                           
         }
     }
     catch (e) {
-
+        notyAlert('error', e.Message);
     }
 
 }
-
-
-
 function RenderPartialTemplateForAttributes(atsetID, Isconfig) {
     var data = { setID: atsetID, Isconfigurable: Isconfig };
     var ds = {};
@@ -552,30 +565,25 @@ function RenderPartialTemplateForAttributes(atsetID, Isconfig) {
     if (ds != '') {
         return ds;
     }
-    // $("#" + Dom).empty();
-    //  $("#" + Dom).html(ds);
-
 }
 
-//function dfd() {
-//    try {
+function OtherAttributeSave()
+{
+    try
+    {   //Serialize dynamic other attribute elements
+        var otherAttrValues = $('#otherAttributes').find('select,input').serialize();
+        if (otherAttrValues)
+        {
 
-//        var data = "";
-//        var ds = {};
-//        ds = GetDataFromServer("Products/GetAllProducts/", data);
-//        if (ds != '') {
-//            ds = JSON.parse(ds);
-//        }
-//        if (ds.Result == "OK") {
-//            return ds.Records;
-//        }
-//        if (ds.Result == "ERROR") {
-//            notyAlert('error', ds.Message);
-//        }
 
-//    }
-//    catch (e) {
+            PostDataToServer('Products/', otherAttrValues);
+        }
 
-//    }
+    }
+    catch(e)
+    {
+        notyAlert('error', e.Message);
+    }
 
-//}
+
+}
