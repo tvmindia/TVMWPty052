@@ -25,6 +25,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string Message  { get; set; }
         public string AdminRemarks  { get; set; }
         public int EventStatus { get; set; }
+
         public DateTime? FollowUpDate { get; set; } 
         public string CurrencyCode  { get; set; }
         public decimal CurrencyRate  { get; set; }
@@ -38,7 +39,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string ParentType { get; set; }
         public string CommentDate { get; set; }
         public string PrevComment { get; set; }
-
+        public string EventDesc { get; set; }
 
         public LogDetails logDetailsObj { get; set; }
 
