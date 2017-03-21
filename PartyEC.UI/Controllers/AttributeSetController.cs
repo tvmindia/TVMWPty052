@@ -68,14 +68,31 @@ namespace PartyEC.UI.Controllers
                 }
                 //Deserialize the string to object
                 List<AttributeSetLinkViewModel> TreeViewOrder = JsonConvert.DeserializeObject<List<AttributeSetLinkViewModel>>(attributeSetViewModelObj.TreeList);
-                //Adding Created date and Createdby 
-                foreach (var i in TreeViewOrder)
+                if((TreeViewOrder.Count>3)&&(attributeSetViewModelObj.ID!=0))
                 {
-                    i.commonObj = attributeSetViewModelObj.commonObj;
-                }
+                    foreach (var i in TreeViewOrder)
+                    {
+                        i.commonObj = attributeSetViewModelObj.commonObj;
+                    }
 
-                OperationsStatusViewModelObj= Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeToSetLinks.TreeViewUpdateAttributeSetLink((Mapper.Map<List<AttributeSetLinkViewModel>, List<AttributeSetLink>>(TreeViewOrder)), attributeSetViewModelObj.ID));
-                return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeToSetLinks.TreeViewUpdateAttributeSetLink((Mapper.Map<List<AttributeSetLinkViewModel>, List<AttributeSetLink>>(TreeViewOrder)), attributeSetViewModelObj.ID));
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+                }
+                //Adding Created date and Createdby 
+               else
+                {
+                    if(attributeSetViewModelObj.ID != 0)
+                    {                       
+                        return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+                    }
+                    else
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Records = OperationsStatusViewModelObj });
+                    }
+                    
+                   
+                }
+               
             }
             catch (Exception ex)
             {

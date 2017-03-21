@@ -147,7 +147,7 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 //Delete the link data usng AttributeSet ID
-                _attributeToSetLinksRepository.DeleteAttributeSetLink(ID);
+                operationsStatusObj= _attributeToSetLinksRepository.DeleteAttributeSetLink(ID);
                 //
                 foreach (AttributeSetLink i in TreeViewData)
                 {

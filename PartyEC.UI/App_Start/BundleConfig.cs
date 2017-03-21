@@ -35,14 +35,16 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/jstreeScript").Include("~/Scripts/jstree/dist/jstree.js"));
             bundles.Add(new ScriptBundle("~/bundles/bootstrapdatepicker").Include("~/Scripts/bootstrap-datepicker.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/userpluginjs").Include("~/Scripts/jquery.noty.packaged.min.js","~/Scripts/custom.js"));
-            
+            bundles.Add(new ScriptBundle("~/bundles/Uploadify").Include("~/Scripts/jquery.uploadify.js"));
+
             bundles.Add(new ScriptBundle("~/bundles/product").Include("~/Scripts/UserJS/Products.js"));
             bundles.Add(new ScriptBundle("~/bundles/attributes").Include("~/Scripts/UserJS/Attributes.js"));
             bundles.Add(new ScriptBundle("~/bundles/AttributeSet").Include("~/Scripts/UserJS/AttributeSet.js"));
             bundles.Add(new ScriptBundle("~/bundles/Event").Include("~/Scripts/UserJS/Event.js"));
             bundles.Add(new ScriptBundle("~/bundles/Categories").Include("~/Scripts/UserJS/Categories.js"));
             bundles.Add(new ScriptBundle("~/bundles/EventRequests").Include("~/Scripts/UserJS/EventRequests.js"));
-            bundles.Add(new ScriptBundle("~/bundles/Uploadify").Include("~/Scripts/jquery.uploadify.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Order").Include("~/Scripts/UserJS/Order.js"));
+
         }
     }
 }

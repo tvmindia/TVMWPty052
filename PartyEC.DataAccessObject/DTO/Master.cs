@@ -27,4 +27,9 @@ namespace PartyEC.DataAccessObject.DTO
         public string Name { get; set; }
     }
 
+    public class OrderStatusMaster
+    {
+        public int Code { get; set; }
+        public string Description { get; set; }
+    }
 }
