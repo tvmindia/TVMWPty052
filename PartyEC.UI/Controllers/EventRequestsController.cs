@@ -73,8 +73,8 @@ namespace PartyEC.UI.Controllers
             try
             {
                 OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                EventRequestsViewModel attribute = Mapper.Map<EventRequests, EventRequestsViewModel>(_eventRequestsBusiness.GetEventRequest(Int32.Parse(ID), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
-                return JsonConvert.SerializeObject(new { Result = "OK", Records = attribute });
+                EventRequestsViewModel EventRequest = Mapper.Map<EventRequests, EventRequestsViewModel>(_eventRequestsBusiness.GetEventRequest(Int32.Parse(ID), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = EventRequest });
             }
             catch (Exception ex)
             {
@@ -85,7 +85,26 @@ namespace PartyEC.UI.Controllers
 
         #endregion GetEventRequestsByID
 
-        //UpdateEventR_CommercialInfo
+        #region GetEventsLogByID
+
+        [HttpGet]
+        public string GetEventsLog(string ID)
+        {
+            try
+            {
+                List<EventRequestsViewModel> eventsLogList = Mapper.Map<List<EventRequests>, List<EventRequestsViewModel>>(_eventRequestsBusiness.GetEventsLog(Int32.Parse(ID)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = eventsLogList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+
+
+        #endregion GetEventsLogByID
+
+        //UpdateEventRequest
         #region UpdateEventRequest
 
         [HttpPost]

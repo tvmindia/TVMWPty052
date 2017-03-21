@@ -20,7 +20,7 @@ $(document).ready(function () {
                { "data": "CustomerName", "defaultContent": "<i>-</i>" },
                { "data": "ContactName", "defaultContent": "<i>-</i>" },
                { "data": "Phone", "defaultContent": "<i>-</i>" },
-               { "data": "EventStatus", "defaultContent": "<i>-</i>" },
+               { "data": "EventDesc", "defaultContent": "<i>-</i>" },
                { "data": "FollowUpDate", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
@@ -59,8 +59,15 @@ function GetAllEventRequests() {
     }
 }
 
+ 
 function goback() {
     $('#tabeventRequestsList').trigger('click');
+    try {
+        DataTables.eventTable.clear().rows.add(GetAllEventRequests()).draw(false);
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
 }
 
 function tabeventRequestListClick()
@@ -76,6 +83,7 @@ function Edit(currentObj) {
     $('#tabeventRequestDetails').removeClass('disabled');
     $('#tabeventRequestDetails a').attr('data-toggle', 'tab');
     $('#tabeventRequestDetails a').trigger('click');
+    debugger;
     var rowData = DataTables.eventTable.row($(currentObj).parents('tr')).data();
     //Event Request Case
     if ((rowData != null) && (rowData.ID != null)) {
@@ -92,13 +100,14 @@ function Edit(currentObj) {
 
             $("#EventStatus").val(thisEvent.EventStatus);
             $("#AdminRemarks").val(thisEvent.AdminRemarks);
-            $("#FollowUpDate").val(thisEvent.FollowUpDate);
+            $("#FollowUpDate").val(thisEvent.FollowUpDate.substring(0, 10));
 
             document.getElementById('lblEventReqNo').innerHTML = thisEvent.EventReqNo;
             document.getElementById('lblEventType').innerHTML = thisEvent.EventType;
             document.getElementById('lblEventTitle').innerHTML = thisEvent.EventTitle;
-            document.getElementById('lblEventDateTime').innerHTML = thisEvent.EventDateTime;
-            document.getElementById('lblEventStatus').innerHTML = thisEvent.EventStatus;
+            document.getElementById('lblEventDate').innerHTML = thisEvent.EventDateTime.substring(0,10);
+            document.getElementById('lblEventTime').innerHTML = thisEvent.EventDateTime.substring(11);
+            document.getElementById('lblEventDesc').innerHTML = thisEvent.EventDesc;
             document.getElementById('lblLookingFor').innerHTML = thisEvent.LookingFor;
             document.getElementById('lblRequirementSpec').innerHTML = thisEvent.RequirementSpec;
             document.getElementById('lblMessage').innerHTML = thisEvent.Message;
@@ -110,7 +119,7 @@ function Edit(currentObj) {
             document.getElementById('lblContactType').innerHTML = thisEvent.ContactType; 
         }
         if ((rowData.CustomerID != null)) {
-            debugger;
+            
             var thisEvent = GetCustomer(rowData.CustomerID);
             if (thisEvent != null) {
                 
@@ -121,7 +130,19 @@ function Edit(currentObj) {
                 
             }
         }
-    }
+       
+        // To Display Previous Comment history
+        var thisCommentList = GetEventsLog(rowData.ID);
+        if (thisCommentList != null) {
+            debugger;
+            for (var i = 0; i < thisCommentList.length; i++) {           
+                var cnt = $('<li id="Comment'+i+'" class="list-group-item col-md-12"><span class="badge">' + thisCommentList[i].CommentDate.substring(1, 10) + '</span>' + thisCommentList[i].PrevComment + '</li>');
+                   
+         
+            $("#CommentsDisplay").append(cnt);
+            }
+        }
+    } 
 }
 //---------------------------------------Get Events Request Details By ID-------------------------------------//
 function GetEventRequest(id) {
@@ -149,6 +170,26 @@ function GetCustomer(id) {
         var data = { "ID": id };
         var ds = {};
         ds = GetDataFromServer("Customer/GetCustomer/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            alert(ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+//---------------------------------------Get Events Logs Details By ID-------------------------------------//
+function GetEventsLog(id) {
+    try {
+        var data = { "ID": id };
+        var ds = {};
+        ds = GetDataFromServer("EventRequests/GetEventsLog/", data);
         if (ds != '') {
             ds = JSON.parse(ds);
         }

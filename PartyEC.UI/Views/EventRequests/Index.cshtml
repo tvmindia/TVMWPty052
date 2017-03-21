@@ -93,14 +93,20 @@
                                         <div class="col-md-12">
                                             @Html.LabelFor(model => model.EventDateTime, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblEventDateTime" class="h4 label-display">-</label>
+                                                <label id="lblEventDate" class="h4 label-display">-</label> 
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <label class = "h4 col-md-4">Event Time</label>
+                                            <div class="col-md-8">
+                                                <label id="lblEventTime" class="h4 label-display">-</label>
                                             </div>
                                         </div>
 
                                         <div class="col-md-12">
-                                            @Html.LabelFor(model => model.EventStatus, htmlAttributes: new { @class = "h4 col-md-4" })
+                                            @Html.LabelFor(model => model.EventDesc, htmlAttributes: new { @class = "h4 col-md-4" })
                                             <div class="col-md-8">
-                                                <label id="lblEventStatus" class="h4 label-display">-</label>
+                                                <label id="lblEventDesc" class="h4 label-display">-</label>
                                             </div>
                                         </div>
                                     </div>
@@ -324,14 +330,10 @@
                                                 </div>
                                                  <div class="form-group col-md-12">
                                                      <label id="lblHistroy" class="control-label">Earlier Comments</label>
-                                                   
-                                                    <div id="CommentsDisplay"  style="height:50px; overflow-y:auto"> 
-                                                        @Html.LabelFor(model => model.CommentDate, htmlAttributes: new { @class = "control-label col-md-4" }) 
-                                                        @Html.LabelFor(model => model.PrevComment, htmlAttributes: new { @class = "control-label col-md-8" })
-                                                        //comments binding
+                                                     <hr/>                                                      
+                                                    <div id="CommentsDisplay"  style="height:150px; overflow-y:auto"> 
                                                     </div>                                                     
                                                 </div>
-
                                             </div>
                                         </div>
                                     </div>                                   

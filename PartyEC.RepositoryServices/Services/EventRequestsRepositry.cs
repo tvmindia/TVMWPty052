@@ -60,9 +60,8 @@ namespace PartyEC.RepositoryServices.Services
                                         _eventRequestsObj.ContactName = (sdr["ContactName"].ToString() != "" ? sdr["ContactName"].ToString() : _eventRequestsObj.ContactName);
                                         _eventRequestsObj.EventDateTime = (sdr["EventDateTime"].ToString() != "" ? DateTime.Parse(sdr["EventDateTime"].ToString()) : _eventRequestsObj.EventDateTime);
                                         _eventRequestsObj.Phone = (sdr["Phone"].ToString() != "" ? sdr["Phone"].ToString() : _eventRequestsObj.Phone);
-                                        _eventRequestsObj.EventStatus = (sdr["EventStatus"].ToString() != "" ? Int16.Parse(sdr["EventStatus"].ToString()) : _eventRequestsObj.EventStatus);
-                                        _eventRequestsObj.FollowUpDate = (sdr["FollowUpDate"].ToString() != "" ? DateTime.Parse( sdr["FollowUpDate"].ToString()) : _eventRequestsObj.FollowUpDate);
-                                         
+                                        _eventRequestsObj.EventDesc = (sdr["EventDesc"].ToString() != "" ?sdr["EventDesc"].ToString() : _eventRequestsObj.EventDesc);
+                                        _eventRequestsObj.FollowUpDate = (sdr["FollowUpDate"].ToString() != "" ? DateTime.Parse( sdr["FollowUpDate"].ToString()) :_eventRequestsObj.FollowUpDate);                                        
                                     }
                                     Requestslist.Add(_eventRequestsObj);
                                 }
@@ -111,6 +110,8 @@ namespace PartyEC.RepositoryServices.Services
                                     myEventRequests.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : myEventRequests.Email);
                                     myEventRequests.Phone = (sdr["Phone"].ToString() != "" ? sdr["Phone"].ToString() : myEventRequests.Phone);
                                     myEventRequests.EventStatus = (sdr["EventStatus"].ToString() != "" ? Int16.Parse(sdr["EventStatus"].ToString()) : myEventRequests.EventStatus);
+                                    myEventRequests.EventDesc = (sdr["EventDesc"].ToString() != "" ? sdr["EventDesc"].ToString() : myEventRequests.EventDesc);
+
                                     myEventRequests.FollowUpDate = (sdr["FollowUpDate"].ToString() != "" ? DateTime.Parse(sdr["FollowUpDate"].ToString()) : myEventRequests.FollowUpDate);//
 
                                     myEventRequests.EventDateTime = (sdr["EventDateTime"].ToString() != "" ? DateTime.Parse(sdr["EventDateTime"].ToString()) : myEventRequests.EventDateTime);
@@ -205,9 +206,7 @@ namespace PartyEC.RepositoryServices.Services
             }
             return operationsStatusObj;        
     }
-        
-        //InsertEventsLog
-
+      
         public OperationsStatus InsertEventsLog(EventRequests eventObj)
         {
             OperationsStatus operationsStatusObj = null;
@@ -260,6 +259,53 @@ namespace PartyEC.RepositoryServices.Services
                 throw ex;
             }
             return operationsStatusObj;
+        }
+
+        public List<EventRequests> GetEventsLog(int EventRequestsID)
+        {
+            List<EventRequests> Requestslist = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@ParentID", SqlDbType.Int).Value = EventRequestsID;
+                        cmd.Parameters.Add("@ParentType", SqlDbType.NVarChar,20).Value = "EventRequests";
+                        cmd.CommandText = "[GetEventLogs]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                Requestslist = new List<EventRequests>();
+                                while (sdr.Read())
+                                {
+                                    EventRequests _eventRequestsObj = new EventRequests();
+                                    {
+                                       
+                                        _eventRequestsObj.PrevComment = (sdr["Comment"].ToString() != "" ? sdr["Comment"].ToString() : _eventRequestsObj.PrevComment);
+                                      
+                                        _eventRequestsObj.CommentDate = (sdr["CreatedDate"].ToString() != "" ?  sdr["CreatedDate"].ToString(): _eventRequestsObj.CommentDate);
+
+                                    }
+                                    Requestslist.Add(_eventRequestsObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Requestslist;
         }
         #endregion Methods
 

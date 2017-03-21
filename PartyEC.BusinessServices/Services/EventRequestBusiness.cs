@@ -76,7 +76,22 @@ namespace PartyEC.BusinessServices.Services
             return OperationsStatusObj;
         }
 
-        
+        public List<EventRequests> GetEventsLog(int EventRequestsID)
+        {
+            List<EventRequests> EventsLogLists = null;
+            try
+            {
+                EventsLogLists = _eventRequestsRepositry.GetEventsLog(EventRequestsID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return EventsLogLists;
+        }
+
+
         #endregion Methods
     }
 }

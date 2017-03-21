@@ -11,8 +11,11 @@ namespace PartyEC.BusinessServices.Contracts
     {
         List<EventRequests> GetAllEventRequests();
         EventRequests GetEventRequest(int EventRequestsID, OperationsStatus Status);
+        List<EventRequests> GetEventsLog(int EventRequestsID);
+
         OperationsStatus UpdateEventRequests(EventRequests eventObj);
         OperationsStatus InsertEventsLog(EventRequests eventObj);
+
         
     }
 }

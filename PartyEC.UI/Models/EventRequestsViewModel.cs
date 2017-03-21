@@ -29,9 +29,10 @@ namespace PartyEC.UI.Models
         [Display(Name = "Event Date")]
         public DateTime EventDateTime { get; set; }
 
-      
         [Display(Name = "Event Status")]
-        public int EventStatus { get; set; }
+        public string EventDesc { get; set; }
+
+
 
 
         public CustomerViewModel Customerlist { get; set; }
@@ -95,6 +96,9 @@ namespace PartyEC.UI.Models
 
         [Display(Name = "Admin Remarks")]
         public string AdminRemarks { get; set; }
+
+        [Display(Name = "Event Status")]
+        public int EventStatus { get; set; }
 
         [DataType(DataType.Date, ErrorMessage = "Must be a Date")]
         [Display(Name = "FollowUp Date")]
