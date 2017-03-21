@@ -90,6 +90,7 @@
     <Compile Include="Contracts\IEventBusiness.cs" />
     <Compile Include="Contracts\IEventRequestBusiness.cs" />
     <Compile Include="Contracts\IMasterBusiness.cs" />
+    <Compile Include="Contracts\IOrderBusiness.cs" />
     <Compile Include="Contracts\IProductBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AttributesBusiness.cs" />
@@ -102,6 +103,7 @@
     <Compile Include="Services\EventBusiness.cs" />
     <Compile Include="Services\EventRequestBusiness.cs" />
     <Compile Include="Services\MasterBusiness.cs" />
+    <Compile Include="Services\OrderBusiness.cs" />
     <Compile Include="Services\ProductBusiness.cs" />
   </ItemGroup>
   <ItemGroup />

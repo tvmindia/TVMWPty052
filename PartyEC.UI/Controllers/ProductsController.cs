@@ -305,6 +305,9 @@ namespace PartyEC.UI.Controllers
         }
 
 
+    
+
+
         #region ChangeButtonStyle
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)

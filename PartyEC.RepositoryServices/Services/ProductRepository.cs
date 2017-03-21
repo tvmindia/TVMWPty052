@@ -698,7 +698,6 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-
                     }
 
                 }

@@ -453,6 +453,7 @@
     <Content Include="Scripts\UserJS\Categories.js" />
     <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\EventRequests.js" />
+    <Content Include="Scripts\UserJS\Order.js" />
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
     <Content Include="Web.config" />
@@ -480,6 +481,7 @@
     <Compile Include="Controllers\DynamicUIController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventRequestsController.cs" />
+    <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -495,6 +497,7 @@
     <Compile Include="Models\MasterViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\OperationsStatusViewModel.cs" />
+    <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\ToolboxViewModel.cs" />
     <Compile Include="Models\TreeViewModel.cs" />
@@ -513,6 +516,7 @@
     <Content Include="Views\Categories\Index.cshtml" />
     <Content Include="Views\EventRequests\Index.cshtml" />
     <Content Include="Views\Shared\_EditTemplateForAttributes.cshtml" />
+    <Content Include="Views\Order\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
