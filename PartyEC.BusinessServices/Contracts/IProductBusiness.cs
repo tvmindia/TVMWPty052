@@ -21,6 +21,8 @@ namespace PartyEC.BusinessServices.Contracts
         List<Product> GetUNRelatedProducts(int productID);
         OperationsStatus InsertRelatedProducts(Product productObj, string IDList);
         OperationsStatus DeleteRelatedProducts(Product productObj, string IDList);
+        OperationsStatus InsertUpdateProductDetails(Product productObj);
+        OperationsStatus UpdateProductHeaderOtherAttributes(Product productObj);
 
     }
 }

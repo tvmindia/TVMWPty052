@@ -204,9 +204,10 @@ namespace PartyEC.UI.Controllers
         [HttpGet]
         public ActionResult EditTemplateForAttributes(string setID,string Isconfigurable)
         {
+            List<AttributesViewModel> attributesList = null;
             try
             {
-                List<AttributesViewModel> attributesList = null;
+               
                 if ((!string.IsNullOrEmpty(setID))&&(!string.IsNullOrEmpty(Isconfigurable)))
                 {
                     attributesList = Mapper.Map<List<Attributes>, List<AttributesViewModel>>(_attributeBusiness.GetAllAttributeBySet(int.Parse(setID),bool.Parse(Isconfigurable)));
@@ -216,11 +217,12 @@ namespace PartyEC.UI.Controllers
             }
             catch(Exception ex)
             {
-                return View("_EditTemplateForAttributes");
+                return View("_EditTemplateForAttributes", attributesList);
             }
             
            
         }
         #endregion OtherAttributeTemplate
+    
     }
 }

@@ -15,6 +15,7 @@ namespace PartyEC.RepositoryServices.Services
         private IAttributesRepository _attributesRepository;
         private SqlConnection _con;
         private SqlCommand _cmd;
+        Const constObj = new Const();
 
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
@@ -317,7 +318,7 @@ namespace PartyEC.RepositoryServices.Services
 
 
             //------------transaction need to be put here ----------------------  
-            _con = _databaseFactory.GetDBConnection();
+          //  _con = _databaseFactory.GetDBConnection();
           //  SqlTransaction transaction;
            // transaction = _con.BeginTransaction("InsertProduct");
 
@@ -356,10 +357,10 @@ namespace PartyEC.RepositoryServices.Services
             {
                 SqlParameter statusCode = null;
                 SqlParameter outparamID = null;
-                SqlConnection con = _con;
-                //using (SqlConnection con = _con)
-                // {
-                using (SqlCommand cmd = new SqlCommand())
+               
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
                     {
                         if (con.State == ConnectionState.Closed)
                         {
@@ -417,7 +418,7 @@ namespace PartyEC.RepositoryServices.Services
 
 
                     }
-              //  }
+                }
             }
             catch (Exception)
             {
@@ -428,16 +429,17 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
 
         }
-        private OperationsStatus InsertUpdateProductDetails(Product productObj)
+        public OperationsStatus InsertUpdateProductDetails(Product productObj)
         {
             OperationsStatus operationsStatusObj = null;
             try
             {
                 SqlParameter statusCode = null;
                 SqlParameter outparamID = null;
-                SqlConnection con = _con;
-                //using (SqlConnection con = _con)
-                //{
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+
                     if (con.State == ConnectionState.Closed)
                     {
                         con.Open();
@@ -458,7 +460,6 @@ namespace PartyEC.RepositoryServices.Services
                             }
 
                             cmd.CommandType = CommandType.StoredProcedure;
-
                             cmd.Parameters.Add("@ID", SqlDbType.Int).Value = detail.ID;//for insert it will be 0;
                             cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = productObj.ID;
                             cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = detail.Qty;
@@ -502,7 +503,7 @@ namespace PartyEC.RepositoryServices.Services
                         }
                     
                 }
-            //}
+            }
             }
             catch (Exception)
             {
@@ -518,7 +519,7 @@ namespace PartyEC.RepositoryServices.Services
             OperationsStatus operationsStatusObjH = null;
             OperationsStatus operationsStatusObjD = null;
             //------------transaction need to be put here ----------------------
-            _con = _databaseFactory.GetDBConnection();
+            //_con = _databaseFactory.GetDBConnection();
            // SqlTransaction transaction;
             //transaction = _con.BeginTransaction("UpdateProduct");
             try
@@ -563,10 +564,10 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter statusCode = null;
-                SqlConnection con = _con;
-                //  using (SqlConnection con = _con)
-            //  {
-                using (SqlCommand cmd = new SqlCommand())
+              
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
                     {
                         if (con.State == ConnectionState.Closed)
                         {
@@ -619,7 +620,7 @@ namespace PartyEC.RepositoryServices.Services
                                 break;
                         }
                     }
-              //  }
+                }
             }
             catch (Exception ex)
             {
@@ -635,7 +636,7 @@ namespace PartyEC.RepositoryServices.Services
             bool result= false;
             try
             {
-                using (SqlConnection con = _con)
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
                     if (con.State == ConnectionState.Closed)
                     {
@@ -1334,5 +1335,58 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
 
         }
+
+
+        public OperationsStatus UpdateProductHeaderOtherAttributes(Product productObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateProductHeaderOtherAttributes]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = productObj.ID;
+                        cmd.Parameters.Add("@OtherAttributeXML", SqlDbType.Xml).Value = _attributesRepository.GetAttributeXML(productObj.ProductOtherAttributes);
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
+                                return operationsStatusObj;
+                            case "1":
+                               
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                return operationsStatusObj;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return operationsStatusObj;
+
+        }
+
     }
 }

@@ -252,8 +252,6 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
 
-
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public string RelatedProductsInsert(ProductViewModel productObj)
@@ -272,8 +270,7 @@ namespace PartyEC.UI.Controllers
                 }
                 catch(Exception ex)
                 {
-                   
-                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                  return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                 }
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
@@ -304,8 +301,52 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
 
+        #region UpdateProductHeaderOtherAttributes
+        [HttpPost]
+        public string UpdateProductHeaderOtherAttributes(ProductViewModel productObj)
+        {
+            try
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                productObj.logDetails = new LogDetailsViewModel();
+                //Getting UA
+                productObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                productObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.UpdateProductHeaderOtherAttributes(Mapper.Map<ProductViewModel, Product>(productObj)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        #endregion UpdateProductHeaderOtherAttributes
 
-    
+        #region InsertProductDetails
+        [HttpPost]
+        public string InsertUpdateProductDetails(ProductViewModel productObj)
+        {
+            try
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+
+                //INSERT
+
+                productObj.logDetails = new LogDetailsViewModel();
+                //Getting UA
+                productObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                productObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertUpdateProductDetails(Mapper.Map<ProductViewModel, Product>(productObj)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+            
+        }
+        #endregion InsertProductDetails
 
 
         #region ChangeButtonStyle
@@ -354,6 +395,10 @@ namespace PartyEC.UI.Controllers
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
         #endregion ChangeButtonStyle
+
+
+
+
 
 
 

@@ -352,7 +352,7 @@ namespace PartyEC.RepositoryServices.Services
                     foreach (AttributeValues att in AttributeContainerWithValues) {
 
                         myXML += "<" + att.Name + ">";
-                        myXML += "<" + att.Value + ">";
+                        myXML += "" + att.Value + "";
                         myXML += "</" + att.Name + ">";
                     }
 

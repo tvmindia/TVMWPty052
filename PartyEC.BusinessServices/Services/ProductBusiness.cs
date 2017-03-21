@@ -157,5 +157,34 @@ namespace PartyEC.BusinessServices.Services
             }
         }
 
+
+        public OperationsStatus InsertUpdateProductDetails(Product productObj)
+        {
+            try
+            {
+                return _productRepository.InsertUpdateProductDetails(productObj);
+            }
+            catch (Exception ex)
+            {
+                OperationsStatus OS = new OperationsStatus();
+                OS.StatusMessage = ex.Message.ToString();
+                return OS;
+            }
+        }
+
+
+        public OperationsStatus UpdateProductHeaderOtherAttributes(Product productObj)
+        {
+            try
+            {
+                return _productRepository.UpdateProductHeaderOtherAttributes(productObj);
+            }
+            catch (Exception ex)
+            {
+                OperationsStatus OS = new OperationsStatus();
+                OS.StatusMessage = ex.Message.ToString();
+                return OS;
+            }
+        }
     }
 }

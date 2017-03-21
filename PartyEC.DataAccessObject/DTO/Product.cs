@@ -37,11 +37,11 @@ namespace PartyEC.DataAccessObject.DTO
         public int CategoryID { get; set; }
         public float PositionNo { get; set; }
         public List<ProductDetail> ProductDetails { get; set; }
-      
-        
+        public ProductDetail ProductDetailObj { get; set; }
+
         public List<ProductImages>ProductHeaderImages { get; set; }
         public LogDetails logDetails { get; set; }
-       
+        public List<AttributeValues> ProductOtherAttributes { get; set; }
     }
     public class ProductDetail {
         public int ID { get; set; }

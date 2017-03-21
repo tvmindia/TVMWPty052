@@ -1,16 +1,7 @@
 ﻿@model IEnumerable<PartyEC.UI.Models.AttributesViewModel>
 
 @*ButtonPatch*@
-<div id="yo">
-    @{
-        PartyEC.UI.Models.ToolboxViewModel ToolBoxControlforOtherAttr = new PartyEC.UI.Models.ToolboxViewModel();
-        ToolBoxControlforOtherAttr.savebtn.Visible = true;
-        ToolBoxControlforOtherAttr.savebtn.Title = "Save";
-        ToolBoxControlforOtherAttr.savebtn.Event = "OtherAttributeSave()";
-        Html.RenderPartial("_ToolboxView", ToolBoxControlforOtherAttr);
-    }
 
-</div>
 
 
 

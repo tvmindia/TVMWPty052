@@ -531,9 +531,9 @@ function RenderContentsForAttributes()
             var Isconfig = false;
             var pview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
             //clear otherattributes div
-            $("#otherAttributes").empty();
+            $("#dynamicOtherAttributes").empty();
             //append dynamic html to div from partialview
-            $("#otherAttributes").html(pview);
+            $("#dynamicOtherAttributes").html(pview);
             //date picker reloading
             $('input[type="date"]').datepicker({
                 format: "yyyy-mm-dd",//dd-M-yyyy",
@@ -547,9 +547,9 @@ function RenderContentsForAttributes()
         else
         {
             //clear otherattributes div
-            $("#otherAttributes").empty();
+            $("#dynamicOtherAttributes").empty();
             //append dynamic html to div from partialview
-            $("#otherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-success"> <p>Please Create a product from general section and come back:).</p></div></div>');
+            $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-success"> <p>Please Create a product from general section and come back:).</p></div></div>');
                            
         }
     }
@@ -571,17 +571,48 @@ function OtherAttributeSave()
 {
     try
     {   //Serialize dynamic other attribute elements
-        var otherAttrValues = $('#otherAttributes').find('select,input').serialize();
-        if (otherAttrValues)
+        var otherAttrValues = $('#dynamicOtherAttributes').find('select,input').serializeArray();
+        var prodid=$('.productID').val();
+        if ((otherAttrValues)&&(prodid>0))
         {
+            var ProductAttributesList = [];
+            var ProductViewModel = new Object();
+            ProductViewModel.ID = prodid;
+         
+            for (var at = 0; at < otherAttrValues.length; at++)
+            {
+                var AttributeValuesViewModel = new Object();
+                AttributeValuesViewModel.Name = otherAttrValues[at].name;
+                AttributeValuesViewModel.Value = otherAttrValues[at].value;
+                ProductAttributesList.push(AttributeValuesViewModel);
+            }
+            ProductViewModel.ProductOtherAttributes = ProductAttributesList;
+            var data = "{'productObj':" + JSON.stringify(ProductViewModel) + "}";
+            PostDataToServer('Products/UpdateProductHeaderOtherAttributes/', data, function (JsonResult)
+            {
+              if (JsonResult != '') {
+                   switch (JsonResult.Result)
+                    {
+                        case "OK":
+                            notyAlert('success', JsonResult.Record.StatusMessage);
+                            break;
+                        case "ERROR":
+                            notyAlert('error', JsonResult.Record.StatusMessage);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            })
+            
 
-
-            PostDataToServer('Products/', otherAttrValues);
         }
 
     }
     catch(e)
     {
+
+        
         notyAlert('error', e.Message);
     }
 

@@ -573,23 +573,37 @@
 
                             </div>
                             <div class="tab-pane fade" id="otherAttributes">
+                                <div>
+                                    @{
+                                        PartyEC.UI.Models.ToolboxViewModel ToolBoxControlforOtherAttr = new PartyEC.UI.Models.ToolboxViewModel();
+                                        ToolBoxControlforOtherAttr.savebtn.Visible = true;
+                                        ToolBoxControlforOtherAttr.savebtn.Title = "Save";
+                                        ToolBoxControlforOtherAttr.savebtn.Event = "OtherAttributeSave()";
+                                        Html.RenderPartial("_ToolboxView", ToolBoxControlforOtherAttr);
+                                    }
 
+                                </div>
                                
-                               
-                                        <div class="col-sm-6 col-md-6">
-                                            <div class="alert-message alert-message-success">
-                                               
-                                                <p>Please Create a product from general section and come back:).</p>
-                                            </div>
-                                        </div>
+                               <div id="dynamicOtherAttributes">
+                                   <div class="col-sm-6 col-md-6">
+                                       <div class="alert-message alert-message-success">
+
+                                           <p>Please Create a product from general section and come back:).</p>
+                                       </div>
+                                   </div>
+                               </div>
+                                       
                                </div>
                             <div class="tab-pane fade" id="associatedProducts">
-                                <div class="col-sm-6 col-md-6">
-                                    <div class="alert-message alert-message-success">
+                                <div id="dynamicAssociatedProducts">
+                                    <div class="col-sm-6 col-md-6">
+                                        <div class="alert-message alert-message-success">
 
-                                        <p>Please Create a product from general section and come back:).</p>
+                                            <p>Please Create a product from general section and come back:).</p>
+                                        </div>
                                     </div>
                                 </div>
+                          
                             </div>
                             <div class="tab-pane fade" id="ratingAndReviews">
                                 <div class="well well-sm">

@@ -160,6 +160,7 @@ namespace PartyEC.UI.Models
         public ProductDetailViewModel ProductDetailObj { get; set; }
         //collection of related products ids
         public string IDList { get; set; }
+        public List<AttributeValuesViewModel> ProductOtherAttributes { get; set; }
 
     }
   public class ProductDetailViewModel

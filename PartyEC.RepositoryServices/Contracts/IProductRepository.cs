@@ -22,6 +22,8 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertRelatedProducts(Product productObj,string IDList);
         OperationsStatus DeleteRelatedProducts(Product productObj, string IDList);
 
+        OperationsStatus InsertUpdateProductDetails(Product productObj);
+        OperationsStatus UpdateProductHeaderOtherAttributes(Product productObj);
 
     }
 }

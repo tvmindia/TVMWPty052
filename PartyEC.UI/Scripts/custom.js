@@ -47,9 +47,9 @@ function notyAlert(type,msgtxt) {
     });
    
 }
-function PostDataToServer(page,formData)
+function PostDataToServer(page, formData, callback)
 {
-   
+    debugger;
     var jsonResult={};
     $.ajax({
         type: "POST",
@@ -60,6 +60,7 @@ function PostDataToServer(page,formData)
         contentType: "application/json; charset=utf-8",
         dataType: "json",
         success: function (data) {
+            callback(data);
             jsonResult = data;
         },
         error: function (jqXHR, textStatus, errorThrown) {
