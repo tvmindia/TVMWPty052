@@ -374,7 +374,6 @@ function ConstructproductDetailObject()
 
 function productSaveSuccess(data, status, xhr)
 {
-  
     var JsonResult=JSON.parse(data)
     switch (JsonResult.Result) {
         case "OK":
@@ -386,6 +385,7 @@ function productSaveSuccess(data, status, xhr)
             notyAlert('error', JsonResult.Record.StatusMessage);
             break;
         default:
+            notyAlert('error', JsonResult.Record.Message);
             break;
     }
 }
@@ -421,7 +421,11 @@ function clearform()
     //Clear form
     $('#productform')[0].reset();
     //Clear Hidden form fields
-    $("#productform input:hidden").val('').trigger('change');
+    //$("#productform input:hidden").val('').trigger('change');
+    $(".productID").val(0);
+    $("#productdetailsID").val(0);
+    $("#productDetailhdf").val('');
+    
 }
 
 function RelatedProductsModel()
@@ -549,7 +553,7 @@ function RenderContentsForAttributes()
             //clear otherattributes div
             $("#dynamicOtherAttributes").empty();
             //append dynamic html to div from partialview
-            $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-success"> <p>Please Create a product from general section and come back:).</p></div></div>');
+            $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back:).</p></div></div>');
                            
         }
     }
@@ -611,10 +615,119 @@ function OtherAttributeSave()
     }
     catch(e)
     {
-
-        
         notyAlert('error', e.Message);
     }
+}
+
+function RenderContentsForAssocProdAttributes()
+{
+    HideProductDetalsToolBox();
+    try {
+        debugger;
+        var atsetID = $("#AttributeSetID").val();
+        if (atsetID) {
+            var Isconfig = true;
+            var pview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
+            //clear otherattributes div
+            $("#dynamicAssociatedProducts").empty();
+            //append dynamic html to div from partialview
+            $("#dynamicAssociatedProducts").html(pview);
+            //date picker reloading
+            $('input[type="date"]').datepicker({
+                format: "yyyy-mm-dd",//dd-M-yyyy",
+                maxViewMode: 0,
+                todayBtn: "linked",
+                clearBtn: true,
+                autoclose: true,
+                todayHighlight: true
+            });
+        }
+        else {
+            //clear otherattributes div
+            $("#dynamicAssociatedProducts").empty();
+            //append dynamic html to div from partialview
+            $("#dynamicAssociatedProducts").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back:).</p></div></div>');
+
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.Message);
+    }
+}
 
 
+function ProductTypeOnChange()
+{
+    try
+    {
+        var prodtype = $("#ProductType").val();
+        switch(prodtype)
+        {
+            case "C":
+                //Hide General detail entries
+                $(".productDetailGroup").hide();
+              
+
+                break;
+            case "S":
+                $(".productDetailGroup").show();
+                break;
+            default:
+                break;
+
+        }
+    }
+    catch(e)
+    {
+    }
+}
+
+function AssociatedProductSave()
+{
+    debugger;
+    try {   //Serialize dynamic other attribute elements
+        var Associatedpro = $('#dynamicAssociatedProducts').find('select,input').serializeArray();
+        var prodid = $('.productID').val();
+        if ((Associatedpro) && (prodid > 0)) {
+          
+            
+            var ProductViewModel = new Object();
+            var ProductDetailViewModel = new Object();
+            var ProductAttributesList = [];
+            var ProductDetailList = [];
+            ProductViewModel.ID = prodid;
+
+            for (var at = 0; at < Associatedpro.length; at++) {
+                var AttributeValuesViewModel = new Object();
+                AttributeValuesViewModel.Name = Associatedpro[at].name;
+                AttributeValuesViewModel.Value = Associatedpro[at].value;
+                ProductAttributesList.push(AttributeValuesViewModel);
+            }
+           
+            ProductDetailViewModel.ProductAttributes = ProductAttributesList;
+            ProductDetailList.push(ProductDetailViewModel);
+            ProductViewModel.ProductDetails = ProductDetailList;
+            var data = "{'productObj':" + JSON.stringify(ProductViewModel) + "}";
+            PostDataToServer('Products/InsertUpdateProductDetails/', data, function (JsonResult) {
+                if (JsonResult != '') {
+                    switch (JsonResult.Result) {
+                        case "OK":
+                            notyAlert('success', JsonResult.Record.StatusMessage);
+                            break;
+                        case "ERROR":
+                            notyAlert('error', JsonResult.Record.StatusMessage);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            })
+
+
+        }
+
+    }
+    catch (e) {
+        notyAlert('error', e.Message);
+    }
 }

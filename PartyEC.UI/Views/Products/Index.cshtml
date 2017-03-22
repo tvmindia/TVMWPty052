@@ -104,7 +104,7 @@
                                     <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
                                     <li onclick="HideProductDetalsToolBox()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
                                     <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
-                                    <li onclick="HideProductDetalsToolBox()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
+                                    <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
                                     <li onclick="HideProductDetalsToolBox()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
                                  </ul>
                              </div>
@@ -181,7 +181,7 @@
                                                 { Text = "Quotation", Value = "Q" });
                                             }
                                        
-                                            @Html.DropDownListFor(model => model.ActionType, actionTypeList, "-- Select Action Type --", new { @class = "form-control", @onchange = "ActionTypeOnChange()" })
+                                            @Html.DropDownListFor(model => model.ActionType, actionTypeList, "-- Select Action Type --", new { @class = "form-control", @onchange = "ActionTypeOnChange()",value=-1 })
                                             @Html.ValidationMessageFor(model => model.ActionType, "", new { @class = "text-danger" })
                    
                                         </div>
@@ -190,7 +190,7 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.SupplierID, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-4">
-                                            @Html.DropDownListFor(model => model.SupplierID, Model.suppliers, "--Select Supplier--", new { @class = "form-control", @onchange = "supplierOnChange()" })
+                                            @Html.DropDownListFor(model => model.SupplierID, Model.suppliers, "--Select Supplier--", new { @class = "form-control", onchange = "supplierOnChange()",value=-1 })
                                           
                                             @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
                                         </div>
@@ -199,7 +199,7 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ManufacturerID, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-4">
-                                            @Html.DropDownListFor(model => model.ManufacturerID, Model.manufacturers, "--Select Manufacturers--", new { @class = "form-control", @onchange = "manufacturerOnChange()" })
+                                            @Html.DropDownListFor(model => model.ManufacturerID, Model.manufacturers, "--Select Manufacturers--", new { @class = "form-control", onchange = "manufacturerOnChange()",value=-1 })
                                             @Html.ValidationMessageFor(model => model.ManufacturerID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -215,7 +215,7 @@
                                                 { Text = "Simple", Value = "S" });
                                             }
                                         
-                                            @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange()" })
+                                            @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange()",value=-1 })
                                             @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -288,26 +288,26 @@
                                 </div>
                                  
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.DiscountAmount, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    @Html.LabelFor(model => model.DiscountAmount, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
                                     <div class="col-lg-4">
-                                        @Html.EditorFor(model => model.DiscountAmount, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.DiscountAmount, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.DiscountAmount, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
+                                        @Html.ValidationMessageFor(model => model.DiscountAmount, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.DiscountStartDate, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    @Html.LabelFor(model => model.DiscountStartDate, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
                                     <div class="col-lg-4">
                                        
-                                        @Html.EditorFor(model => model.DiscountStartDate, new { htmlAttributes = new { @class = "form-control"} })
-                                        @Html.ValidationMessageFor(model => model.DiscountStartDate, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.DiscountStartDate, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
+                                        @Html.ValidationMessageFor(model => model.DiscountStartDate, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.DiscountEndDate, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    @Html.LabelFor(model => model.DiscountEndDate, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
                                     <div class="col-lg-4">
-                                        @Html.EditorFor(model => model.DiscountEndDate, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.DiscountEndDate, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.DiscountEndDate, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
+                                        @Html.ValidationMessageFor(model => model.DiscountEndDate, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
                             </div>
@@ -332,8 +332,8 @@
                             <div class="tab-pane fade" id="inventory">
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.StockAvailable, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                    <div class="col-lg-4">
+                                    @Html.LabelFor(model => model.StockAvailable, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
+                                    <div class="col-lg-4 productDetailGroup">
                                         <div>
                                             @Html.EditorFor(model => model.StockAvailable)
                                             @Html.ValidationMessageFor(model => model.StockAvailable, "", new { @class = "text-danger" })
@@ -342,17 +342,17 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
                                     <div class="col-lg-4">
-                                        @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
+                                        @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.OutOfStockAlertQty, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    @Html.LabelFor(model => model.OutOfStockAlertQty, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
                                     <div class="col-lg-4">
-                                        @Html.EditorFor(model => model.OutOfStockAlertQty, new { htmlAttributes = new { @class = "form-control" } })
-                                        @Html.ValidationMessageFor(model => model.OutOfStockAlertQty, "", new { @class = "text-danger" })
+                                        @Html.EditorFor(model => model.OutOfStockAlertQty, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
+                                        @Html.ValidationMessageFor(model => model.OutOfStockAlertQty, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
 
@@ -586,7 +586,7 @@
                                
                                <div id="dynamicOtherAttributes">
                                    <div class="col-sm-6 col-md-6">
-                                       <div class="alert-message alert-message-success">
+                                       <div class="alert-message alert-message-warning">
 
                                            <p>Please Create a product from general section and come back:).</p>
                                        </div>
@@ -595,15 +595,15 @@
                                        
                                </div>
                             <div class="tab-pane fade" id="associatedProducts">
+                             
                                 <div id="dynamicAssociatedProducts">
                                     <div class="col-sm-6 col-md-6">
-                                        <div class="alert-message alert-message-success">
-
+                                        <div class="alert-message alert-message-warning">
                                             <p>Please Create a product from general section and come back:).</p>
                                         </div>
                                     </div>
                                 </div>
-                          
+
                             </div>
                             <div class="tab-pane fade" id="ratingAndReviews">
                                 <div class="well well-sm">
@@ -847,16 +847,8 @@
                         </div>
                         @Html.HiddenFor(model => model.productDetailhdf)
                   }
-
-                      
-
-                        </div>
-                   
-
-                </div>
-
-
-             
+                       </div>
+                 </div>
             </div>
         </div>
     </div>
@@ -913,8 +905,8 @@
 @using (Ajax.BeginForm("RelatedProductsInsert", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "Are You Sure?...", OnSuccess = "RelatedproductSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "" }, new { @class = "form-horizontal", role = "form", id = "relatedproductform" }))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.IDList, htmlAttributes: new { @class = "control-label col-lg-2 IDList" })
-    @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-lg-2 productID",id= "productID" })
+    @Html.HiddenFor(model => model.IDList, htmlAttributes: new { @class = "control-label col-lg-2 IDList", Value = "0" })
+    @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-lg-2 productID",id= "productID", Value = "0" })
     <div class="form-group" hidden="hidden">
         <div class="col-md-offset-2 col-md-10">
 
@@ -936,8 +928,8 @@
 @using (Ajax.BeginForm("DeleteRelatedProducts", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "Are You Sure?...", OnSuccess = "RelatedproductDeleteSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "" }, new { @class = "form-horizontal", role = "form", id = "relatedproductDeleteform" }))
 {
     @Html.AntiForgeryToken()
-    @Html.HiddenFor(model => model.IDList, htmlAttributes: new { @class = "control-label col-lg-2 IDList",id="relatedproductlistID" })
-    @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-lg-2 productID", id = "productIDInDelete" })
+    @Html.HiddenFor(model => model.IDList, htmlAttributes: new { @class = "control-label col-lg-2 IDList",id="relatedproductlistID", Value = "0" })
+    @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-lg-2 productID", id = "productIDInDelete", Value = "0" })
     <div class="form-group" hidden="hidden">
         <div class="col-md-offset-2 col-md-10">
 

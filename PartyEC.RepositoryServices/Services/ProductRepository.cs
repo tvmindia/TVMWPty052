@@ -420,7 +420,7 @@ namespace PartyEC.RepositoryServices.Services
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -505,7 +505,7 @@ namespace PartyEC.RepositoryServices.Services
                 }
             }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
                 throw;
@@ -551,7 +551,7 @@ namespace PartyEC.RepositoryServices.Services
                 //---------------------------------------------------------------------
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
               //  transaction.Rollback();
 
@@ -857,16 +857,21 @@ namespace PartyEC.RepositoryServices.Services
                             myProductDetail.ProductAttributes = new List<AttributeValues>();
                             foreach (AttributeValues att in myAttributeStructure)
                             {
+                                int i = 0;
                                 AttributeValues myAttribute = new AttributeValues(att);//copy the values
                                 try
                                 {
-                                    if (sdr.GetOrdinal(att.Name) > 0)
+                                    //Checks column exists in reader
+                                    if (sdr.GetName(i).Equals(att.Name.ToString(), StringComparison.InvariantCultureIgnoreCase))
+                                    {
                                         myAttribute.Value = sdr[att.Name].ToString();
+                                    }
                                 }
-                                catch (Exception)
+                                catch (Exception ex)
                                 {
                                 }
                                 myProductDetail.ProductAttributes.Add(myAttribute);
+                                i++;
                             }
                             myProductDetails.Add(myProductDetail);
                             myProductDetail.ProductDetailImages = GetProductImages(myProductDetail.ProductID, myProductDetail.ID);

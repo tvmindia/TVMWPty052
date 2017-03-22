@@ -47,7 +47,8 @@ namespace PartyEC.UI.Models
         //  public List<SupplierViewModel> suppliers { get; set; }
 
         [Display(Name = "Manufacturer")]
-        public int ManufacturerID { get; set; }
+        //making it nullable because its not mandatory field
+        public int? ManufacturerID { get; set; }
         public List<SelectListItem> manufacturers { get; set; }
         [Required(ErrorMessage = "Please enter Product Type")]
         [Display(Name = "Product Type")]
@@ -67,13 +68,16 @@ namespace PartyEC.UI.Models
         #region Prices
         [Required(ErrorMessage = "Please enter Cost Price")]
         [Display(Name = "Cost Price")]
-        [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Decimal ie:(85.50)")]
-        public decimal CostPrice { get; set; }
+        // [RegularExpression("^[0-9]*$", ErrorMessage = "Must be number")]
+        // [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Decimal ie:(85.50)")]
+        [Range(0, 9999999999999999.99)]
+        public decimal? CostPrice { get; set; }
 
         [Required(ErrorMessage = "Please enter Selling Price ")]
         [Display(Name = "Selling Price")]
-        [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Decimal ie:(85.50)")]
-        public decimal BaseSellingPrice { get; set; }
+        //[RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Decimal ie:(85.50)")]
+        [Range(0, 9999999999999999.99)]
+        public decimal? BaseSellingPrice { get; set; }
 
         [Required(ErrorMessage = "Please enter Show Price  ")]
         [Display(Name = "Show Price")]
@@ -83,8 +87,9 @@ namespace PartyEC.UI.Models
         public string TaxClass { get; set; }
        
         [Display(Name = "Discount Price")]
-        [RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Decimal ie:(85.50)")]
-        public decimal DiscountAmount { get; set; }
+        //[RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Decimal ie:(85.50)")]
+        [Range(0, 9999999999999999.99)]
+        public decimal? DiscountAmount { get; set; }
 
         [DataType(DataType.Date,ErrorMessage ="Must be a Date")]
         //[DisplayFormat(DataFormatString = "{0:dd-M-yyyy}", ApplyFormatInEditMode = true)]
@@ -129,14 +134,13 @@ namespace PartyEC.UI.Models
         [Required(ErrorMessage = "Please enter Stock Status")]
         [Display(Name = "Stock Status")]
         public Boolean StockAvailable { get; set; }
-        [Required(ErrorMessage = "Please enter Quantity")]
         [RegularExpression("^[0-9]*$", ErrorMessage = "Must be number")]
         [Display(Name = "Qty")]
         public int? Qty { get; set; }
 
         
 
-        [Required(ErrorMessage = "Please enter Reorder Alert Qty")]
+       
         [RegularExpression("^[0-9]*$", ErrorMessage = "Must be number")]
         [Display(Name = "Reorder Alert Qty")]
         public int? OutOfStockAlertQty { get; set; }
@@ -170,14 +174,14 @@ namespace PartyEC.UI.Models
 
       
 
-        public int Qty { get; set; }
-        public int OutOfStockAlertQty { get; set; }
+        public int? Qty { get; set; }
+        public int? OutOfStockAlertQty { get; set; }
         public decimal PriceDifference { get; set; }
         public string DetailTags { get; set; }
         public Boolean Enabled { get; set; }
         public Boolean StockAvailable { get; set; }
         public Boolean DefaultOption { get; set; }
-        public decimal DiscountAmount { get; set; }
+        public decimal? DiscountAmount { get; set; }
         public DateTime? DiscountStartDate { get; set; }
         public DateTime? DiscountEndDate { get; set; }
         public LogDetailsViewModel logDetails { get; set; }

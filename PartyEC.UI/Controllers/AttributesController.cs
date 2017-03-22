@@ -211,16 +211,24 @@ namespace PartyEC.UI.Controllers
                 if ((!string.IsNullOrEmpty(setID))&&(!string.IsNullOrEmpty(Isconfigurable)))
                 {
                     attributesList = Mapper.Map<List<Attributes>, List<AttributesViewModel>>(_attributeBusiness.GetAllAttributeBySet(int.Parse(setID),bool.Parse(Isconfigurable)));
+                    //Renders corresponding partial view
+                    switch(bool.Parse(Isconfigurable))
+                    {
+                        case true:
+                            return View("_EditTemplateForAssociatedProductAttributes", attributesList);
+                        case false:
+                            return View("_EditTemplateForAttributes", attributesList);
+                    }
                 }
               
-                return View("_EditTemplateForAttributes", attributesList);
+           
             }
             catch(Exception ex)
             {
-                return View("_EditTemplateForAttributes", attributesList);
+                
             }
-            
-           
+
+            return View("", attributesList);
         }
         #endregion OtherAttributeTemplate
     
