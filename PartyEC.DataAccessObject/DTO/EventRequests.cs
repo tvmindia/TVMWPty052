@@ -12,6 +12,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string EventType { get; set; }
         public string EventTitle  { get; set; }
         public DateTime EventDateTime { get; set; }
+        public string EventTime { get; set; }
         public   int NoOfPersons { get; set; }
         public decimal Budget  { get; set; }
         public string LookingFor  { get; set; }

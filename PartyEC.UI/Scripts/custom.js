@@ -133,3 +133,26 @@ function ClearFields() {
 
 }
 
+//------Date Formating :Return Result Eg: 01-Jan-2017--------------------//
+//Passing value
+//before Parse Eg:"2017-03-30T00:00:00"
+//after Parse Date Eg:1490832000000  Passing as jsonDate
+function ConvertJsonToDate(jsonDate) {
+    debugger;
+    if (jsonDate != null) {
+       // var dateString = jsonDate.substr(6);
+        var currentTime = new Date(parseInt(jsonDate));
+        var month = currentTime.getMonth();
+        var day = currentTime.getDate();
+        var year = currentTime.getFullYear();
+        var monthNames = [
+                      "Jan", "Feb", "Mar",
+                      "Apr", "May", "Jun", "Jul",
+                      "Aug", "Sep", "Oct",
+                      "Nov", "Dec"
+        ];
+        var result = day + '-' + monthNames[month] + '-' + year;
+        return result;
+    }
+}
+
