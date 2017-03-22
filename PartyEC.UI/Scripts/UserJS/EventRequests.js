@@ -17,6 +17,7 @@ $(document).ready(function () {
                { "data": "EventTitle", "defaultContent": "<i>-</i>" },
                { "data": "EventType", "defaultContent": "<i>-</i>" },
                { "data": "EventDateTime", "defaultContent": "<i>-</i>" },
+               { "data": "EventTime", "defaultContent": "<i>-</i>" },
                { "data": "CustomerName", "defaultContent": "<i>-</i>" },
                { "data": "ContactName", "defaultContent": "<i>-</i>" },
                { "data": "Phone", "defaultContent": "<i>-</i>" },
@@ -24,8 +25,17 @@ $(document).ready(function () {
                { "data": "FollowUpDate", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
-             columnDefs: [{ "targets": [0], "visible": false, "searchable": false },
-                          { "targets": [1], "visible": false, "searchable": false }]
+             columnDefs: [{ "targets": [0], "visible": false, "searchable": false },{ "targets": [1], "visible": false, "searchable": false },
+                 { "targets": [5], "render": function (data, type, full, meta) {                         
+                         var str = Date.parse(data);
+                         var res = ConvertJsonToDate('' + str + '');
+                         return res;
+                 }},
+                 { "targets": [11], "render": function (data, type, full, meta) {                         
+                         var str = Date.parse(data);
+                         var res = ConvertJsonToDate('' + str + '');
+                         return res;
+                     }}]
          });
     }
     catch (e) {
@@ -76,7 +86,7 @@ function tabeventRequestListClick()
     $('#tabeventRequestDetails a').attr('data-toggle', '');
 }
 
-
+//---------------------------------------Edit Bind Functions-------------------------------------//
 function Edit(currentObj) {
     //Tab Change
     ChangeButtonPatchView("EventRequests", "btnPatcheventRequeststab2", "Edit"); //ControllerName,id of the container div,Name of the action
@@ -107,38 +117,40 @@ function BindEventRequest(id)
         $("#TotalTaxAmt").val(thisEvent.TotalTaxAmt);
         $("#TotalDiscountAmt").val(thisEvent.TotalDiscountAmt);
         $("#EventStatus").val(thisEvent.EventStatus);
-        $("#AdminRemarks").val(thisEvent.AdminRemarks);
+        $("#AdminRemarks").val(thisEvent.AdminRemarks);        
         $("#FollowUpDate").val(thisEvent.FollowUpDate.substring(0, 10));
+        //labels
+        $('#lblEventReqNo').text(thisEvent.EventReqNo);
+        $('#lblEventType').text(thisEvent.EventType);
+        $('#lblEventTitle').text(thisEvent.EventTitle);
 
-        document.getElementById('lblEventReqNo').innerHTML = thisEvent.EventReqNo;
-        document.getElementById('lblEventType').innerHTML = thisEvent.EventType;
-        document.getElementById('lblEventTitle').innerHTML = thisEvent.EventTitle;
-        document.getElementById('lblEventDate').innerHTML = thisEvent.EventDateTime.substring(0, 10);
-        document.getElementById('lblEventTime').innerHTML = thisEvent.EventDateTime.substring(11);
-        document.getElementById('lblEventDesc').innerHTML = thisEvent.EventDesc;
-        document.getElementById('lblLookingFor').innerHTML = thisEvent.LookingFor;
-        document.getElementById('lblRequirementSpec').innerHTML = thisEvent.RequirementSpec;
-        document.getElementById('lblMessage').innerHTML = thisEvent.Message;
-        document.getElementById('lblNoOfPersons').innerHTML = thisEvent.NoOfPersons;
-        document.getElementById('lblBudget').innerHTML = thisEvent.Budget;
-        document.getElementById('lblContactName').innerHTML = thisEvent.ContactName;
-        document.getElementById('lblEmail').innerHTML = thisEvent.Email;
-        document.getElementById('lblPhone').innerHTML = thisEvent.Phone;
-        document.getElementById('lblContactType').innerHTML = thisEvent.ContactType;
+        //formating Date using function in custom js 
+        var str = Date.parse(thisEvent.EventDateTime.substring(0, 10));
+        var resultdate = ConvertJsonToDate('' + str + '');
+        $('#lblEventDate').text(resultdate);      
+        $('#lblEventTime').text(thisEvent.EventTime);
+        $('#lblEventDesc').text(thisEvent.EventDesc);
+        $('#lblLookingFor').text(thisEvent.LookingFor);
+        $('#lblRequirementSpec').text(thisEvent.RequirementSpec);
+        $('#lblMessage').text(thisEvent.Message);
+        $('#lblNoOfPersons').text(thisEvent.NoOfPersons);
+        $('#lblBudget').text(thisEvent.Budget);
+        $('#lblContactName').text(thisEvent.ContactName);
+        $('#lblEmail').text(thisEvent.Email);
+        $('#lblPhone').text(thisEvent.Phone);
+        $('#lblContactType').text(thisEvent.ContactType);
     }
 }
-
 function BindCustomer(id)
 {
     var thisEvent = GetCustomer(id);
     if (thisEvent != null) {
-        document.getElementById('lblcust_ID').innerHTML = thisEvent.ID;
-        document.getElementById('lblName').innerHTML = thisEvent.Name;
-        document.getElementById('lblCust_No').innerHTML = thisEvent.Mobile;
-        document.getElementById('lblCust_Email').innerHTML = thisEvent.Email;
+        $('#lblcust_ID').text(thisEvent.ID);
+        $('#lblName').text(thisEvent.Name);
+        $('#lblCust_No').text(thisEvent.Mobile);
+        $('#lblCust_Email').text(thisEvent.Email);
     }
 }
-
 function BindComments()   // To Display Previous Comment history
 {
     debugger;
@@ -149,7 +161,10 @@ function BindComments()   // To Display Previous Comment history
         debugger;
         for (var i = 0; i < thisCommentList.length; i++)
         {
-            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12"><span class="badge">'+ thisCommentList[i].CommentDate.substring(1, 10) + '</span>' + thisCommentList[i].PrevComment + '</li>');
+            var str = Date.parse(thisCommentList[i].CommentDate.substring(0, 10));
+            var resultdate = ConvertJsonToDate('' + str + '');
+            
+            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12"><span class="badge">' + resultdate + '</span>' + thisCommentList[i].PrevComment + '</li>');
             $("#CommentsDisplay").append(cnt);
         }
     }

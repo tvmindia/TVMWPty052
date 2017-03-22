@@ -28,6 +28,7 @@ namespace PartyEC.UI.Models
         [ReadOnly(true)]
         [Display(Name = "Event Date")]
         public DateTime EventDateTime { get; set; }
+        public string EventTime { get; set; }
 
         [Display(Name = "Event Status")]
         public string EventDesc { get; set; }
