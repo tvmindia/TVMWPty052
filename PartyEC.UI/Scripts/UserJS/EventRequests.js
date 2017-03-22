@@ -161,7 +161,10 @@ function BindComments()   // To Display Previous Comment history
         debugger;
         for (var i = 0; i < thisCommentList.length; i++)
         {
-            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12"><span class="badge">'+ thisCommentList[i].CommentDate.substring(1, 10) + '</span>' + thisCommentList[i].PrevComment + '</li>');
+            var str = Date.parse(thisCommentList[i].CommentDate.substring(0, 10));
+            var resultdate = ConvertJsonToDate('' + str + '');
+            
+            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12"><span class="badge">' + resultdate + '</span>' + thisCommentList[i].PrevComment + '</li>');
             $("#CommentsDisplay").append(cnt);
         }
     }
