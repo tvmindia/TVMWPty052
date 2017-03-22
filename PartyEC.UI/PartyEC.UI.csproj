@@ -475,6 +475,7 @@
     <Compile Include="Controllers\AttributesController.cs" />
     <Compile Include="Controllers\AttributeSetController.cs" />
     <Compile Include="Controllers\AttributeSetLinkController.cs" />
+    <Compile Include="Controllers\Cart_WishlistController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
@@ -487,6 +488,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AttributesViewModel.cs" />
+    <Compile Include="Models\Cart_WishlistViewModel.cs" />
     <Compile Include="Models\CategoriesViewModel.cs" />
     <Compile Include="Models\CommonViewModel.cs" />
     <Compile Include="Models\CustomerViewModel.cs" />
@@ -517,6 +519,7 @@
     <Content Include="Views\EventRequests\Index.cshtml" />
     <Content Include="Views\Shared\_EditTemplateForAttributes.cshtml" />
     <Content Include="Views\Order\Index.cshtml" />
+    <Content Include="Views\Cart_Wishlist\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
