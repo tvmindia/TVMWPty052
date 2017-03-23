@@ -31,5 +31,35 @@ namespace PartyEC.BusinessServices.Services
             }
             return cartWishlist;
         }
+
+        public List<Cart_Wishlist> GetCustomerShoppingCart(int customerID)
+        {
+            List<Cart_Wishlist> cartlist = null;
+            try
+            {
+                cartlist = _cartWishlistRepository.GetCustomerShoppingCart(customerID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return cartlist;
+        }
+        public List<Cart_Wishlist> GetCustomerWishlist(int customerID)
+        {
+            List<Cart_Wishlist> wishlist = null;
+            try
+            {
+                wishlist = _cartWishlistRepository.GetCustomerWishlist(customerID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return wishlist;
+        }
+        
     }
 }

@@ -11,5 +11,11 @@ namespace PartyEC.BusinessServices.Contracts
     {
 
         List<Cart_Wishlist> GetAllCustomerCartWishlistSummary();
+
+        List<Cart_Wishlist> GetCustomerShoppingCart(int customerID);
+
+        List<Cart_Wishlist> GetCustomerWishlist(int customerID);
+        
+
     }
 }

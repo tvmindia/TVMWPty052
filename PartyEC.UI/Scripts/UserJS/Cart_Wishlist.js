@@ -21,6 +21,53 @@ $(document).ready(function () {
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ]
          });
+
+        DataTables.CustomersCartTable = $('#tblShoppingCart').DataTable(
+          {
+              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+              order: [],
+              searching: true,
+              paging: true,
+              data: null,
+              columns: [{ "data": "ProductID" },
+                        { "data": "ProductName" },
+                        { "data": "ProductSpecXML", "defaultContent": "<i>-</i>" },
+                        { "data": "Qty", "defaultContent": "<i>-</i>" },
+                        { "data": "CurrencyCode", "defaultContent": "<i>-</i>" },
+                        { "data": "Price", "defaultContent": "<i>-</i>" },
+                        { "data": "ItemStatus", "defaultContent": "<i>-</i>" },
+                        { "data": "CreatedDate", "defaultContent": "<i>-</i>" }
+              ], columnDefs: [{                  
+                     "targets": [7], "render": function (data, type, full, meta) {
+                         var str = Date.parse(data);
+                         debugger;
+                         var res = ConvertJsonToDate('' + str + '');
+                         return res;
+                     }
+                 }]
+          });
+
+        DataTables.CustomersWishlistTable = $('#tblWishlist').DataTable(
+            {
+                dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+                order: [],
+                searching: true,
+                paging: true,
+                data: null,
+                columns: [{ "data": "ProductID" },
+                            { "data": "ProductName" },
+                            { "data": "ProductSpecXML", "defaultContent": "<i>-</i>" },
+                            { "data": "CreatedDate", "defaultContent": "<i>-</i>" },
+                            //{ "data": "", "defaultContent": "<i>-</i>" }
+                ], columnDefs: [{
+                    "targets": [3], "render": function (data, type, full, meta) {
+                        var str = Date.parse(data);
+                        debugger;
+                        var res = ConvertJsonToDate('' + str + '');
+                        return res;
+                    }
+                }]
+            });
     
     }
     catch (e) {
@@ -53,42 +100,82 @@ function GetAllCustomerCartWishlistSummary() {
 
 function Edit(currentObj) {
     //Tab Change
-    ChangeButtonPatchView("EventRequests", "btnPatcheventRequeststab2", "Edit"); //ControllerName,id of the container div,Name of the action
-   
     debugger;
+    ChangeButtonPatchView("EventRequests", "btnPatcheventRequeststab2", "Edit"); //ControllerName,id of the container div,Name of the action
+    $('#tabshoppingCartWishlist').trigger('click');
+    
     var rowData = DataTables.CustomersListTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null))
     {
-        DataTables.CustomersCartTable = $('#tblShoppingCart').DataTable(
-            {
-               dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
-               order: [],
-               searching: true,
-               paging: true,
-               data: GetCustomerShoppingCart(rowData.ID),
-               columns: [{ "data": "ProductID" },
-                         { "data": "ProductName" },
-                         { "data": "ProductSpecXML", "defaultContent": "<i>-</i>" },
-                         { "data": "Qty", "defaultContent": "<i>-</i>" },
-                         { "data": "CurrencyCode", "defaultContent": "<i>-</i>" },
-                         { "data": "Price", "defaultContent": "<i>-</i>" },
-                         { "data": "ItemStatus", "defaultContent": "<i>-</i>" }
-               ]
-            });
-
-        DataTables.CustomersWishlistTable = $('#tblWishlist').DataTable(
-            {
-                dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
-                order: [],
-                searching: true,
-                paging: true,
-                data: GetCustomerWishlist(rowData.ID),
-                columns: [  { "data": "ProductID" },
-                            { "data": "Product Name" },
-                            { "data": "ProductSpecXML", "defaultContent": "<i>-</i>" },
-                            { "data": "", "defaultContent": "<i>-</i>" },
-                            { "data": "", "defaultContent": "<i>-</i>" },
-                ]
-            });
+        try {
+            DataTables.CustomersCartTable.clear().rows.add(GetCustomerShoppingCart(rowData.ID)).draw(false);
+        }
+        catch (e) {
+            notyAlert('error', e.message);
+        }
+        try {
+            DataTables.CustomersWishlistTable.clear().rows.add(GetCustomerWishlist(rowData.ID)).draw(false);
+        }
+        catch (e) {
+            notyAlert('error', e.message);
+        }
+       
+        
+      
+      
     }
+}
+
+function GetCustomerShoppingCart(id) {
+
+    try {
+        debugger;
+        var data = { "ID": id };
+        var ds = {};
+        ds = GetDataFromServer("Cart_Wishlist/GetCustomerShoppingCart/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            alert(ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
+function GetCustomerWishlist(id) {
+
+    try {
+        debugger;
+        var data = { "ID": id };
+        var ds = {};
+        ds = GetDataFromServer("Cart_Wishlist/GetCustomerWishlist/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            alert(ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
+function goback() {
+    $('#tabCustomerList').trigger('click');
+    //try {
+    //    DataTables.CustomersListTable.clear().rows.add(GetAllCustomerCartWishlistSummary()).draw(false);
+    //}
+    //catch (e) {
+    //    notyAlert('error', e.message);
+    //}
 }

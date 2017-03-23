@@ -21,6 +21,7 @@ namespace PartyEC.RepositoryServices.Services
         {
             _databaseFactory = databaseFactory;
         }
+        #endregion DataBaseFactory
 
         public List<Cart_Wishlist> GetAllCustomerCartWishlistSummary()
         {
@@ -68,7 +69,106 @@ namespace PartyEC.RepositoryServices.Services
             }
             return Requestslist;
         }
-        #endregion DataBaseFactory
 
+        public List<Cart_Wishlist> GetCustomerShoppingCart(int customerID)
+        {
+            List<Cart_Wishlist> Requestslist = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID; 
+                        cmd.CommandText = "[GetCustomerShoppingCart]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                Requestslist = new List<Cart_Wishlist>();
+                                while (sdr.Read())
+                                {
+                                    Cart_Wishlist _ShoppingcartObj = new Cart_Wishlist();
+                                    {
+                                        _ShoppingcartObj.ProductID = (sdr["ProductID"].ToString() != "" ? Int16.Parse(sdr["ProductID"].ToString()) : _ShoppingcartObj.ProductID);
+                                        _ShoppingcartObj.ProductName = (sdr["ProductName"].ToString() != "" ?  sdr["ProductName"].ToString() : _ShoppingcartObj.ProductName);
+                                        _ShoppingcartObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? Int16.Parse(sdr["CustomerID"].ToString()) : _ShoppingcartObj.CustomerID);
+                                        _ShoppingcartObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _ShoppingcartObj.CustomerName);
+                                        _ShoppingcartObj.ProductSpecXML = (sdr["ProductSpecXML"].ToString() != "" ? sdr["ProductSpecXML"].ToString() : _ShoppingcartObj.ProductSpecXML);
+                                        _ShoppingcartObj.Qty = (sdr["Qty"].ToString() != "" ? Int16.Parse(sdr["Qty"].ToString()) : _ShoppingcartObj.Qty);
+                                        _ShoppingcartObj.CurrencyCode = (sdr["CurrencyCode"].ToString() != "" ? sdr["CurrencyCode"].ToString() : _ShoppingcartObj.CurrencyCode);
+                                        _ShoppingcartObj.Price = (sdr["Price"].ToString() != "" ? Decimal.Parse(sdr["Price"].ToString()) : _ShoppingcartObj.Price);
+                                        _ShoppingcartObj.ItemStatus = (sdr["ItemStatus"].ToString() != "" ? sdr["ItemStatus"].ToString() : _ShoppingcartObj.ItemStatus);
+                                        _ShoppingcartObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _ShoppingcartObj.CreatedDate);    
+                                    }
+                                    Requestslist.Add(_ShoppingcartObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Requestslist;
+        }
+        
+        public List<Cart_Wishlist> GetCustomerWishlist(int customerID)
+        {
+            List<Cart_Wishlist> Requestslist = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID;
+                        cmd.CommandText = "[GetCustomerWishlist]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                Requestslist = new List<Cart_Wishlist>();
+                                while (sdr.Read())
+                                {
+                                    Cart_Wishlist _ShoppingcartObj = new Cart_Wishlist();
+                                    {
+                                        _ShoppingcartObj.ProductID = (sdr["ProductID"].ToString() != "" ? Int16.Parse(sdr["ProductID"].ToString()) : _ShoppingcartObj.ProductID);
+                                        _ShoppingcartObj.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : _ShoppingcartObj.ProductName);
+                                        _ShoppingcartObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? Int16.Parse(sdr["CustomerID"].ToString()) : _ShoppingcartObj.CustomerID);
+                                        _ShoppingcartObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _ShoppingcartObj.CustomerName);
+                                        _ShoppingcartObj.ProductSpecXML = (sdr["ProductSpecXML"].ToString() != "" ? sdr["ProductSpecXML"].ToString() : _ShoppingcartObj.ProductSpecXML);
+
+                                        _ShoppingcartObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _ShoppingcartObj.CreatedDate);    
+
+
+                                    }
+                                    Requestslist.Add(_ShoppingcartObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Requestslist;
+        }
     }
 }
