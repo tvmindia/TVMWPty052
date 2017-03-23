@@ -2,6 +2,7 @@
 
 $(document).ready(function () {
     try {
+        debugger;
         var Cart_WishlistViewModel = new Object();
         DataTables.CustomersListTable = $('#tblCustomersList').DataTable(
          {
@@ -9,14 +10,14 @@ $(document).ready(function () {
              order: [],
              searching: true,
              paging: true,
-             data: GetAllCustomerCartWishlist(),
+             data: GetAllCustomerCartWishlistSummary(),
              columns: [
                { "data": "ID" },
                { "data": "Name" },
                { "data": "Email", "defaultContent": "<i>-</i>"},
                { "data": "Mobile", "defaultContent": "<i>-</i>" },
                { "data": "CartCount", "defaultContent": "<i>-</i>" },
-               { "data": "WishlistCount", "defaultContent": "<i>-</i>" },
+               { "data": "WishCount", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ]
          });
@@ -34,7 +35,7 @@ function GetAllCustomerCartWishlistSummary() {
         debugger;
         var data = {};
         var ds = {};
-        ds = GetDataFromServer("Cart_Wishlist/GetAllCustomerCartWishlist/", data);
+        ds = GetDataFromServer("Cart_Wishlist/GetAllCustomerCartWishlistSummary/", data);
         if (ds != '') {
             ds = JSON.parse(ds);
         }
@@ -55,7 +56,7 @@ function Edit(currentObj) {
     ChangeButtonPatchView("EventRequests", "btnPatcheventRequeststab2", "Edit"); //ControllerName,id of the container div,Name of the action
    
     debugger;
-    var rowData = DataTables.eventTable.row($(currentObj).parents('tr')).data();    
+    var rowData = DataTables.CustomersListTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null))
     {
         DataTables.CustomersCartTable = $('#tblShoppingCart').DataTable(
