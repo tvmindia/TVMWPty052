@@ -15,8 +15,8 @@
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#Tab1" id="tabCustomerList"  data-toggle="tab">Customers List</a></li>
-                <li><a href="#Tab2"  id="tabshoppingCartWishlist" data-toggle="tab">Shopping Cart & Wishlist Detail</a></li>
+                <li class="active"><a href="#Tab1" id="tabCustomerList"onclick="Tab1Click()"  data-toggle="tab">Customers List</a></li>
+                <li  id="tabshoppingCartWishlist" class="disabled"><a href="#Tab2"  >Shopping Cart & Wishlist Detail</a></li>
             </ul>
         </div>
         <div class="panel-body">
@@ -63,10 +63,12 @@
                         <div class="col-md-10">
                             <div class="tab-content EventTabContent">
                                 <div class="tab-pane fade in active" id="ShoppingCartDetails">
+                                    <h4 id="SC_TableHead"></h4>
                                     @*table*@
                                     <table id="tblShoppingCart" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                         <thead>
-                                            <tr> 
+                                            <tr>
+                                                <th>Customer Name</th>
                                                 <th>Product ID</th>
                                                 <th>Product Name</th>
                                                 <th>Options</th>
@@ -81,10 +83,12 @@
                                     @*table*@
                                 </div>
                                 <div class="tab-pane fade" id="WishListDetails">
+                                    <h4 id="WL_TableHead"></h4>
                                     @*table*@
                                     <table id="tblWishlist" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                         <thead>
                                             <tr> 
+                                                <th>Customer Name</th>
                                                 <th>Product ID</th>
                                                 <th>Product Name</th>
                                                 <th>Options</th> 

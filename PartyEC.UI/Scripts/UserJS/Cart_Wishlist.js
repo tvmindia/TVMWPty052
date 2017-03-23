@@ -29,7 +29,8 @@ $(document).ready(function () {
               searching: true,
               paging: true,
               data: null,
-              columns: [{ "data": "ProductID" },
+              columns: [{ "data": "CustomerName" },
+                        { "data": "ProductID" },
                         { "data": "ProductName" },
                         { "data": "ProductSpecXML", "defaultContent": "<i>-</i>" },
                         { "data": "Qty", "defaultContent": "<i>-</i>" },
@@ -37,10 +38,21 @@ $(document).ready(function () {
                         { "data": "Price", "defaultContent": "<i>-</i>" },
                         { "data": "ItemStatus", "defaultContent": "<i>-</i>" },
                         { "data": "CreatedDate", "defaultContent": "<i>-</i>" }
-              ], columnDefs: [{                  
-                     "targets": [7], "render": function (data, type, full, meta) {
-                         var str = Date.parse(data);
-                         debugger;
+              ], columnDefs: [{
+                  "targets": [0], "visible": false, "searchable": false, "render": function (data, type, full, meta) { 
+                      if (data != "") {
+                          debugger;
+                          $("#SC_TableHead").text(data + "'s ShoppingCart");
+                      }
+                      else {
+                          $("#SC_TableHead").text("")
+                      }
+                     
+                      return data;
+                  }
+              }, {
+                     "targets": [8], "render": function (data, type, full, meta) {
+                         var str = Date.parse(data); 
                          var res = ConvertJsonToDate('' + str + '');
                          return res;
                      }
@@ -54,13 +66,25 @@ $(document).ready(function () {
                 searching: true,
                 paging: true,
                 data: null,
-                columns: [{ "data": "ProductID" },
+                columns: [  { "data": "CustomerName" },
+                            { "data": "ProductID" },
                             { "data": "ProductName" },
                             { "data": "ProductSpecXML", "defaultContent": "<i>-</i>" },
                             { "data": "CreatedDate", "defaultContent": "<i>-</i>" },
-                            //{ "data": "", "defaultContent": "<i>-</i>" }
+                            { "data": "DaysinWL", "defaultContent": "<i>-</i>" }
                 ], columnDefs: [{
-                    "targets": [3], "render": function (data, type, full, meta) {
+                    "targets": [0], "visible": false, "searchable": false, "render": function (data, type, full, meta) {
+                        debugger;
+                        if (data != "") {
+                            $("#WL_TableHead").text(data + "'s WishList ");
+                        }
+                        else {
+                            $("#SC_TableHead").text("")
+                        }
+                        return data;
+                    }
+                }, {
+                    "targets": [4], "render": function (data, type, full, meta) {
                         var str = Date.parse(data);
                         debugger;
                         var res = ConvertJsonToDate('' + str + '');
@@ -102,7 +126,9 @@ function Edit(currentObj) {
     //Tab Change
     debugger;
     ChangeButtonPatchView("EventRequests", "btnPatcheventRequeststab2", "Edit"); //ControllerName,id of the container div,Name of the action
-    $('#tabshoppingCartWishlist').trigger('click');
+    $('#tabshoppingCartWishlist').removeClass('disabled');
+    $('#tabshoppingCartWishlist a').attr('data-toggle', 'tab');
+    $('#tabshoppingCartWishlist a').trigger('click');
     
     var rowData = DataTables.CustomersListTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null))
@@ -170,6 +196,12 @@ function GetCustomerWishlist(id) {
     }
 }
 
+function Tab1Click() {
+    $("#SC_TableHead").text("");
+    $("#WL_TableHead").text("");
+    $('#tabshoppingCartWishlist').addClass('disabled');
+    $('#tabshoppingCartWishlist a').attr('data-toggle', '');
+}
 function goback() {
     $('#tabCustomerList').trigger('click');
     //try {
