@@ -449,6 +449,7 @@
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jstree\dist\jstree.js" />
     <Content Include="Scripts\jstree\dist\jstree.min.js" />
+    <Content Include="Scripts\UserJS\AssociatedProduct.js" />
     <Content Include="Scripts\UserJS\Attributes.js" />
     <Content Include="Scripts\UserJS\Cart_Wishlist.js" />
     <Content Include="Scripts\UserJS\Categories.js" />

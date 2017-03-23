@@ -143,6 +143,48 @@ $(document).ready(function () {
         notyAlert('errror', e.message);
     }
 
+    try {
+
+        DataTables.AssociatedProductsTable = $('#tblAssociatedProducts').DataTable(
+         {
+             dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+             order: [],
+             searching: true,
+             paging: true,
+             data: null,
+             columns: [
+               { "data": null },
+               { "data": "ID" },
+               { "data": "Name" },
+               { "data": "ProductType", "defaultContent": "<i>-</i>" },
+               { "data": "EnableYN", "defaultContent": "<i>-</i>" },
+               { "data": "SupplierID", "defaultContent": "<i>-</i>" },
+               { "data": "SKU", "defaultContent": "<i>-</i>" },
+               { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
+               { "data": "Qty", "defaultContent": "<i>-</i>" },
+               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
+               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+             ],
+             columnDefs: [
+              {//hiding hidden column 
+                  "targets": [0],
+                  "visible": true,
+                  "searchable": false,
+                  "render": function (data, type, full, meta) {
+                      if (type === 'display') {
+                          data = '<input type="checkbox" class="dt-checkboxes">';
+                      }
+                      return data;
+                  }
+              }
+             ]
+         });
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
+
+
 
 });
 //remove header tags
@@ -686,7 +728,8 @@ function AssociatedProductSave()
 {
     debugger;
     try {   //Serialize dynamic other attribute elements
-        var Associatedpro = $('#dynamicAssociatedProducts').find('select,input').serializeArray();
+        //var Associatedpro = $('#dynamicAssociatedProducts').find('select,input').serializeArray();
+        var Associatedpro = $('#dynamicAssociatedProductContents').find('select,input').serializeArray();
         var prodid = $('.productID').val();
         if ((Associatedpro) && (prodid > 0)) {
           
@@ -705,8 +748,24 @@ function AssociatedProductSave()
             }
            
             ProductDetailViewModel.ProductAttributes = ProductAttributesList;
+            var detqty=$("#detailQty").val();
+            ProductDetailViewModel.Qty = (detqty != "" ? detqty : "");
+            var outstockqty = $("#detailOutOfStockAlertQty").val();
+            ProductDetailViewModel.OutOfStockAlertQty = (outstockqty != "" ? outstockqty : "");
+            var stockavail = $("#detailStockAvailable").val();
+            ProductDetailViewModel.StockAvailable = (stockavail != "" ? stockavail : "");
+            var detailDiscAmount = $("#detailDiscountAmount").val();
+            ProductDetailViewModel.detailDiscountAmount = (detailDiscAmount != "" ? detailDiscAmount : "");
+            var detailPriceDiff = $("#detailPriceDifference").val();
+            ProductDetailViewModel.PriceDifference = (detailPriceDiff != "" ? detailPriceDiff : "");
+            var detailDiscStart = $("#detailDiscountStartDate").val();
+            ProductDetailViewModel.DiscountStartDate = (detailDiscStart != "" ? detailDiscStart : "");
+            var detailDiscEnd = $("#detailDiscountEndDate").val();
+            ProductDetailViewModel.DiscountEndDate = (detailDiscEnd != "" ? detailDiscEnd : "");
+
             ProductDetailList.push(ProductDetailViewModel);
             ProductViewModel.ProductDetails = ProductDetailList;
+
             var data = "{'productObj':" + JSON.stringify(ProductViewModel) + "}";
             PostDataToServer('Products/InsertUpdateProductDetails/', data, function (JsonResult) {
                 if (JsonResult != '') {
