@@ -16,5 +16,8 @@ namespace PartyEC.UI.Models
         public decimal CurrencyRate { get; set; }
         public decimal Price { get; set; }
         public int ItemStatus { get; set; }
+        
+        public int CartCount { get; set; }
+        public int WishlistCount { get; set; }
     }
 }

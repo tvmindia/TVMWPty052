@@ -24,16 +24,7 @@
         </div>
         <div class="panel-body">
             <div class="tab-content">
-                <div class="tab-pane fade in active" id="eventRequestsList">
-                    @*<div class="" id="btnPatchEdittab1">
-                        @{
-                            PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab1 = new PartyEC.UI.Models.ToolboxViewModel();
-                            ToolBoxControltab1.addbtn.Visible = true;
-                            ToolBoxControltab1.addbtn.Event = "btnAddNew()";
-                            ToolBoxControltab1.addbtn.Title = "Add New";
-                            Html.RenderPartial("_ToolboxView", ToolBoxControltab1);
-                        }
-                    </div>*@
+                <div class="tab-pane fade in active" id="eventRequestsList"> 
                     <h4>   Event Requests List </h4>
                     @*table*@
                     <table id="tbleventRequest" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
@@ -236,7 +227,7 @@
                                             <div class="panel panel-default" style="min-height:250px">
                                                 <div class="panel-heading">Commercial Info</div>
                                                 <div class="panel-body">
-                                                    <div class="" id="btnPatchCommercial">
+                                                    @*<div class="" id="btnPatchCommercial">
                                                         @{
                                                             PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab1 = new PartyEC.UI.Models.ToolboxViewModel();
                                                             ToolBoxControltab1.savebtn.Visible = true;
@@ -244,7 +235,7 @@
                                                             ToolBoxControltab1.savebtn.Title = "Save";
                                                             Html.RenderPartial("_ToolboxView", ToolBoxControltab1);
                                                         }
-                                                    </div>
+                                                    </div>*@
 
                                                     <div class="form-group col-md-12">
                                                         @Html.LabelFor(model => model.CurrencyCode, htmlAttributes: new { @class = "control-label col-md-4" })

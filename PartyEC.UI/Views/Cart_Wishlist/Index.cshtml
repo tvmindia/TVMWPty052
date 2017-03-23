@@ -1,8 +1,116 @@
 ﻿
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Cart_Wishlist";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
  
+@section styles {
+    @Styles.Render("~/Content/datatable")
+    @Styles.Render("~/Content/bootstrapdatepicker")  
+}
+
+
+<div class="container-fluid">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs">
+                <li class="active"><a href="#Tab1" id="tabCustomerList"  data-toggle="tab">Customers List</a></li>
+                <li><a href="#Tab2"  id="tabshoppingCartWishlist" data-toggle="tab">Shopping Cart & Wishlist Detail</a></li>
+            </ul>
+        </div>
+        <div class="panel-body">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="Tab1"> 
+                    <h4>Shopping Cart & Wishlist</h4>
+                    @*table*@
+                    <table id="tblCustomersList" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Customer ID</th>
+                                <th>Name</th>
+                                <th>Email</th>
+                                <th>Mobile No</th>
+                                <th>Cart Count</th>
+                                <th>Wishlist Count</th>                               
+                                <th>Veiw Button</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    @*table*@
+                </div>
+                <div class="tab-pane fade" id="Tab2">
+                    <div class="" id="btnPatchtab2">
+                        @{
+                            PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab2 = new PartyEC.UI.Models.ToolboxViewModel();
+                            ToolBoxControltab2.backbtn.Visible = true;
+                            ToolBoxControltab2.backbtn.Event = "goback()";
+                            Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
+                        }
+                    </div>
+                    <div class="col-md-12" >
+                        <div class="col-md-2">
+                            @* left hand side Tab  *@
+                            <div class="panel with-nav-tabs js panel-primary">
+                                <div class="panel-heading" style="min-height:300px">
+                                    <ul class="nav nav-tabs nav-stacked">
+                                        <li class="active"><a href="#ShoppingCartDetails" data-toggle="tab" id="tabShoppingCart">ShoppingCart</a></li>
+                                        <li><a href="#WishListDetails" data-toggle="tab" id="tabWishList">WishList</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-10">
+                            <div class="tab-content EventTabContent">
+                                <div class="tab-pane fade in active" id="ShoppingCartDetails">
+                                    @*table*@
+                                    <table id="tblShoppingCart" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr> 
+                                                <th>Product ID</th>
+                                                <th>Product Name</th>
+                                                <th>Options</th>
+                                                <th>Qty</th>
+                                                <th>Currency</th>
+                                                <th>Price</th>
+                                                <th>Status</th>
+                                                <th>Created Date</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    @*table*@
+                                </div>
+                                <div class="tab-pane fade" id="WishListDetails">
+                                    @*table*@
+                                    <table id="tblWishlist" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr> 
+                                                <th>Product ID</th>
+                                                <th>Product Name</th>
+                                                <th>Options</th> 
+                                                <th>Created Date</th>
+                                                <th>Days In Wishlist</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    @*table*@
+                                </div>
+                            </div>                         
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @Scripts.Render("~/bundles/datatable")
+    @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
+    @Scripts.Render("~/bundles/bootstrapdatepicker")
+    @*@Scripts.Render("~/bundles/xxx")*@
+}
+
+
+
 

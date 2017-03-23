@@ -450,6 +450,7 @@
     <Content Include="Scripts\jstree\dist\jstree.js" />
     <Content Include="Scripts\jstree\dist\jstree.min.js" />
     <Content Include="Scripts\UserJS\Attributes.js" />
+    <Content Include="Scripts\UserJS\Cart_Wishlist.js" />
     <Content Include="Scripts\UserJS\Categories.js" />
     <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\EventRequests.js" />
