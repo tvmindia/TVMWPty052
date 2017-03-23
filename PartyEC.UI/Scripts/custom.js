@@ -49,9 +49,7 @@ function notyAlert(type,msgtxt) {
 }
 function PostDataToServer(page, formData, callback)
 {
-    debugger;
-    var jsonResult={};
-    $.ajax({
+   $.ajax({
         type: "POST",
         url: appAddress+page,
         async: true,
@@ -61,7 +59,6 @@ function PostDataToServer(page, formData, callback)
         dataType: "json",
         success: function (data) {
             callback(data);
-            jsonResult = data;
         },
         error: function (jqXHR, textStatus, errorThrown) {
             notyAlert('error', errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
@@ -72,7 +69,7 @@ function PostDataToServer(page, formData, callback)
         }
 
     });
-    return jsonResult;
+    
 }
 
 

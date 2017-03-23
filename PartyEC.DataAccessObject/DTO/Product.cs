@@ -60,8 +60,10 @@ namespace PartyEC.DataAccessObject.DTO
         public LogDetails logDetails { get; set; }
         public List<AttributeValues> ProductAttributes { get; set; }
         public List<ProductImages> ProductDetailImages { get; set; }
+        //For associated product
+        public string ProductName { get; set; }
+        public decimal BaseSellingPrice { get; set; }
 
-       
 
         public struct ProductTypes
         {

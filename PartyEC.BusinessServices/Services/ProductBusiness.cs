@@ -186,5 +186,21 @@ namespace PartyEC.BusinessServices.Services
                 return OS;
             }
         }
+
+
+        public List<ProductDetail> GetProductDetail(int ProductID)
+        {
+            List<ProductDetail> productDetailslist = null;
+            try
+            {
+                productDetailslist = _productRepository.GetProductDetail(ProductID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return productDetailslist;
+        }
     }
 }

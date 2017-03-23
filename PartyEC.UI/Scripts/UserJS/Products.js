@@ -153,35 +153,27 @@ $(document).ready(function () {
              paging: true,
              data: null,
              columns: [
-               { "data": null },
-               { "data": "ID" },
-               { "data": "Name" },
-               { "data": "ProductType", "defaultContent": "<i>-</i>" },
-               { "data": "EnableYN", "defaultContent": "<i>-</i>" },
-               { "data": "SupplierID", "defaultContent": "<i>-</i>" },
-               { "data": "SKU", "defaultContent": "<i>-</i>" },
+
+               { "data": "ID", "defaultContent": "<i>-</i>" },
+               { "data": "ProductName", "defaultContent": "<i>-</i>" },
+               { "data": null, "defaultContent": "<i>-</i>" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
-               { "data": "Qty", "defaultContent": "<i>-</i>" },
-               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
+               { "data": null, "defaultContent": "<i>-</i>" },
+               { "data": null, "orderable": false, "defaultContent": '<a onclick="E(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [
-              {//hiding hidden column 
+              {
                   "targets": [0],
                   "visible": true,
-                  "searchable": false,
-                  "render": function (data, type, full, meta) {
-                      if (type === 'display') {
-                          data = '<input type="checkbox" class="dt-checkboxes">';
-                      }
-                      return data;
-                  }
+                  "searchable": true
               }
              ]
+            
          });
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 
 
@@ -772,6 +764,7 @@ function AssociatedProductSave()
                     switch (JsonResult.Result) {
                         case "OK":
                             notyAlert('success', JsonResult.Record.StatusMessage);
+                            RefreshAssociatedProducts(prodid);
                             break;
                         case "ERROR":
                             notyAlert('error', JsonResult.Record.StatusMessage);
@@ -789,4 +782,41 @@ function AssociatedProductSave()
     catch (e) {
         notyAlert('error', e.Message);
     }
+}
+
+function RefreshAssociatedProducts(id) {
+    try {
+        DataTables.AssociatedProductsTable.clear().rows.add(GetProductDetailsByProductId(id)).draw(false);
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
+function GetProductDetailsByProductId(id)
+{
+    debugger;
+    try {
+        var data = { "id": id };
+        var ds = {};
+        ds = GetDataFromServer("Products/GetProductDetailByProduct/", data);
+       
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
+function AssociatedProductDelete()
+{
+    RefreshAssociatedProducts(2042);
 }
