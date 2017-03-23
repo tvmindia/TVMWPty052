@@ -18,7 +18,7 @@ $(document).ready(function () {
                { "data": "Mobile", "defaultContent": "<i>-</i>" },
                { "data": "CartCount", "defaultContent": "<i>-</i>" },
                { "data": "WishCount", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a onclick="View(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ]
          });
 
@@ -99,11 +99,9 @@ $(document).ready(function () {
 
     } 
 });
-
+//------------------------------------GetAllCustomerCartWishlistSummary--------------------------------------//
 function GetAllCustomerCartWishlistSummary() {
-
     try {
-        debugger;
         var data = {};
         var ds = {};
         ds = GetDataFromServer("Cart_Wishlist/GetAllCustomerCartWishlistSummary/", data);
@@ -121,10 +119,8 @@ function GetAllCustomerCartWishlistSummary() {
         notyAlert('error', e.message);
     }
 }
-
-function Edit(currentObj) {
-    //Tab Change
-    debugger;
+//---------------------------------Edit Click-----------------------------------------//
+function View(currentObj) {
     ChangeButtonPatchView("EventRequests", "btnPatcheventRequeststab2", "Edit"); //ControllerName,id of the container div,Name of the action
     $('#tabshoppingCartWishlist').removeClass('disabled');
     $('#tabshoppingCartWishlist a').attr('data-toggle', 'tab');
@@ -151,7 +147,7 @@ function Edit(currentObj) {
       
     }
 }
-
+//------------------------------GetCustomerShoppingCart--------------------------------------------//
 function GetCustomerShoppingCart(id) {
 
     try {
@@ -161,6 +157,9 @@ function GetCustomerShoppingCart(id) {
         ds = GetDataFromServer("Cart_Wishlist/GetCustomerShoppingCart/", data);
         if (ds != '') {
             ds = JSON.parse(ds);
+            if (ds.Records == 0) {
+                $("#SC_TableHead").text("Shopping Cart"); 
+            }
         }
         if (ds.Result == "OK") {
             return ds.Records;
@@ -173,7 +172,7 @@ function GetCustomerShoppingCart(id) {
         notyAlert('error', e.message);
     }
 }
-
+//--------------------------------GetCustomerWishlist------------------------------------------//
 function GetCustomerWishlist(id) {
 
     try {
@@ -183,6 +182,10 @@ function GetCustomerWishlist(id) {
         ds = GetDataFromServer("Cart_Wishlist/GetCustomerWishlist/", data);
         if (ds != '') {
             ds = JSON.parse(ds);
+            if (ds.Records == 0) {
+               
+                $("#WL_TableHead").text("Wishlist");
+            }
         }
         if (ds.Result == "OK") {
             return ds.Records;
@@ -195,7 +198,7 @@ function GetCustomerWishlist(id) {
         notyAlert('error', e.message);
     }
 }
-
+//-------------------------------CLick Events-------------------------------------------//
 function Tab1Click() {
     $("#SC_TableHead").text("");
     $("#WL_TableHead").text("");
@@ -204,10 +207,10 @@ function Tab1Click() {
 }
 function goback() {
     $('#tabCustomerList').trigger('click');
-    //try {
-    //    DataTables.CustomersListTable.clear().rows.add(GetAllCustomerCartWishlistSummary()).draw(false);
-    //}
-    //catch (e) {
-    //    notyAlert('error', e.message);
-    //}
+    try {
+        DataTables.CustomersListTable.clear().rows.add(GetAllCustomerCartWishlistSummary()).draw(false);
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
 }
