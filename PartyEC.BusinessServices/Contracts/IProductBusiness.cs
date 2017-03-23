@@ -23,6 +23,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus DeleteRelatedProducts(Product productObj, string IDList);
         OperationsStatus InsertUpdateProductDetails(Product productObj);
         OperationsStatus UpdateProductHeaderOtherAttributes(Product productObj);
+        List<ProductDetail> GetProductDetail(int ProductID);
 
     }
 }

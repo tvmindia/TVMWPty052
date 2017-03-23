@@ -187,8 +187,9 @@ namespace PartyEC.UI.Models
         public LogDetailsViewModel logDetails { get; set; }
         public List<AttributeValuesViewModel> ProductAttributes { get; set; }
         public List<ProductImagesViewModel> ProductDetailImages { get; set; }
-
-
+        //For associated product
+        public string ProductName { get; set; }
+        public decimal BaseSellingPrice { get; set; }
     }
     public class ProductCategoryLinkViewModel
     {

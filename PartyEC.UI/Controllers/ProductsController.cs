@@ -348,6 +348,30 @@ namespace PartyEC.UI.Controllers
         }
         #endregion InsertProductDetails
 
+        #region GetProductDetailByProduct
+        [HttpGet]
+        public string GetProductDetailByProduct(string id)
+        {
+          try
+            {
+                List<ProductDetailViewModel> productDetail = null;
+                if (!string.IsNullOrEmpty(id))
+                {
+                    OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                    productDetail = Mapper.Map<List<ProductDetail>,List<ProductDetailViewModel>>(_productBusiness.GetProductDetail(Int32.Parse(id)));
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productDetail });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productDetail });
+                }
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        #endregion GetProductDetailByProduct
 
         #region ChangeButtonStyle
         [HttpGet]
