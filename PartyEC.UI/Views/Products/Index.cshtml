@@ -95,8 +95,8 @@
                     <div class="col-md-2">
                         <div class="panel with-nav-tabs js panel-primary">
                             <div class="panel-heading">
-                                <ul class="nav nav-tabs nav-stacked">
-                                    <li onclick="ShowProductDetalsToolBox()" class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="label label-danger">E</span></a></li>
+                                <ul class="nav nav-tabs nav-stacked" id="LHSNavbarProductDetails">
+                                    <li id="GeneralLI" onclick="ShowProductDetalsToolBox()" class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="label label-danger">E</span></a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#discription" data-toggle="tab" id="tabDiscrption">Discription</a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
@@ -113,7 +113,7 @@
                     </div>
 
                     <div class="col-md-10">
-@using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "Are You Sure?...", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "onbeginProductSave", OnComplete = "oncomplteProductSave" }, new { @class = "form-horizontal", role = "form", id = "productform" }))
+@using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin = "onbeginProductSave", OnComplete = "oncomplteProductSave" }, new { @class = "form-horizontal", role = "form", id = "productform" }))
 {
     @Html.AntiForgeryToken()
 
@@ -595,7 +595,36 @@
                                        
                                </div>
                             <div class="tab-pane fade" id="associatedProducts">
-                             
+                                <div>
+                                    @{
+                                        PartyEC.UI.Models.ToolboxViewModel ToolBoxControlforAssocProductAttr = new PartyEC.UI.Models.ToolboxViewModel();
+                                        ToolBoxControlforAssocProductAttr.savebtn.Visible = true;
+                                        ToolBoxControlforAssocProductAttr.savebtn.Title = "Save";
+                                        ToolBoxControlforAssocProductAttr.savebtn.Event = "AssociatedProductSave()";
+                                        ToolBoxControlforAssocProductAttr.deletebtn.Visible = true;
+                                        ToolBoxControlforAssocProductAttr.deletebtn.Title = "Delete";
+                                        ToolBoxControlforAssocProductAttr.deletebtn.Event = "AssociatedProductDelete()";
+                                        Html.RenderPartial("_ToolboxView", ToolBoxControlforAssocProductAttr);
+                                    }
+
+                                </div>
+                                <div class="container">
+                                    @*table*@
+                                    <table id="tblAssociatedProducts" class="table table-striped table-bordered table-hover" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>Product detail ID</th>
+                                                <th>Name</th>
+                                                <th>Options</th>
+                                                <th>Base selling price</th>
+                                                <th>Price difference</th>
+                                                <th>Actual price</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                    @*table*@
+                                </div>
                                 <div id="dynamicAssociatedProducts">
                                     <div class="col-sm-6 col-md-6">
                                         <div class="alert-message alert-message-warning">
@@ -603,23 +632,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="container">
-                                    @*table*@
-                                    <table id="tblAssociatedProducts" class="table table-striped table-bordered table-hover" cellspacing="0">
-                                        <thead>
-                                            <tr>
-                                                <th>productid</th>
-                                                <th>name</th>
-                                                <th>options</th>
-                                                <th>base selling price</th>
-                                                <th>price difference</th>
-                                                <th>actual price</th>
-                                                <th>actions</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                    @*table*@
-                                </div>
+                               
                                
 
                             </div>
@@ -920,7 +933,7 @@
                       
                 </div>
            </div>
-@using (Ajax.BeginForm("RelatedProductsInsert", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "Are You Sure?...", OnSuccess = "RelatedproductSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "" }, new { @class = "form-horizontal", role = "form", id = "relatedproductform" }))
+@using (Ajax.BeginForm("RelatedProductsInsert", "Products", new AjaxOptions { HttpMethod = "POST", OnSuccess = "RelatedproductSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "" }, new { @class = "form-horizontal", role = "form", id = "relatedproductform" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.IDList, htmlAttributes: new { @class = "control-label col-lg-2 IDList", Value = "0" })

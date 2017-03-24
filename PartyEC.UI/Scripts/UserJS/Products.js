@@ -156,17 +156,26 @@ $(document).ready(function () {
 
                { "data": "ID", "defaultContent": "<i>-</i>" },
                { "data": "ProductName", "defaultContent": "<i>-</i>" },
-               { "data": null, "defaultContent": "<i>-</i>" },
+               { "data": "ProductAttributes", "defaultContent": "<i>-</i>" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
                { "data": null, "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="E(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a onclick="EditAssocProduct(this)"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>Edit</a>' }
              ],
              columnDefs: [
               {
-                  "targets": [0],
-                  "visible": true,
-                  "searchable": true
+                  "render": function (data, type, row) {
+                      var returnstring='';
+                      if (data)
+                      {
+                          for(var ik=0;ik<data.length;ik++)
+                          {
+                              returnstring = returnstring + '<span>' + data[ik].Caption + ':' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
+                           }
+                      }
+                      return returnstring;
+              },
+                  "targets": 2
               }
              ]
             
@@ -194,7 +203,14 @@ function Edit(currentObj)
     //$('#tabproductDetails').removeClass('disabled');
     //$('#tabproductDetails a').attr('data-toggle', 'tab');
     $('#tabproductDetails a').trigger('click');
-  
+
+    //Make General tab active
+    $('#tabGeneral').trigger('click');
+    //$("#LHSNavbarProductDetails li").removeClass('active');
+   // $("#LHSNavbarProductDetails li.active").removeClass('active');
+   // $("#LHSNavbarProductDetails li").first().addClass('active');
+    
+
     var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null))
     {
@@ -675,6 +691,13 @@ function RenderContentsForAssocProdAttributes()
                 autoclose: true,
                 todayHighlight: true
             });
+            var proid = $('.productID').val();
+            if (proid)
+            {
+                //Refresh associated products table
+                RefreshAssociatedProducts(proid);
+            }
+         
         }
         else {
             //clear otherattributes div
@@ -818,5 +841,64 @@ function GetProductDetailsByProductId(id)
 
 function AssociatedProductDelete()
 {
-    RefreshAssociatedProducts(2042);
+    
+}
+function EditAssocProduct(curObj) {
+    var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
+    if ((rowData != null) && (rowData.ID != null)) {
+        var thisproduct = GetProduct(rowData.ID);
+        if (thisproduct) {
+            $("#Name").val(thisproduct.Name);
+            $("#SKU").val(thisproduct.SKU);
+            if (thisproduct.Enabled == true)
+            { $("#Enabled").prop('checked', true); }
+            else { $("#Enabled").prop('checked', false); }
+            $("#Unit").val(thisproduct.Unit);
+            $("#URL").val(thisproduct.URL);
+            $("#ActionType").val(thisproduct.ActionType);
+            $("#SupplierID").val(thisproduct.SupplierID);
+            $("#ManufacturerID").val(thisproduct.ManufacturerID);
+            $("#ProductType").val(thisproduct.ProductType);
+            $("#AttributeSetID").val(thisproduct.AttributeSetID);
+            if (thisproduct.FreeDelivery == true)
+            { $("#FreeDelivery").prop('checked', true); }
+            else { $("#FreeDelivery").prop('checked', false); }
+            $("#CostPrice").val(thisproduct.CostPrice);
+            $("#BaseSellingPrice").val(thisproduct.BaseSellingPrice);
+            if (thisproduct.ShowPrice == true)
+            { $("#ShowPrice").prop('checked', true); }
+            else { $("#ShowPrice").prop('checked', false); }
+
+            $("#DiscountAmount").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountAmount : 0.00));
+            $("#DiscountStartDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountStartDate : ""));
+            $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountEndDate : ""));
+            $("#ShortDescription").val(thisproduct.ShortDescription);
+            $("#LongDescription").val(thisproduct.LongDescription);
+            if (thisproduct.StockAvailable == true)
+            { $("#StockAvailable").prop('checked', true); }
+            else { $("#StockAvailable").prop('checked', false); }
+
+            $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
+            $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
+            //Tags
+            if (thisproduct.HeaderTags != null) {
+                $('.Htags').remove();
+                var tagar = thisproduct.HeaderTags.split(",");
+                for (index = 0; index < tagar.length; ++index) {
+                    //Tag creation when binding
+                    $("#headertagsdiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'Htags', 'onclick': 'removeme(this)' }));
+                }
+            }
+            else {
+                //Removes span tags
+                $('.Htags').remove();
+            }
+
+
+            //ProductID
+            $(".productID").val(thisproduct.ID);
+            //ProductDetailID
+            $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
+        }
+    }
 }

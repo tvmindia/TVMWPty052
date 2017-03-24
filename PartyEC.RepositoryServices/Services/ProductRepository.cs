@@ -865,21 +865,25 @@ namespace PartyEC.RepositoryServices.Services
                                 myProductDetail.ProductAttributes = new List<AttributeValues>();
                                 foreach (AttributeValues att in myAttributeStructure)
                                 {
-                                    int i = 0;
+                                   
                                     AttributeValues myAttribute = new AttributeValues(att);//copy the values
                                     try
                                     {
                                         //Checks column exists in reader
-                                        if (sdr.GetName(i).Equals(att.Name.ToString(), StringComparison.InvariantCultureIgnoreCase))
+                                        for (int i = 0; i < sdr.FieldCount; i++)
                                         {
-                                            myAttribute.Value = sdr[att.Name].ToString();
+                                            if (sdr.GetName(i).Equals(att.Caption.ToString(), StringComparison.InvariantCultureIgnoreCase))
+                                            {
+                                                myAttribute.Value = sdr[att.Caption].ToString();
+                                                break;
+                                            }
                                         }
                                     }
                                     catch (Exception ex)
                                     {
                                     }
                                     myProductDetail.ProductAttributes.Add(myAttribute);
-                                    i++;
+                                   
                                 }
                                 myProductDetails.Add(myProductDetail);
                                 myProductDetail.ProductDetailImages = GetProductImages(myProductDetail.ProductID, myProductDetail.ID);
