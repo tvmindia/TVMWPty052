@@ -176,7 +176,7 @@ namespace PartyEC.UI.Models
 
         public int? Qty { get; set; }
         public int? OutOfStockAlertQty { get; set; }
-        public decimal PriceDifference { get; set; }
+        public decimal? PriceDifference { get; set; }
         public string DetailTags { get; set; }
         public Boolean Enabled { get; set; }
         public Boolean StockAvailable { get; set; }

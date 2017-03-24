@@ -40,7 +40,7 @@ $(document).ready(function () {
                { "data": "Qty", "defaultContent": "<i>-</i>" },
                { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" data-toggle="Ratingpopover" title="Rating" data-trigger="focus" data-content="Some content inside the popover">Rating</a>' },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [
               {//hiding hidden column 
@@ -78,7 +78,7 @@ $(document).ready(function () {
                { "data": "Qty", "defaultContent": "<i>-</i>" },
                { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
          
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [{
                  orderable: false,
@@ -118,7 +118,7 @@ $(document).ready(function () {
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "Qty", "defaultContent": "<i>-</i>" },
                { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [
               {//hiding hidden column 
@@ -152,6 +152,7 @@ $(document).ready(function () {
              searching: true,
              paging: true,
              data: null,
+             pageLength: 2,
              columns: [
 
                { "data": "ID", "defaultContent": "<i>-</i>" },
@@ -160,7 +161,7 @@ $(document).ready(function () {
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
                { "data": null, "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="EditAssocProduct(this)"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>Edit</a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="EditAssocProduct(this)"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>Edit</a>' }
              ],
              columnDefs: [
               {
@@ -400,7 +401,7 @@ function ConstructproductDetailObject()
              
         tagval.push(this.innerHTML);
     });
-    debugger;
+  
     $("#HeaderTags").val(tagval);
     
     var ProductDetailViewModel = new Object();
@@ -579,7 +580,7 @@ function RenderContentsForAttributes()
 {
     HideProductDetalsToolBox();
     try {
-        debugger;
+       
         var atsetID = $("#AttributeSetID").val();
         if (atsetID) {
             var Isconfig = false;
@@ -673,7 +674,7 @@ function RenderContentsForAssocProdAttributes()
 {
     HideProductDetalsToolBox();
     try {
-        debugger;
+    
         var atsetID = $("#AttributeSetID").val();
         if (atsetID) {
             var Isconfig = true;
@@ -741,7 +742,6 @@ function ProductTypeOnChange()
 
 function AssociatedProductSave()
 {
-    debugger;
     try {   //Serialize dynamic other attribute elements
         //var Associatedpro = $('#dynamicAssociatedProducts').find('select,input').serializeArray();
         var Associatedpro = $('#dynamicAssociatedProductContents').find('select,input').serializeArray();
@@ -761,7 +761,8 @@ function AssociatedProductSave()
                 AttributeValuesViewModel.Value = Associatedpro[at].value;
                 ProductAttributesList.push(AttributeValuesViewModel);
             }
-           
+            var prodetid=$("#productDetailID").val();
+            ProductDetailViewModel.ID = (prodetid != "" ? prodetid : "");
             ProductDetailViewModel.ProductAttributes = ProductAttributesList;
             var detqty=$("#detailQty").val();
             ProductDetailViewModel.Qty = (detqty != "" ? detqty : "");
@@ -787,6 +788,7 @@ function AssociatedProductSave()
                     switch (JsonResult.Result) {
                         case "OK":
                             notyAlert('success', JsonResult.Record.StatusMessage);
+                            $("#productDetailID").val(JsonResult.Record.ReturnValues);
                             RefreshAssociatedProducts(prodid);
                             break;
                         case "ERROR":
@@ -818,7 +820,7 @@ function RefreshAssociatedProducts(id) {
 
 function GetProductDetailsByProductId(id)
 {
-    debugger;
+ 
     try {
         var data = { "id": id };
         var ds = {};
@@ -841,64 +843,127 @@ function GetProductDetailsByProductId(id)
 
 function AssociatedProductDelete()
 {
+    debugger;
+    var prodetid = $("#productDetailID").val();
+    if (prodetid)
+    {
+        if (confirm("Are you Sure!") == true) {
+            var ProductDetailViewModel = new Object();
+            ProductDetailViewModel.ID = (prodetid != "" ? prodetid : "");
+            var data = "{'productDeails':" + JSON.stringify(ProductDetailViewModel) + "}";
+            PostDataToServer('Products/DeleteProductDetail/', data, function (JsonResult) {
+                if (JsonResult != '') {
+                    switch (JsonResult.Result) {
+                        case "OK":
+                            notyAlert('success', JsonResult.Record.StatusMessage);
+                            RefreshAssociatedProducts(prodid);
+                            break;
+                        case "ERROR":
+                            notyAlert('error', JsonResult.Record.StatusMessage);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            })
+        }
+        
+
+    }
+    else {
+        
+    }
+ 
     
 }
-function EditAssocProduct(curObj) {
+function EditAssocProduct(currentObj) {
+    
+ 
     var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
-        var thisproduct = GetProduct(rowData.ID);
+        var thisproduct = GetProductDetailsByProductDetailID(rowData.ProductID,rowData.ID );
+   
         if (thisproduct) {
-            $("#Name").val(thisproduct.Name);
-            $("#SKU").val(thisproduct.SKU);
-            if (thisproduct.Enabled == true)
-            { $("#Enabled").prop('checked', true); }
-            else { $("#Enabled").prop('checked', false); }
-            $("#Unit").val(thisproduct.Unit);
-            $("#URL").val(thisproduct.URL);
-            $("#ActionType").val(thisproduct.ActionType);
-            $("#SupplierID").val(thisproduct.SupplierID);
-            $("#ManufacturerID").val(thisproduct.ManufacturerID);
-            $("#ProductType").val(thisproduct.ProductType);
-            $("#AttributeSetID").val(thisproduct.AttributeSetID);
-            if (thisproduct.FreeDelivery == true)
-            { $("#FreeDelivery").prop('checked', true); }
-            else { $("#FreeDelivery").prop('checked', false); }
-            $("#CostPrice").val(thisproduct.CostPrice);
-            $("#BaseSellingPrice").val(thisproduct.BaseSellingPrice);
-            if (thisproduct.ShowPrice == true)
-            { $("#ShowPrice").prop('checked', true); }
-            else { $("#ShowPrice").prop('checked', false); }
-
-            $("#DiscountAmount").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountAmount : 0.00));
-            $("#DiscountStartDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountStartDate : ""));
-            $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountEndDate : ""));
-            $("#ShortDescription").val(thisproduct.ShortDescription);
-            $("#LongDescription").val(thisproduct.LongDescription);
+            $("#productDetailID").val(thisproduct.ID);
+            $("#detailQty").val(thisproduct.Qty);
+            $("#detailOutOfStockAlertQty").val(thisproduct.OutOfStockAlertQty);
             if (thisproduct.StockAvailable == true)
-            { $("#StockAvailable").prop('checked', true); }
-            else { $("#StockAvailable").prop('checked', false); }
+            { $("#detailStockAvailable").prop('checked', true); }
+            else { $("#detailStockAvailable").prop('checked', false); }
+            $("#detailDiscountAmount").val(thisproduct.DiscountAmount);
+            $("#detailPriceDifference").val(thisproduct.PriceDifference);
+            $("#detailDiscountStartDate").val(thisproduct.DiscountStartDate);
+            $("#detailDiscountEndDate").val(thisproduct.DiscountEndDate);
+            if (thisproduct.Enabled == true)
+            { $("#detailEnable").prop('checked', true); }
+            else { $("#detailEnable").prop('checked', false); }
+            if (thisproduct.DefaultOption == true)
+            { $("#detailDefaultOption").prop('checked', true); }
+            else { $("#detailDefaultOption").prop('checked', false); }
+            $("#detailDetailTags").val(thisproduct.DetailTags);
 
-            $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
-            $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
-            //Tags
-            if (thisproduct.HeaderTags != null) {
-                $('.Htags').remove();
-                var tagar = thisproduct.HeaderTags.split(",");
-                for (index = 0; index < tagar.length; ++index) {
-                    //Tag creation when binding
-                    $("#headertagsdiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'Htags', 'onclick': 'removeme(this)' }));
+            if(thisproduct.ProductAttributes)
+            {
+                for (var jk = 0; jk < thisproduct.ProductAttributes.length; jk++)
+                {
+                    $("#" + thisproduct.ProductAttributes[jk].Name).val(thisproduct.ProductAttributes[jk].Value);
                 }
+               
             }
-            else {
-                //Removes span tags
-                $('.Htags').remove();
-            }
+          
+
+            //$("#DiscountAmount").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountAmount : 0.00));
+            //$("#DiscountStartDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountStartDate : ""));
+            //$("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountEndDate : ""));
+            //$("#ShortDescription").val(thisproduct.ShortDescription);
+            //$("#LongDescription").val(thisproduct.LongDescription);
+            //if (thisproduct.StockAvailable == true)
+            //{ $("#StockAvailable").prop('checked', true); }
+            //else { $("#StockAvailable").prop('checked', false); }
+
+            //$("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
+            //$("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
+            ////Tags
+            //if (thisproduct.HeaderTags != null) {
+            //    $('.Htags').remove();
+            //    var tagar = thisproduct.HeaderTags.split(",");
+            //    for (index = 0; index < tagar.length; ++index) {
+            //        //Tag creation when binding
+            //        $("#headertagsdiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'Htags', 'onclick': 'removeme(this)' }));
+            //    }
+            //}
+            //else {
+            //    //Removes span tags
+            //    $('.Htags').remove();
+            //}
 
 
-            //ProductID
-            $(".productID").val(thisproduct.ID);
-            //ProductDetailID
-            $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
+            ////ProductID
+            //$(".productID").val(thisproduct.ID);
+            ////ProductDetailID
+            //$("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
         }
     }
+}
+
+function GetProductDetailsByProductDetailID(id,detailid)
+{
+    try {
+        var data = {"productID": id,"productDetailID":detailid};
+        var ds = {};
+        ds = GetDataFromServer("Products/GetProductDetailsByProductDetailID/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Record;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+
 }

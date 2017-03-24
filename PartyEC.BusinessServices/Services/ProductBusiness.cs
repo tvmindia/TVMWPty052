@@ -202,5 +202,32 @@ namespace PartyEC.BusinessServices.Services
             }
             return productDetailslist;
         }
+
+           public ProductDetail GetProductDetailsByProduct(int ProductID, int DetailID)
+          {
+            ProductDetail productDetail = null;
+            try
+            {
+                productDetail = _productRepository.GetProductDetailsByProduct(ProductID, DetailID);
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return productDetail;
+         }
+         public  OperationsStatus DeleteProductsDetails(int ProductDetailsID)
+         {
+            OperationsStatus OS = null;
+            try
+            {
+                OS=_productRepository.DeleteProductsDetails(ProductDetailsID);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return OS;
+        }
     }
 }
