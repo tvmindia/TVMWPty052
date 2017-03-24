@@ -2,7 +2,6 @@
 
 $(document).ready(function () {
     try {
-        debugger;
         var Cart_WishlistViewModel = new Object();
         DataTables.CustomersListTable = $('#tblCustomersList').DataTable(
          {
@@ -32,7 +31,7 @@ $(document).ready(function () {
               columns: [{ "data": "CustomerName" },
                         { "data": "ProductID" },
                         { "data": "ProductName" },
-                        { "data": "ProductSpecXML", "defaultContent": "<i>-</i>" },
+                        { "data": "AttributeValues", "defaultContent": "<i>-</i>" },
                         { "data": "Qty", "defaultContent": "<i>-</i>" },
                         { "data": "CurrencyCode", "defaultContent": "<i>-</i>" },
                         { "data": "Price", "defaultContent": "<i>-</i>" },
@@ -41,16 +40,25 @@ $(document).ready(function () {
               ], columnDefs: [{
                   "targets": [0], "visible": false, "searchable": false, "render": function (data, type, full, meta) { 
                       if (data != "") {
-                          debugger;
                           $("#SC_TableHead").text(data + "'s ShoppingCart");
                       }
                       else {
                           $("#SC_TableHead").text("")
-                      }
-                     
+                      }                     
                       return data;
                   }
-              }, {
+              },{
+                  "targets": [3],
+                  "render": function (data, type, row) {
+                      var returnstring = '';
+                      if (data) {
+                          for (var ik = 0; ik < data.length; ik++) {
+                              returnstring = returnstring + '<span>' + data[ik].Name + ':' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
+                          }
+                      }
+                      return returnstring;
+                  }
+              },{
                      "targets": [8], "render": function (data, type, full, meta) {
                          var str = Date.parse(data); 
                          var res = ConvertJsonToDate('' + str + '');
@@ -69,12 +77,11 @@ $(document).ready(function () {
                 columns: [  { "data": "CustomerName" },
                             { "data": "ProductID" },
                             { "data": "ProductName" },
-                            { "data": "ProductSpecXML", "defaultContent": "<i>-</i>" },
+                            { "data": "AttributeValues", "defaultContent": "<i>-</i>" },
                             { "data": "CreatedDate", "defaultContent": "<i>-</i>" },
                             { "data": "DaysinWL", "defaultContent": "<i>-</i>" }
                 ], columnDefs: [{
                     "targets": [0], "visible": false, "searchable": false, "render": function (data, type, full, meta) {
-                        debugger;
                         if (data != "") {
                             $("#WL_TableHead").text(data + "'s WishList ");
                         }
@@ -83,20 +90,29 @@ $(document).ready(function () {
                         }
                         return data;
                     }
-                }, {
+                },{
+                    "targets": [3],
+                    "render": function (data, type, row) {
+                        var returnstring = '';
+                        if (data) {
+                            debugger;
+                            for (var ik = 0; ik < data.length; ik++) {
+                                returnstring = returnstring + '<span>' + data[ik].Name + ':' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
+                            }
+                        }
+                        return returnstring;
+                    }
+                },{
                     "targets": [4], "render": function (data, type, full, meta) {
                         var str = Date.parse(data);
-                        debugger;
                         var res = ConvertJsonToDate('' + str + '');
                         return res;
                     }
                 }]
-            });
-    
+            });    
     }
     catch (e) {
         notyAlert('error', e.message);
-
     } 
 });
 //------------------------------------GetAllCustomerCartWishlistSummary--------------------------------------//
@@ -151,7 +167,6 @@ function View(currentObj) {
 function GetCustomerShoppingCart(id) {
 
     try {
-        debugger;
         var data = { "ID": id };
         var ds = {};
         ds = GetDataFromServer("Cart_Wishlist/GetCustomerShoppingCart/", data);
@@ -176,7 +191,7 @@ function GetCustomerShoppingCart(id) {
 function GetCustomerWishlist(id) {
 
     try {
-        debugger;
+      
         var data = { "ID": id };
         var ds = {};
         ds = GetDataFromServer("Cart_Wishlist/GetCustomerWishlist/", data);

@@ -135,7 +135,6 @@ function ClearFields() {
 //before Parse Eg:"2017-03-30T00:00:00"
 //after Parse Date Eg:1490832000000  Passing as jsonDate
 function ConvertJsonToDate(jsonDate) {
-    debugger;
     if (jsonDate != null) {
        // var dateString = jsonDate.substr(6);
         var currentTime = new Date(parseInt(jsonDate));
