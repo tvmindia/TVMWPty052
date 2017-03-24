@@ -11,7 +11,9 @@ namespace PartyEC.BusinessServices.Contracts
     {
         UA GetUA();
         void UpdateUA(UA uaObj);
-        DateTime GetCurrentDateTime();        
-        
+        DateTime GetCurrentDateTime();
+        void SendMessage(string Msg, string MobileNos, string provider);
+
+
     }
 }

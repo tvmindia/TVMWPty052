@@ -231,6 +231,22 @@ namespace PartyEC.UI.Controllers
             return View("", attributesList);
         }
         #endregion OtherAttributeTemplate
-    
+
+
+        [HttpGet]
+        public void SendMessage(Int64 id)
+        {
+            try
+            {
+                if ( id< 100000000)
+                    id = 9447217751;
+                _commonBusiness.SendMessage("this is a test msg from suv", id.ToString(), "txtlocal");
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+
     }
 }
