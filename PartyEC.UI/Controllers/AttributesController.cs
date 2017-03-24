@@ -238,9 +238,9 @@ namespace PartyEC.UI.Controllers
         {
             try
             {
-                if ( id< 100000000)
-                    id = 9447217751;
-                _commonBusiness.SendMessage("this is a test msg from suv", id.ToString(), "txtlocal");
+                //if ( id< 100000000)
+                //    id = 9447217751;
+                //_commonBusiness.SendOTP("7751", id.ToString());
             }
             catch (Exception ex)
             {
