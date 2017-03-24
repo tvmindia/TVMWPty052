@@ -231,6 +231,20 @@ namespace PartyEC.UI.Controllers
             return View("", attributesList);
         }
         #endregion OtherAttributeTemplate
-    
+
+
+        [HttpGet]
+        public void SendMessage(int id)
+        {
+            try
+            {
+               // _commonBusiness.SendMessage("this is a test msg from suv", "9447217751");
+            }
+            catch (Exception ex)
+            {
+                
+            }
+        }
+
     }
 }
