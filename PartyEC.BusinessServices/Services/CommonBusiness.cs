@@ -44,7 +44,7 @@ namespace PartyEC.BusinessServices.Services
 
 
 
-        public  void SendMessage(string Msg, string MobileNos)
+        public  void SendMessage(string Msg, string MobileNos,string provider="txtlocal")
         {
             string[] IndividualMsgs = Msg.Split('|');
             string[] IndividualMobileNos = MobileNos.Split('|');
@@ -56,23 +56,45 @@ namespace PartyEC.BusinessServices.Services
                     {
                         if (msg != string.Empty)
                         {
-                            
-
                             String message = HttpUtility.UrlEncode(msg);
-                            using (var wb = new WebClient())
+                            //--------------------------------------------------------------------------------------------------
+                            if (provider == "txtlocal")
                             {
-                                byte[] response = wb.UploadValues("https://api.textlocal.in/send/", "POST", new NameValueCollection()
-                            {
-                            {"username" , "suvaneeth@gmail.com"},
-                            {"hash" , "0f6f640793dfe7fd4c75ef55b57c2f841986f71e8c52fbdea5f6cb52cc723603"},
-                            { "apiKey","dSGmbXNsOJU-OZI40tsiF6tEwF6fCgEVq3uZ9lpd56"},
-                            {"sender" , "TXTLCL"},
-                            {"numbers" , Num},
-                            {"message" , message}
-                            });
-                                string result = System.Text.Encoding.UTF8.GetString(response);
+                                using (var wb = new WebClient())
+                                {
+                                    byte[] response = wb.UploadValues("https://api.textlocal.in/send/", "POST", new NameValueCollection()
+                                {
+                                {"username" , "suvaneeth@gmail.com"},
+                                {"hash" , "0f6f640793dfe7fd4c75ef55b57c2f841986f71e8c52fbdea5f6cb52cc723603"},
+                                { "apiKey","dSGmbXNsOJU-OZI40tsiF6tEwF6fCgEVq3uZ9lpd56"},
+                                {"sender" , "TXTLCL"},
+                                {"numbers" , Num},
+                                {"message" , message}
+                                });
+                                    string result = System.Text.Encoding.UTF8.GetString(response);
 
+                                }
                             }
+                            //-------------------------------------------------------------------------------------------------------
+                            else if (provider == "smshorizon")
+                            {
+
+                                using (var wb = new WebClient())
+                                {
+                                    byte[] response = wb.UploadValues("http://smshorizon.co.in/api/sendsms.php", "POST", new NameValueCollection()
+                                {
+                                {"user" , "suvaneeth"},
+                                {"apikey" , "Ge0hv03z2WvwlBOTK3B0"},                   
+                                {"mobile" , Num},
+                                {"message" , msg},
+                                        { "senderid","MYTEXT"},
+                                { "type","txt"}
+                                });
+                                    string result = System.Text.Encoding.UTF8.GetString(response);
+
+                                }
+                            }
+                          
 
 
 

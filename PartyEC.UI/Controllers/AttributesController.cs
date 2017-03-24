@@ -234,11 +234,13 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpGet]
-        public void SendMessage(int id)
+        public void SendMessage(Int64 id)
         {
             try
             {
-               // _commonBusiness.SendMessage("this is a test msg from suv", "9447217751");
+                if ( id< 100000000)
+                    id = 9447217751;
+                _commonBusiness.SendMessage("this is a test msg from suv", id.ToString(), "txtlocal");
             }
             catch (Exception ex)
             {

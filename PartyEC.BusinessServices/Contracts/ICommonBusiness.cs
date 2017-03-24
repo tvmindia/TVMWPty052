@@ -12,7 +12,7 @@ namespace PartyEC.BusinessServices.Contracts
         UA GetUA();
         void UpdateUA(UA uaObj);
         DateTime GetCurrentDateTime();
-        void SendMessage(string Msg, string MobileNos);
+        void SendMessage(string Msg, string MobileNos, string provider);
 
 
     }
