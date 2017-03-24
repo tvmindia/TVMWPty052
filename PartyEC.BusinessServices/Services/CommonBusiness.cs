@@ -7,6 +7,8 @@ using System.Net;
 using System.Web;
 using System.Web.UI.WebControls;
 using System.IO;
+using System.Collections.Specialized;
+using System.Text;
 
 namespace PartyEC.BusinessServices.Services
 {
@@ -42,7 +44,7 @@ namespace PartyEC.BusinessServices.Services
 
 
 
-        public static void SendMessage(string Msg, string MobileNos)
+        public  void SendMessage(string Msg, string MobileNos,string provider="txtlocal")
         {
             string[] IndividualMsgs = Msg.Split('|');
             string[] IndividualMobileNos = MobileNos.Split('|');
@@ -54,22 +56,60 @@ namespace PartyEC.BusinessServices.Services
                     {
                         if (msg != string.Empty)
                         {
-                            string strUrl = "http://api.mVaayoo.com/mvaayooapi/MessageCompose?user=shamilatps5@gmail.com:123456&senderID=TEST SMS&receipientno=" + Num + "&msgtxt=" + msg + "&state=4";
-                            WebRequest request = HttpWebRequest.Create(strUrl);
-                            HttpWebResponse response = (HttpWebResponse)request.GetResponse();
-                            Stream s = (Stream)response.GetResponseStream();
-                            StreamReader readStream = new StreamReader(s);
-                            string dataString = readStream.ReadToEnd();
-                            response.Close();
-                            s.Close();
-                            readStream.Close();
+                            String message = HttpUtility.UrlEncode(msg);
+                            //--------------------------------------------------------------------------------------------------
+                            if (provider == "txtlocal")
+                            {
+                                using (var wb = new WebClient())
+                                {
+                                    byte[] response = wb.UploadValues("https://api.textlocal.in/send/", "POST", new NameValueCollection()
+                                {
+                                {"username" , "suvaneeth@gmail.com"},
+                                {"hash" , "0f6f640793dfe7fd4c75ef55b57c2f841986f71e8c52fbdea5f6cb52cc723603"},
+                                { "apiKey","dSGmbXNsOJU-OZI40tsiF6tEwF6fCgEVq3uZ9lpd56"},
+                                {"sender" , "TXTLCL"},
+                                {"numbers" , Num},
+                                {"message" , message}
+                                });
+                                    string result = System.Text.Encoding.UTF8.GetString(response);
 
+                                }
+                            }
+                            //-------------------------------------------------------------------------------------------------------
+                            else if (provider == "smshorizon")
+                            {
+
+                                using (var wb = new WebClient())
+                                {
+                                    byte[] response = wb.UploadValues("http://smshorizon.co.in/api/sendsms.php", "POST", new NameValueCollection()
+                                {
+                                {"user" , "suvaneeth"},
+                                {"apikey" , "Ge0hv03z2WvwlBOTK3B0"},                   
+                                {"mobile" , Num},
+                                {"message" , msg},
+                                        { "senderid","MYTEXT"},
+                                { "type","txt"}
+                                });
+                                    string result = System.Text.Encoding.UTF8.GetString(response);
+
+                                }
+                            }
+                          
+
+
+
+
+                          
                         }
+
+
+
                     }
+                    }
+
                 }
-
             }
-        }
 
-    }
+        }
+    
 }
