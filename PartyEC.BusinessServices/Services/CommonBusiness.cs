@@ -44,7 +44,18 @@ namespace PartyEC.BusinessServices.Services
 
 
 
-        public  void SendMessage(string Msg, string MobileNos,string provider="txtlocal")
+        public void SendOTP(string OTP, string MobileNo) {
+            if (OTP.Length != 4)
+                throw new Exception("OTP should be 4 digits");
+
+            SendMessage(OTP, MobileNo, "2factor", "OTP");
+        }
+
+
+        #region messageSending
+
+        
+        private void SendMessage(string Msg, string MobileNos,string provider="txtlocal",string type="Promotional")
         {
             string[] IndividualMsgs = Msg.Split('|');
             string[] IndividualMobileNos = MobileNos.Split('|');
@@ -94,12 +105,29 @@ namespace PartyEC.BusinessServices.Services
 
                                 }
                             }
-                          
+                            //-----------------------------------------------------------------------------------------------------------
+                            else if (provider == "2factor" && type=="OTP")
+                            {
+
+                                using (var wb = new WebClient())
+                                {
+                                    byte[] response = wb.UploadValues("http://205.147.96.66/API/R1/", "POST", new NameValueCollection()
+                                {
+                                        { "module","SMS_OTP"},
+                                {"apikey" , "bddc3759-107a-11e7-9462-00163ef91450"},                                
+                                {"to" , MobileNos},
+                                {"otpvalue" , msg}
+                                     
+                                });
+                                    string result = System.Text.Encoding.UTF8.GetString(response);
+
+                                }
+                            }
+
+                            //-------------------------------------------------------------------------------------------------------------
 
 
 
-
-                          
                         }
 
 
@@ -110,6 +138,12 @@ namespace PartyEC.BusinessServices.Services
                 }
             }
 
-        }
-    
+        #endregion
+
+
+
+
+
+    }
+
 }

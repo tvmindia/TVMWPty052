@@ -25,6 +25,7 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertUpdateProductDetails(Product productObj);
         OperationsStatus UpdateProductHeaderOtherAttributes(Product productObj);
         List<ProductDetail> GetProductDetail(int ProductID);
-
+        ProductDetail GetProductDetailsByProduct(int ProductID,int DetailID);
+        OperationsStatus DeleteProductsDetails(int ProductDetailsID);
     }
 }

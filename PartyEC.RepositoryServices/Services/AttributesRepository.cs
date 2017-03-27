@@ -323,7 +323,7 @@ namespace PartyEC.RepositoryServices.Services
                         myProductAttributeList = new List<AttributeValues>();
                         if ((sdr != null) && (sdr.HasRows))
                         {
-                            if (sdr.Read())
+                            while(sdr.Read())
                             {
                                 AttributeValues myAttribute = new AttributeValues();
                                 myAttribute.Name = sdr["Name"].ToString();

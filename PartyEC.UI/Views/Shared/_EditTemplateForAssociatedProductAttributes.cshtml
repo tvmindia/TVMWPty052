@@ -1,18 +1,6 @@
 ﻿@model IEnumerable<PartyEC.UI.Models.AttributesViewModel>
 
-<div>
-    @{
-        PartyEC.UI.Models.ToolboxViewModel ToolBoxControlforAssocProductAttr = new PartyEC.UI.Models.ToolboxViewModel();
-        ToolBoxControlforAssocProductAttr.savebtn.Visible = true;
-        ToolBoxControlforAssocProductAttr.savebtn.Title = "Save";
-        ToolBoxControlforAssocProductAttr.savebtn.Event = "AssociatedProductSave()";
-        ToolBoxControlforAssocProductAttr.deletebtn.Visible = true;
-        ToolBoxControlforAssocProductAttr.deletebtn.Title = "Delete";
-        ToolBoxControlforAssocProductAttr.deletebtn.Event = "AssociatedProductDelete()";
-        Html.RenderPartial("_ToolboxView", ToolBoxControlforAssocProductAttr);
-    }
 
-</div>
 <div id="dynamicAssociatedProductContents">
 
 
@@ -74,6 +62,7 @@
     <label for=detailQty class="col-lg-2 control-label">Qty</label>
     <div class="col-lg-4">
         <input type="number" class="form-control" id="detailQty" name="detailQty">
+        <input type="hidden" class="form-control" id="productDetailID" name="productDetailID" />
     </div>
 </div>
 

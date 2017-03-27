@@ -373,6 +373,60 @@ namespace PartyEC.UI.Controllers
         }
         #endregion GetProductDetailByProduct
 
+
+        #region GetProductDetailsByProductDetailID
+        [HttpGet]
+        public string GetProductDetailsByProductDetailID(string productID,string productDetailID )
+        {
+            try
+            {
+                ProductDetailViewModel productDetail = null;
+                if ((!string.IsNullOrEmpty(productID))&&(!string.IsNullOrEmpty(productDetailID)))
+                {
+                    OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                    productDetail = Mapper.Map<ProductDetail, ProductDetailViewModel>(_productBusiness.GetProductDetailsByProduct(Int32.Parse(productID),Int32.Parse(productDetailID)));
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = productDetail });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = productDetail });
+                }
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        #endregion GetProductDetailsByProductDetailID
+
+        #region DeleteProductDetail
+        [HttpPost]
+        public string DeleteProductDetail(ProductDetailViewModel productDeails)
+        {
+            try
+             {
+               OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                if(productDeails.ID>0)
+                {
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.DeleteProductsDetails((productDeails.ID)));
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                
+                
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
+        #endregion DeleteProductDetail
+
+
         #region ChangeButtonStyle
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)
