@@ -173,6 +173,10 @@ namespace PartyEC.RepositoryServices.Services
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = constObj.InsertSuccess;
                                 break;
+                            case "2":                                 
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.Duplicate;
+                                break;
                             default:
                                 break;
                         }
@@ -232,6 +236,10 @@ namespace PartyEC.RepositoryServices.Services
                             case "1": 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                break;
+                            case "2":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.Duplicate;
                                 break;
                             default:
                                 break;
