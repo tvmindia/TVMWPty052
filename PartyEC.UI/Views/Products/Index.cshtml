@@ -97,9 +97,9 @@
                             <div class="panel-heading">
                                 <ul class="nav nav-tabs nav-stacked" id="LHSNavbarProductDetails">
                                     <li id="GeneralLI" onclick="ShowProductDetalsToolBox()" class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="label label-danger">E</span></a></li>
-                                    <li onclick="ShowProductDetalsToolBox()"><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
+                                    <li onclick="RenderContentForPrice()"><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#discription" data-toggle="tab" id="tabDiscrption">Discription</a></li>
-                                    <li onclick="ShowProductDetalsToolBox()"><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
+                                    <li onclick="RenderContentForInventory()"><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#productTags" data-toggle="tab" id="tabproducttags">Product Tags <span class="label label-danger">E</span></a></li>
                                     <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
                                     <li onclick="HideProductDetalsToolBox()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
@@ -310,6 +310,11 @@
                                         @Html.ValidationMessageFor(model => model.DiscountEndDate, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
+                                <div class="col-sm-6 col-md-6 divMsgconfigurable">
+                                    <div class="alert-message alert-message-warning">
+                                        <p>For Configurable products, Price section is available in 'Associated products' tab.</p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="discription">
                                 <div class="form-group">
@@ -340,7 +345,6 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
                                     @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
                                     <div class="col-lg-4">
@@ -356,18 +360,47 @@
                                     </div>
                                 </div>
 
+                                <div class="col-sm-6 col-md-6 divMsgconfigurable">
+                                    <div class="alert-message alert-message-warning">
+                                        <p>For Configurable products, inventory section is available in 'Associated products' tab.</p>
+                                    </div>
+                                </div>
+
 
                             </div>
                             <div class="tab-pane fade" id="productTags">
-                                <div class="col-lg-8">
+                               @* <div class="col-lg-8">
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.HeaderTags, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-6" id="headertagsdiv">
                                             @Html.EditorFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control" } })
+                                           
+                                                <button class="btn btn-default input-group-btn" type="button">Go!</button>
+                                           
                                             @Html.ValidationMessageFor(model => model.HeaderTags, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                </div><!-- /.col-lg-6 -->
+                                </div><!-- /.col-lg-6 -->*@
+
+                                <div class="col-lg-8">
+                                    @Html.LabelFor(model => model.HeaderTags, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="input-group">
+                                        @Html.HiddenFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control", placeholder = "Add key Words....." } })
+                                        <input id="HeaderTagsPicker" type="text" class="form-control" placeholder = "Add key Words....." >
+                                       
+                                       
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button">+</button>
+                                        </span>
+                                    </div><!-- /input-group -->
+                                </div><!-- /.col-lg-8 -->
+                                <br/>
+                                <br />
+                                <div id="keywordsDiv" class="col-lg-8 thumbnail">
+
+
+                                </div>
+
                             </div>
                        
 
@@ -401,7 +434,7 @@
                                             <th>Selling Price</th>
                                             <th>Qty</th>
                                             <th>Stock Status</th>
-                                            <th>Actions</th>
+                                           
                                         </tr>
                                     </thead>
                                 </table>
@@ -927,7 +960,7 @@
                                     <th>Selling Price</th>
                                     <th>Qty</th>
                                     <th>Stock Status</th>
-                                    <th>Actions</th>
+                                  
                                 </tr>
                             </thead>
                         </table>

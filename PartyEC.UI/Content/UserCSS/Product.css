@@ -42,9 +42,10 @@
 
 .Htags{
   float:left;
-  border:1px none;
   padding:5px;
   font-family:Arial;
+  margin:3px;
+  font-size: larger;
 }
 .Htags{
   cursor:pointer;
@@ -70,7 +71,7 @@
 }
 
 
-/*Alert*/
+
 .alert-message
 {
     margin: 20px 0;

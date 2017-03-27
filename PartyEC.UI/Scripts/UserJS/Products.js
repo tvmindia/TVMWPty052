@@ -1,14 +1,16 @@
 ﻿var DataTables = {};
 
 $(document).ready(function () {
-
-
-    $("#HeaderTags").on({
-
+    $("#HeaderTagsPicker").on({
         focusout: function () {
+            debugger;
             var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
-            if (txt) $("<span/>", { text: txt.toLowerCase(), insertAfter: this }).attr({ 'class': 'Htags','onclick':'removeme(this)' });
-            this.value = "";
+            if (txt)
+            {
+                var h = $("<span/>", { text: txt }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' });
+                $('#keywordsDiv').append(h);
+                this.value = "";
+            }
         },
         keypress: function (ev) {
             if (ev.keyCode == 13) {
@@ -18,6 +20,7 @@ $(document).ready(function () {
                 return false;
             }
         }
+        
     });
   
     //$("#detailDetailTags").on({
@@ -93,9 +96,9 @@ $(document).ready(function () {
                { "data": "SKU", "defaultContent": "<i>-</i>" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "Qty", "defaultContent": "<i>-</i>" },
-               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
+               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" }
          
-               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               
              ],
              columnDefs: [{
                  orderable: false,
@@ -134,8 +137,8 @@ $(document).ready(function () {
                { "data": "SKU", "defaultContent": "<i>-</i>" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "Qty", "defaultContent": "<i>-</i>" },
-               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" }
+             
              ],
              columnDefs: [
               {//hiding hidden column 
@@ -274,7 +277,8 @@ function Edit(currentObj)
                 var tagar = thisproduct.HeaderTags.split(",");
                 for (index = 0; index < tagar.length; ++index) {
                     //Tag creation when binding
-                    $("#headertagsdiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'Htags', 'onclick': 'removeme(this)' }));
+                    $("#keywordsDiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' }));
+                   
                 }
             }
             else
@@ -595,35 +599,48 @@ function ShowProductDetalsToolBox()
 }
 function RenderContentsForAttributes()
 {
+   
     HideProductDetalsToolBox();
     try {
        
         var atsetID = $("#AttributeSetID").val();
-        if (atsetID) {
-            var Isconfig = false;
-            var pview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
-            //clear otherattributes div
-            $("#dynamicOtherAttributes").empty();
-            //append dynamic html to div from partialview
-            $("#dynamicOtherAttributes").html(pview);
-            //date picker reloading
-            $('input[type="date"]').datepicker({
-                format: "yyyy-mm-dd",//dd-M-yyyy",
-                maxViewMode: 0,
-                todayBtn: "linked",
-                clearBtn: true,
-                autoclose: true,
-                todayHighlight: true
-            });
+        var proid = $('.productID').val();
+        if ((atsetID) && (proid)) {
+            if ((atsetID>0) && (proid>0))
+            {
+                var Isconfig = false;
+                var pview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
+                //clear otherattributes div
+                $("#dynamicOtherAttributes").empty();
+                //append dynamic html to div from partialview
+                $("#dynamicOtherAttributes").html(pview);
+                //date picker reloading
+                $('input[type="date"]').datepicker({
+                    format: "yyyy-mm-dd",//dd-M-yyyy",
+                    maxViewMode: 0,
+                    todayBtn: "linked",
+                    clearBtn: true,
+                    autoclose: true,
+                    todayHighlight: true
+                });
+            }
+            else {
+                //clear otherattributes div
+                $("#dynamicOtherAttributes").empty();
+                //append dynamic html to div from partialview
+                $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back:).</p></div></div>');
+
+            }
+           
         }
-        else
-        {
+        else {
             //clear otherattributes div
             $("#dynamicOtherAttributes").empty();
             //append dynamic html to div from partialview
             $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back:).</p></div></div>');
-                           
+
         }
+        
     }
     catch (e) {
         notyAlert('error', e.Message);
@@ -694,32 +711,42 @@ function RenderContentsForAssocProdAttributes()
         var proid = $('.productID').val();
         var atsetID = $("#AttributeSetID").val();
         if ((atsetID) && (proid)) {
-            var Isconfig = true;
-            var pview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
-            //clear otherattributes div
-            $("#dynamicAssociatedProducts").empty();
-            //append dynamic html to div from partialview
-            $("#dynamicAssociatedProducts").html(pview);
-            //date picker reloading
-            $('input[type="date"]').datepicker({
-                format: "yyyy-mm-dd",//dd-M-yyyy",
-                maxViewMode: 0,
-                todayBtn: "linked",
-                clearBtn: true,
-                autoclose: true,
-                todayHighlight: true
-            });
+            if ((atsetID > 0) && (proid > 0))
+            {
+                var Isconfig = true;
+                var pview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
+                //clear otherattributes div
+                $("#dynamicAssociatedProducts").empty();
+                //append dynamic html to div from partialview
+                $("#dynamicAssociatedProducts").html(pview);
+                //date picker reloading
+                $('input[type="date"]').datepicker({
+                    format: "yyyy-mm-dd",//dd-M-yyyy",
+                    maxViewMode: 0,
+                    todayBtn: "linked",
+                    clearBtn: true,
+                    autoclose: true,
+                    todayHighlight: true
+                });
                 $("#DivtblAssociatedProducts").show();
                 //Refresh associated products table
                 RefreshAssociatedProducts(proid);
-         }
+            }
+            else
+            {
+                $("#DivtblAssociatedProducts").hide();
+                //clear otherattributes div
+                $("#dynamicAssociatedProducts").empty();
+                //append dynamic html to div from partialview
+                $("#dynamicAssociatedProducts").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back:).</p></div></div>');
+           }
+        }
         else {
             $("#DivtblAssociatedProducts").hide();
             //clear otherattributes div
             $("#dynamicAssociatedProducts").empty();
             //append dynamic html to div from partialview
             $("#dynamicAssociatedProducts").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back:).</p></div></div>');
-
         }
     }
     catch (e) {
@@ -727,31 +754,59 @@ function RenderContentsForAssocProdAttributes()
     }
 }
 
-
-function ProductTypeOnChange()
+function RenderContentForPrice()
 {
-    try
-    {
+    try {
+        ShowProductDetalsToolBox();
         var prodtype = $("#ProductType").val();
-        switch(prodtype)
-        {
+        switch (prodtype) {
             case "C":
                 //Hide General detail entries
                 $(".productDetailGroup").hide();
-              
+                $(".divMsgconfigurable").show();
 
                 break;
             case "S":
                 $(".productDetailGroup").show();
+                $(".divMsgconfigurable").hide();
                 break;
             default:
                 break;
 
         }
     }
-    catch(e)
-    {
+    catch (e) {
     }
+}
+
+function RenderContentForInventory()
+{
+    try {
+        ShowProductDetalsToolBox();
+        var prodtype = $("#ProductType").val();
+        switch (prodtype) {
+            case "C":
+                //Hide General detail entries
+                $(".productDetailGroup").hide();
+                $(".divMsgconfigurable").show();
+
+                break;
+            case "S":
+                $(".productDetailGroup").show();
+                $(".divMsgconfigurable").hide();
+                break;
+            default:
+                break;
+
+        }
+    }
+    catch (e) {
+    }
+}
+
+function ProductTypeOnChange()
+{
+    
 }
 
 function AssociatedProductSave()
@@ -772,7 +827,7 @@ function AssociatedProductSave()
             for (var at = 0; at < Associatedpro.length; at++) {
                 var AttributeValuesViewModel = new Object();
                 AttributeValuesViewModel.Name = Associatedpro[at].name;
-                AttributeValuesViewModel.Value = Associatedpro[at].value;
+                AttributeValuesViewModel.Value = ((Associatedpro[at].value != "" && Associatedpro[at].value!=-1)?Associatedpro[at].value:"");
                 ProductAttributesList.push(AttributeValuesViewModel);
             }
             var prodetid=$("#productDetailID").val();
