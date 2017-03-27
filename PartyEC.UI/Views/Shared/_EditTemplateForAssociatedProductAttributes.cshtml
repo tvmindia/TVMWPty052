@@ -58,85 +58,88 @@
                                 }
 </div>
 
-<div class="form-group">
-    <label for=detailQty class="col-lg-2 control-label">Qty</label>
-    <div class="col-lg-4">
-        <input type="number" class="form-control" id="detailQty" name="detailQty">
-        <input type="hidden" class="form-control" id="productDetailID" name="productDetailID" />
-    </div>
-</div>
-
-<div class="form-group">
-    <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty</label>
-    <div class="col-lg-4">
-        <input type="number" class="form-control" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
-    </div>
-</div>
-
-<div class="form-group">
-    <label class="control-label col-lg-2" for="detailStockAvailable" style="">Stock Status</label>
-    <div class="col-lg-4">
-        <div>
-            <input class="check-box" data-val="true" id="detailStockAvailable" name="detailStockAvailable" value="true" type="checkbox">
-            <input name="detailStockAvailable" value="false" type="hidden">
+<div id="associatedStaticfields">
+    <div class="form-group">
+        <label for=detailQty class="col-lg-2 control-label">Qty</label>
+        <div class="col-lg-4">
+            <input type="number" class="form-control" id="detailQty" name="detailQty">
+            <input type="hidden" class="form-control" id="productDetailID" name="productDetailID" />
         </div>
     </div>
-</div>
 
-<div class="form-group">
-    <label class="control-label col-lg-2" for="detailDiscountAmount">Discount Price</label>
-    <div class="col-lg-4">
-        <input class="form-control text-box single-line" id="detailDiscountAmount" name="detailDiscountAmount" value="" type="number">
-    </div>
-</div>
-
-<div class="form-group">
-    <label class="control-label col-lg-2" for="detailPriceDifference">Price Difference</label>
-    <div class="col-lg-4">
-        <input class="form-control text-box single-line" id="detailPriceDifference" name="detailPriceDifference" value="" type="number">
-    </div>
-</div>
-
-<div class="form-group">
-    <label class="control-label col-lg-2" for="detailDiscountStartDate" style="">Discount Start Date</label>
-    <div class="col-lg-4">
-        <input class="form-control text-box single-line" id="detailDiscountStartDate" name="detailDiscountStartDate" value="" type="date">
-    </div>
-</div>
-
-<div class="form-group">
-    <label class="control-label col-lg-2" for="detailDiscountEndDate" style="">Discount End Date</label>
-    <div class="col-lg-4">
-        <input class="form-control text-box single-line" id="detailDiscountEndDate" name="detailDiscountEndDate" value="" type="date">
-    </div>
-</div>
-
-<div class="form-group">
-    <label class="control-label col-lg-2" for="detailEnable" style="">Enable</label>
-    <div class="col-lg-4">
-        <div>
-            <input class="check-box" data-val="true" id="detailEnable" name="detailEnable" value="true" type="checkbox">
-            <input name="detailEnable" value="false" type="hidden">
+    <div class="form-group">
+        <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty</label>
+        <div class="col-lg-4">
+            <input type="number" class="form-control" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
         </div>
     </div>
-</div>
 
-<div class="form-group">
-    <label class="control-label col-lg-2" for="detailDefaultOption" style="">Default Option</label>
-    <div class="col-lg-4">
-        <div>
-            <input class="check-box" data-val="true" id="detailDefaultOption" name="detailDefaultOption" value="true" type="checkbox">
-            <input name="detailDefaultOption" value="false" type="hidden">
+    <div class="form-group">
+        <label class="control-label col-lg-2" for="detailStockAvailable" style="">Stock Status</label>
+        <div class="col-lg-4">
+            <div>
+                <input class="check-box" data-val="true" id="detailStockAvailable" name="detailStockAvailable" value="true" type="checkbox">
+                <input name="detailStockAvailable" value="false" type="hidden">
+            </div>
         </div>
     </div>
-</div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-2" for="detailDiscountAmount">Discount Price</label>
+        <div class="col-lg-4">
+            <input class="form-control text-box single-line" id="detailDiscountAmount" name="detailDiscountAmount" value="" type="number">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-2" for="detailPriceDifference">Price Difference</label>
+        <div class="col-lg-4">
+            <input class="form-control text-box single-line" id="detailPriceDifference" name="detailPriceDifference" value="" type="number">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-2" for="detailDiscountStartDate" style="">Discount Start Date</label>
+        <div class="col-lg-4">
+            <input class="form-control text-box single-line" id="detailDiscountStartDate" name="detailDiscountStartDate" value="" type="date">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-2" for="detailDiscountEndDate" style="">Discount End Date</label>
+        <div class="col-lg-4">
+            <input class="form-control text-box single-line" id="detailDiscountEndDate" name="detailDiscountEndDate" value="" type="date">
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-2" for="detailEnable" style="">Enable</label>
+        <div class="col-lg-4">
+            <div>
+                <input class="check-box" data-val="true" id="detailEnable" name="detailEnable" value="true" type="checkbox">
+                <input name="detailEnable" value="false" type="hidden">
+            </div>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <label class="control-label col-lg-2" for="detailDefaultOption" style="">Default Option</label>
+        <div class="col-lg-4">
+            <div>
+                <input class="check-box" data-val="true" id="detailDefaultOption" name="detailDefaultOption" value="true" type="checkbox">
+                <input name="detailDefaultOption" value="false" type="hidden">
+            </div>
+        </div>
+    </div>
 
 
-<div class="form-group">
-    <label class="control-label col-lg-2" for="detailDetailTags" style="">New Tags</label>
-     <div class="col-lg-4" id="detailTagsdiv">
-         <input class="form-control text-box single-line" id="detailDetailTags" name="detailDetailTags" value="" type="text">
-     </div>
+    <div class="form-group">
+        <label class="control-label col-lg-2" for="detailDetailTags" style="">New Tags</label>
+        <div class="col-lg-4" id="detailTagsdiv">
+            <input class="form-control text-box single-line" id="detailDetailTags" name="detailDetailTags" value="" type="text">
+        </div>
+    </div>
+
 </div>
 
 @*table*@

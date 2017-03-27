@@ -216,12 +216,12 @@ namespace PartyEC.BusinessServices.Services
             }
             return productDetail;
          }
-         public  OperationsStatus DeleteProductsDetails(int ProductDetailsID)
+         public  OperationsStatus DeleteProductsDetails(int ProductDetailsID, int ProductID)
          {
             OperationsStatus OS = null;
             try
             {
-                OS=_productRepository.DeleteProductsDetails(ProductDetailsID);
+                OS=_productRepository.DeleteProductsDetails(ProductDetailsID, ProductID);
             }
             catch (Exception ex)
             {

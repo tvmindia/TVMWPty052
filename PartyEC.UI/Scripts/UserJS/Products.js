@@ -20,6 +20,23 @@ $(document).ready(function () {
         }
     });
   
+    //$("#detailDetailTags").on({
+
+    //    focusout: function () {
+    //        var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
+    //        if (txt) $("<span/>", { text: txt.toLowerCase(), insertAfter: this }).attr({ 'class': 'Dtags', 'onclick': 'removeme(this)' });
+    //        this.value = "";
+    //    },
+    //    keypress: function (ev) {
+    //        if (ev.keyCode == 13) {
+    //            if (/(188|13)/.test(ev.which)) $(this).focusout();
+    //            var callbacks = $.Callbacks();
+    //            callbacks.disable();
+    //            return false;
+    //        }
+    //    }
+    //});
+    
    try {
        
         DataTables.productTable = $('#tblproducts').DataTable(
@@ -674,9 +691,9 @@ function RenderContentsForAssocProdAttributes()
 {
     HideProductDetalsToolBox();
     try {
-    
+        var proid = $('.productID').val();
         var atsetID = $("#AttributeSetID").val();
-        if (atsetID) {
+        if ((atsetID) && (proid)) {
             var Isconfig = true;
             var pview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
             //clear otherattributes div
@@ -692,15 +709,12 @@ function RenderContentsForAssocProdAttributes()
                 autoclose: true,
                 todayHighlight: true
             });
-            var proid = $('.productID').val();
-            if (proid)
-            {
+                $("#DivtblAssociatedProducts").show();
                 //Refresh associated products table
                 RefreshAssociatedProducts(proid);
-            }
-         
-        }
+         }
         else {
+            $("#DivtblAssociatedProducts").hide();
             //clear otherattributes div
             $("#dynamicAssociatedProducts").empty();
             //append dynamic html to div from partialview
@@ -810,6 +824,7 @@ function AssociatedProductSave()
 }
 
 function RefreshAssociatedProducts(id) {
+ 
     try {
         DataTables.AssociatedProductsTable.clear().rows.add(GetProductDetailsByProductId(id)).draw(false);
     }
@@ -843,20 +858,24 @@ function GetProductDetailsByProductId(id)
 
 function AssociatedProductDelete()
 {
-    debugger;
+  
     var prodetid = $("#productDetailID").val();
-    if (prodetid)
+    var prodid = $('.productID').val();
+    if ((prodetid) && (prodid))
     {
         if (confirm("Are you Sure!") == true) {
             var ProductDetailViewModel = new Object();
-            ProductDetailViewModel.ID = (prodetid != "" ? prodetid : "");
+            ProductDetailViewModel.ID = prodetid;
+            ProductDetailViewModel.ProductID = prodid;
             var data = "{'productDeails':" + JSON.stringify(ProductDetailViewModel) + "}";
             PostDataToServer('Products/DeleteProductDetail/', data, function (JsonResult) {
                 if (JsonResult != '') {
                     switch (JsonResult.Result) {
                         case "OK":
+                 
                             notyAlert('success', JsonResult.Record.StatusMessage);
                             RefreshAssociatedProducts(prodid);
+                            clearAssociatedProductform();
                             break;
                         case "ERROR":
                             notyAlert('error', JsonResult.Record.StatusMessage);
@@ -877,8 +896,6 @@ function AssociatedProductDelete()
     
 }
 function EditAssocProduct(currentObj) {
-    
- 
     var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         var thisproduct = GetProductDetailsByProductDetailID(rowData.ProductID,rowData.ID );
@@ -966,4 +983,16 @@ function GetProductDetailsByProductDetailID(id,detailid)
         notyAlert('error', e.message);
     }
 
+}
+
+function clearAssociatedProductform() {
+    //Clear form
+    //drop down clear
+    $('#dynamicAssociatedProductContents').find('select,input').val(-1);
+    //normal text box clear
+    $('#dynamicAssociatedProductContents').find('input').val('');
+    $("#productDetailID").val(0);
+    $('#associatedStaticfields').find('input').val('');
+    $('#associatedStaticfields').find('.check-box').prop('checked', false);
+ 
 }

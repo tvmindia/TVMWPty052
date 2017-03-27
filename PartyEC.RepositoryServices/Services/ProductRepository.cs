@@ -1521,7 +1521,7 @@ namespace PartyEC.RepositoryServices.Services
         }
 
 
-        public OperationsStatus DeleteProductsDetails(int ProductDetailsID)
+        public OperationsStatus DeleteProductsDetails(int ProductDetailsID,int ProductID)
         {
             OperationsStatus operationsStatusObj = null;
             try
@@ -1539,6 +1539,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandText = "[DeleteProductDetails]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ProductDetailsID;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
