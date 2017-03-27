@@ -53,7 +53,7 @@ $(document).ready(function () {
                       var returnstring = '';
                       if (data) {
                           for (var ik = 0; ik < data.length; ik++) {
-                              returnstring = returnstring + '<span>' + data[ik].Name + ':' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
+                              returnstring = returnstring + '<span><b>' + data[ik].Name + '</b> : ' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
                           }
                       }
                       return returnstring;
@@ -141,18 +141,17 @@ function View(currentObj) {
     $('#tabshoppingCartWishlist').removeClass('disabled');
     $('#tabshoppingCartWishlist a').attr('data-toggle', 'tab');
     $('#tabshoppingCartWishlist a').trigger('click');
-    
     var rowData = DataTables.CustomersListTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null))
     {
         try {
-            DataTables.CustomersCartTable.clear().rows.add(GetCustomerShoppingCart(rowData.ID)).draw(false);
+            DataTables.CustomersCartTable.clear().rows.add(GetCustomerShoppingCart(rowData.ID,rowData.Name)).draw(false);
         }
         catch (e) {
             notyAlert('error', e.message);
         }
         try {
-            DataTables.CustomersWishlistTable.clear().rows.add(GetCustomerWishlist(rowData.ID)).draw(false);
+            DataTables.CustomersWishlistTable.clear().rows.add(GetCustomerWishlist(rowData.ID, rowData.Name)).draw(false);
         }
         catch (e) {
             notyAlert('error', e.message);
@@ -164,8 +163,7 @@ function View(currentObj) {
     }
 }
 //------------------------------GetCustomerShoppingCart--------------------------------------------//
-function GetCustomerShoppingCart(id) {
-
+function GetCustomerShoppingCart(id,name) {
     try {
         var data = { "ID": id };
         var ds = {};
@@ -173,7 +171,7 @@ function GetCustomerShoppingCart(id) {
         if (ds != '') {
             ds = JSON.parse(ds);
             if (ds.Records == 0) {
-                $("#SC_TableHead").text("Shopping Cart"); 
+                $("#SC_TableHead").text(name + "'s Shopping Cart");
             }
         }
         if (ds.Result == "OK") {
@@ -188,8 +186,7 @@ function GetCustomerShoppingCart(id) {
     }
 }
 //--------------------------------GetCustomerWishlist------------------------------------------//
-function GetCustomerWishlist(id) {
-
+function GetCustomerWishlist(id,name) {
     try {
       
         var data = { "ID": id };
@@ -198,8 +195,7 @@ function GetCustomerWishlist(id) {
         if (ds != '') {
             ds = JSON.parse(ds);
             if (ds.Records == 0) {
-               
-                $("#WL_TableHead").text("Wishlist");
+                $("#WL_TableHead").text(name + "'s Wishlist");
             }
         }
         if (ds.Result == "OK") {

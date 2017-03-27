@@ -182,12 +182,17 @@ function btnAddNew() {
 //---------------------------------------Save Click alerts------------------------------------------------//
 function attributeSaveSuccess(data, status, xhr) {
     BindAllAttributes();
-    clearfields();
-    goback();
     var i = JSON.parse(data)
-    switch(i.Result){
+    debugger;
+    switch (i.Result) {
+        
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
+            clearfields();
+            goback();
+            break;
+        case "Error":
+            notyAlert('error', i.Record.StatusMessage);
             break;
         case "ERROR":
             notyAlert('error', i.Message);
@@ -206,6 +211,9 @@ function attributeDeleteSuccess(data, status, xhr) {
     switch (i.Result) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
+            break;
+        case "Error":
+            notyAlert('error', i.Record.StatusMessage);
             break;
         case "ERROR":
             notyAlert('error', i.Message);
