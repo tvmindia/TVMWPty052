@@ -53,7 +53,7 @@ $(document).ready(function () {
                       var returnstring = '';
                       if (data) {
                           for (var ik = 0; ik < data.length; ik++) {
-                              returnstring = returnstring + '<span><b>' + data[ik].Name + '</b> : ' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
+                              returnstring = returnstring + '<span><b>' + data[ik].Caption + '</b> : ' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
                           }
                       }
                       return returnstring;
@@ -97,7 +97,7 @@ $(document).ready(function () {
                         if (data) {
                             debugger;
                             for (var ik = 0; ik < data.length; ik++) {
-                                returnstring = returnstring + '<span>' + data[ik].Name + ':' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
+                                returnstring = returnstring + '<span>' + data[ik].Caption + ':' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
                             }
                         }
                         return returnstring;

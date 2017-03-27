@@ -66,6 +66,7 @@ function fillAttributes(ID)
     $("#deleteId").val(thisattribute.ID)//for delete action    
     //Textboxes
     $("#Name").val(thisattribute.Name);
+    $("#Name").attr('disabled', true);
     $("#Caption").val(thisattribute.Caption)
     $("#AttributeType").val(thisattribute.AttributeType)
     $("#CSValues").val(thisattribute.CSValues)
@@ -90,6 +91,7 @@ function fillAttributes(ID)
 }
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
+    $("#Name").attr('disabled', false);
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
@@ -167,7 +169,8 @@ function Validation() {
             notyAlert('error', 'Please Enter Configurable Values');
             return false;
         }     
-    }  
+    }
+    $("#Name").attr('disabled', false);
         $("#AttributeType").attr('disabled', false);
         $("#CSValues").attr('disabled', false);
         return true; 
