@@ -206,4 +206,14 @@ namespace PartyEC.UI.Models
         public bool isMain { get; set; }
     }
 
+    public class ProductReviewViewModel
+    {
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int CustomerID { get; set; }
+        public string Review { get; set; }
+        public int DaysCount { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string CustomerName { get; set; }
+    }
 }

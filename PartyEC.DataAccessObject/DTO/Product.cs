@@ -92,6 +92,15 @@ namespace PartyEC.DataAccessObject.DTO
         public int CategoryID { get; set; }
         public LogDetails commonObj { get; set; }
     }
-
+    public class ProductReview
+    {
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int CustomerID { get; set; }
+        public string Review { get; set; }
+        public int DaysCount { get; set; }
+        public DateTime CreatedDate { get; set; }
+        public string CustomerName { get; set; }
+    }
     
 }

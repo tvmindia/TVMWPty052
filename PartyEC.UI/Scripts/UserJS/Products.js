@@ -201,10 +201,7 @@ $(document).ready(function () {
     }
     catch (e) {
         notyAlert('error', e.message);
-    }
-
-
-
+    } 
 });
 //remove header tags
 function removeme(current)
@@ -588,6 +585,8 @@ function RelatedproductDeleteSuccess(data, status, xhr)
 function HideProductDetalsToolBox()
 {
     $('#btnPatchProductDetails').hide();
+    BindProductReviews()
+
 }
 function ShowProductDetalsToolBox()
 {
@@ -995,4 +994,73 @@ function clearAssociatedProductform() {
     $('#associatedStaticfields').find('input').val('');
     $('#associatedStaticfields').find('.check-box').prop('checked', false);
  
+}
+
+//-----------------------------------------------------Products Review-------------------------------------------------//
+
+function BindProductReviews()   // To Display Previous Comment history
+{
+    debugger;
+    $("#ReviewsDisplay").empty();
+    id =   $(".productID").val();// assigning id for binding reviews.
+    var thisReviewList = GetProductReviews(id);
+    if (thisReviewList != null) {
+        debugger;
+        for (var i = 0; i < thisReviewList.length; i++) {
+            var str = Date.parse(thisReviewList[i].CreatedDate.substring(0, 10));
+            var resultdate = ConvertJsonToDate('' + str + '');
+
+            var cnt = $('<div class="review-block"><div class="row"><div class="row"><div class="col-sm-3">'+
+                        '<img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">'+
+                        '<div class="review-block-name"><a href="#">' + thisReviewList[i].CustomerName + '</a></div>' +
+                        '<div class="review-block-date">' + resultdate + '<br />' + thisReviewList[i].DaysCount + ' day ago</div>' +
+                        '</div>'+
+                        '<div class="col-sm-9">'+
+                        '<div id="ReviewBlockRate'+[i]+'" class="review-block-rate">'+
+                        
+                        '</div>' +
+                        '<div id=ReviewDesc' + i + 'class="review-block-description">' + thisReviewList[i].Review + '</div></div><hr /></div>');
+            $("#ReviewsDisplay").append(cnt);
+
+           // for (var count=1;)
+            var ratebtn = $('<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
+            '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>' +
+            '</button>' +
+            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
+            '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>' +
+            '</button>' +
+            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
+            '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>' +
+            '</button>' +
+            '<button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">' +
+            '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>' +
+            '</button>' +
+            '<button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">' +
+            '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>' +
+            '</button>');
+            $("#ReviewBlockRate"+[i]).append(ratebtn);
+
+        }
+    }
+}
+function GetProductReviews(id) {
+    debugger;
+    try {
+        var data = { "id": id };
+        var ds = {};
+        ds = GetDataFromServer("Products/GetProductReviews/", data);
+
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
 }

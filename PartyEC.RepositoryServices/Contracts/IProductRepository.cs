@@ -27,5 +27,7 @@ namespace PartyEC.RepositoryServices.Contracts
         List<ProductDetail> GetProductDetail(int ProductID);
         ProductDetail GetProductDetailsByProduct(int ProductID,int DetailID);
         OperationsStatus DeleteProductsDetails(int ProductDetailsID,int ProductID);
+
+        List<ProductReview> GetProductReviews(int ProductID);
     }
 }

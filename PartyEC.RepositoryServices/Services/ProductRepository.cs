@@ -1573,5 +1573,56 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
+        public List<ProductReview> GetProductReviews(int ProductID)
+        {
+            List<ProductReview> productReviewList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetProductReviews]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ProductID;
+
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                productReviewList = new List<ProductReview>();
+                                while (sdr.Read())
+                                {
+                                    ProductReview _pReviewObj = new ProductReview();
+                                    {
+                                        _pReviewObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _pReviewObj.ID);
+                                        _pReviewObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? Int16.Parse(sdr["CustomerID"].ToString()) : _pReviewObj.CustomerID);
+                                        _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? Int16.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
+                                        _pReviewObj.Review = (sdr["Review"].ToString() != "" ? sdr["Review"].ToString() : _pReviewObj.Review);
+                                        _pReviewObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _pReviewObj.CreatedDate);
+                                        _pReviewObj.DaysCount = (sdr["DaysCount"].ToString() != "" ? Int16.Parse(sdr["DaysCount"].ToString()) : _pReviewObj.DaysCount);
+                                        _pReviewObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _pReviewObj.CustomerName);
+                                    }
+                                    productReviewList.Add(_pReviewObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return productReviewList;
+        }
     }
 }
