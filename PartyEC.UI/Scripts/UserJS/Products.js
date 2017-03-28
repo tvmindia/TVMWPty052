@@ -1073,38 +1073,42 @@ function BindProductReviews()   // To Display Previous Comment history
     if (thisReviewList) {
         debugger;
         for (var i = 0; i < thisReviewList.length; i++) {
-            var str = Date.parse(thisReviewList[i].CreatedDate.substring(0, 10));
+            var str = Date.parse(thisReviewList[i].ReviewCreatedDate.substring(0, 10));
             var resultdate = ConvertJsonToDate('' + str + '');
 
-            var cnt = $('<div class="review-block"><div class="row"><div class="row"><div class="col-sm-3">'+
-                        '<img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">'+
+            var cnt = $('<div class="review-block"><div class="row"><div class="row"><div class="col-sm-3">' +
+                        '<img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">' +
                         '<div class="review-block-name"><a href="#">' + thisReviewList[i].CustomerName + '</a></div>' +
                         '<div class="review-block-date">' + resultdate + '<br />' + thisReviewList[i].DaysCount + ' day ago</div>' +
-                        '</div>'+
-                        '<div class="col-sm-9">'+
-                        '<div id="ReviewBlockRate'+[i]+'" class="review-block-rate">'+
-                        
+                        '</div>' +
+                        '<div class="col-sm-9">' +
+                        '<div id="ReviewBlockRate' + [i] + '" class="review-block-rate">' +
+
                         '</div>' +
                         '<div id=ReviewDesc' + i + 'class="review-block-description">' + thisReviewList[i].Review + '</div></div><hr /></div>');
             $("#ReviewsDisplay").append(cnt);
 
-           // for (var count=1;)
-            var ratebtn = $('<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
+            var rating = thisReviewList[i].AvgRating;
+            var splitresult = rating.split(".");
+            if (splitresult[1] >= 500000)
+                rating = Math.ceil(rating);
+            else
+                rating = Math.floor(rating);
+            var ratebtns = '';
+            for (var count = 0; count < 5; count++) {
+                if (count < rating)
+                    ratebtns = ratebtns + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">' +
             '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>' +
-            '</button>' +
-            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
+            '</button>'
+                else {
+                    ratebtns = ratebtns + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
             '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>' +
-            '</button>' +
-            '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
-            '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>' +
-            '</button>' +
-            '<button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">' +
-            '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>' +
-            '</button>' +
-            '<button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">' +
-            '<span class="glyphicon glyphicon-star" aria-hidden="true"></span>' +
-            '</button>');
-            $("#ReviewBlockRate"+[i]).append(ratebtn);
+            '</button>'
+                }
+
+            }
+            ratebtns = $(ratebtns);
+            $("#ReviewBlockRate" + [i]).append(ratebtns);
 
         }
     }

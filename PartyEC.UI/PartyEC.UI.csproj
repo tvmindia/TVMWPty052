@@ -311,6 +311,7 @@
     <Content Include="Content\images\closemodel.png" />
     <Content Include="Content\images\delete.PNG" />
     <Content Include="Content\images\edit.png" />
+    <Content Include="Content\images\NoImage.png" />
     <Content Include="Content\images\NoImageFound.png" />
     <Content Include="Content\images\notyfi.png" />
     <Content Include="Content\images\partyEClogo.png" />
