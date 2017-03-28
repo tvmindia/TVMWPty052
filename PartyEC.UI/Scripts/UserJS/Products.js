@@ -603,7 +603,7 @@ function HideProductDetalsToolBox()
 {
     //$('#btnPatchProductDetails').hide();
     $("#btnPatchProductDetails").css('visibility', 'hidden');
-    BindProductReviews()
+   
 
 }
 function ShowProductDetalsToolBox()
@@ -1070,6 +1070,7 @@ function clearAssociatedProductform() {
 
 function BindProductReviews()   // To Display Previous Comment history
 {
+    HideProductDetalsToolBox();
     debugger;
     $("#ReviewsDisplay").empty();
     id =   $(".productID").val();// assigning id for binding reviews.
