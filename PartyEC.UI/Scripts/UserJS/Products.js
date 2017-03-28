@@ -599,13 +599,15 @@ function RelatedproductDeleteSuccess(data, status, xhr)
 
 function HideProductDetalsToolBox()
 {
-    $('#btnPatchProductDetails').hide();
+    //$('#btnPatchProductDetails').hide();
+    $("#btnPatchProductDetails").css('visibility', 'hidden');
     BindProductReviews()
 
 }
 function ShowProductDetalsToolBox()
 {
-    $('#btnPatchProductDetails').show();
+    // $('#btnPatchProductDetails').show();
+    $("#btnPatchProductDetails").css('visibility', 'visible');
 }
 function RenderContentsForAttributes()
 {
