@@ -1059,7 +1059,7 @@ function BindProductReviews()   // To Display Previous Comment history
     $("#ReviewsDisplay").empty();
     id =   $(".productID").val();// assigning id for binding reviews.
     var thisReviewList = GetProductReviews(id);
-    if (thisReviewList != null) {
+    if (thisReviewList) {
         debugger;
         for (var i = 0; i < thisReviewList.length; i++) {
             var str = Date.parse(thisReviewList[i].CreatedDate.substring(0, 10));
