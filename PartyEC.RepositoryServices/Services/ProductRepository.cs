@@ -1587,9 +1587,9 @@ namespace PartyEC.RepositoryServices.Services
                             con.Open();
                         }
                         cmd.Connection = con;
-                        cmd.CommandText = "[GetProductReviews]";
+                        cmd.CommandText = "[GetProductReviewsandRating]";
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ProductID;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
 
 
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -1605,9 +1605,10 @@ namespace PartyEC.RepositoryServices.Services
                                         _pReviewObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? Int16.Parse(sdr["CustomerID"].ToString()) : _pReviewObj.CustomerID);
                                         _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? Int16.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
                                         _pReviewObj.Review = (sdr["Review"].ToString() != "" ? sdr["Review"].ToString() : _pReviewObj.Review);
-                                        _pReviewObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _pReviewObj.CreatedDate);
+                                        _pReviewObj.ReviewCreatedDate = (sdr["ReviewCreatedDate"].ToString() != "" ? DateTime.Parse(sdr["ReviewCreatedDate"].ToString()) : _pReviewObj.ReviewCreatedDate);
                                         _pReviewObj.DaysCount = (sdr["DaysCount"].ToString() != "" ? Int16.Parse(sdr["DaysCount"].ToString()) : _pReviewObj.DaysCount);
                                         _pReviewObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _pReviewObj.CustomerName);
+                                        _pReviewObj.AvgRating = (sdr["AvgRating"].ToString() != "" ? sdr["AvgRating"].ToString() : _pReviewObj.AvgRating);
                                     }
                                     productReviewList.Add(_pReviewObj);
                                 }
