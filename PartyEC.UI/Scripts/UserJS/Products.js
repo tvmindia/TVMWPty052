@@ -221,6 +221,7 @@ function btnAddNewProduct() {
     $('#tabproductDetails a').attr({ 'data-toggle': 'tab', 'href': '#productDetails' });
     $('#tabproductList a').removeAttr('data-toggle href');
     $('#tabproductDetails a').trigger('click');
+    $("#productDetails h4").text('New Product');
     clearform();
 }
 function goback() {
@@ -258,6 +259,7 @@ function Edit(currentObj)
         var thisproduct = GetProduct(rowData.ID);
         if (thisproduct != null)
         {
+            $("#productDetails h4").text(thisproduct.Name + '('+thisproduct.ProductType+')');
             $("#Name").val(thisproduct.Name);
             $("#SKU").val(thisproduct.SKU);
             if (thisproduct.Enabled == true)
