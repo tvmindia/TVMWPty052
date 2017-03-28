@@ -33,8 +33,8 @@
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li id="tabproductList" class="active"><a href="#productList" data-toggle="tab">Product List</a></li>
-                <li id="tabproductDetails"><a href="#productDetails" data-toggle="tab">Product Details</a></li>
+                <li id="tabproductList" class="active"><a>Product List</a></li>
+                <li id="tabproductDetails"><a>Product Details</a></li>
                 @*<li id="tabproductDetails" class="disabled"><a href="#productDetails">Product Details</a></li>*@
               @*<li class="dropdown">
                     <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
@@ -99,9 +99,9 @@
                        ToolBoxControlDetail.savebtn.Event = "ProductSave()";
                        //ToolBoxControlDetail.deletebtn.Visible = true;
                        //ToolBoxControlDetail.deletebtn.Disable = true;
-                       //ToolBoxControlDetail.backbtn.Visible = true;
-                       //ToolBoxControlDetail.backbtn.Title = "Back";
-                       //ToolBoxControlDetail.backbtn.Event = "goback";
+                       ToolBoxControlDetail.backbtn.Visible = true;
+                       ToolBoxControlDetail.backbtn.Title = "Back";
+                       ToolBoxControlDetail.backbtn.Event = "goback()";
                        Html.RenderPartial("_ToolboxView", ToolBoxControlDetail);
                    }
                      
@@ -115,15 +115,15 @@
                             <div class="panel-heading">
                                 <ul class="nav nav-tabs nav-stacked" id="LHSNavbarProductDetails">
                                     <li id="GeneralLI" onclick="ShowProductDetalsToolBox()" class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="label label-danger">E</span></a></li>
-                                    <li onclick="ShowProductDetalsToolBox()"><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
+                                    <li onclick="RenderContentForPrice()"><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#discription" data-toggle="tab" id="tabDiscrption">Discription</a></li>
-                                    <li onclick="ShowProductDetalsToolBox()"><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
+                                    <li onclick="RenderContentForInventory()"><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#productTags" data-toggle="tab" id="tabproducttags">Product Tags <span class="label label-danger">E</span></a></li>
                                     <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
                                     <li onclick="HideProductDetalsToolBox()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
                                     <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
                                     <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
-                                    <li onclick="HideProductDetalsToolBox()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
+                                    <li onclick="BindProductReviews()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
                                  </ul>
                              </div>
                             </div>
@@ -143,7 +143,8 @@
                                    
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="Name" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.Name)<span class="required">*</span></label>
+                                        
                                         <div class="col-lg-4">
                                             @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-lg-2 productID", Value = "0" })
                                             @Html.HiddenFor(model => model.ImageID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
@@ -154,14 +155,15 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.SKU, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="SKU" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.SKU)<span class="required">*</span></label>
                                         <div class="col-lg-4">
                                             @Html.EditorFor(model => model.SKU, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.SKU, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Enabled, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="Enabled" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.Enabled)<span class="required">*</span></label>
+                                      
                                         <div class="col-lg-4">
                                             <div>
                                                 @Html.EditorFor(model => model.Enabled)
@@ -171,7 +173,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Unit, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="Unit" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.Unit)<span class="required">*</span></label>
                                         <div class="col-lg-4">
                                             @Html.EditorFor(model => model.Unit, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.Unit, "", new { @class = "text-danger" })
@@ -187,7 +189,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.ActionType, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="ActionType" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ActionType)<span class="required">*</span></label>
+                                  
                                         <div class="col-lg-4">
                                             @{
                                                 List<SelectListItem> actionTypeList = new List<SelectListItem>();
@@ -206,7 +209,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.SupplierID, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="SupplierID" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.SupplierID)<span class="required">*</span></label>
+                                       
                                         <div class="col-lg-4">
                                             @Html.DropDownListFor(model => model.SupplierID, Model.suppliers, "--Select Supplier--", new { @class = "form-control", onchange = "supplierOnChange()",value=-1 })
                                           
@@ -223,7 +227,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.ProductType, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="ProductType" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ProductType)<span class="required">*</span></label>
                                         <div class="col-lg-4">
                                             @{
                                                 List<SelectListItem> productTypeList = new List<SelectListItem>();
@@ -249,7 +253,7 @@
 
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.FreeDelivery, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="FreeDelivery" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.FreeDelivery)<span class="required">*</span></label>
                                         <div class="col-lg-4">
                                             <div>
                                                 @Html.EditorFor(model => model.FreeDelivery)
@@ -273,7 +277,7 @@
                             </div>
                             <div class="tab-pane fade" id="price">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.CostPrice, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <label for="CostPrice" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.CostPrice)<span class="required">*</span></label>
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.CostPrice, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.CostPrice, "", new { @class = "text-danger" })
@@ -281,14 +285,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.BaseSellingPrice, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <label for="BaseSellingPrice" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.BaseSellingPrice)<span class="required">*</span></label>
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.BaseSellingPrice, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.BaseSellingPrice, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ShowPrice, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <label for="ShowPrice" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ShowPrice)<span class="required">*</span></label>
+                                
                                     <div class="col-lg-4">
                                         <div>
                                             @Html.EditorFor(model => model.ShowPrice)
@@ -328,10 +333,15 @@
                                         @Html.ValidationMessageFor(model => model.DiscountEndDate, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
+                                <div class="col-sm-6 col-md-6 divMsgconfigurable">
+                                    <div class="alert-message alert-message-warning">
+                                        <p>For Configurable products, Price section is available in 'Associated products' tab.</p>
+                                    </div>
+                                </div>
                             </div>
                             <div class="tab-pane fade" id="discription">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <label for="ShortDescription" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ShortDescription)<span class="required">*</span></label>
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
@@ -339,7 +349,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.LongDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <label for="LongDescription" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.LongDescription)<span class="required">*</span></label>
                                     <div class="col-lg-6">
                                         @Html.EditorFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
@@ -350,7 +360,7 @@
                             <div class="tab-pane fade" id="inventory">
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.StockAvailable, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
+                                    <label for="StockAvailable" class="control-label col-lg-2 productDetailGroup">@Html.DisplayNameFor(model => model.StockAvailable)<span class="required">*</span></label>
                                     <div class="col-lg-4 productDetailGroup">
                                         <div>
                                             @Html.EditorFor(model => model.StockAvailable)
@@ -358,34 +368,66 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
+                                    <label for="Qty" class="control-label col-lg-2 productDetailGroup">@Html.DisplayNameFor(model => model.Qty)<span class="required">*</span></label>
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
                                         @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.OutOfStockAlertQty, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
-                                    <div class="col-lg-4">
+                                    <label for="OutOfStockAlertQty" class="control-label col-lg-2 productDetailGroup">@Html.DisplayNameFor(model => model.OutOfStockAlertQty)<span class="required">*</span></label>
+                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.OutOfStockAlertQty, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
                                         @Html.ValidationMessageFor(model => model.OutOfStockAlertQty, "", new { @class = "text-danger productDetailGroup" })
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-md-6 divMsgconfigurable">
+                                    <div class="alert-message alert-message-warning">
+                                        <p>For Configurable products, inventory section is available in 'Associated products' tab.</p>
                                     </div>
                                 </div>
 
 
                             </div>
                             <div class="tab-pane fade" id="productTags">
-                                <div class="col-lg-8">
+                               @* <div class="col-lg-8">
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.HeaderTags, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-6" id="headertagsdiv">
                                             @Html.EditorFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control" } })
+                                           
+                                                <button class="btn btn-default input-group-btn" type="button">Go!</button>
+                                           
                                             @Html.ValidationMessageFor(model => model.HeaderTags, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                </div><!-- /.col-lg-6 -->
+                                </div><!-- /.col-lg-6 -->*@
+
+                                <div class="col-lg-8">
+                                    @Html.LabelFor(model => model.HeaderTags, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="input-group">
+                                        @Html.HiddenFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control", placeholder = "Add key Words....." } })
+                                        <input id="HeaderTagsPicker" type="text" class="form-control" placeholder = "Add key Words....." >
+                                       
+                                       
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-default" type="button">+</button>
+                                        </span>
+                                    </div><!-- /input-group -->
+                                </div><!-- /.col-lg-8 -->
+                                <br/>
+                                <br />
+                                
+                                <div class="col-lg-8">
+                                    <div class="col-lg-2"></div>
+                                    <div id="keywordsDiv" class="input-group">
+
+                                    </div>
+
+                                </div>
+
                             </div>
                        
 
@@ -419,7 +461,7 @@
                                             <th>Selling Price</th>
                                             <th>Qty</th>
                                             <th>Stock Status</th>
-                                            <th>Actions</th>
+                                           
                                         </tr>
                                     </thead>
                                 </table>
@@ -792,96 +834,8 @@
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-sm-7">
-                                        <hr />
-                                        <div class="review-block">
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                                                    <div class="review-block-name"><a href="#">nktailor</a></div>
-                                                    <div class="review-block-date">January 29, 2016<br />1 day ago</div>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <div class="review-block-rate">
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="review-block-title">this was nice in buy</div>
-                                                    <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
-                                                </div>
-                                            </div>
-                                            <hr />
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                                                    <div class="review-block-name"><a href="#">nktailor</a></div>
-                                                    <div class="review-block-date">January 29, 2016<br />1 day ago</div>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <div class="review-block-rate">
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="review-block-title">this was nice in buy</div>
-                                                    <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
-                                                </div>
-                                            </div>
-                                            <hr />
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                                                    <div class="review-block-name"><a href="#">nktailor</a></div>
-                                                    <div class="review-block-date">January 29, 2016<br />1 day ago</div>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <div class="review-block-rate">
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="review-block-title">this was nice in buy</div>
-                                                    <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div id="ReviewsDisplay" class="col-sm-7">
+                                        
                                     </div>
                                 </div>
                             </div>
@@ -934,7 +888,7 @@
                                     <th>Selling Price</th>
                                     <th>Qty</th>
                                     <th>Stock Status</th>
-                                    <th>Actions</th>
+                                  
                                 </tr>
                             </thead>
                         </table>

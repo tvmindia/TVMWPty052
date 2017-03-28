@@ -251,6 +251,20 @@ namespace PartyEC.BusinessServices.Services
             }
             return OS;
         }
+
+        public List<ProductReview> GetProductReviews(int ProductID)
+        {
+            List<ProductReview> productReview = null;
+            try
+            {
+                productReview = _productRepository.GetProductReviews(ProductID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productReview;
+        }
         public OperationsStatus InsertImageProduct(Product productObj)
         {
             OperationsStatus operationsStatusObj = null;

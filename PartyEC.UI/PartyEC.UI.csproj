@@ -314,9 +314,12 @@
     <Content Include="Content\images\edit.png" />
     <Content Include="Content\images\loadinglt.gif" />
     <Content Include="Content\images\nextlt.png" />
+    <Content Include="Content\images\NoImage60x60.png" />
     <Content Include="Content\images\NoImageFound.png" />
     <Content Include="Content\images\notyfi.png" />
     <Content Include="Content\images\partyEClogo.png" />
+    <Content Include="Content\images\Person1.png" />
+    <Content Include="Content\images\person2.jpg" />
     <Content Include="Content\images\prevlt.png" />
     <Content Include="Content\images\push.png" />
     <Content Include="Content\images\reset.PNG" />

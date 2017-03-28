@@ -481,9 +481,9 @@ namespace PartyEC.UI.Controllers
                     //ToolboxViewModelObj.resetbtn.Event = "btnreset()";
                     //ToolboxViewModelObj.resetbtn.Title = "Reset";
 
-                    //ToolboxViewModelObj.backbtn.Visible = true;
-                    //ToolboxViewModelObj.backbtn.Event = "goback()";
-                    //ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
 
                     break;
                 case "Delete":
@@ -581,8 +581,26 @@ namespace PartyEC.UI.Controllers
             return Content(Url.Content(@"~\Content\ProductImages\" + FileNameCustom));
         }
 
+        //------------------------------------------------------//
+        [HttpGet]
+        public string GetProductReviews(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    List<ProductReviewViewModel> productReviewList = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_productBusiness.GetProductReviews(int.Parse(id)));
 
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productReviewList });
+                }
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "id is empty" });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
 
+        }
 
 
 

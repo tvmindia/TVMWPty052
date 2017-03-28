@@ -403,6 +403,7 @@ namespace PartyEC.RepositoryServices.Services
                                 // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                productObj.ID = 0;
                                 break;
                             case "1":
                                 //Insert Successfull
@@ -629,11 +630,13 @@ namespace PartyEC.RepositoryServices.Services
                                 // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "updation Not Successfull!";
+                                operationsStatusObj.ReturnValues = productObj.ID;
                                 break;
                             case "1":
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "updation Successfull!";
+                                operationsStatusObj.ReturnValues= productObj.ID;
 
                                 break;
                             default:
@@ -1744,5 +1747,58 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
+        public List<ProductReview> GetProductReviews(int ProductID)
+        {
+            List<ProductReview> productReviewList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetProductReviewsandRating]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                productReviewList = new List<ProductReview>();
+                                while (sdr.Read())
+                                {
+                                    ProductReview _pReviewObj = new ProductReview();
+                                    {
+                                        _pReviewObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _pReviewObj.ID);
+                                        _pReviewObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? Int16.Parse(sdr["CustomerID"].ToString()) : _pReviewObj.CustomerID);
+                                        _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? Int16.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
+                                        _pReviewObj.Review = (sdr["Review"].ToString() != "" ? sdr["Review"].ToString() : _pReviewObj.Review);
+                                        _pReviewObj.ReviewCreatedDate = (sdr["ReviewCreatedDate"].ToString() != "" ? DateTime.Parse(sdr["ReviewCreatedDate"].ToString()) : _pReviewObj.ReviewCreatedDate);
+                                        _pReviewObj.DaysCount = (sdr["DaysCount"].ToString() != "" ? Int16.Parse(sdr["DaysCount"].ToString()) : _pReviewObj.DaysCount);
+                                        _pReviewObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _pReviewObj.CustomerName);
+                                        _pReviewObj.AvgRating = (sdr["AvgRating"].ToString() != "" ? sdr["AvgRating"].ToString() : _pReviewObj.AvgRating);
+                                        _pReviewObj.ImageUrl = (sdr["ImageUrl"].ToString() != "" ? sdr["ImageUrl"].ToString() : _pReviewObj.ImageUrl);
+                                    }
+                                    productReviewList.Add(_pReviewObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return productReviewList;
+        }
     }
 }

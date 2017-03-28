@@ -29,5 +29,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus DeleteProductsDetails(int ProductDetailsID, int ProductID);
         OperationsStatus DeleteProductsImage(string[] DeleteIDs);
         OperationsStatus InsertImageProduct(Product productObj);
+
+        List<ProductReview> GetProductReviews(int ProductID);
     }
 }

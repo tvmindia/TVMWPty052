@@ -155,7 +155,7 @@ namespace PartyEC.UI.Models
 
         #region ProductTags
      
-        [Display(Name = "New Tags")]
+        [Display(Name = "Key Words")]
         [MaxLength(250)]
         public string HeaderTags { get; set; }
         #endregion ProductTags
@@ -211,4 +211,16 @@ namespace PartyEC.UI.Models
         public bool isMain { get; set; }
     }
 
+    public class ProductReviewViewModel
+    {
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int CustomerID { get; set; }
+        public string Review { get; set; }
+        public int DaysCount { get; set; }
+        public DateTime ReviewCreatedDate { get; set; }
+        public string CustomerName { get; set; }
+        public string AvgRating { get; set; }
+        public string ImageUrl { get; set; }
+    }
 }
