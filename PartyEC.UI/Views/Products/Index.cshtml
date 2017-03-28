@@ -424,6 +424,9 @@
                                         ToolBoxControlRelProduct.deletebtn.Visible = true;
                                         ToolBoxControlRelProduct.deletebtn.Event = "CallbtnDeleteRelatedProductSubmit()";
                                         ToolBoxControlRelProduct.deletebtn.Title = "Delete";
+                                        ToolBoxControlRelProduct.backbtn.Visible = true;
+                                        ToolBoxControlRelProduct.backbtn.Title = "Back";
+                                        ToolBoxControlRelProduct.backbtn.Event = "goback()";
                                         Html.RenderPartial("_ToolboxView", ToolBoxControlRelProduct);
                                     }
 
@@ -621,6 +624,9 @@
                                         ToolBoxControlforOtherAttr.savebtn.Visible = true;
                                         ToolBoxControlforOtherAttr.savebtn.Title = "Save";
                                         ToolBoxControlforOtherAttr.savebtn.Event = "OtherAttributeSave()";
+                                        ToolBoxControlforOtherAttr.backbtn.Visible = true;
+                                        ToolBoxControlforOtherAttr.backbtn.Title = "Back";
+                                        ToolBoxControlforOtherAttr.backbtn.Event = "goback()";
                                         Html.RenderPartial("_ToolboxView", ToolBoxControlforOtherAttr);
                                     }
 
@@ -646,6 +652,9 @@
                                         ToolBoxControlforAssocProductAttr.deletebtn.Visible = true;
                                         ToolBoxControlforAssocProductAttr.deletebtn.Title = "Delete";
                                         ToolBoxControlforAssocProductAttr.deletebtn.Event = "AssociatedProductDelete()";
+                                        ToolBoxControlforAssocProductAttr.backbtn.Visible = true;
+                                        ToolBoxControlforAssocProductAttr.backbtn.Title = "Back";
+                                        ToolBoxControlforAssocProductAttr.backbtn.Event = "goback()";
                                         Html.RenderPartial("_ToolboxView", ToolBoxControlforAssocProductAttr);
                                     }
 

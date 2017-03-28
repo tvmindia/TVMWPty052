@@ -221,6 +221,8 @@ function btnAddNewProduct() {
     $('#tabproductList a').removeAttr('data-toggle href');
     $('#tabproductDetails a').trigger('click');
     $("#productDetails h4").text('New Product');
+    $("#AttributeSetID").removeAttr('disabled');
+    $("#ProductType").removeAttr('disabled');
     clearform();
 }
 function goback() {
@@ -231,6 +233,7 @@ function goback() {
     $('#tabproductDetails a').removeAttr('data-toggle href');
     $('#tabproductList a').trigger('click');
     // tabproductList
+    clearform();
 }
 
 
@@ -250,7 +253,7 @@ function Edit(currentObj)
     //$("#LHSNavbarProductDetails li").removeClass('active');
    // $("#LHSNavbarProductDetails li.active").removeClass('active');
    // $("#LHSNavbarProductDetails li").first().addClass('active');
-    
+  
 
     var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null))
@@ -258,7 +261,12 @@ function Edit(currentObj)
         var thisproduct = GetProduct(rowData.ID);
         if (thisproduct != null)
         {
-            $("#productDetails h4").text(thisproduct.Name + '('+thisproduct.ProductType+')');
+            $("#productDetails h4").text(thisproduct.Name + '(' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ')');
+            //disables some drop downs
+            
+            ((thisproduct.ProductType == "C") && (thisproduct.ProductDetails.length > 1) ? $("#AttributeSetID").attr({ 'disabled': 'disabled' }) : $("#AttributeSetID").removeAttr('disabled'));
+            
+            $("#ProductType").attr({ 'disabled': 'disabled' });
             $("#Name").val(thisproduct.Name);
             $("#SKU").val(thisproduct.SKU);
             if (thisproduct.Enabled == true)
