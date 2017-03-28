@@ -150,7 +150,7 @@ namespace PartyEC.UI.Models
 
         #region ProductTags
      
-        [Display(Name = "New Tags")]
+        [Display(Name = "Key Words")]
         [MaxLength(250)]
         public string HeaderTags { get; set; }
         #endregion ProductTags
