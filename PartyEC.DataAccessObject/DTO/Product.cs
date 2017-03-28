@@ -102,7 +102,8 @@ namespace PartyEC.DataAccessObject.DTO
         public DateTime ReviewCreatedDate { get; set; }
         public string CustomerName { get; set; }
         public string AvgRating { get; set; }
-        
+        public string ImageUrl { get; set; }
+
     }
     
 }

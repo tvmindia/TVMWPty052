@@ -1609,6 +1609,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _pReviewObj.DaysCount = (sdr["DaysCount"].ToString() != "" ? Int16.Parse(sdr["DaysCount"].ToString()) : _pReviewObj.DaysCount);
                                         _pReviewObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _pReviewObj.CustomerName);
                                         _pReviewObj.AvgRating = (sdr["AvgRating"].ToString() != "" ? sdr["AvgRating"].ToString() : _pReviewObj.AvgRating);
+                                        _pReviewObj.ImageUrl = (sdr["ImageUrl"].ToString() != "" ? sdr["ImageUrl"].ToString() : _pReviewObj.ImageUrl);
                                     }
                                     productReviewList.Add(_pReviewObj);
                                 }
