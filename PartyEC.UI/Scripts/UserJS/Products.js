@@ -212,15 +212,38 @@ function removeme(current)
     $(current).remove();
 }
 
+function btnAddNewProduct() {
+    //$('#tabproductDetails').removeClass('disabled');
+    //$('#tabproductDetails a').attr('data-toggle', 'tab');
+   
+    //$('#tabproductList').addClass('disabled');
+    //$('#tabproductList a').attr('data-toggle', '');
+    $('#tabproductDetails a').attr({ 'data-toggle': 'tab', 'href': '#productDetails' });
+    $('#tabproductList a').removeAttr('data-toggle href');
+    $('#tabproductDetails a').trigger('click');
+    clearform();
+}
+function goback() {
+    debugger;
+    $('#tabproductList a').attr({ 'data-toggle': 'tab', 'href': '#productList' });
+    //Remove attributes from current tab
+    
+    $('#tabproductDetails a').removeAttr('data-toggle href');
+    $('#tabproductList a').trigger('click');
+    // tabproductList
+}
 
 
 function Edit(currentObj)
 {
     //Tab Change
     ChangeButtonPatchView("Products", "btnPatchProductDetails", "Edit"); //ControllerName,id of the container div,Name of the action
-    //$('#tabproductDetails').removeClass('disabled');
-    //$('#tabproductDetails a').attr('data-toggle', 'tab');
+    $('#tabproductDetails a').attr({ 'data-toggle': 'tab', 'href': '#productDetails' });
+    $('#tabproductList a').removeAttr('data-toggle href');
     $('#tabproductDetails a').trigger('click');
+    //$('#tabproductDetails').removeClass('disabled');
+   // $('#tabproductDetails a').attr('data-toggle', 'tab');
+    //$('#tabproductDetails a').trigger('click');
 
     //Make General tab active
     $('#tabGeneral').trigger('click');
@@ -471,20 +494,8 @@ function ProductSave()
     $('#btnProductSubmit').trigger('click');
 }
 
-function btnAddNewProduct()
-{
-    //$('#tabproductDetails').removeClass('disabled');
-    //$('#tabproductDetails a').attr('data-toggle', 'tab');
-    //$('#tabproductList').addClass('disabled');
-    //$('#tabproductList a').attr('data-toggle', '');
-    $('#tabproductDetails a').trigger('click');
-    clearform();
-}
-function goback()
-{
-    alert('hi');
-   // tabproductList
-}
+
+
 function clearform()
 {
     //Clear form

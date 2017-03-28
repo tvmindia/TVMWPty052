@@ -447,9 +447,9 @@ namespace PartyEC.UI.Controllers
                     //ToolboxViewModelObj.resetbtn.Event = "btnreset()";
                     //ToolboxViewModelObj.resetbtn.Title = "Reset";
 
-                    //ToolboxViewModelObj.backbtn.Visible = true;
-                    //ToolboxViewModelObj.backbtn.Event = "goback()";
-                    //ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
 
                     break;
                 case "Add":
