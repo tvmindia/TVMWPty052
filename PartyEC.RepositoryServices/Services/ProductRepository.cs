@@ -403,6 +403,7 @@ namespace PartyEC.RepositoryServices.Services
                                 // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                productObj.ID = 0;
                                 break;
                             case "1":
                                 //Insert Successfull
@@ -629,11 +630,13 @@ namespace PartyEC.RepositoryServices.Services
                                 // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "updation Not Successfull!";
+                                operationsStatusObj.ReturnValues = productObj.ID;
                                 break;
                             case "1":
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "updation Successfull!";
+                                operationsStatusObj.ReturnValues= productObj.ID;
 
                                 break;
                             default:

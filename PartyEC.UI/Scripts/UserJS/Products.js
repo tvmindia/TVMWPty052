@@ -3,7 +3,6 @@
 $(document).ready(function () {
     $("#HeaderTagsPicker").on({
         focusout: function () {
-            debugger;
             var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
             if (txt)
             {
@@ -225,7 +224,7 @@ function btnAddNewProduct() {
     clearform();
 }
 function goback() {
-    debugger;
+   
     $('#tabproductList a').attr({ 'data-toggle': 'tab', 'href': '#productList' });
     //Remove attributes from current tab
     
@@ -468,6 +467,7 @@ function ConstructproductDetailObject()
 
 function productSaveSuccess(data, status, xhr)
 {
+    
     var JsonResult=JSON.parse(data)
     switch (JsonResult.Result) {
         case "OK":
@@ -1071,12 +1071,12 @@ function clearAssociatedProductform() {
 function BindProductReviews()   // To Display Previous Comment history
 {
     HideProductDetalsToolBox();
-    debugger;
+  
     $("#ReviewsDisplay").empty();
     id =   $(".productID").val();// assigning id for binding reviews.
     var thisReviewList = GetProductReviews(id);
     if (thisReviewList) {
-        debugger;
+       
         for (var i = 0; i < thisReviewList.length; i++) {
             var str = Date.parse(thisReviewList[i].ReviewCreatedDate.substring(0, 10));
             var resultdate = ConvertJsonToDate('' + str + '');
@@ -1122,7 +1122,7 @@ function BindProductReviews()   // To Display Previous Comment history
     }
 }
 function GetProductReviews(id) {
-    debugger;
+  
     try {
         var data = { "id": id };
         var ds = {};
