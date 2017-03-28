@@ -762,6 +762,50 @@ namespace PartyEC.RepositoryServices.Services
 
             return myProduct;
         }
+        public List<Product> GetRelatedImages(int ProductID, OperationsStatus Status)
+        {
+            List<Product> ProductList= null;
+            try
+            {
+                using (_con = _databaseFactory.GetDBConnection())
+                {
+                    if (_con.State == ConnectionState.Closed)
+                    {
+                        _con.Open();
+                    }
+                    _cmd = new SqlCommand();
+                    _cmd.Connection = _con;
+                    _cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                    _cmd.CommandText = "[GetAllProductImages]";
+                    _cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader sdr = _cmd.ExecuteReader())
+                    {
+                        if ((sdr != null) && (sdr.HasRows))
+                        {
+                            ProductList = new List<Product>();
+                            while (sdr.Read())
+                            {
+                                Product myProduct = new Product();
+                                myProduct.ImageID = sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myProduct.ImageID;
+                                myProduct.ImageURL = sdr["ImageURL"].ToString();
+                                myProduct.ID = sdr["ProductID"].ToString() != "" ? Int16.Parse(sdr["ProductID"].ToString()) : ProductID; //sdr["Qty"].ToString();
+                                myProduct.ProductDetID = sdr["ProductDetID"].ToString() != "" ? Int16.Parse(sdr["ProductDetID"].ToString()) : myProduct.ProductDetID;
+                                myProduct.MainImage = sdr["MainImageYN"].ToString() != "" ? bool.Parse(sdr["MainImageYN"].ToString()) : myProduct.MainImage;
+                                ProductList.Add(myProduct);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+
+            }
+
+            return ProductList;
+        }
 
         private Product GetProductHeader(int ProductID)
         {
@@ -1574,6 +1618,133 @@ namespace PartyEC.RepositoryServices.Services
 
             return operationsStatusObj;
 
+        }
+        public OperationsStatus DeleteProductImage(int ID)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter outparameter = null;
+                SqlParameter OutparameterURL = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteProductImage]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ID;
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        OutparameterURL = cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1);
+                        outparameter.Direction = ParameterDirection.Output;
+                        OutparameterURL.Direction= ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // Delete not Successfull
+
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.DeleteFailure;
+                                break;
+                            case "1":
+                                //Delete Successfull
+                                if (outparameter.Value.ToString() == "1")
+                                {
+                                    try
+                                    {
+                                        if (OutparameterURL.Value.ToString() != "")
+                                        {
+                                            System.IO.File.Delete(HttpContext.Current.Server.MapPath(OutparameterURL.Value.ToString()));
+                                        }
+
+
+                                    }
+                                    catch (System.IO.IOException e)
+                                    {
+                                        throw e;
+
+                                    }
+                                }
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.DeleteSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
+        }
+        public OperationsStatus InsertImageProduct(Product productObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertProductImage]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = productObj.ID;
+                        if(productObj.ProductDetID!=0)
+                        {
+                            cmd.Parameters.Add("@DetailID", SqlDbType.NVarChar, -1).Value = productObj.ProductDetID;
+                        }
+                        
+                        cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1).Value = productObj.ImageURL;
+                        cmd.Parameters.Add("@isMain", SqlDbType.Bit).Value = productObj.MainImage;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = productObj.logDetails.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = productObj.logDetails.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Not Successfull!";
+                                return operationsStatusObj;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                return operationsStatusObj;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return operationsStatusObj;
         }
 
         public List<ProductReview> GetProductReviews(int ProductID)

@@ -211,6 +211,20 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        [HttpGet]
+        public string GetRelatedImages(string id)
+        {
+            try
+            {
+                OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                List<ProductViewModel> product = Mapper.Map<List<Product>, List<ProductViewModel>>(_productBusiness.GetRelatedImages(Int32.Parse(id), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = product });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -271,6 +285,26 @@ namespace PartyEC.UI.Controllers
                 catch(Exception ex)
                 {
                   return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+
+        [HttpPost]
+        public string DeleteProductOtherImages(ProductViewModel productViewObj)
+        {
+            if ((!ModelState.IsValid))
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                try
+                {
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.DeleteProductsImage(productViewObj.IDSet));
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                catch (Exception ex)
+                {
+
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                 }
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
@@ -452,6 +486,15 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Title = "Back";
 
                     break;
+                case "Delete":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Event = "DeleteOtherImage()";
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
+                    break;
+                case "CancelDelete":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    break;
                 case "Add":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Disable = true;
@@ -472,7 +515,71 @@ namespace PartyEC.UI.Controllers
             }
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
+
+        
         #endregion ChangeButtonStyle
+
+        public ActionResult UploadProductImage(ProductViewModel ProductViewObj)
+        {
+            OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+
+            var file = Request.Files["Filedata"];
+            var FileNameCustom = ProductViewObj.Name + ".png";
+            string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
+            file.SaveAs(savePath);
+            ProductViewObj.ImageURL = "/Content/ProductImages/" + FileNameCustom;
+            if (ProductViewObj.ImageID==0)
+            {
+                ProductViewObj.logDetails = new LogDetailsViewModel();
+                ProductViewObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                ProductViewObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                ProductViewObj.logDetails.UpdatedBy = _commonBusiness.GetUA().UserName;
+                ProductViewObj.logDetails.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                ProductViewObj.MainImage = true;
+                operationsStatus = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertImageProduct(Mapper.Map<ProductViewModel, Product>(ProductViewObj)));
+
+            }
+            return Content(Url.Content(@"~\Content\ProductImages\" + FileNameCustom));
+        }
+        public ActionResult UploadOtherImages(ProductViewModel ProductViewObj)
+        {
+            OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+            Random rnd = new Random();
+            var file = Request.Files["Filedata"];
+            var FileNameCustom = ProductViewObj.Name+"Other"+rnd.Next(111,9999).ToString()+ ".png";
+            string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
+            file.SaveAs(savePath);
+            ProductViewObj.ImageURL = "/Content/ProductImages/" + FileNameCustom;
+                ProductViewObj.logDetails = new LogDetailsViewModel();
+                ProductViewObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                ProductViewObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                ProductViewObj.logDetails.UpdatedBy = _commonBusiness.GetUA().UserName;
+                ProductViewObj.logDetails.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                operationsStatus = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertImageProduct(Mapper.Map<ProductViewModel, Product>(ProductViewObj)));
+                return Content(Url.Content(@"~\Content\ProductImages\" + FileNameCustom));
+        }
+        public ActionResult UploadStickerImages(ProductViewModel ProductViewObj)
+        {
+            OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+
+            Random rnd = new Random();
+            var file = Request.Files["Filedata"];
+            var FileNameCustom = ProductViewObj.Name + "Sticker" + rnd.Next(111, 9999).ToString() + ".png";
+            string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
+            file.SaveAs(savePath);
+            ProductViewObj.URL = "/Content/ProductImages/" + FileNameCustom;
+            //if (ProductViewObj.i == null)
+            //{
+            //    categoryObj.commonObj = new LogDetailsViewModel();
+            //    categoryObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+            //    categoryObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+            //    categoryObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+            //    categoryObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+            //    operationsStatus = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_categoryBusiness.InsertImageCategory(Mapper.Map<CategoriesViewModel, Categories>(categoryObj)));
+
+            //}
+            return Content(Url.Content(@"~\Content\ProductImages\" + FileNameCustom));
+        }
 
         //------------------------------------------------------//
         [HttpGet]

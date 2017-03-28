@@ -604,7 +604,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 
 		// Triggered once for each file added to the queue
 		onSelect: function (file) {
-		    $('#alinkUpload').show();
+		    //$('#alinkUpload').show();
 			// Load the swfupload settings
 			var settings = this.settings;
 
