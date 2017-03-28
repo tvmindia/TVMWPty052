@@ -10,6 +10,24 @@
 
     @Styles.Render("~/Content/datatableSelect")
     @Styles.Render("~/Content/product")   
+    @Styles.Render("~/Content/Uplodify")
+    <link href="~/Content/lightbox.min.css" rel="stylesheet" />
+    <style>
+        .uploadify-button {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+        }
+
+        .uploadify:hover .uploadify-button {
+            background-color: transparent;
+        }
+        .Selected
+        {
+            background-color:black;
+            opacity:0.4;
+        }
+    </style>
 }
 <div class="container-fluid">
     <div class="panel with-nav-tabs panel-primary">
@@ -128,7 +146,7 @@
                                         @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-4">
                                             @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-lg-2 productID", Value = "0" })
-
+                                            @Html.HiddenFor(model => model.ImageID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
                                             @Html.HiddenFor(model => model.ProductDetailObj.ID, htmlAttributes: new { @class = "control-label col-lg-2", Value = "0",id="productdetailsID" })
                                             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -416,36 +434,52 @@
 
                             </div>
                             <div class="tab-pane fade" id="images">
-                                <div class="col-lg-12">
-                                    <h2>Product Images</h2>
-                                    <hr />
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="thumbnail">
+                                    <div class="col-lg-12">
+                                        <h2>Product Image</h2>
+                                        <hr />
+                                        <div class="col-md-5" id="divImageUpload">
+                                            <div>
+                                                <a id="alinkUpload" style="display:none" class="btn btn-info" href="javascript:$('#file_upload').uploadify('upload','*')">Upload</a>
+                                                <input type="file" class="uploadify" name="file_upload" id="file_upload" />
 
-                                            <div class="caption">
-                                                <p>@Html.LabelFor(model => model.ProdutMainImageUpload, new { @class = "control-label" })</p>
-                                                <p>@Html.TextBoxFor(model => model.ProdutMainImageUpload, new { type = "file", @class = "btn btn-default" })</p>
+                                            </div>
+                                            <div id="uploaded">
+                                            </div>
+                                            <div class="overlay" id="divOverlayimage" style="display:none;">
+                                                <div class="uploadify-button  disabled" title="Save Category to enable file browse" style="height: 30px; line-height: 30px; width: 120px;margin-left:1.55%;cursor:not-allowed;"><span class="uploadify-button-text">SELECT FILES</span></div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-7" style="object-fit:fill;">
+                                            <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="" id="imgProduct" class="img-thumbnail" style="max-height:250px;">
+                                        </div>
                                     </div>
-                                    <div class="col-lg-8">
-                                        <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="">
-                                    </div>
-                                </div>
                                 <div class="col-lg-12">
                                     <h2>Other Images</h2>
-                                    <hr />
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="thumbnail">
+                                    <div id="buttonPatchOtherImages">
+                                        @{
+                                            PartyEC.UI.Models.ToolboxViewModel ToolBoxControlOtherImage = new PartyEC.UI.Models.ToolboxViewModel();
+                                            ToolBoxControlOtherImage.deletebtn.Visible = true;
+                                            ToolBoxControlOtherImage.deletebtn.Disable = true;
+                                            Html.RenderPartial("_ToolboxView", ToolBoxControlOtherImage);
+                                        }
 
-                                            <div class="caption">
-                                                <p>@Html.LabelFor(model => model.OtherImagesUpload, new { @class = "control-label" })</p>
-                                                <p>@Html.TextBoxFor(model => model.OtherImagesUpload, new { type = "file", @class = "btn btn-default" })</p>
-                                            </div>
+                                    </div>
+
+                                    <hr />
+                                    <div class="col-md-5" id="divImageUploadOther">
+                                        <div>
+                                            <a id="alinkUploadOther" style="display:none" class="btn btn-info" href="javascript:$('#file_uploadOther').uploadify('upload','*')">Upload</a>
+                                            <input type="file" class="uploadify" name="file_uploadOther" id="file_uploadOther" />
+
+                                        </div>
+                                        <div id="uploaded">
+                                        </div>
+                                        <div class="overlay" id="divOverlayimageOther" style="display:none;">
+                                            <div class="uploadify-button  disabled" title="Save Category to enable file browse" style="height: 30px; line-height: 30px; width: 120px;margin-left:1.55%;cursor:not-allowed;"><span class="uploadify-button-text">SELECT FILES</span></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-8">
-                                        <ul class="hide-bullets">
+                                    <div class="col-lg-7" style="object-fit:fill;">
+                                        <ul class="hide-bullets" id="ulOtherImages">
                                             <li class="col-sm-3">
                                                 <a class="thumbnail" id="carousel-selector-0">
                                                     <img src="http://placehold.it/150x150&text=zero">
@@ -460,62 +494,35 @@
                                             <li class="col-sm-3">
                                                 <a class="thumbnail" id="carousel-selector-3"><img src="http://placehold.it/150x150&text=3"></a>
                                             </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-4"><img src="http://placehold.it/150x150&text=4"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-5"><img src="http://placehold.it/150x150&text=5"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-6"><img src="http://placehold.it/150x150&text=6"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-7"><img src="http://placehold.it/150x150&text=7"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-8"><img src="http://placehold.it/150x150&text=8"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-9"><img src="http://placehold.it/150x150&text=9"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-10"><img src="http://placehold.it/150x150&text=10"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-11"><img src="http://placehold.it/150x150&text=11"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-12"><img src="http://placehold.it/150x150&text=12"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-13"><img src="http://placehold.it/150x150&text=13"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-14"><img src="http://placehold.it/150x150&text=14"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-15"><img src="http://placehold.it/150x150&text=15"></a>
-                                            </li>
-                                        </ul>
-                                    </div>
+</div>
+                                   
                                 </div>
                                 <div class="col-lg-12">
                                     <h2>Stickers</h2>
-                                    <hr />
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="thumbnail">
+                                    <div>
+                                        @{
+                                            PartyEC.UI.Models.ToolboxViewModel ToolBoxControlStickerImage = new PartyEC.UI.Models.ToolboxViewModel();
+                                            ToolBoxControlStickerImage.deletebtn.Visible = true;
+                                            ToolBoxControlStickerImage.deletebtn.Disable = true;
+                                            Html.RenderPartial("_ToolboxView", ToolBoxControlStickerImage);
+                                        }
 
-                                            <div class="caption">
-
-                                                <p>@Html.LabelFor(model => model.ProductStickerUpload, new { @class = "control-label" })</p>
-
-                                                <p>@Html.TextBoxFor(model => model.ProductStickerUpload, new { type = "file", @class = "btn btn-default" })</p>
-
-
-                                            </div>
-                                        </div>
                                     </div>
-                                    <div class="col-lg-8">
+                                    <hr />
+                                    <div class="col-lg-5">
+                                        <div>
+                                            <a id="alinkUploadSticker" style="display:none" class="btn btn-info" href="javascript:$('#file_uploadSticker').uploadify('upload','*')">Upload</a>
+                                            <input type="file" class="uploadify" name="file_uploadOther" id="file_uploadSticker" />
+
+                                        </div>
+                                        <div id="uploaded">
+                                        </div>
+                                        <div class="overlay" id="divOverlayimageSticker" style="display:none;">
+                                            <div class="uploadify-button  disabled" title="Save Category to enable file browse" style="height: 30px; line-height: 30px; width: 120px;margin-left:1.55%;cursor:not-allowed;"><span class="uploadify-button-text">SELECT FILES</span></div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="col-lg-7">
                                         <ul class="hide-bullets">
                                             <li class="col-sm-3">
                                                 <a class="thumbnail" id="carousel-selector-0">
@@ -980,6 +987,89 @@
 @Scripts.Render("~/bundles/bootstrapdatepicker")
 @Scripts.Render("~/bundles/product")
 @Scripts.Render("~/bundles/AssoProduct")
+@Scripts.Render("~/bundles/Uploadify")
+<script src="~/Scripts/lightbox.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $('#file_upload').uploadify({
+            'auto': false,
+            'formData': {
+                'Name': '','ID':'','ImageID':''
+            },
+            'buttonImage': '/Content/images/browse-btn.png',
+                'swf': "@Url.Content("~/Content/uploadify.swf")",
+                //this is where the file posts when it uploads.
+            'uploader': "@Url.Action("UploadProductImage", "Products")",
+            'onSelect': function (file) {
+                $('#alinkUpload').show();
+            },
+            'onUploadStart': function (file) {
+                $('#file_upload').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'ImageID': $('#ImageID').val() });
+            },
+            'uploadLimit': 1,
+                'onUploadSuccess': function (file, data, response) {
+                  //data is whatever you return from the server
+                  //we're sending the URL from the server so we append this as an image to the #uploaded div
+                //$('#URL').val(data);
+                    //$('#imgProduct').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
+                    BindImages();
+                    $('#alinkUpload').hide();
+                }
+
+        });
+        $('#file_uploadOther').uploadify({
+            'auto': false,
+            'formData': {
+                'Name': '','ID':'','ImageID':''
+            },
+            'buttonImage': '/Content/images/browse-btn.png',
+            'swf': "@Url.Content("~/Content/uploadify.swf")",
+                //this is where the file posts when it uploads.
+            'uploader': "@Url.Action("UploadOtherImages", "Products")",
+            'onSelect': function (file) {
+                $('#alinkUploadOther').show();
+            },
+            'onUploadStart': function (file) {
+                $('#file_uploadOther').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'ImageID': $('#ImageID').val() });
+            },
+                'onUploadSuccess': function (file, data, response) {
+                    //data is whatever you return from the server
+                    //we're sending the URL from the server so we append this as an image to the #uploaded div
+                    //$('#URL').val(data);
+                    //$('#imgCategory').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
+                    BindImages();
+                    $('#alinkUploadOther').hide();
+                }
+
+        });
+        $('#file_uploadSticker').uploadify({
+            'auto': false,
+            'formData': {
+                'Name': '','ID':'','ImageID':''
+            },
+            'buttonImage': '/Content/images/browse-btn.png',
+            'swf': "@Url.Content("~/Content/uploadify.swf")",
+                //this is where the file posts when it uploads.
+            'uploader': "@Url.Action("UploadStickerImages", "Products")",
+            'onSelect': function (file) {
+                $('#alinkUploadSticker').show();
+            },
+            'onUploadStart': function (file) {
+                $('#file_uploadOther').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'ImageID': $('#ImageID').val() });
+            },
+                'onUploadSuccess': function (file, data, response) {
+                    //data is whatever you return from the server
+                    //we're sending the URL from the server so we append this as an image to the #uploaded div
+                    //$('#URL').val(data);
+                    $('#imgCategory').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
+                    $('#alinkUploadSticker').hide();
+                }
+
+    });
+
+    });
+
+</script>
 }
 
 

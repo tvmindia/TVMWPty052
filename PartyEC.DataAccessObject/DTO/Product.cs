@@ -10,7 +10,13 @@ namespace PartyEC.DataAccessObject.DTO
         public string SKU { get; set; }
         public Boolean Enabled { get; set; }
         public string Unit { get; set; }      
-        public string URL { get; set; } //partyec web url for this product,share option       
+        public string URL { get; set; } //partyec web url for this product,share option 
+
+        public int ImageID { get; set; }  
+        public string ImageURL { get; set; }
+        public int ProductDetID { get; set; }   
+        public bool MainImage { get; set; }
+
         public char ActionType { get; set; }//book //buy //Quote
         public char ProductType { get; set; }//simple //configurable
         public int AttributeSetID { get; set; }

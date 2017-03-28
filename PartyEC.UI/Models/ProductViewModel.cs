@@ -117,6 +117,11 @@ namespace PartyEC.UI.Models
         [Display(Name = "Choose Product Sticker")]
         public HttpPostedFileBase ProductStickerUpload { get; set; }
         public Guid? StickerID { get; set; }
+        public int ImageID { get; set; }
+        public string ImageURL { get; set; }
+        public int ProductDetID { get; set; }
+        public bool MainImage { get; set; }
+        public string[] IDSet { get; set; }
         #endregion Images
         #region Description
         [Required(ErrorMessage = "Please enter Short Description")]

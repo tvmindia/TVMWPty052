@@ -121,6 +121,11 @@ namespace PartyEC.BusinessServices.Services
 
             return _productRepository.GetProduct(ProductID, Status);
         }
+        public List<Product> GetRelatedImages(int ProductID, OperationsStatus Status)
+        {
+
+            return _productRepository.GetRelatedImages(ProductID, Status);
+        }
 
         public OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList, List<ProductCategoryLink> DeleteList)
         {
@@ -229,5 +234,36 @@ namespace PartyEC.BusinessServices.Services
             }
             return OS;
         }
+        public OperationsStatus DeleteProductsImage(string[] DeleteIDs)
+        {
+            OperationsStatus OS = null;
+            try
+            {
+                foreach(var i in DeleteIDs)
+                {
+                    OS = _productRepository.DeleteProductImage(int.Parse(i));
+                }
+                
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return OS;
+        }
+        public OperationsStatus InsertImageProduct(Product productObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                    operationsStatusObj = _productRepository.InsertImageProduct(productObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
+
     }
 }

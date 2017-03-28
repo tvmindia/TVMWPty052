@@ -1,8 +1,6 @@
 ﻿var DataTables = {};
 
 $(document).ready(function () {
-
-
     $("#HeaderTags").on({
 
         focusout: function () {
@@ -216,6 +214,7 @@ function removeme(current)
 
 function Edit(currentObj)
 {
+    debugger;
     //Tab Change
     ChangeButtonPatchView("Products", "btnPatchProductDetails", "Edit"); //ControllerName,id of the container div,Name of the action
     //$('#tabproductDetails').removeClass('disabled');
@@ -242,6 +241,7 @@ function Edit(currentObj)
             else { $("#Enabled").prop('checked', false); }
             $("#Unit").val(thisproduct.Unit);
             $("#URL").val(thisproduct.URL);
+            $('#imgProduct').attr('src', '');
             $("#ActionType").val(thisproduct.ActionType);
             $("#SupplierID").val(thisproduct.SupplierID);
             $("#ManufacturerID").val(thisproduct.ManufacturerID);
@@ -295,6 +295,96 @@ function Edit(currentObj)
     }
 
    
+}
+function BindImages() {
+    debugger;
+    var Table = GetRelatedImages($('#ID').val());
+    var MainFlag = 0;
+    $('#ulOtherImages').empty();
+    for(var i=0;i<Table.length;i++)
+    {
+        if(Table[i].MainImage)
+        {
+            MainFlag=1;
+            $('#imgProduct').attr('src', (Table[i].ImageURL != "" && Table[i].ImageURL != null ? Table[i].ImageURL + '?' + new Date().getTime() : "/Content/images/NoImageFound.png"));
+            $('#ImageID').val(Table[i].ImageID);
+        }
+        else
+        {
+            $('#ulOtherImages').append(' <li class="col-sm-3"><a class="thumbnail" onclick="SelectForDelete(this)" id="' + Table[i].ImageID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].ImageURL + '?' + new Date().getTime() + '">'
+                +'<a style="top: 2%;left: 14%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].ImageURL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a></li>')
+        }
+    }
+    if(Table.length==0&&MainFlag==0)
+    {
+        $('#imgProduct').attr('src','/Content/images/NoImageFound.png');
+    }
+}
+function DeleteOtherImage()
+{
+    debugger;
+    var DeletedImageID = [];
+    var objectset = $('#ulOtherImages a.Selected');
+    for(var i=0;i<objectset.length;i++)
+    {
+        DeletedImageID.push(objectset[i].id);
+    }
+    var ProductViewModel=new Object();
+    ProductViewModel.IDSet=DeletedImageID;
+    var data = "{'productViewObj':" + JSON.stringify(ProductViewModel) + "}";
+    PostDataToServer('Products/DeleteProductOtherImages/', data, function (JsonResult)
+    {
+        if (JsonResult != '') {
+            switch (JsonResult.Result)
+            {
+                case "OK":
+                    notyAlert('success', JsonResult.Record.StatusMessage);
+                    BindImages();
+                    ChangeButtonPatchView("Products", "buttonPatchOtherImages", "CancelDelete");
+                    break;
+                case "ERROR":
+                    notyAlert('error', JsonResult.Record.StatusMessage);
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
+    }
+function SelectForDelete(this_Obj)
+{
+    debugger;
+    $(this_Obj).toggleClass('Selected');
+    if($('#ulOtherImages a.Selected').length>0)
+    {
+        ChangeButtonPatchView("Products", "buttonPatchOtherImages", "Delete");
+    }
+    else
+    {
+        ChangeButtonPatchView("Products", "buttonPatchOtherImages", "CancelDelete");
+    }
+}
+function GetRelatedImages(id)
+{
+    try {
+        debugger;
+        var data = { "ID": id };
+        var ds = {};
+        ds = GetDataFromServer("Products/GetRelatedImages/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Record;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+
+    }
+    catch (e) {
+
+    }
 }
 
 function GetProduct(id)
@@ -588,6 +678,7 @@ function RelatedproductDeleteSuccess(data, status, xhr)
 function HideProductDetalsToolBox()
 {
     $('#btnPatchProductDetails').hide();
+    BindImages();
 }
 function ShowProductDetalsToolBox()
 {
