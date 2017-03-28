@@ -700,7 +700,8 @@ function RelatedproductDeleteSuccess(data, status, xhr)
 
 function HideProductDetalsToolBox()
 {
-    $('#btnPatchProductDetails').hide();
+   
+    $("#btnPatchProductDetails").css('visibility', 'hidden');
     BindImages();
 }
 function ShowProductDetalsToolBox()
