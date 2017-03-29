@@ -235,7 +235,12 @@ function goback() {
     clearform();
 }
 
-
+function RenderContentForImages()
+{
+    HideProductDetalsToolBox();
+    BindImages();
+    BindStickers();
+}
 function Edit(currentObj)
 {
     //Tab Change
@@ -328,8 +333,6 @@ function Edit(currentObj)
 
    
 }
-
-
 function BindStickers()
 {
     try
@@ -385,7 +388,7 @@ function BindImages() {
             }
             else {
                 OtherFlag = 1;
-                $('#ulOtherImages').append(' <li class="col-sm-3"><a class="thumbnail" onclick="SelectForDelete(this)" id="' + Table[i].ImageID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].ImageURL + '?' + new Date().getTime() + '">'
+                $('#ulOtherImages').append(' <li class="col-sm-3"><a class="thumbnail" onclick="SelectImagesForDelete(this)" id="' + Table[i].ImageID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].ImageURL + '?' + new Date().getTime() + '">'
                     + '<a style="top: 2%;left: 14%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].ImageURL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a></li>')
             }
         }
@@ -439,7 +442,7 @@ function DeleteOtherImage()
     }
    
     }
-function SelectForDelete(this_Obj)
+function SelectImagesForDelete(this_Obj)
 {
     try
     {
@@ -509,7 +512,6 @@ function UpdateStickerForProduct()
         }
     });
 }
-
 function GetRelatedImages(id)
 {
     try {

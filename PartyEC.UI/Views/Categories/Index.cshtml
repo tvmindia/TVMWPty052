@@ -251,10 +251,13 @@
                 'swf': "@Url.Content("~/Content/uploadify.swf")",
                 //this is where the file posts when it uploads.
             'uploader': "@Url.Action("Upload", "Categories")",
+            'onSelect': function (file) {
+                $('#alinkUpload').show();
+            },
             'onUploadStart': function (file) {
                 $('#file_upload').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'ImageID': $('#ImageID').val() });
             },
-            'uploadLimit': 1,
+            'multi': false,
                 'onUploadSuccess': function (file, data, response) {
                   //data is whatever you return from the server
                   //we're sending the URL from the server so we append this as an image to the #uploaded div

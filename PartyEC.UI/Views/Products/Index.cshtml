@@ -7,11 +7,10 @@
 @section styles {
    @Styles.Render("~/Content/datatable")
    @Styles.Render("~/Content/bootstrapdatepicker")
-
-    @Styles.Render("~/Content/datatableSelect")
-    @Styles.Render("~/Content/product")   
-    @Styles.Render("~/Content/Uplodify")
-    <link href="~/Content/lightbox.min.css" rel="stylesheet" />
+   @Styles.Render("~/Content/datatableSelect")
+   @Styles.Render("~/Content/product")   
+   @Styles.Render("~/Content/Uplodify")
+   @Styles.Render("~/Content/lightbox")
     <style>
         .uploadify-button {
             background-color: transparent;
@@ -121,7 +120,7 @@
                                     <li onclick="RenderContentForInventory()"><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#productTags" data-toggle="tab" id="tabproducttags">Product Tags <span class="label label-danger">E</span></a></li>
                                     <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
-                                    <li onclick="HideProductDetalsToolBox()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
+                                    <li onclick="RenderContentForImages()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
                                     <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
                                     <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
                                     <li onclick="BindProductReviews()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
@@ -132,12 +131,11 @@
                     </div>
 
                     <div class="col-md-10">
-@using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "",OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "productform" }))
-{
-    @Html.AntiForgeryToken()
+                    @using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "",OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "productform" }))
+                    {
+                        @Html.AntiForgeryToken()
 
                         <div class="tab-content productTabContent">
-
                             <div class="tab-pane fade in active" id="general">
                                 <!--Edit form column-->
                                 
@@ -440,8 +438,6 @@
                                     </div>
                                 </div>
                             </div>
-                       
-
                             <div class="tab-pane fade" id="relatedProducts">
 
                                 <div>
@@ -490,7 +486,19 @@
 
                             </div>
                             <div class="tab-pane fade" id="images">
+                                <div>
+                                    @{
+                                        PartyEC.UI.Models.ToolboxViewModel ToolBoxImageProduct = new PartyEC.UI.Models.ToolboxViewModel();
+                                        ToolBoxImageProduct.backbtn.Visible = true;
+                                        ToolBoxImageProduct.backbtn.Title = "Back";
+                                        ToolBoxImageProduct.backbtn.Event = "goback()";
+                                        Html.RenderPartial("_ToolboxView", ToolBoxImageProduct);
+                                    }
+
+                                </div>
+
                                     <div class="col-lg-12">
+                                       
                                         <h2>Product Image</h2>
                                         <hr />
                                         <div class="col-md-5" id="divImageUpload">
@@ -506,11 +514,15 @@
                                             </div>
                                         </div>
                                         <div class="col-lg-7" style="object-fit:fill;">
-                                            <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="" id="imgProduct" class="img-thumbnail" style="max-height:250px;">
-                                        </div>
+                                            <div class="col-lg-12">
+                                                <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="" id="imgProduct" class="img-thumbnail" style="max-height:250px;margin-left:3%">
+
+                                            </div>
+                                             </div>
                                     </div>
                                 <div class="col-lg-12">
                                     <h2>Other Images</h2>
+                                    <hr />
                                     <div id="buttonPatchOtherImages">
                                         @{
                                             PartyEC.UI.Models.ToolboxViewModel ToolBoxControlOtherImage = new PartyEC.UI.Models.ToolboxViewModel();
@@ -521,8 +533,7 @@
 
                                     </div>
 
-                                    <hr />
-                                    <div class="col-md-5" id="divImageUploadOther">
+                                    <div class="col-md-5" id="divImageUploadOther" style="margin-top:5%">
                                         <div>
                                             <a id="alinkUploadOther" style="display:none" class="btn btn-info" href="javascript:$('#file_uploadOther').uploadify('upload','*')">Upload</a>
                                             <input type="file" class="uploadify" name="file_uploadOther" id="file_uploadOther" />
@@ -535,26 +546,15 @@
                                         </div>
                                     </div>
                                     <div class="col-lg-7" style="object-fit:fill;">
-                                        <ul class="hide-bullets" id="ulOtherImages">
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-0">
-                                                    <img src="http://placehold.it/150x150&text=zero">
-                                                </a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-1"><img src="http://placehold.it/150x150&text=1"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-2"><img src="http://placehold.it/150x150&text=2"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-3"><img src="http://placehold.it/150x150&text=3"></a>
-                                            </li>
-</div>
+                                        <div class="col-lg-12">
+                                            <ul class="hide-bullets" id="ulOtherImages"></ul>
+                                        </div>
+                                </div>
                                    
                                 </div>
                                 <div class="col-lg-12">
                                     <h2>Stickers</h2>
+                                    <hr />
                                     <div id="buttonPatchStickerImages">
                                         @{
                                             PartyEC.UI.Models.ToolboxViewModel ToolBoxControlStickerImage = new PartyEC.UI.Models.ToolboxViewModel();
@@ -567,8 +567,8 @@
                                         }
 
                                     </div>
-                                    <hr />
-                                    <div class="col-lg-5">
+                                    
+                                    <div class="col-lg-5" style="margin-top:10%">
                                         <div>
                                             <a id="alinkUploadSticker" style="display:none" class="btn btn-info" href="javascript:$('#file_uploadSticker').uploadify('upload','*')">Upload</a>
                                             <input type="file" class="uploadify" name="file_uploadOther" id="file_uploadSticker" />
@@ -583,72 +583,18 @@
                                     </div>
                                     <div class="col-lg-7">
                                         <div class="col-lg-12">
-                                            <p>Attached Sticker</p>
+                                            <h3>Attached Sticker</h3>
                                             <hr />
                                             <ul class="hide-bullets" id="ulMainStickerArea">
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-0">
-                                                        <img src="http://placehold.it/150x150&text=zero">
-                                                    </a>
-                                                </li>
                                                 
                                             </ul>
                                         </div>
                                         @* ----------------------------------------------------------------------------- *@
                                         <div class="col-lg-12">
-                                            <p>Available Stickers</p>
+                                            <h3>Available Stickers</h3>
                                             <hr />
                                             <ul class="hide-bullets" id="ulStickerArea">
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-0">
-                                                        <img src="http://placehold.it/150x150&text=zero">
-                                                    </a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-1"><img src="http://placehold.it/150x150&text=1"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-2"><img src="http://placehold.it/150x150&text=2"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-3"><img src="http://placehold.it/150x150&text=3"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-4"><img src="http://placehold.it/150x150&text=4"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-5"><img src="http://placehold.it/150x150&text=5"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-6"><img src="http://placehold.it/150x150&text=6"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-7"><img src="http://placehold.it/150x150&text=7"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-8"><img src="http://placehold.it/150x150&text=8"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-9"><img src="http://placehold.it/150x150&text=9"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-10"><img src="http://placehold.it/150x150&text=10"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-11"><img src="http://placehold.it/150x150&text=11"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-12"><img src="http://placehold.it/150x150&text=12"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-13"><img src="http://placehold.it/150x150&text=13"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-14"><img src="http://placehold.it/150x150&text=14"></a>
-                                                </li>
-                                                <li class="col-sm-3">
-                                                    <a class="thumbnail" id="carousel-selector-15"><img src="http://placehold.it/150x150&text=15"></a>
-                                                </li>
+                                               
                                             </ul>
                                         </div>
                                         
@@ -847,7 +793,6 @@
                                     </div>
                                 </div>
                             </div>
-                           
                         </div>
                         @Html.HiddenFor(model => model.productDetailhdf)
                   }
@@ -951,7 +896,7 @@
 @Scripts.Render("~/bundles/product")
 @Scripts.Render("~/bundles/AssoProduct")
 @Scripts.Render("~/bundles/Uploadify")
-<script src="~/Scripts/lightbox.min.js"></script>
+@Scripts.Render("~/bundles/Lightbox")
 <script type="text/javascript">
     $(function () {
         $('#file_upload').uploadify({
@@ -969,13 +914,14 @@
             'onUploadStart': function (file) {
                 $('#file_upload').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'ImageID': $('#ImageID').val() });
             },
-            'uploadLimit': 1,
+            'multi': false,
                 'onUploadSuccess': function (file, data, response) {
                   //data is whatever you return from the server
                   //we're sending the URL from the server so we append this as an image to the #uploaded div
                 //$('#URL').val(data);
                     //$('#imgProduct').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
                     BindImages();
+                    debugger;
                     $('#alinkUpload').hide();
                 }
 

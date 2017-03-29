@@ -304,6 +304,8 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 		// Stop a file upload and remove it from the queue 
 		cancel : function(fileID, supressEvent) {
 		    $('#alinkUpload').hide(200);
+		    $('#alinkUploadSticker').hide(200);
+		    $('#alinkUploadOther').hide(200);
 			var args = arguments;
 
 			this.each(function() {
@@ -604,7 +606,6 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 
 		// Triggered once for each file added to the queue
 		onSelect: function (file) {
-		    //$('#alinkUpload').show();
 			// Load the swfupload settings
 			var settings = this.settings;
 

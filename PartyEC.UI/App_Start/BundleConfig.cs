@@ -11,6 +11,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/bootstrapdatepicker").Include("~/Content/bootstrap-datepicker3.min.css"));
             bundles.Add(new StyleBundle("~/Content/jstree").Include("~/Content/jstree/dist/themes/default/style.css"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css", "~/Content/bootstrap-theme.min.css", "~/Content/font-awesome.min.css", "~/Content/custom.css"));
+            bundles.Add(new ScriptBundle("~/Content/lightbox").Include("~/Content/lightbox.min.css"));
 
             bundles.Add(new StyleBundle("~/Content/datatable").Include("~/Content/DataTables/css/dataTables.bootstrap.min.css", "~/Content/DataTables/css/responsive.bootstrap.min.css"));
             bundles.Add(new StyleBundle("~/Content/datatablecheckbox").Include("~/Content/DataTables/css/dataTables.checkboxes.css"));
@@ -18,6 +19,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/product").Include("~/Content/UserCSS/Product.css"));
             bundles.Add(new StyleBundle("~/Content/Uplodify").Include("~/Content/uploadify.css"));
             bundles.Add(new StyleBundle("~/Content/EventRequest").Include("~/Content/UserCSS/EventRequests.css"));
+            
 
 
 
@@ -36,6 +38,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/bootstrapdatepicker").Include("~/Scripts/bootstrap-datepicker.min.js"));
             bundles.Add(new ScriptBundle("~/bundles/userpluginjs").Include("~/Scripts/jquery.noty.packaged.min.js","~/Scripts/custom.js"));
             bundles.Add(new ScriptBundle("~/bundles/Uploadify").Include("~/Scripts/jquery.uploadify.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Lightbox").Include("~/Scripts/lightbox.min.js"));
 
             bundles.Add(new ScriptBundle("~/bundles/product").Include("~/Scripts/UserJS/Products.js"));
             bundles.Add(new ScriptBundle("~/bundles/attributes").Include("~/Scripts/UserJS/Attributes.js"));
