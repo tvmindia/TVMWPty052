@@ -541,6 +541,12 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.savebtn.Event = "UpdateStickerForProduct()";
                     ToolboxViewModelObj.savebtn.Title = "Save";
                     break;
+                case "NoSticker":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Disable = true;
+                    break;
                 case "CancelSticker":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Event = "UpdateStickerForProduct()";

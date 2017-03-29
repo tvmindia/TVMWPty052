@@ -50,7 +50,7 @@ $(document).ready(function () {
 //---------------------------------------Get All Events Requests-----------------------------------------------//
 function GetAllEventRequests() {
     try {
-        debugger;
+        
         var data = {};
         var ds = {};
         ds = GetDataFromServer("EventRequests/GetAllEventRequests/", data);
@@ -93,7 +93,7 @@ function Edit(currentObj) {
     $('#tabeventRequestDetails').removeClass('disabled');
     $('#tabeventRequestDetails a').attr('data-toggle', 'tab');
     $('#tabeventRequestDetails a').trigger('click');
-    debugger;
+    
     var rowData = DataTables.eventTable.row($(currentObj).parents('tr')).data();
     //Event Request Case
     if ((rowData != null) && (rowData.ID != null))
@@ -110,7 +110,7 @@ function BindEventRequest(id)
 {
     var thisEvent = GetEventRequest(id);
     if (thisEvent != null) {
-        debugger;
+        
         $("#ID").val(thisEvent.ID);
         $(".UpdateId").val(thisEvent.ID);
         $("#TotalAmt").val(thisEvent.TotalAmt);
@@ -153,12 +153,12 @@ function BindCustomer(id)
 }
 function BindComments()   // To Display Previous Comment history
 {
-    debugger;
+    
     $("#CommentsDisplay").empty();
     id = $("#ID").val();// assigning id for binding comments.
     var thisCommentList = GetEventsLog(id);
     if (thisCommentList != null) {
-        debugger;
+        
         for (var i = 0; i < thisCommentList.length; i++)
         {
             var str = Date.parse(thisCommentList[i].CommentDate.substring(0, 10));
@@ -232,13 +232,13 @@ function GetEventsLog(id) {
 }
 
 function ValidationCommercialInfo() {
-    debugger;
+    
     //setting Update Flag as 1 indicating that  Update called from Commercial Info on save click
     $("#Updateflag").val(1);
 }
 
 function SaveSuccess(data, status, xhr) {
-    debugger;
+    
     $("#Comments").val("");
     var i = JSON.parse(data)
     switch (i.Result) {
@@ -268,7 +268,7 @@ function UpdateEvntRq_OnBegin() {
     $("#CurrencyRate").attr('disabled', false);
 }
 function BindEvntRq_Remarks() {
-    debugger;
+    
     id = $("#ID").val();
     BindEventRequest(id);
 }

@@ -32,7 +32,7 @@ $(document).ready(function ()
 
 //---------------------------------------Edit Events--------------------------------------------------//
 function Edit(currentObj) {    
-    debugger;
+    
     ChangeButtonPatchView("Event", "btnPatchEdittab2", "Edit"); //ControllerName,id of the container div,Name of the action
     $('#tabeventDetails').trigger('click');
     var rowData = DataTables.eventTable.row($(currentObj).parents('tr')).data();
@@ -43,7 +43,7 @@ function Edit(currentObj) {
 //---------------------------------------Fill Events--------------------------------------------------//
 function fillevent(ID)
 {
-    debugger;
+    
     var thisevent = GetEventDetailsByID(ID); //Binding Data
     $("#ID").val(thisevent.ID)
     $("#deleteId").val(thisevent.ID)//for delete action 
@@ -62,7 +62,7 @@ function fillevent(ID)
 } 
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
-    debugger;
+    
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
@@ -81,7 +81,7 @@ function TabeventDetails() {
 }
 
 function btnreset() {
-    debugger;
+    
     if ($("#ID").val() == 0) {
         clearfields();
     }
@@ -102,7 +102,7 @@ function goback() {
 }
 //---------------------------------------Delete-------------------------------------------------------//
 function clickdelete() {
-    debugger;
+    
     var id = $("#ID").val();
     if (id != 0) {
         $("#btnFormDelete").click();
@@ -113,7 +113,7 @@ function clickdelete() {
 }
 //---------------------------------------Validation Functions---------------------------------------------//  
 function Validation() {
-    debugger;
+    
 /*--------------Checking the Checkboxes Checked 
     and ID's saved in array. array value filled in RelatedCategoriesCSV---------------------*/
     var checkboxCount = $("input:checked").length;
@@ -143,7 +143,7 @@ function btnAddNew() {
 }
 //---------------------------------------Save Click alerts------------------------------------------------//
 function SaveSuccess(data, status, xhr) {
-    debugger;
+    
     BindAllEvent();
     clearfields();
     goback();

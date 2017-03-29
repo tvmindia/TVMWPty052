@@ -916,7 +916,7 @@ Released under the MIT License <http://www.opensource.org/licenses/mit-license.p
 
 		// Triggered right before a file is uploaded
 		onUploadStart: function (file) {
-		    debugger;
+		    
 			// Load the swfupload settings
 			var settings = this.settings;
 

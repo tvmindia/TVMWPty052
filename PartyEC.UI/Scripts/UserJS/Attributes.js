@@ -186,7 +186,7 @@ function btnAddNew() {
 function attributeSaveSuccess(data, status, xhr) {
     BindAllAttributes();
     var i = JSON.parse(data)
-    debugger;
+    
     switch (i.Result) {
         
         case "OK":
