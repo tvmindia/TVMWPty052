@@ -299,7 +299,7 @@ Checkboxes.prototype = {
 
    // Updates array holding data for selected checkboxes
    updateData: function (type, selector, isSelected) {
-       debugger;
+       
       var self = this;
       var dt = self.s.dt;
       var ctx = dt.settings()[0];
@@ -367,7 +367,7 @@ Checkboxes.prototype = {
 
    // Updates row selection
    updateSelect: function (type, selector, isSelected) {
-       debugger;
+       
       var self = this;
       var dt = self.s.dt;
       var ctx = dt.settings()[0];
@@ -420,7 +420,7 @@ Checkboxes.prototype = {
 
    // Updates row selection
    updateCheckbox: function (type, selector, isSelected) {
-       debugger;
+       
       var self = this;
       var dt = self.s.dt;
       var ctx = dt.settings()[0];
@@ -470,7 +470,7 @@ Checkboxes.prototype = {
 
    // Handles checkbox click event
    onClick: function (e, ctrl) {
-       debugger;
+       
       var self = this;
       var dt = self.s.dt;
       var ctx = dt.settings()[0];
@@ -497,7 +497,7 @@ Checkboxes.prototype = {
 
    // Handles row select/deselect event
    onSelect: function (e, type, indexes) {
-       debugger;
+       
       var self = this;
       var dt = self.s.dt;
       var ctx = dt.settings()[0];
@@ -513,7 +513,7 @@ Checkboxes.prototype = {
 
    // Handles checkbox click event
    onClickSelectAll: function (e, ctrl) {
-       debugger;
+       
       var self = this;
       var dt = self.s.dt;
       var ctx = dt.settings()[0];
@@ -605,7 +605,7 @@ Checkboxes.prototype = {
 
    // Updates state of the "Select all" controls
    updateSelectAll: function () {
-       debugger;
+       
       var self = this;
       var dt = self.s.dt;
       var ctx = dt.settings()[0];
@@ -667,7 +667,7 @@ Checkboxes.prototype = {
    // Updates the information element of the DataTable showing information about the
    // items selected. Based on info() method of Select extension.
    showInfoSelected: function () {
-       debugger;
+       
       var self = this;
       var dt = self.s.dt;
       var ctx = dt.settings()[0];

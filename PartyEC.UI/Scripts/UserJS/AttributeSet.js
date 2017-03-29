@@ -1,6 +1,6 @@
 ﻿var DataTables = {};
 $(document).ready(function () {
-    debugger;
+    
     //Tree bind into right side container
     $('#jstree_Drag').jstree({
         "core": {
@@ -35,7 +35,7 @@ $(document).ready(function () {
             'check_callback': function (operation, node, node_parent, node_position, more) {
                 // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
                 // in case of 'rename_node' node_position is filled with the new node name
-                debugger;
+                
                 if (operation === "move_node") {
                     return node_parent.id === node.parent; //only allow dropping inside nodes of type 'Parent'
                 }
@@ -113,7 +113,7 @@ $(document).ready(function () {
 });
 function MainClick()
 {
-    debugger;
+    
     $('#btnFormSave').click();
 }
 function AddNew()
@@ -123,7 +123,7 @@ function AddNew()
 function Edit(currentObj) {
     //Tab Change on edit click
     $('#tabattributeSetDetails').trigger('click');
-    debugger;
+    
     var rowData = DataTables.attributeSetTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
 
@@ -204,7 +204,7 @@ function GetTreeDataLeft(id)
 function PostSaveOrder(AttributeSetLinkViewModel,id)
 {
     try {
-        debugger;
+        
         var data = "{'Treeview':" + JSON.stringify(AttributeSetLinkViewModel) + ",'ID':"+id+"}";
         var ds = {};
         ds = PostDataToServer("AttributeSetLink/PostTreeOrder/", data);
@@ -241,7 +241,7 @@ function EditAttibuteSet(id)
 }
 function SaveOrder()
 {
-    debugger;
+    
     var TreeOrderFormatted = [];
     var TreeOrder = $("#jstree_DragUpdate").jstree(true).get_json('#', { 'flat': true });
     var j = 0;
@@ -266,7 +266,7 @@ function SaveOrder()
     $('#TreeList').val(JSON.stringify(TreeOrderFormatted));
 }
 function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
-    debugger;
+    
     var i = JSON.parse(data.responseText)
     switch(i.Result)
     {
@@ -288,7 +288,7 @@ function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
     
 }
 function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the question
-    debugger;
+    
     var i = JSON.parse(data.responseText)
     switch (i.Result) {
         case "OK":

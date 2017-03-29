@@ -337,7 +337,7 @@ function BindStickers()
 {
     try
     {
-        debugger;
+        
         var thisproduct = GetProduct($('#ID').val());
         var Table = GetAllStickers()
         var ActiveSticker = 0;
@@ -360,7 +360,7 @@ function BindStickers()
         }
         if(ActiveSticker==0)
         {
-            ChangeButtonPatchView("Products", "buttonPatchStickerImages", "Sticker");
+            ChangeButtonPatchView("Products", "buttonPatchStickerImages", "NoSticker");
             $('#ulMainStickerArea').append('<li class="col-sm-3"><a class="thumbnail" id="carousel-selector-0"><img src="http://placehold.it/150x150&text=zero"></a></li>');
         }
         if (AvailableSticker == 0) {
@@ -375,7 +375,7 @@ function BindStickers()
 function BindImages() {
     try
     {
-        debugger;
+        
         var Table = GetRelatedImages($('#ID').val());
         var MainFlag = 0;
         var OtherFlag = 0;
@@ -410,7 +410,7 @@ function DeleteOtherImage()
 {
     try
     {
-        debugger;
+        
         var DeletedImageID = [];
         var objectset = $('#ulOtherImages a.Selected');
         for (var i = 0; i < objectset.length; i++) {
@@ -446,7 +446,7 @@ function SelectImagesForDelete(this_Obj)
 {
     try
     {
-        debugger;
+        
         $(this_Obj).toggleClass('Selected');
         if ($('#ulOtherImages a.Selected').length > 0) {
             ChangeButtonPatchView("Products", "buttonPatchOtherImages", "Delete");
@@ -463,9 +463,9 @@ function SelectImagesForDelete(this_Obj)
 }
 function SelectForAddSticker(this_Obj)
 {
-    debugger;
+    
     try {
-        debugger;
+        
        
         if ($('#ulStickerArea span.highlighted').length == 0) {
             $(this_Obj).append('<span class="highlighted">&#10004;</span>');
@@ -484,7 +484,7 @@ function SelectForAddSticker(this_Obj)
 }
 function UpdateStickerForProduct()
 {
-    debugger;
+    
     var objectset = $('#ulStickerArea span.highlighted');
     var ProductViewModel = new Object();
     if (objectset.length != 0)
@@ -495,7 +495,7 @@ function UpdateStickerForProduct()
     var data = "{'productViewObj':" + JSON.stringify(ProductViewModel) + "}";
     PostDataToServer('Products/UpdateProductSticker/', data, function (JsonResult) {
         if (JsonResult != '') {
-            debugger;
+            
             switch (JsonResult.Result) {
                 case "OK":
                     notyAlert('success', JsonResult.Record.StatusMessage);
@@ -515,7 +515,7 @@ function UpdateStickerForProduct()
 function GetRelatedImages(id)
 {
     try {
-        debugger;
+        
         var data = { "ID": id };
         var ds = {};
         ds = GetDataFromServer("Products/GetRelatedImages/", data);
@@ -537,7 +537,7 @@ function GetRelatedImages(id)
 function GetAllStickers()
 {
     try {
-        debugger;
+        
         var data = "";
         var ds = {};
         ds = GetDataFromServer("Products/GetAllStickers/", data);
@@ -1351,7 +1351,7 @@ function BindProductReviews()   // To Display Previous Comment history
 {
 
     HideProductDetalsToolBox();
-    debugger;
+    
     var id = $(".productID").val();// assigning id for binding reviews.
     var attributesetId = $("#AttributeSetID").val();
 
@@ -1364,7 +1364,7 @@ function BindProductReviews()   // To Display Previous Comment history
             var ratinglists = ""
             var TotalRating = parseFloat(0);
             var AvgRating;
-            debugger;
+            
 
             for (var i = 0; i < attributecount; i++) {
                 var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value);

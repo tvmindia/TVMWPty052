@@ -14,7 +14,7 @@ $(document).ready(function () {
                 "check_callback": function(operation, node, node_parent, node_position, more) {
                     // operation can be 'create_node', 'rename_node', 'delete_node', 'move_node' or 'copy_node'
                     // in case of 'rename_node' node_position is filled with the new node name
-                    debugger;
+                    
                     if (operation === "move_node") {
                         return node.state.selected === true; //only allow dropping if node is selected
                     }
@@ -111,7 +111,7 @@ $(document).ready(function () {
 });
 function GetValue(value)
 {
-    debugger;
+    
     var Value = $("#txt" + value.id).val();
     $('#hdnOrderRowid').val($('#ID').val());
     $('#hdnOrderValue').val(Value);
@@ -203,7 +203,7 @@ function GetCategoryDetails(id)
 function GetAssignedProWithID(id) {
 
     try {
-        debugger;
+        
         var data = { "CategoryID": id };
         var ds = {};
         ds = GetDataFromServer("Products/GetAssignedPro/", data);
@@ -227,7 +227,7 @@ function GetAssignedProWithID(id) {
 function GetUnAssignedProWithID(id) {
 
     try {
-        debugger;
+        
         var data = { "CategoryID": id };
         var ds = {};
         ds = GetDataFromServer("Products/GetUnAssignedPro/", data);
@@ -251,7 +251,7 @@ function GetUnAssignedProWithID(id) {
 function GetAllProducts(id) {
 
     try {
-        debugger;
+        
         var data = {"CategoryID":id};
         var ds = {};
         ds = GetDataFromServer("Products/GetAllProductswithCategory/", data);
@@ -313,7 +313,7 @@ function AddNewSubCategory()
 function AddCategory() {
     try
     {
-        debugger;
+        
         $('#divOverlayimage').show();
         ClearFields();
         $('#ID').val(0);
@@ -337,7 +337,7 @@ function AddCategory() {
 }
 function MainClick()
 {
-    debugger;
+    
     var loParent = $('#jstree_Categories').jstree(true).get_node($('#ID').val());
     if (loParent)
     {
@@ -362,7 +362,7 @@ function AddProductLink()
 {
     try
     {
-        debugger;
+        
         var AddList = [];
         var DeleteList = [];
         var tabledata = DataTables.productTable.rows('.selected').data();
@@ -393,7 +393,7 @@ function AddProductLink()
 ////////////////////////////////////////Onclick for Radio button
 function GetAssignedPro()
 {
-    debugger;
+    
     var id=$('#ID').val()!="0"?$('#ID').val():"";
     DataTables.productTable.clear().rows.add(GetAssignedProWithID(id)).draw(false);
     $("#rdoproductAssigned").prop("checked", true);
@@ -404,14 +404,14 @@ function GetAssignedPro()
 }
 function GetUnAssignedPro()
 {
-    debugger;
+    
     var id = $('#ID').val() != "0" ? $('#ID').val() : "";
     DataTables.productTable.clear().rows.add(GetUnAssignedProWithID(id)).draw(false);
     Radioselected = "2";
 }
 function GetAllPro()
 {
-    debugger;
+    
     var id = $('#ID').val();
     DataTables.productTable.clear().rows.add(GetAllProducts(id)).draw(false);
     Radioselected = "3";
@@ -428,7 +428,7 @@ function DeleteCategory()
 }
 
 function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the question
-    debugger;
+    
     var i = JSON.parse(data.responseText)
     switch (i.Result) {
         case "OK":
@@ -448,7 +448,7 @@ function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the qu
 
 }
 function CheckSubmittedInsertCategory(data) { //function CouponSubmitted(data) in the question
-    debugger;
+    
     var i = JSON.parse(data.responseText)
     switch (i.Result) {
         case "OK":

@@ -1869,7 +1869,7 @@
 		 * @return {String} the ID of the object added to the model
 		 */
 		_parse_model_from_json: function (d, p, ps,oldid) {
-		    debugger;
+		    
 			if(!ps) { ps = []; }
 			else { ps = ps.concat(); }
 			if(p) { ps.unshift(p); }
@@ -3268,7 +3268,7 @@
 				return false;
 			}
 			if (node.id === true) { delete node.id; }
-			debugger;
+			
 			node = this._parse_model_from_json(node, par.id, par.parents.concat(), par.id);
 			if(!node) { return false; }
 			tmp = this.get_node(node);
@@ -3605,7 +3605,7 @@
 		 * @trigger model.jstree copy_node.jstree
 		 */
 		copy_node: function (obj, par, pos, callback, is_loaded) {
-		    debugger;
+		    
 			var t1, t2, dpc, tmp, i, j, node, old_par, new_par, old_ins, is_multi;
 
 			par = this.get_node(par);
@@ -3659,7 +3659,7 @@
 			node = old_ins ? old_ins.get_json(obj, { no_id : true, no_data : true, no_state : true }) : obj;
 			if(!node) { return false; }
 			if (node.id === true) { delete node.id; }
-			debugger;
+			
 			node = this._parse_model_from_json(node, new_par.id, new_par.parents.concat(),obj.id);
 			if(!node) { return false; }
 			tmp = this.get_node(node);
