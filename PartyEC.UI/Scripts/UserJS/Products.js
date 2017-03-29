@@ -899,7 +899,6 @@ function RenderContentsForAttributes()
             $("#dynamicOtherAttributes").empty();
             //append dynamic html to div from partialview
             $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back:).</p></div></div>');
-
         }
         
     }
@@ -908,7 +907,8 @@ function RenderContentsForAttributes()
     }
 
 }
-function RenderPartialTemplateForAttributes(atsetID, Isconfig) {
+function RenderPartialTemplateForAttributes(atsetID, Isconfig)
+{
     var data = { setID: atsetID, Isconfigurable: Isconfig };
     var ds = {};
     ds = GetDataFromServer("Attributes/EditTemplateForAttributes/", data);
