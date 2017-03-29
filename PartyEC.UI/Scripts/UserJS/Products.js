@@ -1171,15 +1171,14 @@ function BindProductReviews()   // To Display Previous Comment history
 
     HideProductDetalsToolBox();
     debugger;
-    $("#ReviewsDisplay").empty();
-    $("#RatingDisplay").empty();
     var id = $(".productID").val();// assigning id for binding reviews.
     var attributesetId = $("#AttributeSetID").val();
 
-    if (attributesetId != null && id!=null) {
+    if (attributesetId != null && id != null) {
+        //Rating
         var thisRatingSummary = GetRatingSummary(id, attributesetId);
-        if (thisRatingSummary) {
-
+        if (thisRatingSummary.length>0) {          
+            $("#RatingDisplay").empty();
             var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
             var ratinglists = ""
             var TotalRating = parseFloat(0);
@@ -1231,9 +1230,10 @@ function BindProductReviews()   // To Display Previous Comment history
             $("#RatingDisplay").append(ratingdiv);
 
         }
+        //Reviews
         var thisReviewList = GetProductReviews(id);
-        if (thisReviewList) {
-
+        if (thisReviewList.length>0) {
+            $("#ReviewsDisplay").empty();
             for (var i = 0; i < thisReviewList.length; i++) {
                 var str = Date.parse(thisReviewList[i].ReviewCreatedDate.substring(0, 10));
                 var resultdate = ConvertJsonToDate('' + str + '');
