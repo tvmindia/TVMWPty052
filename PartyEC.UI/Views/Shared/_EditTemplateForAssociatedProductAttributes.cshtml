@@ -11,7 +11,7 @@
             case "S":
                 <div class="form-group">
                     <label for=@Html.DisplayName(item.Name) class="col-lg-2 control-label">@Html.DisplayName(item.Caption)</label>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 input-group">
                         <input type="text" class="form-control" id=@Html.DisplayName(item.Name) name=@Html.DisplayName(item.Name)>
                     </div>
                 </div>
@@ -20,7 +20,7 @@
             case "D":
                 <div class="form-group">
                     <label for=@Html.DisplayName(item.Name) class="col-lg-2 control-label">@Html.DisplayName(item.Caption)</label>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 input-group">
                         <input type="date" class="form-control" id=@Html.DisplayName(item.Name) name=@Html.DisplayName(item.Name)>
                     </div>
                 </div>
@@ -29,7 +29,7 @@
             case "N":
                 <div class="form-group">
                     <label for=@Html.DisplayName(item.Name) class="col-lg-2 control-label">@Html.DisplayName(item.Caption)</label>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 input-group">
                         <input type="number" class="form-control" id=@Html.DisplayName(item.Name) name=@Html.DisplayName(item.Name)>
                     </div>
                 </div>
@@ -37,7 +37,7 @@
             case "C":
                 <div class="form-group">
                     <label for=@Html.DisplayName(item.Name) class="col-lg-2 control-label">@Html.DisplayName(item.Caption)</label>
-                    <div class="col-lg-4">
+                    <div class="col-lg-4 input-group">
                         <select class="form-control" id=@Html.DisplayName(item.Name) name=@Html.DisplayName(item.Name)>
                             <option value=-1>--Select @Html.DisplayName(item.Caption)--</option>
                             @{

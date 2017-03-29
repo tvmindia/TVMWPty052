@@ -21,7 +21,26 @@ $(document).ready(function () {
         }
         
     });
-  
+    $("#detailDetailTags").on({
+        focusout: function () {
+            var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
+            if (txt) {
+                var h = $("<span/>", { text: txt }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' });
+                $('#detailkeywordsDiv').append(h);
+                this.value = "";
+            }
+        },
+        keypress: function (ev) {
+            if (ev.keyCode == 13) {
+                if (/(188|13)/.test(ev.which)) $(this).focusout();
+                var callbacks = $.Callbacks();
+                callbacks.disable();
+                return false;
+            }
+        }
+
+    });
+    
     //$("#detailDetailTags").on({
 
     //    focusout: function () {

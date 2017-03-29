@@ -679,7 +679,7 @@
                                  
                                     <div class="form-group">
                                         <label for=detailQty class="col-lg-2 control-label">Qty</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 input-group">
                                             <input type="number" class="form-control" id="detailQty" name="detailQty">
                                             <input type="hidden" class="form-control" id="productDetailID" name="productDetailID" />
                                         </div>
@@ -687,7 +687,7 @@
 
                                     <div class="form-group">
                                         <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 input-group">
                                             <input type="number" class="form-control" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
                                         </div>
                                     </div>
@@ -704,28 +704,28 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailDiscountAmount">Discount Price</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 input-group">
                                             <input class="form-control text-box single-line" id="detailDiscountAmount" name="detailDiscountAmount" value="" type="number">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailPriceDifference">Price Difference</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 input-group">
                                             <input class="form-control text-box single-line" id="detailPriceDifference" name="detailPriceDifference" value="" type="number">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailDiscountStartDate" style="">Discount Start Date</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 input-group">
                                             <input class="form-control text-box single-line" id="detailDiscountStartDate" name="detailDiscountStartDate" value="" type="date">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailDiscountEndDate" style="">Discount End Date</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 input-group">
                                             <input class="form-control text-box single-line" id="detailDiscountEndDate" name="detailDiscountEndDate" value="" type="date">
                                         </div>
                                     </div>
@@ -752,8 +752,12 @@
 
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailDetailTags" style="">New Tags</label>
-                                        <div class="col-lg-4" id="detailTagsdiv">
-                                            <input class="form-control text-box single-line" id="detailDetailTags" name="detailDetailTags" value="" type="text">
+                                        <div class="col-lg-4 input-group" id="detailTagsdiv">
+                                            <input class="form-control text-box single-line" id="detailDetailTags" placeholder = "Add key Words....." name="detailDetailTags" value="" type="text">
+                                            @*@Html.HiddenFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control"} })*@
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button">+</button>
+                                            </span>
                                         </div>
                                     </div>
 
@@ -761,7 +765,7 @@
                                         <span class="col-lg-2"></span>
 
                                         <div id="detailkeywordsDiv" class="col-lg-4">
-                                            sdfds
+                                           
                                         </div>
                                     </div>
 
