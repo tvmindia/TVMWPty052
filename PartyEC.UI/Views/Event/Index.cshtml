@@ -211,6 +211,9 @@
                 'swf': "@Url.Content("~/Content/uploadify.swf")",
                 //this is where the file posts when it uploads.
             'uploader': "@Url.Action("Upload", "Event")",
+            'onSelect': function (file) {
+                $('#alinkUpload').show();
+            },
             'onUploadStart': function (file) {
                 $('#file_upload').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'EventImageID': $('#EventImageID').val() });
             },
