@@ -96,8 +96,6 @@ $(document).ready(function () {
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "Qty", "defaultContent": "<i>-</i>" },
                { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" }
-         
-               
              ],
              columnDefs: [{
                  orderable: false,
@@ -223,6 +221,7 @@ function btnAddNewProduct() {
     $("#productDetails h4").text('New Product');
     $("#AttributeSetID").removeAttr('disabled');
     $("#ProductType").removeAttr('disabled');
+    $('#tabGeneral').trigger('click');
     clearform();
 }
 function goback() {
@@ -279,7 +278,9 @@ function Edit(currentObj)
             $("#SupplierID").val(thisproduct.SupplierID);
             $("#ManufacturerID").val(thisproduct.ManufacturerID);
             $("#ProductType").val(thisproduct.ProductType);
+            $("#ProductTypehdf").val(thisproduct.ProductType);
             $("#AttributeSetID").val(thisproduct.AttributeSetID);
+            $("#AttributeSetIDhdf").val(thisproduct.AttributeSetID);
             if (thisproduct.FreeDelivery == true)
             { $("#FreeDelivery").prop('checked', true); }
             else { $("#FreeDelivery").prop('checked', false); }
@@ -301,7 +302,7 @@ function Edit(currentObj)
             $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
             $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
             //Tags
-            if (thisproduct.HeaderTags != null)
+            if (thisproduct.HeaderTags)
             {
                 $('.Htags').remove();
                 var tagar = thisproduct.HeaderTags.split(",");
@@ -316,9 +317,7 @@ function Edit(currentObj)
                 //Removes span tags
                 $('.Htags').remove();
             }
-            
-
-            //ProductID
+              //ProductID
             $(".productID").val(thisproduct.ID);
             //ProductDetailID
             $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
@@ -577,8 +576,9 @@ function productSaveSuccess(data, status, xhr)
         case "ERROR":
             notyAlert('error', JsonResult.Record.StatusMessage);
             break;
+        
         default:
-            notyAlert('error', JsonResult.Record.Message);
+            notyAlert('error', JsonResult.Message);
             break;
     }
 }
@@ -595,8 +595,6 @@ function ProductSave()
     $('#btnProductSubmit').trigger('click');
 }
 
-
-
 function clearform()
 {
     //Clear form
@@ -606,7 +604,10 @@ function clearform()
     $(".productID").val(0);
     $("#productdetailsID").val(0);
     $("#productDetailhdf").val('');
-    
+    $("#ProductTypehdf").val('');
+    $("#AttributeSetIDhdf").val('');
+    //tags removal
+    $('.Htags').remove();
 }
 
 function RelatedProductsModel()
@@ -870,19 +871,26 @@ function RenderContentForPrice()
 {
     try {
         ShowProductDetalsToolBox();
-        var prodtype = $("#ProductType").val();
+        var prodtype = $("#ProductTypehdf").val();
         switch (prodtype) {
             case "C":
                 //Hide General detail entries
                 $(".productDetailGroup").hide();
                 $(".divMsgconfigurable").show();
+                $("#price .form-group").show();
+                $(".divPriceMessage").hide();
 
                 break;
             case "S":
                 $(".productDetailGroup").show();
                 $(".divMsgconfigurable").hide();
+
+                $("#price .form-group").show();
+                $(".divPriceMessage").hide();
                 break;
             default:
+                $("#price .form-group").hide();
+                $(".divPriceMessage").show();
                 break;
 
         }
@@ -895,19 +903,25 @@ function RenderContentForInventory()
 {
     try {
         ShowProductDetalsToolBox();
-        var prodtype = $("#ProductType").val();
+        var prodtype = $("#ProductTypehdf").val();
         switch (prodtype) {
             case "C":
                 //Hide General detail entries
                 $(".productDetailGroup").hide();
                 $(".divMsgconfigurable").show();
 
+                $("#inventory .form-group").show();
+                $(".divInventoryMessage").hide();
                 break;
             case "S":
                 $(".productDetailGroup").show();
                 $(".divMsgconfigurable").hide();
+                $("#inventory .form-group").show();
+                $(".divInventoryMessage").hide();
                 break;
             default:
+                $("#inventory .form-group").hide();
+                $(".divInventoryMessage").show();
                 break;
 
         }
@@ -916,9 +930,28 @@ function RenderContentForInventory()
     }
 }
 
-function ProductTypeOnChange()
+function ProductTypeOnChange(curobj)
 {
-    
+    try
+    {
+        $("#ProductTypehdf").val(curobj.value);
+    }
+    catch(e)
+    {
+
+    }
+  
+}
+function attributeSetOnChange(curobj)
+{
+    try
+    {
+    $("#AttributeSetIDhdf").val(curobj.value);
+    }
+    catch(e)
+    {
+
+    }
 }
 
 function AssociatedProductSave()

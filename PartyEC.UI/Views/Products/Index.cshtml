@@ -237,7 +237,8 @@
                                                 { Text = "Simple", Value = "S" });
                                             }
                                         
-                                            @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange()",value=-1 })
+                                            @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange(this)",value=-1 })
+                                            @Html.HiddenFor(model=>model.ProductType, htmlAttributes: new { @class = "control-label col-lg-2",id="ProductTypehdf", Value = "" })
                                             @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -246,7 +247,8 @@
                                         @Html.LabelFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-4">
                                             @*@Html.EditorFor(model => model.AttributeSetID, new { htmlAttributes = new { @class = "form-control" } })*@
-                                            @Html.DropDownListFor(model => model.AttributeSetID, Model.AttributeSets, "--Select AttributeSets--", new { @class = "form-control", @onchange = "attributeSetOnChange()" })
+                                            @Html.DropDownListFor(model => model.AttributeSetID, Model.AttributeSets, "--Select AttributeSets--", new { @class = "form-control", @onchange = "attributeSetOnChange(this)" })
+                                            @Html.HiddenFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2", id = "AttributeSetIDhdf", Value = "" })
                                             @Html.ValidationMessageFor(model => model.AttributeSetID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -276,7 +278,13 @@
                                 
                             </div>
                             <div class="tab-pane fade" id="price">
+                                <div class="col-sm-6 col-md-6 divPriceMessage">
+                                    <div class="alert-message alert-message-warning">
+                                        <p>Please Select Product Type in General that you want to work with!</p>
+                                    </div>
+                                </div>
                                 <div class="form-group">
+
                                     <label for="CostPrice" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.CostPrice)<span class="required">*</span></label>
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.CostPrice, new { htmlAttributes = new { @class = "form-control" } })
@@ -311,6 +319,11 @@
                                 </div>
                                  
                                 <div class="form-group">
+                                    <div class="col-sm-6 col-md-6 divMsgconfigurable">
+                                        <div class="alert-message alert-message-warning">
+                                            <p>For Configurable products, Price section is available in 'Associated products' tab.</p>
+                                        </div>
+                                    </div>
                                     @Html.LabelFor(model => model.DiscountAmount, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.DiscountAmount, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
@@ -333,11 +346,7 @@
                                         @Html.ValidationMessageFor(model => model.DiscountEndDate, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-6 divMsgconfigurable">
-                                    <div class="alert-message alert-message-warning">
-                                        <p>For Configurable products, Price section is available in 'Associated products' tab.</p>
-                                    </div>
-                                </div>
+                               
                             </div>
                             <div class="tab-pane fade" id="discription">
                                 <div class="form-group">
@@ -358,8 +367,17 @@
 
                             </div>     
                             <div class="tab-pane fade" id="inventory">
-
+                                <div class="col-sm-6 col-md-6 divInventoryMessage">
+                                    <div class="alert-message alert-message-warning">
+                                        <p>Please Select Product Type in General that you want to work with!</p>
+                                    </div>
+                                </div>
                                 <div class="form-group">
+                                    <div class="col-sm-6 col-md-6 divMsgconfigurable">
+                                        <div class="alert-message alert-message-warning">
+                                            <p>For Configurable products, inventory section is available in 'Associated products' tab.</p>
+                                        </div>
+                                    </div>
                                     <label for="StockAvailable" class="control-label col-lg-2 productDetailGroup">@Html.DisplayNameFor(model => model.StockAvailable)<span class="required">*</span></label>
                                     <div class="col-lg-4 productDetailGroup">
                                         <div>
@@ -383,11 +401,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-6 col-md-6 divMsgconfigurable">
-                                    <div class="alert-message alert-message-warning">
-                                        <p>For Configurable products, inventory section is available in 'Associated products' tab.</p>
-                                    </div>
-                                </div>
+                                
 
 
                             </div>
