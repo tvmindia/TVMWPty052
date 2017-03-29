@@ -249,7 +249,6 @@ namespace PartyEC.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 try
                 {
                     OperationsStatusViewModel OperationsStatusViewModelObj = null;
@@ -273,22 +272,26 @@ namespace PartyEC.UI.Controllers
                             OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.UpdateProduct(Mapper.Map<ProductViewModel, Product>(productObj)));
                             return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                     }
-                   
-                }
+                  }
                 catch (Exception ex)
                 {
                     return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                 }
             }
+            //Model state errror
             else
             {
-                var errors = ModelState.Select(x => x.Value.Errors)
-                           .Where(y => y.Count > 0)
-                           .ToList();
+                List<string> modelErrors = new List<string>();
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var modelError in modelState.Errors)
+                    {
+                     modelErrors.Add(modelError.ErrorMessage);
+                    }
+                }
+                return JsonConvert.SerializeObject(new { Result = "VALIDATION", Message = string.Join(",", modelErrors) });
             }
-            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
-        }
-
+      }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public string RelatedProductsInsert(ProductViewModel productObj)
@@ -649,7 +652,25 @@ namespace PartyEC.UI.Controllers
 
         }
 
+        [HttpGet]
+        public string GetRatingSummary(string id, string attributesetId)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    List<ProductReviewViewModel> productRatingSummary = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_productBusiness.GetRatingSummary(int.Parse(id), int.Parse(attributesetId)));
 
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productRatingSummary });
+                }
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "id is empty" });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
 
 
 

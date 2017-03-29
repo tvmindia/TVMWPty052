@@ -96,8 +96,6 @@ $(document).ready(function () {
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "Qty", "defaultContent": "<i>-</i>" },
                { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" }
-         
-               
              ],
              columnDefs: [{
                  orderable: false,
@@ -223,6 +221,7 @@ function btnAddNewProduct() {
     $("#productDetails h4").text('New Product');
     $("#AttributeSetID").removeAttr('disabled');
     $("#ProductType").removeAttr('disabled');
+    $('#tabGeneral').trigger('click');
     clearform();
 }
 function goback() {
@@ -278,7 +277,9 @@ function Edit(currentObj)
             $("#SupplierID").val(thisproduct.SupplierID);
             $("#ManufacturerID").val(thisproduct.ManufacturerID);
             $("#ProductType").val(thisproduct.ProductType);
+            $("#ProductTypehdf").val(thisproduct.ProductType);
             $("#AttributeSetID").val(thisproduct.AttributeSetID);
+            $("#AttributeSetIDhdf").val(thisproduct.AttributeSetID);
             if (thisproduct.FreeDelivery == true)
             { $("#FreeDelivery").prop('checked', true); }
             else { $("#FreeDelivery").prop('checked', false); }
@@ -300,7 +301,7 @@ function Edit(currentObj)
             $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
             $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
             //Tags
-            if (thisproduct.HeaderTags != null)
+            if (thisproduct.HeaderTags)
             {
                 $('.Htags').remove();
                 var tagar = thisproduct.HeaderTags.split(",");
@@ -315,9 +316,7 @@ function Edit(currentObj)
                 //Removes span tags
                 $('.Htags').remove();
             }
-            
-
-            //ProductID
+              //ProductID
             $(".productID").val(thisproduct.ID);
             //ProductDetailID
             $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
@@ -711,8 +710,9 @@ function productSaveSuccess(data, status, xhr)
         case "ERROR":
             notyAlert('error', JsonResult.Record.StatusMessage);
             break;
+        
         default:
-            notyAlert('error', JsonResult.Record.Message);
+            notyAlert('error', JsonResult.Message);
             break;
     }
 }
@@ -729,8 +729,6 @@ function ProductSave()
     $('#btnProductSubmit').trigger('click');
 }
 
-
-
 function clearform()
 {
     //Clear form
@@ -740,7 +738,10 @@ function clearform()
     $(".productID").val(0);
     $("#productdetailsID").val(0);
     $("#productDetailhdf").val('');
-    
+    $("#ProductTypehdf").val('');
+    $("#AttributeSetIDhdf").val('');
+    //tags removal
+    $('.Htags').remove();
 }
 
 function RelatedProductsModel()
@@ -1005,19 +1006,26 @@ function RenderContentForPrice()
 {
     try {
         ShowProductDetalsToolBox();
-        var prodtype = $("#ProductType").val();
+        var prodtype = $("#ProductTypehdf").val();
         switch (prodtype) {
             case "C":
                 //Hide General detail entries
                 $(".productDetailGroup").hide();
                 $(".divMsgconfigurable").show();
+                $("#price .form-group").show();
+                $(".divPriceMessage").hide();
 
                 break;
             case "S":
                 $(".productDetailGroup").show();
                 $(".divMsgconfigurable").hide();
+
+                $("#price .form-group").show();
+                $(".divPriceMessage").hide();
                 break;
             default:
+                $("#price .form-group").hide();
+                $(".divPriceMessage").show();
                 break;
 
         }
@@ -1030,19 +1038,25 @@ function RenderContentForInventory()
 {
     try {
         ShowProductDetalsToolBox();
-        var prodtype = $("#ProductType").val();
+        var prodtype = $("#ProductTypehdf").val();
         switch (prodtype) {
             case "C":
                 //Hide General detail entries
                 $(".productDetailGroup").hide();
                 $(".divMsgconfigurable").show();
 
+                $("#inventory .form-group").show();
+                $(".divInventoryMessage").hide();
                 break;
             case "S":
                 $(".productDetailGroup").show();
                 $(".divMsgconfigurable").hide();
+                $("#inventory .form-group").show();
+                $(".divInventoryMessage").hide();
                 break;
             default:
+                $("#inventory .form-group").hide();
+                $(".divInventoryMessage").show();
                 break;
 
         }
@@ -1051,9 +1065,28 @@ function RenderContentForInventory()
     }
 }
 
-function ProductTypeOnChange()
+function ProductTypeOnChange(curobj)
 {
-    
+    try
+    {
+        $("#ProductTypehdf").val(curobj.value);
+    }
+    catch(e)
+    {
+
+    }
+  
+}
+function attributeSetOnChange(curobj)
+{
+    try
+    {
+    $("#AttributeSetIDhdf").val(curobj.value);
+    }
+    catch(e)
+    {
+
+    }
 }
 
 function AssociatedProductSave()
@@ -1303,57 +1336,142 @@ function clearAssociatedProductform() {
 
 function BindProductReviews()   // To Display Previous Comment history
 {
+
     HideProductDetalsToolBox();
-  
-    $("#ReviewsDisplay").empty();
-    id =   $(".productID").val();// assigning id for binding reviews.
-    var thisReviewList = GetProductReviews(id);
-    if (thisReviewList) {
-       
-        for (var i = 0; i < thisReviewList.length; i++) {
-            var str = Date.parse(thisReviewList[i].ReviewCreatedDate.substring(0, 10));
-            var resultdate = ConvertJsonToDate('' + str + '');
-            var imageurl;
-            if (thisReviewList[i].ImageUrl)
-                imageurl = thisReviewList[i].ImageUrl
-                else
-                imageurl='Content/images/NoImage60x60.png';
+    debugger;
+    var id = $(".productID").val();// assigning id for binding reviews.
+    var attributesetId = $("#AttributeSetID").val();
 
-            var cnt = $('<div class="review-block"><div class="row">' +
-                        '<div class="col-sm-3">' +
-                        '<img src="'+imageurl+'" class="img-rounded">' +
-                        '<div class="review-block-name"><a href="#">' + thisReviewList[i].CustomerName + '</a></div>' +
-                        '<div class="review-block-date">' + resultdate + '<br />' + thisReviewList[i].DaysCount + ' days ago</div>' +
-                        '</div>' +
-                        '<div class="col-sm-9">' +
-                        '<div id="ReviewBlockRate' + [i] + '" class="review-block-rate"></div>' +
-                        '<div id=ReviewDesc' + i + 'class="review-block-description">' + thisReviewList[i].Review + '</div>'+
-                        '</div><hr/></div>');
-            $("#ReviewsDisplay").append(cnt);
+    if (attributesetId != null && id != null) {
+        //Rating
+        var thisRatingSummary = GetRatingSummary(id, attributesetId);
+        if (thisRatingSummary.length>0) {          
+            $("#RatingDisplay").empty();
+            var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
+            var ratinglists = ""
+            var TotalRating = parseFloat(0);
+            var AvgRating;
+            debugger;
 
-//--------------------------------------------Rating Star dispalying region-----------------------------------------------//
-            var rating = thisReviewList[i].AvgRating;
-            var splitresult = rating.split(".");
-            
-                rating = Math.round(rating);
-            var ratebtns = '';
+            for (var i = 0; i < attributecount; i++) {
+                var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value);
+
+                TotalRating = TotalRating + ratingstar; //Total Rating of each attribute is saved here
+                ratingstar = Math.round(ratingstar); //count of Rating to display as star
+                var ratebtnstring = '';
+                for (var count = 0; count < 5; count++) {
+                    if (count < ratingstar) {
+                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    }
+                    else {
+                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    }
+                }
+                ratinglists = ratinglists + '<div class="col-xs-3 col-md-3 text-right">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
+                                            '<div class="col-xs-8 col-md-9"><div  class="rating-block">' + ratebtnstring + '</div></div>';
+            }
+            AvgRating = Math.round(TotalRating / attributecount); //total rating by attribute count
+            var Avgratebtnstring = '';
+
             for (var count = 0; count < 5; count++) {
-                if (count < rating) {
-                    ratebtns = ratebtns + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">' +
-                                          '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                if (count < AvgRating) {
+                    Avgratebtnstring = Avgratebtnstring + '<span class="glyphicon glyphicon-star"></span>'
                 }
                 else {
-                    ratebtns = ratebtns + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
-                                          '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    Avgratebtnstring = Avgratebtnstring + '<span class="glyphicon glyphicon-star-empty"></span>'
                 }
             }
-            ratebtns = $(ratebtns);
-            $("#ReviewBlockRate" + [i]).append(ratebtns);
-//----------------------------------------------------------------------------------------------------------------------//
+
+            var ratingdiv = $('<div class="row">' +
+                                                  '<div class="col-xs-12 col-md-6 text-center"><h1 class="rating-num">' + AvgRating + '</h1>' +
+                                                      '<div class="rating">' + Avgratebtnstring + '</div>' +
+                                                      '<div>' +
+                                                      '<span class="glyphicon glyphicon-user"></span>' + thisRatingSummary[0].RatingCount + ' total' +
+                                                      '</div>' +
+                                                  '</div>' +
+                                                  '<div class="col-xs-12 col-md-6">' +
+                                                      '<div id ="RatingAttributes" class="row rating-desc">' + ratinglists +
+                                                      '</div></div></div>');
+
+
+
+            $("#RatingDisplay").append(ratingdiv);
 
         }
+        //Reviews
+        var thisReviewList = GetProductReviews(id);
+        if (thisReviewList.length>0) {
+            $("#ReviewsDisplay").empty();
+            for (var i = 0; i < thisReviewList.length; i++) {
+                var str = Date.parse(thisReviewList[i].ReviewCreatedDate.substring(0, 10));
+                var resultdate = ConvertJsonToDate('' + str + '');
+                var imageurl;
+                if (thisReviewList[i].ImageUrl)
+                    imageurl = thisReviewList[i].ImageUrl
+                else
+                    imageurl = 'Content/images/NoImage60x60.png';
+
+                var cnt = $('<div class="review-block"><div class="row">' +
+                            '<div class="col-sm-3">' +
+                            '<img src="' + imageurl + '" class="img-rounded">' +
+                            '<div class="review-block-name"><a href="#">' + thisReviewList[i].CustomerName + '</a></div>' +
+                            '<div class="review-block-date">' + resultdate + '<br />' + thisReviewList[i].DaysCount + ' days ago</div>' +
+                            '</div>' +
+                            '<div class="col-sm-9">' +
+                            '<div id="ReviewBlockRate' + [i] + '" class="review-block-rate"></div>' +
+                            '<div id=ReviewDesc' + i + 'class="review-block-description">' + thisReviewList[i].Review + '</div>' +
+                            '</div><hr/></div>');
+                $("#ReviewsDisplay").append(cnt);
+
+                //--------------------------------------------Rating Star dispalying region-----------------------------------------------//
+                var rating = thisReviewList[i].AvgRating;
+                var splitresult = rating.split(".");
+
+                rating = Math.round(rating);
+                var ratebtns = '';
+                for (var count = 0; count < 5; count++) {
+                    if (count < rating) {
+                        ratebtns = ratebtns + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">' +
+                                              '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    }
+                    else {
+                        ratebtns = ratebtns + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
+                                              '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    }
+                }
+                ratebtns = $(ratebtns);
+                $("#ReviewBlockRate" + [i]).append(ratebtns);
+                //----------------------------------------------------------------------------------------------------------------------//
+
+            }
+        }
+}
+   
+}
+
+function GetRatingSummary(id, attributesetId) {
+    try {
+        var data = {
+            "id": id, "attributesetId": attributesetId
+        };
+        var ds = {};
+        ds = GetDataFromServer("Products/GetRatingSummary/", data);
+
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
     }
 }
+
 function GetProductReviews(id) {
   
     try {

@@ -238,7 +238,8 @@
                                                 { Text = "Simple", Value = "S" });
                                             }
                                         
-                                            @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange()",value=-1 })
+                                            @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange(this)",value=-1 })
+                                            @Html.HiddenFor(model=>model.ProductType, htmlAttributes: new { @class = "control-label col-lg-2",id="ProductTypehdf", Value = "" })
                                             @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -247,7 +248,8 @@
                                         @Html.LabelFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-4">
                                             @*@Html.EditorFor(model => model.AttributeSetID, new { htmlAttributes = new { @class = "form-control" } })*@
-                                            @Html.DropDownListFor(model => model.AttributeSetID, Model.AttributeSets, "--Select AttributeSets--", new { @class = "form-control", @onchange = "attributeSetOnChange()" })
+                                            @Html.DropDownListFor(model => model.AttributeSetID, Model.AttributeSets, "--Select AttributeSets--", new { @class = "form-control", @onchange = "attributeSetOnChange(this)" })
+                                            @Html.HiddenFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2", id = "AttributeSetIDhdf", Value = "" })
                                             @Html.ValidationMessageFor(model => model.AttributeSetID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -277,7 +279,13 @@
                                 
                             </div>
                             <div class="tab-pane fade" id="price">
+                                <div class="col-sm-6 col-md-6 divPriceMessage">
+                                    <div class="alert-message alert-message-warning">
+                                        <p>Please Select Product Type in General that you want to work with!</p>
+                                    </div>
+                                </div>
                                 <div class="form-group">
+
                                     <label for="CostPrice" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.CostPrice)<span class="required">*</span></label>
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.CostPrice, new { htmlAttributes = new { @class = "form-control" } })
@@ -312,6 +320,11 @@
                                 </div>
                                  
                                 <div class="form-group">
+                                    <div class="col-sm-6 col-md-6 divMsgconfigurable">
+                                        <div class="alert-message alert-message-warning">
+                                            <p>For Configurable products, Price section is available in 'Associated products' tab.</p>
+                                        </div>
+                                    </div>
                                     @Html.LabelFor(model => model.DiscountAmount, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.DiscountAmount, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
@@ -334,11 +347,7 @@
                                         @Html.ValidationMessageFor(model => model.DiscountEndDate, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
-                                <div class="col-sm-6 col-md-6 divMsgconfigurable">
-                                    <div class="alert-message alert-message-warning">
-                                        <p>For Configurable products, Price section is available in 'Associated products' tab.</p>
-                                    </div>
-                                </div>
+                               
                             </div>
                             <div class="tab-pane fade" id="discription">
                                 <div class="form-group">
@@ -359,8 +368,17 @@
 
                             </div>     
                             <div class="tab-pane fade" id="inventory">
-
+                                <div class="col-sm-6 col-md-6 divInventoryMessage">
+                                    <div class="alert-message alert-message-warning">
+                                        <p>Please Select Product Type in General that you want to work with!</p>
+                                    </div>
+                                </div>
                                 <div class="form-group">
+                                    <div class="col-sm-6 col-md-6 divMsgconfigurable">
+                                        <div class="alert-message alert-message-warning">
+                                            <p>For Configurable products, inventory section is available in 'Associated products' tab.</p>
+                                        </div>
+                                    </div>
                                     <label for="StockAvailable" class="control-label col-lg-2 productDetailGroup">@Html.DisplayNameFor(model => model.StockAvailable)<span class="required">*</span></label>
                                     <div class="col-lg-4 productDetailGroup">
                                         <div>
@@ -384,11 +402,7 @@
                                     </div>
                                 </div>
 
-                                <div class="col-sm-6 col-md-6 divMsgconfigurable">
-                                    <div class="alert-message alert-message-warning">
-                                        <p>For Configurable products, inventory section is available in 'Associated products' tab.</p>
-                                    </div>
-                                </div>
+                                
 
 
                             </div>
@@ -720,156 +734,35 @@
 
                             </div>
                             <div class="tab-pane fade" id="ratingAndReviews">
-                                <div class="well well-sm">
+                                <div id="RatingDisplay" class="well well-sm">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-6 text-center">
                                             <h1 class="rating-num">
-                                                4.0
+                                                0.0
                                             </h1>
                                             <div class="rating">
-                                                <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star">
-                                                </span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star">
-                                                </span><span class="glyphicon glyphicon-star-empty"></span>
+                                                <span class="glyphicon glyphicon-star-empty"></span>
+                                                <span class="glyphicon glyphicon-star-empty"></span>
+                                                <span class="glyphicon glyphicon-star-empty"></span>
+                                                <span class="glyphicon glyphicon-star-empty"></span>
+                                                <span class="glyphicon glyphicon-star-empty"></span>
                                             </div>
                                             <div>
-                                                <span class="glyphicon glyphicon-user"></span>1,050,008 total
+                                                <span class="glyphicon glyphicon-user"></span>0,000,000 total
                                             </div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-6">
-                                            <div class="row rating-desc">
-                                                <div class="col-xs-3 col-md-3 text-right">
-                                                    Taste
-                                                </div>
-                                                <div class="col-xs-8 col-md-9">
-
-                                                    <div class="rating-block">
-
-                                                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-success btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <!-- end 5 -->
-                                                <div class="col-xs-3 col-md-3 text-right">
-                                                    Delivery
-                                                </div>
-                                                <div class="col-xs-8 col-md-9">
-                                                    <div class="rating-block">
-
-                                                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <!-- end 4 -->
-                                                <div class="col-xs-3 col-md-3 text-right">
-                                                    Ease of Use
-                                                </div>
-                                                <div class="col-xs-8 col-md-9">
-                                                    <div class="rating-block">
-
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <!-- end 3 -->
-                                                <div class="col-xs-3 col-md-3 text-right">
-                                                    Brand Reputation
-                                                </div>
-                                                <div class="col-xs-8 col-md-9">
-                                                    <div class="rating-block">
-
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <!-- end 2 -->
-                                                <div class="col-xs-3 col-md-3 text-right">
-                                                    Value for Money
-                                                </div>
-                                                <div class="col-xs-8 col-md-9">
-                                                    <div class="rating-block">
-
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <!-- end 1 -->
-                                            </div>
-                                            <!-- end row -->
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
                                     <div id="ReviewsDisplay" class="col-sm-7">
-                                        
+                                        <h2>
+                                           No Reviews Yet
+                                        </h2>
                                     </div>
                                 </div>
                             </div>
+                           
                         </div>
                         @Html.HiddenFor(model => model.productDetailhdf)
                   }
