@@ -11,10 +11,11 @@ namespace PartyEC.BusinessServices.Services
     public class ProductBusiness:IProductBusiness
     {
         private IProductRepository _productRepository;
-
-        public ProductBusiness(IProductRepository productRepository)
+        private IMasterRepository _masterRepository;
+        public ProductBusiness(IProductRepository productRepository,IMasterRepository masterRepository)
         {
             _productRepository = productRepository;
+            _masterRepository = masterRepository;
         }
 
         public List<Product> GetAllProducts(Product productObj)
@@ -115,7 +116,10 @@ namespace PartyEC.BusinessServices.Services
         {
             return _productRepository.UpdateProduct(productObj);
         }
-
+        public OperationsStatus UpdateProductSticker(Product productObj)
+        {
+            return _productRepository.UpdateProductSticker(productObj);
+        }
         public Product GetProduct(int ProductID, OperationsStatus Status)
         {
 
@@ -126,7 +130,6 @@ namespace PartyEC.BusinessServices.Services
 
             return _productRepository.GetRelatedImages(ProductID, Status);
         }
-
         public OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList, List<ProductCategoryLink> DeleteList)
         {
 
@@ -293,6 +296,28 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationsStatusObj;
         }
+        public OperationsStatus InsertStickers(Product productObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                //if (productObj.StickerURL != "" && productObj.StickerURL != null)
+                //{
+                    OtherImages otherImgObj = new OtherImages();
+                    otherImgObj.URL = productObj.StickerURL;
+                    otherImgObj.ImageType = ImageTypesPreffered.Sticker;
+                    otherImgObj.LogDetails = productObj.logDetails;
+                    operationsStatusObj = _masterRepository.InsertImage(otherImgObj);
+                    //productObj.StickerID = operationsStatusObj.ReturnValues.ToString();
+                //}
+                //operationsStatusObj = _categoryRepository.UpdateCategory(CategoryObj);
 
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace PartyEC.BusinessServices.Contracts
         List<Product> GetUnAssignedPro(string CategoryID);
         OperationsStatus InsertProduct(Product productObj);
         OperationsStatus UpdateProduct(Product productObj);
+        OperationsStatus UpdateProductSticker(Product productObj);
         OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList,List<ProductCategoryLink> DeleteList);
         Product GetProduct(int ProductID, OperationsStatus Status);
         List<Product> GetRelatedImages(int ProductID, OperationsStatus Status);
@@ -29,7 +30,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus DeleteProductsDetails(int ProductDetailsID, int ProductID);
         OperationsStatus DeleteProductsImage(string[] DeleteIDs);
         OperationsStatus InsertImageProduct(Product productObj);
-
+        OperationsStatus InsertStickers(Product productObj);
         List<ProductReview> GetProductReviews(int ProductID);
         List<ProductReview> GetRatingSummary(int ProductID, int AttributesetId);
     }

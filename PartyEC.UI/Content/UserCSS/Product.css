@@ -160,3 +160,19 @@
 {
     color: #444;
 }
+
+.highlighted {
+    border:2px solid #b404ae;
+    background-image: url(image/tick.png);
+}
+.thumbnail span {
+    color: #0f0;
+    position: absolute;
+    font-size:32px;
+    top:54%;
+    display:none;
+    border:none;
+}
+.thumbnail span.highlighted {
+    display:inline;    
+}
