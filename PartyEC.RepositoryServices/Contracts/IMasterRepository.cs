@@ -13,5 +13,6 @@ namespace PartyEC.RepositoryServices.Contracts
        List<Supplier> GetAllSuppliers();
        OperationsStatus InsertImage(OtherImages otherimgObj);
         List<OrderStatusMaster> GetAllOrderStatus();
+        List<OtherImages> GetAllStickers();
     }
 }

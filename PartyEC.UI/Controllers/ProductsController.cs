@@ -129,6 +129,22 @@ namespace PartyEC.UI.Controllers
             }
            
         }
+        [HttpGet]
+        public string GetAllStickers()
+        {
+            try
+            {
+                    List<OtherImagesViewModel> OtherImagesList = Mapper.Map<List<OtherImages>, List<OtherImagesViewModel>>(_masterBusiness.GetAllStickers());
+
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OtherImagesList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
+
 
         [HttpGet]
         public string GetUNRelatedProducts(string id)
@@ -225,6 +241,7 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -339,6 +356,20 @@ namespace PartyEC.UI.Controllers
                 }
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+        [HttpPost]
+        public string UpdateProductSticker(ProductViewModel productViewObj)
+        {
+            try
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = new OperationsStatusViewModel();
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.UpdateProductSticker(Mapper.Map<ProductViewModel, Product>(productViewObj)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
         }
 
         #region UpdateProductHeaderOtherAttributes
@@ -466,7 +497,6 @@ namespace PartyEC.UI.Controllers
         }
         #endregion DeleteProductDetail
 
-
         #region ChangeButtonStyle
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)
@@ -500,6 +530,20 @@ namespace PartyEC.UI.Controllers
                 case "CancelDelete":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Disable = true;
+                    break;
+                case "Sticker":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "UpdateStickerForProduct()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    break;
+                case "CancelSticker":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Event = "UpdateStickerForProduct()";
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Disable = true;
                     break;
                 case "Add":
                     ToolboxViewModelObj.deletebtn.Visible = true;
@@ -570,21 +614,18 @@ namespace PartyEC.UI.Controllers
 
             Random rnd = new Random();
             var file = Request.Files["Filedata"];
-            var FileNameCustom = ProductViewObj.Name + "Sticker" + rnd.Next(111, 9999).ToString() + ".png";
-            string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
+            var FileNameCustom ="Sticker" + rnd.Next(111, 9999).ToString() + ".png";
+            string savePath = Server.MapPath(@"~\Content\OtherImages\" + FileNameCustom);
             file.SaveAs(savePath);
-            ProductViewObj.URL = "/Content/ProductImages/" + FileNameCustom;
-            //if (ProductViewObj.i == null)
-            //{
-            //    categoryObj.commonObj = new LogDetailsViewModel();
-            //    categoryObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
-            //    categoryObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
-            //    categoryObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
-            //    categoryObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
-            //    operationsStatus = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_categoryBusiness.InsertImageCategory(Mapper.Map<CategoriesViewModel, Categories>(categoryObj)));
+            ProductViewObj.StickerURL = "/Content/OtherImages/" + FileNameCustom;
+            ProductViewObj.logDetails = new LogDetailsViewModel();
+            ProductViewObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+            ProductViewObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+            //ProductViewObj.logDetails.UpdatedBy = _commonBusiness.GetUA().UserName;
+            //ProductViewObj.logDetails.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+            operationsStatus = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertStickers(Mapper.Map<ProductViewModel, Product>(ProductViewObj)));
 
-            //}
-            return Content(Url.Content(@"~\Content\ProductImages\" + FileNameCustom));
+            return Content(Url.Content(@"~\Content\OtherImages\" + FileNameCustom));
         }
 
         //------------------------------------------------------//

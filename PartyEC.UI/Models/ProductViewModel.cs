@@ -159,8 +159,7 @@ namespace PartyEC.UI.Models
         [MaxLength(250)]
         public string HeaderTags { get; set; }
         #endregion ProductTags
-
-
+        public string StickerURL { get; set; }
         public int LinkID { get; set; }
         public int CategoryID { get; set; }
         public float PositionNo { get; set; }

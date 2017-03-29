@@ -534,7 +534,78 @@ namespace PartyEC.RepositoryServices.Services
 
             return operationsStatusObj;
         }
+        public OperationsStatus UpdateProductSticker(Product productObj)
+        {
 
+            OperationsStatus operationsStatusObj = null;
+            SqlParameter statusCode = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+
+
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateProductSticker]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        if (productObj.StickerID != Guid.Empty&& productObj.StickerID!=null)
+                        {
+                            cmd.Parameters.Add("@StickerID", SqlDbType.UniqueIdentifier).Value = productObj.StickerID;
+                        }
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = productObj.ID;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull   
+                                if (productObj.StickerID != Guid.Empty && productObj.StickerID != null)
+                                {
+                                    operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Sticker Updation Not Successfull!";
+                                }
+                                else
+                                {
+                                    operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Sticker Deletion Not Successfull!";
+                                }
+                                    
+                                break;
+                            case "1":
+                                //Update Successfull
+                                if (productObj.StickerID != Guid.Empty && productObj.StickerID != null)
+                                {
+                                    operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Sticker Updation Successfull!";
+                                }
+                                 else
+                                {
+                                    operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Sticker Deletion Successfull!";
+                                }   
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
         public OperationsStatus UpdateProduct(Product productObj) {
 
             OperationsStatus operationsStatusObjH = null;

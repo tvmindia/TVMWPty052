@@ -12,5 +12,6 @@ namespace PartyEC.BusinessServices.Contracts
         List<Manufacturer> GetAllManufacturers();
         List<Supplier> GetAllSuppliers();
         List<OrderStatusMaster> GetAllOrderStatus();
+        List<OtherImages> GetAllStickers();
     }
 }

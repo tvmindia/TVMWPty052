@@ -63,5 +63,18 @@ namespace PartyEC.BusinessServices.Services
             }
             return orderStatuslist;
         }
+        public List<OtherImages> GetAllStickers()
+        {
+            List<OtherImages> otherImagesList = null;
+            try
+            {
+                otherImagesList = _masterRepository.GetAllStickers();
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return otherImagesList;
+        }
     }
 }

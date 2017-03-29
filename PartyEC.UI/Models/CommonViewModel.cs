@@ -12,4 +12,21 @@ namespace PartyEC.UI.Models
         public DateTime? UpdatedDate { get; set; }
       
     }
+    public class OtherImagesViewModel
+    {
+
+        public Guid ID { get; set; }
+        public string ImageType { get; set; }
+        public string URL { get; set; }
+        public LogDetailsViewModel LogDetails { get; set; }
+
+        public struct ImageTypes
+        {
+            public const string Sticker = "Sticker";
+            public const string ProfileImage = "Profile";
+            public const string CategoryImage = "Category";
+            public const string EventTypeImage = "EventType";
+
+        }
+    }
 }
