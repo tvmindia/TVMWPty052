@@ -1168,10 +1168,66 @@ function clearAssociatedProductform() {
 
 function BindProductReviews()   // To Display Previous Comment history
 {
+
     HideProductDetalsToolBox();
-  
+    debugger;
     $("#ReviewsDisplay").empty();
-    id =   $(".productID").val();// assigning id for binding reviews.
+    $("#RatingDisplay").empty();
+    var id = $(".productID").val();// assigning id for binding reviews.
+    var attributesetId = $("#AttributeSetID").val();
+
+
+    var thisRatingSummary = GetRatingSummary(id, attributesetId);
+    if (thisRatingSummary) {
+
+        var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
+        var ratinglists = ""
+        debugger;
+        for (var i = 0; i < attributecount; i++) {
+            debugger;
+
+            var ratingstar = thisRatingSummary[0].ProductRatingAttributes[i].Value;
+            ratingstar = Math.round(ratingstar);
+            var ratebtnstar = '';
+            for (var count = 0; count < 5; count++) {
+                if (count < ratingstar) {
+                    ratebtnstar = ratebtnstar + '<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                }
+                else {
+                    ratebtnstar = ratebtnstar + '<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                }
+            }
+
+            ratinglists = ratinglists + '<div class="col-xs-3 col-md-3 text-right">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
+                                                '<div class="col-xs-8 col-md-9">' +
+                                                    '<div  class="rating-block">' + ratebtnstar +
+                                                    '</div></div>';
+
+          
+           
+
+
+
+        }
+
+        var ratingdiv = $('<div class="row">' +
+                                            '<div class="col-xs-12 col-md-6 text-center"><h1 class="rating-num">4.0</h1>' +
+                                                '<div class="rating">' +
+                                                '<span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star">' +
+                                                '</span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star">' +
+                                                '</span><span class="glyphicon glyphicon-star-empty"></span>' +
+                                                '</div>' +
+                                                '<div>' +
+                                                '<span class="glyphicon glyphicon-user"></span>1,050,008 total' +
+                                                '</div>' +
+                                            '</div>' +
+                                            '<div class="col-xs-12 col-md-6">' +
+                                                '<div id ="RatingAttributes" class="row rating-desc">' + ratinglists +
+                                                '</div></div></div>');
+
+        $("#RatingDisplay").append(ratingdiv);
+
+    }
     var thisReviewList = GetProductReviews(id);
     if (thisReviewList) {
        
@@ -1219,6 +1275,30 @@ function BindProductReviews()   // To Display Previous Comment history
         }
     }
 }
+
+function GetRatingSummary(id, attributesetId) {
+    try {
+        var data = {
+            "id": id, "attributesetId": attributesetId
+        };
+        var ds = {};
+        ds = GetDataFromServer("Products/GetRatingSummary/", data);
+
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
 function GetProductReviews(id) {
   
     try {

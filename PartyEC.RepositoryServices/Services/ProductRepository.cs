@@ -1800,5 +1800,66 @@ namespace PartyEC.RepositoryServices.Services
 
             return productReviewList;
         }
+
+        public List<ProductReview> GetRatingSummary(int ProductID, int AttributesetId)
+        {
+            List<ProductReview> RatingSummary = null;
+            List<AttributeValues> myAttributeStructure = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetProductRatingSummary]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                RatingSummary = new List<ProductReview>();
+                                while (sdr.Read())
+                                {
+                                    ProductReview _pReviewObj = new ProductReview();
+                                    {
+                                        _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? Int16.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
+
+                                        if (myAttributeStructure == null)
+                                        {
+                                            myAttributeStructure = _attributesRepository.GetAttributeContainer(AttributesetId, "Rating");
+                                        }
+
+                                        _pReviewObj.ProductRatingAttributes = new List<AttributeValues>();
+                                        foreach (AttributeValues att in myAttributeStructure)
+                                        {
+                                            att.Value = sdr[att.Caption].ToString();
+                                            _pReviewObj.ProductRatingAttributes.Add(att);
+
+                                        }
+                                    }
+                                    RatingSummary.Add(_pReviewObj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return RatingSummary;
+
+        }
     }
 }

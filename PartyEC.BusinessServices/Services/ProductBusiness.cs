@@ -265,6 +265,21 @@ namespace PartyEC.BusinessServices.Services
             }
             return productReview;
         }
+
+        public List<ProductReview> GetRatingSummary(int ProductID, int AttributesetId)
+        {
+            List<ProductReview> RatingSummary = null;
+            try
+            {
+                RatingSummary = _productRepository.GetRatingSummary(ProductID, AttributesetId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RatingSummary;
+        }
+
         public OperationsStatus InsertImageProduct(Product productObj)
         {
             OperationsStatus operationsStatusObj = null;

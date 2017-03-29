@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PartyEC.DataAccessObject.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -222,5 +223,7 @@ namespace PartyEC.UI.Models
         public string CustomerName { get; set; }
         public string AvgRating { get; set; }
         public string ImageUrl { get; set; }
+        public List<AttributeValues> ProductRatingAttributes { get; set; }
+
     }
 }

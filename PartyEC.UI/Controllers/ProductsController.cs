@@ -608,7 +608,25 @@ namespace PartyEC.UI.Controllers
 
         }
 
+        [HttpGet]
+        public string GetRatingSummary(string id, string attributesetId)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    List<ProductReviewViewModel> productRatingSummary = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_productBusiness.GetRatingSummary(int.Parse(id), int.Parse(attributesetId)));
 
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productRatingSummary });
+                }
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "id is empty" });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
 
 
 

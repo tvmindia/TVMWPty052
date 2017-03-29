@@ -32,5 +32,6 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertImageProduct(Product productObj);
 
         List<ProductReview> GetProductReviews(int ProductID);
+        List<ProductReview> GetRatingSummary(int ProductID, int AttributesetId);
     }
 }

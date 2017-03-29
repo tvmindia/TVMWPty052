@@ -110,6 +110,8 @@ namespace PartyEC.DataAccessObject.DTO
         public string AvgRating { get; set; }
         public string ImageUrl { get; set; }
 
+        public List<AttributeValues> ProductRatingAttributes { get; set; }
+
     }
     
 }
