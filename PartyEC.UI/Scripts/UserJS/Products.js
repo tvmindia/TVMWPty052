@@ -990,11 +990,13 @@ function RenderContentsForAssocProdAttributes()
                     todayHighlight: true
                 });
                 $("#DivtblAssociatedProducts").show();
+                $("#associatedStaticfields").show();
                 //Refresh associated products table
                 RefreshAssociatedProducts(proid);
             }
             else
             {
+                $("#associatedStaticfields").hide();
                 $("#DivtblAssociatedProducts").hide();
                 //clear otherattributes div
                 $("#dynamicAssociatedProducts").empty();
@@ -1003,6 +1005,7 @@ function RenderContentsForAssocProdAttributes()
            }
         }
         else {
+            $("#associatedStaticfields").hide();
             $("#DivtblAssociatedProducts").hide();
             //clear otherattributes div
             $("#dynamicAssociatedProducts").empty();
