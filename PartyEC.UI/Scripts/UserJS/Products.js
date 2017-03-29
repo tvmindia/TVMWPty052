@@ -572,6 +572,7 @@ function productSaveSuccess(data, status, xhr)
             notyAlert('success', JsonResult.Record.StatusMessage);
             $(".productID").val(JsonResult.Record.ReturnValues);
             RefreshProducts();
+            $("#productDetails h4").text($("#Name").val() + '(' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ')');
             break;
         case "ERROR":
             notyAlert('error', JsonResult.Record.StatusMessage);
@@ -703,7 +704,7 @@ function HideProductDetalsToolBox()
 {
    
     $("#btnPatchProductDetails").css('visibility', 'hidden');
-    BindImages();
+   
 }
 function ShowProductDetalsToolBox()
 {
@@ -716,26 +717,37 @@ function RenderContentsForAttributes()
     HideProductDetalsToolBox();
     try {
        
-        var atsetID = $("#AttributeSetID").val();
+        var atsetID = $("#AttributeSetIDhdf").val();
         var proid = $('.productID').val();
         if ((atsetID) && (proid)) {
             if ((atsetID>0) && (proid>0))
             {
                 var Isconfig = false;
                 var pview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
-                //clear otherattributes div
-                $("#dynamicOtherAttributes").empty();
-                //append dynamic html to div from partialview
-                $("#dynamicOtherAttributes").html(pview);
-                //date picker reloading
-                $('input[type="date"]').datepicker({
-                    format: "yyyy-mm-dd",//dd-M-yyyy",
-                    maxViewMode: 0,
-                    todayBtn: "linked",
-                    clearBtn: true,
-                    autoclose: true,
-                    todayHighlight: true
-                });
+                if (pview.trim() != "")
+                {
+                    //clear otherattributes div
+                    $("#dynamicOtherAttributes").empty();
+                    //append dynamic html to div from partialview
+                    $("#dynamicOtherAttributes").html(pview);
+                    //date picker reloading
+                    $('input[type="date"]').datepicker({
+                        format: "yyyy-mm-dd",//dd-M-yyyy",
+                        maxViewMode: 0,
+                        todayBtn: "linked",
+                        clearBtn: true,
+                        autoclose: true,
+                        todayHighlight: true
+                    });
+                }
+                else
+                {
+                    //clear otherattributes div
+                    $("#dynamicOtherAttributes").empty();
+                    //append dynamic html to div from partialview
+                    $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>No Attributes Available for this product.</p></div></div>');
+                }
+                
             }
             else {
                 //clear otherattributes div
