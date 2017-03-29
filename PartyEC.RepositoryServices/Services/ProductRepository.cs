@@ -1831,6 +1831,7 @@ namespace PartyEC.RepositoryServices.Services
                                     ProductReview _pReviewObj = new ProductReview();
                                     {
                                         _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? Int16.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
+                                        _pReviewObj.RatingCount = (sdr["RatingCount"].ToString() != "" ? sdr["RatingCount"].ToString() : _pReviewObj.RatingCount);
 
                                         if (myAttributeStructure == null)
                                         {

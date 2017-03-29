@@ -1204,109 +1204,114 @@ function BindProductReviews()   // To Display Previous Comment history
 
     HideProductDetalsToolBox();
     debugger;
-    $("#ReviewsDisplay").empty();
-    $("#RatingDisplay").empty();
     var id = $(".productID").val();// assigning id for binding reviews.
     var attributesetId = $("#AttributeSetID").val();
 
-
-    var thisRatingSummary = GetRatingSummary(id, attributesetId);
-    if (thisRatingSummary) {
-
-        var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
-        var ratinglists = ""
-        debugger;
-        for (var i = 0; i < attributecount; i++) {
+    if (attributesetId != null && id != null) {
+        //Rating
+        var thisRatingSummary = GetRatingSummary(id, attributesetId);
+        if (thisRatingSummary.length>0) {          
+            $("#RatingDisplay").empty();
+            var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
+            var ratinglists = ""
+            var TotalRating = parseFloat(0);
+            var AvgRating;
             debugger;
 
-            var ratingstar = thisRatingSummary[0].ProductRatingAttributes[i].Value;
-            ratingstar = Math.round(ratingstar);
-            var ratebtnstar = '';
+            for (var i = 0; i < attributecount; i++) {
+                var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value);
+
+                TotalRating = TotalRating + ratingstar; //Total Rating of each attribute is saved here
+                ratingstar = Math.round(ratingstar); //count of Rating to display as star
+                var ratebtnstring = '';
+                for (var count = 0; count < 5; count++) {
+                    if (count < ratingstar) {
+                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    }
+                    else {
+                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    }
+                }
+                ratinglists = ratinglists + '<div class="col-xs-3 col-md-3 text-right">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
+                                            '<div class="col-xs-8 col-md-9"><div  class="rating-block">' + ratebtnstring + '</div></div>';
+            }
+            AvgRating = Math.round(TotalRating / attributecount); //total rating by attribute count
+            var Avgratebtnstring = '';
+
             for (var count = 0; count < 5; count++) {
-                if (count < ratingstar) {
-                    ratebtnstar = ratebtnstar + '<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                if (count < AvgRating) {
+                    Avgratebtnstring = Avgratebtnstring + '<span class="glyphicon glyphicon-star"></span>'
                 }
                 else {
-                    ratebtnstar = ratebtnstar + '<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    Avgratebtnstring = Avgratebtnstring + '<span class="glyphicon glyphicon-star-empty"></span>'
                 }
             }
 
-            ratinglists = ratinglists + '<div class="col-xs-3 col-md-3 text-right">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
-                                                '<div class="col-xs-8 col-md-9">' +
-                                                    '<div  class="rating-block">' + ratebtnstar +
-                                                    '</div></div>';
+            var ratingdiv = $('<div class="row">' +
+                                                  '<div class="col-xs-12 col-md-6 text-center"><h1 class="rating-num">' + AvgRating + '</h1>' +
+                                                      '<div class="rating">' + Avgratebtnstring + '</div>' +
+                                                      '<div>' +
+                                                      '<span class="glyphicon glyphicon-user"></span>' + thisRatingSummary[0].RatingCount + ' total' +
+                                                      '</div>' +
+                                                  '</div>' +
+                                                  '<div class="col-xs-12 col-md-6">' +
+                                                      '<div id ="RatingAttributes" class="row rating-desc">' + ratinglists +
+                                                      '</div></div></div>');
 
-          
-           
 
 
+            $("#RatingDisplay").append(ratingdiv);
 
         }
-
-        var ratingdiv = $('<div class="row">' +
-                                            '<div class="col-xs-12 col-md-6 text-center"><h1 class="rating-num">4.0</h1>' +
-                                                '<div class="rating">' +
-                                                '<span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star">' +
-                                                '</span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star">' +
-                                                '</span><span class="glyphicon glyphicon-star-empty"></span>' +
-                                                '</div>' +
-                                                '<div>' +
-                                                '<span class="glyphicon glyphicon-user"></span>1,050,008 total' +
-                                                '</div>' +
-                                            '</div>' +
-                                            '<div class="col-xs-12 col-md-6">' +
-                                                '<div id ="RatingAttributes" class="row rating-desc">' + ratinglists +
-                                                '</div></div></div>');
-
-        $("#RatingDisplay").append(ratingdiv);
-
-    }
-    var thisReviewList = GetProductReviews(id);
-    if (thisReviewList) {
-       
-        for (var i = 0; i < thisReviewList.length; i++) {
-            var str = Date.parse(thisReviewList[i].ReviewCreatedDate.substring(0, 10));
-            var resultdate = ConvertJsonToDate('' + str + '');
-            var imageurl;
-            if (thisReviewList[i].ImageUrl)
-                imageurl = thisReviewList[i].ImageUrl
+        //Reviews
+        var thisReviewList = GetProductReviews(id);
+        if (thisReviewList.length>0) {
+            $("#ReviewsDisplay").empty();
+            for (var i = 0; i < thisReviewList.length; i++) {
+                var str = Date.parse(thisReviewList[i].ReviewCreatedDate.substring(0, 10));
+                var resultdate = ConvertJsonToDate('' + str + '');
+                var imageurl;
+                if (thisReviewList[i].ImageUrl)
+                    imageurl = thisReviewList[i].ImageUrl
                 else
-                imageurl='Content/images/NoImage60x60.png';
+                    imageurl = 'Content/images/NoImage60x60.png';
 
-            var cnt = $('<div class="review-block"><div class="row">' +
-                        '<div class="col-sm-3">' +
-                        '<img src="'+imageurl+'" class="img-rounded">' +
-                        '<div class="review-block-name"><a href="#">' + thisReviewList[i].CustomerName + '</a></div>' +
-                        '<div class="review-block-date">' + resultdate + '<br />' + thisReviewList[i].DaysCount + ' days ago</div>' +
-                        '</div>' +
-                        '<div class="col-sm-9">' +
-                        '<div id="ReviewBlockRate' + [i] + '" class="review-block-rate"></div>' +
-                        '<div id=ReviewDesc' + i + 'class="review-block-description">' + thisReviewList[i].Review + '</div>'+
-                        '</div><hr/></div>');
-            $("#ReviewsDisplay").append(cnt);
+                var cnt = $('<div class="review-block"><div class="row">' +
+                            '<div class="col-sm-3">' +
+                            '<img src="' + imageurl + '" class="img-rounded">' +
+                            '<div class="review-block-name"><a href="#">' + thisReviewList[i].CustomerName + '</a></div>' +
+                            '<div class="review-block-date">' + resultdate + '<br />' + thisReviewList[i].DaysCount + ' days ago</div>' +
+                            '</div>' +
+                            '<div class="col-sm-9">' +
+                            '<div id="ReviewBlockRate' + [i] + '" class="review-block-rate"></div>' +
+                            '<div id=ReviewDesc' + i + 'class="review-block-description">' + thisReviewList[i].Review + '</div>' +
+                            '</div><hr/></div>');
+                $("#ReviewsDisplay").append(cnt);
 
-//--------------------------------------------Rating Star dispalying region-----------------------------------------------//
-            var rating = thisReviewList[i].AvgRating;
-            var splitresult = rating.split(".");
-            
+                //--------------------------------------------Rating Star dispalying region-----------------------------------------------//
+                var rating = thisReviewList[i].AvgRating;
+                var splitresult = rating.split(".");
+
                 rating = Math.round(rating);
-            var ratebtns = '';
-            for (var count = 0; count < 5; count++) {
-                if (count < rating) {
-                    ratebtns = ratebtns + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">' +
-                                          '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                var ratebtns = '';
+                for (var count = 0; count < 5; count++) {
+                    if (count < rating) {
+                        ratebtns = ratebtns + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">' +
+                                              '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    }
+                    else {
+                        ratebtns = ratebtns + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
+                                              '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    }
                 }
-                else {
-                    ratebtns = ratebtns + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
-                                          '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
-                }
-            }
-            ratebtns = $(ratebtns);
-            $("#ReviewBlockRate" + [i]).append(ratebtns);
-//----------------------------------------------------------------------------------------------------------------------//
+                ratebtns = $(ratebtns);
+                $("#ReviewBlockRate" + [i]).append(ratebtns);
+                //----------------------------------------------------------------------------------------------------------------------//
 
+            }
         }
-    }
+}
+   
 }
 
 function GetRatingSummary(id, attributesetId) {

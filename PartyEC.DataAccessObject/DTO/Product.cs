@@ -111,6 +111,8 @@ namespace PartyEC.DataAccessObject.DTO
         public string ImageUrl { get; set; }
 
         public List<AttributeValues> ProductRatingAttributes { get; set; }
+        public string RatingCount { get; set; }
+        
 
     }
     
