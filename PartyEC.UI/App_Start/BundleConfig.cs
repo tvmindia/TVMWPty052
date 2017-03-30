@@ -9,7 +9,7 @@ namespace PartyEC.UI.App_Start
             
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css", "~/Content/bootstrap-theme.min.css", "~/Content/font-awesome.min.css","~/Content/custom.css"));
             bundles.Add(new StyleBundle("~/Content/bootstrapdatepicker").Include("~/Content/bootstrap-datepicker3.min.css"));
-            bundles.Add(new StyleBundle("~/Content/jstree").Include("~/Content/jstree/dist/themes/default/style.css"));
+            bundles.Add(new StyleBundle("~/Content/jstree").Include("~/Content/jstree/default/style.css"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css", "~/Content/bootstrap-theme.min.css", "~/Content/font-awesome.min.css", "~/Content/custom.css"));
             bundles.Add(new ScriptBundle("~/Content/lightbox").Include("~/Content/lightbox.min.css"));
 

@@ -568,7 +568,7 @@
 
                                     </div>
                                     
-                                    <div class="col-lg-5" style="margin-top:10%">
+                                    <div class="col-lg-5" style="margin-top:30%">
                                         <div>
                                             <a id="alinkUploadSticker" style="display:none" class="btn btn-info" href="javascript:$('#file_uploadSticker').uploadify('upload','*')">Upload</a>
                                             <input type="file" class="uploadify" name="file_uploadOther" id="file_uploadSticker" />
@@ -913,6 +913,8 @@
                 'Name': '','ID':'','ImageID':''
             },
             'buttonImage': '/Content/images/browse-btn.png',
+            'fileTypeDesc': 'Image Files',
+            'fileTypeExts': '*.jpg; *.png',
                 'swf': "@Url.Content("~/Content/uploadify.swf")",
                 //this is where the file posts when it uploads.
             'uploader': "@Url.Action("UploadProductImage", "Products")",
@@ -940,6 +942,8 @@
                 'Name': '','ID':'','ImageID':''
             },
             'buttonImage': '/Content/images/browse-btn.png',
+            'fileTypeDesc': 'Image Files',
+            'fileTypeExts': '*.jpg; *.png',
             'swf': "@Url.Content("~/Content/uploadify.swf")",
                 //this is where the file posts when it uploads.
             'uploader': "@Url.Action("UploadOtherImages", "Products")",
@@ -964,6 +968,8 @@
             'formData': {
                 'Name': '','ID':'','ImageID':''
             },
+            'fileTypeDesc': 'Image Files',
+            'fileTypeExts': '*.jpg; *.png',
             'buttonImage': '/Content/images/browse-btn.png',
             'swf': "@Url.Content("~/Content/uploadify.swf")",
                 //this is where the file posts when it uploads.
