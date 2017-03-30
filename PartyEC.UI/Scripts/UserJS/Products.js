@@ -1300,8 +1300,8 @@ function EditAssocProduct(currentObj) {
             else { $("#detailStockAvailable").prop('checked', false); }
             $("#detailDiscountAmount").val(thisproduct.DiscountAmount);
             $("#detailPriceDifference").val(thisproduct.PriceDifference);
-            $("#detailDiscountStartDate").val(thisproduct.DiscountStartDate);
-            $("#detailDiscountEndDate").val(thisproduct.DiscountEndDate);
+            $("#detailDiscountStartDate").val(ConvertJsonToDate(thisproduct.DiscountStartDate));
+            $("#detailDiscountEndDate").val(ConvertJsonToDate(thisproduct.DiscountEndDate));
             if (thisproduct.Enabled == true)
             { $("#detailEnable").prop('checked', true); }
             else { $("#detailEnable").prop('checked', false); }
@@ -1309,6 +1309,20 @@ function EditAssocProduct(currentObj) {
             { $("#detailDefaultOption").prop('checked', true); }
             else { $("#detailDefaultOption").prop('checked', false); }
             $("#detailDetailTags").val(thisproduct.DetailTags);
+
+            if (thisproduct.DetailTags) {
+                $('.Htags').remove();
+                var tagar = thisproduct.DetailTags.split(",");
+                for (index = 0; index < tagar.length; ++index) {
+                    //Tag creation when binding
+                    $("#detailkeywordsDiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' }));
+
+                }
+            }
+            else {
+                //Removes span tags
+                $('.Htags').remove();
+            }
 
             if(thisproduct.ProductAttributes)
             {

@@ -29,7 +29,7 @@
 
     </style>
 }
-<div class="container-fluid">
+<div class="container-fluid" style="min-height:950px;">
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
@@ -679,23 +679,23 @@
                                 <div id="associatedStaticfields">
                                  
                                     <div class="form-group">
-                                        <label for=detailQty class="col-lg-2 control-label">Qty</label>
+                                        <label for=detailQty class="col-lg-2 control-label">Qty<span class="required">*</span></label>
                                         <div class="col-lg-4 input-group">
-                                            <input type="number" class="form-control" id="detailQty" name="detailQty">
+                                            <input type="text" class="form-control" id="detailQty" name="detailQty">
                                             <input type="hidden" class="form-control" id="productDetailID" name="productDetailID" />
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty</label>
+                                        <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty<span class="required">*</span></label>
                                         <div class="col-lg-4 input-group">
-                                            <input type="number" class="form-control" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
+                                            <input type="text" class="form-control" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
                                         </div>
                                     </div>
 
                                  
                                     <div class="form-group">
-                                        <label class="control-label col-lg-2" for="detailStockAvailable" style="">Stock Status</label>
+                                        <label class="control-label col-lg-2" for="detailStockAvailable" style="">Stock Status<span class="required">*</span></label>
                                         <div class="col-lg-4 input-group">
                                             <div>
                                                 <input class="check-box" data-val="true" id="detailStockAvailable" name="detailStockAvailable" value="true" type="checkbox">
@@ -707,14 +707,14 @@
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailDiscountAmount">Discount Price</label>
                                         <div class="col-lg-4 input-group">
-                                            <input class="form-control text-box single-line" id="detailDiscountAmount" name="detailDiscountAmount" value="" type="number">
+                                            <input class="form-control text-box single-line" id="detailDiscountAmount" name="detailDiscountAmount" value="" type="text">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailPriceDifference">Price Difference</label>
                                         <div class="col-lg-4 input-group">
-                                            <input class="form-control text-box single-line" id="detailPriceDifference" name="detailPriceDifference" value="" type="number">
+                                            <input class="form-control text-box single-line" id="detailPriceDifference" name="detailPriceDifference" value="" type="text">
                                         </div>
                                     </div>
 
