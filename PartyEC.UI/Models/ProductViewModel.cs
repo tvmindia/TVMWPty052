@@ -170,6 +170,7 @@ namespace PartyEC.UI.Models
         //collection of related products ids
         public string IDList { get; set; }
         public List<AttributeValuesViewModel> ProductOtherAttributes { get; set; }
+        public string SupplierName { get; set; }
 
     }
   public class ProductDetailViewModel

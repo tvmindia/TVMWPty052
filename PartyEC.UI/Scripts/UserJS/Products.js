@@ -75,7 +75,7 @@ $(document).ready(function () {
                { "data": "Name" },
                { "data": "ProductType", "defaultContent": "<i>-</i>" },
                { "data": "EnableYN", "defaultContent": "<i>-</i>" },
-               { "data": "SupplierID", "defaultContent": "<i>-</i>" },
+               { "data": "SupplierName", "defaultContent": "<i>-</i>" },
                { "data": "SKU", "defaultContent": "<i>-</i>" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "Qty", "defaultContent": "<i>-</i>" },
@@ -613,6 +613,7 @@ function GetAllProducts()
         }
         if(ds.Result=="OK")
         {
+debugger;
             return ds.Records;
         }
         if (ds.Result == "ERROR") {
