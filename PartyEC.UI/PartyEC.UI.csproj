@@ -484,6 +484,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\CategoryController.cs" />
+    <Compile Include="API\EventController.cs" />
     <Compile Include="API\ProductController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\MappingConfig.cs" />

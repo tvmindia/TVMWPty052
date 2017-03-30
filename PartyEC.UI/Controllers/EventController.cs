@@ -89,7 +89,7 @@ namespace PartyEC.UI.Controllers
                         EventObj.commonObj = new LogDetailsViewModel();
                         EventObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                         EventObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
-                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.InsertEvent(Mapper.Map<EventViewModel, Event>(EventObj)));                      
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.InsertEventTypes(Mapper.Map<EventViewModel, Event>(EventObj)));                      
                     }
                     catch (Exception ex)
                     {

@@ -29,7 +29,7 @@
 
     </style>
 }
-<div class="container-fluid">
+<div class="container-fluid" style="min-height:950px;">
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
@@ -61,11 +61,12 @@
                             Html.RenderPartial("_ToolboxView", ToolBoxControl);
                         }
                     </div>
-                    
+
                     @*table*@
                     <table id="tblproducts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th>AttributeSetId</th>
                                 <th>ProductID</th>
                                 <th>Name</th>
                                 <th>ProductType</th>
@@ -81,9 +82,9 @@
                         </thead>
                     </table>
                     @*table*@
-
-
-
+                    <div class="form-group" hidden="hidden">                     
+                        <button id="btnmodelproductrating" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ModelProductsRating"></button>                   
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="productDetails">
                    
@@ -678,23 +679,24 @@
                                 <div id="associatedStaticfields">
                                  
                                     <div class="form-group">
-                                        <label for=detailQty class="col-lg-2 control-label">Qty</label>
+                                        <label for=detailQty class="col-lg-2 control-label">Qty<span class="required">*</span></label>
                                         <div class="col-lg-4 input-group">
-                                            <input type="number" class="form-control" id="detailQty" name="detailQty">
+                                            <input type="text" class="form-control" id="detailQty" name="detailQty">
                                             <input type="hidden" class="form-control" id="productDetailID" name="productDetailID" />
                                         </div>
                                     </div>
 
                                     <div class="form-group">
-                                        <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty</label>
+                                        <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty<span class="required">*</span></label>
                                         <div class="col-lg-4 input-group">
-                                            <input type="number" class="form-control" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
+                                            <input type="text" class="form-control" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
                                         </div>
                                     </div>
 
+                                 
                                     <div class="form-group">
-                                        <label class="control-label col-lg-2" for="detailStockAvailable" style="">Stock Status</label>
-                                        <div class="col-lg-4">
+                                        <label class="control-label col-lg-2" for="detailStockAvailable" style="">Stock Status<span class="required">*</span></label>
+                                        <div class="col-lg-4 input-group">
                                             <div>
                                                 <input class="check-box" data-val="true" id="detailStockAvailable" name="detailStockAvailable" value="true" type="checkbox">
                                                 <input name="detailStockAvailable" value="false" type="hidden">
@@ -705,14 +707,14 @@
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailDiscountAmount">Discount Price</label>
                                         <div class="col-lg-4 input-group">
-                                            <input class="form-control text-box single-line" id="detailDiscountAmount" name="detailDiscountAmount" value="" type="number">
+                                            <input class="form-control text-box single-line" id="detailDiscountAmount" name="detailDiscountAmount" value="" type="text">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailPriceDifference">Price Difference</label>
                                         <div class="col-lg-4 input-group">
-                                            <input class="form-control text-box single-line" id="detailPriceDifference" name="detailPriceDifference" value="" type="number">
+                                            <input class="form-control text-box single-line" id="detailPriceDifference" name="detailPriceDifference" value="" type="text">
                                         </div>
                                     </div>
 
@@ -730,9 +732,11 @@
                                         </div>
                                     </div>
 
+      
+
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailEnable" style="">Enable</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 input-group">
                                             <div>
                                                 <input class="check-box" data-val="true" id="detailEnable" name="detailEnable" value="true" type="checkbox">
                                                 <input name="detailEnable" value="false" type="hidden">
@@ -740,9 +744,10 @@
                                         </div>
                                     </div>
 
+
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailDefaultOption" style="">Default Option</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 input-group">
                                             <div>
                                                 <input class="check-box" data-val="true" id="detailDefaultOption" name="detailDefaultOption" value="true" type="checkbox">
                                                 <input name="detailDefaultOption" value="false" type="hidden">
@@ -750,16 +755,21 @@
                                         </div>
                                     </div>
 
+
                                     <div class="form-group">
-                                        <label class="control-label col-lg-2" for="detailDetailTags" style="">New Tags</label>
+                                        <label class="control-label col-lg-2" id="lblDetailTags" for="detailTagsPicker" style="">New Tags</label>
                                         <div class="col-lg-4 input-group" id="detailTagsdiv">
-                                            <input class="form-control text-box single-line" id="detailDetailTags" placeholder = "Add key Words....." name="detailDetailTags" value="" type="text">
-                                            @*@Html.HiddenFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control"} })*@
+                                            <input class="form-control text-box single-line" id="detailTagsPicker" placeholder = "Add key Words....." name="detailTagsPicker" value="" type="text">
+                                            <input id="detailDetailTags" value="" type="hidden">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button">+</button>
                                             </span>
                                         </div>
                                     </div>
+
+                                     
+
+                                    
 
                                     <div class="form-group">
                                         <span class="col-lg-2"></span>
@@ -877,6 +887,23 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
             </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+@*--------------------------------------Product Rating Form------------------------------------------------------------------*@
+<div id="ModelProductsRating" class="modal fade" tabindex="-1" role="dialog" style="left:50%; top:45%" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="titleProductRating">Product Ratings</h4>
+            </div>
+            <div class="modal-body">
+                <div id="RatingPopupDisplay" class="row"> 
+
+                </div>
+            </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

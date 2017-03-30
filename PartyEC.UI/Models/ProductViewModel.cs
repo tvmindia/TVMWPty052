@@ -170,6 +170,7 @@ namespace PartyEC.UI.Models
         //collection of related products ids
         public string IDList { get; set; }
         public List<AttributeValuesViewModel> ProductOtherAttributes { get; set; }
+        public string SupplierName { get; set; }
 
     }
   public class ProductDetailViewModel
@@ -195,6 +196,7 @@ namespace PartyEC.UI.Models
         //For associated product
         public string ProductName { get; set; }
         public decimal BaseSellingPrice { get; set; }
+        public decimal? ActualPrice { get; set; }
     }
     public class ProductCategoryLinkViewModel
     {
