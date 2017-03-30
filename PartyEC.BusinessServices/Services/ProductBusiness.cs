@@ -204,9 +204,9 @@ namespace PartyEC.BusinessServices.Services
                 productDetailslist = _productRepository.GetProductDetail(ProductID);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return productDetailslist;
         }

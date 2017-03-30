@@ -69,7 +69,7 @@ namespace PartyEC.DataAccessObject.DTO
         //For associated product
         public string ProductName { get; set; }
         public decimal BaseSellingPrice { get; set; }
-
+        public decimal? ActualPrice { get; set; }
 
         public struct ProductTypes
         {

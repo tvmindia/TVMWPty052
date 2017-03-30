@@ -1,5 +1,6 @@
 ﻿var DataTables = {};
 $(document).ready(function () {
+    debugger;
     $("#HeaderTagsPicker").on({
         focusout: function () {
             var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
@@ -198,7 +199,7 @@ $(document).ready(function () {
                { "data": "ProductAttributes", "defaultContent": "<i>-</i>" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
-               { "data": null, "defaultContent": "<i>-</i>" },
+               { "data": "ActualPrice", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="EditAssocProduct(this)"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>Edit</a>' }
              ],
              columnDefs: [
@@ -989,6 +990,7 @@ function OtherAttributeSave()
 
 function RenderContentsForAssocProdAttributes()
 {
+    debugger;
     HideProductDetalsToolBox();
     try {
         var proid = $('.productID').val();
@@ -1127,6 +1129,8 @@ function attributeSetOnChange(curobj)
     }
 }
 
+
+
 function AssociatedProductSave()
 {
     debugger;
@@ -1190,6 +1194,7 @@ function AssociatedProductSave()
                             notyAlert('success', JsonResult.Record.StatusMessage);
                             $("#productDetailID").val(JsonResult.Record.ReturnValues);
                             RefreshAssociatedProducts(prodid);
+                            clearAssociatedProductform();
                             break;
                         case "ERROR":
                             notyAlert('error', JsonResult.Record.StatusMessage);
@@ -1276,12 +1281,13 @@ function AssociatedProductDelete()
 
     }
     else {
-        
+        notyAlert('error', 'Please Select a product');
     }
  
     
 }
 function EditAssocProduct(currentObj) {
+    debugger;
     var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         var thisproduct = GetProductDetailsByProductDetailID(rowData.ProductID,rowData.ID );
