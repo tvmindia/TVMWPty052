@@ -1568,14 +1568,14 @@ function ModelProductsRating(currentObj) {
                 for (var count = 0; count < 5; count++)
                 {
                     if (count < ratingstar) {
-                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
                     }
                     else {
-                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
                     }
                 }//for
-                ratinglists = ratinglists + '<div class="col-xs-3 col-md-3 text-right">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
-                                            '<div class="col-xs-8 col-md-9"><div  class="rating-block">' + ratebtnstring + '</div></div>';
+                ratinglists = ratinglists + '<div class="col-xs-5 ">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
+                                            '<div class="col-xs-7 "><div  class="rating-block">' + ratebtnstring + '</div></div>';
             }//for
             $("#RatingPopupDisplay").append(ratinglists);
         }//if
