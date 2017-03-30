@@ -692,9 +692,10 @@
                                         </div>
                                     </div>
 
+                                 
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailStockAvailable" style="">Stock Status</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 input-group">
                                             <div>
                                                 <input class="check-box" data-val="true" id="detailStockAvailable" name="detailStockAvailable" value="true" type="checkbox">
                                                 <input name="detailStockAvailable" value="false" type="hidden">
@@ -730,9 +731,11 @@
                                         </div>
                                     </div>
 
+      
+
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailEnable" style="">Enable</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 input-group">
                                             <div>
                                                 <input class="check-box" data-val="true" id="detailEnable" name="detailEnable" value="true" type="checkbox">
                                                 <input name="detailEnable" value="false" type="hidden">
@@ -740,9 +743,10 @@
                                         </div>
                                     </div>
 
+
                                     <div class="form-group">
                                         <label class="control-label col-lg-2" for="detailDefaultOption" style="">Default Option</label>
-                                        <div class="col-lg-4">
+                                        <div class="col-lg-4 input-group">
                                             <div>
                                                 <input class="check-box" data-val="true" id="detailDefaultOption" name="detailDefaultOption" value="true" type="checkbox">
                                                 <input name="detailDefaultOption" value="false" type="hidden">
@@ -750,16 +754,21 @@
                                         </div>
                                     </div>
 
+
                                     <div class="form-group">
-                                        <label class="control-label col-lg-2" for="detailDetailTags" style="">New Tags</label>
+                                        <label class="control-label col-lg-2" id="lblDetailTags" for="detailTagsPicker" style="">New Tags</label>
                                         <div class="col-lg-4 input-group" id="detailTagsdiv">
-                                            <input class="form-control text-box single-line" id="detailDetailTags" placeholder = "Add key Words....." name="detailDetailTags" value="" type="text">
-                                            @*@Html.HiddenFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control"} })*@
+                                            <input class="form-control text-box single-line" id="detailTagsPicker" placeholder = "Add key Words....." name="detailTagsPicker" value="" type="text">
+                                            <input id="detailDetailTags" value="" type="hidden">
                                             <span class="input-group-btn">
                                                 <button class="btn btn-default" type="button">+</button>
                                             </span>
                                         </div>
                                     </div>
+
+                                     
+
+                                    
 
                                     <div class="form-group">
                                         <span class="col-lg-2"></span>

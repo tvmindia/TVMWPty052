@@ -58,7 +58,10 @@
   float:left;
   padding:5px;
   font-family:Arial;
-  margin:3px;
+  margin-bottom:3px;
+  margin-right:3px;
+  margin-top:3px;
+  margin-left:3px;
   font-size: larger;
 }
 .Htags{

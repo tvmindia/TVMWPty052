@@ -1,5 +1,4 @@
 ﻿var DataTables = {};
-
 $(document).ready(function () {
     $("#HeaderTagsPicker").on({
         focusout: function () {
@@ -9,6 +8,7 @@ $(document).ready(function () {
                 var h = $("<span/>", { text: txt }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' });
                 $('#keywordsDiv').append(h);
                 this.value = "";
+               
             }
         },
         keypress: function (ev) {
@@ -21,13 +21,14 @@ $(document).ready(function () {
         }
         
     });
-    $("#detailDetailTags").on({
+    $("#detailTagsPicker").on({
         focusout: function () {
             var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
             if (txt) {
                 var h = $("<span/>", { text: txt }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' });
                 $('#detailkeywordsDiv').append(h);
                 this.value = "";
+               // $("#lblDetailTags").trigger('click');
             }
         },
         keypress: function (ev) {
@@ -1126,6 +1127,7 @@ function attributeSetOnChange(curobj)
 
 function AssociatedProductSave()
 {
+    debugger;
     try {   //Serialize dynamic other attribute elements
         //var Associatedpro = $('#dynamicAssociatedProducts').find('select,input').serializeArray();
         var Associatedpro = $('#dynamicAssociatedProductContents').find('select,input').serializeArray();
@@ -1155,14 +1157,26 @@ function AssociatedProductSave()
             var stockavail = $("#detailStockAvailable").val();
             ProductDetailViewModel.StockAvailable = (stockavail != "" ? stockavail : "");
             var detailDiscAmount = $("#detailDiscountAmount").val();
-            ProductDetailViewModel.detailDiscountAmount = (detailDiscAmount != "" ? detailDiscAmount : "");
+            ProductDetailViewModel.DiscountAmount = (detailDiscAmount != "" ? detailDiscAmount : "");
             var detailPriceDiff = $("#detailPriceDifference").val();
             ProductDetailViewModel.PriceDifference = (detailPriceDiff != "" ? detailPriceDiff : "");
             var detailDiscStart = $("#detailDiscountStartDate").val();
             ProductDetailViewModel.DiscountStartDate = (detailDiscStart != "" ? detailDiscStart : "");
             var detailDiscEnd = $("#detailDiscountEndDate").val();
             ProductDetailViewModel.DiscountEndDate = (detailDiscEnd != "" ? detailDiscEnd : "");
+            var detailEnable = $("#detailEnable").val();
+            ProductDetailViewModel.Enabled = detailEnable;
+            var detailDefaultOption = $("#detailDefaultOption").val();
+            ProductDetailViewModel.DefaultOption = detailDefaultOption;
+            var tagval = [];
+            $('#detailkeywordsDiv .Htags').each(function () {
 
+                tagval.push(this.innerHTML);
+            }); 
+            $("#detailDetailTags").val(tagval);
+           
+            var detailnewtags = $("#detailDetailTags").val();
+            ProductDetailViewModel.DetailTags = detailnewtags;
             ProductDetailList.push(ProductDetailViewModel);
             ProductViewModel.ProductDetails = ProductDetailList;
 
