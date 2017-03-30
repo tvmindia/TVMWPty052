@@ -70,6 +70,7 @@ $(document).ready(function () {
              paging: true,
              data: GetAllProducts(),
              columns: [
+               { "data": "AttributeSetID" },
                { "data": "ID" },
                { "data": "Name" },
                { "data": "ProductType", "defaultContent": "<i>-</i>" },
@@ -79,14 +80,14 @@ $(document).ready(function () {
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "Qty", "defaultContent": "<i>-</i>" },
                { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a href="#" data-toggle="Ratingpopover" title="Rating" data-trigger="focus" data-content="Some content inside the popover">Rating</a>' },
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="ModelProductsRating(this)">Rating</a>' },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [
               {//hiding hidden column 
                   "targets": [0],
-                  "visible": true,
-                  "searchable": true
+                  "visible": false,
+                  "searchable": false
               }
              ]
          });
@@ -1547,4 +1548,50 @@ function GetProductReviews(id) {
     catch (e) {
         notyAlert('error', e.message);
     }
+}
+
+function ModelProductsRating(currentObj) {
+    //popsup the model
+    debugger;
+    var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
+    if ((rowData != null) && (rowData.ID != null) && (rowData.AttributeSetID != null))
+    {
+        $("#titleProductRating").text(rowData.Name);
+        var thisRatingSummary = GetRatingSummary(rowData.ID, rowData.AttributeSetID);
+        if (thisRatingSummary.length > 0)
+        {
+            debugger;
+        
+            $("#RatingPopupDisplay").empty();
+            var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
+            var ratinglists = ""  
+
+            for (var i = 0; i < attributecount; i++)
+            {
+                var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value); 
+                ratingstar = Math.round(ratingstar); //count of Rating to display as star
+                var ratebtnstring = '';
+                for (var count = 0; count < 5; count++)
+                {
+                    if (count < ratingstar) {
+                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    }
+                    else {
+                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    }
+                }//for
+                ratinglists = ratinglists + '<div class="col-xs-5 ">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
+                                            '<div class="col-xs-7 "><div  class="rating-block">' + ratebtnstring + '</div></div>';
+            }//for
+            $("#RatingPopupDisplay").append(ratinglists);
+        }//if
+        else
+        {
+            $("#RatingPopupDisplay").empty();
+            var ratinglists = '<div class="col-xs-12 text-center"><h3>No Ratings Yet.. </h3></div>'
+            $("#RatingPopupDisplay").append(ratinglists);
+        }
+    }//if
+
+    $('#btnmodelproductrating').trigger('click');
 }

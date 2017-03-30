@@ -113,7 +113,7 @@ namespace PartyEC.RepositoryServices.Services
             return myEvent;
         }
 
-        public OperationsStatus InsertEvent(Event EventObj)
+        public OperationsStatus InsertEventTypes(Event EventObj)
         {
             OperationsStatus operationsStatusObj = null;
             try
@@ -128,7 +128,7 @@ namespace PartyEC.RepositoryServices.Services
                             con.Open();
                         }
                         cmd.Connection = con;
-                        cmd.CommandText = "[InsertEvents]";
+                        cmd.CommandText = "[InsertEventTypes]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = EventObj.Name;
                         cmd.Parameters.Add("@RelatedCategoriesCSV", SqlDbType.NVarChar, 250).Value = EventObj.RelatedCategoriesCSV;

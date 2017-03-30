@@ -11,7 +11,7 @@ namespace PartyEC.RepositoryServices.Contracts
     {
         List<Event> GetAllEvents();
         Event GetEvent(int EventID, OperationsStatus Status);
-        OperationsStatus InsertEvent(Event EventObj);
+        OperationsStatus InsertEventTypes(Event EventObj);
         OperationsStatus UpdateEvent(Event EventObj);
         OperationsStatus DeleteEvent(int EventID);
     }
