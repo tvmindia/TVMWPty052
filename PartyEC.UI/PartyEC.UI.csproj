@@ -506,6 +506,7 @@
     <Compile Include="Controllers\EventRequestsController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
+    <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -543,6 +544,7 @@
     <Content Include="Views\Order\Index.cshtml" />
     <Content Include="Views\Shared\_EditTemplateForAssociatedProductAttributes.cshtml" />
     <Content Include="Views\Cart_Wishlist\Index.cshtml" />
+    <Content Include="Views\Supplier\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
