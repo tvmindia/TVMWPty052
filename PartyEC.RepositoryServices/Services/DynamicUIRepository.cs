@@ -100,7 +100,7 @@ namespace PartyEC.RepositoryServices.Services
                                     Treeview TreeviewObj = new Treeview();
                                     {
                                         TreeviewObj.ID = sdr["ID"].ToString();
-                                        TreeviewObj.ParentID = (sdr["ParentID"].ToString() != "" ? Int16.Parse(sdr["ParentID"].ToString()) : TreeviewObj.ParentID);
+                                        TreeviewObj.ParentID = (sdr["ParentID"].ToString() != "" ? int.Parse(sdr["ParentID"].ToString()) : TreeviewObj.ParentID);
                                         TreeviewObj.Name = sdr["Name"].ToString();
                                         TreeviewObj.level = sdr["level"].ToString();
                                         TreeviewObj.icon = sdr["icon"].ToString();
@@ -146,7 +146,7 @@ namespace PartyEC.RepositoryServices.Services
                                     Treeview TreeviewObj = new Treeview();
                                     {
                                         TreeviewObj.ID = sdr["ID"].ToString();
-                                        TreeviewObj.ParentID = (sdr["ParentID"].ToString() != "" ? Int16.Parse(sdr["ParentID"].ToString()) : TreeviewObj.ParentID);
+                                        TreeviewObj.ParentID = (sdr["ParentID"].ToString() != "" ? int.Parse(sdr["ParentID"].ToString()) : TreeviewObj.ParentID);
                                         TreeviewObj.Name = sdr["Name"].ToString();
                                         TreeviewObj.level = sdr["level"].ToString();
                                         TreeviewObj.icon = sdr["icon"].ToString();
@@ -191,7 +191,7 @@ namespace PartyEC.RepositoryServices.Services
                                     Treeview TreeviewObj = new Treeview();
                                     {
                                         TreeviewObj.ID = sdr["ID"].ToString();
-                                        TreeviewObj.ParentID = (sdr["ParentID"].ToString() != "" ? Int16.Parse(sdr["ParentID"].ToString()) : TreeviewObj.ParentID);
+                                        TreeviewObj.ParentID = (sdr["ParentID"].ToString() != "" ? int.Parse(sdr["ParentID"].ToString()) : TreeviewObj.ParentID);
                                         TreeviewObj.Name = sdr["Name"].ToString();
                                         TreeviewObj.level = sdr["level"].ToString();
                                     }

@@ -45,7 +45,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Manufacturer _manufacturer = new Manufacturer();
                                     {
-                                        _manufacturer.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _manufacturer.ID);
+                                        _manufacturer.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _manufacturer.ID);
                                         _manufacturer.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _manufacturer.Name);
                                         _manufacturer.country.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : _manufacturer.country.Code);
                                         _manufacturer.country.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : _manufacturer.country.Name);
@@ -95,7 +95,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Supplier _supplier = new Supplier();
                                     {
-                                        _supplier.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _supplier.ID);
+                                        _supplier.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _supplier.ID);
                                         _supplier.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _supplier.Name);
                                      
 
@@ -200,7 +200,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     OrderStatusMaster _orderstatus = new OrderStatusMaster();
                                     {
-                                        _orderstatus.Code = (sdr["Code"].ToString() != "" ? Int16.Parse(sdr["Code"].ToString()) : _orderstatus.Code);
+                                        _orderstatus.Code = (sdr["Code"].ToString() != "" ? int.Parse(sdr["Code"].ToString()) : _orderstatus.Code);
                                         _orderstatus.Description = (sdr["Description"].ToString() != "" ? sdr["Description"].ToString() : _orderstatus.Description);
 
                                     }
