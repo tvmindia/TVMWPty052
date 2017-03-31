@@ -50,6 +50,8 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/AssoProduct").Include("~/Scripts/UserJS/AssociatedProduct.js"));
             bundles.Add(new ScriptBundle("~/bundles/CartWishlist").Include("~/Scripts/UserJS/Cart_Wishlist.js"));
             bundles.Add(new ScriptBundle("~/bundles/Suppliers").Include("~/Scripts/UserJS/Suppliers.js"));
+            bundles.Add(new ScriptBundle("~/bundles/ShippingLocations").Include("~/Scripts/UserJS/ShippingLocation.js"));
+            
         }
     }
 }
