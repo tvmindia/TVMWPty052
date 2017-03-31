@@ -156,7 +156,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@EntityType", SqlDbType.NVarChar, 10).Value = attributesObj.EntityType;
                         cmd.Parameters.Add("@MandatoryYN", SqlDbType.Bit).Value = attributesObj.MandatoryYN;
                         cmd.Parameters.Add("@ComparableYN", SqlDbType.Bit).Value = attributesObj.ComparableYN;
-                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 10).Value = attributesObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 50).Value = attributesObj.commonObj.CreatedBy;
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = attributesObj.commonObj.CreatedDate;
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
@@ -220,7 +220,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@EntityType", SqlDbType.NVarChar, 10).Value = attributesObj.EntityType;
                         cmd.Parameters.Add("@MandatoryYN", SqlDbType.Bit).Value = attributesObj.MandatoryYN;
                         cmd.Parameters.Add("@ComparableYN", SqlDbType.Bit).Value = attributesObj.ComparableYN;
-                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 10).Value = attributesObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 50).Value = attributesObj.commonObj.UpdatedBy;
                         cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = attributesObj.commonObj.UpdatedDate;
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
