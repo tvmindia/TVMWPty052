@@ -106,7 +106,7 @@ $(document).ready(function () {
 
         $('#Name').val('');
         $('#ID').val(0);
-        $('#TreeList').val('');
+        $('#hdnTreeList').val("0");
     });
    
     
@@ -241,7 +241,6 @@ function EditAttibuteSet(id)
 }
 function SaveOrder()
 {
-    
     var TreeOrderFormatted = [];
     var TreeOrder = $("#jstree_DragUpdate").jstree(true).get_json('#', { 'flat': true });
     var j = 0;
@@ -263,7 +262,7 @@ function SaveOrder()
         //AttributeSetLinkViewModel.text = TreeOrder[i].text;
         TreeOrderFormatted.push(AttributeSetLinkViewModel);
     }
-    $('#TreeList').val(JSON.stringify(TreeOrderFormatted));
+    $('#hdnTreeList').val(JSON.stringify(TreeOrderFormatted));
 }
 function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
     
@@ -271,7 +270,12 @@ function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
     switch(i.Result)
     {
         case "OK":
+            debugger;
             notyAlert('success', i.Records.StatusMessage);
+            if (i.Records.ReturnValues)
+            {
+                $('#ID').val(i.Records.ReturnValues);
+            }
             //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
             ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Edit");
             $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft($("#ID").val());
