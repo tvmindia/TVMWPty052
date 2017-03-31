@@ -45,7 +45,7 @@ function GetAllSuppliers() {
             return ds.Records;
         }
         if (ds.Result == "ERROR") {
-            alert(ds.Message);
+            notyAlert('error', ds.Message);
         }
     }
     catch (e) {
@@ -67,7 +67,7 @@ function GetSupplierByID(id) {
             return ds.Records;
         }
         if (ds.Result == "ERROR") {
-            alert(ds.Message);
+            notyAlert('error', ds.Message); 
         }
     }
     catch (e) {
@@ -91,7 +91,8 @@ function Edit(currentObj) {
 function fillSupplier(ID) {
     debugger;
     var thissupplier = GetSupplierByID(ID); //Binding Data  
-        $("#ID").val(thissupplier.ID)
+    $("#ID").val(thissupplier.ID);
+    $("#deleteId").val(thissupplier.ID);
     $("#lblSupplierID").text(thissupplier.ID);
     $("#Name").val(thissupplier.Name); 
  
@@ -99,7 +100,7 @@ function fillSupplier(ID) {
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
     $("#ID").val("0")//ID is zero for New
-    //$("#deleteId").val("0")
+    $("#deleteId").val("0")
     $("#Name").val("")
     $("#lblSupplierID").text("-New-");
   
@@ -146,12 +147,36 @@ function SaveSuccess(data, status, xhr) {
             break;
     }
 }
+function DeleteSuccess(data, status, xhr) {
+    BindAllSuppliers();
+    var i = JSON.parse(data)
+    debugger;
+
+    switch (i.Result) {
+
+        case "OK":
+            notyAlert('success', i.Record.StatusMessage);
+            clearfields();
+            break;
+        case "Error":
+            notyAlert('error', i.Record.StatusMessage);
+            break;
+        case "ERROR":
+            notyAlert('error', i.Message);
+            break;
+        default:
+            break;
+    }
+}
+
+
 //---------------------------------------Back-------------------------------------------------------//
 function goback() {
     $('#tabSupplierList').trigger('click');
 }
 //---------------------------------------Delete-------------------------------------------------------//
 function clickdelete() {
+    debugger;
     var id = $("#ID").val();
     if (id != 0) {
         $("#btnFormDelete").click();

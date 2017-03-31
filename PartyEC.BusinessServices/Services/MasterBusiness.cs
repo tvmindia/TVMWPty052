@@ -95,6 +95,18 @@ namespace PartyEC.BusinessServices.Services
             return OperationsStatusObj;
         }
 
+        public OperationsStatus DeleteSupplier(int supplierID)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.DeleteSupplier(supplierID);
+            }
+            catch (Exception)
+            {
+            }
+            return OperationsStatusObj;
+        }
 
         #endregion Suppliers
 
@@ -127,6 +139,6 @@ namespace PartyEC.BusinessServices.Services
             return otherImagesList;
         }
 
-       
+      
     }
 }

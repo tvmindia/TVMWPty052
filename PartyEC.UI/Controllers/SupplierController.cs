@@ -118,6 +118,41 @@ namespace PartyEC.UI.Controllers
 
         #endregion InsertUpdateAttributes
 
+        // DeleteSupplier
+        #region DeleteAttributes
+
+
+        [HttpPost]
+        public string DeleteSupplier([Bind(Exclude = "Name")] SupplierViewModel  supplierObj)
+        {
+            if (!ModelState.IsValid)
+            {
+                if (supplierObj.ID != 0)
+                {
+                    try
+                    {
+                        OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.DeleteSupplier(supplierObj.ID));
+                        if (OperationsStatusViewModelObj.StatusCode == 1)
+                        {
+                            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        }
+                        else
+                        {
+                            return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    }
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select attribute" });
+        }
+
+        #endregion DeleteAttributes
+
         #region ChangeButtonStyle
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)

@@ -282,6 +282,51 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
 
         }
+
+        public OperationsStatus DeleteSupplier(int supplierID)
+        {
+            OperationsStatus OperationsStatusObj = new OperationsStatus();
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteSupplier]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = supplierID;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
+                                break;
+                            case "1":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
         #endregion Suppliers
 
         public OperationsStatus InsertImage(OtherImages otherimgObj)
@@ -436,6 +481,6 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
-    
+       
     }
 }
