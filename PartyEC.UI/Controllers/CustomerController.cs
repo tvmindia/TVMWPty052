@@ -33,12 +33,12 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllCustomers
         [HttpGet]
-        public string GetAllCustomers(CustomerViewModel eventObj)
+        public string GetAllCustomers()
         {
             try
             {
-                List<CustomerViewModel> eventList = Mapper.Map<List<Customer>, List<CustomerViewModel>>(_customerBusiness.GetAllCustomers());
-                return JsonConvert.SerializeObject(new { Result = "OK", Records = eventList });
+                List<CustomerViewModel> customersList = Mapper.Map<List<Customer>, List<CustomerViewModel>>(_customerBusiness.GetAllCustomers());
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = customersList });
             }
             catch (Exception ex)
             {

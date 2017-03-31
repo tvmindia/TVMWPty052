@@ -17,6 +17,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/DataTables/css/datatablecheckbox").Include("~/Content/DataTables/css/dataTables.checkboxes.css"));
             bundles.Add(new StyleBundle("~/Content/DataTables/css/datatableSelect").Include("~/Content/DataTables/css/select.dataTables.min.css"));
             bundles.Add(new StyleBundle("~/Content/UserCSS/product").Include("~/Content/UserCSS/Product.css"));
+            bundles.Add(new StyleBundle("~/Content/UserCSS/customer").Include("~/Content/UserCSS/Customer.css"));
             bundles.Add(new StyleBundle("~/Content/Uplodify").Include("~/Content/uploadify.css"));
             bundles.Add(new StyleBundle("~/Content/UserCSS/EventRequest").Include("~/Content/UserCSS/EventRequests.css"));
             
@@ -50,6 +51,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/AssoProduct").Include("~/Scripts/UserJS/AssociatedProduct.js"));
             bundles.Add(new ScriptBundle("~/bundles/CartWishlist").Include("~/Scripts/UserJS/Cart_Wishlist.js"));
             bundles.Add(new ScriptBundle("~/bundles/Suppliers").Include("~/Scripts/UserJS/Suppliers.js"));
+            bundles.Add(new ScriptBundle("~/bundles/customer").Include("~/Scripts/UserJS/Customer.js"));
             bundles.Add(new ScriptBundle("~/bundles/ShippingLocations").Include("~/Scripts/UserJS/ShippingLocation.js"));
             
         }

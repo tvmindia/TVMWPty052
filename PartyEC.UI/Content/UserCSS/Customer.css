@@ -1,1 +1,4 @@
-﻿
+﻿/*LHS stacked navbar*/
+.col-md-2 >.panel-primary>.panel-heading{
+  min-height: 350px;
+}
