@@ -97,7 +97,9 @@ namespace PartyEC.RepositoryServices.Services
                                     {
                                         _supplier.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _supplier.ID);
                                         _supplier.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _supplier.Name);
-                                     
+                                        _supplier.CreatedDate= (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _supplier.CreatedDate);
+
+
 
                                     }
                                     suppliersList.Add(_supplier);
@@ -116,6 +118,49 @@ namespace PartyEC.RepositoryServices.Services
             return suppliersList;
 
 
+        }
+
+        public Supplier GetSupplier(int SupplierID, OperationsStatus Status)
+        {
+
+            Supplier mySupplier = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = SupplierID;
+                        cmd.CommandText = "[GetSupplier]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                if (sdr.Read())
+                                {
+                                    mySupplier = new Supplier();
+                                    mySupplier.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : mySupplier.ID);
+                                    mySupplier.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : mySupplier.Name);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return mySupplier;
         }
 
         public OperationsStatus InsertImage(OtherImages otherimgObj)
@@ -269,5 +314,7 @@ namespace PartyEC.RepositoryServices.Services
 
 
         }
+
+     
     }
 }

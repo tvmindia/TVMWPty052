@@ -49,6 +49,23 @@ namespace PartyEC.BusinessServices.Services
             }
             return supplierlist;
         }
+
+        public Supplier GetSupplier(int SupplierID, OperationsStatus Status)
+        {
+            Supplier mySupplier = null;
+            try
+            {
+                mySupplier = _masterRepository.GetSupplier(SupplierID, Status);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return mySupplier;
+        }
+
+
         public List<OrderStatusMaster> GetAllOrderStatus()
         {
             List<OrderStatusMaster> orderStatuslist = null;
@@ -76,5 +93,7 @@ namespace PartyEC.BusinessServices.Services
             }
             return otherImagesList;
         }
+
+     
     }
 }
