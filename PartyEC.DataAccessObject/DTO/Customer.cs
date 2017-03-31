@@ -14,13 +14,13 @@ namespace PartyEC.DataAccessObject.DTO
         public string Mobile { get; set; }
         public string Language { get; set; }
         public string Gender { get; set; }
-        public int ProfileImageID { get; set; }
-        public int OrdersCount { get; set; }
-        public int BookingsCount { get; set; }
-        public int QuotationsCount { get; set; }
-        public int OrdersCountHistory { get; set; }
-        public int BookingsCountHistory { get; set; }
-        public int QuotationsCountHistory { get; set; }
+        public Guid? ProfileImageID { get; set; }
+        public int? OrdersCount { get; set; }
+        public int? BookingsCount { get; set; }
+        public int? QuotationsCount { get; set; }
+        public int? OrdersCountHistory { get; set; }
+        public int? BookingsCountHistory { get; set; }
+        public int? QuotationsCountHistory { get; set; }
 
         public LogDetails logDetailsObj { get; set; }
 

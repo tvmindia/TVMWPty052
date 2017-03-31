@@ -25,19 +25,21 @@ namespace PartyEC.UI.Models
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
-        public int ProfileImageID { get; set; }
+       
 
-        public int OrdersCount { get; set; }
+        public Guid? ProfileImageID { get; set; }
 
-        public int BookingsCount { get; set; }
+        public int? OrdersCount { get; set; }
 
-        public int QuotationsCount { get; set; }
+        public int? BookingsCount { get; set; }
 
-        public int OrdersCountHistory { get; set; }
+        public int? QuotationsCount { get; set; }
 
-        public int BookingsCountHistory { get; set; }
+        public int? OrdersCountHistory { get; set; }
 
-        public int QuotationsCountHistory { get; set; }
+        public int? BookingsCountHistory { get; set; }
+
+        public int? QuotationsCountHistory { get; set; }
 
 
         public LogDetailsViewModel logDetailsObj { get; set; }

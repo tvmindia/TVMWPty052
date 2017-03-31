@@ -1,6 +1,6 @@
 ﻿var DataTables = {};
 $(document).ready(function () {
-    debugger;
+   
     $("#HeaderTagsPicker").on({
         focusout: function () {
             var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
@@ -604,7 +604,7 @@ function GetAllProducts()
         }
         if(ds.Result=="OK")
         {
-debugger;
+
             return ds.Records;
         }
         if (ds.Result == "ERROR") {
@@ -981,7 +981,7 @@ function OtherAttributeSave()
 
 function RenderContentsForAssocProdAttributes()
 {
-    debugger;
+   
     HideProductDetalsToolBox();
     try {
         var proid = $('.productID').val();
@@ -1307,7 +1307,7 @@ function AssociatedProductDelete()
     
 }
 function EditAssocProduct(currentObj) {
-    debugger;
+   
     var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         var thisproduct = GetProductDetailsByProductDetailID(rowData.ProductID,rowData.ID );
@@ -1587,7 +1587,7 @@ function GetProductReviews(id) {
 
 function ModelProductsRating(currentObj) {
     //popsup the model
-    debugger;
+   
     var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null) && (rowData.AttributeSetID != null))
     {
@@ -1595,7 +1595,7 @@ function ModelProductsRating(currentObj) {
         var thisRatingSummary = GetRatingSummary(rowData.ID, rowData.AttributeSetID);
         if (thisRatingSummary.length > 0)
         {
-            debugger;
+            
         
             $("#RatingPopupDisplay").empty();
             var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
