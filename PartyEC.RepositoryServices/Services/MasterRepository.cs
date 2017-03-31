@@ -258,21 +258,14 @@ namespace PartyEC.RepositoryServices.Services
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
                         {
-                            case "0":
-                                // not Successfull
-
+                            case "0":  
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
                                 break;
-                            case "1":
-                                //Insert Successfull
+                            case "1": 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
-                                break;
-                            case "2":
-                                //Duplicate Entry
-                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                operationsStatusObj.ReturnValues = supplierObj.ID;                               
                                 break;
                             default:
                                 break;
