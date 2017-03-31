@@ -9,16 +9,16 @@ namespace PartyEC.UI.App_Start
             
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css", "~/Content/bootstrap-theme.min.css", "~/Content/font-awesome.min.css","~/Content/custom.css"));
             bundles.Add(new StyleBundle("~/Content/bootstrapdatepicker").Include("~/Content/bootstrap-datepicker3.min.css"));
-            bundles.Add(new StyleBundle("~/Content/jstree").Include("~/Content/jstree/default/jstreestyle.css"));
+            bundles.Add(new StyleBundle("~/Content/jstree/default/jstreecss").Include("~/Content/jstree/default/jstreestyle.css"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css", "~/Content/bootstrap-theme.min.css", "~/Content/font-awesome.min.css", "~/Content/custom.css"));
             bundles.Add(new ScriptBundle("~/Content/lightbox").Include("~/Content/lightbox.min.css"));
 
-            bundles.Add(new StyleBundle("~/Content/datatable").Include("~/Content/DataTables/css/dataTables.bootstrap.min.css", "~/Content/DataTables/css/responsive.bootstrap.min.css"));
-            bundles.Add(new StyleBundle("~/Content/datatablecheckbox").Include("~/Content/DataTables/css/dataTables.checkboxes.css"));
-            bundles.Add(new StyleBundle("~/Content/datatableSelect").Include("~/Content/DataTables/css/select.dataTables.min.css"));
-            bundles.Add(new StyleBundle("~/Content/product").Include("~/Content/UserCSS/Product.css"));
+            bundles.Add(new StyleBundle("~/Content/DataTables/css/datatable").Include("~/Content/DataTables/css/dataTables.bootstrap.min.css", "~/Content/DataTables/css/responsive.bootstrap.min.css"));
+            bundles.Add(new StyleBundle("~/Content/DataTables/css/datatablecheckbox").Include("~/Content/DataTables/css/dataTables.checkboxes.css"));
+            bundles.Add(new StyleBundle("~/Content/DataTables/css/datatableSelect").Include("~/Content/DataTables/css/select.dataTables.min.css"));
+            bundles.Add(new StyleBundle("~/Content/UserCSS/product").Include("~/Content/UserCSS/Product.css"));
             bundles.Add(new StyleBundle("~/Content/Uplodify").Include("~/Content/uploadify.css"));
-            bundles.Add(new StyleBundle("~/Content/EventRequest").Include("~/Content/UserCSS/EventRequests.css"));
+            bundles.Add(new StyleBundle("~/Content/UserCSS/EventRequest").Include("~/Content/UserCSS/EventRequests.css"));
             
 
 

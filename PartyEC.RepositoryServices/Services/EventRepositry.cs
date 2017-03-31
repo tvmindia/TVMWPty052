@@ -133,7 +133,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = EventObj.Name;
                         cmd.Parameters.Add("@RelatedCategoriesCSV", SqlDbType.NVarChar, 250).Value = EventObj.RelatedCategoriesCSV;
                         cmd.Parameters.Add("@EventImageID", SqlDbType.UniqueIdentifier).Value = null;//EventObj.EventImageID;
-                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 10).Value = EventObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 50).Value = EventObj.commonObj.CreatedBy;
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = EventObj.commonObj.CreatedDate;
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
@@ -187,7 +187,7 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             cmd.Parameters.Add("@EventImageID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(EventObj.EventImageID); //EventObj.EventImageID;
                         }
-                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 10).Value = EventObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 50).Value = EventObj.commonObj.UpdatedBy;
                         cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = EventObj.commonObj.UpdatedDate;
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
