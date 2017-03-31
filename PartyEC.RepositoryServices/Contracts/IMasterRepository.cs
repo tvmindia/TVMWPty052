@@ -16,5 +16,7 @@ namespace PartyEC.RepositoryServices.Contracts
         List<OtherImages> GetAllStickers();
 
         Supplier GetSupplier(int SupplierID, OperationsStatus Status);
+        OperationsStatus InsertSupplier(Supplier supplierObj);
+        OperationsStatus UpdateSupplier(Supplier supplierObj);
     }
 }

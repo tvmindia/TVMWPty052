@@ -72,19 +72,17 @@ function Edit(currentObj) {
 function fillSupplier(ID) {
     debugger;
     var thissupplier = GetSupplierByID(ID); //Binding Data
-    //Hidden
+   
+
     $("#ID").val(thissupplier.ID)
-    $("#deleteId").val(thissupplier.ID)//for delete action    
-    //Textboxes
-    $("#Name").val(thissupplier.Name);
-    $("#Name").attr('disabled', true);
+    $("#lblSupplierID").text(thissupplier.ID);
+    $("#Name").val(thissupplier.Name); 
  
 }
 //---------------------------------------Clear Fields-----------------------------------------------------//
-function clearfields() {
-    $("#Name").attr('disabled', false);
+function clearfields() { 
     $("#ID").val("0")//ID is zero for New
-    $("#deleteId").val("0")
+    //$("#deleteId").val("0")
     $("#Name").val("")
   
 }
@@ -99,6 +97,7 @@ function btnreset() {
 }
 //---------------------------------------Save-------------------------------------------------------//
 function clicksave() {
+    debugger;
     var res = Validation();
     if (res) {
         $("#btnFormSave").click();
@@ -125,7 +124,7 @@ function Validation() {
 
 //---------------------------------------Add New Click----------------------------------------------------//
 function btnAddNew() {
-    $('#tabattributeDetails').trigger('click');
+    $('#tabSupplierDetails').trigger('click');
     clearfields();
 }
 

@@ -35,6 +35,8 @@ namespace PartyEC.BusinessServices.Services
             return manufacturelist;
         }
 
+        #region Suppliers
+
         public List<Supplier> GetAllSuppliers()
         {
             List<Supplier> supplierlist = null;
@@ -65,6 +67,37 @@ namespace PartyEC.BusinessServices.Services
             return mySupplier;
         }
 
+        public OperationsStatus InsertSupplier(Supplier supplierObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.InsertSupplier(supplierObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
+        public OperationsStatus UpdateSupplier(Supplier supplierObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.UpdateSupplier(supplierObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
+
+        #endregion Suppliers
+
 
         public List<OrderStatusMaster> GetAllOrderStatus()
         {
@@ -94,6 +127,6 @@ namespace PartyEC.BusinessServices.Services
             return otherImagesList;
         }
 
-     
+       
     }
 }

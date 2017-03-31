@@ -67,6 +67,57 @@ namespace PartyEC.UI.Controllers
 
         #endregion GetSupplierByID
 
+
+        #region InsertUpdateSuppliers
+
+        [HttpPost]
+        public string InsertUpdateSuppliers(SupplierViewModel supplierObj)
+        {
+            if (ModelState.IsValid)
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                if (supplierObj.ID == 0) //Create Supplier
+                {
+                    try
+                    {
+                        supplierObj.commonObj = new LogDetailsViewModel();
+                        supplierObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                        supplierObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertSupplier(Mapper.Map<SupplierViewModel, Supplier>(supplierObj)));
+                    }
+                    catch (Exception ex)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    }
+                }
+                else //Update Supplier
+                {
+                    try
+                    {
+                        supplierObj.commonObj = new LogDetailsViewModel();
+                        supplierObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                        supplierObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.UpdateSupplier(Mapper.Map<SupplierViewModel, Supplier>(supplierObj)));
+                    }
+                    catch (Exception ex)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    }
+                }
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+
+        #endregion InsertUpdateAttributes
+
         #region ChangeButtonStyle
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)

@@ -11,6 +11,8 @@ namespace PartyEC.RepositoryServices.Services
 {
     public class MasterRepository: IMasterRepository
     {
+        Const ConstObj = new Const();
+
         private IDatabaseFactory _databaseFactory;
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
@@ -69,7 +71,7 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
-
+        #region Suppliers
         public List<Supplier> GetAllSuppliers()
         {
             List<Supplier> suppliersList = null;
@@ -162,6 +164,132 @@ namespace PartyEC.RepositoryServices.Services
 
             return mySupplier;
         }
+
+        public OperationsStatus InsertSupplier(Supplier supplierObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                SqlParameter outparameterID = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertSupplier]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = supplierObj.Name;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = supplierObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = supplierObj.commonObj.CreatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        outparameterID = cmd.Parameters.Add("@ID", SqlDbType.Int);
+                        outparameterID.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
+
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
+                                operationsStatusObj.ReturnValues = int.Parse(outparameterID.Value.ToString());
+                                break;
+                            case "2":
+                                //Duplicate Entry
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
+        }
+
+        public OperationsStatus UpdateSupplier(Supplier supplierObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateSupplier]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = supplierObj.ID;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = supplierObj.Name;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = supplierObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = supplierObj.commonObj.UpdatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
+
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
+                                break;
+                            case "2":
+                                //Duplicate Entry
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
+        }
+        #endregion Suppliers
 
         public OperationsStatus InsertImage(OtherImages otherimgObj)
         {
@@ -315,6 +443,6 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
-     
+    
     }
 }

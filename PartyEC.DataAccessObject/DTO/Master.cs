@@ -26,6 +26,9 @@ namespace PartyEC.DataAccessObject.DTO
         public int ID { get; set; }
         public string Name { get; set; }
         public DateTime CreatedDate { get; set; }
+
+        public LogDetails commonObj { get; set; }
+        public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
     }
 
     public class OrderStatusMaster

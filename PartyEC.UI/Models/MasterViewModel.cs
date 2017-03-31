@@ -31,6 +31,8 @@ namespace PartyEC.UI.Models
         public string Name { get; set; }
 
         public DateTime CreatedDate { get; set; }
+
+        public LogDetailsViewModel commonObj { get; set; }
     }
     public class OrderStatusViewModel
     {
