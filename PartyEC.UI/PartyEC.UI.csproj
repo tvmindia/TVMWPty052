@@ -354,6 +354,7 @@
     <Content Include="Content\ProductImages\wonderfull cakeOther9925.png" />
     <Content Include="Content\uploadify.css" />
     <Content Include="Content\uploadify.swf" />
+    <Content Include="Content\UserCSS\Customer.css" />
     <Content Include="Content\UserCSS\EventRequests.css" />
     <Content Include="Content\UserCSS\Product.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -476,6 +477,7 @@
     <Content Include="Scripts\UserJS\Attributes.js" />
     <Content Include="Scripts\UserJS\Cart_Wishlist.js" />
     <Content Include="Scripts\UserJS\Categories.js" />
+    <Content Include="Scripts\UserJS\Customer.js" />
     <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\EventRequests.js" />
     <Content Include="Scripts\UserJS\Order.js" />
@@ -550,6 +552,7 @@
     <Content Include="Views\Shared\_EditTemplateForAssociatedProductAttributes.cshtml" />
     <Content Include="Views\Cart_Wishlist\Index.cshtml" />
     <Content Include="Views\Supplier\Index.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -560,7 +563,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
-    <Folder Include="Views\Customer\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">
