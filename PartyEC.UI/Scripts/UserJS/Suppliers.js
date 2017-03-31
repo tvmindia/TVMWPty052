@@ -1,6 +1,7 @@
 ﻿var DataTables = {};
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
+    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Add"); //ControllerName,id of the container div,Name of the action
     try {
         debugger;
         //var AttributesViewModel = new Object();
@@ -81,6 +82,7 @@ function Edit(currentObj) {
     //Tab Change on edit click
     debugger;
     $('#tabSupplierDetails').trigger('click');
+    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Edit");//ControllerName,id of the container div,Name of the action
  
     var rowData = DataTables.supplierTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -149,6 +151,8 @@ function SaveSuccess(data, status, xhr) {
 }
 function DeleteSuccess(data, status, xhr) {
     BindAllSuppliers();
+    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Add");
+
     var i = JSON.parse(data)
     debugger;
 
@@ -189,6 +193,7 @@ function clickdelete() {
 //---------------------------------------Add New Click----------------------------------------------------//
 function btnAddNew() {
     $('#tabSupplierDetails').trigger('click');
+    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
 }
 
