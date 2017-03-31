@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PartyEC.DataAccessObject.DTO;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -117,6 +118,11 @@ namespace PartyEC.UI.Models
         [Display(Name = "Choose Product Sticker")]
         public HttpPostedFileBase ProductStickerUpload { get; set; }
         public Guid? StickerID { get; set; }
+        public int ImageID { get; set; }
+        public string ImageURL { get; set; }
+        public int ProductDetID { get; set; }
+        public bool MainImage { get; set; }
+        public string[] IDSet { get; set; }
         #endregion Images
         #region Description
         [Required(ErrorMessage = "Please enter Short Description")]
@@ -150,12 +156,11 @@ namespace PartyEC.UI.Models
 
         #region ProductTags
      
-        [Display(Name = "New Tags")]
+        [Display(Name = "Key Words")]
         [MaxLength(250)]
         public string HeaderTags { get; set; }
         #endregion ProductTags
-
-
+        public string StickerURL { get; set; }
         public int LinkID { get; set; }
         public int CategoryID { get; set; }
         public float PositionNo { get; set; }
@@ -165,6 +170,7 @@ namespace PartyEC.UI.Models
         //collection of related products ids
         public string IDList { get; set; }
         public List<AttributeValuesViewModel> ProductOtherAttributes { get; set; }
+        public string SupplierName { get; set; }
 
     }
   public class ProductDetailViewModel
@@ -190,6 +196,7 @@ namespace PartyEC.UI.Models
         //For associated product
         public string ProductName { get; set; }
         public decimal BaseSellingPrice { get; set; }
+        public decimal? ActualPrice { get; set; }
     }
     public class ProductCategoryLinkViewModel
     {
@@ -206,4 +213,19 @@ namespace PartyEC.UI.Models
         public bool isMain { get; set; }
     }
 
+    public class ProductReviewViewModel
+    {
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int CustomerID { get; set; }
+        public string Review { get; set; }
+        public int DaysCount { get; set; }
+        public DateTime ReviewCreatedDate { get; set; }
+        public string CustomerName { get; set; }
+        public string AvgRating { get; set; }
+        public string ImageUrl { get; set; }
+
+        public List<AttributeValues> ProductRatingAttributes { get; set; }
+        public string RatingCount { get; set; }
+    }
 }

@@ -175,7 +175,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@EventStatus", SqlDbType.SmallInt).Value = eventObj.EventStatus;
                         cmd.Parameters.Add("@FollowUpDate", SqlDbType.DateTime).Value = eventObj.FollowUpDate;
 
-                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 10).Value = eventObj.logDetailsObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 50).Value = eventObj.logDetailsObj.UpdatedBy;
                         cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = eventObj.logDetailsObj.UpdatedDate;
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
@@ -229,7 +229,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, -1).Value = eventObj.Comments;
                         cmd.Parameters.Add("@CustomerNotifiedYN", SqlDbType.Bit).Value = null;
 
-                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 20).Value = eventObj.logDetailsObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 50).Value = eventObj.logDetailsObj.CreatedBy;
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = eventObj.logDetailsObj.CreatedDate;
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);

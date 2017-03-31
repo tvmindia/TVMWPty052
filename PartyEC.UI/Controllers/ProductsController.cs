@@ -129,6 +129,22 @@ namespace PartyEC.UI.Controllers
             }
            
         }
+        [HttpGet]
+        public string GetAllStickers()
+        {
+            try
+            {
+                    List<OtherImagesViewModel> OtherImagesList = Mapper.Map<List<OtherImages>, List<OtherImagesViewModel>>(_masterBusiness.GetAllStickers());
+
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OtherImagesList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
+
 
         [HttpGet]
         public string GetUNRelatedProducts(string id)
@@ -211,6 +227,21 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        [HttpGet]
+        public string GetRelatedImages(string id)
+        {
+            try
+            {
+                OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                List<ProductViewModel> product = Mapper.Map<List<Product>, List<ProductViewModel>>(_productBusiness.GetRelatedImages(Int32.Parse(id), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = product });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -218,7 +249,6 @@ namespace PartyEC.UI.Controllers
         {
             if (ModelState.IsValid)
             {
-
                 try
                 {
                     OperationsStatusViewModel OperationsStatusViewModelObj = null;
@@ -242,16 +272,26 @@ namespace PartyEC.UI.Controllers
                             OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.UpdateProduct(Mapper.Map<ProductViewModel, Product>(productObj)));
                             return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                     }
-                   
-                }
+                  }
                 catch (Exception ex)
                 {
                     return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                 }
             }
-            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
-        }
-
+            //Model state errror
+            else
+            {
+                List<string> modelErrors = new List<string>();
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var modelError in modelState.Errors)
+                    {
+                     modelErrors.Add(modelError.ErrorMessage);
+                    }
+                }
+                return JsonConvert.SerializeObject(new { Result = "VALIDATION", Message = string.Join(",", modelErrors) });
+            }
+      }
         [HttpPost]
         [ValidateAntiForgeryToken]
         public string RelatedProductsInsert(ProductViewModel productObj)
@@ -271,6 +311,26 @@ namespace PartyEC.UI.Controllers
                 catch(Exception ex)
                 {
                   return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+
+        [HttpPost]
+        public string DeleteProductOtherImages(ProductViewModel productViewObj)
+        {
+            if ((!ModelState.IsValid))
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                try
+                {
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.DeleteProductsImage(productViewObj.IDSet));
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                catch (Exception ex)
+                {
+
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                 }
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
@@ -299,6 +359,20 @@ namespace PartyEC.UI.Controllers
                 }
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+        [HttpPost]
+        public string UpdateProductSticker(ProductViewModel productViewObj)
+        {
+            try
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = new OperationsStatusViewModel();
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.UpdateProductSticker(Mapper.Map<ProductViewModel, Product>(productViewObj)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
         }
 
         #region UpdateProductHeaderOtherAttributes
@@ -426,7 +500,6 @@ namespace PartyEC.UI.Controllers
         }
         #endregion DeleteProductDetail
 
-
         #region ChangeButtonStyle
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)
@@ -447,10 +520,39 @@ namespace PartyEC.UI.Controllers
                     //ToolboxViewModelObj.resetbtn.Event = "btnreset()";
                     //ToolboxViewModelObj.resetbtn.Title = "Reset";
 
-                    //ToolboxViewModelObj.backbtn.Visible = true;
-                    //ToolboxViewModelObj.backbtn.Event = "goback()";
-                    //ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
 
+                    break;
+                case "Delete":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Event = "DeleteOtherImage()";
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
+                    break;
+                case "CancelDelete":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    break;
+                case "Sticker":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "UpdateStickerForProduct()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    break;
+                case "NoSticker":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Disable = true;
+                    break;
+                case "CancelSticker":
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Event = "UpdateStickerForProduct()";
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Disable = true;
                     break;
                 case "Add":
                     ToolboxViewModelObj.deletebtn.Visible = true;
@@ -472,12 +574,109 @@ namespace PartyEC.UI.Controllers
             }
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
+
+        
         #endregion ChangeButtonStyle
 
+        public ActionResult UploadProductImage(ProductViewModel ProductViewObj)
+        {
+            OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
 
+            var file = Request.Files["Filedata"];
+            var FileNameCustom = ProductViewObj.Name + ".png";
+            string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
+            file.SaveAs(savePath);
+            ProductViewObj.ImageURL = "/Content/ProductImages/" + FileNameCustom;
+            if (ProductViewObj.ImageID==0)
+            {
+                ProductViewObj.logDetails = new LogDetailsViewModel();
+                ProductViewObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                ProductViewObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                ProductViewObj.logDetails.UpdatedBy = _commonBusiness.GetUA().UserName;
+                ProductViewObj.logDetails.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                ProductViewObj.MainImage = true;
+                operationsStatus = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertImageProduct(Mapper.Map<ProductViewModel, Product>(ProductViewObj)));
 
+            }
+            return Content(Url.Content(@"~\Content\ProductImages\" + FileNameCustom));
+        }
+        public ActionResult UploadOtherImages(ProductViewModel ProductViewObj)
+        {
+            OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+            Random rnd = new Random();
+            var file = Request.Files["Filedata"];
+            var FileNameCustom = ProductViewObj.Name+"Other"+rnd.Next(111,9999).ToString()+ ".png";
+            string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
+            file.SaveAs(savePath);
+            ProductViewObj.ImageURL = "/Content/ProductImages/" + FileNameCustom;
+                ProductViewObj.logDetails = new LogDetailsViewModel();
+                ProductViewObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                ProductViewObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                ProductViewObj.logDetails.UpdatedBy = _commonBusiness.GetUA().UserName;
+                ProductViewObj.logDetails.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                operationsStatus = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertImageProduct(Mapper.Map<ProductViewModel, Product>(ProductViewObj)));
+                return Content(Url.Content(@"~\Content\ProductImages\" + FileNameCustom));
+        }
+        public ActionResult UploadStickerImages(ProductViewModel ProductViewObj)
+        {
+            OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
 
+            Random rnd = new Random();
+            var file = Request.Files["Filedata"];
+            var FileNameCustom ="Sticker" + rnd.Next(111, 9999).ToString() + ".png";
+            string savePath = Server.MapPath(@"~\Content\OtherImages\" + FileNameCustom);
+            file.SaveAs(savePath);
+            ProductViewObj.StickerURL = "/Content/OtherImages/" + FileNameCustom;
+            ProductViewObj.logDetails = new LogDetailsViewModel();
+            ProductViewObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+            ProductViewObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+            //ProductViewObj.logDetails.UpdatedBy = _commonBusiness.GetUA().UserName;
+            //ProductViewObj.logDetails.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+            operationsStatus = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertStickers(Mapper.Map<ProductViewModel, Product>(ProductViewObj)));
 
+            return Content(Url.Content(@"~\Content\OtherImages\" + FileNameCustom));
+        }
+
+        //------------------------------------------------------//
+        [HttpGet]
+        public string GetProductReviews(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    List<ProductReviewViewModel> productReviewList = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_productBusiness.GetProductReviews(int.Parse(id)));
+
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productReviewList });
+                }
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "id is empty" });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
+
+        [HttpGet]
+        public string GetRatingSummary(string id, string attributesetId)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    List<ProductReviewViewModel> productRatingSummary = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_productBusiness.GetRatingSummary(int.Parse(id), int.Parse(attributesetId)));
+
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productRatingSummary });
+                }
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "id is empty" });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
 
 
 

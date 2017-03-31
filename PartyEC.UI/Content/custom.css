@@ -220,7 +220,7 @@ background-image: -o-linear-gradient(top, #ffffff, #eeeeee);
     z-index:199;
     color:white;
 }
-  #alinkUpload
+  #alinkUpload,#alinkUploadOther,#alinkUploadSticker
   {
       position:absolute;
       left:34%;

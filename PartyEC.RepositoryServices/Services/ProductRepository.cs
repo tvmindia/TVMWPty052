@@ -56,7 +56,7 @@ namespace PartyEC.RepositoryServices.Services
                               {
                                   Product _productObj = new Product();
                                   {
-                                        _productObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _productObj.ID);
+                                        _productObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _productObj.ID);
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.SKU = (sdr["SKU"].ToString() != "" ? sdr["SKU"].ToString() : _productObj.SKU);
                                         _productObj.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : _productObj.Enabled);
@@ -115,7 +115,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandText = "[GetAllProductswithCategory]";
                         if (CategoryID != "" && CategoryID != null)
                         {
-                            cmd.Parameters.Add("@ID", SqlDbType.Int).Value = Int16.Parse(CategoryID.ToString());
+                            cmd.Parameters.Add("@ID", SqlDbType.Int).Value = int.Parse(CategoryID.ToString());
                         }
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -127,7 +127,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Product _productObj = new Product();
                                     {
-                                        _productObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _productObj.ID);
+                                        _productObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _productObj.ID);
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.SKU = (sdr["SKU"].ToString() != "" ? sdr["SKU"].ToString() : _productObj.SKU);
                                         _productObj.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : _productObj.Enabled);
@@ -148,9 +148,9 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.FreeDelivery = (sdr["FreeDeliveryYN"].ToString() != "" ? bool.Parse(sdr["FreeDeliveryYN"].ToString()) : _productObj.FreeDelivery);
                                         _productObj.HeaderTags = (sdr["HeaderTag"].ToString() != "" ? sdr["HeaderTag"].ToString() : _productObj.HeaderTags);
                                         _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.SupplierName);
-                                        _productObj.CategoryID = (sdr["CategoryID"].ToString() != "" ? Int16.Parse(sdr["CategoryID"].ToString()) : _productObj.CategoryID);
+                                        _productObj.CategoryID = (sdr["CategoryID"].ToString() != "" ? int.Parse(sdr["CategoryID"].ToString()) : _productObj.CategoryID);
                                         _productObj.PositionNo = (sdr["PositionNo"].ToString() != "" ? float.Parse(sdr["PositionNo"].ToString()) : _productObj.PositionNo);
-                                        _productObj.LinkID = (sdr["LinkID"].ToString() != "" ? Int16.Parse(sdr["LinkID"].ToString()) : _productObj.LinkID);
+                                        _productObj.LinkID = (sdr["LinkID"].ToString() != "" ? int.Parse(sdr["LinkID"].ToString()) : _productObj.LinkID);
                                     }
                                     productList.Add(_productObj);
                                 }
@@ -187,7 +187,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandType = CommandType.StoredProcedure;
                         if (CategoryID != "" && CategoryID != null)
                         {
-                            cmd.Parameters.Add("@ID", SqlDbType.Int).Value = Int16.Parse(CategoryID.ToString());
+                            cmd.Parameters.Add("@ID", SqlDbType.Int).Value = int.Parse(CategoryID.ToString());
                         }
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
@@ -198,7 +198,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Product _productObj = new Product();
                                     {
-                                        _productObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _productObj.ID);
+                                        _productObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _productObj.ID);
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.SKU = (sdr["SKU"].ToString() != "" ? sdr["SKU"].ToString() : _productObj.SKU);
                                         _productObj.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : _productObj.Enabled);
@@ -219,9 +219,9 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.FreeDelivery = (sdr["FreeDeliveryYN"].ToString() != "" ? bool.Parse(sdr["FreeDeliveryYN"].ToString()) : _productObj.FreeDelivery);
                                         _productObj.HeaderTags = (sdr["HeaderTag"].ToString() != "" ? sdr["HeaderTag"].ToString() : _productObj.HeaderTags);
                                         _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.SupplierName);
-                                        _productObj.CategoryID = (sdr["CategoryID"].ToString() != "" ? Int16.Parse(sdr["CategoryID"].ToString()) : _productObj.CategoryID);
+                                        _productObj.CategoryID = (sdr["CategoryID"].ToString() != "" ? int.Parse(sdr["CategoryID"].ToString()) : _productObj.CategoryID);
                                         _productObj.PositionNo = (sdr["PositionNo"].ToString() != "" ? float.Parse(sdr["PositionNo"].ToString()) : _productObj.PositionNo);
-                                        _productObj.LinkID = (sdr["LinkID"].ToString() != "" ? Int16.Parse(sdr["LinkID"].ToString()) : _productObj.LinkID);
+                                        _productObj.LinkID = (sdr["LinkID"].ToString() != "" ? int.Parse(sdr["LinkID"].ToString()) : _productObj.LinkID);
                                     }
                                     productList.Add(_productObj);
                                 }
@@ -257,7 +257,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandText = "[GetAllProductswithCategoryAssiged]";
                         if (CategoryID != "" && CategoryID != null)
                         {
-                            cmd.Parameters.Add("@ID", SqlDbType.Int).Value = Int16.Parse(CategoryID.ToString());
+                            cmd.Parameters.Add("@ID", SqlDbType.Int).Value = int.Parse(CategoryID.ToString());
                         }
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -269,7 +269,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Product _productObj = new Product();
                                     {
-                                        _productObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _productObj.ID);
+                                        _productObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _productObj.ID);
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.SKU = (sdr["SKU"].ToString() != "" ? sdr["SKU"].ToString() : _productObj.SKU);
                                         _productObj.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : _productObj.Enabled);
@@ -290,9 +290,9 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.FreeDelivery = (sdr["FreeDeliveryYN"].ToString() != "" ? bool.Parse(sdr["FreeDeliveryYN"].ToString()) : _productObj.FreeDelivery);
                                         _productObj.HeaderTags = (sdr["HeaderTag"].ToString() != "" ? sdr["HeaderTag"].ToString() : _productObj.HeaderTags);
                                         _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.SupplierName);
-                                        _productObj.CategoryID = (sdr["CategoryID"].ToString() != "" ? Int16.Parse(sdr["CategoryID"].ToString()) : _productObj.CategoryID);
+                                        _productObj.CategoryID = (sdr["CategoryID"].ToString() != "" ? int.Parse(sdr["CategoryID"].ToString()) : _productObj.CategoryID);
                                         _productObj.PositionNo = (sdr["PositionNo"].ToString() != "" ? float.Parse(sdr["PositionNo"].ToString()) : _productObj.PositionNo);
-                                        _productObj.LinkID = (sdr["LinkID"].ToString() != "" ? Int16.Parse(sdr["LinkID"].ToString()) : _productObj.LinkID);
+                                        _productObj.LinkID = (sdr["LinkID"].ToString() != "" ? int.Parse(sdr["LinkID"].ToString()) : _productObj.LinkID);
                                     }
                                     productList.Add(_productObj);
                                 }
@@ -403,6 +403,7 @@ namespace PartyEC.RepositoryServices.Services
                                 // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                productObj.ID = 0;
                                 break;
                             case "1":
                                 //Insert Successfull
@@ -471,8 +472,8 @@ namespace PartyEC.RepositoryServices.Services
                             cmd.Parameters.Add("@EnableYN", SqlDbType.Bit).Value = detail.Enabled;
                             cmd.Parameters.Add("@StockAvailableYN", SqlDbType.Bit).Value = detail.StockAvailable;
                             cmd.Parameters.Add("@DiscountAmout", SqlDbType.Decimal).Value = detail.DiscountAmount;
-                            cmd.Parameters.Add("@DiscountStDate", SqlDbType.SmallDateTime).Value = detail.DiscountStartDate;
-                            cmd.Parameters.Add("@DiscountEnDate", SqlDbType.SmallDateTime).Value = detail.DiscountEndDate;
+                            cmd.Parameters.Add("@DiscountStDate", SqlDbType.DateTime).Value = detail.DiscountStartDate;
+                            cmd.Parameters.Add("@DiscountEnDate", SqlDbType.DateTime).Value = detail.DiscountEndDate;
                             cmd.Parameters.Add("@DefaultOptionYN", SqlDbType.Bit).Value = detail.DefaultOption;
                             cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = productObj.logDetails.CreatedBy;
                             cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = productObj.logDetails.CreatedDate;
@@ -533,7 +534,78 @@ namespace PartyEC.RepositoryServices.Services
 
             return operationsStatusObj;
         }
+        public OperationsStatus UpdateProductSticker(Product productObj)
+        {
 
+            OperationsStatus operationsStatusObj = null;
+            SqlParameter statusCode = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+
+
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateProductSticker]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        if (productObj.StickerID != Guid.Empty&& productObj.StickerID!=null)
+                        {
+                            cmd.Parameters.Add("@StickerID", SqlDbType.UniqueIdentifier).Value = productObj.StickerID;
+                        }
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = productObj.ID;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull   
+                                if (productObj.StickerID != Guid.Empty && productObj.StickerID != null)
+                                {
+                                    operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Sticker Updation Not Successfull!";
+                                }
+                                else
+                                {
+                                    operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Sticker Deletion Not Successfull!";
+                                }
+                                    
+                                break;
+                            case "1":
+                                //Update Successfull
+                                if (productObj.StickerID != Guid.Empty && productObj.StickerID != null)
+                                {
+                                    operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Sticker Updation Successfull!";
+                                }
+                                 else
+                                {
+                                    operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                    operationsStatusObj.StatusMessage = "Sticker Deletion Successfull!";
+                                }   
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
         public OperationsStatus UpdateProduct(Product productObj) {
 
             OperationsStatus operationsStatusObjH = null;
@@ -629,11 +701,13 @@ namespace PartyEC.RepositoryServices.Services
                                 // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "updation Not Successfull!";
+                                operationsStatusObj.ReturnValues = productObj.ID;
                                 break;
                             case "1":
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "updation Successfull!";
+                                operationsStatusObj.ReturnValues= productObj.ID;
 
                                 break;
                             default:
@@ -759,6 +833,50 @@ namespace PartyEC.RepositoryServices.Services
 
             return myProduct;
         }
+        public List<Product> GetRelatedImages(int ProductID, OperationsStatus Status)
+        {
+            List<Product> ProductList= null;
+            try
+            {
+                using (_con = _databaseFactory.GetDBConnection())
+                {
+                    if (_con.State == ConnectionState.Closed)
+                    {
+                        _con.Open();
+                    }
+                    _cmd = new SqlCommand();
+                    _cmd.Connection = _con;
+                    _cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                    _cmd.CommandText = "[GetAllProductImages]";
+                    _cmd.CommandType = CommandType.StoredProcedure;
+
+                    using (SqlDataReader sdr = _cmd.ExecuteReader())
+                    {
+                        if ((sdr != null) && (sdr.HasRows))
+                        {
+                            ProductList = new List<Product>();
+                            while (sdr.Read())
+                            {
+                                Product myProduct = new Product();
+                                myProduct.ImageID = sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myProduct.ImageID;
+                                myProduct.ImageURL = sdr["ImageURL"].ToString();
+                                myProduct.ID = sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : ProductID; //sdr["Qty"].ToString();
+                                myProduct.ProductDetID = sdr["ProductDetID"].ToString() != "" ? int.Parse(sdr["ProductDetID"].ToString()) : myProduct.ProductDetID;
+                                myProduct.MainImage = sdr["MainImageYN"].ToString() != "" ? bool.Parse(sdr["MainImageYN"].ToString()) : myProduct.MainImage;
+                                ProductList.Add(myProduct);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                throw e;
+
+            }
+
+            return ProductList;
+        }
 
         private Product GetProductHeader(int ProductID)
         {
@@ -784,7 +902,7 @@ namespace PartyEC.RepositoryServices.Services
                             if (sdr.Read())
                             {
                                 myProduct = new Product();
-                                myProduct.ID = sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myProduct.ID;
+                                myProduct.ID = sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myProduct.ID;
                                 myProduct.Name = sdr["Name"].ToString();
                                 myProduct.SKU = sdr["SKU"].ToString();
                                 myProduct.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : myProduct.Enabled);
@@ -793,8 +911,8 @@ namespace PartyEC.RepositoryServices.Services
                                 myProduct.URL = (sdr["URL"].ToString() != "" ? sdr["URL"].ToString() : myProduct.URL);
                                 myProduct.ShowPrice = (sdr["ShowPriceYN"].ToString() != "" ? bool.Parse(sdr["ShowPriceYN"].ToString()) : myProduct.ShowPrice);
                                 myProduct.ActionType = (sdr["ActionType"].ToString() != "" ? char.Parse(sdr["ActionType"].ToString()) : myProduct.ActionType);
-                                myProduct.SupplierID = (sdr["SupplierID"].ToString() != "" ? Int16.Parse(sdr["SupplierID"].ToString()) : myProduct.SupplierID);
-                                myProduct.ManufacturerID = (sdr["ManufacturerID"].ToString() != "" ? Int16.Parse(sdr["ManufacturerID"].ToString()) : myProduct.ManufacturerID);
+                                myProduct.SupplierID = (sdr["SupplierID"].ToString() != "" ? int.Parse(sdr["SupplierID"].ToString()) : myProduct.SupplierID);
+                                myProduct.ManufacturerID = (sdr["ManufacturerID"].ToString() != "" ? int.Parse(sdr["ManufacturerID"].ToString()) : myProduct.ManufacturerID);
                                 myProduct.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : myProduct.SupplierName);
                                 myProduct.ManufacturerName = (sdr["ManufacturerName"].ToString() != "" ? sdr["ManufacturerName"].ToString() : myProduct.ManufacturerName);
                                 myProduct.BaseSellingPrice = sdr["BaseSellingPrice"].ToString() != "" ? decimal.Parse(sdr["BaseSellingPrice"].ToString()) : myProduct.BaseSellingPrice;
@@ -803,7 +921,7 @@ namespace PartyEC.RepositoryServices.Services
                                 myProduct.LongDescription = (sdr["LongDescription"].ToString() != "" ? sdr["LongDescription"].ToString() : myProduct.LongDescription);
                                 myProduct.ProductType = (sdr["ProductType"].ToString() != "" ? char.Parse(sdr["ProductType"].ToString()) : myProduct.ProductType);
                                 myProduct.StockAvailable = (sdr["StockAvailableYN"].ToString() != "" ? bool.Parse(sdr["StockAvailableYN"].ToString()) : myProduct.StockAvailable);
-                                myProduct.AttributeSetID = sdr["AttributeSetID"].ToString() != "" ? Int16.Parse(sdr["AttributeSetID"].ToString()) : myProduct.AttributeSetID;
+                                myProduct.AttributeSetID = sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : myProduct.AttributeSetID;
                                 myProduct.FreeDelivery = (sdr["FreeDeliveryYN"].ToString() != "" ? bool.Parse(sdr["FreeDeliveryYN"].ToString()) : myProduct.FreeDelivery);
                                 myProduct.HeaderTags = (sdr["HeaderTag"].ToString() != "" ? sdr["HeaderTag"].ToString() : myProduct.HeaderTags);
                                 myProduct.StickerURL = (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : myProduct.StickerURL);
@@ -860,9 +978,9 @@ namespace PartyEC.RepositoryServices.Services
                                 ProductDetail myProductDetail = new ProductDetail();
                                 myProductDetail.ProductID = ProductID;
                                 myProductDetail.ID = sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myProductDetail.ID;
-                                myProductDetail.AttributeSetID = sdr["AttributeSetID"].ToString() != "" ? Int16.Parse(sdr["AttributeSetID"].ToString()) : myProductDetail.AttributeSetID;
-                                myProductDetail.Qty = sdr["Qty"].ToString() != "" ? Int16.Parse(sdr["Qty"].ToString()) : myProductDetail.Qty; //sdr["Qty"].ToString();
-                                myProductDetail.OutOfStockAlertQty = sdr["OutOfStockAlertQty"].ToString() != "" ? Int16.Parse(sdr["OutOfStockAlertQty"].ToString()) : myProductDetail.OutOfStockAlertQty;
+                                myProductDetail.AttributeSetID = sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : myProductDetail.AttributeSetID;
+                                myProductDetail.Qty = sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : myProductDetail.Qty; //sdr["Qty"].ToString();
+                                myProductDetail.OutOfStockAlertQty = sdr["OutOfStockAlertQty"].ToString() != "" ? int.Parse(sdr["OutOfStockAlertQty"].ToString()) : myProductDetail.OutOfStockAlertQty;
                                 myProductDetail.PriceDifference = sdr["PriceDiffAmt"].ToString() != "" ? decimal.Parse(sdr["PriceDiffAmt"].ToString()) : myProductDetail.PriceDifference;
                                 myProductDetail.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : myProductDetail.Enabled);
                                 myProductDetail.DetailTags = (sdr["DetailTag"].ToString() != "" ? sdr["DetailTag"].ToString() : myProductDetail.DetailTags);
@@ -872,6 +990,7 @@ namespace PartyEC.RepositoryServices.Services
                                 myProductDetail.DiscountEndDate = (sdr["DiscountEnDate"].ToString() != "" ? (Convert.ToDateTime(sdr["DiscountEnDate"].ToString())) : myProductDetail.DiscountEndDate);
                                 myProductDetail.ProductName=(sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : myProductDetail.ProductName);
                                 myProductDetail.BaseSellingPrice= sdr["BaseSellingPrice"].ToString() != "" ? decimal.Parse(sdr["BaseSellingPrice"].ToString()) : myProductDetail.BaseSellingPrice;
+                                myProductDetail.ActualPrice = (sdr["ActualPrice"].ToString() != "" ? decimal.Parse(sdr["ActualPrice"].ToString()) : myProductDetail.ActualPrice);
                                 //myProductDetail.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
                                 //myProductDetail.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["CreatedDate"].ToString())) : myProductDetail.logDetails.CreatedDate);
                                 //myProductDetail.logDetails.UpdatedBy = sdr["UpdatedBy"].ToString();
@@ -1026,7 +1145,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Product _productObj = new Product();
                                     {
-                                        _productObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _productObj.ID);
+                                        _productObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _productObj.ID);
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.SKU = (sdr["SKU"].ToString() != "" ? sdr["SKU"].ToString() : _productObj.SKU);
                                         _productObj.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : _productObj.Enabled);
@@ -1096,7 +1215,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Product _productObj = new Product();
                                     {
-                                        _productObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _productObj.ID);
+                                        _productObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _productObj.ID);
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.SKU = (sdr["SKU"].ToString() != "" ? sdr["SKU"].ToString() : _productObj.SKU);
                                         _productObj.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : _productObj.Enabled);
@@ -1458,9 +1577,9 @@ namespace PartyEC.RepositoryServices.Services
                                 myProductDetail = new ProductDetail();
                                 myProductDetail.ProductID = ProductID;
                                 myProductDetail.ID = sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myProductDetail.ID;
-                                myProductDetail.AttributeSetID = sdr["AttributeSetID"].ToString() != "" ? Int16.Parse(sdr["AttributeSetID"].ToString()) : myProductDetail.AttributeSetID;
-                                myProductDetail.Qty = sdr["Qty"].ToString() != "" ? Int16.Parse(sdr["Qty"].ToString()) : myProductDetail.Qty; //sdr["Qty"].ToString();
-                                myProductDetail.OutOfStockAlertQty = sdr["OutOfStockAlertQty"].ToString() != "" ? Int16.Parse(sdr["OutOfStockAlertQty"].ToString()) : myProductDetail.OutOfStockAlertQty;
+                                myProductDetail.AttributeSetID = sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : myProductDetail.AttributeSetID;
+                                myProductDetail.Qty = sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : myProductDetail.Qty; //sdr["Qty"].ToString();
+                                myProductDetail.OutOfStockAlertQty = sdr["OutOfStockAlertQty"].ToString() != "" ? int.Parse(sdr["OutOfStockAlertQty"].ToString()) : myProductDetail.OutOfStockAlertQty;
                                 myProductDetail.PriceDifference = sdr["PriceDiffAmt"].ToString() != "" ? decimal.Parse(sdr["PriceDiffAmt"].ToString()) : myProductDetail.PriceDifference;
                                 myProductDetail.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : myProductDetail.Enabled);
                                 myProductDetail.DetailTags = (sdr["DetailTag"].ToString() != "" ? sdr["DetailTag"].ToString() : myProductDetail.DetailTags);
@@ -1572,6 +1691,248 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
 
         }
+        public OperationsStatus DeleteProductImage(int ID)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter outparameter = null;
+                SqlParameter OutparameterURL = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteProductImage]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ID;
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        OutparameterURL = cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1);
+                        outparameter.Direction = ParameterDirection.Output;
+                        OutparameterURL.Direction= ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // Delete not Successfull
 
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.DeleteFailure;
+                                break;
+                            case "1":
+                                //Delete Successfull
+                                if (outparameter.Value.ToString() == "1")
+                                {
+                                    try
+                                    {
+                                        if (OutparameterURL.Value.ToString() != "")
+                                        {
+                                            System.IO.File.Delete(HttpContext.Current.Server.MapPath(OutparameterURL.Value.ToString()));
+                                        }
+
+
+                                    }
+                                    catch (System.IO.IOException e)
+                                    {
+                                        throw e;
+
+                                    }
+                                }
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.DeleteSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
+        }
+        public OperationsStatus InsertImageProduct(Product productObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertProductImage]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = productObj.ID;
+                        if(productObj.ProductDetID!=0)
+                        {
+                            cmd.Parameters.Add("@DetailID", SqlDbType.NVarChar, -1).Value = productObj.ProductDetID;
+                        }
+                        
+                        cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1).Value = productObj.ImageURL;
+                        cmd.Parameters.Add("@isMain", SqlDbType.Bit).Value = productObj.MainImage;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = productObj.logDetails.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = productObj.logDetails.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Not Successfull!";
+                                return operationsStatusObj;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                return operationsStatusObj;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return operationsStatusObj;
+        }
+
+        public List<ProductReview> GetProductReviews(int ProductID)
+        {
+            List<ProductReview> productReviewList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetProductReviewsandRating]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                productReviewList = new List<ProductReview>();
+                                while (sdr.Read())
+                                {
+                                    ProductReview _pReviewObj = new ProductReview();
+                                    {
+                                        _pReviewObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _pReviewObj.ID);
+                                        _pReviewObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : _pReviewObj.CustomerID);
+                                        _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
+                                        _pReviewObj.Review = (sdr["Review"].ToString() != "" ? sdr["Review"].ToString() : _pReviewObj.Review);
+                                        _pReviewObj.ReviewCreatedDate = (sdr["ReviewCreatedDate"].ToString() != "" ? DateTime.Parse(sdr["ReviewCreatedDate"].ToString()) : _pReviewObj.ReviewCreatedDate);
+                                        _pReviewObj.DaysCount = (sdr["DaysCount"].ToString() != "" ? int.Parse(sdr["DaysCount"].ToString()) : _pReviewObj.DaysCount);
+                                        _pReviewObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _pReviewObj.CustomerName);
+                                        _pReviewObj.AvgRating = (sdr["AvgRating"].ToString() != "" ? sdr["AvgRating"].ToString() : _pReviewObj.AvgRating);
+                                        _pReviewObj.ImageUrl = (sdr["ImageUrl"].ToString() != "" ? sdr["ImageUrl"].ToString() : _pReviewObj.ImageUrl);
+                                    }
+                                    productReviewList.Add(_pReviewObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return productReviewList;
+        }
+
+        public List<ProductReview> GetRatingSummary(int ProductID, int AttributesetId)
+        {
+            List<ProductReview> RatingSummary = null;
+            List<AttributeValues> myAttributeStructure = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetProductRatingSummary]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+
+
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                RatingSummary = new List<ProductReview>();
+                                while (sdr.Read())
+                                {
+                                    ProductReview _pReviewObj = new ProductReview();
+                                    {
+                                        _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
+                                        _pReviewObj.RatingCount = (sdr["RatingCount"].ToString() != "" ? sdr["RatingCount"].ToString() : _pReviewObj.RatingCount);
+
+                                        if (myAttributeStructure == null)
+                                        {
+                                            myAttributeStructure = _attributesRepository.GetAttributeContainer(AttributesetId, "Rating");
+                                        }
+
+                                        _pReviewObj.ProductRatingAttributes = new List<AttributeValues>();
+                                        foreach (AttributeValues att in myAttributeStructure)
+                                        {
+                                            att.Value = sdr[att.Caption].ToString();
+                                            _pReviewObj.ProductRatingAttributes.Add(att);
+
+                                        }
+                                    }
+                                    RatingSummary.Add(_pReviewObj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return RatingSummary;
+
+        }
     }
 }

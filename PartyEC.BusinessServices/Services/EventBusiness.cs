@@ -74,12 +74,12 @@ namespace PartyEC.BusinessServices.Services
             return myEvent;
         }
 
-        public OperationsStatus InsertEvent(Event EventObj)
+        public OperationsStatus InsertEventTypes(Event EventObj)
         {
             OperationsStatus operationsStatusObj = null;
             try
             {
-                operationsStatusObj= _eventRepository.InsertEvent(EventObj);
+                operationsStatusObj= _eventRepository.InsertEventTypes(EventObj);
             }
             catch (Exception ex)
             {

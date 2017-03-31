@@ -11,10 +11,11 @@ namespace PartyEC.BusinessServices.Services
     public class ProductBusiness:IProductBusiness
     {
         private IProductRepository _productRepository;
-
-        public ProductBusiness(IProductRepository productRepository)
+        private IMasterRepository _masterRepository;
+        public ProductBusiness(IProductRepository productRepository,IMasterRepository masterRepository)
         {
             _productRepository = productRepository;
+            _masterRepository = masterRepository;
         }
 
         public List<Product> GetAllProducts(Product productObj)
@@ -115,13 +116,20 @@ namespace PartyEC.BusinessServices.Services
         {
             return _productRepository.UpdateProduct(productObj);
         }
-
+        public OperationsStatus UpdateProductSticker(Product productObj)
+        {
+            return _productRepository.UpdateProductSticker(productObj);
+        }
         public Product GetProduct(int ProductID, OperationsStatus Status)
         {
 
             return _productRepository.GetProduct(ProductID, Status);
         }
+        public List<Product> GetRelatedImages(int ProductID, OperationsStatus Status)
+        {
 
+            return _productRepository.GetRelatedImages(ProductID, Status);
+        }
         public OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList, List<ProductCategoryLink> DeleteList)
         {
 
@@ -196,9 +204,9 @@ namespace PartyEC.BusinessServices.Services
                 productDetailslist = _productRepository.GetProductDetail(ProductID);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return productDetailslist;
         }
@@ -228,6 +236,88 @@ namespace PartyEC.BusinessServices.Services
 
             }
             return OS;
+        }
+        public OperationsStatus DeleteProductsImage(string[] DeleteIDs)
+        {
+            OperationsStatus OS = null;
+            try
+            {
+                foreach(var i in DeleteIDs)
+                {
+                    OS = _productRepository.DeleteProductImage(int.Parse(i));
+                }
+                
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return OS;
+        }
+
+        public List<ProductReview> GetProductReviews(int ProductID)
+        {
+            List<ProductReview> productReview = null;
+            try
+            {
+                productReview = _productRepository.GetProductReviews(ProductID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productReview;
+        }
+
+        public List<ProductReview> GetRatingSummary(int ProductID, int AttributesetId)
+        {
+            List<ProductReview> RatingSummary = null;
+            try
+            {
+                RatingSummary = _productRepository.GetRatingSummary(ProductID, AttributesetId);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return RatingSummary;
+        }
+
+        public OperationsStatus InsertImageProduct(Product productObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                    operationsStatusObj = _productRepository.InsertImageProduct(productObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
+        public OperationsStatus InsertStickers(Product productObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                //if (productObj.StickerURL != "" && productObj.StickerURL != null)
+                //{
+                    OtherImages otherImgObj = new OtherImages();
+                    otherImgObj.URL = productObj.StickerURL;
+                    otherImgObj.ImageType = ImageTypesPreffered.Sticker;
+                    otherImgObj.LogDetails = productObj.logDetails;
+                    operationsStatusObj = _masterRepository.InsertImage(otherImgObj);
+                    //productObj.StickerID = operationsStatusObj.ReturnValues.ToString();
+                //}
+                //operationsStatusObj = _categoryRepository.UpdateCategory(CategoryObj);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
         }
     }
 }

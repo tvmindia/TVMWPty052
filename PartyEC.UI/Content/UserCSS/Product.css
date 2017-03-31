@@ -1,4 +1,18 @@
-﻿.productTabContent .hide-bullets {
+﻿/*Nav bar left*/
+#LHSNavbarProductDetails li a
+{
+ font-weight: 400; 
+ font-size: 15px;
+
+}
+
+/*required fieldset**/
+.required{
+      color:red;
+      font-size:medium;
+}
+
+.productTabContent .hide-bullets {
     list-style:none;
     margin-left: -40px;
     margin-top:20px;
@@ -42,9 +56,13 @@
 
 .Htags{
   float:left;
-  border:1px none;
   padding:5px;
   font-family:Arial;
+  margin-bottom:3px;
+  margin-right:3px;
+  margin-top:3px;
+  margin-left:3px;
+  font-size: larger;
 }
 .Htags{
   cursor:pointer;
@@ -70,7 +88,7 @@
 }
 
 
-/*Alert*/
+
 .alert-message
 {
     margin: 20px 0;
@@ -144,4 +162,20 @@
 .alert-message-notice h4
 {
     color: #444;
+}
+
+.highlighted {
+    border:2px solid #b404ae;
+    background-image: url(image/tick.png);
+}
+.thumbnail span {
+    color: #0f0;
+    position: absolute;
+    font-size:32px;
+    top:54%;
+    display:none;
+    border:none;
+}
+.thumbnail span.highlighted {
+    display:inline;    
 }

@@ -17,20 +17,19 @@ namespace PartyEC.DataAccessObject.DTO
     public class OtherImages {
 
         public Guid ID { get; set; }
-        public string ImageType { get; set; }
         public string URL { get; set; }
         public LogDetails LogDetails { get; set; }
-
-        public struct ImageTypes
-        {
-            public const string Sticker = "Sticker";
-            public const string ProfileImage = "Profile";
-            public const string CategoryImage = "Category";
-            public const string EventTypeImage = "EventType";
-
-        }
+        public string ImageType { get; set; }
+        
     }
+    public static class ImageTypesPreffered
+    {
+        public static readonly string Sticker = "Sticker";
+        public static readonly string ProfileImage = "Profile";
+        public static readonly string CategoryImage = "Category";
+        public static readonly string EventTypeImage = "EventType";
 
+    }
     public class Const
     {
         #region Messages

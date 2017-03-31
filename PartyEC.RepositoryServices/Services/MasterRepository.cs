@@ -221,5 +221,53 @@ namespace PartyEC.RepositoryServices.Services
 
 
         }
+
+        public List<OtherImages> GetAllStickers()
+        {
+            List<OtherImages> otherImagesList = null;
+
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetAllStickers]";
+                        cmd.Parameters.Add("@ImageType", SqlDbType.NVarChar, 50).Value = ImageTypesPreffered.Sticker;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                otherImagesList = new List<OtherImages>();
+                                while (sdr.Read())
+                                {
+                                    OtherImages _otherimages = new OtherImages();
+                                    {
+                                        _otherimages.ID = (sdr["ID"].ToString() != "" ? Guid.Parse(sdr["ID"].ToString()) : _otherimages.ID);
+                                        _otherimages.URL = (sdr["URL"].ToString() != "" ? sdr["URL"].ToString() : _otherimages.URL);
+                                    }
+                                    otherImagesList.Add(_otherimages);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return otherImagesList;
+
+
+        }
     }
 }

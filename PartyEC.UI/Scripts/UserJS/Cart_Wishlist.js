@@ -95,7 +95,7 @@ $(document).ready(function () {
                     "render": function (data, type, row) {
                         var returnstring = '';
                         if (data) {
-                            debugger;
+                            
                             for (var ik = 0; ik < data.length; ik++) {
                                 returnstring = returnstring + '<span>' + data[ik].Caption + ':' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
                             }

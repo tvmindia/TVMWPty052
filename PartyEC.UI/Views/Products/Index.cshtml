@@ -7,16 +7,34 @@
 @section styles {
    @Styles.Render("~/Content/datatable")
    @Styles.Render("~/Content/bootstrapdatepicker")
+   @Styles.Render("~/Content/datatableSelect")
+   @Styles.Render("~/Content/product")   
+   @Styles.Render("~/Content/Uplodify")
+   @Styles.Render("~/Content/lightbox")
+    <style>
+        .uploadify-button {
+            background-color: transparent;
+            border: none;
+            padding: 0;
+        }
 
-    @Styles.Render("~/Content/datatableSelect")
-    @Styles.Render("~/Content/product")   
+        .uploadify:hover .uploadify-button {
+            background-color: transparent;
+        }
+        .Selected
+        {
+            background-color:black;
+            opacity:0.4;
+        }
+
+    </style>
 }
-<div class="container-fluid">
+<div class="container-fluid" style="min-height:950px;">
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li id="tabproductList" class="active"><a href="#productList" data-toggle="tab">Product List</a></li>
-                <li id="tabproductDetails"><a href="#productDetails" data-toggle="tab">Product Details</a></li>
+                <li id="tabproductList" class="active"><a>Product List</a></li>
+                <li id="tabproductDetails"><a>Product Details</a></li>
                 @*<li id="tabproductDetails" class="disabled"><a href="#productDetails">Product Details</a></li>*@
               @*<li class="dropdown">
                     <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
@@ -43,11 +61,12 @@
                             Html.RenderPartial("_ToolboxView", ToolBoxControl);
                         }
                     </div>
-                    
+
                     @*table*@
                     <table id="tblproducts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                         <thead>
                             <tr>
+                                <th>AttributeSetId</th>
                                 <th>ProductID</th>
                                 <th>Name</th>
                                 <th>ProductType</th>
@@ -63,9 +82,9 @@
                         </thead>
                     </table>
                     @*table*@
-
-
-
+                    <div class="form-group" hidden="hidden">                     
+                        <button id="btnmodelproductrating" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ModelProductsRating"></button>                   
+                    </div>
                 </div>
                 <div class="tab-pane fade" id="productDetails">
                    
@@ -81,9 +100,9 @@
                        ToolBoxControlDetail.savebtn.Event = "ProductSave()";
                        //ToolBoxControlDetail.deletebtn.Visible = true;
                        //ToolBoxControlDetail.deletebtn.Disable = true;
-                       //ToolBoxControlDetail.backbtn.Visible = true;
-                       //ToolBoxControlDetail.backbtn.Title = "Back";
-                       //ToolBoxControlDetail.backbtn.Event = "goback";
+                       ToolBoxControlDetail.backbtn.Visible = true;
+                       ToolBoxControlDetail.backbtn.Title = "Back";
+                       ToolBoxControlDetail.backbtn.Event = "goback()";
                        Html.RenderPartial("_ToolboxView", ToolBoxControlDetail);
                    }
                      
@@ -97,15 +116,15 @@
                             <div class="panel-heading">
                                 <ul class="nav nav-tabs nav-stacked" id="LHSNavbarProductDetails">
                                     <li id="GeneralLI" onclick="ShowProductDetalsToolBox()" class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="label label-danger">E</span></a></li>
-                                    <li onclick="ShowProductDetalsToolBox()"><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
+                                    <li onclick="RenderContentForPrice()"><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#discription" data-toggle="tab" id="tabDiscrption">Discription</a></li>
-                                    <li onclick="ShowProductDetalsToolBox()"><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
+                                    <li onclick="RenderContentForInventory()"><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#productTags" data-toggle="tab" id="tabproducttags">Product Tags <span class="label label-danger">E</span></a></li>
                                     <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
-                                    <li onclick="HideProductDetalsToolBox()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
+                                    <li onclick="RenderContentForImages()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
                                     <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
                                     <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
-                                    <li onclick="HideProductDetalsToolBox()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
+                                    <li onclick="BindProductReviews()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
                                  </ul>
                              </div>
                             </div>
@@ -113,22 +132,22 @@
                     </div>
 
                     <div class="col-md-10">
-@using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "",OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "productform" }))
-{
-    @Html.AntiForgeryToken()
+                    @using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "",OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "productform" }))
+                    {
+                        @Html.AntiForgeryToken()
 
                         <div class="tab-content productTabContent">
-
                             <div class="tab-pane fade in active" id="general">
                                 <!--Edit form column-->
                                 
                                    
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="Name" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.Name)<span class="required">*</span></label>
+                                        
                                         <div class="col-lg-4">
                                             @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-lg-2 productID", Value = "0" })
-
+                                            @Html.HiddenFor(model => model.ImageID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
                                             @Html.HiddenFor(model => model.ProductDetailObj.ID, htmlAttributes: new { @class = "control-label col-lg-2", Value = "0",id="productdetailsID" })
                                             @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
@@ -136,14 +155,15 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.SKU, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="SKU" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.SKU)<span class="required">*</span></label>
                                         <div class="col-lg-4">
                                             @Html.EditorFor(model => model.SKU, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.SKU, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Enabled, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="Enabled" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.Enabled)<span class="required">*</span></label>
+                                      
                                         <div class="col-lg-4">
                                             <div>
                                                 @Html.EditorFor(model => model.Enabled)
@@ -153,7 +173,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.Unit, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="Unit" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.Unit)<span class="required">*</span></label>
                                         <div class="col-lg-4">
                                             @Html.EditorFor(model => model.Unit, new { htmlAttributes = new { @class = "form-control" } })
                                             @Html.ValidationMessageFor(model => model.Unit, "", new { @class = "text-danger" })
@@ -169,7 +189,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.ActionType, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="ActionType" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ActionType)<span class="required">*</span></label>
+                                  
                                         <div class="col-lg-4">
                                             @{
                                                 List<SelectListItem> actionTypeList = new List<SelectListItem>();
@@ -188,7 +209,8 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.SupplierID, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="SupplierID" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.SupplierID)<span class="required">*</span></label>
+                                       
                                         <div class="col-lg-4">
                                             @Html.DropDownListFor(model => model.SupplierID, Model.suppliers, "--Select Supplier--", new { @class = "form-control", onchange = "supplierOnChange()",value=-1 })
                                           
@@ -205,7 +227,7 @@
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.ProductType, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="ProductType" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ProductType)<span class="required">*</span></label>
                                         <div class="col-lg-4">
                                             @{
                                                 List<SelectListItem> productTypeList = new List<SelectListItem>();
@@ -215,7 +237,8 @@
                                                 { Text = "Simple", Value = "S" });
                                             }
                                         
-                                            @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange()",value=-1 })
+                                            @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange(this)",value=-1 })
+                                            @Html.HiddenFor(model=>model.ProductType, htmlAttributes: new { @class = "control-label col-lg-2",id="ProductTypehdf", Value = "" })
                                             @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -224,14 +247,15 @@
                                         @Html.LabelFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-4">
                                             @*@Html.EditorFor(model => model.AttributeSetID, new { htmlAttributes = new { @class = "form-control" } })*@
-                                            @Html.DropDownListFor(model => model.AttributeSetID, Model.AttributeSets, "--Select AttributeSets--", new { @class = "form-control", @onchange = "attributeSetOnChange()" })
+                                            @Html.DropDownListFor(model => model.AttributeSetID, Model.AttributeSets, "--Select AttributeSets--", new { @class = "form-control", @onchange = "attributeSetOnChange(this)" })
+                                            @Html.HiddenFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2", id = "AttributeSetIDhdf", Value = "" })
                                             @Html.ValidationMessageFor(model => model.AttributeSetID, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
 
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.FreeDelivery, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                        <label for="FreeDelivery" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.FreeDelivery)<span class="required">*</span></label>
                                         <div class="col-lg-4">
                                             <div>
                                                 @Html.EditorFor(model => model.FreeDelivery)
@@ -254,8 +278,14 @@
                                 
                             </div>
                             <div class="tab-pane fade" id="price">
+                                <div class="col-sm-6 col-md-6 divPriceMessage">
+                                    <div class="alert-message alert-message-warning">
+                                        <p>Please Select Product Type in General that you want to work with!</p>
+                                    </div>
+                                </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.CostPrice, htmlAttributes: new { @class = "control-label col-lg-2" })
+
+                                    <label for="CostPrice" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.CostPrice)<span class="required">*</span></label>
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.CostPrice, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.CostPrice, "", new { @class = "text-danger" })
@@ -263,14 +293,15 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.BaseSellingPrice, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <label for="BaseSellingPrice" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.BaseSellingPrice)<span class="required">*</span></label>
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.BaseSellingPrice, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.BaseSellingPrice, "", new { @class = "text-danger" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ShowPrice, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <label for="ShowPrice" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ShowPrice)<span class="required">*</span></label>
+                                
                                     <div class="col-lg-4">
                                         <div>
                                             @Html.EditorFor(model => model.ShowPrice)
@@ -288,6 +319,11 @@
                                 </div>
                                  
                                 <div class="form-group">
+                                    <div class="col-sm-6 col-md-6 divMsgconfigurable">
+                                        <div class="alert-message alert-message-warning">
+                                            <p>For Configurable products, Price section is available in 'Associated products' tab.</p>
+                                        </div>
+                                    </div>
                                     @Html.LabelFor(model => model.DiscountAmount, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.DiscountAmount, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
@@ -310,10 +346,11 @@
                                         @Html.ValidationMessageFor(model => model.DiscountEndDate, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
+                               
                             </div>
                             <div class="tab-pane fade" id="discription">
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.ShortDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <label for="ShortDescription" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ShortDescription)<span class="required">*</span></label>
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
@@ -321,7 +358,7 @@
                                 </div>
 
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.LongDescription, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <label for="LongDescription" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.LongDescription)<span class="required">*</span></label>
                                     <div class="col-lg-6">
                                         @Html.EditorFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" } })
                                         @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
@@ -330,9 +367,18 @@
 
                             </div>     
                             <div class="tab-pane fade" id="inventory">
-
+                                <div class="col-sm-6 col-md-6 divInventoryMessage">
+                                    <div class="alert-message alert-message-warning">
+                                        <p>Please Select Product Type in General that you want to work with!</p>
+                                    </div>
+                                </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.StockAvailable, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
+                                    <div class="col-sm-6 col-md-6 divMsgconfigurable">
+                                        <div class="alert-message alert-message-warning">
+                                            <p>For Configurable products, inventory section is available in 'Associated products' tab.</p>
+                                        </div>
+                                    </div>
+                                    <label for="StockAvailable" class="control-label col-lg-2 productDetailGroup">@Html.DisplayNameFor(model => model.StockAvailable)<span class="required">*</span></label>
                                     <div class="col-lg-4 productDetailGroup">
                                         <div>
                                             @Html.EditorFor(model => model.StockAvailable)
@@ -340,37 +386,59 @@
                                         </div>
                                     </div>
                                 </div>
-
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.Qty, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
+                                    <label for="Qty" class="control-label col-lg-2 productDetailGroup">@Html.DisplayNameFor(model => model.Qty)<span class="required">*</span></label>
                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
                                         @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    @Html.LabelFor(model => model.OutOfStockAlertQty, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })
-                                    <div class="col-lg-4">
+                                    <label for="OutOfStockAlertQty" class="control-label col-lg-2 productDetailGroup">@Html.DisplayNameFor(model => model.OutOfStockAlertQty)<span class="required">*</span></label>
+                                     <div class="col-lg-4">
                                         @Html.EditorFor(model => model.OutOfStockAlertQty, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
                                         @Html.ValidationMessageFor(model => model.OutOfStockAlertQty, "", new { @class = "text-danger productDetailGroup" })
                                     </div>
                                 </div>
 
+                                
+
 
                             </div>
                             <div class="tab-pane fade" id="productTags">
-                                <div class="col-lg-8">
+                               @* <div class="col-lg-8">
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.HeaderTags, htmlAttributes: new { @class = "control-label col-lg-2" })
                                         <div class="col-lg-6" id="headertagsdiv">
                                             @Html.EditorFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control" } })
+                                           
+                                                <button class="btn btn-default input-group-btn" type="button">Go!</button>
+                                           
                                             @Html.ValidationMessageFor(model => model.HeaderTags, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
-                                </div><!-- /.col-lg-6 -->
-                            </div>
-                       
+                                </div><!-- /.col-lg-6 -->*@
 
+                                <div class="col-lg-8">
+                                    @Html.LabelFor(model => model.HeaderTags, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                    <div class="input-group">
+                                        @Html.HiddenFor(model => model.HeaderTags, new { htmlAttributes = new { @class = "form-control", placeholder = "Add key Words....." } })
+                                        <input id="HeaderTagsPicker" type="text" class="form-control" placeholder = "Add key Words....." >
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-default" type="button">+</button>
+                                        </span>
+                                    </div><!-- /input-group -->
+                                </div><!-- /.col-lg-8 -->
+                                <br/>
+                                <br />
+                                
+                                <div class="col-lg-8">
+                                    <div class="col-lg-2"></div>
+                                    <div id="keywordsDiv" class="input-group">
+
+                                    </div>
+                                </div>
+                            </div>
                             <div class="tab-pane fade" id="relatedProducts">
 
                                 <div>
@@ -382,6 +450,9 @@
                                         ToolBoxControlRelProduct.deletebtn.Visible = true;
                                         ToolBoxControlRelProduct.deletebtn.Event = "CallbtnDeleteRelatedProductSubmit()";
                                         ToolBoxControlRelProduct.deletebtn.Title = "Delete";
+                                        ToolBoxControlRelProduct.backbtn.Visible = true;
+                                        ToolBoxControlRelProduct.backbtn.Title = "Back";
+                                        ToolBoxControlRelProduct.backbtn.Event = "goback()";
                                         Html.RenderPartial("_ToolboxView", ToolBoxControlRelProduct);
                                     }
 
@@ -401,7 +472,7 @@
                                             <th>Selling Price</th>
                                             <th>Qty</th>
                                             <th>Stock Status</th>
-                                            <th>Actions</th>
+                                           
                                         </tr>
                                     </thead>
                                 </table>
@@ -416,158 +487,118 @@
 
                             </div>
                             <div class="tab-pane fade" id="images">
-                                <div class="col-lg-12">
-                                    <h2>Product Images</h2>
-                                    <hr />
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="thumbnail">
+                                <div>
+                                    @{
+                                        PartyEC.UI.Models.ToolboxViewModel ToolBoxImageProduct = new PartyEC.UI.Models.ToolboxViewModel();
+                                        ToolBoxImageProduct.backbtn.Visible = true;
+                                        ToolBoxImageProduct.backbtn.Title = "Back";
+                                        ToolBoxImageProduct.backbtn.Event = "goback()";
+                                        Html.RenderPartial("_ToolboxView", ToolBoxImageProduct);
+                                    }
 
-                                            <div class="caption">
-                                                <p>@Html.LabelFor(model => model.ProdutMainImageUpload, new { @class = "control-label" })</p>
-                                                <p>@Html.TextBoxFor(model => model.ProdutMainImageUpload, new { type = "file", @class = "btn btn-default" })</p>
+                                </div>
+
+                                    <div class="col-lg-12">
+                                       
+                                        <h2>Product Image</h2>
+                                        <hr />
+                                        <div class="col-md-5" id="divImageUpload">
+                                            <div>
+                                                <a id="alinkUpload" style="display:none" class="btn btn-info" href="javascript:$('#file_upload').uploadify('upload','*')">Upload</a>
+                                                <input type="file" class="uploadify" name="file_upload" id="file_upload" />
+
+                                            </div>
+                                            <div id="uploaded">
+                                            </div>
+                                            <div class="overlay" id="divOverlayimage" style="display:none;">
+                                                <div class="uploadify-button  disabled" title="Save Category to enable file browse" style="height: 30px; line-height: 30px; width: 120px;margin-left:1.55%;cursor:not-allowed;"><span class="uploadify-button-text">SELECT FILES</span></div>
                                             </div>
                                         </div>
+                                        <div class="col-lg-7" style="object-fit:fill;">
+                                            <div class="col-lg-12">
+                                                <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="" id="imgProduct" class="img-thumbnail" style="max-height:250px;margin-left:3%">
+
+                                            </div>
+                                             </div>
                                     </div>
-                                    <div class="col-lg-8">
-                                        <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="">
-                                    </div>
-                                </div>
                                 <div class="col-lg-12">
                                     <h2>Other Images</h2>
                                     <hr />
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="thumbnail">
+                                    <div id="buttonPatchOtherImages">
+                                        @{
+                                            PartyEC.UI.Models.ToolboxViewModel ToolBoxControlOtherImage = new PartyEC.UI.Models.ToolboxViewModel();
+                                            ToolBoxControlOtherImage.deletebtn.Visible = true;
+                                            ToolBoxControlOtherImage.deletebtn.Disable = true;
+                                            Html.RenderPartial("_ToolboxView", ToolBoxControlOtherImage);
+                                        }
 
-                                            <div class="caption">
-                                                <p>@Html.LabelFor(model => model.OtherImagesUpload, new { @class = "control-label" })</p>
-                                                <p>@Html.TextBoxFor(model => model.OtherImagesUpload, new { type = "file", @class = "btn btn-default" })</p>
-                                            </div>
+                                    </div>
+
+                                    <div class="col-md-5" id="divImageUploadOther" style="margin-top:5%">
+                                        <div>
+                                            <a id="alinkUploadOther" style="display:none" class="btn btn-info" href="javascript:$('#file_uploadOther').uploadify('upload','*')">Upload</a>
+                                            <input type="file" class="uploadify" name="file_uploadOther" id="file_uploadOther" />
+
+                                        </div>
+                                        <div id="uploaded">
+                                        </div>
+                                        <div class="overlay" id="divOverlayimageOther" style="display:none;">
+                                            <div class="uploadify-button  disabled" title="Save Category to enable file browse" style="height: 30px; line-height: 30px; width: 120px;margin-left:1.55%;cursor:not-allowed;"><span class="uploadify-button-text">SELECT FILES</span></div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-8">
-                                        <ul class="hide-bullets">
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-0">
-                                                    <img src="http://placehold.it/150x150&text=zero">
-                                                </a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-1"><img src="http://placehold.it/150x150&text=1"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-2"><img src="http://placehold.it/150x150&text=2"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-3"><img src="http://placehold.it/150x150&text=3"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-4"><img src="http://placehold.it/150x150&text=4"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-5"><img src="http://placehold.it/150x150&text=5"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-6"><img src="http://placehold.it/150x150&text=6"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-7"><img src="http://placehold.it/150x150&text=7"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-8"><img src="http://placehold.it/150x150&text=8"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-9"><img src="http://placehold.it/150x150&text=9"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-10"><img src="http://placehold.it/150x150&text=10"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-11"><img src="http://placehold.it/150x150&text=11"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-12"><img src="http://placehold.it/150x150&text=12"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-13"><img src="http://placehold.it/150x150&text=13"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-14"><img src="http://placehold.it/150x150&text=14"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-15"><img src="http://placehold.it/150x150&text=15"></a>
-                                            </li>
-                                        </ul>
-                                    </div>
+                                    <div class="col-lg-7" style="object-fit:fill;">
+                                        <div class="col-lg-12">
+                                            <ul class="hide-bullets" id="ulOtherImages"></ul>
+                                        </div>
+                                </div>
+                                   
                                 </div>
                                 <div class="col-lg-12">
                                     <h2>Stickers</h2>
                                     <hr />
-                                    <div class="col-sm-6 col-md-4">
-                                        <div class="thumbnail">
+                                    <div id="buttonPatchStickerImages">
+                                        @{
+                                            PartyEC.UI.Models.ToolboxViewModel ToolBoxControlStickerImage = new PartyEC.UI.Models.ToolboxViewModel();
+                                            ToolBoxControlStickerImage.savebtn.Visible = true;
+                                            ToolBoxControlStickerImage.savebtn.Disable = true;
+                                            ToolBoxControlStickerImage.deletebtn.Visible = true;
+                                            ToolBoxControlStickerImage.deletebtn.Event = "UpdateStickerForProduct()";
+                                            ToolBoxControlStickerImage.deletebtn.Title = "Delete";
+                                            Html.RenderPartial("_ToolboxView", ToolBoxControlStickerImage);
+                                        }
 
-                                            <div class="caption">
-
-                                                <p>@Html.LabelFor(model => model.ProductStickerUpload, new { @class = "control-label" })</p>
-
-                                                <p>@Html.TextBoxFor(model => model.ProductStickerUpload, new { type = "file", @class = "btn btn-default" })</p>
-
-
-                                            </div>
-                                        </div>
                                     </div>
-                                    <div class="col-lg-8">
-                                        <ul class="hide-bullets">
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-0">
-                                                    <img src="http://placehold.it/150x150&text=zero">
-                                                </a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-1"><img src="http://placehold.it/150x150&text=1"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-2"><img src="http://placehold.it/150x150&text=2"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-3"><img src="http://placehold.it/150x150&text=3"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-4"><img src="http://placehold.it/150x150&text=4"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-5"><img src="http://placehold.it/150x150&text=5"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-6"><img src="http://placehold.it/150x150&text=6"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-7"><img src="http://placehold.it/150x150&text=7"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-8"><img src="http://placehold.it/150x150&text=8"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-9"><img src="http://placehold.it/150x150&text=9"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-10"><img src="http://placehold.it/150x150&text=10"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-11"><img src="http://placehold.it/150x150&text=11"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-12"><img src="http://placehold.it/150x150&text=12"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-13"><img src="http://placehold.it/150x150&text=13"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-14"><img src="http://placehold.it/150x150&text=14"></a>
-                                            </li>
-                                            <li class="col-sm-3">
-                                                <a class="thumbnail" id="carousel-selector-15"><img src="http://placehold.it/150x150&text=15"></a>
-                                            </li>
-                                        </ul>
+                                    
+                                    <div class="col-lg-5" style="margin-top:30%">
+                                        <div>
+                                            <a id="alinkUploadSticker" style="display:none" class="btn btn-info" href="javascript:$('#file_uploadSticker').uploadify('upload','*')">Upload</a>
+                                            <input type="file" class="uploadify" name="file_uploadOther" id="file_uploadSticker" />
+
+                                        </div>
+                                        <div id="uploaded">
+                                        </div>
+                                        <div class="overlay" id="divOverlayimageSticker" style="display:none;">
+                                            <div class="uploadify-button  disabled" title="Save Category to enable file browse" style="height: 30px; line-height: 30px; width: 120px;margin-left:1.55%;cursor:not-allowed;"><span class="uploadify-button-text">SELECT FILES</span></div>
+                                        </div>
+                                       
+                                    </div>
+                                    <div class="col-lg-7">
+                                        <div class="col-lg-12">
+                                            <h3>Attached Sticker</h3>
+                                            <hr />
+                                            <ul class="hide-bullets" id="ulMainStickerArea">
+                                                
+                                            </ul>
+                                        </div>
+                                        @* ----------------------------------------------------------------------------- *@
+                                        <div class="col-lg-12">
+                                            <h3>Available Stickers</h3>
+                                            <hr />
+                                            <ul class="hide-bullets" id="ulStickerArea">
+                                               
+                                            </ul>
+                                        </div>
+                                        
                                     </div>
                                 </div>
 
@@ -579,6 +610,9 @@
                                         ToolBoxControlforOtherAttr.savebtn.Visible = true;
                                         ToolBoxControlforOtherAttr.savebtn.Title = "Save";
                                         ToolBoxControlforOtherAttr.savebtn.Event = "OtherAttributeSave()";
+                                        ToolBoxControlforOtherAttr.backbtn.Visible = true;
+                                        ToolBoxControlforOtherAttr.backbtn.Title = "Back";
+                                        ToolBoxControlforOtherAttr.backbtn.Event = "goback()";
                                         Html.RenderPartial("_ToolboxView", ToolBoxControlforOtherAttr);
                                     }
 
@@ -604,6 +638,9 @@
                                         ToolBoxControlforAssocProductAttr.deletebtn.Visible = true;
                                         ToolBoxControlforAssocProductAttr.deletebtn.Title = "Delete";
                                         ToolBoxControlforAssocProductAttr.deletebtn.Event = "AssociatedProductDelete()";
+                                        ToolBoxControlforAssocProductAttr.backbtn.Visible = true;
+                                        ToolBoxControlforAssocProductAttr.backbtn.Title = "Back";
+                                        ToolBoxControlforAssocProductAttr.backbtn.Event = "goback()";
                                         Html.RenderPartial("_ToolboxView", ToolBoxControlforAssocProductAttr);
                                     }
 
@@ -629,252 +666,148 @@
                                  
                                 </div>
                                 <div id="dynamicAssociatedProducts">
-                                    <div class="col-sm-6 col-md-6">
-                                        <div class="alert-message alert-message-warning">
-                                            <p>Please Create a product from general section and come back:).</p>
+                                    <div class="form-group">
+                                        <div class="col-sm-6 col-md-6">
+                                            <div class="alert-message alert-message-warning">
+                                                <p>Please Create a product from general section and come back:).</p>
+                                            </div>
                                         </div>
                                     </div>
+
                                 </div>
                                
-                               
+                                <div id="associatedStaticfields">
+                                 
+                                    <div class="form-group">
+                                        <label for=detailQty class="col-lg-2 control-label">Qty<span class="required">*</span></label>
+                                        <div class="col-lg-4 input-group">
+                                            <input type="text" class="form-control" id="detailQty" name="detailQty">
+                                            <input type="hidden" class="form-control" id="productDetailID" name="productDetailID" />
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty<span class="required">*</span></label>
+                                        <div class="col-lg-4 input-group">
+                                            <input type="text" class="form-control" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
+                                        </div>
+                                    </div>
+
+                                 
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2" for="detailStockAvailable" style="">Stock Status<span class="required">*</span></label>
+                                        <div class="col-lg-4 input-group">
+                                            <div>
+                                                <input class="check-box" data-val="true" id="detailStockAvailable" name="detailStockAvailable" value="true" type="checkbox">
+                                                <input name="detailStockAvailable" value="false" type="hidden">
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2" for="detailDiscountAmount">Discount Price</label>
+                                        <div class="col-lg-4 input-group">
+                                            <input class="form-control text-box single-line" id="detailDiscountAmount" name="detailDiscountAmount" value="" type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2" for="detailPriceDifference">Price Difference</label>
+                                        <div class="col-lg-4 input-group">
+                                            <input class="form-control text-box single-line" id="detailPriceDifference" name="detailPriceDifference" value="" type="text">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2" for="detailDiscountStartDate" style="">Discount Start Date</label>
+                                        <div class="col-lg-4 input-group">
+                                            <input class="form-control text-box single-line" id="detailDiscountStartDate" name="detailDiscountStartDate" value="" type="date">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2" for="detailDiscountEndDate" style="">Discount End Date</label>
+                                        <div class="col-lg-4 input-group">
+                                            <input class="form-control text-box single-line" id="detailDiscountEndDate" name="detailDiscountEndDate" value="" type="date">
+                                        </div>
+                                    </div>
+
+      
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2" for="detailEnable" style="">Enable</label>
+                                        <div class="col-lg-4 input-group">
+                                            <div>
+                                                <input class="check-box" data-val="true" id="detailEnable" name="detailEnable" value="true" type="checkbox">
+                                                <input name="detailEnable" value="false" type="hidden">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2" for="detailDefaultOption" style="">Default Option</label>
+                                        <div class="col-lg-4 input-group">
+                                            <div>
+                                                <input class="check-box" data-val="true" id="detailDefaultOption" name="detailDefaultOption" value="true" type="checkbox">
+                                                <input name="detailDefaultOption" value="false" type="hidden">
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                    <div class="form-group">
+                                        <label class="control-label col-lg-2" id="lblDetailTags" for="detailTagsPicker" style="">New Tags</label>
+                                        <div class="col-lg-4 input-group" id="detailTagsdiv">
+                                            <input class="form-control text-box single-line" id="detailTagsPicker" placeholder = "Add key Words....." name="detailTagsPicker" value="" type="text">
+                                            <input id="detailDetailTags" value="" type="hidden">
+                                            <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button">+</button>
+                                            </span>
+                                        </div>
+                                    </div>
+
+                                     
+
+                                    
+
+                                    <div class="form-group">
+                                        <span class="col-lg-2"></span>
+
+                                        <div id="detailkeywordsDiv" class="col-lg-4">
+                                           
+                                        </div>
+                                    </div>
+
+                                </div>
 
                             </div>
                             <div class="tab-pane fade" id="ratingAndReviews">
-                                <div class="well well-sm">
+                                <div id="RatingDisplay" class="well well-sm">
                                     <div class="row">
                                         <div class="col-xs-12 col-md-6 text-center">
                                             <h1 class="rating-num">
-                                                4.0
+                                                0.0
                                             </h1>
                                             <div class="rating">
-                                                <span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star">
-                                                </span><span class="glyphicon glyphicon-star"></span><span class="glyphicon glyphicon-star">
-                                                </span><span class="glyphicon glyphicon-star-empty"></span>
+                                                <span class="glyphicon glyphicon-star-empty"></span>
+                                                <span class="glyphicon glyphicon-star-empty"></span>
+                                                <span class="glyphicon glyphicon-star-empty"></span>
+                                                <span class="glyphicon glyphicon-star-empty"></span>
+                                                <span class="glyphicon glyphicon-star-empty"></span>
                                             </div>
                                             <div>
-                                                <span class="glyphicon glyphicon-user"></span>1,050,008 total
+                                                <span class="glyphicon glyphicon-user"></span>0,000,000 total
                                             </div>
-                                        </div>
-                                        <div class="col-xs-12 col-md-6">
-                                            <div class="row rating-desc">
-                                                <div class="col-xs-3 col-md-3 text-right">
-                                                    Taste
-                                                </div>
-                                                <div class="col-xs-8 col-md-9">
-
-                                                    <div class="rating-block">
-
-                                                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-success btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <!-- end 5 -->
-                                                <div class="col-xs-3 col-md-3 text-right">
-                                                    Delivery
-                                                </div>
-                                                <div class="col-xs-8 col-md-9">
-                                                    <div class="rating-block">
-
-                                                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-danger btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <!-- end 4 -->
-                                                <div class="col-xs-3 col-md-3 text-right">
-                                                    Ease of Use
-                                                </div>
-                                                <div class="col-xs-8 col-md-9">
-                                                    <div class="rating-block">
-
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <!-- end 3 -->
-                                                <div class="col-xs-3 col-md-3 text-right">
-                                                    Brand Reputation
-                                                </div>
-                                                <div class="col-xs-8 col-md-9">
-                                                    <div class="rating-block">
-
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <!-- end 2 -->
-                                                <div class="col-xs-3 col-md-3 text-right">
-                                                    Value for Money
-                                                </div>
-                                                <div class="col-xs-8 col-md-9">
-                                                    <div class="rating-block">
-
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-sm" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                                <!-- end 1 -->
-                                            </div>
-                                            <!-- end row -->
                                         </div>
                                     </div>
                                 </div>
 
                                 <div class="row">
-                                    <div class="col-sm-7">
-                                        <hr />
-                                        <div class="review-block">
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                                                    <div class="review-block-name"><a href="#">nktailor</a></div>
-                                                    <div class="review-block-date">January 29, 2016<br />1 day ago</div>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <div class="review-block-rate">
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="review-block-title">this was nice in buy</div>
-                                                    <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
-                                                </div>
-                                            </div>
-                                            <hr />
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                                                    <div class="review-block-name"><a href="#">nktailor</a></div>
-                                                    <div class="review-block-date">January 29, 2016<br />1 day ago</div>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <div class="review-block-rate">
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="review-block-title">this was nice in buy</div>
-                                                    <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
-                                                </div>
-                                            </div>
-                                            <hr />
-                                            <div class="row">
-                                                <div class="col-sm-3">
-                                                    <img src="http://dummyimage.com/60x60/666/ffffff&text=No+Image" class="img-rounded">
-                                                    <div class="review-block-name"><a href="#">nktailor</a></div>
-                                                    <div class="review-block-date">January 29, 2016<br />1 day ago</div>
-                                                </div>
-                                                <div class="col-sm-9">
-                                                    <div class="review-block-rate">
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                        <button type="button" class="btn btn-default btn-grey btn-xs" aria-label="Left Align">
-                                                            <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
-                                                        </button>
-                                                    </div>
-                                                    <div class="review-block-title">this was nice in buy</div>
-                                                    <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                    <div id="ReviewsDisplay" class="col-sm-7">
+                                        <h2>
+                                           No Reviews Yet
+                                        </h2>
                                     </div>
                                 </div>
                             </div>
@@ -927,7 +860,7 @@
                                     <th>Selling Price</th>
                                     <th>Qty</th>
                                     <th>Stock Status</th>
-                                    <th>Actions</th>
+                                  
                                 </tr>
                             </thead>
                         </table>
@@ -958,6 +891,23 @@
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
 
+@*--------------------------------------Product Rating Form------------------------------------------------------------------*@
+<div id="ModelProductsRating" class="modal fade" tabindex="-1" role="dialog" style="left:50%; top:45%" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="titleProductRating">Product Ratings</h4>
+            </div>
+            <div class="modal-body">
+                <div id="RatingPopupDisplay" class="row"> 
+
+                </div>
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
 @*--------------------------------------DeleteForm------------------------------------------------------------------*@
 @using (Ajax.BeginForm("DeleteRelatedProducts", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "Are You Sure?...", OnSuccess = "RelatedproductDeleteSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "" }, new { @class = "form-horizontal", role = "form", id = "relatedproductDeleteform" }))
 {
@@ -980,6 +930,97 @@
 @Scripts.Render("~/bundles/bootstrapdatepicker")
 @Scripts.Render("~/bundles/product")
 @Scripts.Render("~/bundles/AssoProduct")
+@Scripts.Render("~/bundles/Uploadify")
+@Scripts.Render("~/bundles/Lightbox")
+<script type="text/javascript">
+    $(function () {
+        $('#file_upload').uploadify({
+            'auto': false,
+            'formData': {
+                'Name': '','ID':'','ImageID':''
+            },
+            'buttonImage': '/Content/images/browse-btn.png',
+            'fileTypeDesc': 'Image Files',
+            'fileTypeExts': '*.jpg; *.png',
+                'swf': "@Url.Content("~/Content/uploadify.swf")",
+                //this is where the file posts when it uploads.
+            'uploader': "@Url.Action("UploadProductImage", "Products")",
+            'onSelect': function (file) {
+                $('#alinkUpload').show();
+            },
+            'onUploadStart': function (file) {
+                $('#file_upload').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'ImageID': $('#ImageID').val() });
+            },
+            'multi': false,
+                'onUploadSuccess': function (file, data, response) {
+                  //data is whatever you return from the server
+                  //we're sending the URL from the server so we append this as an image to the #uploaded div
+                //$('#URL').val(data);
+                    //$('#imgProduct').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
+                    BindImages();
+                    
+                    $('#alinkUpload').hide();
+                }
+
+        });
+        $('#file_uploadOther').uploadify({
+            'auto': false,
+            'formData': {
+                'Name': '','ID':'','ImageID':''
+            },
+            'buttonImage': '/Content/images/browse-btn.png',
+            'fileTypeDesc': 'Image Files',
+            'fileTypeExts': '*.jpg; *.png',
+            'swf': "@Url.Content("~/Content/uploadify.swf")",
+                //this is where the file posts when it uploads.
+            'uploader': "@Url.Action("UploadOtherImages", "Products")",
+            'onSelect': function (file) {
+                $('#alinkUploadOther').show();
+            },
+            'onUploadStart': function (file) {
+                $('#file_uploadOther').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'ImageID': $('#ImageID').val() });
+            },
+                'onUploadSuccess': function (file, data, response) {
+                    //data is whatever you return from the server
+                    //we're sending the URL from the server so we append this as an image to the #uploaded div
+                    //$('#URL').val(data);
+                    //$('#imgCategory').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
+                    BindImages();
+                    $('#alinkUploadOther').hide();
+                }
+
+        });
+        $('#file_uploadSticker').uploadify({
+            'auto': false,
+            'formData': {
+                'Name': '','ID':'','ImageID':''
+            },
+            'fileTypeDesc': 'Image Files',
+            'fileTypeExts': '*.jpg; *.png',
+            'buttonImage': '/Content/images/browse-btn.png',
+            'swf': "@Url.Content("~/Content/uploadify.swf")",
+                //this is where the file posts when it uploads.
+            'uploader': "@Url.Action("UploadStickerImages", "Products")",
+            'onSelect': function (file) {
+                $('#alinkUploadSticker').show();
+            },
+            'onUploadStart': function (file) {
+                $('#file_uploadOther').uploadify('settings', 'formData', { 'Name': $('#Name').val(), 'ID': $('#ID').val(), 'ImageID': $('#ImageID').val() });
+            },
+                'onUploadSuccess': function (file, data, response) {
+                    //data is whatever you return from the server
+                    //we're sending the URL from the server so we append this as an image to the #uploaded div
+                    //$('#URL').val(data);
+                    //$('#imgCategory').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
+                    BindStickers();
+                    $('#alinkUploadSticker').hide();
+                }
+
+    });
+
+    });
+
+</script>
 }
 
 

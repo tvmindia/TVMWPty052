@@ -10,7 +10,13 @@ namespace PartyEC.DataAccessObject.DTO
         public string SKU { get; set; }
         public Boolean Enabled { get; set; }
         public string Unit { get; set; }      
-        public string URL { get; set; } //partyec web url for this product,share option       
+        public string URL { get; set; } //partyec web url for this product,share option 
+
+        public int ImageID { get; set; }  
+        public string ImageURL { get; set; }
+        public int ProductDetID { get; set; }   
+        public bool MainImage { get; set; }
+
         public char ActionType { get; set; }//book //buy //Quote
         public char ProductType { get; set; }//simple //configurable
         public int AttributeSetID { get; set; }
@@ -63,7 +69,7 @@ namespace PartyEC.DataAccessObject.DTO
         //For associated product
         public string ProductName { get; set; }
         public decimal BaseSellingPrice { get; set; }
-
+        public decimal? ActualPrice { get; set; }
 
         public struct ProductTypes
         {
@@ -92,6 +98,22 @@ namespace PartyEC.DataAccessObject.DTO
         public int CategoryID { get; set; }
         public LogDetails commonObj { get; set; }
     }
+    public class ProductReview
+    {
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int CustomerID { get; set; }
+        public string Review { get; set; }
+        public int DaysCount { get; set; }
+        public DateTime ReviewCreatedDate { get; set; }
+        public string CustomerName { get; set; }
+        public string AvgRating { get; set; }
+        public string ImageUrl { get; set; }
 
+        public List<AttributeValues> ProductRatingAttributes { get; set; }
+        public string RatingCount { get; set; }
+        
+
+    }
     
 }
