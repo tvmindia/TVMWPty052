@@ -265,7 +265,7 @@ function SaveOrder()
     $('#hdnTreeList').val(JSON.stringify(TreeOrderFormatted));
 }
 function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
-    
+    debugger;
     var i = JSON.parse(data.responseText)
     switch(i.Result)
     {
@@ -283,6 +283,8 @@ function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
 
             $('#jstree_DragUpdate').jstree(true).settings.core.data = GetTreeDataRight($("#ID").val());
             $('#jstree_DragUpdate').jstree(true).refresh(true);
+
+            DataTables.attributeSetTable.clear().rows.add(GetAllAttributeSet()).draw(false);
             break;
         case "ERROR":
             notyAlert('success', i.Records.StatusMessage);

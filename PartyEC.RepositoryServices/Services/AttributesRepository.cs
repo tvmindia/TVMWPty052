@@ -725,6 +725,7 @@ namespace PartyEC.RepositoryServices.Services
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
+                                operationsStatusObj.ReturnValues = attrSetLinkObj.AttributeSetID;
                                 break;
                             default:
                                 break;
