@@ -258,21 +258,14 @@ namespace PartyEC.RepositoryServices.Services
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
                         {
-                            case "0":
-                                // not Successfull
-
+                            case "0":  
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
                                 break;
-                            case "1":
-                                //Insert Successfull
+                            case "1": 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
-                                break;
-                            case "2":
-                                //Duplicate Entry
-                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                operationsStatusObj.ReturnValues = supplierObj.ID;                               
                                 break;
                             default:
                                 break;
@@ -288,6 +281,51 @@ namespace PartyEC.RepositoryServices.Services
 
             return operationsStatusObj;
 
+        }
+
+        public OperationsStatus DeleteSupplier(int supplierID)
+        {
+            OperationsStatus OperationsStatusObj = new OperationsStatus();
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteSupplier]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = supplierID;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
+                                break;
+                            case "1":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
         }
         #endregion Suppliers
 
@@ -443,6 +481,6 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
-    
+       
     }
 }

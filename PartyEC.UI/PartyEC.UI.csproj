@@ -511,6 +511,7 @@
     <Compile Include="Controllers\DynamicUIController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventRequestsController.cs" />
+    <Compile Include="Controllers\ShippingLocationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
@@ -553,6 +554,7 @@
     <Content Include="Views\Cart_Wishlist\Index.cshtml" />
     <Content Include="Views\Supplier\Index.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\ShippingLocation\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -563,6 +565,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
+    <Folder Include="Views\Location\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

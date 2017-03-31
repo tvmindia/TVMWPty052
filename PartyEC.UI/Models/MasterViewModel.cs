@@ -34,6 +34,20 @@ namespace PartyEC.UI.Models
 
         public LogDetailsViewModel commonObj { get; set; }
     }
+    public class ShippingLocationViewModel
+    {
+        public int ID { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Location Name")]
+        [Display(Name = "Location Name")]
+        public string Name { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public LogDetailsViewModel commonObj { get; set; }
+       
+    }
+
+
     public class OrderStatusViewModel
     {
         public int Code { get; set; }

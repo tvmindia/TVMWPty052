@@ -80,7 +80,7 @@
                                     <div class="col-md-offset-4 col-md-8">
                                         <input type="submit" value="Create" id="btnFormSave" onclick="SaveOrder()" class="btn btn-default" style="display:none"/>
                                         @*<input type="hidden" id="TreeObjectList" value=""/>*@
-                                        @Html.HiddenFor(model => model.TreeList, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
+                                        @Html.HiddenFor(model => model.TreeList, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id= "hdnTreeList" })
                                         @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
                                     </div>
                                 </div>
@@ -126,6 +126,7 @@
 @section Scripts {
 @Scripts.Render("~/bundles/datatable")
 @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-@Scripts.Render("~/bundles/jstreeScript") 
+@*@Scripts.Render("~/bundles/jstreeScript")*@ 
+<script src="~/Scripts/jstree/dist/jstree.js"></script>
 @Scripts.Render("~/bundles/AttributeSet")
 }
