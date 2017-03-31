@@ -54,8 +54,8 @@ namespace PartyEC.BusinessServices.Services
 
         #region messageSending
 
-        
-        private void SendMessage(string Msg, string MobileNos,string provider="txtlocal",string type="Promotional")
+
+        private void SendMessage(string Msg, string MobileNos, string provider = "txtlocal", string type = "Promotional")
         {
             string[] IndividualMsgs = Msg.Split('|');
             string[] IndividualMobileNos = MobileNos.Split('|');
@@ -68,6 +68,7 @@ namespace PartyEC.BusinessServices.Services
                         if (msg != string.Empty)
                         {
                             String message = HttpUtility.UrlEncode(msg);
+                            #region textlocal
                             //--------------------------------------------------------------------------------------------------
                             if (provider == "txtlocal")
                             {
@@ -86,6 +87,9 @@ namespace PartyEC.BusinessServices.Services
 
                                 }
                             }
+                            #endregion
+
+                            #region smshorizon
                             //-------------------------------------------------------------------------------------------------------
                             else if (provider == "smshorizon")
                             {
@@ -95,7 +99,7 @@ namespace PartyEC.BusinessServices.Services
                                     byte[] response = wb.UploadValues("http://smshorizon.co.in/api/sendsms.php", "POST", new NameValueCollection()
                                 {
                                 {"user" , "suvaneeth"},
-                                {"apikey" , "Ge0hv03z2WvwlBOTK3B0"},                   
+                                {"apikey" , "Ge0hv03z2WvwlBOTK3B0"},
                                 {"mobile" , Num},
                                 {"message" , msg},
                                         { "senderid","MYTEXT"},
@@ -105,25 +109,46 @@ namespace PartyEC.BusinessServices.Services
 
                                 }
                             }
+
+                            #endregion
+
+                            #region 2factor
                             //-----------------------------------------------------------------------------------------------------------
-                            else if (provider == "2factor" && type=="OTP")
+                            else if (provider == "2factor" && type == "OTP")
                             {
 
-                                using (var wb = new WebClient())
-                                {
-                                    byte[] response = wb.UploadValues("http://205.147.96.66/API/R1/", "POST", new NameValueCollection()
-                                {
-                                        { "module","SMS_OTP"},
-                                {"apikey" , "bddc3759-107a-11e7-9462-00163ef91450"},                                
-                                {"to" , MobileNos},
-                                {"otpvalue" , msg}
-                                     
-                                });
-                                    string result = System.Text.Encoding.UTF8.GetString(response);
+                                string Confgs = System.Web.Configuration.WebConfigurationManager.AppSettings["2factorOTP"];
 
+                                if (!String.IsNullOrEmpty(Confgs))
+                                {
+
+
+                                    string[] ConfgValues = Confgs.Split('|');
+
+                                    using (var wb = new WebClient())
+                                    {
+                                        // byte[] response = wb.UploadValues("http://205.147.96.66/API/R1/", "POST", new NameValueCollection()
+                                        //{
+                                        //{ "module","SMS_OTP"},
+                                        //{"apikey" , "bddc3759-107a-11e7-9462-00163ef91450"},                                
+                                        //{"to" , MobileNos},
+                                        //{"otpvalue" , msg}
+
+                                        byte[] response = wb.UploadValues(ConfgValues[0], "POST", new NameValueCollection()
+                                    {
+                                    { "module",ConfgValues[1]},
+                                    {"apikey" , ConfgValues[2]},
+                                    {"template_name" , ConfgValues[3]},
+                                    {"to" , MobileNos},
+                                    {"otpvalue" , msg}
+
+                                    });
+                                        string result = System.Text.Encoding.UTF8.GetString(response);
+
+                                    }
                                 }
                             }
-
+                            #endregion
                             //-------------------------------------------------------------------------------------------------------------
 
 
@@ -133,11 +158,10 @@ namespace PartyEC.BusinessServices.Services
 
 
                     }
-                    }
-
                 }
-            }
 
+            }
+        }
         #endregion
 
 
