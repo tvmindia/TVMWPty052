@@ -13,5 +13,10 @@ namespace PartyEC.BusinessServices.Contracts
         List<Supplier> GetAllSuppliers();
         List<OrderStatusMaster> GetAllOrderStatus();
         List<OtherImages> GetAllStickers();
+
+        Supplier GetSupplier(int SupplierID, OperationsStatus Status);
+        OperationsStatus InsertSupplier(Supplier supplierObj);
+        OperationsStatus UpdateSupplier(Supplier supplierObj);
+
     }
 }

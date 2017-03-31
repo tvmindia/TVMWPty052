@@ -43,5 +43,20 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        public object GetEventTypesAndRelatedCategories()
+        {
+            try
+            {
+                List<EventTypeAppViewModel> EventTypesList = Mapper.Map<List<Event>, List<EventTypeAppViewModel>>(_eventBusiness.GetAllEvents());
+                if (EventTypesList.Count == 0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = EventTypesList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
     }
 }

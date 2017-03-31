@@ -26,9 +26,11 @@ namespace PartyEC.UI.Models
         public string EventImageID { get; set; }
         public string URL { get; set; }
         public LogDetailsViewModel commonObj { get; set; }
-
-
-
-
+    }
+    public class EventTypeAppViewModel
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string RelatedCategoriesCSV { get; set; }
     }
 }
