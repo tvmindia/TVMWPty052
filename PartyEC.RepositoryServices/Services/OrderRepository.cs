@@ -50,7 +50,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Order orderObj = new Order();
                                     {
-                                        orderObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : orderObj.ID);
+                                        orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
                                         orderObj.OrderNo = sdr["OrderNo"].ToString();
                                         orderObj.OrderRev = sdr["OrderRev"].ToString();
                                         orderObj.OrderDate =sdr["OrderDate"].ToString()!=""?DateTime.Parse(sdr["OrderDate"].ToString()) :orderObj.OrderDate;
