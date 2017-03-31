@@ -5,10 +5,10 @@
 }
 
 @section styles {
-   @Styles.Render("~/Content/datatable")
+   @Styles.Render("~/Content/DataTables/css/datatable")
    @Styles.Render("~/Content/bootstrapdatepicker")
-   @Styles.Render("~/Content/datatableSelect")
-   @Styles.Render("~/Content/product")   
+   @Styles.Render("~/Content/DataTables/css/datatableSelect")
+   @Styles.Render("~/Content/UserCSS/product")   
    @Styles.Render("~/Content/Uplodify")
    @Styles.Render("~/Content/lightbox")
     <style>
@@ -676,7 +676,7 @@
 
                                 </div>
                                
-                                <div id="associatedStaticfields">
+                                <form id="associatedStaticfields" name="associatedStaticfields">
                                  
                                     <div class="form-group">
                                         <label for=detailQty class="col-lg-2 control-label">Qty<span class="required">*</span></label>
@@ -779,7 +779,7 @@
                                         </div>
                                     </div>
 
-                                </div>
+                                </form>
 
                             </div>
                             <div class="tab-pane fade" id="ratingAndReviews">
@@ -942,8 +942,8 @@
             'buttonImage': '/Content/images/browse-btn.png',
             'fileTypeDesc': 'Image Files',
             'fileTypeExts': '*.jpg; *.png',
-                'swf': "@Url.Content("~/Content/uploadify.swf")",
-                //this is where the file posts when it uploads.
+            'swf': '/Content/uploadify.swf',
+            //this is where the file posts when it uploads.
             'uploader': "@Url.Action("UploadProductImage", "Products")",
             'onSelect': function (file) {
                 $('#alinkUpload').show();
@@ -958,7 +958,7 @@
                 //$('#URL').val(data);
                     //$('#imgProduct').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
                     BindImages();
-                    
+
                     $('#alinkUpload').hide();
                 }
 
@@ -971,7 +971,7 @@
             'buttonImage': '/Content/images/browse-btn.png',
             'fileTypeDesc': 'Image Files',
             'fileTypeExts': '*.jpg; *.png',
-            'swf': "@Url.Content("~/Content/uploadify.swf")",
+            'swf': '/Content/uploadify.swf',
                 //this is where the file posts when it uploads.
             'uploader': "@Url.Action("UploadOtherImages", "Products")",
             'onSelect': function (file) {
@@ -998,7 +998,7 @@
             'fileTypeDesc': 'Image Files',
             'fileTypeExts': '*.jpg; *.png',
             'buttonImage': '/Content/images/browse-btn.png',
-            'swf': "@Url.Content("~/Content/uploadify.swf")",
+            'swf': '/Content/uploadify.swf',
                 //this is where the file posts when it uploads.
             'uploader': "@Url.Action("UploadStickerImages", "Products")",
             'onSelect': function (file) {

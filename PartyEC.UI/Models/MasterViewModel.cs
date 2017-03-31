@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -24,7 +25,12 @@ namespace PartyEC.UI.Models
     public class SupplierViewModel
     {
         public int ID { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Supplier Name")]
+        [Display(Name = "Supplier Name")]
         public string Name { get; set; }
+
+        public DateTime CreatedDate { get; set; }
     }
     public class OrderStatusViewModel
     {

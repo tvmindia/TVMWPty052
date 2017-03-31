@@ -52,17 +52,17 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Categories categoriesObj = new Categories();
                                     {
-                                        categoriesObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : categoriesObj.ID);
+                                        categoriesObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : categoriesObj.ID);
                                         categoriesObj.Name = sdr["Name"].ToString();
                                         categoriesObj.Description = sdr["Description"].ToString();
-                                        categoriesObj.ParentID = (sdr["ParentID"].ToString() != "" ? Int16.Parse(sdr["ParentID"].ToString()) : categoriesObj.ParentID);
+                                        categoriesObj.ParentID = (sdr["ParentID"].ToString() != "" ? int.Parse(sdr["ParentID"].ToString()) : categoriesObj.ParentID);
                                         categoriesObj.ImageID = sdr["ImageID"].ToString();
                                         categoriesObj.URL = sdr["URL"].ToString();
                                         categoriesObj.Navigation = sdr["Navigation"].ToString() != "" ? bool.Parse(sdr["Navigation"].ToString()) : false;
                                         categoriesObj.System = sdr["System"].ToString() != "" ? bool.Parse(sdr["System"].ToString()) : false;
                                         categoriesObj.Filter = sdr["Filter"].ToString() != "" ? bool.Parse(sdr["Filter"].ToString()) : false;
                                         categoriesObj.Enable = sdr["Enable"].ToString() != "" ? bool.Parse(sdr["Enable"].ToString()) : false;
-                                        categoriesObj.ChildrenCount= (sdr["ChildrenCount"].ToString() != "" ? Int16.Parse(sdr["ChildrenCount"].ToString()) : categoriesObj.ChildrenCount);
+                                        categoriesObj.ChildrenCount= (sdr["ChildrenCount"].ToString() != "" ? int.Parse(sdr["ChildrenCount"].ToString()) : categoriesObj.ChildrenCount);
                                         categoriesObj.CategoryOrder= (sdr["CategoryOrder"].ToString() != "" ? float.Parse(sdr["CategoryOrder"].ToString()) : categoriesObj.ChildrenCount);
                                     }
                                     Categorylist.Add(categoriesObj);
@@ -104,10 +104,10 @@ namespace PartyEC.RepositoryServices.Services
                                 while (sdr.Read())
                                 {
                                     
-                                        myCategory.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myCategory.ID);
+                                        myCategory.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myCategory.ID);
                                         myCategory.Name = sdr["Name"].ToString();
                                         myCategory.Description = sdr["Description"].ToString();
-                                        myCategory.ParentID=(sdr["ParentID"].ToString() != "" ? Int16.Parse(sdr["ParentID"].ToString()) : myCategory.ParentID);
+                                        myCategory.ParentID=(sdr["ParentID"].ToString() != "" ? int.Parse(sdr["ParentID"].ToString()) : myCategory.ParentID);
                                     myCategory.ImageID = sdr["ImageID"].ToString();
                                     myCategory.URL= sdr["URL"].ToString();
                                     myCategory.Navigation = sdr["Navigation"].ToString()!=""?bool.Parse(sdr["Navigation"].ToString()):false;
@@ -177,7 +177,7 @@ namespace PartyEC.RepositoryServices.Services
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
-                                operationsStatusObj.ReturnValues = Int16.Parse(outparameterID.Value.ToString());
+                                operationsStatusObj.ReturnValues = int.Parse(outparameterID.Value.ToString());
                                 break;
                             case "2":
                                 //Insert Successfull

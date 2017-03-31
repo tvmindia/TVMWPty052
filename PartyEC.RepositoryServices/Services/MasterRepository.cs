@@ -45,7 +45,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Manufacturer _manufacturer = new Manufacturer();
                                     {
-                                        _manufacturer.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _manufacturer.ID);
+                                        _manufacturer.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _manufacturer.ID);
                                         _manufacturer.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _manufacturer.Name);
                                         _manufacturer.country.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : _manufacturer.country.Code);
                                         _manufacturer.country.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : _manufacturer.country.Name);
@@ -95,9 +95,11 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Supplier _supplier = new Supplier();
                                     {
-                                        _supplier.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _supplier.ID);
+                                        _supplier.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _supplier.ID);
                                         _supplier.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _supplier.Name);
-                                     
+                                        _supplier.CreatedDate= (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _supplier.CreatedDate);
+
+
 
                                     }
                                     suppliersList.Add(_supplier);
@@ -116,6 +118,49 @@ namespace PartyEC.RepositoryServices.Services
             return suppliersList;
 
 
+        }
+
+        public Supplier GetSupplier(int SupplierID, OperationsStatus Status)
+        {
+
+            Supplier mySupplier = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = SupplierID;
+                        cmd.CommandText = "[GetSupplier]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                if (sdr.Read())
+                                {
+                                    mySupplier = new Supplier();
+                                    mySupplier.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : mySupplier.ID);
+                                    mySupplier.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : mySupplier.Name);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return mySupplier;
         }
 
         public OperationsStatus InsertImage(OtherImages otherimgObj)
@@ -200,7 +245,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     OrderStatusMaster _orderstatus = new OrderStatusMaster();
                                     {
-                                        _orderstatus.Code = (sdr["Code"].ToString() != "" ? Int16.Parse(sdr["Code"].ToString()) : _orderstatus.Code);
+                                        _orderstatus.Code = (sdr["Code"].ToString() != "" ? int.Parse(sdr["Code"].ToString()) : _orderstatus.Code);
                                         _orderstatus.Description = (sdr["Description"].ToString() != "" ? sdr["Description"].ToString() : _orderstatus.Description);
 
                                     }
@@ -269,5 +314,7 @@ namespace PartyEC.RepositoryServices.Services
 
 
         }
+
+     
     }
 }
