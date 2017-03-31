@@ -299,7 +299,7 @@ namespace PartyEC.RepositoryServices.Services
             return OperationsStatusObj;
         }
         
-        public List<AttributeValues> GetAttributeContainer(int AttributeSetID,string Type)
+        public List<AttributeValues> GetAttributeContainer(int AttributeSetID,string Type,bool isForAssociated=false)
         {
             List<AttributeValues> myProductAttributeList = null;
             try
@@ -315,6 +315,7 @@ namespace PartyEC.RepositoryServices.Services
                     cmd.Connection = con;
                     cmd.Parameters.Add("@AttributeSetID", SqlDbType.Int).Value = AttributeSetID;
                     cmd.Parameters.Add("@EntityType", SqlDbType.NVarChar).Value = Type;
+                    cmd.Parameters.Add("@isForAssociated", SqlDbType.Bit).Value = isForAssociated;
                     cmd.CommandText = "[GetAttributesBySetIdAndEntityType]";
                     cmd.CommandType = CommandType.StoredProcedure;
 

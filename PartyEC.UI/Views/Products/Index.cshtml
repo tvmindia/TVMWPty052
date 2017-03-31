@@ -676,12 +676,13 @@
 
                                 </div>
                                
-                                <form id="associatedStaticfields" name="associatedStaticfields">
+                                <div id="associatedStaticfields">
                                  
                                     <div class="form-group">
                                         <label for=detailQty class="col-lg-2 control-label">Qty<span class="required">*</span></label>
                                         <div class="col-lg-4 input-group">
-                                            <input type="text" class="form-control" id="detailQty" name="detailQty">
+                                            <input type="text" class="form-control" onkeypress="return isNumber(event)" id="detailQty" name="detailQty">
+                                            <span id="errorQty" style="color: Red; display: none">Qty is Required</span>
                                             <input type="hidden" class="form-control" id="productDetailID" name="productDetailID" />
                                         </div>
                                     </div>
@@ -689,7 +690,8 @@
                                     <div class="form-group">
                                         <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty<span class="required">*</span></label>
                                         <div class="col-lg-4 input-group">
-                                            <input type="text" class="form-control" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
+                                            <input type="text" class="form-control" onkeypress="return isNumber(event)" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
+                                            <span id="errorAlertQty" style="color: Red; display: none">Reorder Alert Qty is Required</span>
                                         </div>
                                     </div>
 
@@ -779,7 +781,7 @@
                                         </div>
                                     </div>
 
-                                </form>
+                                </div>
 
                             </div>
                             <div class="tab-pane fade" id="ratingAndReviews">
