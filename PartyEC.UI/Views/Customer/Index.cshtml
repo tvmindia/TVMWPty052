@@ -12,13 +12,13 @@
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li  id="tabcustomerList" class="active"><a href="#customerList" data-toggle="tab">Customer List</a></li>
-                <li id="tabcustomerView"><a data-toggle="tab" href="#customerView">Customer View</a></li>
+                <li  id="tabcustomerList" class="active"><a href="#customerListContent" data-toggle="tab">Customer List</a></li>
+                <li id="tabcustomerView"><a data-toggle="tab" href="#customerViewContent">Customer View</a></li>
             </ul>
         </div>
         <div class="panel-body">
             <div class="tab-content">
-                <div class="tab-pane fade in active" id="customerList">
+                <div class="tab-pane fade in active" id="customerListContent">
 
                  
 
@@ -44,13 +44,13 @@
                         <button id="btnmodelproductrating" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ModelProductsRating"></button>
                     </div>
                 </div>
-                <div class="tab-pane fade" id="customerView">
+                <div class="tab-pane fade" id="customerViewContent">
 
                     <h4>Customer View</h4>
 
 
                     @*ButtonPatch*@
-                    <div class="" id="">
+                    <div>
                         @{
                             PartyEC.UI.Models.ToolboxViewModel ToolBoxControlDetail = new PartyEC.UI.Models.ToolboxViewModel();
                             ToolBoxControlDetail.savebtn.Visible = true;
@@ -73,8 +73,8 @@
                         <div class="panel with-nav-tabs js panel-primary">
                             <div class="panel-heading">
                                 <ul class="nav nav-tabs nav-stacked" id="LHSNavbarCustomers">
-                                    <li id="customerViewLI" onclick="ShowProductDetalsToolBox()" class="active"><a href="#tabCustomerView" data-toggle="tab" id="tabCustomerView">Customer View</a></li>
-                                    <li onclick="RenderContentForPrice()"><a href="#tabAddress" data-toggle="tab" id="tabcustomerAddress">Addresses</a></li>
+                                    <li id="customerViewLI" onclick="return true;" class="active"><a href="#CustomerView" data-toggle="tab" id="tabCustomerView">Customer View</a></li>
+                                    <li onclick="return true;"><a href="#AddressView" data-toggle="tab" id="tabcustomerAddress">Addresses</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -84,15 +84,158 @@
                     <div class="col-md-10">
                        
                             <div class="tab-content customerTabContent">
-                                <div class="tab-pane fade in active" id="tabCustomerView">
+                                <div class="tab-pane fade in active" id="CustomerView">
                                     <!--Edit form column-->
 
-                                    custemer view
-                                 
+                                    <div class="container">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">Personal Information</div>
+                                                    <div class="panel-body">
+                                                        <div class="col-md-12">
+                                                            @*@Html.LabelFor(model => model.EventReqNo, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <div class="col-md-8">
+                                                                <label id="lblEventReqNo" class="h4 label-display">-</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            @*@Html.LabelFor(model => model.EventType, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <div class="col-md-8">
+                                                                <label id="lblEventType" class="h4 label-display">-</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            @*  @Html.LabelFor(model => model.EventTitle, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <div class="col-md-8">
+                                                                <label id="lblEventTitle" class="h4 label-display">-</label>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            @*@Html.LabelFor(model => model.EventDateTime, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <div class="col-md-8">
+                                                                <label id="lblEventDate" class="h4 label-display">-</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            @*@Html.LabelFor(model => model.EventDateTime, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <div class="col-md-8">
+                                                                <label id="lblEventTime" class="h4 label-display">-</label>
+                                                            </div>
+                                                        </div>
 
 
-                                </div>
-                                <div class="tab-pane fade" id="tabAddress">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="panel panel-default">
+                                                    <div class="panel-heading">Sales Statistics</div>
+                                                    <div class="panel-body">
+
+                                                        <div class="col-md-12">
+                                                            @*@Html.LabelFor(model => model.LookingFor, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <div class="col-md-8">
+                                                                <label id="lblLookingFor" class="h4 label-display">-</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            @*@Html.LabelFor(model => model.RequirementSpec, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <div class="col-md-8">
+                                                                <label id="lblRequirementSpec" class="h4 label-display">-</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            @*@Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <div class="col-md-8">
+                                                                <label id="lblMessage" class="h4 label-display">-</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            @*@Html.LabelFor(model => model.NoOfPersons, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <div class="col-md-8">
+                                                                <label id="lblNoOfPersons" class="h4 label-display">-</label>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-md-12">
+                                                            @*@Html.LabelFor(model => model.Budget, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <div class="col-md-8">
+                                                                <label id="lblBudget" class="h4 label-display">-</label>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                    <br />
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">Recent Orders</div>
+                                                <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                         <th>Order No</th>
+                                                         <th>Order Date</th>
+                                                         <th>Bill To Name</th>
+                                                         <th>Ship To Name</th>
+                                                         <th>Order Total</th>
+                                                         </tr>
+                                                    </thead>
+                                                 </table>
+                                            </div>
+                                        </div>
+                                        </div>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">Shopping Cart</div>
+                                                <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr> 
+                                                        <th>Product ID</th>
+                                                        <th>Product Name</th>
+                                                        <th>SKU</th>
+                                                        <th>Qty</th>
+                                                        <th>Price</th>
+                                                        <th>Total</th>
+                                                       </tr>
+                                                    </thead>
+                                                    
+                                                </table>
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <div class="panel panel-default">
+                                                <div class="panel-heading">Wishlist</div>
+                                                <table class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                                    <thead>
+                                                        <tr>
+                                                         <th>Product ID</th>
+                                                         <th>Product Name</th>
+                                                         <th>Date Added</th>
+                                                         <th>Days In Wishlist</th>
+                                                        </tr>
+                                                    </thead>
+                                                    
+                                                </table>
+                                            </div>
+                                        </div>
+                                     
+                                    </div>
+                                    </div>
+                                <div class="tab-pane fade" id="AddressView">
                                    
                                     address
                                 </div>
