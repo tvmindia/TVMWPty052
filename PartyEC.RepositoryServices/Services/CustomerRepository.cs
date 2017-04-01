@@ -66,6 +66,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _customerObj.OrdersCountHistory = (sdr["OrdersCountHistory"].ToString() != "" ? int.Parse(sdr["OrdersCountHistory"].ToString()) : _customerObj.OrdersCountHistory);
                                         _customerObj.BookingsCountHistory = (sdr["BookingsCountHistory"].ToString() != "" ? int.Parse(sdr["BookingsCountHistory"].ToString()) : _customerObj.BookingsCountHistory);
                                         _customerObj.QuotationsCountHistory = (sdr["QuotationsCountHistory"].ToString() != "" ? int.Parse(sdr["QuotationsCountHistory"].ToString()) : _customerObj.QuotationsCountHistory);
+                                        _customerObj.IsActive = bool.Parse(sdr["ActiveYN"].ToString());
                                         _customerObj.logDetailsObj = new LogDetails();
                                         _customerObj.logDetailsObj.CreatedDate= (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _customerObj.logDetailsObj.CreatedDate);
 
@@ -108,7 +109,6 @@ namespace PartyEC.RepositoryServices.Services
                                 if (sdr.Read())
                                 {
                                     mycustomer = new Customer();
-
                                     mycustomer.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : mycustomer.ID);
                                     mycustomer.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : mycustomer.Name);
                                     mycustomer.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : mycustomer.Email);
@@ -122,7 +122,15 @@ namespace PartyEC.RepositoryServices.Services
                                     mycustomer.OrdersCountHistory = (sdr["OrdersCountHistory"].ToString() != "" ? int.Parse(sdr["OrdersCountHistory"].ToString()) : mycustomer.OrdersCountHistory);
                                     mycustomer.BookingsCountHistory = (sdr["BookingsCountHistory"].ToString() != "" ? int.Parse(sdr["BookingsCountHistory"].ToString()) : mycustomer.BookingsCountHistory);
                                     mycustomer.QuotationsCountHistory = (sdr["QuotationsCountHistory"].ToString() != "" ? int.Parse(sdr["QuotationsCountHistory"].ToString()) : mycustomer.QuotationsCountHistory);
-                                    
+                                    mycustomer.IsActive = bool.Parse(sdr["ActiveYN"].ToString());
+                                    mycustomer.customerAddress = new CustomerAddress();
+                                    mycustomer.customerAddress.Address = (sdr["Address"].ToString() != "" ? sdr["Address"].ToString() : mycustomer.customerAddress.Address);
+                                    mycustomer.customerAddress.City = (sdr["City"].ToString() != "" ? sdr["City"].ToString() : mycustomer.customerAddress.City);
+                                    mycustomer.customerAddress.StateProvince = (sdr["StateProvince"].ToString() != "" ? sdr["StateProvince"].ToString() : mycustomer.customerAddress.StateProvince);
+                                    mycustomer.customerAddress.county = new Country();
+                                    mycustomer.customerAddress.county.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : mycustomer.customerAddress.county.Name);
+                                    mycustomer.logDetailsObj = new LogDetails();
+                                    mycustomer.logDetailsObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : mycustomer.logDetailsObj.CreatedDate);
                                 }
                             }//if
                         }

@@ -65,13 +65,84 @@ function GetAllCustomers()
 
 function EditCustomer(currentObj)
 {
+    debugger;
     try
     {
         var rowData = DataTables.customerTable.row($(currentObj).parents('tr')).data();
-        if ((rowData != null) && (rowData.ID != null)) {
+        if ((rowData.ID != null))
+        {
             $("#tabcustomerView a").trigger('click');
-           
+            var thiscustomer = GetCustomerDetail(rowData.ID);
+            if(thiscustomer)
+            {
+                $('#lblCustName').text(thiscustomer.Name);
+                $('#lblCustAccCreate').text(ConvertJsonToDate(thiscustomer.logDetailsObj.CreatedDate));
+                $('#lblEmail').text(thiscustomer.Email);
+                $('#lblCustMobile').text(thiscustomer.Mobile);
+                $('#lblCustGender').text(thiscustomer.Gender);
+                $('#lblCustActive').text((thiscustomer.IsActive!=true?'No':'Yes'));
+                $('#lblCustDefaultAddress').text(thiscustomer.customerAddress.Address);
+                $('#lblCustCity').text(thiscustomer.customerAddress.City);
+                $('#lblCustStateProvince').text(thiscustomer.customerAddress.StateProvince);
+                $('#lblCustCountry').text(thiscustomer.customerAddress.county.Name);
+
+
+            }
+
         }
+    }
+    catch(e)
+    {
+        notyAlert('errror', e.message);
+    }
+}
+
+function GetCustomerDetail(custid)
+{
+    try
+    {
+        if ((custid) && (custid > 0)) {
+            var data = { "ID" : custid };
+            var ds = {};
+            ds = GetDataFromServer("Customer/GetCustomer/", data);
+            if (ds != '') {
+                ds = JSON.parse(ds);
+            }
+            if (ds.Result == "OK") {
+
+                return ds.Record;
+            }
+            if (ds.Result == "ERROR") {
+                notyAlert('error', ds.Message);
+            }
+        }
+        else {
+
+        }
+    }
+    catch(e)
+    {
+        notyAlert('errror', e.message);
+    }
+   
+}
+
+function  GetCustomerOrders()
+{
+    try
+    {
+        
+    }
+    catch(e)
+    {
+        notyAlert('errror', e.message);
+    }
+}
+function RefreshCustomerOrders()
+{
+    try
+    {
+
     }
     catch(e)
     {

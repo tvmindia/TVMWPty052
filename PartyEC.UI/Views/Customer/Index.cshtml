@@ -94,37 +94,58 @@
                                                     <div class="panel-heading">Personal Information</div>
                                                     <div class="panel-body">
                                                         <div class="col-md-12">
-                                                            @*@Html.LabelFor(model => model.EventReqNo, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <label class="h4 col-md-4">Customer Name</label>
                                                             <div class="col-md-8">
-                                                                <label id="lblEventReqNo" class="h4 label-display">-</label>
+                                                                <label id="lblCustName" class="h4 label-display">-</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
-                                                            @*@Html.LabelFor(model => model.EventType, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <label class="h4 col-md-4">Account Created On</label>
                                                             <div class="col-md-8">
-                                                                <label id="lblEventType" class="h4 label-display">-</label>
+                                                                <label id="lblCustAccCreate" class="h4 label-display">-</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
-                                                            @*  @Html.LabelFor(model => model.EventTitle, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <label class="h4 col-md-4">Email</label>
                                                             <div class="col-md-8">
-                                                                <label id="lblEventTitle" class="h4 label-display">-</label>
+                                                                <label id="lblEmail" class="h4 label-display">-</label>
 
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
-                                                            @*@Html.LabelFor(model => model.EventDateTime, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <label class="h4 col-md-4">Mobile</label>
                                                             <div class="col-md-8">
-                                                                <label id="lblEventDate" class="h4 label-display">-</label>
+                                                                <label id="lblCustMobile" class="h4 label-display">-</label>
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12">
-                                                            @*@Html.LabelFor(model => model.EventDateTime, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <label class="h4 col-md-4">Gender</label>
                                                             <div class="col-md-8">
-                                                                <label id="lblEventTime" class="h4 label-display">-</label>
+                                                                <label id="lblCustGender" class="h4 label-display">-</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12">
+                                                            <label class="h4 col-md-4">Is Active</label>
+                                                            <div class="col-md-8">
+                                                                <label id="lblCustActive" class="h4 label-display">-</label>
                                                             </div>
                                                         </div>
 
+                                                        <div class="col-md-12">
+                                                            <label class="h4 col-md-4">Default Address</label>
+                                                            <div class="col-md-8">
+                                                                <label id="lblCustDefaultAddress" class="h4 label-display">-</label>
+                                                                <p>
+                                                                    <label id="lblCustCity" class="h4 label-display">-</label>
+                                                                </p>
+                                                                <p>
+                                                                    <label id="lblCustStateProvince" class="h4 label-display">-</label>
+                                                                </p>
+                                                                <p>
+                                                                    <label id="lblCustCountry" class="h4 label-display">-</label>
+                                                                </p>
+                                                            </div>
+                                                        </div>
 
                                                     </div>
                                                 </div>
@@ -135,40 +156,27 @@
                                                     <div class="panel-body">
 
                                                         <div class="col-md-12">
-                                                            @*@Html.LabelFor(model => model.LookingFor, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <label class="h4 col-md-4">Lifetime Sales</label>
                                                             <div class="col-md-8">
-                                                                <label id="lblLookingFor" class="h4 label-display">-</label>
+                                                                <label id="lblLifeSales" class="h4 label-display">-</label>
+                                                            </div>
+                                                        </div>
+
+                                                        
+
+                                                        <div class="col-md-12">
+                                                            <label class="h4 col-md-4">Average Sale</label>
+                                                            <div class="col-md-8">
+                                                                <label id="lblAverageSales" class="h4 label-display">-</label>
                                                             </div>
                                                         </div>
 
                                                         <div class="col-md-12">
-                                                            @*@Html.LabelFor(model => model.RequirementSpec, htmlAttributes: new { @class = "h4 col-md-4" })*@
+                                                            <label class="h4 col-md-4">Last Month Sale</label>
                                                             <div class="col-md-8">
-                                                                <label id="lblRequirementSpec" class="h4 label-display">-</label>
+                                                                <label id="lblLastSale" class="h4 label-display">-</label>
                                                             </div>
                                                         </div>
-
-                                                        <div class="col-md-12">
-                                                            @*@Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "h4 col-md-4" })*@
-                                                            <div class="col-md-8">
-                                                                <label id="lblMessage" class="h4 label-display">-</label>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            @*@Html.LabelFor(model => model.NoOfPersons, htmlAttributes: new { @class = "h4 col-md-4" })*@
-                                                            <div class="col-md-8">
-                                                                <label id="lblNoOfPersons" class="h4 label-display">-</label>
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="col-md-12">
-                                                            @*@Html.LabelFor(model => model.Budget, htmlAttributes: new { @class = "h4 col-md-4" })*@
-                                                            <div class="col-md-8">
-                                                                <label id="lblBudget" class="h4 label-display">-</label>
-                                                            </div>
-                                                        </div>
-
                                                     </div>
                                                 </div>
                                             </div>

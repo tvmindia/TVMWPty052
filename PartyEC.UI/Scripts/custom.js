@@ -141,24 +141,23 @@ function ClearFields() {
 
 //------Date Formating :Return Result Eg: 01-Jan-2017--------------------//
 //Passing value
-//before Parse Eg:"2017-03-30T00:00:00"
-//after Parse Date Eg:1490832000000  Passing as jsonDate
+//Argument Eg:"2017-03-30T00:00:00"
+//Returns 30-03-2017
 function ConvertJsonToDate(jsonDate) {
-    if (jsonDate != null) {
-       // var dateString = jsonDate.substr(6);
-        var currentTime = new Date(parseInt(jsonDate));
-        var month = currentTime.getMonth();
-        var day = currentTime.getDate();
-        var year = currentTime.getFullYear();
-        var monthNames = [
-                      "Jan", "Feb", "Mar",
-                      "Apr", "May", "Jun", "Jul",
-                      "Aug", "Sep", "Oct",
-                      "Nov", "Dec"
-        ];
-        var result = day + '-' + monthNames[month] + '-' + year;
-        return result;
+    try
+    {
+        if (jsonDate != null) {
+            var currentTime = new Date(jsonDate.substr(0, 10));
+            var monthNames = ["Jan", "Feb", "Mar","Apr", "May", "Jun", "Jul","Aug", "Sep", "Oct","Nov", "Dec"];
+            var result = currentTime.getDate() + '-' + monthNames[currentTime.getMonth()] + '-' + currentTime.getFullYear();
+            return result;
+        }
     }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+   
 }
 //only number validation
 function isNumber(e) {
