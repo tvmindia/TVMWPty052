@@ -1,30 +1,23 @@
 ﻿var DataTables = {};
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
-    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Add"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Add"); //ControllerName,id of the container div,Name of the action
     try {
-        debugger;       
-        DataTables.ShippingLocationTable = $('#tblshippinglocation').DataTable(
+        debugger;
+        DataTables.SupplierLocationsTable = $('#tblSupplierLocations').DataTable(
          {
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
              order: [],
              searching: true,
              paging: true,
-             data: GetAllShippingLocation(),
+             data: GetAllSupplierLocations(),
              columns: [
                { "data": "ID" },
-               { "data": "Name" },
-               { "data": "CreatedDate", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
-             ],
-             columnDefs: [{
-                 "render": function (data, type, row) {
-                     var str = Date.parse(data);
-                     var res = ConvertJsonToDate('' + str + '');
-                     return res;
-                 },
-                 "targets": 2
-             }]
+               { "data": "SupplierName" },
+               { "data": "LocationName" },
+               { "data": "ShippingCharge", "defaultContent": "<i>-</i>" },
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+             ] 
          });
     }
     catch (e) {
@@ -33,11 +26,12 @@ $(document).ready(function () {
     }
 });
 
-function GetAllShippingLocation() {
+function GetAllSupplierLocations() {
     try {
+        debugger;
         var data = {};
         var ds = {};
-        ds = GetDataFromServer("ShippingLocation/GetAllShippingLocation/", data);
+        ds = GetDataFromServer("SupplierLocations/GetAllSupplierLocations/", data);
         if (ds != '') {
             ds = JSON.parse(ds);
         }
@@ -53,13 +47,13 @@ function GetAllShippingLocation() {
     }
 }
 
-//---------------------------------------Get ShippingLocation Details By ID-------------------------------------//
-function GetShippingLocationByID(id) {
+//---------------------------------------Get SupplierLocations Details By ID-------------------------------------//
+function GetSupplierLocationsByID(id) {
     try {
         debugger;
         var data = { "ID": id };
         var ds = {};
-        ds = GetDataFromServer("ShippingLocation/GetShippingLocation/", data);
+        ds = GetDataFromServer("SupplierLocations/GetSupplierLocations/", data);
         if (ds != '') {
             ds = JSON.parse(ds);
         }
@@ -76,26 +70,28 @@ function GetShippingLocationByID(id) {
 }
 
 
-//---------------------------------------Edit ShippingLocation--------------------------------------------------//
+//---------------------------------------Edit SupplierLocations--------------------------------------------------//
 function Edit(currentObj) {
     //Tab Change on edit click
     debugger;
-    $('#tabShippingLocationDetails').trigger('click');
-    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Edit");//ControllerName,id of the container div,Name of the action
+    $('#tabSupplierLocationsDetails').trigger('click');
+    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationsstab2", "Edit");//ControllerName,id of the container div,Name of the action
 
-    var rowData = DataTables.ShippingLocationTable.row($(currentObj).parents('tr')).data();
+    var rowData = DataTables.SupplierLocationsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
-        fillShippingLocation(rowData.ID);
+        fillSupplierLocations(rowData.ID);
     }
 }
-//---------------------------------------Fill ShippingLocation--------------------------------------------------//
-function fillShippingLocation(ID) {
+//---------------------------------------Fill SupplierLocations--------------------------------------------------//
+function fillSupplierLocations(ID) {
     debugger;
-    var thisShippingLocation = GetShippingLocationByID(ID); //Binding Data  
-    $("#ID").val(thisShippingLocation.ID);
-    $("#deleteId").val(thisShippingLocation.ID);
-    $("#lblShippingLocationID").text(thisShippingLocation.ID);
-    $("#Name").val(thisShippingLocation.Name);
+    var thisSupplierLocations = GetSupplierLocationsByID(ID); //Binding Data  
+    $("#ID").val(thisSupplierLocations.ID);
+    $("#SupplierID").val(thisSupplierLocations.SupplierID)
+    $("#deleteId").val(thisSupplierLocations.ID);
+    $("#lblSupplierName").text(thisSupplierLocations.Name);
+    $("#LocationID").val(thisSupplierLocations.LocationID);
+    $("#ShippingCharge").val(thisSupplierLocations.ShippingCharge);
 
 }
 //---------------------------------------Clear Fields-----------------------------------------------------//
@@ -103,7 +99,7 @@ function clearfields() {
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
-    $("#lblShippingLocationID").text("-New-");
+   // $("#lblSupplierName").text("-New-");
 
 }
 //---------------------------------------Button Patch Click Events------------------------------------------------//
@@ -112,7 +108,7 @@ function btnreset() {
         clearfields();
     }
     else {
-        fillShippingLocation($("#ID").val())
+        fillSupplier($("#ID").val())
     }
 }
 //---------------------------------------Save-------------------------------------------------------//
@@ -127,7 +123,7 @@ function Validation() {
     return true;
 }
 function SaveSuccess(data, status, xhr) {
-    BindAllShippingLocation();
+    BindAllSupplierLocations();
     var i = JSON.parse(data)
     debugger;
 
@@ -136,7 +132,7 @@ function SaveSuccess(data, status, xhr) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
             var returnId = i.Record.ReturnValues
-            fillShippingLocation(returnId);
+            fillSupplier(returnId);
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -149,8 +145,8 @@ function SaveSuccess(data, status, xhr) {
     }
 }
 function DeleteSuccess(data, status, xhr) {
-    BindAllShippingLocation();
-   
+    BindAllSupplierLocations();
+  
 
     var i = JSON.parse(data)
     debugger;
@@ -160,7 +156,7 @@ function DeleteSuccess(data, status, xhr) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
             clearfields();
-            ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Add");
+            ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Add");
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -176,7 +172,7 @@ function DeleteSuccess(data, status, xhr) {
 
 //---------------------------------------Back-------------------------------------------------------//
 function goback() {
-    $('#tabShippingLocationList').trigger('click');
+    $('#tabSupplierLocationsList').trigger('click');
 }
 //---------------------------------------Delete-------------------------------------------------------//
 function clickdelete() {
@@ -192,15 +188,15 @@ function clickdelete() {
 
 //---------------------------------------Add New Click----------------------------------------------------//
 function btnAddNew() {
-    $('#tabShippingLocationDetails').trigger('click');
-    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Add"); //ControllerName,id of the container div,Name of the action
+    $('#tabSupplierLocationsDetails').trigger('click');
+    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
 }
 
-//---------------------------------------Bind All ShippingLocation----------------------------------------------//
-function BindAllShippingLocation() {
+//---------------------------------------Bind All SupplierLocations----------------------------------------------//
+function BindAllSupplierLocations() {
     try {
-        DataTables.ShippingLocationTable.clear().rows.add(GetAllShippingLocation()).draw(false);
+        DataTables.SupplierLocationsTable.clear().rows.add(GetAllSupplierLocations()).draw(false);
     }
     catch (e) {
         notyAlert('error', e.message);

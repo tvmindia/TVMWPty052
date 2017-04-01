@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartyEC.UI.Models
 {
@@ -45,6 +46,28 @@ namespace PartyEC.UI.Models
 
         public LogDetailsViewModel commonObj { get; set; }
        
+    }
+
+    public class SupplierLocationsViewModel
+    {
+        public int ID { get; set; }
+
+        public int LocationID { get; set; }
+        public int SupplierID { get; set; }
+
+        public string SupplierName { get; set; }
+        public string LocationName { get; set; }
+
+        public decimal ShippingCharge { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public List<SelectListItem> LocationList { get; set; }
+        public List<SelectListItem> supplierList { get; set; }
+        
+
+        public LogDetailsViewModel commonObj { get; set; }
+
+      
     }
 
 

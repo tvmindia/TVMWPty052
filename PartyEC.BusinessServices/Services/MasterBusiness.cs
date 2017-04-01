@@ -35,6 +35,35 @@ namespace PartyEC.BusinessServices.Services
             return manufacturelist;
         }
 
+        public List<OrderStatusMaster> GetAllOrderStatus()
+        {
+            List<OrderStatusMaster> orderStatuslist = null;
+            try
+            {
+                orderStatuslist = _masterRepository.GetAllOrderStatus();
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return orderStatuslist;
+        }
+
+        public List<OtherImages> GetAllStickers()
+        {
+            List<OtherImages> otherImagesList = null;
+            try
+            {
+                otherImagesList = _masterRepository.GetAllStickers();
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return otherImagesList;
+        }
+
         #region Suppliers
 
         public List<Supplier> GetAllSuppliers()
@@ -45,9 +74,9 @@ namespace PartyEC.BusinessServices.Services
                 supplierlist = _masterRepository.GetAllSuppliers();
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return supplierlist;
         }
@@ -60,9 +89,9 @@ namespace PartyEC.BusinessServices.Services
                 mySupplier = _masterRepository.GetSupplier(SupplierID, Status);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return mySupplier;
         }
@@ -102,8 +131,9 @@ namespace PartyEC.BusinessServices.Services
             {
                 OperationsStatusObj = _masterRepository.DeleteSupplier(supplierID);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw ex;
             }
             return OperationsStatusObj;
         }
@@ -120,9 +150,9 @@ namespace PartyEC.BusinessServices.Services
                 ShippingLocationlist = _masterRepository.GetAllShippingLocation();
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return ShippingLocationlist;
         }
@@ -135,9 +165,9 @@ namespace PartyEC.BusinessServices.Services
                 myShippingLocation = _masterRepository.GetShippingLocation(ShippingLocationID, Status);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return myShippingLocation;
         }
@@ -177,43 +207,95 @@ namespace PartyEC.BusinessServices.Services
             {
                 OperationsStatusObj = _masterRepository.DeleteShippingLocation(ShippingLocationID);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw ex;
             }
             return OperationsStatusObj;
         }
 
         #endregion ShippingLocation
 
+        #region SupplierLocations
 
-        public List<OrderStatusMaster> GetAllOrderStatus()
+        public List<SupplierLocations> GetAllSupplierLocations()
         {
-            List<OrderStatusMaster> orderStatuslist = null;
+            List<SupplierLocations> SupplierLocationslist = null;
             try
             {
-                orderStatuslist = _masterRepository.GetAllOrderStatus();
+                SupplierLocationslist = _masterRepository.GetAllSupplierLocations();
 
             }
-            catch (Exception)
-            {
-
-            }
-            return orderStatuslist;
-        }
-        public List<OtherImages> GetAllStickers()
-        {
-            List<OtherImages> otherImagesList = null;
-            try
-            {
-                otherImagesList = _masterRepository.GetAllStickers();
-            }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw ex;
             }
-            return otherImagesList;
+            return SupplierLocationslist;
         }
 
-      
+        public SupplierLocations GetSupplierLocations(int SupplierLocationsID, OperationsStatus Status)
+        {
+            SupplierLocations mySupplierLocations = null;
+            try
+            {
+                mySupplierLocations = _masterRepository.GetSupplierLocations(SupplierLocationsID, Status);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return mySupplierLocations;
+        }
+
+        public OperationsStatus InsertSupplierLocations(SupplierLocations sup_locObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.InsertSupplierLocations(sup_locObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
+        public OperationsStatus UpdateSupplierLocations(SupplierLocations sup_locObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.UpdateSupplierLocations(sup_locObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
+        public OperationsStatus DeleteSupplierLocations(int SupplierLocationsID)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.DeleteSupplierLocations(SupplierLocationsID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
+        #endregion SupplierLocations
+
+
+
+
+
+
     }
 }

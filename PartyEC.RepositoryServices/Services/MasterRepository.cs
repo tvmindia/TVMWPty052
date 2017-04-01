@@ -14,14 +14,17 @@ namespace PartyEC.RepositoryServices.Services
         Const ConstObj = new Const();
 
         private IDatabaseFactory _databaseFactory;
+        
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
         /// <param name="databaseFactory"></param>
+
         public MasterRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
         }
+
         public List<Manufacturer> GetAllManufacturers()
         {
             List<Manufacturer> manufacturesList = null;
@@ -70,6 +73,157 @@ namespace PartyEC.RepositoryServices.Services
 
 
         }
+              
+        public OperationsStatus InsertImage(OtherImages otherimgObj)
+        {
+            OperationsStatus operrationstatusObj = null;
+            try
+            {
+                SqlParameter outparameter = null;
+                SqlParameter outparameterID = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertOtherImage]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ImageType", SqlDbType.NVarChar, 250).Value = otherimgObj.ImageType;
+                        cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1).Value = otherimgObj.URL;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = otherimgObj.LogDetails.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = otherimgObj.LogDetails.CreatedDate;
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameterID = cmd.Parameters.Add("@ID", SqlDbType.UniqueIdentifier);
+                        outparameter.Direction = ParameterDirection.Output;
+                        outparameterID.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operrationstatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
+
+                                operrationstatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operrationstatusObj.StatusMessage = "Insertion Not Successfull!";
+
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operrationstatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operrationstatusObj.StatusMessage = "Insertion Successfull!";
+                                operrationstatusObj.ReturnValues = Guid.Parse(outparameterID.Value.ToString());
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operrationstatusObj;
+        }
+              
+        public List<OrderStatusMaster> GetAllOrderStatus()
+        {
+            List<OrderStatusMaster> orderstatusList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetMasterOrderStatus]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                orderstatusList = new List<OrderStatusMaster>();
+                                while (sdr.Read())
+                                {
+                                    OrderStatusMaster _orderstatus = new OrderStatusMaster();
+                                    {
+                                        _orderstatus.Code = (sdr["Code"].ToString() != "" ? int.Parse(sdr["Code"].ToString()) : _orderstatus.Code);
+                                        _orderstatus.Description = (sdr["Description"].ToString() != "" ? sdr["Description"].ToString() : _orderstatus.Description);
+
+                                    }
+                                    orderstatusList.Add(_orderstatus);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return orderstatusList;
+
+
+        }
+
+        public List<OtherImages> GetAllStickers()
+        {
+            List<OtherImages> otherImagesList = null;
+
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetAllStickers]";
+                        cmd.Parameters.Add("@ImageType", SqlDbType.NVarChar, 50).Value = ImageTypesPreffered.Sticker;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                otherImagesList = new List<OtherImages>();
+                                while (sdr.Read())
+                                {
+                                    OtherImages _otherimages = new OtherImages();
+                                    {
+                                        _otherimages.ID = (sdr["ID"].ToString() != "" ? Guid.Parse(sdr["ID"].ToString()) : _otherimages.ID);
+                                        _otherimages.URL = (sdr["URL"].ToString() != "" ? sdr["URL"].ToString() : _otherimages.URL);
+                                    }
+                                    otherImagesList.Add(_otherimages);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return otherImagesList;
+
+
+        }
 
         #region Suppliers
         public List<Supplier> GetAllSuppliers()
@@ -99,7 +253,7 @@ namespace PartyEC.RepositoryServices.Services
                                     {
                                         _supplier.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _supplier.ID);
                                         _supplier.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _supplier.Name);
-                                        _supplier.CreatedDate= (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _supplier.CreatedDate);
+                                        _supplier.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _supplier.CreatedDate);
 
 
 
@@ -258,14 +412,14 @@ namespace PartyEC.RepositoryServices.Services
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
                         {
-                            case "0":  
+                            case "0":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
                                 break;
-                            case "1": 
+                            case "1":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
-                                operationsStatusObj.ReturnValues = supplierObj.ID;                               
+                                operationsStatusObj.ReturnValues = supplierObj.ID;
                                 break;
                             case "2":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
@@ -339,7 +493,7 @@ namespace PartyEC.RepositoryServices.Services
 
         #region ShippingLocation
 
-       
+
         public List<ShippingLocations> GetAllShippingLocation()
         {
             List<ShippingLocations> ShippingLocationlist = null;
@@ -464,16 +618,16 @@ namespace PartyEC.RepositoryServices.Services
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
                         {
-                            case "0": 
+                            case "0":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
                                 break;
-                            case "1": 
+                            case "1":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
                                 operationsStatusObj.ReturnValues = int.Parse(outparameterID.Value.ToString());
                                 break;
-                            case "2": 
+                            case "2":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.Duplicate;
                                 break;
@@ -602,10 +756,112 @@ namespace PartyEC.RepositoryServices.Services
         #endregion ShippingLocation
 
 
+        #region SupplierLocations
 
-        public OperationsStatus InsertImage(OtherImages otherimgObj)
+
+        public List<SupplierLocations> GetAllSupplierLocations()
         {
-            OperationsStatus operrationstatusObj = null;
+            List<SupplierLocations> SupplierLocationslist = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetMasterSupplierLocations]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                SupplierLocationslist = new List<SupplierLocations>();
+                                while (sdr.Read())
+                                {
+                                    SupplierLocations _supLoc = new SupplierLocations();
+                                    {
+                                        _supLoc.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _supLoc.ID);
+                                        _supLoc.LocationID = (sdr["LocationID"].ToString() != "" ? int.Parse(sdr["LocationID"].ToString()) : _supLoc.LocationID);
+                                        _supLoc.SupplierID = (sdr["SupplierID"].ToString() != "" ? int.Parse(sdr["SupplierID"].ToString()) : _supLoc.SupplierID);
+                                        _supLoc.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _supLoc.LocationName);
+                                        _supLoc.LocationName = (sdr["LocationName"].ToString() != "" ? sdr["LocationName"].ToString() : _supLoc.LocationName);
+                                       // _supLoc.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _supLoc.CreatedDate);
+
+
+
+                                    }
+                                    SupplierLocationslist.Add(_supLoc);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return SupplierLocationslist;
+
+
+        }
+
+        public SupplierLocations GetSupplierLocations(int SupplierLocationID, OperationsStatus Status)
+        {
+
+            SupplierLocations mySupplierloc = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = SupplierLocationID;
+                        cmd.CommandText = "[GetSupplierLocations]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                if (sdr.Read())
+                                {
+                                    mySupplierloc = new SupplierLocations();
+                                    mySupplierloc.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : mySupplierloc.ID);
+                                    mySupplierloc.LocationID = (sdr["LocationID"].ToString() != "" ? int.Parse(sdr["LocationID"].ToString()) : mySupplierloc.LocationID);
+                                    mySupplierloc.SupplierID = (sdr["SupplierID"].ToString() != "" ? int.Parse(sdr["SupplierID"].ToString()) : mySupplierloc.SupplierID);
+                                    mySupplierloc.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : mySupplierloc.LocationName);
+                                    mySupplierloc.LocationName = (sdr["LocationName"].ToString() != "" ? sdr["LocationName"].ToString() : mySupplierloc.LocationName);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return mySupplierloc;
+        }
+
+        public OperationsStatus InsertSupplierLocations(SupplierLocations supplier_locObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
             try
             {
                 SqlParameter outparameter = null;
@@ -619,32 +875,146 @@ namespace PartyEC.RepositoryServices.Services
                             con.Open();
                         }
                         cmd.Connection = con;
-                        cmd.CommandText = "[InsertOtherImage]";
+                        cmd.CommandText = "[InsertSupplierLocations]";
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@ImageType", SqlDbType.NVarChar, 250).Value = otherimgObj.ImageType;
-                        cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1).Value = otherimgObj.URL;
-                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = otherimgObj.LogDetails.CreatedBy;
-                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = otherimgObj.LogDetails.CreatedDate;
+                        cmd.Parameters.Add("@LocationID", SqlDbType.Int).Value = supplier_locObj.LocationID;
+                        cmd.Parameters.Add("@SupplierID", SqlDbType.Int).Value = supplier_locObj.SupplierID;
+                        cmd.Parameters.Add("@ShippingCharge", SqlDbType.Decimal).Value = supplier_locObj.ShippingCharge;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = supplier_locObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = supplier_locObj.commonObj.CreatedDate;
+
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
-                        outparameterID = cmd.Parameters.Add("@ID", SqlDbType.UniqueIdentifier);
                         outparameter.Direction = ParameterDirection.Output;
+                        outparameterID = cmd.Parameters.Add("@ID", SqlDbType.Int);
                         outparameterID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operrationstatusObj = new OperationsStatus();
+                        operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                // not Successfull
-
-                                operrationstatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operrationstatusObj.StatusMessage = "Insertion Not Successfull!";
-
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
                                 break;
                             case "1":
-                                //Insert Successfull
-                                operrationstatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operrationstatusObj.StatusMessage = "Insertion Successfull!";
-                                operrationstatusObj.ReturnValues = Guid.Parse(outparameterID.Value.ToString());
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
+                                operationsStatusObj.ReturnValues = int.Parse(outparameterID.Value.ToString());
+                                break;
+                            case "2":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
+        }
+
+        public OperationsStatus UpdateSupplierLocations(SupplierLocations supplier_locObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateSupplierLocations]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = supplier_locObj.ID;
+                        cmd.Parameters.Add("@LocationID", SqlDbType.Int).Value = supplier_locObj.LocationID;
+                        cmd.Parameters.Add("@SupplierID", SqlDbType.Int).Value = supplier_locObj.SupplierID;
+                        cmd.Parameters.Add("@ShippingCharge", SqlDbType.Decimal).Value = supplier_locObj.ShippingCharge;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = supplier_locObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = supplier_locObj.commonObj.UpdatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                operationsStatusObj.ReturnValues = supplier_locObj.ID;
+                                break;
+                            case "2":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
+        }
+
+        public OperationsStatus DeleteSupplierLocations(int SupplierLocationID)
+        {
+            OperationsStatus OperationsStatusObj = new OperationsStatus();
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteSupplierLocations]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = SupplierLocationID;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
+                                break;
+                            case "1":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
+                                break;
+                            case "2":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.FKviolation;
                                 break;
                             default:
                                 break;
@@ -656,105 +1026,10 @@ namespace PartyEC.RepositoryServices.Services
             {
                 throw ex;
             }
-            return operrationstatusObj;
+            return OperationsStatusObj;
         }
-        
-        // List<OrderStatusMaster> GetAllOrderStatus();
-        public List<OrderStatusMaster> GetAllOrderStatus()
-        {
-            List<OrderStatusMaster> orderstatusList = null;
-            try
-            {
-                using (SqlConnection con = _databaseFactory.GetDBConnection())
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-                        if (con.State == ConnectionState.Closed)
-                        {
-                            con.Open();
-                        }
-                        cmd.Connection = con;
-                        cmd.CommandText = "[GetMasterOrderStatus]";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
-                        {
-                            if ((sdr != null) && (sdr.HasRows))
-                            {
-                                orderstatusList = new List<OrderStatusMaster>();
-                                while (sdr.Read())
-                                {
-                                    OrderStatusMaster _orderstatus = new OrderStatusMaster();
-                                    {
-                                        _orderstatus.Code = (sdr["Code"].ToString() != "" ? int.Parse(sdr["Code"].ToString()) : _orderstatus.Code);
-                                        _orderstatus.Description = (sdr["Description"].ToString() != "" ? sdr["Description"].ToString() : _orderstatus.Description);
-
-                                    }
-                                    orderstatusList.Add(_orderstatus);
-                                }
-                            }//if
-                        }
-                    }
-                }
-            }
-
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return orderstatusList;
+        #endregion SupplierLocations
 
 
-        }
-
-        public List<OtherImages> GetAllStickers()
-        {
-            List<OtherImages> otherImagesList = null;
-
-            try
-            {
-                using (SqlConnection con = _databaseFactory.GetDBConnection())
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-                        if (con.State == ConnectionState.Closed)
-                        {
-                            con.Open();
-                        }
-                        cmd.Connection = con;
-                        cmd.CommandText = "[GetAllStickers]";
-                        cmd.Parameters.Add("@ImageType", SqlDbType.NVarChar, 50).Value = ImageTypesPreffered.Sticker;
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
-                        {
-                            if ((sdr != null) && (sdr.HasRows))
-                            {
-                                otherImagesList = new List<OtherImages>();
-                                while (sdr.Read())
-                                {
-                                    OtherImages _otherimages = new OtherImages();
-                                    {
-                                        _otherimages.ID = (sdr["ID"].ToString() != "" ? Guid.Parse(sdr["ID"].ToString()) : _otherimages.ID);
-                                        _otherimages.URL = (sdr["URL"].ToString() != "" ? sdr["URL"].ToString() : _otherimages.URL);
-                                    }
-                                    otherImagesList.Add(_otherimages);
-                                }
-                            }//if
-                        }
-                    }
-                }
-            }
-
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return otherImagesList;
-
-
-        }
-
-      
     }
 }
