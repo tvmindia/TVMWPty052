@@ -150,7 +150,7 @@ function SaveSuccess(data, status, xhr) {
 }
 function DeleteSuccess(data, status, xhr) {
     BindAllShippingLocation();
-    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Add");
+   
 
     var i = JSON.parse(data)
     debugger;
@@ -160,6 +160,7 @@ function DeleteSuccess(data, status, xhr) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
             clearfields();
+            ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Add");
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);

@@ -25,13 +25,14 @@ namespace PartyEC.UI.Controllers
             _masterBusiness = masterBusiness;
         }
         #endregion Constructor_Injection 
+        
         // GET: Supplier
         public ActionResult Index()
         {
             return View();
         }
 
-
+        #region GetAllSuppliers
         [HttpGet]
         public string GetAllSuppliers()
         {
@@ -46,6 +47,8 @@ namespace PartyEC.UI.Controllers
             }
 
         }
+
+        #endregion GetAllSuppliers
 
         #region GetSupplierByID
 
@@ -66,8 +69,7 @@ namespace PartyEC.UI.Controllers
 
 
         #endregion GetSupplierByID
-
-
+        
         #region InsertUpdateSuppliers
 
         [HttpPost]
@@ -117,9 +119,8 @@ namespace PartyEC.UI.Controllers
         }
 
         #endregion InsertUpdateAttributes
-
-        // DeleteSupplier
-        #region DeleteAttributes
+                
+        #region DeleteSupplier
 
 
         [HttpPost]
@@ -151,7 +152,7 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select Supplier" });
         }
 
-        #endregion DeleteAttributes
+        #endregion DeleteSupplier
 
         #region ChangeButtonStyle
         [HttpGet]

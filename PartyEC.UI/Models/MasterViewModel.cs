@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartyEC.UI.Models
 {
@@ -60,7 +61,12 @@ namespace PartyEC.UI.Models
         public decimal ShippingCharge { get; set; }
         public DateTime CreatedDate { get; set; }
 
+        public List<SelectListItem> LocationList { get; set; }
+        public List<SelectListItem> supplierList { get; set; }
+        
+
         public LogDetailsViewModel commonObj { get; set; }
+
       
     }
 
