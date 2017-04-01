@@ -484,6 +484,7 @@
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
     <Content Include="Scripts\UserJS\ShippingLocation.js" />
+    <Content Include="Scripts\UserJS\SupplierLocations.js" />
     <Content Include="Scripts\UserJS\Suppliers.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
@@ -516,6 +517,7 @@
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\SupplierLocationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -556,6 +558,7 @@
     <Content Include="Views\Supplier\Index.cshtml" />
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\ShippingLocation\Index.cshtml" />
+    <Content Include="Views\SupplierLocations\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -567,6 +570,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
     <Folder Include="Views\Location\" />
+    <Folder Include="Views\Sup_Delivery\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">
