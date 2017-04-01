@@ -148,7 +148,7 @@ namespace PartyEC.UI.Controllers
                     }
                 }
             }
-            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select attribute" });
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select Supplier" });
         }
 
         #endregion DeleteAttributes

@@ -40,6 +40,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<Cart_WishlistViewModel, Cart_Wishlist>().ReverseMap();
                 config.CreateMap<ProductReviewViewModel, ProductReview>().ReverseMap();
                 config.CreateMap<OtherImagesViewModel, OtherImages>().ReverseMap();
+                config.CreateMap<ShippingLocationViewModel, ShippingLocations>().ReverseMap();
             });
         }
 

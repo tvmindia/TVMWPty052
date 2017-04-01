@@ -110,6 +110,81 @@ namespace PartyEC.BusinessServices.Services
 
         #endregion Suppliers
 
+        #region ShippingLocation
+
+        public List<ShippingLocations> GetAllShippingLocation()
+        {
+            List<ShippingLocations> ShippingLocationlist = null;
+            try
+            {
+                ShippingLocationlist = _masterRepository.GetAllShippingLocation();
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return ShippingLocationlist;
+        }
+
+        public ShippingLocations GetShippingLocation(int ShippingLocationID, OperationsStatus Status)
+        {
+            ShippingLocations myShippingLocation = null;
+            try
+            {
+                myShippingLocation = _masterRepository.GetShippingLocation(ShippingLocationID, Status);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return myShippingLocation;
+        }
+
+        public OperationsStatus InsertShippingLocation(ShippingLocations shipping_locObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.InsertShippingLocation(shipping_locObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
+        public OperationsStatus UpdateShippingLocation(ShippingLocations supplierObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.UpdateShippingLocation(supplierObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
+        public OperationsStatus DeleteShippingLocation(int ShippingLocationID)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.DeleteShippingLocation(ShippingLocationID);
+            }
+            catch (Exception)
+            {
+            }
+            return OperationsStatusObj;
+        }
+
+        #endregion ShippingLocation
+
 
         public List<OrderStatusMaster> GetAllOrderStatus()
         {

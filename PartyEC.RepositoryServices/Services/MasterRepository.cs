@@ -267,6 +267,10 @@ namespace PartyEC.RepositoryServices.Services
                                 operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
                                 operationsStatusObj.ReturnValues = supplierObj.ID;                               
                                 break;
+                            case "2":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
+                                break;
                             default:
                                 break;
                         }
@@ -315,6 +319,10 @@ namespace PartyEC.RepositoryServices.Services
                                 OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 OperationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
                                 break;
+                            case "2":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.FKviolation;
+                                break;
                             default:
                                 break;
                         }
@@ -328,6 +336,272 @@ namespace PartyEC.RepositoryServices.Services
             return OperationsStatusObj;
         }
         #endregion Suppliers
+
+        #region ShippingLocation
+
+       
+        public List<ShippingLocations> GetAllShippingLocation()
+        {
+            List<ShippingLocations> ShippingLocationlist = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetMasterShippingLocations]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                ShippingLocationlist = new List<ShippingLocations>();
+                                while (sdr.Read())
+                                {
+                                    ShippingLocations _shippingloc = new ShippingLocations();
+                                    {
+                                        _shippingloc.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _shippingloc.ID);
+                                        _shippingloc.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _shippingloc.Name);
+                                        _shippingloc.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _shippingloc.CreatedDate);
+
+
+
+                                    }
+                                    ShippingLocationlist.Add(_shippingloc);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return ShippingLocationlist;
+
+
+        }
+
+        public ShippingLocations GetShippingLocation(int ShippingLocationID, OperationsStatus Status)
+        {
+
+            ShippingLocations myShippingloc = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ShippingLocationID;
+                        cmd.CommandText = "[GetShippingLocation]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                if (sdr.Read())
+                                {
+                                    myShippingloc = new ShippingLocations();
+                                    myShippingloc.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myShippingloc.ID);
+                                    myShippingloc.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : myShippingloc.Name);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return myShippingloc;
+        }
+
+        public OperationsStatus InsertShippingLocation(ShippingLocations shipping_locObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                SqlParameter outparameterID = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertShippingLocation]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = shipping_locObj.Name;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = shipping_locObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = shipping_locObj.commonObj.CreatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        outparameterID = cmd.Parameters.Add("@ID", SqlDbType.Int);
+                        outparameterID.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0": 
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
+                                break;
+                            case "1": 
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
+                                operationsStatusObj.ReturnValues = int.Parse(outparameterID.Value.ToString());
+                                break;
+                            case "2": 
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
+        }
+
+        public OperationsStatus UpdateShippingLocation(ShippingLocations shipping_locObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateShippingLocation]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = shipping_locObj.ID;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = shipping_locObj.Name;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = shipping_locObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = shipping_locObj.commonObj.UpdatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                operationsStatusObj.ReturnValues = shipping_locObj.ID;
+                                break;
+                            case "2":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
+        }
+
+        public OperationsStatus DeleteShippingLocation(int ShippingLocationID)
+        {
+            OperationsStatus OperationsStatusObj = new OperationsStatus();
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteShippingLocation]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ShippingLocationID;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
+                                break;
+                            case "1":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
+                                break;
+                            case "2":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.FKviolation;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+        #endregion ShippingLocation
+
+
 
         public OperationsStatus InsertImage(OtherImages otherimgObj)
         {
@@ -481,6 +755,6 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
-       
+      
     }
 }
