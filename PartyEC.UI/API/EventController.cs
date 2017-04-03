@@ -27,14 +27,18 @@ namespace PartyEC.UI.API
             _eventBusiness = eventBusiness;
         }
         #endregion Constructor_Injection
-        Const messages = new Const();
+        Const constants = new Const();
 
         [HttpPost]
         public object RequestEvent(EventRequests eventRequestObject)
         {
             try
             {
-                OperationsStatus operationStatus = _eventRequestBusiness.InsertEventsLog(eventRequestObject);
+                eventRequestObject.logDetailsObj = new LogDetails();
+                eventRequestObject.logDetailsObj.CreatedBy = constants.AppUser;
+                eventRequestObject.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatus operationStatus = _eventRequestBusiness.InsertEventRequests(eventRequestObject);
                 if (operationStatus.StatusCode == 0) throw operationStatus.Exception;
                 return JsonConvert.SerializeObject(new { Result = true, Records = operationStatus.StatusMessage });
             }
@@ -50,7 +54,7 @@ namespace PartyEC.UI.API
             try
             {
                 List<EventTypeAppViewModel> EventTypesList = Mapper.Map<List<Event>, List<EventTypeAppViewModel>>(_eventBusiness.GetAllEvents());
-                if (EventTypesList.Count == 0) throw new Exception(messages.NoItems);
+                if (EventTypesList.Count == 0) throw new Exception(constants.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = EventTypesList });
             }
             catch (Exception ex)
