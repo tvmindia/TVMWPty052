@@ -117,7 +117,8 @@ function BindEventRequest(id)
         $("#TotalTaxAmt").val(thisEvent.TotalTaxAmt);
         $("#TotalDiscountAmt").val(thisEvent.TotalDiscountAmt);
         $("#EventStatus").val(thisEvent.EventStatus);
-        $("#AdminRemarks").val(thisEvent.AdminRemarks);        
+        $("#AdminRemarks").val(thisEvent.AdminRemarks);
+        if (thisEvent.FollowUpDate!=null)
         $("#FollowUpDate").val(thisEvent.FollowUpDate.substring(0, 10));
         //labels
         $('#lblEventReqNo').text(thisEvent.EventReqNo);
