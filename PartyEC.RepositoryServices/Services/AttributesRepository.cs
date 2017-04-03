@@ -52,7 +52,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Attributes _attributesObj = new Attributes();
                                     {
-                                        _attributesObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _attributesObj.ID);
+                                        _attributesObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _attributesObj.ID);
                                         _attributesObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _attributesObj.Name);
                                         _attributesObj.Caption = (sdr["Caption"].ToString() != "" ? sdr["Caption"].ToString() : _attributesObj.Caption);
                                         _attributesObj.AttributeType = (sdr["AttributeType"].ToString() != "" ? sdr["AttributeType"].ToString() : _attributesObj.AttributeType);
@@ -103,7 +103,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     myAttribute = new Attributes();
 
-                                    myAttribute.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myAttribute.ID);
+                                    myAttribute.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myAttribute.ID);
                                     myAttribute.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : myAttribute.Name);
                                     myAttribute.Caption = (sdr["Caption"].ToString() != "" ? sdr["Caption"].ToString() : myAttribute.Caption);
                                     myAttribute.AttributeType = (sdr["AttributeType"].ToString() != "" ? sdr["AttributeType"].ToString() : myAttribute.AttributeType);
@@ -299,7 +299,7 @@ namespace PartyEC.RepositoryServices.Services
             return OperationsStatusObj;
         }
         
-        public List<AttributeValues> GetAttributeContainer(int AttributeSetID,string Type)
+        public List<AttributeValues> GetAttributeContainer(int AttributeSetID,string Type,bool isForAssociated=false)
         {
             List<AttributeValues> myProductAttributeList = null;
             try
@@ -315,6 +315,7 @@ namespace PartyEC.RepositoryServices.Services
                     cmd.Connection = con;
                     cmd.Parameters.Add("@AttributeSetID", SqlDbType.Int).Value = AttributeSetID;
                     cmd.Parameters.Add("@EntityType", SqlDbType.NVarChar).Value = Type;
+                    cmd.Parameters.Add("@isForAssociated", SqlDbType.Bit).Value = isForAssociated;
                     cmd.CommandText = "[GetAttributesBySetIdAndEntityType]";
                     cmd.CommandType = CommandType.StoredProcedure;
 
@@ -478,7 +479,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     AttributeSet attributeSetObj = new AttributeSet();
                                     {
-                                        attributeSetObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : attributeSetObj.ID);
+                                        attributeSetObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : attributeSetObj.ID);
                                         attributeSetObj.Name = sdr["Name"].ToString();
                                        
                                     }
@@ -538,7 +539,7 @@ namespace PartyEC.RepositoryServices.Services
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
-                                operationsStatusObj.ReturnValues = Int16.Parse(outparameterID.Value.ToString());
+                                operationsStatusObj.ReturnValues = int.Parse(outparameterID.Value.ToString());
                                 break;
                             case "2":
                                 //Duplicate Entry
@@ -724,6 +725,7 @@ namespace PartyEC.RepositoryServices.Services
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
+                                operationsStatusObj.ReturnValues = attrSetLinkObj.AttributeSetID;
                                 break;
                             default:
                                 break;

@@ -1,6 +1,6 @@
 ﻿var DataTables = {};
 $(document).ready(function () {
-    debugger;
+   
     $("#HeaderTagsPicker").on({
         focusout: function () {
             var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
@@ -43,23 +43,7 @@ $(document).ready(function () {
 
     });
     
-    //$("#detailDetailTags").on({
-
-    //    focusout: function () {
-    //        var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
-    //        if (txt) $("<span/>", { text: txt.toLowerCase(), insertAfter: this }).attr({ 'class': 'Dtags', 'onclick': 'removeme(this)' });
-    //        this.value = "";
-    //    },
-    //    keypress: function (ev) {
-    //        if (ev.keyCode == 13) {
-    //            if (/(188|13)/.test(ev.which)) $(this).focusout();
-    //            var callbacks = $.Callbacks();
-    //            callbacks.disable();
-    //            return false;
-    //        }
-    //    }
-    //});
-    
+   
    try {
        
         DataTables.productTable = $('#tblproducts').DataTable(
@@ -223,8 +207,15 @@ $(document).ready(function () {
     }
     catch (e) {
         notyAlert('error', e.message);
-    } 
+    }
+    //Validation for associatedproducts
+   
+    
+
+
 });
+
+
 //remove header tags
 function removeme(current)
 {
@@ -613,7 +604,7 @@ function GetAllProducts()
         }
         if(ds.Result=="OK")
         {
-debugger;
+
             return ds.Records;
         }
         if (ds.Result == "ERROR") {
@@ -912,7 +903,7 @@ function RenderContentsForAttributes()
                 //clear otherattributes div
                 $("#dynamicOtherAttributes").empty();
                 //append dynamic html to div from partialview
-                $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back:).</p></div></div>');
+                $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back.</p></div></div>');
 
             }
            
@@ -921,7 +912,7 @@ function RenderContentsForAttributes()
             //clear otherattributes div
             $("#dynamicOtherAttributes").empty();
             //append dynamic html to div from partialview
-            $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back:).</p></div></div>');
+            $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back.</p></div></div>');
         }
         
     }
@@ -990,51 +981,61 @@ function OtherAttributeSave()
 
 function RenderContentsForAssocProdAttributes()
 {
-    debugger;
+   
     HideProductDetalsToolBox();
     try {
         var proid = $('.productID').val();
         var atsetID = $("#AttributeSetID").val();
-        if ((atsetID) && (proid)) {
-            if ((atsetID > 0) && (proid > 0))
-            {
-                var Isconfig = true;
-                var pview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
-                //clear otherattributes div
-                $("#dynamicAssociatedProducts").empty();
-                //append dynamic html to div from partialview
-                $("#dynamicAssociatedProducts").html(pview);
-                //date picker reloading
-                $('input[type="date"]').datepicker({
-                    format: "yyyy-mm-dd",//dd-M-yyyy",
-                    maxViewMode: 0,
-                    todayBtn: "linked",
-                    clearBtn: true,
-                    autoclose: true,
-                    todayHighlight: true
-                });
-                $("#DivtblAssociatedProducts").show();
-                $("#associatedStaticfields").show();
-                //Refresh associated products table
-                RefreshAssociatedProducts(proid);
+        var protype = $("#ProductTypehdf").val();
+        if (protype != 'S') {
+            if ((atsetID) && (proid)) {
+                if ((atsetID > 0) && (proid > 0)) {
+                    var Isconfig = true;
+                    var pview = RenderPartialTemplateForAttributes(atsetID, Isconfig);
+                    //clear otherattributes div
+                    $("#dynamicAssociatedProducts").empty();
+                    //append dynamic html to div from partialview
+                    $("#dynamicAssociatedProducts").html(pview);
+                    //date picker reloading
+                    $('input[type="date"]').datepicker({
+                        format: "yyyy-mm-dd",//dd-M-yyyy",
+                        maxViewMode: 0,
+                        todayBtn: "linked",
+                        clearBtn: true,
+                        autoclose: true,
+                        todayHighlight: true
+                    });
+                    $("#DivtblAssociatedProducts").show();
+                    $("#associatedStaticfields").show();
+                    //Refresh associated products table
+                    RefreshAssociatedProducts(proid);
+                }
+                else {
+                    $("#associatedStaticfields").hide();
+                    $("#DivtblAssociatedProducts").hide();
+                    //clear otherattributes div
+                    $("#dynamicAssociatedProducts").empty();
+                    //append dynamic html to div from partialview
+                    $("#dynamicAssociatedProducts").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back.</p></div></div>');
+                }
             }
-            else
-            {
+            else {
                 $("#associatedStaticfields").hide();
                 $("#DivtblAssociatedProducts").hide();
                 //clear otherattributes div
                 $("#dynamicAssociatedProducts").empty();
                 //append dynamic html to div from partialview
-                $("#dynamicAssociatedProducts").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back:).</p></div></div>');
-           }
+                $("#dynamicAssociatedProducts").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back.</p></div></div>');
+            }
         }
-        else {
+        else
+        {
             $("#associatedStaticfields").hide();
             $("#DivtblAssociatedProducts").hide();
             //clear otherattributes div
             $("#dynamicAssociatedProducts").empty();
             //append dynamic html to div from partialview
-            $("#dynamicAssociatedProducts").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Please Create a product from general section and come back:).</p></div></div>');
+            $("#dynamicAssociatedProducts").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>Associated tab is not available for simple products.</p></div></div>');
         }
     }
     catch (e) {
@@ -1130,85 +1131,104 @@ function attributeSetOnChange(curobj)
 }
 
 
+function ValidateAssociatedProducts()
+{
+    $("#errorQty").hide();
+    $("#errorAlertQty").hide();
+    var flagval = false;
+    if($("#detailQty").val()=="")
+    {
+        $("#errorQty").show();
+        flagval = true;
+    }
+
+    if($("#detailOutOfStockAlertQty").val()=="")
+    {
+        $("#errorAlertQty").show();
+        flagval = true;
+    }
+    return flagval;
+}
 
 function AssociatedProductSave()
 {
-    debugger;
-    try {   //Serialize dynamic other attribute elements
-        //var Associatedpro = $('#dynamicAssociatedProducts').find('select,input').serializeArray();
-        var Associatedpro = $('#dynamicAssociatedProductContents').find('select,input').serializeArray();
-        var prodid = $('.productID').val();
-        if ((Associatedpro) && (prodid > 0)) {
-          
-            
-            var ProductViewModel = new Object();
-            var ProductDetailViewModel = new Object();
-            var ProductAttributesList = [];
-            var ProductDetailList = [];
-            ProductViewModel.ID = prodid;
+   
+    try {
+        if (!ValidateAssociatedProducts())
+        {
+            //Serialize dynamic other attribute elements
+            //var Associatedpro = $('#dynamicAssociatedProducts').find('select,input').serializeArray();
+            var Associatedpro = $('#dynamicAssociatedProductContents').find('select,input').serializeArray();
+            var prodid = $('.productID').val();
+            if ((Associatedpro) && (prodid > 0)) {
+                var ProductViewModel = new Object();
+                var ProductDetailViewModel = new Object();
+                var ProductAttributesList = [];
+                var ProductDetailList = [];
+                ProductViewModel.ID = prodid;
 
-            for (var at = 0; at < Associatedpro.length; at++) {
-                var AttributeValuesViewModel = new Object();
-                AttributeValuesViewModel.Name = Associatedpro[at].name;
-                AttributeValuesViewModel.Value = ((Associatedpro[at].value != "" && Associatedpro[at].value!=-1)?Associatedpro[at].value:"");
-                ProductAttributesList.push(AttributeValuesViewModel);
-            }
-            var prodetid=$("#productDetailID").val();
-            ProductDetailViewModel.ID = (prodetid != "" ? prodetid : "");
-            ProductDetailViewModel.ProductAttributes = ProductAttributesList;
-            var detqty=$("#detailQty").val();
-            ProductDetailViewModel.Qty = (detqty != "" ? detqty : "");
-            var outstockqty = $("#detailOutOfStockAlertQty").val();
-            ProductDetailViewModel.OutOfStockAlertQty = (outstockqty != "" ? outstockqty : "");
-            var stockavail = $("#detailStockAvailable").val();
-            ProductDetailViewModel.StockAvailable = (stockavail != "" ? stockavail : "");
-            var detailDiscAmount = $("#detailDiscountAmount").val();
-            ProductDetailViewModel.DiscountAmount = (detailDiscAmount != "" ? detailDiscAmount : "");
-            var detailPriceDiff = $("#detailPriceDifference").val();
-            ProductDetailViewModel.PriceDifference = (detailPriceDiff != "" ? detailPriceDiff : "");
-            var detailDiscStart = $("#detailDiscountStartDate").val();
-            ProductDetailViewModel.DiscountStartDate = (detailDiscStart != "" ? detailDiscStart : "");
-            var detailDiscEnd = $("#detailDiscountEndDate").val();
-            ProductDetailViewModel.DiscountEndDate = (detailDiscEnd != "" ? detailDiscEnd : "");
-            var detailEnable = $("#detailEnable").val();
-            ProductDetailViewModel.Enabled = detailEnable;
-            var detailDefaultOption = $("#detailDefaultOption").val();
-            ProductDetailViewModel.DefaultOption = detailDefaultOption;
-            var tagval = [];
-            $('#detailkeywordsDiv .Htags').each(function () {
-
-                tagval.push(this.innerHTML);
-            }); 
-            $("#detailDetailTags").val(tagval);
-           
-            var detailnewtags = $("#detailDetailTags").val();
-            ProductDetailViewModel.DetailTags = detailnewtags;
-            ProductDetailList.push(ProductDetailViewModel);
-            ProductViewModel.ProductDetails = ProductDetailList;
-
-            var data = "{'productObj':" + JSON.stringify(ProductViewModel) + "}";
-            PostDataToServer('Products/InsertUpdateProductDetails/', data, function (JsonResult) {
-                if (JsonResult != '') {
-                    switch (JsonResult.Result) {
-                        case "OK":
-                            notyAlert('success', JsonResult.Record.StatusMessage);
-                            $("#productDetailID").val(JsonResult.Record.ReturnValues);
-                            RefreshAssociatedProducts(prodid);
-                            clearAssociatedProductform();
-                            break;
-                        case "ERROR":
-                            notyAlert('error', JsonResult.Record.StatusMessage);
-                            break;
-                        default:
-                            break;
-                    }
+                for (var at = 0; at < Associatedpro.length; at++) {
+                    var AttributeValuesViewModel = new Object();
+                    AttributeValuesViewModel.Name = Associatedpro[at].name;
+                    AttributeValuesViewModel.Value = ((Associatedpro[at].value != "" && Associatedpro[at].value != -1) ? Associatedpro[at].value : "");
+                    ProductAttributesList.push(AttributeValuesViewModel);
                 }
-            })
+                var prodetid = $("#productDetailID").val();
+                ProductDetailViewModel.ID = (prodetid != "" ? prodetid : "");
+                ProductDetailViewModel.ProductAttributes = ProductAttributesList;
+                var detqty = $("#detailQty").val();
+                ProductDetailViewModel.Qty = (detqty != "" ? detqty : "");
+                var outstockqty = $("#detailOutOfStockAlertQty").val();
+                ProductDetailViewModel.OutOfStockAlertQty = (outstockqty != "" ? outstockqty : "");
+                var stockavail = $("#detailStockAvailable").val();
+                ProductDetailViewModel.StockAvailable = (stockavail != "" ? stockavail : "");
+                var detailDiscAmount = $("#detailDiscountAmount").val();
+                ProductDetailViewModel.DiscountAmount = (detailDiscAmount != "" ? detailDiscAmount : "");
+                var detailPriceDiff = $("#detailPriceDifference").val();
+                ProductDetailViewModel.PriceDifference = (detailPriceDiff != "" ? detailPriceDiff : "");
+                var detailDiscStart = $("#detailDiscountStartDate").val();
+                ProductDetailViewModel.DiscountStartDate = (detailDiscStart != "" ? detailDiscStart : "");
+                var detailDiscEnd = $("#detailDiscountEndDate").val();
+                ProductDetailViewModel.DiscountEndDate = (detailDiscEnd != "" ? detailDiscEnd : "");
+                var detailEnable = $("#detailEnable").val();
+                ProductDetailViewModel.Enabled = detailEnable;
+                var detailDefaultOption = $("#detailDefaultOption").val();
+                ProductDetailViewModel.DefaultOption = detailDefaultOption;
+                var tagval = [];
+                $('#detailkeywordsDiv .Htags').each(function () {
+
+                    tagval.push(this.innerHTML);
+                });
+                $("#detailDetailTags").val(tagval);
+
+                var detailnewtags = $("#detailDetailTags").val();
+                ProductDetailViewModel.DetailTags = detailnewtags;
+                ProductDetailList.push(ProductDetailViewModel);
+                ProductViewModel.ProductDetails = ProductDetailList;
+
+                var data = "{'productObj':" + JSON.stringify(ProductViewModel) + "}";
+                PostDataToServer('Products/InsertUpdateProductDetails/', data, function (JsonResult) {
+                    if (JsonResult != '') {
+                        switch (JsonResult.Result) {
+                            case "OK":
+                                notyAlert('success', JsonResult.Record.StatusMessage);
+                                $("#productDetailID").val(JsonResult.Record.ReturnValues);
+                                RefreshAssociatedProducts(prodid);
+                                clearAssociatedProductform();
+                                break;
+                            case "ERROR":
+                                notyAlert('error', JsonResult.Record.StatusMessage);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                })
 
 
+            }
         }
-
-    }
+     }
     catch (e) {
         notyAlert('error', e.Message);
     }
@@ -1287,7 +1307,7 @@ function AssociatedProductDelete()
     
 }
 function EditAssocProduct(currentObj) {
-    debugger;
+   
     var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         var thisproduct = GetProductDetailsByProductDetailID(rowData.ProductID,rowData.ID );
@@ -1473,9 +1493,8 @@ function BindProductReviews()   // To Display Previous Comment history
         var thisReviewList = GetProductReviews(id);
         if (thisReviewList.length>0) {
             $("#ReviewsDisplay").empty();
-            for (var i = 0; i < thisReviewList.length; i++) {
-                var str = Date.parse(thisReviewList[i].ReviewCreatedDate.substring(0, 10));
-                var resultdate = ConvertJsonToDate('' + str + '');
+            for (var i = 0; i < thisReviewList.length; i++) {               
+                var resultdate = ConvertJsonToDate(thisReviewList[i].ReviewCreatedDate);
                 var imageurl;
                 if (thisReviewList[i].ImageUrl)
                     imageurl = thisReviewList[i].ImageUrl
@@ -1567,7 +1586,7 @@ function GetProductReviews(id) {
 
 function ModelProductsRating(currentObj) {
     //popsup the model
-    debugger;
+   
     var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null) && (rowData.AttributeSetID != null))
     {
@@ -1575,7 +1594,7 @@ function ModelProductsRating(currentObj) {
         var thisRatingSummary = GetRatingSummary(rowData.ID, rowData.AttributeSetID);
         if (thisRatingSummary.length > 0)
         {
-            debugger;
+            
         
             $("#RatingPopupDisplay").empty();
             var attributecount = thisRatingSummary[0].ProductRatingAttributes.length

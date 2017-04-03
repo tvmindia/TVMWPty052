@@ -17,7 +17,7 @@ $(document).ready(function () {
                { "data": "Mobile", "defaultContent": "<i>-</i>" },
                { "data": "CartCount", "defaultContent": "<i>-</i>" },
                { "data": "WishCount", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="View(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="View(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ]
          });
 
@@ -59,9 +59,8 @@ $(document).ready(function () {
                       return returnstring;
                   }
               },{
-                     "targets": [8], "render": function (data, type, full, meta) {
-                         var str = Date.parse(data); 
-                         var res = ConvertJsonToDate('' + str + '');
+                     "targets": [8], "render": function (data, type, full, meta) { 
+                         var res = ConvertJsonToDate(data);
                          return res;
                      }
                  }]
@@ -103,9 +102,8 @@ $(document).ready(function () {
                         return returnstring;
                     }
                 },{
-                    "targets": [4], "render": function (data, type, full, meta) {
-                        var str = Date.parse(data);
-                        var res = ConvertJsonToDate('' + str + '');
+                    "targets": [4], "render": function (data, type, full, meta) { 
+                        var res = ConvertJsonToDate(data);
                         return res;
                     }
                 }]

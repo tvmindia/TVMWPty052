@@ -76,5 +76,11 @@ namespace PartyEC.DataAccessObject.DTO
         }
         #endregion Messages
 
+        #region Strings
+        public string AppUser
+        {
+            get { return "App User"; }
+        }
+        #endregion
     }
 }

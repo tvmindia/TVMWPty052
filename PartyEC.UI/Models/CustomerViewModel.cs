@@ -25,21 +25,45 @@ namespace PartyEC.UI.Models
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
-        public int ProfileImageID { get; set; }
+       
 
-        public int OrdersCount { get; set; }
+        public Guid? ProfileImageID { get; set; }
 
-        public int BookingsCount { get; set; }
+        public int? OrdersCount { get; set; }
 
-        public int QuotationsCount { get; set; }
+        public int? BookingsCount { get; set; }
 
-        public int OrdersCountHistory { get; set; }
+        public int? QuotationsCount { get; set; }
 
-        public int BookingsCountHistory { get; set; }
+        public int? OrdersCountHistory { get; set; }
 
-        public int QuotationsCountHistory { get; set; }
+        public int? BookingsCountHistory { get; set; }
 
+        public int? QuotationsCountHistory { get; set; }
 
+        public bool IsActive { get; set; }
+        public CustomerAddressViewModel customerAddress { get; set; }
         public LogDetailsViewModel logDetailsObj { get; set; }
+    }
+    public class CustomerAddressViewModel
+    {
+        public int ID { get; set; }
+        public int CustomerID { get; set; }
+        public string Prefix { get; set; }
+        public string FirstName { get; set; }
+        public string MidName { get; set; }
+        public string LastName { get; set; }
+        public string Address { get; set; }
+        public string City { get; set; }
+        public CountryViewModel county { get; set; }
+        public string StateProvince { get; set; }
+        public string ContactNo { get; set; }
+        public bool BillDefaultYN { get; set; }
+        public bool ShipDefaultYN { get; set; }
+        public LogDetailsViewModel logDetailsObj { get; set; }
+        
+
+
+
     }
 }

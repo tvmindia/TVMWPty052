@@ -23,8 +23,7 @@ namespace PartyEC.BusinessServices.Services
             List<Product> productlist = null;
             try
             {
-                productlist = _productRepository.GetAllProducts(productObj);
-
+              productlist = _productRepository.GetAllProducts(productObj).OrderByDescending(prod => prod.logDetails.CreatedDate).ToList();
             }
             catch(Exception)
             {
@@ -201,7 +200,8 @@ namespace PartyEC.BusinessServices.Services
             List<ProductDetail> productDetailslist = null;
             try
             {
-                productDetailslist = _productRepository.GetProductDetail(ProductID);
+               
+                productDetailslist = _productRepository.GetProductDetail(ProductID).OrderByDescending(prod => prod.logDetails.CreatedDate).ToList();
 
             }
             catch (Exception ex)

@@ -25,6 +25,35 @@ namespace PartyEC.DataAccessObject.DTO
     {
         public int ID { get; set; }
         public string Name { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public LogDetails commonObj { get; set; }
+        public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
+    }
+
+    public class ShippingLocations
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public LogDetails commonObj { get; set; }
+        public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
+    }
+
+    public class SupplierLocations
+    {
+        public int ID { get; set; }
+        public int LocationID { get; set; }
+        public int SupplierID { get; set; }
+        public string SupplierName { get; set; }
+        public string LocationName { get; set; }
+
+        public decimal ShippingCharge { get; set; }
+        public DateTime CreatedDate { get; set; }
+
+        public LogDetails commonObj { get; set; }
+        public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
     }
 
     public class OrderStatusMaster

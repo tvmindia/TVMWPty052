@@ -5,22 +5,16 @@
 }
 
 
-<div class="container">
-    <div class="navbar-header">
-        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-    </div>
-    <div class="collapse navbar-collapse">
+
         <ul class="nav navbar-nav">
-
-
-            @foreach (var mp in menuList.Where(p => p.ParentID == 0))
+          @foreach (var mp in menuList.Where(p => p.ParentID == 0))
             {
 
                 if (menuList.Count(p => p.ParentID == mp.ID) == 0)
                 {
                     if(mp.ID==1)
                     {
-                          @:<li class="active">@Html.ActionLink(mp.MenuText, mp.Action, mp.Controller, null, new { id = @mp.ID, parentid = @mp.ParentID })
+                          @:<li>@Html.ActionLink(mp.MenuText, mp.Action, mp.Controller, null, new { id = @mp.ID, parentid = @mp.ParentID })
                     }
                     else
                     {
@@ -47,9 +41,7 @@
             }
 
             </ul>
-        </div>
-        <!--/.nav-collapse -->
-    </div>
+   
 @helper RenderMenuItem(List<PartyEC.UI.Models.MenuViewModel> menuList, PartyEC.UI.Models.MenuViewModel mi)
 {
     foreach (var cp in menuList.Where(p => p.ParentID == mi.ID))

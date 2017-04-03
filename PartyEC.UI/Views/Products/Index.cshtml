@@ -5,10 +5,10 @@
 }
 
 @section styles {
-   @Styles.Render("~/Content/datatable")
+   @Styles.Render("~/Content/DataTables/css/datatable")
    @Styles.Render("~/Content/bootstrapdatepicker")
-   @Styles.Render("~/Content/datatableSelect")
-   @Styles.Render("~/Content/product")   
+   @Styles.Render("~/Content/DataTables/css/datatableSelect")
+   @Styles.Render("~/Content/UserCSS/product")   
    @Styles.Render("~/Content/Uplodify")
    @Styles.Render("~/Content/lightbox")
     <style>
@@ -681,7 +681,8 @@
                                     <div class="form-group">
                                         <label for=detailQty class="col-lg-2 control-label">Qty<span class="required">*</span></label>
                                         <div class="col-lg-4 input-group">
-                                            <input type="text" class="form-control" id="detailQty" name="detailQty">
+                                            <input type="text" class="form-control" onkeypress="return isNumber(event)" id="detailQty" name="detailQty">
+                                            <span id="errorQty" style="color: Red; display: none">Qty is Required</span>
                                             <input type="hidden" class="form-control" id="productDetailID" name="productDetailID" />
                                         </div>
                                     </div>
@@ -689,7 +690,8 @@
                                     <div class="form-group">
                                         <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty<span class="required">*</span></label>
                                         <div class="col-lg-4 input-group">
-                                            <input type="text" class="form-control" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
+                                            <input type="text" class="form-control" onkeypress="return isNumber(event)" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
+                                            <span id="errorAlertQty" style="color: Red; display: none">Reorder Alert Qty is Required</span>
                                         </div>
                                     </div>
 
@@ -942,8 +944,8 @@
             'buttonImage': '/Content/images/browse-btn.png',
             'fileTypeDesc': 'Image Files',
             'fileTypeExts': '*.jpg; *.png',
-                'swf': "@Url.Content("~/Content/uploadify.swf")",
-                //this is where the file posts when it uploads.
+            'swf': '/Content/uploadify.swf',
+            //this is where the file posts when it uploads.
             'uploader': "@Url.Action("UploadProductImage", "Products")",
             'onSelect': function (file) {
                 $('#alinkUpload').show();
@@ -958,7 +960,7 @@
                 //$('#URL').val(data);
                     //$('#imgProduct').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
                     BindImages();
-                    
+
                     $('#alinkUpload').hide();
                 }
 
@@ -971,7 +973,7 @@
             'buttonImage': '/Content/images/browse-btn.png',
             'fileTypeDesc': 'Image Files',
             'fileTypeExts': '*.jpg; *.png',
-            'swf': "@Url.Content("~/Content/uploadify.swf")",
+            'swf': '/Content/uploadify.swf',
                 //this is where the file posts when it uploads.
             'uploader': "@Url.Action("UploadOtherImages", "Products")",
             'onSelect': function (file) {
@@ -998,7 +1000,7 @@
             'fileTypeDesc': 'Image Files',
             'fileTypeExts': '*.jpg; *.png',
             'buttonImage': '/Content/images/browse-btn.png',
-            'swf': "@Url.Content("~/Content/uploadify.swf")",
+            'swf': '/Content/uploadify.swf',
                 //this is where the file posts when it uploads.
             'uploader': "@Url.Action("UploadStickerImages", "Products")",
             'onSelect': function (file) {

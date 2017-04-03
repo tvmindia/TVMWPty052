@@ -11,35 +11,34 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
-    public class SupplierController : Controller
+    public class ShippingLocationController : Controller
     {
-
         #region Constructor_Injection 
 
         IMasterBusiness _masterBusiness;
         ICommonBusiness _commonBusiness;
 
-        public SupplierController(IMasterBusiness masterBusiness, ICommonBusiness commonBusiness)
+        public ShippingLocationController(IMasterBusiness masterBusiness, ICommonBusiness commonBusiness)
         {
             _commonBusiness = commonBusiness;
             _masterBusiness = masterBusiness;
         }
         #endregion Constructor_Injection 
-        
-        // GET: Supplier
+        // GET: Location
         public ActionResult Index()
         {
             return View();
+
         }
 
-        #region GetAllSuppliers
+
         [HttpGet]
-        public string GetAllSuppliers()
+        public string GetAllShippingLocation()
         {
             try
-            {               
-                List<SupplierViewModel> supplierList = Mapper.Map<List<Supplier>, List<SupplierViewModel>>(_masterBusiness.GetAllSuppliers());
-                return JsonConvert.SerializeObject(new { Result = "OK", Records = supplierList });
+            {
+                List<ShippingLocationViewModel> ShippinglocationList = Mapper.Map<List<ShippingLocations>, List<ShippingLocationViewModel>>(_masterBusiness.GetAllShippingLocation());
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = ShippinglocationList });
             }
             catch (Exception ex)
             {
@@ -48,17 +47,15 @@ namespace PartyEC.UI.Controllers
 
         }
 
-        #endregion GetAllSuppliers
-
-        #region GetSupplierByID
+        #region GetShippingLocationByID
 
         [HttpGet]
-        public string GetSupplier(string ID)
+        public string GetShippingLocation(string ID)
         {
             try
             {
                 OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                SupplierViewModel attribute = Mapper.Map<Supplier, SupplierViewModel>(_masterBusiness.GetSupplier(Int32.Parse(ID), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                ShippingLocationViewModel attribute = Mapper.Map<ShippingLocations, ShippingLocationViewModel>(_masterBusiness.GetShippingLocation(Int32.Parse(ID), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = attribute });
             }
             catch (Exception ex)
@@ -68,38 +65,39 @@ namespace PartyEC.UI.Controllers
         }
 
 
-        #endregion GetSupplierByID
-        
-        #region InsertUpdateSuppliers
+        #endregion GetShippingLocationByID
+
+
+        #region InsertUpdateShippingLocation
 
         [HttpPost]
-        public string InsertUpdateSuppliers(SupplierViewModel supplierObj)
+        public string InsertUpdateShippingLocation(ShippingLocationViewModel Shipping_locObj)
         {
             if (ModelState.IsValid)
             {
                 OperationsStatusViewModel OperationsStatusViewModelObj = null;
-                if (supplierObj.ID == 0) //Create Supplier
+                if (Shipping_locObj.ID == 0) //Create ShippingLocation
                 {
                     try
                     {
-                        supplierObj.commonObj = new LogDetailsViewModel();
-                        supplierObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
-                        supplierObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
-                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertSupplier(Mapper.Map<SupplierViewModel, Supplier>(supplierObj)));
+                        Shipping_locObj.commonObj = new LogDetailsViewModel();
+                        Shipping_locObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                        Shipping_locObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertShippingLocation(Mapper.Map<ShippingLocationViewModel, ShippingLocations>(Shipping_locObj)));
                     }
                     catch (Exception ex)
                     {
                         return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                     }
                 }
-                else //Update Supplier
+                else //Update ShippingLocation
                 {
                     try
                     {
-                        supplierObj.commonObj = new LogDetailsViewModel();
-                        supplierObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
-                        supplierObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
-                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.UpdateSupplier(Mapper.Map<SupplierViewModel, Supplier>(supplierObj)));
+                        Shipping_locObj.commonObj = new LogDetailsViewModel();
+                        Shipping_locObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                        Shipping_locObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.UpdateShippingLocation(Mapper.Map<ShippingLocationViewModel, ShippingLocations>(Shipping_locObj)));
                     }
                     catch (Exception ex)
                     {
@@ -118,22 +116,23 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
 
-        #endregion InsertUpdateAttributes
-                
-        #region DeleteSupplier
+        #endregion InsertUpdateShippingLocation
+
+
+        #region DeleteShippingLocation
 
 
         [HttpPost]
-        public string DeleteSupplier([Bind(Exclude = "Name")] SupplierViewModel  supplierObj)
+        public string DeleteShippingLocation([Bind(Exclude = "Name")] ShippingLocationViewModel Shipping_locObj)
         {
             if (!ModelState.IsValid)
             {
-                if (supplierObj.ID != 0)
+                if (Shipping_locObj.ID != 0)
                 {
                     try
                     {
                         OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.DeleteSupplier(supplierObj.ID));
+                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.DeleteShippingLocation(Shipping_locObj.ID));
                         if (OperationsStatusViewModelObj.StatusCode == 1)
                         {
                             return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
@@ -149,10 +148,10 @@ namespace PartyEC.UI.Controllers
                     }
                 }
             }
-            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select Supplier" });
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select attribute" });
         }
 
-        #endregion DeleteSupplier
+        #endregion DeleteShippingLocation
 
         #region ChangeButtonStyle
         [HttpGet]

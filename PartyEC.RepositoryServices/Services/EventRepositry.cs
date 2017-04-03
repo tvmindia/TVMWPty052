@@ -52,7 +52,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Event eventObj = new Event();
                                     {
-                                        eventObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : eventObj.ID);
+                                        eventObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : eventObj.ID);
                                         eventObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : eventObj.Name);
                                         eventObj.RelatedCategoriesCSV= (sdr["RelatedCategoriesCSV"].ToString() != "" ? sdr["RelatedCategoriesCSV"].ToString() : eventObj.RelatedCategoriesCSV);
                                     }
@@ -95,7 +95,7 @@ namespace PartyEC.RepositoryServices.Services
                                 if (sdr.Read())
                                 {
                                     myEvent = new Event();
-                                    myEvent.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myEvent.ID);
+                                    myEvent.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myEvent.ID);
                                     myEvent.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : myEvent.Name);
                                     myEvent.RelatedCategoriesCSV = (sdr["RelatedCategoriesCSV"].ToString() != "" ? sdr["RelatedCategoriesCSV"].ToString() : myEvent.RelatedCategoriesCSV);
                                     myEvent.URL = sdr["URL"].ToString();

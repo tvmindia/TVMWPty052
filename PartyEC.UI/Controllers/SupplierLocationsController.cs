@@ -11,35 +11,64 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
-    public class SupplierController : Controller
+    public class SupplierLocationsController : Controller
     {
-
         #region Constructor_Injection 
 
         IMasterBusiness _masterBusiness;
         ICommonBusiness _commonBusiness;
 
-        public SupplierController(IMasterBusiness masterBusiness, ICommonBusiness commonBusiness)
+        public SupplierLocationsController(IMasterBusiness masterBusiness, ICommonBusiness commonBusiness)
         {
             _commonBusiness = commonBusiness;
             _masterBusiness = masterBusiness;
         }
         #endregion Constructor_Injection 
-        
-        // GET: Supplier
+        // GET: Sup_Delivery
         public ActionResult Index()
         {
-            return View();
+            SupplierLocationsViewModel ordrsat_obj = new SupplierLocationsViewModel();
+            List<SelectListItem> selectListItem = new List<SelectListItem>();
+
+            List<ShippingLocationViewModel> orderstatusListVM = Mapper.Map<List<ShippingLocations>, List<ShippingLocationViewModel>>(_masterBusiness.GetAllShippingLocation());
+            foreach (ShippingLocationViewModel ovm in orderstatusListVM)
+            {
+                selectListItem.Add(new SelectListItem
+                {
+                    Text = ovm.Name,
+                    Value = ovm.ID.ToString(),
+                    Selected = false
+                });
+            }
+            ordrsat_obj.LocationList = selectListItem;
+
+            List<SelectListItem> selectListsupplier = new List<SelectListItem>();
+
+            List<SupplierViewModel> supplierListVM = Mapper.Map<List<Supplier>, List<SupplierViewModel>>(_masterBusiness.GetAllSuppliers());
+            foreach (SupplierViewModel ovm in supplierListVM)
+            {
+                selectListsupplier.Add(new SelectListItem
+                {
+                    Text = ovm.Name,
+                    Value = ovm.ID.ToString(),
+                    Selected = false
+                });
+            }
+            ordrsat_obj.supplierList = selectListsupplier;
+
+            return View(ordrsat_obj);
         }
 
-        #region GetAllSuppliers
+
+
+        #region GetAllSupplierLocations
         [HttpGet]
-        public string GetAllSuppliers()
+        public string GetAllSupplierLocations()
         {
             try
-            {               
-                List<SupplierViewModel> supplierList = Mapper.Map<List<Supplier>, List<SupplierViewModel>>(_masterBusiness.GetAllSuppliers());
-                return JsonConvert.SerializeObject(new { Result = "OK", Records = supplierList });
+            {
+                List<SupplierLocationsViewModel> supplierLocList = Mapper.Map<List<SupplierLocations>, List<SupplierLocationsViewModel>>(_masterBusiness.GetAllSupplierLocations());
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = supplierLocList });
             }
             catch (Exception ex)
             {
@@ -48,18 +77,18 @@ namespace PartyEC.UI.Controllers
 
         }
 
-        #endregion GetAllSuppliers
+        #endregion GetAllSupplierLocations
 
-        #region GetSupplierByID
+        #region GetSupplierLocationsByID
 
         [HttpGet]
-        public string GetSupplier(string ID)
+        public string GetSupplierLocations(string ID)
         {
             try
             {
                 OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                SupplierViewModel attribute = Mapper.Map<Supplier, SupplierViewModel>(_masterBusiness.GetSupplier(Int32.Parse(ID), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
-                return JsonConvert.SerializeObject(new { Result = "OK", Records = attribute });
+                SupplierLocationsViewModel supplierLoc = Mapper.Map<SupplierLocations, SupplierLocationsViewModel>(_masterBusiness.GetSupplierLocations(Int32.Parse(ID), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = supplierLoc });
             }
             catch (Exception ex)
             {
@@ -68,24 +97,25 @@ namespace PartyEC.UI.Controllers
         }
 
 
-        #endregion GetSupplierByID
-        
-        #region InsertUpdateSuppliers
+        #endregion GetSupplierLocationsByID
+
+
+        #region InsertUpdateSupplierLocations
 
         [HttpPost]
-        public string InsertUpdateSuppliers(SupplierViewModel supplierObj)
+        public string InsertUpdateSupplierLocations(SupplierLocationsViewModel supplierLocObj)
         {
             if (ModelState.IsValid)
             {
                 OperationsStatusViewModel OperationsStatusViewModelObj = null;
-                if (supplierObj.ID == 0) //Create Supplier
+                if (supplierLocObj.ID == 0) //Create Supplier
                 {
                     try
                     {
-                        supplierObj.commonObj = new LogDetailsViewModel();
-                        supplierObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
-                        supplierObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
-                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertSupplier(Mapper.Map<SupplierViewModel, Supplier>(supplierObj)));
+                        supplierLocObj.commonObj = new LogDetailsViewModel();
+                        supplierLocObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                        supplierLocObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertSupplierLocations(Mapper.Map<SupplierLocationsViewModel, SupplierLocations>(supplierLocObj)));
                     }
                     catch (Exception ex)
                     {
@@ -96,10 +126,10 @@ namespace PartyEC.UI.Controllers
                 {
                     try
                     {
-                        supplierObj.commonObj = new LogDetailsViewModel();
-                        supplierObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
-                        supplierObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
-                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.UpdateSupplier(Mapper.Map<SupplierViewModel, Supplier>(supplierObj)));
+                        supplierLocObj.commonObj = new LogDetailsViewModel();
+                        supplierLocObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                        supplierLocObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.UpdateSupplierLocations(Mapper.Map<SupplierLocationsViewModel, SupplierLocations>(supplierLocObj)));
                     }
                     catch (Exception ex)
                     {
@@ -118,22 +148,23 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
 
-        #endregion InsertUpdateAttributes
-                
-        #region DeleteSupplier
+        #endregion InsertUpdateSupplierLocations
+
+
+        #region DeleteSupplierLocations
 
 
         [HttpPost]
-        public string DeleteSupplier([Bind(Exclude = "Name")] SupplierViewModel  supplierObj)
+        public string DeleteSupplierLocations([Bind(Exclude = "Name")] SupplierLocationsViewModel supplierLocObj)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                if (supplierObj.ID != 0)
+                if (supplierLocObj.ID != 0)
                 {
                     try
                     {
                         OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.DeleteSupplier(supplierObj.ID));
+                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.DeleteSupplierLocations(supplierLocObj.ID));
                         if (OperationsStatusViewModelObj.StatusCode == 1)
                         {
                             return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
@@ -149,10 +180,10 @@ namespace PartyEC.UI.Controllers
                     }
                 }
             }
-            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select Supplier" });
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select Supplier Location" });
         }
 
-        #endregion DeleteSupplier
+        #endregion DeleteAttributes
 
         #region ChangeButtonStyle
         [HttpGet]
@@ -199,6 +230,9 @@ namespace PartyEC.UI.Controllers
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
         #endregion ChangeButtonStyle
+
+
+
 
     }
 }

@@ -1,25 +1,25 @@
-﻿@model PartyEC.UI.Models.SupplierViewModel
+﻿@model PartyEC.UI.Models.ShippingLocationViewModel
 
 @{
-    ViewBag.Title = "Suppliers";
+    ViewBag.Title = "Shipping Location";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 @section styles {
     @Styles.Render("~/Content/DataTables/css/datatable")
 
 }
- <div class="container-fluid">
+<div class="container-fluid">
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1" id="tabSupplierList" data-toggle="tab">Supplier List</a></li>
-                <li><a href="#tab2"  onclick="clearfields()" id="tabSupplierDetails" data-toggle="tab">Supplier Details</a></li>
+                <li class="active"><a href="#tab1" id="tabShippingLocationList" data-toggle="tab">Shipping Location List</a></li>
+                <li><a href="#tab2" onclick="clearfields()" id="tabShippingLocationDetails" data-toggle="tab">Shipping Location Details</a></li>
             </ul>
         </div>
         <div class="panel-body">
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="tab1">
-                    <div class="" id="btnPatchSupplierstab1">
+                    <div class="" id="btnPatchShippingLocationtab1">
                         @{
                             PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab1 = new PartyEC.UI.Models.ToolboxViewModel();
                             ToolBoxControltab1.addbtn.Visible = true;
@@ -27,14 +27,14 @@
                             Html.RenderPartial("_ToolboxView", ToolBoxControltab1);
                         }
                     </div>
-                    <h4>   Suppliers List </h4>
+                    <h4>Shipping Location List</h4>
                     @*table*@
-                    <table id="tblsuppliers" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                    <table id="tblshippinglocation" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Supplier Name</th>
-                                <th>Created Date</th>                           
+                                <th>Shipping Location</th>
+                                <th>Created Date</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -42,7 +42,7 @@
                     @*table*@
                 </div>
                 <div class="tab-pane fade" id="tab2">
-                    <div class="" id="btnPatchSupplierstab2">
+                    <div class="" id="btnPatchShippingLocationtab2">
                         @{
                             PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab2 = new PartyEC.UI.Models.ToolboxViewModel();
                             ToolBoxControltab2.deletebtn.Visible = true;
@@ -56,8 +56,8 @@
                             Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
                         }
                     </div>
-                    <h4>Supplier Details</h4>         
-                    <div class="col-md-12" id="Insertsupplier">
+                    <h4>Shipping Location Details</h4>
+                    <div class="col-md-12" id="InsertShippingLocation">
                         <div class="col-md-2">
                             @* left hand side Tab  *@
                             <div class="panel with-nav-tabs js panel-primary">
@@ -69,22 +69,22 @@
                             </div>
                         </div>
                         <div class="col-md-6 ">
-                         @using (Ajax.BeginForm("InsertUpdateSuppliers", "Supplier", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "mainform" }))
-                         {
+                            @using (Ajax.BeginForm("InsertUpdateShippingLocation", "ShippingLocation", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form",id="mainform" }))
+                            {
                                 @Html.AntiForgeryToken()
 
                                 <div class="form-horizontal">
-                                                            
+
 
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <div class="form-group"> 
+                                    <div class="form-group">
                                         @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
                                     </div>
 
-                                    <div class="form-group">                                        
+                                    <div class="form-group">
                                         @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            @Html.Editor("New", new { htmlAttributes = new { @class = "form-control", disabled = "disabled", id = "SuppliersId" } })
+                                            @Html.Editor("New", new { htmlAttributes = new { @class = "form-control",disabled = "disabled",id="Shipping_locId" } })
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -101,15 +101,15 @@
                                         </div>
                                     </div>
                                 </div>
-                           }
+                            }
                         </div>
                         <div class="col-md-4">
                             @* Right hand side Space  *@
                         </div>
-                    </div> 
-                </div> 
-                <div id="supplierdelete" hidden="hidden">
-                    @using (Ajax.BeginForm("DeleteSupplier", "Supplier", new AjaxOptions { HttpMethod = "POST", Confirm = "DeleteConfirm", OnSuccess = "DeleteSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
+                    </div>
+                </div>
+                <div id="DeleteShippingLocation" hidden="hidden">
+                    @using (Ajax.BeginForm("DeleteShippingLocation", "ShippingLocation", new AjaxOptions { HttpMethod = "POST", Confirm = "DeleteConfirm", OnSuccess = "DeleteSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="form-actions no-color">
@@ -117,7 +117,7 @@
                             <input id="btnFormDelete" type="submit" value="Delete" class="btn btn-default" />
                         </div>
                     }
-                </div> 
+                </div>
             </div>
         </div>
     </div>
@@ -127,8 +127,8 @@
 
 
 
- @section Scripts {
+@section Scripts {
     @Scripts.Render("~/bundles/datatable")
     @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-    @Scripts.Render("~/bundles/Suppliers")
+    @Scripts.Render("~/bundles/ShippingLocations")
 }

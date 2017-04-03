@@ -23,17 +23,17 @@ $(document).ready(function () {
                { "data": "Phone", "defaultContent": "<i>-</i>" },
                { "data": "EventDesc", "defaultContent": "<i>-</i>" },
                { "data": "FollowUpDate", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [{ "targets": [0], "visible": false, "searchable": false },{ "targets": [1], "visible": false, "searchable": false },
                  { "targets": [5], "render": function (data, type, full, meta) {                         
-                         var str = Date.parse(data);
-                         var res = ConvertJsonToDate('' + str + '');
+                       
+                         var res = ConvertJsonToDate(data);
                          return res;
                  }},
                  { "targets": [11], "render": function (data, type, full, meta) {                         
-                         var str = Date.parse(data);
-                         var res = ConvertJsonToDate('' + str + '');
+                        
+                         var res = ConvertJsonToDate(data);
                          return res;
                      }}]
          });
@@ -117,7 +117,8 @@ function BindEventRequest(id)
         $("#TotalTaxAmt").val(thisEvent.TotalTaxAmt);
         $("#TotalDiscountAmt").val(thisEvent.TotalDiscountAmt);
         $("#EventStatus").val(thisEvent.EventStatus);
-        $("#AdminRemarks").val(thisEvent.AdminRemarks);        
+        $("#AdminRemarks").val(thisEvent.AdminRemarks);
+        if (thisEvent.FollowUpDate!=null)
         $("#FollowUpDate").val(thisEvent.FollowUpDate.substring(0, 10));
         //labels
         $('#lblEventReqNo').text(thisEvent.EventReqNo);
@@ -125,8 +126,8 @@ function BindEventRequest(id)
         $('#lblEventTitle').text(thisEvent.EventTitle);
 
         //formating Date using function in custom js 
-        var str = Date.parse(thisEvent.EventDateTime.substring(0, 10));
-        var resultdate = ConvertJsonToDate('' + str + '');
+      
+        var resultdate = ConvertJsonToDate(thisEvent.EventDateTime);
         $('#lblEventDate').text(resultdate);      
         $('#lblEventTime').text(thisEvent.EventTime);
         $('#lblEventDesc').text(thisEvent.EventDesc);
@@ -161,8 +162,7 @@ function BindComments()   // To Display Previous Comment history
         
         for (var i = 0; i < thisCommentList.length; i++)
         {
-            var str = Date.parse(thisCommentList[i].CommentDate.substring(0, 10));
-            var resultdate = ConvertJsonToDate('' + str + '');
+            var resultdate = ConvertJsonToDate(thisCommentList[i].CommentDate);
             
             var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12"><span class="badge">' + resultdate + '</span>' + thisCommentList[i].PrevComment + '</li>');
             $("#CommentsDisplay").append(cnt);
@@ -200,7 +200,7 @@ function GetCustomer(id) {
             ds = JSON.parse(ds);
         }
         if (ds.Result == "OK") {
-            return ds.Records;
+            return ds.Record;
         }
         if (ds.Result == "ERROR") {
             alert(ds.Message);

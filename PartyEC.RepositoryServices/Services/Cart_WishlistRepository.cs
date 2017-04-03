@@ -48,7 +48,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Cart_Wishlist _cartwishlistObj = new Cart_Wishlist();
                                     {
-                                        _cartwishlistObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _cartwishlistObj.ID);
+                                        _cartwishlistObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _cartwishlistObj.ID);
                                         _cartwishlistObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _cartwishlistObj.Name);
                                         _cartwishlistObj.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : _cartwishlistObj.Email);
                                         _cartwishlistObj.Mobile = (sdr["Mobile"].ToString() != "" ? sdr["Mobile"].ToString() : _cartwishlistObj.Mobile);
@@ -96,12 +96,12 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Cart_Wishlist _ShoppingcartObj = new Cart_Wishlist();
                                     {
-                                        _ShoppingcartObj.ProductID = (sdr["ProductID"].ToString() != "" ? Int16.Parse(sdr["ProductID"].ToString()) : _ShoppingcartObj.ProductID);
+                                        _ShoppingcartObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _ShoppingcartObj.ProductID);
                                         _ShoppingcartObj.ProductName = (sdr["ProductName"].ToString() != "" ?  sdr["ProductName"].ToString() : _ShoppingcartObj.ProductName);
-                                        _ShoppingcartObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? Int16.Parse(sdr["CustomerID"].ToString()) : _ShoppingcartObj.CustomerID);
+                                        _ShoppingcartObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : _ShoppingcartObj.CustomerID);
                                         _ShoppingcartObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _ShoppingcartObj.CustomerName);
                                         _ShoppingcartObj.ProductSpecXML = (sdr["ProductSpecXML"].ToString() != "" ? sdr["ProductSpecXML"].ToString() : _ShoppingcartObj.ProductSpecXML);
-                                        _ShoppingcartObj.Qty = (sdr["Qty"].ToString() != "" ? Int16.Parse(sdr["Qty"].ToString()) : _ShoppingcartObj.Qty);
+                                        _ShoppingcartObj.Qty = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : _ShoppingcartObj.Qty);
                                         _ShoppingcartObj.CurrencyCode = (sdr["CurrencyCode"].ToString() != "" ? sdr["CurrencyCode"].ToString() : _ShoppingcartObj.CurrencyCode);
                                         _ShoppingcartObj.Price = (sdr["Price"].ToString() != "" ? Decimal.Parse(sdr["Price"].ToString()) : _ShoppingcartObj.Price);
                                         _ShoppingcartObj.ItemStatus = (sdr["ItemStatus"].ToString() != "" ? sdr["ItemStatus"].ToString() : _ShoppingcartObj.ItemStatus);
@@ -147,9 +147,9 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Cart_Wishlist _ShoppingcartObj = new Cart_Wishlist();
                                     {
-                                        _ShoppingcartObj.ProductID = (sdr["ProductID"].ToString() != "" ? Int16.Parse(sdr["ProductID"].ToString()) : _ShoppingcartObj.ProductID);
+                                        _ShoppingcartObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _ShoppingcartObj.ProductID);
                                         _ShoppingcartObj.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : _ShoppingcartObj.ProductName);
-                                        _ShoppingcartObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? Int16.Parse(sdr["CustomerID"].ToString()) : _ShoppingcartObj.CustomerID);
+                                        _ShoppingcartObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : _ShoppingcartObj.CustomerID);
                                         _ShoppingcartObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _ShoppingcartObj.CustomerName);
                                         _ShoppingcartObj.ProductSpecXML = (sdr["ProductSpecXML"].ToString() != "" ? sdr["ProductSpecXML"].ToString() : _ShoppingcartObj.ProductSpecXML);    
                                         _ShoppingcartObj.DaysinWL = (sdr["DaysinWL"].ToString() != "" ? sdr["DaysinWL"].ToString() : _ShoppingcartObj.DaysinWL);

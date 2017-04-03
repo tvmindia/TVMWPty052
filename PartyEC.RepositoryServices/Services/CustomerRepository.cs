@@ -53,19 +53,22 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     Customer _customerObj = new Customer();
                                     {
-                                        _customerObj.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : _customerObj.ID);
+                                        _customerObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _customerObj.ID);
                                         _customerObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _customerObj.Name);
                                         _customerObj.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : _customerObj.Email);
                                         _customerObj.Mobile = (sdr["Mobile"].ToString() != "" ? sdr["Mobile"].ToString() : _customerObj.Mobile);
                                         _customerObj.Language = (sdr["Language"].ToString() != "" ? sdr["Language"].ToString() : _customerObj.Language);
                                         _customerObj.Gender = (sdr["Gender"].ToString() != "" ? sdr["Gender"].ToString() : _customerObj.Gender);
-                                        _customerObj.ProfileImageID = (sdr["ProfileImageID"].ToString() != "" ? Int16.Parse(sdr["ProfileImageID"].ToString()) : _customerObj.ProfileImageID);
-                                        _customerObj.OrdersCount = (sdr["OrdersCount"].ToString() != "" ? Int16.Parse(sdr["OrdersCount"].ToString()) : _customerObj.OrdersCount);
-                                        _customerObj.BookingsCount = (sdr["BookingsCount"].ToString() != "" ? Int16.Parse(sdr["BookingsCount"].ToString()) : _customerObj.BookingsCount);
-                                        _customerObj.QuotationsCount = (sdr["QuotationsCount"].ToString() != "" ? Int16.Parse(sdr["QuotationsCount"].ToString()) : _customerObj.QuotationsCount);
-                                        _customerObj.OrdersCountHistory = (sdr["OrdersCountHistory"].ToString() != "" ? Int16.Parse(sdr["OrdersCountHistory"].ToString()) : _customerObj.OrdersCountHistory);
-                                        _customerObj.BookingsCountHistory = (sdr["BookingsCountHistory"].ToString() != "" ? Int16.Parse(sdr["BookingsCountHistory"].ToString()) : _customerObj.BookingsCountHistory);
-                                        _customerObj.QuotationsCountHistory = (sdr["QuotationsCountHistory"].ToString() != "" ? Int16.Parse(sdr["QuotationsCountHistory"].ToString()) : _customerObj.QuotationsCountHistory);
+                                        _customerObj.ProfileImageID = (sdr["ProfileImageID"].ToString() != "" ? Guid.Parse(sdr["ProfileImageID"].ToString()) : _customerObj.ProfileImageID);
+                                        _customerObj.OrdersCount = (sdr["OrdersCount"].ToString() != "" ? int.Parse(sdr["OrdersCount"].ToString()) : _customerObj.OrdersCount);
+                                        _customerObj.BookingsCount = (sdr["BookingsCount"].ToString() != "" ? int.Parse(sdr["BookingsCount"].ToString()) : _customerObj.BookingsCount);
+                                        _customerObj.QuotationsCount = (sdr["QuotationsCount"].ToString() != "" ? int.Parse(sdr["QuotationsCount"].ToString()) : _customerObj.QuotationsCount);
+                                        _customerObj.OrdersCountHistory = (sdr["OrdersCountHistory"].ToString() != "" ? int.Parse(sdr["OrdersCountHistory"].ToString()) : _customerObj.OrdersCountHistory);
+                                        _customerObj.BookingsCountHistory = (sdr["BookingsCountHistory"].ToString() != "" ? int.Parse(sdr["BookingsCountHistory"].ToString()) : _customerObj.BookingsCountHistory);
+                                        _customerObj.QuotationsCountHistory = (sdr["QuotationsCountHistory"].ToString() != "" ? int.Parse(sdr["QuotationsCountHistory"].ToString()) : _customerObj.QuotationsCountHistory);
+                                        _customerObj.IsActive = bool.Parse(sdr["ActiveYN"].ToString());
+                                        _customerObj.logDetailsObj = new LogDetails();
+                                        _customerObj.logDetailsObj.CreatedDate= (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _customerObj.logDetailsObj.CreatedDate);
 
                                     }
                                     Customerlist.Add(_customerObj);
@@ -106,21 +109,28 @@ namespace PartyEC.RepositoryServices.Services
                                 if (sdr.Read())
                                 {
                                     mycustomer = new Customer();
-
-                                    mycustomer.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : mycustomer.ID);
+                                    mycustomer.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : mycustomer.ID);
                                     mycustomer.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : mycustomer.Name);
                                     mycustomer.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : mycustomer.Email);
                                     mycustomer.Mobile = (sdr["Mobile"].ToString() != "" ? sdr["Mobile"].ToString() : mycustomer.Mobile);
                                     mycustomer.Language = (sdr["Language"].ToString() != "" ? sdr["Language"].ToString() : mycustomer.Language);
                                     mycustomer.Gender = (sdr["Gender"].ToString() != "" ? sdr["Gender"].ToString() : mycustomer.Gender);
-                                    mycustomer.ProfileImageID = (sdr["ProfileImageID"].ToString() != "" ? Int16.Parse(sdr["ProfileImageID"].ToString()) : mycustomer.ProfileImageID);
-                                    mycustomer.OrdersCount = (sdr["OrdersCount"].ToString() != "" ? Int16.Parse(sdr["OrdersCount"].ToString()) : mycustomer.OrdersCount);
-                                    mycustomer.BookingsCount = (sdr["BookingsCount"].ToString() != "" ? Int16.Parse(sdr["BookingsCount"].ToString()) : mycustomer.BookingsCount);
-                                    mycustomer.QuotationsCount = (sdr["QuotationsCount"].ToString() != "" ? Int16.Parse(sdr["QuotationsCount"].ToString()) : mycustomer.QuotationsCount);
-                                    mycustomer.OrdersCountHistory = (sdr["OrdersCountHistory"].ToString() != "" ? Int16.Parse(sdr["OrdersCountHistory"].ToString()) : mycustomer.OrdersCountHistory);
-                                    mycustomer.BookingsCountHistory = (sdr["BookingsCountHistory"].ToString() != "" ? Int16.Parse(sdr["BookingsCountHistory"].ToString()) : mycustomer.BookingsCountHistory);
-                                    mycustomer.QuotationsCountHistory = (sdr["QuotationsCountHistory"].ToString() != "" ? Int16.Parse(sdr["QuotationsCountHistory"].ToString()) : mycustomer.QuotationsCountHistory);
-                                    
+                                    mycustomer.ProfileImageID = (sdr["ProfileImageID"].ToString() != "" ? Guid.Parse(sdr["ProfileImageID"].ToString()) : mycustomer.ProfileImageID);
+                                    mycustomer.OrdersCount = (sdr["OrdersCount"].ToString() != "" ? int.Parse(sdr["OrdersCount"].ToString()) : mycustomer.OrdersCount);
+                                    mycustomer.BookingsCount = (sdr["BookingsCount"].ToString() != "" ? int.Parse(sdr["BookingsCount"].ToString()) : mycustomer.BookingsCount);
+                                    mycustomer.QuotationsCount = (sdr["QuotationsCount"].ToString() != "" ? int.Parse(sdr["QuotationsCount"].ToString()) : mycustomer.QuotationsCount);
+                                    mycustomer.OrdersCountHistory = (sdr["OrdersCountHistory"].ToString() != "" ? int.Parse(sdr["OrdersCountHistory"].ToString()) : mycustomer.OrdersCountHistory);
+                                    mycustomer.BookingsCountHistory = (sdr["BookingsCountHistory"].ToString() != "" ? int.Parse(sdr["BookingsCountHistory"].ToString()) : mycustomer.BookingsCountHistory);
+                                    mycustomer.QuotationsCountHistory = (sdr["QuotationsCountHistory"].ToString() != "" ? int.Parse(sdr["QuotationsCountHistory"].ToString()) : mycustomer.QuotationsCountHistory);
+                                    mycustomer.IsActive = bool.Parse(sdr["ActiveYN"].ToString());
+                                    mycustomer.customerAddress = new CustomerAddress();
+                                    mycustomer.customerAddress.Address = (sdr["Address"].ToString() != "" ? sdr["Address"].ToString() : mycustomer.customerAddress.Address);
+                                    mycustomer.customerAddress.City = (sdr["City"].ToString() != "" ? sdr["City"].ToString() : mycustomer.customerAddress.City);
+                                    mycustomer.customerAddress.StateProvince = (sdr["StateProvince"].ToString() != "" ? sdr["StateProvince"].ToString() : mycustomer.customerAddress.StateProvince);
+                                    mycustomer.customerAddress.county = new Country();
+                                    mycustomer.customerAddress.county.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : mycustomer.customerAddress.county.Name);
+                                    mycustomer.logDetailsObj = new LogDetails();
+                                    mycustomer.logDetailsObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : mycustomer.logDetailsObj.CreatedDate);
                                 }
                             }//if
                         }

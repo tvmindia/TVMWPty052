@@ -345,11 +345,16 @@
     <Content Include="Content\OtherImages\weddigcake.jpg" />
     <Content Include="Content\ProductImages\wonderfull cake.png" />
     <Content Include="Content\ProductImages\wonderfull cakeOther1596.png" />
+    <Content Include="Content\ProductImages\wonderfull cakeOther2312.png" />
     <Content Include="Content\ProductImages\wonderfull cakeOther2976.png" />
+    <Content Include="Content\ProductImages\wonderfull cakeOther4792.png" />
     <Content Include="Content\ProductImages\wonderfull cakeOther4990.png" />
     <Content Include="Content\ProductImages\wonderfull cakeOther5456.png" />
+    <Content Include="Content\ProductImages\wonderfull cakeOther6927.png" />
+    <Content Include="Content\ProductImages\wonderfull cakeOther9925.png" />
     <Content Include="Content\uploadify.css" />
     <Content Include="Content\uploadify.swf" />
+    <Content Include="Content\UserCSS\Customer.css" />
     <Content Include="Content\UserCSS\EventRequests.css" />
     <Content Include="Content\UserCSS\Product.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -472,11 +477,14 @@
     <Content Include="Scripts\UserJS\Attributes.js" />
     <Content Include="Scripts\UserJS\Cart_Wishlist.js" />
     <Content Include="Scripts\UserJS\Categories.js" />
+    <Content Include="Scripts\UserJS\Customer.js" />
     <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\EventRequests.js" />
     <Content Include="Scripts\UserJS\Order.js" />
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
+    <Content Include="Scripts\UserJS\ShippingLocation.js" />
+    <Content Include="Scripts\UserJS\SupplierLocations.js" />
     <Content Include="Scripts\UserJS\Suppliers.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
@@ -505,9 +513,11 @@
     <Compile Include="Controllers\DynamicUIController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventRequestsController.cs" />
+    <Compile Include="Controllers\ShippingLocationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
+    <Compile Include="Controllers\SupplierLocationsController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -546,6 +556,9 @@
     <Content Include="Views\Shared\_EditTemplateForAssociatedProductAttributes.cshtml" />
     <Content Include="Views\Cart_Wishlist\Index.cshtml" />
     <Content Include="Views\Supplier\Index.cshtml" />
+    <Content Include="Views\Customer\Index.cshtml" />
+    <Content Include="Views\ShippingLocation\Index.cshtml" />
+    <Content Include="Views\SupplierLocations\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -556,7 +569,7 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
-    <Folder Include="Views\Customer\" />
+    <Folder Include="Views\Location\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

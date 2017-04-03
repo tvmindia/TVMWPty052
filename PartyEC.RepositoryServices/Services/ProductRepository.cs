@@ -79,6 +79,11 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.SupplierName);
                                         _productObj.ManufacturerName = (sdr["ManufacturerName"].ToString() != "" ? sdr["ManufacturerName"].ToString() : _productObj.ManufacturerName);
                                         _productObj.StickerURL = (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : _productObj.StickerURL);
+                                        _productObj.logDetails = new LogDetails();
+
+                                        _productObj.logDetails.CreatedDate = ((sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _productObj.logDetails.CreatedDate));
+                                             _productObj.logDetails.CreatedBy = (sdr["CreatedBy"].ToString() != "" ? sdr["CreatedBy"].ToString() : _productObj.logDetails.CreatedBy);
+                                        
                                     }
                                     productList.Add(_productObj);
                                 }
@@ -991,14 +996,15 @@ namespace PartyEC.RepositoryServices.Services
                                 myProductDetail.ProductName=(sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : myProductDetail.ProductName);
                                 myProductDetail.BaseSellingPrice= sdr["BaseSellingPrice"].ToString() != "" ? decimal.Parse(sdr["BaseSellingPrice"].ToString()) : myProductDetail.BaseSellingPrice;
                                 myProductDetail.ActualPrice = (sdr["ActualPrice"].ToString() != "" ? decimal.Parse(sdr["ActualPrice"].ToString()) : myProductDetail.ActualPrice);
-                                //myProductDetail.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
-                                //myProductDetail.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["CreatedDate"].ToString())) : myProductDetail.logDetails.CreatedDate);
+                                myProductDetail.logDetails = new LogDetails();
+                                myProductDetail.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
+                                myProductDetail.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (DateTime.Parse(sdr["CreatedDate"].ToString())) : myProductDetail.logDetails.CreatedDate);
                                 //myProductDetail.logDetails.UpdatedBy = sdr["UpdatedBy"].ToString();
                                 //myProductDetail.logDetails.UpdatedDate = (sdr["UpdatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["UpdatedDate"].ToString())) : myProductDetail.logDetails.UpdatedDate);
 
                                 if (myAttributeStructure == null)
                                 {
-                                    myAttributeStructure = _attributesRepository.GetAttributeContainer(myProductDetail.AttributeSetID, "Product");
+                                    myAttributeStructure = _attributesRepository.GetAttributeContainer(myProductDetail.AttributeSetID, "Product",true);
                                 }
 
                                 myProductDetail.ProductAttributes = new List<AttributeValues>();

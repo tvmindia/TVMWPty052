@@ -1,42 +1,42 @@
 ﻿var DataTables = {};
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
-    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Add"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Add"); //ControllerName,id of the container div,Name of the action
     try {
-        debugger; 
-        DataTables.supplierTable = $('#tblsuppliers').DataTable(
+        debugger;       
+        DataTables.ShippingLocationTable = $('#tblshippinglocation').DataTable(
          {
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
              order: [],
              searching: true,
              paging: true,
-             data: GetAllSuppliers(),
+             data: GetAllShippingLocation(),
              columns: [
                { "data": "ID" },
                { "data": "Name" },
-               { "data": "CreatedDate", "defaultContent": "<i>-</i>" }, 
+               { "data": "CreatedDate", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [{
-                 "render": function (data, type, row) {                     
+                 "render": function (data, type, row) { 
                      var res = ConvertJsonToDate(data);
-                     return res; 
+                     return res;
                  },
                  "targets": 2
              }]
          });
     }
-    catch (e) { 
+    catch (e) {
         notyAlert('error', e.message);
 
     }
 });
 
-function GetAllSuppliers() {
+function GetAllShippingLocation() {
     try {
-        var data = { };
+        var data = {};
         var ds = {};
-        ds = GetDataFromServer("Supplier/GetAllSuppliers/", data);
+        ds = GetDataFromServer("ShippingLocation/GetAllShippingLocation/", data);
         if (ds != '') {
             ds = JSON.parse(ds);
         }
@@ -52,13 +52,13 @@ function GetAllSuppliers() {
     }
 }
 
-//---------------------------------------Get Suppliers Details By ID-------------------------------------//
-function GetSupplierByID(id) {
+//---------------------------------------Get ShippingLocation Details By ID-------------------------------------//
+function GetShippingLocationByID(id) {
     try {
         debugger;
         var data = { "ID": id };
         var ds = {};
-        ds = GetDataFromServer("Supplier/GetSupplier/", data);
+        ds = GetDataFromServer("ShippingLocation/GetShippingLocation/", data);
         if (ds != '') {
             ds = JSON.parse(ds);
         }
@@ -66,7 +66,7 @@ function GetSupplierByID(id) {
             return ds.Records;
         }
         if (ds.Result == "ERROR") {
-            notyAlert('error', ds.Message); 
+            notyAlert('error', ds.Message);
         }
     }
     catch (e) {
@@ -75,38 +75,40 @@ function GetSupplierByID(id) {
 }
 
 
-//---------------------------------------Edit Suppliers--------------------------------------------------//
+//---------------------------------------Edit ShippingLocation--------------------------------------------------//
 function Edit(currentObj) {
     //Tab Change on edit click
     debugger;
-    $('#tabSupplierDetails').trigger('click');
-    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Edit");//ControllerName,id of the container div,Name of the action
- 
-    var rowData = DataTables.supplierTable.row($(currentObj).parents('tr')).data();
+    $('#tabShippingLocationDetails').trigger('click');
+    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Edit");//ControllerName,id of the container div,Name of the action
+
+    var rowData = DataTables.ShippingLocationTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
-        fillSupplier(rowData.ID);
+        fillShippingLocation(rowData.ID);
     }
 }
-//---------------------------------------Fill Suppliers--------------------------------------------------//
-function fillSupplier(ID) {
+//---------------------------------------Fill ShippingLocation--------------------------------------------------//
+function fillShippingLocation(ID) {
     debugger;
     ResetForm();
-    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Edit");
-    var thissupplier = GetSupplierByID(ID); //Binding Data  
-    $("#ID").val(thissupplier.ID);
-    $("#deleteId").val(thissupplier.ID);
-    $("#SuppliersId").val(thissupplier.ID);
-    $("#Name").val(thissupplier.Name); 
- 
+    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Edit");
+    var thisShippingLocation = GetShippingLocationByID(ID); //Binding Data  
+    $("#ID").val(thisShippingLocation.ID);
+    $("#Shipping_locId").val(thisShippingLocation.ID);
+    $("#deleteId").val(thisShippingLocation.ID);
+    //$("#lblShippingLocationID").text(thisShippingLocation.ID);
+    $("#Name").val(thisShippingLocation.Name);
+    
+
 }
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
-    ResetForm();
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
-    $("#SuppliersId").val("New");
-  
+    $("#Shipping_locId").val("New");
+    ResetForm();
+
 }
 
 function ResetForm() {
@@ -121,8 +123,8 @@ function btnreset() {
     if ($("#ID").val() == 0) {
         clearfields();
     }
-    else { 
-        fillSupplier($("#ID").val())
+    else {
+        fillShippingLocation($("#ID").val())
     }
 }
 //---------------------------------------Save-------------------------------------------------------//
@@ -137,7 +139,7 @@ function Validation() {
     return true;
 }
 function SaveSuccess(data, status, xhr) {
-    BindAllSuppliers(); 
+    BindAllShippingLocation();
     var i = JSON.parse(data)
     debugger;
 
@@ -146,7 +148,7 @@ function SaveSuccess(data, status, xhr) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
             var returnId = i.Record.ReturnValues
-            fillSupplier(returnId);
+            fillShippingLocation(returnId);
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -159,8 +161,8 @@ function SaveSuccess(data, status, xhr) {
     }
 }
 function DeleteSuccess(data, status, xhr) {
-    BindAllSuppliers();
-  
+    BindAllShippingLocation();
+   
 
     var i = JSON.parse(data)
     debugger;
@@ -170,7 +172,7 @@ function DeleteSuccess(data, status, xhr) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
             clearfields();
-            ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Add");
+            ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Add");
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -186,7 +188,7 @@ function DeleteSuccess(data, status, xhr) {
 
 //---------------------------------------Back-------------------------------------------------------//
 function goback() {
-    $('#tabSupplierList').trigger('click');
+    $('#tabShippingLocationList').trigger('click');
 }
 //---------------------------------------Delete-------------------------------------------------------//
 function clickdelete() {
@@ -198,19 +200,19 @@ function clickdelete() {
     else {
         notyAlert('error', 'Please Select Attributes');
     }
-} 
+}
 
 //---------------------------------------Add New Click----------------------------------------------------//
 function btnAddNew() {
-    $('#tabSupplierDetails').trigger('click');
-    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Add"); //ControllerName,id of the container div,Name of the action
+    $('#tabShippingLocationDetails').trigger('click');
+    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
 }
 
-//---------------------------------------Bind All Suppliers----------------------------------------------//
-function BindAllSuppliers() {
+//---------------------------------------Bind All ShippingLocation----------------------------------------------//
+function BindAllShippingLocation() {
     try {
-        DataTables.supplierTable.clear().rows.add(GetAllSuppliers()).draw(false);
+        DataTables.ShippingLocationTable.clear().rows.add(GetAllShippingLocation()).draw(false);
     }
     catch (e) {
         notyAlert('error', e.message);
