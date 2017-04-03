@@ -14,13 +14,16 @@ namespace PartyEC.UI.Models
     }
     public class ManufacturerViewModel
     {
-        public ManufacturerViewModel()
-        {
-            country = new CountryViewModel();
-        }
+        //public ManufacturerViewModel()
+        //{
+        //    country = new CountryViewModel();
+        //}
         public int ID { get; set; }
         public string Name { get; set; }
         public CountryViewModel country { get; set; }
+        public List<SelectListItem> CountryList { get; set; }
+
+        public LogDetailsViewModel commonObj { get; set; }
     }
 
     public class SupplierViewModel
