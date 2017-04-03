@@ -12,13 +12,16 @@ namespace PartyEC.DataAccessObject.DTO
     }
    public class Manufacturer
     {
-        public Manufacturer()
-        {
-            country = new Country();
-        }
+        //public Manufacturer()
+        //{
+        //    country = new Country();
+        //}
         public int ID { get; set; }
         public string Name { get; set; }
         public Country country { get; set; }
+
+        public LogDetails commonObj { get; set; }
+        public OperationsStatus operationsStatusObj { get; set; } // For Insert,Update,Delete
     }
 
     public class Supplier

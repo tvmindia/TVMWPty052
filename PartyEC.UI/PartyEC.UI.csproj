@@ -477,9 +477,11 @@
     <Content Include="Scripts\UserJS\Attributes.js" />
     <Content Include="Scripts\UserJS\Cart_Wishlist.js" />
     <Content Include="Scripts\UserJS\Categories.js" />
+    <Content Include="Scripts\UserJS\Countries.js" />
     <Content Include="Scripts\UserJS\Customer.js" />
     <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\EventRequests.js" />
+    <Content Include="Scripts\UserJS\Manufacturers.js" />
     <Content Include="Scripts\UserJS\Order.js" />
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
@@ -508,11 +510,13 @@
     <Compile Include="Controllers\AttributeSetLinkController.cs" />
     <Compile Include="Controllers\Cart_WishlistController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
+    <Compile Include="Controllers\CountriesController.cs" />
     <Compile Include="Controllers\CustomerController.cs" />
     <Compile Include="Controllers\DashBoardController.cs" />
     <Compile Include="Controllers\DynamicUIController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventRequestsController.cs" />
+    <Compile Include="Controllers\ManufacturersController.cs" />
     <Compile Include="Controllers\ShippingLocationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -559,6 +563,8 @@
     <Content Include="Views\Customer\Index.cshtml" />
     <Content Include="Views\ShippingLocation\Index.cshtml" />
     <Content Include="Views\SupplierLocations\Index.cshtml" />
+    <Content Include="Views\Manufacturers\Index.cshtml" />
+    <Content Include="Views\Countries\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -570,7 +576,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
     <Folder Include="Views\Location\" />
-    <Folder Include="Views\Sup_Delivery\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

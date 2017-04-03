@@ -23,7 +23,7 @@ $(document).ready(function () {
                { "data": "Phone", "defaultContent": "<i>-</i>" },
                { "data": "EventDesc", "defaultContent": "<i>-</i>" },
                { "data": "FollowUpDate", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [{ "targets": [0], "visible": false, "searchable": false },{ "targets": [1], "visible": false, "searchable": false },
                  { "targets": [5], "render": function (data, type, full, meta) {                         
@@ -117,7 +117,8 @@ function BindEventRequest(id)
         $("#TotalTaxAmt").val(thisEvent.TotalTaxAmt);
         $("#TotalDiscountAmt").val(thisEvent.TotalDiscountAmt);
         $("#EventStatus").val(thisEvent.EventStatus);
-        $("#AdminRemarks").val(thisEvent.AdminRemarks);        
+        $("#AdminRemarks").val(thisEvent.AdminRemarks);
+        if (thisEvent.FollowUpDate!=null)
         $("#FollowUpDate").val(thisEvent.FollowUpDate.substring(0, 10));
         //labels
         $('#lblEventReqNo').text(thisEvent.EventReqNo);

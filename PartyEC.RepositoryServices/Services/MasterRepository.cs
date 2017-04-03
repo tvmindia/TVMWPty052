@@ -52,6 +52,7 @@ namespace PartyEC.RepositoryServices.Services
                                     {
                                         _manufacturer.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _manufacturer.ID);
                                         _manufacturer.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _manufacturer.Name);
+                                        _manufacturer.country = new Country();
                                         _manufacturer.country.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : _manufacturer.country.Code);
                                         _manufacturer.country.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : _manufacturer.country.Name);
                                    
@@ -224,6 +225,54 @@ namespace PartyEC.RepositoryServices.Services
 
 
         }
+
+        public List<Country> GetAllCountries()
+        {
+            List<Country> CountryList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetMasterCountry]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                CountryList = new List<Country>();
+                                while (sdr.Read())
+                                {
+                                    Country _countries = new Country();
+                                    { 
+                                        _countries.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _countries.Name);
+                                        _countries.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : _countries.Code);                                   
+
+                                    }
+                                    CountryList.Add(_countries);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return CountryList;
+
+
+        }
+    
 
         #region Suppliers
         public List<Supplier> GetAllSuppliers()
@@ -494,7 +543,7 @@ namespace PartyEC.RepositoryServices.Services
         #region ShippingLocation
 
 
-        public List<ShippingLocations> GetAllShippingLocation()
+                public List<ShippingLocations> GetAllShippingLocation()
         {
             List<ShippingLocations> ShippingLocationlist = null;
             try
@@ -752,11 +801,11 @@ namespace PartyEC.RepositoryServices.Services
                 throw ex;
             }
             return OperationsStatusObj;
-        }
+        }        
         #endregion ShippingLocation
 
 
-        #region SupplierLocations
+                #region SupplierLocations
 
 
         public List<SupplierLocations> GetAllSupplierLocations()
@@ -787,9 +836,9 @@ namespace PartyEC.RepositoryServices.Services
                                         _supLoc.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _supLoc.ID);
                                         _supLoc.LocationID = (sdr["LocationID"].ToString() != "" ? int.Parse(sdr["LocationID"].ToString()) : _supLoc.LocationID);
                                         _supLoc.SupplierID = (sdr["SupplierID"].ToString() != "" ? int.Parse(sdr["SupplierID"].ToString()) : _supLoc.SupplierID);
-                                        _supLoc.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _supLoc.LocationName);
+                                        _supLoc.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _supLoc.SupplierName);
                                         _supLoc.LocationName = (sdr["LocationName"].ToString() != "" ? sdr["LocationName"].ToString() : _supLoc.LocationName);
-                                       // _supLoc.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _supLoc.CreatedDate);
+                                        _supLoc.ShippingCharge = (sdr["ShippingCharge"].ToString() != "" ? decimal.Parse(sdr["ShippingCharge"].ToString()) : _supLoc.ShippingCharge);
 
 
 
@@ -842,6 +891,8 @@ namespace PartyEC.RepositoryServices.Services
                                     mySupplierloc.SupplierID = (sdr["SupplierID"].ToString() != "" ? int.Parse(sdr["SupplierID"].ToString()) : mySupplierloc.SupplierID);
                                     mySupplierloc.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : mySupplierloc.LocationName);
                                     mySupplierloc.LocationName = (sdr["LocationName"].ToString() != "" ? sdr["LocationName"].ToString() : mySupplierloc.LocationName);
+                                    mySupplierloc.ShippingCharge = (sdr["ShippingCharge"].ToString() != "" ? decimal.Parse(sdr["ShippingCharge"].ToString()) : mySupplierloc.ShippingCharge);
+
                                 }
                             }//if
                         }
@@ -1027,7 +1078,7 @@ namespace PartyEC.RepositoryServices.Services
                 throw ex;
             }
             return OperationsStatusObj;
-        }
+        } 
         #endregion SupplierLocations
 
 

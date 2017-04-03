@@ -9,9 +9,10 @@ namespace PartyEC.RepositoryServices.Contracts
 {
     public interface IMasterRepository
     {
-       List<Manufacturer> GetAllManufacturers();
-      
-       OperationsStatus InsertImage(OtherImages otherimgObj);
+        List<Manufacturer> GetAllManufacturers();
+        List<Country> GetAllCountries();
+
+        OperationsStatus InsertImage(OtherImages otherimgObj);
         List<OrderStatusMaster> GetAllOrderStatus();
         List<OtherImages> GetAllStickers();
 

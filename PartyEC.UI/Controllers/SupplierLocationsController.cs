@@ -157,7 +157,7 @@ namespace PartyEC.UI.Controllers
         [HttpPost]
         public string DeleteSupplierLocations([Bind(Exclude = "Name")] SupplierLocationsViewModel supplierLocObj)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (supplierLocObj.ID != 0)
                 {
@@ -180,7 +180,7 @@ namespace PartyEC.UI.Controllers
                     }
                 }
             }
-            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select Supplier" });
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select Supplier Location" });
         }
 
         #endregion DeleteAttributes

@@ -19,6 +19,20 @@ namespace PartyEC.BusinessServices.Services
 
         #region Methods
 
+        public OperationsStatus InsertEventRequests(EventRequests eventObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _eventRequestsRepositry.InsertEventRequests(eventObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
         public List<EventRequests> GetAllEventRequests()
         {
             List<EventRequests> RequestLists = null;
