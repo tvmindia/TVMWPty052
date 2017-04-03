@@ -570,7 +570,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
     <Folder Include="Views\Location\" />
-    <Folder Include="Views\Sup_Delivery\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

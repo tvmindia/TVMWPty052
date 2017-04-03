@@ -69,7 +69,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 ">
-                            @using (Ajax.BeginForm("InsertUpdateShippingLocation", "ShippingLocation", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
+                            @using (Ajax.BeginForm("InsertUpdateShippingLocation", "ShippingLocation", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form",id="mainform" }))
                             {
                                 @Html.AntiForgeryToken()
 
@@ -84,7 +84,7 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            <label id="lblShippingLocationID" class="h4 label-display">-New-</label>
+                                            @Html.Editor("New", new { htmlAttributes = new { @class = "form-control",disabled = "disabled",id="Shipping_locId" } })
                                         </div>
                                     </div>
                                     <div class="form-group">

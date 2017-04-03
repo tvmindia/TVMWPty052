@@ -90,20 +90,31 @@ function Edit(currentObj) {
 //---------------------------------------Fill Suppliers--------------------------------------------------//
 function fillSupplier(ID) {
     debugger;
+    ResetForm();
+    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Edit");
     var thissupplier = GetSupplierByID(ID); //Binding Data  
     $("#ID").val(thissupplier.ID);
     $("#deleteId").val(thissupplier.ID);
-    $("#lblSupplierID").text(thissupplier.ID);
+    $("#SuppliersId").val(thissupplier.ID);
     $("#Name").val(thissupplier.Name); 
  
 }
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
+    ResetForm();
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
-    $("#lblSupplierID").text("-New-");
+    $("#SuppliersId").val("New");
   
+}
+
+function ResetForm() {
+    var validator = $("#mainform").validate();
+    $('#mainform').find('.field-validation-error span').each(function () {
+        validator.settings.success($(this));
+    });
+    validator.resetForm();
 }
 //---------------------------------------Button Patch Click Events------------------------------------------------//
 function btnreset() {

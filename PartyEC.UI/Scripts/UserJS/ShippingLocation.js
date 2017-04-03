@@ -90,11 +90,15 @@ function Edit(currentObj) {
 //---------------------------------------Fill ShippingLocation--------------------------------------------------//
 function fillShippingLocation(ID) {
     debugger;
+    ResetForm();
+    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Edit");
     var thisShippingLocation = GetShippingLocationByID(ID); //Binding Data  
     $("#ID").val(thisShippingLocation.ID);
+    $("#Shipping_locId").val(thisShippingLocation.ID);
     $("#deleteId").val(thisShippingLocation.ID);
-    $("#lblShippingLocationID").text(thisShippingLocation.ID);
+    //$("#lblShippingLocationID").text(thisShippingLocation.ID);
     $("#Name").val(thisShippingLocation.Name);
+    
 
 }
 //---------------------------------------Clear Fields-----------------------------------------------------//
@@ -102,8 +106,17 @@ function clearfields() {
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
-    $("#lblShippingLocationID").text("-New-");
+    $("#Shipping_locId").val("New");
+    ResetForm();
 
+}
+
+function ResetForm() {
+    var validator = $("#mainform").validate();
+    $('#mainform').find('.field-validation-error span').each(function () {
+        validator.settings.success($(this));
+    });
+    validator.resetForm();
 }
 //---------------------------------------Button Patch Click Events------------------------------------------------//
 function btnreset() {
