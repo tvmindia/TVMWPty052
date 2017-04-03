@@ -1493,9 +1493,8 @@ function BindProductReviews()   // To Display Previous Comment history
         var thisReviewList = GetProductReviews(id);
         if (thisReviewList.length>0) {
             $("#ReviewsDisplay").empty();
-            for (var i = 0; i < thisReviewList.length; i++) {
-                var str = Date.parse(thisReviewList[i].ReviewCreatedDate.substring(0, 10));
-                var resultdate = ConvertJsonToDate('' + str + '');
+            for (var i = 0; i < thisReviewList.length; i++) {               
+                var resultdate = ConvertJsonToDate(thisReviewList[i].ReviewCreatedDate);
                 var imageurl;
                 if (thisReviewList[i].ImageUrl)
                     imageurl = thisReviewList[i].ImageUrl
