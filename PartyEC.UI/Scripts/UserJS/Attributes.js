@@ -24,7 +24,7 @@ $(document).ready(function ()
                { "data": "EntityType", "defaultContent": "<i>-</i>" },
                { "data": "MandatoryYN", "defaultContent": "<i>-</i>" },
                { "data": "ComparableYN", "defaultContent": "<i>-</i>" },                 
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [{ "targets": [0], "visible": false, "searchable": false }, {
                  "render": function (data, type, row) {

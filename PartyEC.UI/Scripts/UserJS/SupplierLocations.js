@@ -99,6 +99,7 @@ function fillSupplierLocations(ID) {
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
     debugger;
+    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Add");
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
@@ -140,6 +141,7 @@ function SaveSuccess(data, status, xhr) {
             notyAlert('success', i.Record.StatusMessage);
             var returnId = i.Record.ReturnValues
             fillSupplierLocations(returnId);
+            ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Edit");
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -152,8 +154,7 @@ function SaveSuccess(data, status, xhr) {
     }
 }
 function DeleteSuccess(data, status, xhr) {
-    BindAllSupplierLocations();
-  
+    BindAllSupplierLocations(); 
 
     var i = JSON.parse(data)
     debugger;
@@ -163,7 +164,7 @@ function DeleteSuccess(data, status, xhr) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
             clearfields();
-            ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Add");
+           
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);

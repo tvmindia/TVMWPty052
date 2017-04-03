@@ -15,7 +15,7 @@ $(document).ready(function () {
                { "data": "ID" },
                { "data": "Name" },
                { "data": "CreatedDate", "defaultContent": "<i>-</i>" }, 
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [{
                  "render": function (data, type, row) {                     

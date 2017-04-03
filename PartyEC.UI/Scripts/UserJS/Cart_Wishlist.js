@@ -17,7 +17,7 @@ $(document).ready(function () {
                { "data": "Mobile", "defaultContent": "<i>-</i>" },
                { "data": "CartCount", "defaultContent": "<i>-</i>" },
                { "data": "WishCount", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a onclick="View(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="View(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ]
          });
 
