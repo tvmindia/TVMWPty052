@@ -9,5 +9,9 @@ namespace PartyEC.RepositoryServices.Contracts
     public interface IOrderRepository
     {
         List<Order> GetAllOrderHeader();
+        Order GetSalesStatistics(int CustomerID,DateTime CurrentDate);
+        List<Order> GetOrderSummary(int CustomerID);
+
+
     }
 }

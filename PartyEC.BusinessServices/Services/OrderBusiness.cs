@@ -21,5 +21,22 @@ namespace PartyEC.BusinessServices.Services
 
             return _orderRepository.GetAllOrderHeader();
         }
+        public Order GetSalesStatistics(int CustomerID, DateTime CurrentDate)
+        {
+            Order orderObj = null;
+            try
+            {
+                orderObj= _orderRepository.GetSalesStatistics(CustomerID, CurrentDate);
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return orderObj;
+        }
+        public List<Order> GetOrderSummary(int CustomerID)
+        {
+            return _orderRepository.GetOrderSummary(CustomerID);
+        }
     }
 }

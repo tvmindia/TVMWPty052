@@ -17,7 +17,7 @@ namespace PartyEC.UI.Models
         //
         public string OrderRev { get; set; }
         //
-     public DateTime OrderDate { get; set; }
+     public DateTime? OrderDate { get; set; }
      public string OrderStatus { get; set; }
         //
         public string CustomerName { get; set; }
@@ -73,8 +73,12 @@ namespace PartyEC.UI.Models
 
         //Order Status
         public int Code { get; set; }
-        public string Description { get; set; } 
+        public string Description { get; set; }
 
+        //Sales Statistics
+        public string LifeTimeSales { get; set; }
+        public string AverageSales { get; set; }
+        public string LastMonthSales { get; set; }
 
 
     }

@@ -9,5 +9,11 @@
   
 }
 .container>.row>.col-md-6>.panel-default{
-  min-height: 288px;
+  min-height: 400px;
+}
+
+address {
+   overflow: hidden;
+   white-space: pre-line;
+
 }

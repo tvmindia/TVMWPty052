@@ -9,5 +9,7 @@ namespace PartyEC.BusinessServices.Contracts
     public interface IOrderBusiness
     {
         List<Order> GetAllOrderHeader();
+        Order GetSalesStatistics(int CustomerID, DateTime CurrentDate);
+        List<Order> GetOrderSummary(int CustomerID);
     }
 }
