@@ -59,9 +59,8 @@ $(document).ready(function () {
                       return returnstring;
                   }
               },{
-                     "targets": [8], "render": function (data, type, full, meta) {
-                         var str = Date.parse(data); 
-                         var res = ConvertJsonToDate('' + str + '');
+                     "targets": [8], "render": function (data, type, full, meta) { 
+                         var res = ConvertJsonToDate(data);
                          return res;
                      }
                  }]
@@ -103,9 +102,8 @@ $(document).ready(function () {
                         return returnstring;
                     }
                 },{
-                    "targets": [4], "render": function (data, type, full, meta) {
-                        var str = Date.parse(data);
-                        var res = ConvertJsonToDate('' + str + '');
+                    "targets": [4], "render": function (data, type, full, meta) { 
+                        var res = ConvertJsonToDate(data);
                         return res;
                     }
                 }]

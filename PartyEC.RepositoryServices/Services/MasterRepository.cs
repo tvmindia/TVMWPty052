@@ -787,9 +787,9 @@ namespace PartyEC.RepositoryServices.Services
                                         _supLoc.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _supLoc.ID);
                                         _supLoc.LocationID = (sdr["LocationID"].ToString() != "" ? int.Parse(sdr["LocationID"].ToString()) : _supLoc.LocationID);
                                         _supLoc.SupplierID = (sdr["SupplierID"].ToString() != "" ? int.Parse(sdr["SupplierID"].ToString()) : _supLoc.SupplierID);
-                                        _supLoc.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _supLoc.LocationName);
+                                        _supLoc.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _supLoc.SupplierName);
                                         _supLoc.LocationName = (sdr["LocationName"].ToString() != "" ? sdr["LocationName"].ToString() : _supLoc.LocationName);
-                                       // _supLoc.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _supLoc.CreatedDate);
+                                        _supLoc.ShippingCharge = (sdr["ShippingCharge"].ToString() != "" ? decimal.Parse(sdr["ShippingCharge"].ToString()) : _supLoc.ShippingCharge);
 
 
 
@@ -842,6 +842,8 @@ namespace PartyEC.RepositoryServices.Services
                                     mySupplierloc.SupplierID = (sdr["SupplierID"].ToString() != "" ? int.Parse(sdr["SupplierID"].ToString()) : mySupplierloc.SupplierID);
                                     mySupplierloc.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : mySupplierloc.LocationName);
                                     mySupplierloc.LocationName = (sdr["LocationName"].ToString() != "" ? sdr["LocationName"].ToString() : mySupplierloc.LocationName);
+                                    mySupplierloc.ShippingCharge = (sdr["ShippingCharge"].ToString() != "" ? decimal.Parse(sdr["ShippingCharge"].ToString()) : mySupplierloc.ShippingCharge);
+
                                 }
                             }//if
                         }

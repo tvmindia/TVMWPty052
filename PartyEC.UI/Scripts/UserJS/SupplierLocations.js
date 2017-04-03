@@ -75,7 +75,7 @@ function Edit(currentObj) {
     //Tab Change on edit click
     debugger;
     $('#tabSupplierLocationsDetails').trigger('click');
-    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationsstab2", "Edit");//ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Edit");//ControllerName,id of the container div,Name of the action
 
     var rowData = DataTables.SupplierLocationsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -89,17 +89,24 @@ function fillSupplierLocations(ID) {
     $("#ID").val(thisSupplierLocations.ID);
     $("#SupplierID").val(thisSupplierLocations.SupplierID)
     $("#deleteId").val(thisSupplierLocations.ID);
-    $("#lblSupplierName").text(thisSupplierLocations.Name);
+  
     $("#LocationID").val(thisSupplierLocations.LocationID);
     $("#ShippingCharge").val(thisSupplierLocations.ShippingCharge);
+    $("#LocationID").attr('disabled', true);
+    $("#SupplierID").attr('disabled', true);
 
 }
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
+    debugger;
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
-   // $("#lblSupplierName").text("-New-");
+    $("#LocationID").val("");
+    $("#SupplierID").val("");
+    $("#ShippingCharge").val("");
+    $("#LocationID").attr('disabled', false);
+    $("#SupplierID").attr('disabled', false);
 
 }
 //---------------------------------------Button Patch Click Events------------------------------------------------//
@@ -108,7 +115,7 @@ function btnreset() {
         clearfields();
     }
     else {
-        fillSupplier($("#ID").val())
+        fillSupplierLocations($("#ID").val())
     }
 }
 //---------------------------------------Save-------------------------------------------------------//
@@ -132,7 +139,7 @@ function SaveSuccess(data, status, xhr) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
             var returnId = i.Record.ReturnValues
-            fillSupplier(returnId);
+            fillSupplierLocations(returnId);
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -188,6 +195,7 @@ function clickdelete() {
 
 //---------------------------------------Add New Click----------------------------------------------------//
 function btnAddNew() {
+    debugger;
     $('#tabSupplierLocationsDetails').trigger('click');
     ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();

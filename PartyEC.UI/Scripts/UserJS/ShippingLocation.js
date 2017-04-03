@@ -18,9 +18,8 @@ $(document).ready(function () {
                { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [{
-                 "render": function (data, type, row) {
-                     var str = Date.parse(data);
-                     var res = ConvertJsonToDate('' + str + '');
+                 "render": function (data, type, row) { 
+                     var res = ConvertJsonToDate(data);
                      return res;
                  },
                  "targets": 2
