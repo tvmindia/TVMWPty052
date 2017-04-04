@@ -10,7 +10,8 @@ namespace PartyEC.BusinessServices.Contracts
     public interface IMasterBusiness
     {
         List<Manufacturer> GetAllManufacturers();
-       
+        List<Country> GetAllCountries();
+
         List<OrderStatusMaster> GetAllOrderStatus();
         List<OtherImages> GetAllStickers();
 

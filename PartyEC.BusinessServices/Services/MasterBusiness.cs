@@ -20,19 +20,19 @@ namespace PartyEC.BusinessServices.Services
             _masterRepository = masterRepository;
         }
 
-        public List<Manufacturer> GetAllManufacturers()
+        public List<Country> GetAllCountries()
         {
-            List<Manufacturer> manufacturelist = null;
+            List<Country> countrylist = null;
             try
             {
-                manufacturelist = _masterRepository.GetAllManufacturers();
+                countrylist = _masterRepository.GetAllCountries();
 
             }
             catch (Exception)
             {
 
             }
-            return manufacturelist;
+            return countrylist;
         }
 
         public List<OrderStatusMaster> GetAllOrderStatus()
@@ -292,7 +292,24 @@ namespace PartyEC.BusinessServices.Services
 
         #endregion SupplierLocations
 
+        #region Manufacturers
+        public List<Manufacturer> GetAllManufacturers()
+        {
+            List<Manufacturer> manufacturelist = null;
+            try
+            {
+                manufacturelist = _masterRepository.GetAllManufacturers();
 
+            }
+            catch (Exception)
+            {
+
+            }
+            return manufacturelist;
+        }
+         
+
+        #endregion Manufacturers
 
 
 

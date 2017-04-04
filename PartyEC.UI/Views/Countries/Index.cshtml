@@ -1,11 +1,10 @@
-﻿@model PartyEC.UI.Models.SupplierLocationsViewModel
-
+﻿@model PartyEC.UI.Models.CountryViewModel
 @{
-    ViewBag.Title = "Supplier Delivery Locations";
+    ViewBag.Title = "Countries";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
-@section styles {
+ @section styles {
     @Styles.Render("~/Content/DataTables/css/datatable")
 
 }
@@ -13,38 +12,36 @@
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#tab1" id="tabSupplierLocationsList" data-toggle="tab">Supplier Locations List</a></li>
-                <li><a href="#tab2" onclick="clearfields()" id="tabSupplierLocationsDetails" data-toggle="tab">Supplier Locations Details</a></li>
+                <li class="active"><a href="#tab1" id="tabCountriesList" data-toggle="tab">Countries List</a></li>
+    @*            <li><a href="#tab2" onclick="clearfields()" id="tabCountriesDetails" data-toggle="tab">Countries Details</a></li>*@
             </ul>
         </div>
         <div class="panel-body">
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="tab1">
-                    <div class="" id="btnPatchSupplierLocationstab1">
+                    @*<div class="" id="btnPatchCountriestab1">
                         @{
                             PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab1 = new PartyEC.UI.Models.ToolboxViewModel();
                             ToolBoxControltab1.addbtn.Visible = true;
                             ToolBoxControltab1.addbtn.Event = "btnAddNew()";
                             Html.RenderPartial("_ToolboxView", ToolBoxControltab1);
-                        }
+                        }*@
                     </div>
-                    <h4>Supplier Locations List</h4>
-                    @*table*@
-                    <table id="tblSupplierLocations" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                    @*<h4>Countries List</h4>*@
+                   
+                    <table id="tblCountries" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                         <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Supplier</th>
-                                <th>Location</th>
-                                <th>Shipping Charge</th>
+                            <tr>                               
+                                <th>Country Name</th>
+                                <th>Country Code</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
                     </table>
                     @*table*@
                 </div>
-                <div class="tab-pane fade" id="tab2">
-                    <div class="" id="btnPatchSupplierLocationstab2">
+                @*<div class="tab-pane fade" id="tab2">
+                    <div class="" id="btnPatchCountriestab2">
                         @{
                             PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab2 = new PartyEC.UI.Models.ToolboxViewModel();
                             ToolBoxControltab2.deletebtn.Visible = true;
@@ -58,10 +55,10 @@
                             Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
                         }
                     </div>
-                    <h4>Supplier Locations Details</h4>
-                    <div class="col-md-12" id="InsertSupplierLocations">
+                    <h4>Country Details</h4>
+                    <div class="col-md-12" id="InsertCountries">
                         <div class="col-md-2">
-                            @* left hand side Tab  *@
+                         
                             <div class="panel with-nav-tabs js panel-primary">
                                 <div class="panel-heading" style="min-height:300px">
                                     <ul class="nav nav-tabs nav-stacked">
@@ -71,7 +68,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 ">
-                            @using (Ajax.BeginForm("InsertUpdateSupplierLocations", "SupplierLocations", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" ,id="mainform" }))
+                            @using (Ajax.BeginForm("InsertUpdateCountries", "Countries", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "mainform" }))
                             {
                                 @Html.AntiForgeryToken()
 
@@ -80,30 +77,30 @@
 
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                     <div class="form-group">
-                                        @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" }) 
+                                        @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
                                     </div>
 
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.SupplierName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.SupplierID, Model.supplierList, "-- Select Status --", new { @class = "form-control eventstatus" })
-                                            @Html.ValidationMessageFor(model => model.SupplierID, "", new { @class = "text-danger" })
+                                            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        @Html.LabelFor(model => model.LocationName, htmlAttributes: new { @class = "control-label col-md-2" })
+                                        @Html.LabelFor(model => model.country.Code, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.LocationID, Model.LocationList, "-- Select Status --", new { @class = "form-control eventstatus" })
-                                            @Html.ValidationMessageFor(model => model.LocationID, "", new { @class = "text-danger" })
-                                        </div>
-                                    </div> 
-                                    <div class="form-group">
-                                        @Html.LabelFor(model => model.ShippingCharge, htmlAttributes: new { @class = "control-label col-md-2" })
-                                        <div class="col-md-10">
-                                            @Html.EditorFor(model => model.ShippingCharge, new { htmlAttributes = new { @class = "form-control" } })
-                                            @Html.ValidationMessageFor(model => model.ShippingCharge, "", new { @class = "text-danger" })
+                                            @Html.DropDownListFor(model => model.country.Code, Model.CountryList, "-- Select Status --", new { @class = "form-control eventstatus" })
+                                            @Html.ValidationMessageFor(model => model.country.Code, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
+                                    <div class="form-group">
+                                            @Html.LabelFor(model => model.ShippingCharge, htmlAttributes: new { @class = "control-label col-md-2" })
+                                            <div class="col-md-10">
+                                                @Html.EditorFor(model => model.ShippingCharge, new { htmlAttributes = new { @class = "form-control" } })
+                                                @Html.ValidationMessageFor(model => model.ShippingCharge, "", new { @class = "text-danger" })
+                                            </div>
+                                        </div>
 
                                     <div class="form-group" hidden="hidden">
                                         <div class="col-md-offset-2 col-md-10">
@@ -114,12 +111,12 @@
                             }
                         </div>
                         <div class="col-md-4">
-                            @* Right hand side Space  *@
+                            
                         </div>
                     </div>
                 </div>
-                <div id="supplierdelete" hidden="hidden">
-                    @using (Ajax.BeginForm("DeleteSupplierLocations", "SupplierLocations", new AjaxOptions { HttpMethod = "POST", Confirm = "DeleteConfirm", OnSuccess = "DeleteSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
+                <div id="Countriesdelete" hidden="hidden">
+                    @using (Ajax.BeginForm("DeleteCountries", "Countries", new AjaxOptions { HttpMethod = "POST", Confirm = "DeleteConfirm", OnSuccess = "DeleteSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="form-actions no-color">
@@ -127,7 +124,7 @@
                             <input id="btnFormDelete" type="submit" value="Delete" class="btn btn-default" />
                         </div>
                     }
-                </div>
+                </div>*@
             </div>
         </div>
     </div>
@@ -137,6 +134,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/datatable")
     @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-    @Scripts.Render("~/bundles/SupplierLocations")
+    @Scripts.Render("~/bundles/Manufacturers")
 }
+
 

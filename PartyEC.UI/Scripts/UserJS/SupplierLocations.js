@@ -108,8 +108,17 @@ function clearfields() {
     $("#ShippingCharge").val("");
     $("#LocationID").attr('disabled', false);
     $("#SupplierID").attr('disabled', false);
+    ResetForm();
 
 }
+function ResetForm(){
+    var validator = $("#mainform").validate();
+    $('#mainform').find('.field-validation-error span').each(function () {
+        validator.settings.success($(this));
+    });
+    validator.resetForm();
+}
+
 //---------------------------------------Button Patch Click Events------------------------------------------------//
 function btnreset() {
     if ($("#ID").val() == 0) {
@@ -117,6 +126,7 @@ function btnreset() {
     }
     else {
         fillSupplierLocations($("#ID").val())
+        ResetForm();
     }
 }
 //---------------------------------------Save-------------------------------------------------------//

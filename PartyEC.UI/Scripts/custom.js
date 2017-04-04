@@ -2,8 +2,8 @@ var appAddress = window.location.protocol + "//" + window.location.host + "/";  
 
 $(document).ready(function () {
   
-    $('input[type="date"]').datepicker({
-        format: "yyyy-mm-dd",//dd-M-yyyy",
+    $('input.datepicker').datepicker({
+        format: "dd-M-yyyy",//dd-M-yyyy",
         maxViewMode: 0,
         todayBtn: "linked",
         clearBtn: true,
