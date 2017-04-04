@@ -21,13 +21,14 @@ $(document).ready(function () {
                { "data": "OrdersCount", "defaultContent": "<i>-</i>" },
                { "data": "BookingsCount", "defaultContent": "<i>-</i>" },
                { "data": "QuotationsCount", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="EditCustomer(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="EditCustomer(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' },
+               { "data": "IsActive", "defaultContent": "<i>-</i>" }
              ],
              columnDefs: [
               {//hiding hidden column 
-                  "targets": [0],
-                  "visible": true,
-                  "searchable": true
+                  "targets": [10],
+                  "visible": false,
+                  "searchable": false
               }
              ]
          });
@@ -166,9 +167,21 @@ function EditCustomer(currentObj)
         if ((rowData.ID != null))
         {
             $("#tabcustomerView a").trigger('click');
+            //render button patch
+            switch(rowData.IsActive)
+            {
+                case true:
+                    ChangeButtonPatchView("Customer", "customerToolBox", "Deactivate"); //ControllerName,id of the container div,Name of the action
+                break;
+                case false:
+                    ChangeButtonPatchView("Customer", "customerToolBox", "Activate"); //ControllerName,id of the container div,Name of the action
+                break;
+            }
             var thiscustomer = GetCustomerDetail(rowData.ID);
             if(thiscustomer)
             {
+                $('#hdfCustomerID').val(rowData.ID);
+                $('#hdfCustomerActive').val(rowData.IsActive);
                 $('#lblCustName').text(((thiscustomer.Name != "") && (thiscustomer.Name!=null)?thiscustomer.Name:'-'));
                 $('#lblCustAccCreate').text(((thiscustomer.logDetailsObj.CreatedDate!="")&&(thiscustomer.logDetailsObj.CreatedDate!=null)?ConvertJsonToDate(thiscustomer.logDetailsObj.CreatedDate):'-'));
                 $('#lblEmail').text(((thiscustomer.Email != "") && (thiscustomer.Email!=null)?thiscustomer.Email:'-'));
@@ -348,4 +361,66 @@ function RefreshCustomerCartList(custid) {
     catch (e) {
         notyAlert('errror', e.message);
     }
+}
+
+function RefreshCustomer() {
+
+    try {
+        DataTables.customerTable.clear().rows.add(GetAllCustomers()).draw(false);
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
+}
+
+function ActivateORDeactivate()
+{
+    try {
+        var CustomerViewModel = new Object();
+        CustomerViewModel.ID = $('#hdfCustomerID').val();
+        var activeflag=$('#hdfCustomerActive').val();
+        if (activeflag == "false") {
+            CustomerViewModel.IsActive = true;
+        }
+        else {
+            CustomerViewModel.IsActive = false;
+        }
+       
+        var data = "{'customer':" + JSON.stringify(CustomerViewModel) + "}";
+        PostDataToServer('Customer/ActiateorDeactivateCustomer/', data, function (JsonResult) {
+            if (JsonResult != '') {
+                switch (JsonResult.Result) {
+                    case "OK":
+                        notyAlert('success', JsonResult.Record.StatusMessage);
+                        $('#hdfCustomerActive').val(JsonResult.Record.ReturnValues);
+                        switch (JsonResult.Record.ReturnValues)
+                        {
+                            case true:
+                                ChangeButtonPatchView("Customer", "customerToolBox", "Deactivate"); //ControllerName,id of the container div,Name of the action
+                                break;
+                            case false:
+                                ChangeButtonPatchView("Customer", "customerToolBox", "Activate"); //ControllerName,id of the container div,Name of the action
+                                break;
+                        }
+                        RefreshCustomer();
+                      
+                        break;
+                    case "ERROR":
+                        notyAlert('error', JsonResult.Record.StatusMessage);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        });
+    }
+    catch (e)
+    {
+        notyAlert('errror', e.message);
+    }
+}
+
+function goback()
+{
+    $("#tabcustomerList a").click();
 }

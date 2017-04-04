@@ -19,6 +19,8 @@ namespace PartyEC.UI.Models
         public ToolBoxStructure sendbtn;
         public ToolBoxStructure invoicebtn;
         public ToolBoxStructure shipbtn;
+        public ToolBoxStructure actDeactbtn;
+
     }
     public struct ToolBoxStructure
     {

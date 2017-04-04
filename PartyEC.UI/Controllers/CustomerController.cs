@@ -169,7 +169,7 @@ namespace PartyEC.UI.Controllers
             {
                 OperationsStatusViewModel OperationsStatusViewModelObj = new OperationsStatusViewModel();
                 customer.logDetailsObj = new LogDetailsViewModel();
-                customer.logDetailsObj.UpdatedBy = _commonBusiness.GetUA().ToString() ;
+                customer.logDetailsObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                 customer.logDetailsObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.CustomerEnableORDisable(Mapper.Map<CustomerViewModel, Customer>(customer)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
@@ -180,6 +180,56 @@ namespace PartyEC.UI.Controllers
             }
         }
         #endregion ActiateorDeactivateCustomer
+
+
+        #region ChangeButtonStyle
+        [HttpGet]
+        public ActionResult ChangeButtonStyle(string ActionType)
+        {
+            ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
+            switch (ActionType)
+            {
+                case "Deactivate":
+                    ToolboxViewModelObj.actDeactbtn.Visible = true;
+                    ToolboxViewModelObj.actDeactbtn.Event = "ActivateORDeactivate()";
+                    ToolboxViewModelObj.actDeactbtn.Title = "Deactivate";
+
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "Save()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    //ToolboxViewModelObj.resetbtn.Visible = true;
+                    //ToolboxViewModelObj.resetbtn.Event = "btnreset()";
+                    //ToolboxViewModelObj.resetbtn.Title = "Reset";
+
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+
+                    break;
+
+                case "Activate":
+                    ToolboxViewModelObj.actDeactbtn.Visible = true;
+                    ToolboxViewModelObj.actDeactbtn.Event = "ActivateORDeactivate()";
+                    ToolboxViewModelObj.actDeactbtn.Title = "Activate";
+
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "Save()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
+                                            
+                default:
+                    return Content("Nochange");
+            }
+            return PartialView("_ToolboxView", ToolboxViewModelObj);
+        }
+
+
+        #endregion ChangeButtonStyle
 
     }
 }

@@ -152,6 +152,7 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter statusCode = null;
+                SqlParameter OutFlag = null;
 
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
@@ -169,6 +170,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = customer.logDetailsObj.UpdatedBy;
                         cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = customer.logDetailsObj.UpdatedDate;
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        OutFlag = cmd.Parameters.Add("@OutFlag", SqlDbType.Bit);
+                        OutFlag.Direction = ParameterDirection.Output;
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
@@ -183,6 +186,7 @@ namespace PartyEC.RepositoryServices.Services
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "updation Successfull!";
+                                operationsStatusObj.ReturnValues = OutFlag.Value;
                                 break;
                             default:
                                 break;
