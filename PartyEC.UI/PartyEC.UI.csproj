@@ -489,6 +489,7 @@
     <Content Include="Scripts\UserJS\Order.js" />
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
+    <Content Include="Scripts\UserJS\Review.js" />
     <Content Include="Scripts\UserJS\ShippingLocation.js" />
     <Content Include="Scripts\UserJS\SupplierLocations.js" />
     <Content Include="Scripts\UserJS\Suppliers.js" />
@@ -521,6 +522,7 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventRequestsController.cs" />
     <Compile Include="Controllers\ManufacturersController.cs" />
+    <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\ShippingLocationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
@@ -569,6 +571,7 @@
     <Content Include="Views\SupplierLocations\Index.cshtml" />
     <Content Include="Views\Manufacturers\Index.cshtml" />
     <Content Include="Views\Countries\Index.cshtml" />
+    <Content Include="Views\Reviews\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

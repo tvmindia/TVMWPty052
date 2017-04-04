@@ -18,7 +18,7 @@ namespace PartyEC.DataAccessObject.DTO
         public decimal CurrencyRate { get; set; }
         public decimal Price { get; set; }
         public string ItemStatus { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public string CreatedDate { get; set; }
 
         public int CartCount { get; set; }
         public int WishCount { get; set; }

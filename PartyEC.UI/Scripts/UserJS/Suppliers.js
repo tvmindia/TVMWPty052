@@ -16,14 +16,7 @@ $(document).ready(function () {
                { "data": "Name" },
                { "data": "CreatedDate", "defaultContent": "<i>-</i>" }, 
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
-             ],
-             columnDefs: [{
-                 "render": function (data, type, row) {                     
-                     var res = ConvertJsonToDate(data);
-                     return res; 
-                 },
-                 "targets": 2
-             }]
+             ]
          });
     }
     catch (e) { 
