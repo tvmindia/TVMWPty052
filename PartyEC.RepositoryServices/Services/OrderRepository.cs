@@ -53,7 +53,7 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
                                         orderObj.OrderNo = sdr["OrderNo"].ToString();
                                         orderObj.OrderRev = sdr["OrderRev"].ToString();
-                                        orderObj.OrderDate =sdr["OrderDate"].ToString()!=""?DateTime.Parse(sdr["OrderDate"].ToString()) :orderObj.OrderDate;
+                                        orderObj.OrderDate =sdr["OrderDate"].ToString()!=""?DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") :orderObj.OrderDate;
                                         orderObj.CustomerName =sdr["CustomerName"].ToString();
                                         orderObj.ContactNo =sdr["ContactNo"].ToString();
                                         orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : orderObj.ID);
@@ -149,7 +149,7 @@ namespace PartyEC.RepositoryServices.Services
                                     {
                                         orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
                                         orderObj.OrderNo = (sdr["OrderNo"].ToString()!=""? sdr["OrderNo"].ToString() : orderObj.OrderNo);
-                                        orderObj.OrderDate = (sdr["OrderDate"].ToString()!=""? DateTime.Parse(sdr["OrderDate"].ToString()):orderObj.OrderDate);
+                                        orderObj.OrderDate = (sdr["OrderDate"].ToString()!=""? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy"):orderObj.OrderDate);
                                         orderObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : orderObj.CustomerID);
                                         orderObj.TotalOrderAmt = sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : orderObj.TotalOrderAmt;
                                         orderObj.BillFirstName = (sdr["BillFirstName"].ToString()!=""? sdr["BillFirstName"].ToString():orderObj.BillFirstName);

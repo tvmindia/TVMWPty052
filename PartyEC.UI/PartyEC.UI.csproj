@@ -311,7 +311,9 @@
     <Content Include="Content\images\closelt.png" />
     <Content Include="Content\images\closemodel.png" />
     <Content Include="Content\images\delete.PNG" />
+    <Content Include="Content\images\ship.png" />
     <Content Include="Content\images\edit.png" />
+    <Content Include="Content\images\invoice.png" />
     <Content Include="Content\images\loadinglt.gif" />
     <Content Include="Content\images\nextlt.png" />
     <Content Include="Content\images\NoImage60x60.png" />
@@ -327,6 +329,7 @@
     <Content Include="Content\images\sentmail.png" />
     <Content Include="Content\images\updateButton.png" />
     <Content Include="Content\images\uploadify-cancel.png" />
+    <Content Include="Content\images\invoice1.png" />
     <Content Include="Content\jstree\default\32px.png" />
     <Content Include="Content\jstree\default\32px_line.png" />
     <Content Include="Content\jstree\default\32px_original.png" />

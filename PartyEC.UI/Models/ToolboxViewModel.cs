@@ -15,6 +15,10 @@ namespace PartyEC.UI.Models
         public ToolBoxStructure savebtn;
         public ToolBoxStructure resetbtn;
         public ToolBoxStructure backbtn;
+        public ToolBoxStructure cancelbtn;
+        public ToolBoxStructure sendbtn;
+        public ToolBoxStructure invoicebtn;
+        public ToolBoxStructure shipbtn;
     }
     public struct ToolBoxStructure
     {
