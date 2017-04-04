@@ -26,7 +26,8 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<AttributeSetViewModel, AttributeSet>().ReverseMap();
                 config.CreateMap<AttributeSetLinkViewModel, AttributeSetLink>().ReverseMap();
                 config.CreateMap<CategoriesViewModel, Categories>().ReverseMap();
-                config.CreateMap<CategoriesAppViewModel, Categories>().ReverseMap();
+                config.CreateMap<CategoriesListAppViewModel, Categories>().ReverseMap();
+                config.CreateMap<TopProductsOfCategoryAppViewModel, Product>().ReverseMap();
                 config.CreateMap<ManufacturerViewModel,Manufacturer >().ReverseMap();
                 config.CreateMap<SupplierViewModel,Supplier>().ReverseMap();
                 config.CreateMap<CountryViewModel, Country>().ReverseMap();

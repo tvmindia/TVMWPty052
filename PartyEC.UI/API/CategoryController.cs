@@ -32,9 +32,25 @@ namespace PartyEC.UI.API
         {
             try
             {                
-                List<CategoriesAppViewModel> CategoryList = Mapper.Map<List<Categories>, List< CategoriesAppViewModel >> (_categoryBusiness.GetAllMainCategories());
+                List<CategoriesListAppViewModel> CategoryList = Mapper.Map<List<Categories>, List< CategoriesListAppViewModel >> (_categoryBusiness.GetAllMainCategories());
                 if (CategoryList.Count==0) throw new Exception(messages.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = CategoryList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public object GetCategoryMainPageItems(Categories categoryObj)
+        {
+            try
+            {
+                List<TopProductsOfCategoryAppViewModel> ProductsList = Mapper.Map<List<Product>, List<TopProductsOfCategoryAppViewModel>>(_productBusiness.GetTopProductsOfCategory(categoryObj));
+              //  List<CategoriesListAppViewModel> CategoryList = Mapper.Map<List<Categories>, List<CategoriesListAppViewModel>>(_categoryBusiness.GetAllMainCategories());
+             //   if (ProductsList.Count == 0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = new { Products = ProductsList, SubCategories =  false} });
             }
             catch (Exception ex)
             {

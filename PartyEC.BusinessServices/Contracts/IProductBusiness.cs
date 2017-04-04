@@ -33,5 +33,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertStickers(Product productObj);
         List<ProductReview> GetProductReviews(int ProductID);
         List<ProductReview> GetRatingSummary(int ProductID, int AttributesetId);
+
+        List<Product> GetTopProductsOfCategory(Categories categoryObj);
     }
 }

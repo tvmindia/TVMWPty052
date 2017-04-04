@@ -319,5 +319,24 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationsStatusObj;
         }
+
+
+        #region For App
+
+        public List<Product> GetTopProductsOfCategory(Categories categoryObj)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetTopProductsOfCategory(categoryObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productlist;
+        }
+
+        #endregion
     }
 }
