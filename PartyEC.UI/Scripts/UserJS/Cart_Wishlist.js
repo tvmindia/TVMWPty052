@@ -58,12 +58,7 @@ $(document).ready(function () {
                       }
                       return returnstring;
                   }
-              },{
-                     "targets": [8], "render": function (data, type, full, meta) { 
-                         var res = ConvertJsonToDate(data);
-                         return res;
-                     }
-                 }]
+              } ]
           });
 
         DataTables.CustomersWishlistTable = $('#tblWishlist').DataTable(
@@ -93,20 +88,14 @@ $(document).ready(function () {
                     "targets": [3],
                     "render": function (data, type, row) {
                         var returnstring = '';
-                        if (data) {
-                            
+                        if (data) {                            
                             for (var ik = 0; ik < data.length; ik++) {
                                 returnstring = returnstring + '<span>' + data[ik].Caption + ':' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
                             }
                         }
                         return returnstring;
                     }
-                },{
-                    "targets": [4], "render": function (data, type, full, meta) { 
-                        var res = ConvertJsonToDate(data);
-                        return res;
-                    }
-                }]
+                } ]
             });    
     }
     catch (e) {

@@ -37,7 +37,7 @@ namespace PartyEC.UI.Models
         [Display(Name = "Supplier Name")]
         public string Name { get; set; }
 
-        public DateTime CreatedDate { get; set; }
+        public string CreatedDate { get; set; }
 
         public LogDetailsViewModel commonObj { get; set; }
     }
@@ -48,7 +48,7 @@ namespace PartyEC.UI.Models
         [Required(ErrorMessage = "Please Enter Location Name")]
         [Display(Name = "Location Name")]
         public string Name { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public string CreatedDate { get; set; }
 
         public LogDetailsViewModel commonObj { get; set; }
        
@@ -65,7 +65,7 @@ namespace PartyEC.UI.Models
         public string LocationName { get; set; }
 
         public decimal ShippingCharge { get; set; }
-        public DateTime CreatedDate { get; set; }
+        public string CreatedDate { get; set; }
 
         public List<SelectListItem> LocationList { get; set; }
         public List<SelectListItem> supplierList { get; set; }

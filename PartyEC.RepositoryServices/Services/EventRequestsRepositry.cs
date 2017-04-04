@@ -351,7 +351,7 @@ namespace PartyEC.RepositoryServices.Services
                                        
                                         _eventRequestsObj.PrevComment = (sdr["Comment"].ToString() != "" ? sdr["Comment"].ToString() : _eventRequestsObj.PrevComment);
                                       
-                                        _eventRequestsObj.CommentDate = (sdr["CreatedDate"].ToString() != "" ?  sdr["CreatedDate"].ToString(): _eventRequestsObj.CommentDate);
+                                        _eventRequestsObj.CommentDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _eventRequestsObj.CommentDate);
 
                                     }
                                     Requestslist.Add(_eventRequestsObj);
