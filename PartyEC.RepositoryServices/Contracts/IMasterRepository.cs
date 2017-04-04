@@ -10,6 +10,11 @@ namespace PartyEC.RepositoryServices.Contracts
     public interface IMasterRepository
     {
         List<Manufacturer> GetAllManufacturers();
+        Manufacturer GetManufacturer(int ManufacturerID, OperationsStatus Status);
+        OperationsStatus InsertManufacturer(Manufacturer ManufacturerObj);
+        OperationsStatus UpdateManufacturer(Manufacturer ManufacturerObj);
+        OperationsStatus DeleteManufacturer(int ManufacturerID);
+
         List<Country> GetAllCountries();
 
         OperationsStatus InsertImage(OtherImages otherimgObj);

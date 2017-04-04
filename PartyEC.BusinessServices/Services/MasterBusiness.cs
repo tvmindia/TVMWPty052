@@ -307,7 +307,64 @@ namespace PartyEC.BusinessServices.Services
             }
             return manufacturelist;
         }
-         
+
+        public Manufacturer GetManufacturer(int ManufacturerID, OperationsStatus Status)
+        {
+            Manufacturer myManufacturer = null;
+            try
+            {
+                myManufacturer = _masterRepository.GetManufacturer(ManufacturerID, Status);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return myManufacturer;
+        }
+
+        public OperationsStatus InsertManufacturer(Manufacturer ManufacturerObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.InsertManufacturer(ManufacturerObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
+        public OperationsStatus UpdateManufacturer(Manufacturer ManufacturerObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.UpdateManufacturer(ManufacturerObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
+        public OperationsStatus DeleteManufacturer(int ManufacturerID)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.DeleteManufacturer(ManufacturerID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
 
         #endregion Manufacturers
 

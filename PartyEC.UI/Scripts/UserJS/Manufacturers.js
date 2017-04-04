@@ -2,8 +2,7 @@
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
     ChangeButtonPatchView("Manufacturers", "btnPatchManufacturerstab2", "Add"); //ControllerName,id of the container div,Name of the action
-    try {
-        debugger;
+    try {       
         DataTables.ManufacturersTable = $('#tblManufacturers').DataTable(
          {
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
@@ -14,10 +13,18 @@ $(document).ready(function () {
              columns: [
              { "data": "ID" },
                { "data": "Name" },
-               { "data": "Country.Code" },
-               { "data": "CountryName", "defaultContent": "<i>-</i>" },
+               { "data": "country" },
+               { "data": "country", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
-             ]
+             ], columnDefs: [
+              {"render": function (data, type, row) {               
+                      return data.Code;
+                    }, "targets": 2
+              },
+              {"render": function (data, type, row) {
+                      return data.Name;
+                    }, "targets": 3
+              }]
          });
     }
     catch (e) {
@@ -89,12 +96,9 @@ function fillManufacturers(ID) {
     $("#ID").val(thisManufacturers.ID);
     $("#Name").val(thisManufacturers.Name)
     $("#deleteId").val(thisManufacturers.ID);
-
-    $("#LocationID").val(thisManufacturers.LocationID);
-    $("#ShippingCharge").val(thisManufacturers.ShippingCharge);
-    $("#LocationID").attr('disabled', true);
-    $("#ManufacturersID").attr('disabled', true);
-
+    $("#ddlcountry").val(thisManufacturers.country.Code);
+  
+    //$("#").attr('disabled', true);
 }
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
@@ -103,11 +107,9 @@ function clearfields() {
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
-    //$("#LocationID").val("");
-    //$("#SupplierID").val("");
-    //$("#ShippingCharge").val("");
-    //$("#LocationID").attr('disabled', false);
-    //$("#SupplierID").attr('disabled', false);
+    $("#ddlcountry").val("");
+    
+    //$("#").attr('disabled', false);  
     ResetForm();
 
 }

@@ -25,56 +25,6 @@ namespace PartyEC.RepositoryServices.Services
             _databaseFactory = databaseFactory;
         }
 
-        public List<Manufacturer> GetAllManufacturers()
-        {
-            List<Manufacturer> manufacturesList = null;
-            try
-            {
-                using (SqlConnection con = _databaseFactory.GetDBConnection())
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-                        if (con.State == ConnectionState.Closed)
-                        {
-                            con.Open();
-                        }
-                        cmd.Connection = con;
-                        cmd.CommandText = "[GetMasterManufacturers]";
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
-                        {
-                            if ((sdr != null) && (sdr.HasRows))
-                            {
-                                manufacturesList = new List<Manufacturer>();
-                                while (sdr.Read())
-                                {
-                                    Manufacturer _manufacturer = new Manufacturer();
-                                    {
-                                        _manufacturer.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _manufacturer.ID);
-                                        _manufacturer.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _manufacturer.Name);
-                                        _manufacturer.country = new Country();
-                                        _manufacturer.country.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : _manufacturer.country.Code);
-                                        _manufacturer.country.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : _manufacturer.country.Name);
-                                   
-                                    }
-                                    manufacturesList.Add(_manufacturer);
-                                }
-                            }//if
-                        }
-                    }
-                }
-            }
-
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-
-            return manufacturesList;
-
-
-        }
-              
         public OperationsStatus InsertImage(OtherImages otherimgObj)
         {
             OperationsStatus operrationstatusObj = null;
@@ -240,7 +190,7 @@ namespace PartyEC.RepositoryServices.Services
                             con.Open();
                         }
                         cmd.Connection = con;
-                        cmd.CommandText = "[GetMasterCountry]";
+                        cmd.CommandText = "[GetMasterCountries]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
@@ -252,7 +202,7 @@ namespace PartyEC.RepositoryServices.Services
                                     Country _countries = new Country();
                                     { 
                                         _countries.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _countries.Name);
-                                        _countries.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : _countries.Code);                                   
+                                        _countries.Code = (sdr["Code"].ToString() != "" ? sdr["Code"].ToString() : _countries.Code);                                   
 
                                     }
                                     CountryList.Add(_countries);
@@ -804,8 +754,7 @@ namespace PartyEC.RepositoryServices.Services
         }        
         #endregion ShippingLocation
 
-
-                #region SupplierLocations
+        #region SupplierLocations
 
 
         public List<SupplierLocations> GetAllSupplierLocations()
@@ -1078,8 +1027,281 @@ namespace PartyEC.RepositoryServices.Services
                 throw ex;
             }
             return OperationsStatusObj;
-        } 
+        }
         #endregion SupplierLocations
+
+        #region Manufacturer
+
+        public List<Manufacturer> GetAllManufacturers()
+        {
+            List<Manufacturer> manufacturesList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetMasterManufacturers]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                manufacturesList = new List<Manufacturer>();
+                                while (sdr.Read())
+                                {
+                                    Manufacturer _manufacturer = new Manufacturer();
+                                    {
+                                        _manufacturer.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _manufacturer.ID);
+                                        _manufacturer.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _manufacturer.Name);
+                                        _manufacturer.country = new Country();
+                                        _manufacturer.country.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : _manufacturer.country.Code);
+                                        _manufacturer.country.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : _manufacturer.country.Name);
+
+                                    }
+                                    manufacturesList.Add(_manufacturer);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return manufacturesList;
+
+
+        }
+
+        public Manufacturer GetManufacturer(int ManufacturerID, OperationsStatus Status)
+        {
+
+            Manufacturer myManufacturer = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ManufacturerID;
+                        cmd.CommandText = "[GetManufacturer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                if (sdr.Read())
+                                {
+                                    myManufacturer = new Manufacturer();
+                                    myManufacturer.ID = (sdr["ID"].ToString() != "" ? Int16.Parse(sdr["ID"].ToString()) : myManufacturer.ID);
+                                    myManufacturer.Name = (sdr["ManufacturerName"].ToString() != "" ? sdr["ManufacturerName"].ToString() : myManufacturer.Name);
+                                    myManufacturer.country = new Country();
+                                    myManufacturer.country.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : myManufacturer.country.Code);
+                                    myManufacturer.country.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : myManufacturer.country.Name);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+
+            return myManufacturer;
+        }
+
+        public OperationsStatus InsertManufacturer(Manufacturer ManufacturerObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                SqlParameter outparameterID = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertManufacturer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = ManufacturerObj.Name;
+                        cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = ManufacturerObj.country.Code;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = ManufacturerObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = ManufacturerObj.commonObj.CreatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        outparameterID = cmd.Parameters.Add("@ID", SqlDbType.Int);
+                        outparameterID.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull
+
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
+                                operationsStatusObj.ReturnValues = int.Parse(outparameterID.Value.ToString());
+                                break;
+                            case "2":
+                                //Duplicate Entry
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
+        }
+
+        public OperationsStatus UpdateManufacturer(Manufacturer ManufacturerObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateManufacturer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ManufacturerObj.ID;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = ManufacturerObj.Name;
+                        cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = ManufacturerObj.country.Code;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = ManufacturerObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = ManufacturerObj.commonObj.UpdatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                operationsStatusObj.ReturnValues = ManufacturerObj.ID;
+                                break;
+                            case "2":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.Duplicate;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
+        }
+
+        public OperationsStatus DeleteManufacturer(int ManufacturerID)
+        {
+            OperationsStatus OperationsStatusObj = new OperationsStatus();
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteManufacturer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ManufacturerID;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
+                                break;
+                            case "1":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
+                                break;
+                            case "2":
+                                OperationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                OperationsStatusObj.StatusMessage = ConstObj.FKviolation;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
+
+        #endregion Manufacturer
 
 
     }

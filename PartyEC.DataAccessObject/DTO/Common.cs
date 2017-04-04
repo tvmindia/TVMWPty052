@@ -64,7 +64,7 @@ namespace PartyEC.DataAccessObject.DTO
         }
         public string FKviolation
         {
-            get { return "Foreign key violation-Deletion Not Successfull!"; }
+            get { return "Deletion Not Successfull!-Already In Use"; }
         }
         public string Duplicate
         {

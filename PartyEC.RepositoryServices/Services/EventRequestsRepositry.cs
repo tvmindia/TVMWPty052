@@ -120,11 +120,11 @@ namespace PartyEC.RepositoryServices.Services
                                         _eventRequestsObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : _eventRequestsObj.CustomerID);
                                         _eventRequestsObj.CustomerName = (sdr["CustomerName"].ToString() != "" ?sdr["CustomerName"].ToString() : _eventRequestsObj.CustomerName);
                                         _eventRequestsObj.ContactName = (sdr["ContactName"].ToString() != "" ? sdr["ContactName"].ToString() : _eventRequestsObj.ContactName);
-                                        _eventRequestsObj.EventDateTime = (sdr["EventDateTime"].ToString() != "" ? DateTime.Parse(sdr["EventDateTime"].ToString()) : _eventRequestsObj.EventDateTime);
+                                        _eventRequestsObj.EventDateTime = (sdr["EventDateTime"].ToString() != "" ? DateTime.Parse(sdr["EventDateTime"].ToString().ToString()).ToString("dd-MMM-yyyy") : _eventRequestsObj.EventDateTime);
                                         _eventRequestsObj.EventTime = (sdr["EventTime"].ToString() != "" ?sdr["EventTime"].ToString(): _eventRequestsObj.EventTime);
                                         _eventRequestsObj.Phone = (sdr["Phone"].ToString() != "" ? sdr["Phone"].ToString() : _eventRequestsObj.Phone);
                                         _eventRequestsObj.EventDesc = (sdr["EventDesc"].ToString() != "" ?sdr["EventDesc"].ToString() : _eventRequestsObj.EventDesc);
-                                        _eventRequestsObj.FollowUpDate = (sdr["FollowUpDate"].ToString() != "" ? DateTime.Parse( sdr["FollowUpDate"].ToString()) :_eventRequestsObj.FollowUpDate);                                        
+                                        _eventRequestsObj.FollowUpDate = (sdr["FollowUpDate"].ToString() != "" ? DateTime.Parse( sdr["FollowUpDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _eventRequestsObj.FollowUpDate);                                        
                                     }
                                     Requestslist.Add(_eventRequestsObj);
                                 }
@@ -173,8 +173,8 @@ namespace PartyEC.RepositoryServices.Services
                                     myEventRequests.Phone = (sdr["Phone"].ToString() != "" ? sdr["Phone"].ToString() : myEventRequests.Phone);
                                     myEventRequests.EventStatus = (sdr["EventStatus"].ToString() != "" ? int.Parse(sdr["EventStatus"].ToString()) : myEventRequests.EventStatus);
                                     myEventRequests.EventDesc = (sdr["EventDesc"].ToString() != "" ? sdr["EventDesc"].ToString() : myEventRequests.EventDesc);
-                                    myEventRequests.FollowUpDate = (sdr["FollowUpDate"].ToString() != "" ? DateTime.Parse(sdr["FollowUpDate"].ToString()) : myEventRequests.FollowUpDate);//
-                                    myEventRequests.EventDateTime = (sdr["EventDateTime"].ToString() != "" ? DateTime.Parse(sdr["EventDateTime"].ToString()) : myEventRequests.EventDateTime);
+                                    myEventRequests.FollowUpDate = (sdr["FollowUpDate"].ToString() != "" ? DateTime.Parse(sdr["FollowUpDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : myEventRequests.FollowUpDate);
+                                    myEventRequests.EventDateTime = (sdr["EventDateTime"].ToString() != "" ? DateTime.Parse(sdr["EventDateTime"].ToString().ToString()).ToString("dd-MMM-yyyy") : myEventRequests.EventDateTime);
                                     myEventRequests.EventTime = (sdr["EventTime"].ToString() != "" ? sdr["EventTime"].ToString() : myEventRequests.EventTime);
                                     myEventRequests.NoOfPersons = (sdr["NoOfPersons"].ToString() != "" ? int.Parse(sdr["NoOfPersons"].ToString()) : myEventRequests.NoOfPersons);
                                     myEventRequests.Budget = (sdr["Budget"].ToString() != "" ? Decimal.Parse(sdr["Budget"].ToString()) : myEventRequests.Budget);
@@ -235,7 +235,7 @@ namespace PartyEC.RepositoryServices.Services
 
                         cmd.Parameters.Add("@AdminRemarks", SqlDbType.NVarChar,-1).Value = eventObj.AdminRemarks;
                         cmd.Parameters.Add("@EventStatus", SqlDbType.SmallInt).Value = eventObj.EventStatus;
-                        cmd.Parameters.Add("@FollowUpDate", SqlDbType.DateTime).Value = eventObj.FollowUpDate;
+                        cmd.Parameters.Add("@FollowUpDate", SqlDbType.DateTime).Value = DateTime.Parse(eventObj.FollowUpDate);
 
                         cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 50).Value = eventObj.logDetailsObj.UpdatedBy;
                         cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = eventObj.logDetailsObj.UpdatedDate;

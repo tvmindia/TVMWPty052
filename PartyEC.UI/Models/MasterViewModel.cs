@@ -9,7 +9,8 @@ namespace PartyEC.UI.Models
 {
     public class CountryViewModel
     {
-        public string Code { get; set; }
+        [Display(Name = "Country")]
+        public string Code { get; set; } 
         public string Name { get; set; }
     }
     public class ManufacturerViewModel
@@ -19,6 +20,7 @@ namespace PartyEC.UI.Models
         //    country = new CountryViewModel();
         //}
         public int ID { get; set; }
+
         public string Name { get; set; }
         public CountryViewModel country { get; set; }
         public List<SelectListItem> CountryList { get; set; }

@@ -10,6 +10,11 @@ namespace PartyEC.BusinessServices.Contracts
     public interface IMasterBusiness
     {
         List<Manufacturer> GetAllManufacturers();
+        Manufacturer GetManufacturer(int ManufacturerID, OperationsStatus Status);
+        OperationsStatus InsertManufacturer(Manufacturer ManufacturerObj);
+        OperationsStatus UpdateManufacturer(Manufacturer ManufacturerObj);
+        OperationsStatus DeleteManufacturer(int ManufacturerID);
+
         List<Country> GetAllCountries();
 
         List<OrderStatusMaster> GetAllOrderStatus();

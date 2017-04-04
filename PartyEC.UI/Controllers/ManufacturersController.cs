@@ -64,111 +64,109 @@ namespace PartyEC.UI.Controllers
 
         #endregion GetAllManufacturers
 
-        //#region GetManufacturerByID
+        #region GetManufacturerByID
 
-        //[HttpGet]
-        //public string GetManufacturers(string ID)
-        //{
-        //    try
-        //    {
-        //        OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-        //        ManufacturerViewModel ManufacturerLoc = Mapper.Map<Manufacturer, ManufacturerViewModel>(_masterBusiness.GetManufacturers(Int32.Parse(ID), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
-        //        return JsonConvert.SerializeObject(new { Result = "OK", Records = ManufacturerLoc });
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
-        //    }
-        //}
+        [HttpGet]
+        public string GetManufacturers(string ID)
+        {
+            try
+            {
+                OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                ManufacturerViewModel ManufacturerLoc = Mapper.Map<Manufacturer, ManufacturerViewModel>(_masterBusiness.GetManufacturer(Int32.Parse(ID), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = ManufacturerLoc });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
 
 
-        //#endregion GetManufacturersByID
+        #endregion GetManufacturersByID
         
+        #region InsertUpdateManufacturer
 
-        //#region InsertUpdateManufacturer
+        [HttpPost]
+        public string InsertUpdateManufacturer(ManufacturerViewModel manufacturerObj)
+        {
+            if (ModelState.IsValid)
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                if (manufacturerObj.ID == 0) //Create Supplier
+                {
+                    try
+                    {
+                        manufacturerObj.commonObj = new LogDetailsViewModel();
+                        manufacturerObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                        manufacturerObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertManufacturer(Mapper.Map<ManufacturerViewModel, Manufacturer>(manufacturerObj)));
+                    }
+                    catch (Exception ex)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    }
+                }
+                else //Update Supplier
+                {
+                    try
+                    {
+                        manufacturerObj.commonObj = new LogDetailsViewModel();
+                        manufacturerObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                        manufacturerObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.UpdateManufacturer(Mapper.Map<ManufacturerViewModel, Manufacturer>(manufacturerObj)));
+                    }
+                    catch (Exception ex)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    }
+                }
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
 
-        //[HttpPost]
-        //public string InsertUpdateManufacturer(ManufacturerViewModel manufacturerObj)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        OperationsStatusViewModel OperationsStatusViewModelObj = null;
-        //        if (manufacturerObj.ID == 0) //Create Supplier
-        //        {
-        //            try
-        //            {
-        //                manufacturerObj.commonObj = new LogDetailsViewModel();
-        //                manufacturerObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
-        //                manufacturerObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
-        //                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertManufacturers(Mapper.Map<ManufacturerViewModel, Manufacturer>(manufacturerObj)));
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
-        //            }
-        //        }
-        //        else //Update Supplier
-        //        {
-        //            try
-        //            {
-        //                manufacturerObj.commonObj = new LogDetailsViewModel();
-        //                manufacturerObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
-        //                manufacturerObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
-        //                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.UpdateManufacturers(Mapper.Map<ManufacturerViewModel, Manufacturer>(manufacturerObj)));
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
-        //            }
-        //        }
-        //        if (OperationsStatusViewModelObj.StatusCode == 1)
-        //        {
-        //            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
-        //        }
-        //        else
-        //        {
-        //            return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
-        //        }
-        //    }
-        //    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
-        //}
-
-        //#endregion InsertUpdateManufacturer
-
-
-        //#region DeleteManufacturer
+        #endregion InsertUpdateManufacturer
+        
+        #region DeleteManufacturer
 
 
-        //[HttpPost]
-        //public string DeleteManufacturer([Bind(Exclude = "Name")] ManufacturerViewModel ManufacturerObj)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        if (ManufacturerObj.ID != 0)
-        //        {
-        //            try
-        //            {
-        //                OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-        //                OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.DeleteManufacturer(ManufacturerObj.ID));
-        //                if (OperationsStatusViewModelObj.StatusCode == 1)
-        //                {
-        //                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
-        //                }
-        //                else
-        //                {
-        //                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
-        //                }
-        //            }
-        //            catch (Exception ex)
-        //            {
-        //                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
-        //            }
-        //        }
-        //    }
-        //    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select Manufacturer" });
-        //}
+        [HttpPost]
+        public string DeleteManufacturer([Bind(Exclude = "Name")] ManufacturerViewModel ManufacturerObj)
+        {
+            if (ModelState.IsValid)
+            {
+                if (ManufacturerObj.ID != 0)
+                {
+                    try
+                    {
+                        OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                        OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.DeleteManufacturer(ManufacturerObj.ID));
+                        if (OperationsStatusViewModelObj.StatusCode == 1)
+                        {
+                            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                        }
+                        else
+                        {
+                            return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                        }
+                    }
+                    catch (Exception ex)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    }
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select Manufacturer" });
+        }
 
-        //#endregion DeleteAttributes
+        #endregion DeleteAttributes
 
         #region ChangeButtonStyle
         [HttpGet]

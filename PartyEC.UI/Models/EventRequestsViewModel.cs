@@ -27,7 +27,7 @@ namespace PartyEC.UI.Models
 
         [ReadOnly(true)]
         [Display(Name = "Event Date")]
-        public DateTime EventDateTime { get; set; }
+        public string EventDateTime { get; set; }
         public string EventTime { get; set; }
 
         [Display(Name = "Event Status")]
@@ -102,9 +102,9 @@ namespace PartyEC.UI.Models
         [Display(Name = "Event Status")]
         public int EventStatus { get; set; }
 
-        [DataType(DataType.Date, ErrorMessage = "Must be a Date")]
+        
         [Display(Name = "FollowUp Date")]
-        public DateTime? FollowUpDate { get; set; }
+        public string FollowUpDate { get; set; }
 
 
          

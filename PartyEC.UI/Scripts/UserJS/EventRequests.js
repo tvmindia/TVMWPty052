@@ -25,17 +25,7 @@ $(document).ready(function () {
                { "data": "FollowUpDate", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
-             columnDefs: [{ "targets": [0], "visible": false, "searchable": false },{ "targets": [1], "visible": false, "searchable": false },
-                 { "targets": [5], "render": function (data, type, full, meta) {                         
-                       
-                         var res = ConvertJsonToDate(data);
-                         return res;
-                 }},
-                 { "targets": [11], "render": function (data, type, full, meta) {                         
-                        
-                         var res = ConvertJsonToDate(data);
-                         return res;
-                     }}]
+             columnDefs: [{ "targets": [0], "visible": false, "searchable": false },{ "targets": [1], "visible": false, "searchable": false }]
          });
     }
     catch (e) {
@@ -72,6 +62,9 @@ function GetAllEventRequests() {
  
 function goback() {
     $('#tabeventRequestsList').trigger('click');
+    bindeventrequestTable();
+}
+function bindeventrequestTable() {
     try {
         DataTables.eventTable.clear().rows.add(GetAllEventRequests()).draw(false);
     }
@@ -118,17 +111,14 @@ function BindEventRequest(id)
         $("#TotalDiscountAmt").val(thisEvent.TotalDiscountAmt);
         $("#EventStatus").val(thisEvent.EventStatus);
         $("#AdminRemarks").val(thisEvent.AdminRemarks);
-        if (thisEvent.FollowUpDate!=null)
-        $("#FollowUpDate").val(thisEvent.FollowUpDate.substring(0, 10));
+        if (thisEvent.FollowUpDate!="")
+        $("#FollowUpDate").val(thisEvent.FollowUpDate);
         //labels
         $('#lblEventReqNo').text(thisEvent.EventReqNo);
         $('#lblEventType').text(thisEvent.EventType);
         $('#lblEventTitle').text(thisEvent.EventTitle);
 
-        //formating Date using function in custom js 
-      
-        var resultdate = ConvertJsonToDate(thisEvent.EventDateTime);
-        $('#lblEventDate').text(resultdate);      
+        $('#lblEventDate').text(thisEvent.EventDateTime);
         $('#lblEventTime').text(thisEvent.EventTime);
         $('#lblEventDesc').text(thisEvent.EventDesc);
         $('#lblLookingFor').text(thisEvent.LookingFor);
@@ -271,6 +261,7 @@ function BindEvntRq_Remarks() {
     
     id = $("#ID").val();
     BindEventRequest(id);
+    bindeventrequestTable();
 }
 
  

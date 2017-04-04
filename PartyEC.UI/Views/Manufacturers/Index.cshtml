@@ -71,7 +71,7 @@
                             </div>
                         </div>
                         <div class="col-md-6 ">
-                            @using (Ajax.BeginForm("InsertUpdateManufacturers", "Manufacturers", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "mainform" }))
+                            @using (Ajax.BeginForm("InsertUpdateManufacturer", "Manufacturers", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "mainform" }))
                             {
                                 @Html.AntiForgeryToken()
 
@@ -93,7 +93,7 @@
                                     <div class="form-group">
                                         @Html.LabelFor(model => model.country.Code, htmlAttributes: new { @class = "control-label col-md-2" })
                                         <div class="col-md-10">
-                                            @Html.DropDownListFor(model => model.country.Code, Model.CountryList, "-- Select Status --", new { @class = "form-control eventstatus" })
+                                            @Html.DropDownListFor(model => model.country.Code, Model.CountryList, "-- Select Status --", new { @class = "form-control eventstatus",id="ddlcountry" })
                                             @Html.ValidationMessageFor(model => model.country.Code, "", new { @class = "text-danger" })
                                         </div>
                                     </div>
@@ -119,7 +119,7 @@
                     </div>
                 </div>
                 <div id="Manufacturersdelete" hidden="hidden">
-                    @using (Ajax.BeginForm("DeleteManufacturers", "Manufacturers", new AjaxOptions { HttpMethod = "POST", Confirm = "DeleteConfirm", OnSuccess = "DeleteSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
+                    @using (Ajax.BeginForm("DeleteManufacturer", "Manufacturers", new AjaxOptions { HttpMethod = "POST", Confirm = "DeleteConfirm", OnSuccess = "DeleteSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form" }))
                     {
                         @Html.AntiForgeryToken()
                         <div class="form-actions no-color">

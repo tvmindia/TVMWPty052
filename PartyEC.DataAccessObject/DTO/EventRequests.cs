@@ -11,7 +11,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string EventReqNo { get; set; }
         public string EventType { get; set; }
         public string EventTitle  { get; set; }
-        public DateTime EventDateTime { get; set; }
+        public string EventDateTime { get; set; }
         public string EventTime { get; set; }
         public   int NoOfPersons { get; set; }
         public decimal Budget  { get; set; }
@@ -27,7 +27,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string AdminRemarks  { get; set; }
         public int EventStatus { get; set; }
 
-        public DateTime? FollowUpDate { get; set; } 
+        public string FollowUpDate { get; set; } 
         public string CurrencyCode  { get; set; }
         public decimal CurrencyRate  { get; set; }
         public decimal TotalAmt  { get; set; }
