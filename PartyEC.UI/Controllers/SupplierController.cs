@@ -124,7 +124,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpPost]
-        public string DeleteSupplier([Bind(Exclude = "Name")] SupplierViewModel  supplierObj)
+        public string DeleteSupplier(SupplierViewModel  supplierObj)
         {
             if (!ModelState.IsValid)
             {

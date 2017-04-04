@@ -155,7 +155,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpPost]
-        public string DeleteSupplierLocations([Bind(Exclude = "Name")] SupplierLocationsViewModel supplierLocObj)
+        public string DeleteSupplierLocations(SupplierLocationsViewModel supplierLocObj)
         {
             if (ModelState.IsValid)
             {

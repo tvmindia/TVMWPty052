@@ -10,6 +10,7 @@ namespace PartyEC.UI.Models
     public class CountryViewModel
     {
         [Display(Name = "Country")]
+        [Required(ErrorMessage = "Please Select Country Name")]
         public string Code { get; set; } 
         public string Name { get; set; }
     }
@@ -20,7 +21,7 @@ namespace PartyEC.UI.Models
         //    country = new CountryViewModel();
         //}
         public int ID { get; set; }
-
+        [Required(ErrorMessage = "Please Enter Manufacturer Name")]
         public string Name { get; set; }
         public CountryViewModel country { get; set; }
         public List<SelectListItem> CountryList { get; set; }

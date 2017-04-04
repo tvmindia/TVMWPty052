@@ -138,9 +138,9 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpPost]
-        public string DeleteManufacturer([Bind(Exclude = "Name")] ManufacturerViewModel ManufacturerObj)
+        public string DeleteManufacturer( ManufacturerViewModel ManufacturerObj)
         {
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 if (ManufacturerObj.ID != 0)
                 {
