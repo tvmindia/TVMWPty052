@@ -17,7 +17,7 @@ namespace PartyEC.UI.Models
         //
         public string OrderRev { get; set; }
         //
-     public DateTime? OrderDate { get; set; }
+     public string OrderDate { get; set; }
      public string OrderStatus { get; set; }
         //
         public string CustomerName { get; set; }

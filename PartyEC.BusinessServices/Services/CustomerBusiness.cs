@@ -47,7 +47,21 @@ namespace PartyEC.BusinessServices.Services
 
             }
             return CustomerObj;
-        }   
+        }
+
+        public OperationsStatus CustomerEnableORDisable(Customer customer)
+        {
+            OperationsStatus operationStatus = null;
+            try
+            {
+                operationStatus = _customerRepository.CustomerEnableORDisable(customer);
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return operationStatus;
+        }
         #endregion Methods
     }
 }

@@ -6,7 +6,6 @@
 .container>.row>.col-md-6
 {
   padding-left: 0px;
-  
 }
 .container>.row>.col-md-6>.panel-default{
   min-height: 400px;
@@ -15,5 +14,10 @@
 address {
    overflow: hidden;
    white-space: pre-line;
+}
 
+.table.dataTable
+{
+  margin-top: -1px!important;
+  margin-bottom: -1px!important;
 }

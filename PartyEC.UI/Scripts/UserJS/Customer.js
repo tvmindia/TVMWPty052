@@ -40,10 +40,11 @@ $(document).ready(function () {
     {
         DataTables.orderTable = $('#tblOrderSummary').DataTable(
                 {
-                    dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
-                    order: [],
-                    searching: true,
-                    paging: true,
+                   
+                    ordering: false,
+                    paging:   false,
+                    info:     false,
+                    searching: false,
                     data: null,
                     columns: [
                       { "data": "OrderNo" },
@@ -57,14 +58,76 @@ $(document).ready(function () {
                      {//hiding hidden column 
                          "targets": [0],
                          "visible": true,
-                         "searchable": true
+                         "searchable": false
                      }
                     ]
                 });
     }
     catch(e)
     {
+        notyAlert('errror', e.message);
+    }
 
+
+    try {
+        DataTables.cartTable = $('#tblCart').DataTable(
+       {
+           ordering: false,
+           paging: false,
+           info: false,
+           searching: false,
+           data: null,
+           columns: [
+             { "data": "ProductID" },
+             { "data": "ProductName" },
+             { "data": "Qty", "defaultContent": "<i>-</i>" },
+             { "data": "Price", "defaultContent": "<i>-</i>" },
+             { "data": "Total", "defaultContent": "<i>-</i>" }
+           ],
+           columnDefs: [
+            {//hiding hidden column 
+                "render": function (data, type, row)
+                {
+                 return row.Price * row.Qty;
+                },
+               "targets": 4
+            }
+            
+
+           ]
+       });
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
+
+    try
+    {
+        DataTables.wishListTable = $('#tblWishlist').DataTable(
+       {
+           ordering: false,
+           paging: false,
+           info: false,
+           searching: false,
+           data: null,
+           columns: [
+             { "data": "ProductID" },
+             { "data": "ProductName" },
+             { "data": "CreatedDate", "defaultContent": "<i>-</i>" },
+             { "data": "DaysinWL", "defaultContent": "<i>-</i>" },
+           ],
+           columnDefs: [
+            {//hiding hidden column 
+                "targets": [0],
+                "visible": true,
+                "searchable": true
+            }
+           ]
+       });
+    }
+    catch(e)
+    {
+        notyAlert('errror', e.message);
     }
 
 
@@ -122,7 +185,8 @@ function EditCustomer(currentObj)
                 $('#lblLastSale').text(((ordreSum.LastMonthSales)&&(ordreSum.LastMonthSales))?ordreSum.LastMonthSales:'-');
             }
             RefreshCustomerOrders(rowData.ID);
-
+            RefreshCustomerCartList(rowData.ID);
+            RefreshCustomerWishList(rowData.ID);
         }
     }
     catch(e)
@@ -222,3 +286,66 @@ function RefreshCustomerOrders(custid)
     }
 }
 
+function GetCustomerWishList(custid) {
+    try {
+        if ((custid) && (custid > 0)) {
+            var data = { "customerID": custid };
+            var ds = {};
+            ds = GetDataFromServer("Customer/GetCustomerWishList/", data);
+            if (ds != '') {
+                ds = JSON.parse(ds);
+            }
+            if (ds.Result == "OK") {
+                return ds.Records;
+            }
+            if (ds.Result == "ERROR") {
+                notyAlert('error', ds.Message);
+            }
+        }
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
+}
+
+function RefreshCustomerWishList(custid) {
+
+    try {
+        DataTables.wishListTable.clear().rows.add(GetCustomerWishList(custid)).draw(false);
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
+}
+
+function GetCustomerCartList(custid) {
+    try {
+        if ((custid) && (custid > 0)) {
+            var data = { "customerID": custid };
+            var ds = {};
+            ds = GetDataFromServer("Customer/GetCustomerCartDetails/", data);
+            if (ds != '') {
+                ds = JSON.parse(ds);
+            }
+            if (ds.Result == "OK") {
+                return ds.Records;
+            }
+            if (ds.Result == "ERROR") {
+                notyAlert('error', ds.Message);
+            }
+        }
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
+}
+
+function RefreshCustomerCartList(custid) {
+
+    try {
+        DataTables.cartTable.clear().rows.add(GetCustomerCartList(custid)).draw(false);
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
+}
