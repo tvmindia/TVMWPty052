@@ -105,7 +105,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _ShoppingcartObj.CurrencyCode = (sdr["CurrencyCode"].ToString() != "" ? sdr["CurrencyCode"].ToString() : _ShoppingcartObj.CurrencyCode);
                                         _ShoppingcartObj.Price = (sdr["Price"].ToString() != "" ? Decimal.Parse(sdr["Price"].ToString()) : _ShoppingcartObj.Price);
                                         _ShoppingcartObj.ItemStatus = (sdr["ItemStatus"].ToString() != "" ? sdr["ItemStatus"].ToString() : _ShoppingcartObj.ItemStatus);
-                                        _ShoppingcartObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _ShoppingcartObj.CreatedDate);    
+                                        _ShoppingcartObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _ShoppingcartObj.CreatedDate);    
                                     }
                                     Requestslist.Add(_ShoppingcartObj);
                                 }
@@ -153,7 +153,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _ShoppingcartObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _ShoppingcartObj.CustomerName);
                                         _ShoppingcartObj.ProductSpecXML = (sdr["ProductSpecXML"].ToString() != "" ? sdr["ProductSpecXML"].ToString() : _ShoppingcartObj.ProductSpecXML);    
                                         _ShoppingcartObj.DaysinWL = (sdr["DaysinWL"].ToString() != "" ? sdr["DaysinWL"].ToString() : _ShoppingcartObj.DaysinWL);
-                                        _ShoppingcartObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _ShoppingcartObj.CreatedDate);    
+                                        _ShoppingcartObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _ShoppingcartObj.CreatedDate);    
                                         
                                     }
                                     Requestslist.Add(_ShoppingcartObj);

@@ -252,7 +252,7 @@ namespace PartyEC.RepositoryServices.Services
                                     {
                                         _supplier.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _supplier.ID);
                                         _supplier.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _supplier.Name);
-                                        _supplier.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _supplier.CreatedDate);
+                                        _supplier.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _supplier.CreatedDate);
 
 
 
@@ -520,7 +520,7 @@ namespace PartyEC.RepositoryServices.Services
                                     {
                                         _shippingloc.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _shippingloc.ID);
                                         _shippingloc.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _shippingloc.Name);
-                                        _shippingloc.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _shippingloc.CreatedDate);
+                                        _shippingloc.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _shippingloc.CreatedDate);
 
 
 

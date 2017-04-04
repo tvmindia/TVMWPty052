@@ -109,6 +109,65 @@
         </a>
         }
     }
-   
+    @if (Model.cancelbtn.Visible)
+    {
+        if (Model.cancelbtn.Disable)
+        {
+            <a class="thr_disbtn">
+                <img src="@Url.Content("~/Content/images/closemodel.PNG")">
+            </a>
+        }
+        else
+        {
+            <a title=@Model.cancelbtn.Title class="thr_btn" onclick=@Model.cancelbtn.Event>
+                <img src="@Url.Content("~/Content/images/closemodel.PNG")">
+            </a>
+        }
+    }
+    @if (Model.sendbtn.Visible)
+    {
+        if (Model.sendbtn.Disable)
+        {
+            <a class="thr_disbtn">
+                <img src="@Url.Content("~/Content/images/sentmail.PNG")">
+            </a>
+        }
+        else
+        {
+            <a title=@Model.sendbtn.Title class="thr_btn" onclick=@Model.sendbtn.Event>
+                <img src="@Url.Content("~/Content/images/sentmail.PNG")">
+            </a>
+        }
+    }
+    @if (Model.invoicebtn.Visible)
+    {
+        if (Model.invoicebtn.Disable)
+        {
+            <a class="thr_disbtn">
+                <img src="@Url.Content("~/Content/images/invoice.png")">
+            </a>
+        }
+        else
+        {
+            <a title=@Model.invoicebtn.Title class="thr_btn" onclick=@Model.invoicebtn.Event>
+                <img src="@Url.Content("~/Content/images/invoice.png")">
+            </a>
+        }
+    }
+    @if (Model.shipbtn.Visible)
+    {
+        if (Model.shipbtn.Disable)
+        {
+            <a class="thr_disbtn">
+                <img src="@Url.Content("~/Content/images/ship.png")">
+            </a>
+        }
+        else
+        {
+            <a title=@Model.shipbtn.Title class="thr_btn" onclick=@Model.shipbtn.Event>
+                <img src="@Url.Content("~/Content/images/ship.png")">
+            </a>
+        }
+    }
 
 </div>

@@ -12,7 +12,7 @@ namespace PartyEC.DataAccessObject.DTO
         //
         public string OrderRev { get; set; }
         //
-        public DateTime? OrderDate { get; set; }
+        public string OrderDate { get; set; }
         public string OrderStatus { get; set; }
         public int ParentOrderID { get; set; }
         public string SourceIP { get; set; }

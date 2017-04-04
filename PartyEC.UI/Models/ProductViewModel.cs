@@ -220,7 +220,7 @@ namespace PartyEC.UI.Models
         public int CustomerID { get; set; }
         public string Review { get; set; }
         public int DaysCount { get; set; }
-        public DateTime ReviewCreatedDate { get; set; }
+        public string ReviewCreatedDate { get; set; }
         public string CustomerName { get; set; }
         public string AvgRating { get; set; }
         public string ImageUrl { get; set; }
