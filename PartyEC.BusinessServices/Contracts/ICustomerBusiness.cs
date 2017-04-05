@@ -12,5 +12,6 @@ namespace PartyEC.BusinessServices.Contracts
         List<Customer> GetAllCustomers();
         Customer GetCustomer(int CustomerID, OperationsStatus Status);
         OperationsStatus CustomerEnableORDisable(Customer customer);
+        OperationsStatus InsertUpdateCustomerAddress(Customer customer);
     }
 }

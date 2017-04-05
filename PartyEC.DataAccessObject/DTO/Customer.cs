@@ -37,7 +37,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string LastName { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
-        public Country county { get; set; }
+        public Country country { get; set; }
         public string StateProvince { get; set; }
         public string ContactNo { get; set; }
         public bool BillDefaultYN { get; set; }

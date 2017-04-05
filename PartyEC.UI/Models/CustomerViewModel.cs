@@ -57,7 +57,8 @@ namespace PartyEC.UI.Models
         public string Address { get; set; }
         public string City { get; set; }
         public List<SelectListItem> Countries { get; set; }
-        public CountryViewModel county { get; set; }
+        public string CountryCode { get; set; }
+        public CountryViewModel country { get; set; }
         public string StateProvince { get; set; }
         public string ContactNo { get; set; }
         public bool BillDefaultYN { get; set; }

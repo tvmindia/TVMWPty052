@@ -38,7 +38,7 @@ namespace PartyEC.UI.Controllers
             {
                 customer = new CustomerViewModel();
                 customer.customerAddress = new CustomerAddressViewModel();
-                customer.customerAddress.county = new CountryViewModel();
+                customer.customerAddress.country = new CountryViewModel();
                 List<SelectListItem> selectListItem = new List<SelectListItem>();
                 //Countries drop down bind
                 List<CountryViewModel> countryListVM = Mapper.Map<List<Country>, List<CountryViewModel>>(_masterBusiness.GetAllCountries());
@@ -211,6 +211,48 @@ namespace PartyEC.UI.Controllers
         #endregion ActiateorDeactivateCustomer
 
 
+        #region CustomerAddressInsertUpdate
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string CustomerAddressInsertUpdate(CustomerViewModel customer)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                           //INSERT
+                        
+                            customer.customerAddress.logDetailsObj = new LogDetailsViewModel();
+                            //Getting UA
+                            customer.customerAddress.logDetailsObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                            customer.customerAddress.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                            OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.InsertUpdateCustomerAddress(Mapper.Map<CustomerViewModel, Customer>(customer)));
+                            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                       
+                
+                }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+            }
+            //Model state errror
+            else
+            {
+                List<string> modelErrors = new List<string>();
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var modelError in modelState.Errors)
+                    {
+                        modelErrors.Add(modelError.ErrorMessage);
+                    }
+                }
+                return JsonConvert.SerializeObject(new { Result = "VALIDATION", Message = string.Join(",", modelErrors) });
+            }
+        }
+
+        #endregion CustomerAddressInsertUpdate
         #region ChangeButtonStyle
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)

@@ -14,7 +14,7 @@ namespace PartyEC.RepositoryServices.Services
     {
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
-      
+        Const constObj = new Const();
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
@@ -128,8 +128,8 @@ namespace PartyEC.RepositoryServices.Services
                                     mycustomer.customerAddress.Address = (sdr["Address"].ToString() != "" ? sdr["Address"].ToString() : mycustomer.customerAddress.Address);
                                     mycustomer.customerAddress.City = (sdr["City"].ToString() != "" ? sdr["City"].ToString() : mycustomer.customerAddress.City);
                                     mycustomer.customerAddress.StateProvince = (sdr["StateProvince"].ToString() != "" ? sdr["StateProvince"].ToString() : mycustomer.customerAddress.StateProvince);
-                                    mycustomer.customerAddress.county = new Country();
-                                    mycustomer.customerAddress.county.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : mycustomer.customerAddress.county.Name);
+                                    mycustomer.customerAddress.country = new Country();
+                                    mycustomer.customerAddress.country.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : mycustomer.customerAddress.country.Name);
                                     mycustomer.logDetailsObj = new LogDetails();
                                     mycustomer.logDetailsObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : mycustomer.logDetailsObj.CreatedDate);
                                 }
@@ -203,6 +203,119 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
+
+        public OperationsStatus InsertUpdateCustomerAddress(Customer customer)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+               
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        switch(customer.customerAddress.ID)
+                        {
+                            case 0:
+                                cmd.CommandText = "[InsertCustomerAddress]";
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                
+                                cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customer.ID;
+                                cmd.Parameters.Add("@Prefix", SqlDbType.NVarChar, 4).Value = customer.customerAddress.Prefix;
+                                cmd.Parameters.Add("@FirstName", SqlDbType.NVarChar, 100).Value = customer.customerAddress.FirstName;
+                                cmd.Parameters.Add("@MidName", SqlDbType.NVarChar, 100).Value = customer.customerAddress.MidName;
+                                cmd.Parameters.Add("@LastName", SqlDbType.NVarChar, 100).Value = customer.customerAddress.LastName;
+                                cmd.Parameters.Add("@Address", SqlDbType.NVarChar, -1).Value = customer.customerAddress.Address;
+                                cmd.Parameters.Add("@City", SqlDbType.NVarChar, -1).Value = customer.customerAddress.City;
+                                cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = customer.customerAddress.country.Code;
+                                cmd.Parameters.Add("@StateProvince", SqlDbType.NVarChar, 100).Value = customer.customerAddress.StateProvince;
+                                cmd.Parameters.Add("@ContactNo", SqlDbType.NVarChar, 20).Value = customer.customerAddress.ContactNo;
+                                cmd.Parameters.Add("@BillDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.BillDefaultYN;
+                                cmd.Parameters.Add("@ShipDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.ShipDefaultYN;
+                                cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = customer.customerAddress.logDetailsObj.CreatedBy;
+                                cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime, 250).Value = customer.customerAddress.logDetailsObj.CreatedDate;
+                                statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                                statusCode.Direction = ParameterDirection.Output;
+                                cmd.ExecuteNonQuery();
+                                operationsStatusObj = new OperationsStatus();
+                                switch (statusCode.Value.ToString())
+                                {
+                                    case "0":
+                                        // not Successfull                                
+                                        operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                        operationsStatusObj.StatusMessage = constObj.InsertFailure;
+                                        break;
+                                    case "1":
+                                        //Insert Successfull
+                                        operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                        operationsStatusObj.StatusMessage = constObj.InsertSuccess;
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                            default:
+                                cmd.CommandText = "[UpdateCustomerAddress]";
+                                cmd.CommandType = CommandType.StoredProcedure;
+                                cmd.Parameters.Add("@ID", SqlDbType.Int).Value = customer.customerAddress.ID;
+                                cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customer.ID;
+                                cmd.Parameters.Add("@Prefix", SqlDbType.NVarChar, 4).Value = customer.customerAddress.Prefix;
+                                cmd.Parameters.Add("@FirstName", SqlDbType.NVarChar, 100).Value = customer.customerAddress.FirstName;
+                                cmd.Parameters.Add("@MidName", SqlDbType.NVarChar, 100).Value = customer.customerAddress.MidName;
+                                cmd.Parameters.Add("@LastName", SqlDbType.NVarChar, 100).Value = customer.customerAddress.LastName;
+                                cmd.Parameters.Add("@Address", SqlDbType.NVarChar, -1).Value = customer.customerAddress.Address;
+                                cmd.Parameters.Add("@City", SqlDbType.NVarChar, -1).Value = customer.customerAddress.City;
+                                cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = customer.customerAddress.country.Code;
+                                cmd.Parameters.Add("@StateProvince", SqlDbType.NVarChar, 100).Value = customer.customerAddress.StateProvince;
+                                cmd.Parameters.Add("@ContactNo", SqlDbType.NVarChar, 20).Value = customer.customerAddress.ContactNo;
+                                cmd.Parameters.Add("@BillDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.BillDefaultYN;
+                                cmd.Parameters.Add("@ShipDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.ShipDefaultYN;
+                                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = customer.logDetailsObj.UpdatedBy;
+                                cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = customer.logDetailsObj.UpdatedDate;
+                                statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                                statusCode.Direction = ParameterDirection.Output;
+                                cmd.ExecuteNonQuery();
+                                operationsStatusObj = new OperationsStatus();
+                                switch (statusCode.Value.ToString())
+                                {
+                                    case "0":
+                                        // not Successfull                                
+                                        operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                        operationsStatusObj.StatusMessage = constObj.UpdateFailure;
+                                        break;
+                                    case "1":
+                                        //Insert Successfull
+                                        operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                        operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                       
+                                        break;
+                                    default:
+                                        break;
+                                }
+                                break;
+                        }
+                      
+                      
+                       
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                operationsStatusObj.StatusMessage = ex.Message;
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        
+    }
         #endregion Methods
 
 

@@ -281,25 +281,29 @@
 
                                            </div>
                                            <div class="col-md-7">
-                                             
-                                               <div class="form-horizontal">
+                                             @using (Ajax.BeginForm("CustomerAddressInsertUpdate", "Customer", new AjaxOptions { HttpMethod = "POST", OnSuccess = "AddressSaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "Addressform" }))
+
+                                             {
+                                                @Html.AntiForgeryToken()
+                                               @*<div class="form-horizontal" id="addressForm">*@
                                                    <div class="form-group">
                                                        <label class="control-label col-md-4" for="Prefix">Prefix</label>
                                                        <div class="col-md-8">
-                                                           <input type="text" class="form-control" id="Prefix" >
+                                                         
+                                                           @Html.EditorFor(model => model.customerAddress.Prefix, new { htmlAttributes = new { @class = "form-control" } })
                                                        </div>
                                                    </div>
                                                    <div class="form-group">
                                                        <label class="control-label col-md-4" for="FirstName">First Name</label>
                                                        <div class="col-md-8">
-                                                           <input type="text" class="form-control" id="FirstName">
+                                                           @Html.EditorFor(model => model.customerAddress.FirstName, new { htmlAttributes = new { @class = "form-control" } })
                                                        </div>
                                                    </div>
 
                                                    <div class="form-group">
                                                        <label  class="control-label col-md-4" for="MidName">Middle Name</label>
                                                        <div class="col-md-8">
-                                                           <input type="text" class="form-control" id="MidName" >
+                                                           @Html.EditorFor(model => model.customerAddress.MidName, new { htmlAttributes = new { @class = "form-control" } })
                                                        </div>
                                                      
                                                    </div>
@@ -307,27 +311,30 @@
                                                    <div class="form-group">
                                                        <label class="control-label col-md-4" for="LastName">Last Name</label>
                                                        <div class="col-md-8">
-                                                           <input type="text" class="form-control" id="LastName">
+
+                                                           @Html.EditorFor(model => model.customerAddress.LastName, new { htmlAttributes = new { @class = "form-control" } })
                                                        </div>
                                                    </div>
 
                                                    <div class="form-group">
                                                        <label class="control-label col-md-4" for="Address">Address</label>
                                                        <div class="col-md-8">
-                                                           <input type="text" class="form-control" id="Address">
+                                                           @Html.EditorFor(model => model.customerAddress.Address, new { htmlAttributes = new { @class = "form-control" } })
+
                                                         </div>
                                                        </div>
                                                    <div class="form-group">
                                                        <label class="control-label col-md-4" for="City">City</label>
                                                        <div class="col-md-8">
-                                                           <input type="text" class="form-control" id="City">
+                                                           
+                                                           @Html.EditorFor(model => model.customerAddress.City, new { htmlAttributes = new { @class = "form-control" } })
                                                        </div>
                                                    </div>
-                                                
+
                                                    <div class="form-group">
                                                        <label class="control-label col-md-4" for="Country">Country</label>
                                                        <div class="col-md-8">
-                                                           @Html.DropDownListFor(model => model.customerAddress.county.Code, Model.customerAddress.Countries, "--Select Country--", new { @class = "form-control", id = "Country", onchange = "countryOnChange()", value = -1 })
+                                                           @Html.DropDownListFor(model => model.customerAddress.country.Code, Model.customerAddress.Countries, "--Select Country--", new { @class = "form-control", id = "CountryCode", value = -1 })
                                                          
                                                        </div>
                                                    </div>
@@ -335,14 +342,16 @@
                                                    <div class="form-group">
                                                        <label class="control-label col-md-4" for="StateProvince">State/Province</label>
                                                        <div class="col-md-8">
-                                                           <input type="text" class="form-control" id="StateProvince">
+                                                           @Html.EditorFor(model => model.customerAddress.StateProvince, new { htmlAttributes = new { @class = "form-control" } })
+                                                          
                                                        </div>
                                                    </div>
 
                                                    <div class="form-group">
                                                        <label class="control-label col-md-4" for="ContactNo">Contact No</label>
                                                        <div class="col-md-8">
-                                                           <input type="text" class="form-control" id="ContactNo">
+                                                        
+                                                           @Html.EditorFor(model => model.customerAddress.ContactNo, new { htmlAttributes = new { @class = "form-control" } })
                                                        </div>
                                                    </div>
                                                    <div class="form-group">
@@ -350,8 +359,8 @@
                                                        <label class="control-label col-md-4" for="BillDefaultYN">Is Default Billing Address<span class="required">*</span></label>
                                                        <div class="col-lg-4">
                                                            <div>
-                                                               <input type="checkbox" id="BillDefaultYN"> 
-                                                             
+                                                               
+                                                               @Html.EditorFor(model => model.customerAddress.BillDefaultYN)
                                                            </div>
                                                        </div>
                                                    </div>
@@ -361,15 +370,21 @@
                                                        <label class="control-label col-md-4" for="ShipDefaultYN">Is Default Shipping Address<span class="required">*</span></label>
                                                        <div class="col-lg-4">
                                                            <div>
-                                                               <input type="checkbox" id="ShipDefaultYN">
-
+                                                              
+                                                               @Html.EditorFor(model => model.customerAddress.ShipDefaultYN)
                                                            </div>
                                                        </div>
                                                    </div>
 
-                                               </div>
 
-                                              
+                                                <div class="form-group" hidden="hidden">
+                                                    <div class="col-md-offset-2 col-md-10">
+                                                      <input id="btnaddressSubmit" type="submit" value="Create" class="btn btn-default"/>
+                                                    </div>
+                                                </div>
+                                               @*</div>*@
+                                                @Html.HiddenFor(model => model.ID)
+                                             }
                                            </div>
 
 
@@ -397,9 +412,12 @@
 </div>
 
 
-<input type="hidden" id="hdfCustomerID" />
-<input type="hidden" id="hdfCustomerActive"/>
+@Html.HiddenFor(model => model.IsActive)
+@Html.HiddenFor(model => model.customerAddress.ID)
+@*<input type="hidden" id="hdfCustomerID" />
+<input type="hidden" id="hdfCustomerActive"/>*@
 @section Scripts {
+    @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
     @Scripts.Render("~/bundles/datatable")
     @Scripts.Render("~/bundles/customer")
 }

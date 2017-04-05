@@ -180,15 +180,15 @@ function EditCustomer(currentObj)
             var thiscustomer = GetCustomerDetail(rowData.ID);
             if(thiscustomer)
             {
-                $('#hdfCustomerID').val(rowData.ID);
-                $('#hdfCustomerActive').val(rowData.IsActive);
+                $('#ID').val(rowData.ID);
+                $('#IsActive').val(rowData.IsActive);
                 $('#lblCustName').text(((thiscustomer.Name != "") && (thiscustomer.Name!=null)?thiscustomer.Name:'-'));
                 $('#lblCustAccCreate').text(((thiscustomer.logDetailsObj.CreatedDate!="")&&(thiscustomer.logDetailsObj.CreatedDate!=null)?ConvertJsonToDate(thiscustomer.logDetailsObj.CreatedDate):'-'));
                 $('#lblEmail').text(((thiscustomer.Email != "") && (thiscustomer.Email!=null)?thiscustomer.Email:'-'));
                 $('#lblCustMobile').text(((thiscustomer.Mobile != "") && (thiscustomer.Mobile != null) ? thiscustomer.Mobile : '-'));
                 $('#lblCustGender').text(((thiscustomer.Gender != "") && (thiscustomer.Gender!=null) ? thiscustomer.Gender : '-'));
                 $('#lblCustActive').text((thiscustomer.IsActive != true ? 'No' : 'Yes'));
-                $('.col-md-8 Address').html(((thiscustomer.customerAddress.Address != "") && (thiscustomer.customerAddress.Address != null) ? thiscustomer.customerAddress.Address : '-') + '<br>' + ((thiscustomer.customerAddress.City != "") && (thiscustomer.customerAddress.City != null) ? thiscustomer.customerAddress.City : '-') + '<br>' + ((thiscustomer.customerAddress.StateProvince != "") && (thiscustomer.customerAddress.StateProvince != null) ? thiscustomer.customerAddress.StateProvince : '-') + '<br>' + ((thiscustomer.customerAddress.county.Name != "") && (thiscustomer.customerAddress.county.Name!=null)?thiscustomer.customerAddress.county.Name:'-'));
+                $('.col-md-8 Address').html(((thiscustomer.customerAddress.Address != "") && (thiscustomer.customerAddress.Address != null) ? thiscustomer.customerAddress.Address : '-') + '<br>' + ((thiscustomer.customerAddress.City != "") && (thiscustomer.customerAddress.City != null) ? thiscustomer.customerAddress.City : '-') + '<br>' + ((thiscustomer.customerAddress.StateProvince != "") && (thiscustomer.customerAddress.StateProvince != null) ? thiscustomer.customerAddress.StateProvince : '-') + '<br>' + ((thiscustomer.customerAddress.country.Name != "") && (thiscustomer.customerAddress.country.Name!=null)?thiscustomer.customerAddress.country.Name:'-'));
             }
             var ordreSum = GetSalesStatistics(rowData.ID);
             if(ordreSum)
@@ -377,8 +377,8 @@ function ActivateORDeactivate()
 {
     try {
         var CustomerViewModel = new Object();
-        CustomerViewModel.ID = $('#hdfCustomerID').val();
-        var activeflag=$('#hdfCustomerActive').val();
+        CustomerViewModel.ID = $('#ID').val();
+        var activeflag = $('#IsActive').val();
         if (activeflag == "false") {
             CustomerViewModel.IsActive = true;
         }
@@ -392,7 +392,7 @@ function ActivateORDeactivate()
                 switch (JsonResult.Result) {
                     case "OK":
                         notyAlert('success', JsonResult.Record.StatusMessage);
-                        $('#hdfCustomerActive').val(JsonResult.Record.ReturnValues);
+                        $('#IsActive').val(JsonResult.Record.ReturnValues);
                         switch (JsonResult.Record.ReturnValues)
                         {
                             case true:
@@ -427,5 +427,33 @@ function goback()
 
 function AddressSave()
 {
-    alert("save");
+    try
+    {
+        $("#btnaddressSubmit").click();
+        
+    }
+    catch(e)
+    {
+        notyAlert('errror', e.message);
+    }
+}
+
+function AddressSaveSuccess(data, status, xhr) {
+    debugger;
+    var JsonResult = JSON.parse(data)
+    switch (JsonResult.Result) {
+        case "OK":
+            notyAlert('success', JsonResult.Record.StatusMessage);
+          //  $(".productID").val(JsonResult.Record.ReturnValues);
+            RefreshProducts();
+          //  $("#productDetails h4").text($("#Name").val() + '(' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ')');
+            break;
+        case "ERROR":
+            notyAlert('error', JsonResult.Record.StatusMessage);
+            break;
+
+        default:
+            notyAlert('error', JsonResult.Message);
+            break;
+    }
 }

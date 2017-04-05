@@ -62,6 +62,21 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationStatus;
         }
+
+
+        public OperationsStatus InsertUpdateCustomerAddress(Customer customer)
+        {
+            OperationsStatus operationStatus = null;
+            try
+            {
+                operationStatus = _customerRepository.InsertUpdateCustomerAddress(customer);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return operationStatus;
+        }
         #endregion Methods
     }
 }

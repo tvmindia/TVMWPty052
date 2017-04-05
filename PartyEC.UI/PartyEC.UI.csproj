@@ -311,7 +311,7 @@
     <Content Include="Content\images\closelt.png" />
     <Content Include="Content\images\closemodel.png" />
     <Content Include="Content\images\delete.PNG" />
-    <Content Include="Content\images\power.png" />
+    <Content Include="Content\images\power-button.png" />
     <Content Include="Content\images\ship.png" />
     <Content Include="Content\images\edit.png" />
     <Content Include="Content\images\invoice.png" />
