@@ -14,7 +14,7 @@
         <div class="panel-heading">
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#taborderListgrid" data-toggle="tab">Orders List</a></li>
-                <li><a href="#taborderDetails" data-toggle="tab" id="tabCategoryTable">Order Detail</a></li>
+                <li><a href="#taborderDetails" data-toggle="tab" id="tabOrderDetails">Order Detail</a></li>
                 <li><a href="#taborderEditDetails" data-toggle="tab" id="tabEdit">Order Detail</a></li>
             </ul>
         </div>
@@ -70,48 +70,137 @@
                         </div>
                         <div class="col-md-10">
                             <div class="col-md-12">
-                                <div class="col-md-4">
-                                    <div class="panel panel-default" style="min-height:200px">
+                                <div class="col-md-6">
+                                    <div class="panel panel-default" style="min-height:250px">
                                         <div class="panel-heading">General</div>
                                         <div class="panel-body">
-
+                                            @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblOrderNo" class="h5 label-display">-</label>
+                                            </div>
+                                            @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblOrderDate" class="h5 label-display">-</label>
+                                            </div>
+                                            @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblOrderStatus" class="h5 label-display">-</label>
+                                            </div>
+                                            @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblSourceIP" class="h5 label-display">-</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="panel panel-default" style="min-height:200px">
+                                <div class="col-md-6">
+                                    <div class="panel panel-default" style="min-height:250px">
                                         <div class="panel-heading">Account Information</div>
                                         <div class="panel-body">
-
+                                            <div class="col-md-12">
+                                                <img src="~/Content/images/Person1.png" id="imgPreviewCustomer" />
+                                            </div>
+                                            
+                                            @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblCustomerName" class="h5 label-display">-</label>
+                                            </div>
+                                            @Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblContactNo" class="h5 label-display">-</label>
+                                            </div>
+                                            @Html.LabelFor(model => model.CustomerEmail, htmlAttributes: new { @class = "h5 col-md-4" })
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblCustomerEmail" class="h5 label-display">-</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="panel panel-default" style="min-height:200px">
+                                <div class="col-md-6">
+                                    <div class="panel panel-default" style="min-height:250px">
                                         <div class="panel-heading">Billing Address</div>
                                         <div class="panel-body">
-
+                                            <div class="col-md-12">
+                                            <a id="btnmodelrelproduct" style="position:relative;left:89%" class="btn btn-info" data-toggle="modal" data-target="#ModelBillingDetails">Edit</a>
+                                            </div>
+                                           
+                                            <label class="h5 col-md-6" for="lblName">Name :</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblName" class="h5 label-display">-</label>
+                                            </div>
+                                            <label class="h5 col-md-6" for="lblAddress">Address :</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblAddress" class="h5 label-display">-</label>
+                                            </div>
+                                            <label class="h5 col-md-6" for="lblContact">Contact No :</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblContact" class="h5 label-display">-</label>
+                                            </div>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="panel panel-default" style="min-height:200px">
+                                    </div>
+                                <div class="col-md-6">
+                                    <div class="panel panel-default" style="min-height:250px">
                                         <div class="panel-heading">Shipping Address</div>
                                         <div class="panel-body">
+                                            <div class="col-md-12">
+                                                <a id="btnmodelrelproduct" style="position:relative;left:89%" class="btn btn-info" data-toggle="modal" data-target="#ModelShipingDetails">Edit</a>
+                                            </div>
 
+                                            <label class="h5 col-md-6" for="lblShipDisName">Name :</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblShipDisName" class="h5 label-display">-</label>
+                                            </div>
+                                            <label class="h5 col-md-6" for="lblShipDisAddress">Address :</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblShipDisAddress" class="h5 label-display">-</label>
+                                            </div>
+                                            <label class="h5 col-md-6" for="lblShipDisContact">Contact No :</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblShipDisContact" class="h5 label-display">-</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="panel panel-default" style="min-height:200px">
+                                <div class="col-md-6">
+                                    <div class="panel panel-default" style="min-height:250px">
                                         <div class="panel-heading">Payment Information</div>
                                         <div class="panel-body">
-
+                                            <label class="h5 col-md-6" for="lblPaymentType">Payment Mode:</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblPaymentType" class="h5 label-display">-</label>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            <label class="h5 col-md-6" for="lblCurrencyCode">Currency :</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblCurrencyCode" class="h5 label-display">-</label>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            <label class="h5 col-md-6" for="lblPaymentStatus">Payment Status :</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblPaymentStatus" class="h5 label-display">-</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-md-4">
-                                    <div class="panel panel-default" style="min-height:200px">
+                                <div class="col-md-6">
+                                    <div class="panel panel-default" style="min-height:250px">
                                         <div class="panel-heading">Shipping & Handling information</div>
                                         <div class="panel-body">
 
@@ -121,7 +210,7 @@
                                 <div class="col-md-12">
                                     <h3>Order Items</h3>
                                     <hr />
-                                    <table id="tblProductList" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                    <table id="tblOrderDetailList" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
                                                 <th>Poduct</th>
@@ -129,6 +218,7 @@
                                                 <th>Qty</th>
                                                 <th>Price</th>
                                                 <th>Sub Total</th>
+                                                <th>Shipping Charges</th>
                                                 <th>Tax Amount</th>
                                                 <th>Discount</th>
                                                 <th>Total</th>
@@ -138,7 +228,7 @@
                                 </div>
                                 <div class="col-md-12">
                                     <div class="col-md-6">
-                                        <div class="panel panel-default" style="min-height:200px">
+                                        <div class="panel panel-default" style="min-height:250px">
                                             <div class="panel-heading">Order Comments</div>
                                             <div class="panel-body">
 
@@ -146,7 +236,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-6">
-                                        <div class="panel panel-default" style="min-height:200px">
+                                        <div class="panel panel-default" style="min-height:250px">
                                             <div class="panel-heading">Order Summery</div>
                                             <div class="panel-body">
 
@@ -176,10 +266,188 @@
                 </div>
             </div>
         </div>
+<div id="ModelBillingDetails" class="modal fade" tabindex="-1" role="dialog" style="left:50%;" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="titleProductRating">Edit Billing Details</h4>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("UpdateBillingDetails", "Order", new AjaxOptions { HttpMethod = "POST", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "CheckinBillingChanges" }, new { @class = "form-horizontal", role = "form", id = "formBillingModal" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @*<div class="panel panel-default" style="min-height:250px">
+                            <div class="panel-heading">Billing Address</div>
+                            <div class="panel-body">*@
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.BillFirstName, htmlAttributes: new { @class = "control-label col-md-6" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.BillFirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BillFirstName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.BillMidName, htmlAttributes: new { @class = "control-label col-md-6" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.BillMidName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BillMidName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.BillLastName, htmlAttributes: new { @class = "control-label col-md-6" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.BillLastName, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BillLastName, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.BillAddress, htmlAttributes: new { @class = "control-label col-md-6" })
+                                    <div class="col-md-6">
+                                        @Html.TextAreaFor(model => model.BillAddress, new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.BillAddress, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.BillCity, htmlAttributes: new { @class = "control-label col-md-6" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.BillCity, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BillCity, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.BillStateProvince, htmlAttributes: new { @class = "control-label col-md-6" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.BillStateProvince, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BillStateProvince, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.BillCountryCode, htmlAttributes: new { @class = "control-label col-md-6" })
+                                    <div class="col-md-6">
+                                        @Html.DropDownListFor(model => model.BillCountryCode, Model.Countries, "-- Select Country --", new { @class = "form-control" })
+                                        @Html.ValidationMessageFor(model => model.BillCountryCode, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group col-md-12">
+                                    @Html.LabelFor(model => model.BillContactNo, htmlAttributes: new { @class = "control-label col-md-6" })
+                                    <div class="col-md-6">
+                                        @Html.EditorFor(model => model.BillContactNo, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.BillContactNo, "", new { @class = "text-danger" })
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-md-offset-5 col-md-5">
+                                        @Html.HiddenFor(model => model.CustomerID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
+                                        @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnOrderHID" })
+                                        <input type="submit" value="Save" class="btn btn-default btn-right" />
+                                    </div>
+                                </div>
+                            </div>
+                        @*</div>
+                    </div>*@
+                }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="ModelShipingDetails" class="modal fade" tabindex="-1" role="dialog" style="left:50%;" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="titleProductRating">Edit Shipping Details</h4>
+            </div>
+            <div class="modal-body">
+                @using (Ajax.BeginForm("UpdateShipingDetails", "Order", new AjaxOptions { HttpMethod = "POST", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "CheckinShipingChanges" }, new { @class = "form-horizontal", role = "form", id = "formBillingModal" }))
+                {
+                    @Html.AntiForgeryToken()
+
+                    <div class="form-horizontal">
+                        @*<div class="panel panel-default" style="min-height:250px">
+                            <div class="panel-heading">Billing Address</div>
+                            <div class="panel-body">*@
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.ShipFirstName, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.ShipFirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ShipFirstName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.ShipMidName, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.ShipMidName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ShipMidName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.ShipLastName, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.ShipLastName, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ShipLastName, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.ShipAddress, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.TextAreaFor(model => model.ShipAddress, new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ShipAddress, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.ShipCity, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.ShipCity, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ShipCity, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.ShipStateProvince, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.ShipStateProvince, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ShipStateProvince, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.ShipCountryCode, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.DropDownListFor(model => model.ShipCountryCode, Model.Countries, "-- Select Country --", new { @class = "form-control" })
+                                @Html.ValidationMessageFor(model => model.ShipCountryCode, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group col-md-12">
+                            @Html.LabelFor(model => model.ShipContactNo, htmlAttributes: new { @class = "control-label col-md-6" })
+                            <div class="col-md-6">
+                                @Html.EditorFor(model => model.ShipContactNo, new { htmlAttributes = new { @class = "form-control" } })
+                                @Html.ValidationMessageFor(model => model.ShipContactNo, "", new { @class = "text-danger" })
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-md-offset-5 col-md-5">
+                                @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnOrderHIDShip" })
+                                <input type="submit" value="Save" class="btn btn-default btn-right" />
+                            </div>
+                        </div>
+                    </div>
+                            @*</div>
+                                </div>*@
+                }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 @section Scripts {
     @Scripts.Render("~/bundles/datatable")
     @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-    @Scripts.Render("~/bundles/bootstrapdatepicker")
     @Scripts.Render("~/bundles/Order")
 }
 

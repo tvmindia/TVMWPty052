@@ -20,6 +20,9 @@ namespace PartyEC.DataAccessObject.DTO
         //
         public string CustomerName { get; set; }
         public string ContactNo { get; set; }
+        public string CustomerEmail { get; set; }
+        public string CustomerURL { get; set; }
+        public string ProfileImageID { get; set; }
         //
         public int ShippingLocationID { get; set; }
         public string PaymentType { get; set; }
@@ -29,7 +32,7 @@ namespace PartyEC.DataAccessObject.DTO
         public float TotalShippingAmt { get; set; }
         public float TotalTaxAmt { get; set; }
         public float TotalDiscountAmt { get; set; }
-        public int    PaymentStatus { get; set; }
+        public string PaymentStatus { get; set; }
         public string OrderRemarks { get; set; }
         public string BillPrefix { get; set; }
         public string BillFirstName { get; set; }
@@ -56,12 +59,14 @@ namespace PartyEC.DataAccessObject.DTO
         public int ItemID { get; set; }
         public int ProductID { get; set; }
         public string ProductSpecXML { get; set; }
-        public int ItemStatus { get; set; }
+        public string ItemStatus { get; set; }
         public int Qty { get; set; }
         public float Price { get; set; }
         public float ShippingAmt { get; set; }
         public float TaxAmt { get; set; }
         public float DiscountAmt { get; set; }
+        public float Total { get; set; }
+        public float SubTotal { get; set; }
         //Sales Statistics
 
         public string LifeTimeSales { get; set; }

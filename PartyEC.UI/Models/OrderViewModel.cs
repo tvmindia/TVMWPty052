@@ -10,20 +10,29 @@ namespace PartyEC.UI.Models
     public class OrderViewModel
     {
 
-     public int ID{ get; set; }
-
-     public string OrderNo { get; set; }   
-     public int RevNo { get; set; }
+        public int ID{ get; set; }
+        [Display(Name = "Order No :")]
+        public string OrderNo { get; set; }   
+        public int RevNo { get; set; }
         //
         public string OrderRev { get; set; }
         //
-     public string OrderDate { get; set; }
-     public string OrderStatus { get; set; }
+        [Display(Name = "Date :")]
+        public string OrderDate { get; set; }
+        [Display(Name = "Status :")]
+        public string OrderStatus { get; set; }
         //
+        [Display(Name = "Name :")]
         public string CustomerName { get; set; }
+        [Display(Name = "Mobile :")]
         public string ContactNo { get; set; }
+        [Display(Name = "Email")]
+        public string CustomerEmail { get; set; }
+        public string CustomerURL { get; set; }
+        public string ProfileImageID { get; set; }
+        public List<SelectListItem> Countries { get; set; }
         //
-     public int ParentOrderID { get; set; }
+        public int ParentOrderID { get; set; }
 	 public string SourceIP { get; set; }
 	 public int CustomerID { get; set; }
 	 public int ShippingLocationID { get; set; }
@@ -34,7 +43,7 @@ namespace PartyEC.UI.Models
 	 public float TotalShippingAmt { get; set; }
 	 public float TotalTaxAmt { get; set; }
 	 public float TotalDiscountAmt { get; set; }
-	 public int PaymentStatus { get; set; }
+	 public string PaymentStatus { get; set; }
      public string OrderRemarks { get; set; }
 	 public string BillPrefix { get; set; }
 	 public string BillFirstName { get; set; }
@@ -63,13 +72,14 @@ namespace PartyEC.UI.Models
         public int ItemID { get; set; }
         public int ProductID { get; set; }
         public string ProductSpecXML { get; set; }
-        public int ItemStatus { get; set; }
+        public string ItemStatus { get; set; }
         public int Qty { get; set; }
         public float Price { get; set; }
         public float ShippingAmt { get; set; }
         public float TaxAmt { get; set; }
         public float DiscountAmt { get; set; }
-
+        public float Total { get; set; }
+        public float SubTotal { get; set; }
 
         //Order Status
         public int Code { get; set; }
