@@ -32,11 +32,11 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpGet]
-        public string GetAllReviews(ProductReviewViewModel productObj)
+        public string GetAllReviews(string Condition)
         {
             try
             {
-                List<ProductReviewViewModel> productList = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_reviewBusiness.GetAllReviews());
+                List<ProductReviewViewModel> productList = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_reviewBusiness.GetAllReviews(Condition));
 
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
             }

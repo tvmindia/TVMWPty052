@@ -20,7 +20,7 @@ namespace PartyEC.RepositoryServices.Services
             _databaseFactory = databaseFactory;
         }
 
-        public List<ProductReview> GetAllReviews()
+        public List<ProductReview> GetAllReviews(string Condition)
         {
             List<ProductReview> reviewList = null;
           
@@ -37,6 +37,7 @@ namespace PartyEC.RepositoryServices.Services
                         }
                         cmd.Connection = con;
                         cmd.CommandText = "[GetAllReviewsandRating]";
+                        cmd.Parameters.Add("@Condition", SqlDbType.NVarChar,20).Value = Condition;
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
@@ -54,8 +55,8 @@ namespace PartyEC.RepositoryServices.Services
                                         _reviewObj.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : _reviewObj.ProductName);
                                         _reviewObj.Review = (sdr["Review"].ToString() != "" ? sdr["Review"].ToString() : _reviewObj.Review);
                                        // _reviewObj.ProductRatingAttributes = (sdr["Rating"].ToString() != "" ? sdr["Rating"].ToString() : _reviewObj.ProductRatingAttributes);
-                                        _reviewObj.ReviewCreatedDate = (sdr["ReviewDate"].ToString() != "" ? sdr["ReviewDate"].ToString() : _reviewObj.ReviewCreatedDate);
-                                        _reviewObj.RatingDate = (sdr["ReviewDate"].ToString() != "" ? sdr["ReviewDate"].ToString() : _reviewObj.RatingDate);
+                                        _reviewObj.ReviewCreatedDate = (sdr["ReviewDate"].ToString() != "" ? DateTime.Parse(sdr["ReviewDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _reviewObj.ReviewCreatedDate);
+                                        _reviewObj.RatingDate = (sdr["RatingDate"].ToString() != "" ? DateTime.Parse(sdr["RatingDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _reviewObj.RatingDate);
                                         _reviewObj.IsApproved = (sdr["ApprovedYN"].ToString() != "" ? sdr["ApprovedYN"].ToString() : _reviewObj.IsApproved);
                                         
 

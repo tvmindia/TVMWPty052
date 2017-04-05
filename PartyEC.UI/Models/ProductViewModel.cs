@@ -230,5 +230,6 @@ namespace PartyEC.UI.Models
         public string RatingDate { get; set; }
         public string IsApproved { get; set; }
         public string ProductName { get; set; }
+      
     }
 }

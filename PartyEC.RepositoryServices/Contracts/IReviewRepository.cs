@@ -9,6 +9,6 @@ namespace PartyEC.RepositoryServices.Contracts
 {
     public interface IReviewRepository
     {
-        List<ProductReview> GetAllReviews();
+        List<ProductReview> GetAllReviews(string Condition);
     }
 }

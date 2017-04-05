@@ -10,6 +10,6 @@ namespace PartyEC.BusinessServices.Contracts
      public interface IReviewBusiness
     {
 
-        List<ProductReview>GetAllReviews();
+        List<ProductReview>GetAllReviews(string Condition);
     }
 }
