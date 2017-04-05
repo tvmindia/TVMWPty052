@@ -171,5 +171,23 @@ namespace PartyEC.BusinessServices.Services
             return operationsStatusObj;
         }
 
+        #region For App
+        public List<Categories> GetNavigationalCategoriesForApp(Categories categoryObj)
+        {
+            List<Categories> Categorylist = null;
+
+            try
+            {
+
+                Categorylist = _categoryRepository.GetNavigationalCategoriesForApp(categoryObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Categorylist;
+        }
+        #endregion
+
     }
 }
