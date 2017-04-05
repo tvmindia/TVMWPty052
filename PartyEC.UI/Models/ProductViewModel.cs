@@ -227,5 +227,8 @@ namespace PartyEC.UI.Models
 
         public List<AttributeValues> ProductRatingAttributes { get; set; }
         public string RatingCount { get; set; }
+        public string RatingDate { get; set; }
+        public string IsApproved { get; set; }
+        public string ProductName { get; set; }
     }
 }
