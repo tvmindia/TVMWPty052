@@ -43,7 +43,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<ProductReviewViewModel, ProductReview>().ReverseMap();
                 config.CreateMap<OtherImagesViewModel, OtherImages>().ReverseMap();
                 config.CreateMap<ShippingLocationViewModel, ShippingLocations>().ReverseMap();
-                config.CreateMap<SupplierLocationsViewModel, SupplierLocations>().ReverseMap();
+                config.CreateMap<SupplierLocationsViewModel, SupplierLocations>().ReverseMap(); 
             });
         }
 
