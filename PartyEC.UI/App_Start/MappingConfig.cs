@@ -28,6 +28,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<CategoriesViewModel, Categories>().ReverseMap();
                 config.CreateMap<CategoriesListAppViewModel, Categories>().ReverseMap();
                 config.CreateMap<TopProductsOfCategoryAppViewModel, Product>().ReverseMap();
+                config.CreateMap<NavigationalCatsOfCategoryAppViewModel, Categories>().ReverseMap();
                 config.CreateMap<ManufacturerViewModel,Manufacturer >().ReverseMap();
                 config.CreateMap<SupplierViewModel,Supplier>().ReverseMap();
                 config.CreateMap<CountryViewModel, Country>().ReverseMap();
@@ -43,7 +44,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<ProductReviewViewModel, ProductReview>().ReverseMap();
                 config.CreateMap<OtherImagesViewModel, OtherImages>().ReverseMap();
                 config.CreateMap<ShippingLocationViewModel, ShippingLocations>().ReverseMap();
-                config.CreateMap<SupplierLocationsViewModel, SupplierLocations>().ReverseMap();
+                config.CreateMap<SupplierLocationsViewModel, SupplierLocations>().ReverseMap(); 
             });
         }
 

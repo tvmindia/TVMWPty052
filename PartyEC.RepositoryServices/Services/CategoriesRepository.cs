@@ -421,7 +421,53 @@ namespace PartyEC.RepositoryServices.Services
             }
             return bool.Parse(outparameter.Value.ToString());
         }
-        
 
+        #region For App
+        public List<Categories> GetNavigationalCategoriesForApp(Categories categoryObj)
+        {
+            List<Categories> Categorylist = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@CategoryID", SqlDbType.Int).Value = categoryObj.ID;
+                        cmd.CommandText = "[GetNavigationalCategoriesForApp]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                Categorylist = new List<Categories>();
+                                while (sdr.Read())
+                                {
+                                    Categories categoriesObj = new Categories();
+                                    {
+                                        categoriesObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : categoriesObj.ID);
+                                        categoriesObj.Name = sdr["Name"].ToString();
+                                        categoriesObj.Description = sdr["Description"].ToString();
+                                        categoriesObj.ChildrenCount = (sdr["ChildrenCount"].ToString() != "" ? int.Parse(sdr["ChildrenCount"].ToString()) : categoriesObj.ChildrenCount);
+                                    }
+                                    Categorylist.Add(categoriesObj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return Categorylist;
+        }
+        #endregion
     }
 }
