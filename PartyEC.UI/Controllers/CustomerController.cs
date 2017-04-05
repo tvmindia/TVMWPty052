@@ -19,19 +19,48 @@ namespace PartyEC.UI.Controllers
         ICommonBusiness _commonBusiness;
         IOrderBusiness _orderBusiness;
         ICart_WishlistBusiness _cart_WishlistBusiness;
+        IMasterBusiness _masterBusiness;
 
-        public CustomerController(ICustomerBusiness customerBusiness,ICommonBusiness commonBusiness, IOrderBusiness orderBusiness, ICart_WishlistBusiness cart_WishlistBusiness)
+        public CustomerController(ICustomerBusiness customerBusiness,ICommonBusiness commonBusiness, IOrderBusiness orderBusiness, ICart_WishlistBusiness cart_WishlistBusiness, IMasterBusiness masterBusiness)
         { 
             _commonBusiness = commonBusiness;
             _customerBusiness = customerBusiness;
             _orderBusiness = orderBusiness;
             _cart_WishlistBusiness = cart_WishlistBusiness;
+            _masterBusiness = masterBusiness;
         }
         #endregion Constructor_Injection 
         // GET: Customer
         public ActionResult Index()
         {
-            return View();
+            CustomerViewModel customer = null;
+            try
+            {
+                customer = new CustomerViewModel();
+                customer.customerAddress = new CustomerAddressViewModel();
+                customer.customerAddress.county = new CountryViewModel();
+                List<SelectListItem> selectListItem = new List<SelectListItem>();
+                //Countries drop down bind
+                List<CountryViewModel> countryListVM = Mapper.Map<List<Country>, List<CountryViewModel>>(_masterBusiness.GetAllCountries());
+                foreach (CountryViewModel cvm in countryListVM)
+                {
+                    selectListItem.Add(new SelectListItem
+                    {
+                        Text = cvm.Name,
+                        Value = cvm.Code.ToString(),
+                        Selected = false
+                    });
+                }
+                customer.customerAddress.Countries = selectListItem;
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            
+
+
+            return View(customer);
         }
 
 
@@ -195,7 +224,7 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.actDeactbtn.Title = "Deactivate";
 
                     ToolboxViewModelObj.savebtn.Visible = true;
-                    ToolboxViewModelObj.savebtn.Event = "Save()";
+                    ToolboxViewModelObj.savebtn.Event = "AddressSave()";
                     ToolboxViewModelObj.savebtn.Title = "Save";
 
                     //ToolboxViewModelObj.resetbtn.Visible = true;
@@ -214,7 +243,7 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.actDeactbtn.Title = "Activate";
 
                     ToolboxViewModelObj.savebtn.Visible = true;
-                    ToolboxViewModelObj.savebtn.Event = "Save()";
+                    ToolboxViewModelObj.savebtn.Event = "AddressSave()";
                     ToolboxViewModelObj.savebtn.Title = "Save";
 
                     ToolboxViewModelObj.backbtn.Visible = true;

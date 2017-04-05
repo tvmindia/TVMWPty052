@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartyEC.UI.Models
 {
@@ -55,6 +56,7 @@ namespace PartyEC.UI.Models
         public string LastName { get; set; }
         public string Address { get; set; }
         public string City { get; set; }
+        public List<SelectListItem> Countries { get; set; }
         public CountryViewModel county { get; set; }
         public string StateProvince { get; set; }
         public string ContactNo { get; set; }
