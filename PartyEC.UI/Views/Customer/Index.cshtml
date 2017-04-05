@@ -384,6 +384,7 @@
                                                 </div>
                                                @*</div>*@
                                                 @Html.HiddenFor(model => model.ID)
+                                                @Html.HiddenFor(model => model.customerAddress.ID)
                                              }
                                            </div>
 
@@ -413,7 +414,7 @@
 
 
 @Html.HiddenFor(model => model.IsActive)
-@Html.HiddenFor(model => model.customerAddress.ID)
+
 @*<input type="hidden" id="hdfCustomerID" />
 <input type="hidden" id="hdfCustomerActive"/>*@
 @section Scripts {

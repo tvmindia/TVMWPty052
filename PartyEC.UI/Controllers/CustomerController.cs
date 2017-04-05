@@ -222,13 +222,24 @@ namespace PartyEC.UI.Controllers
                 {
                     OperationsStatusViewModel OperationsStatusViewModelObj = null;
                            //INSERT
-                        
+                        switch(customer.customerAddress.ID)
+                        {
+                        case 0:
                             customer.customerAddress.logDetailsObj = new LogDetailsViewModel();
                             //Getting UA
                             customer.customerAddress.logDetailsObj.CreatedBy = _commonBusiness.GetUA().UserName;
                             customer.customerAddress.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
                             OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.InsertUpdateCustomerAddress(Mapper.Map<CustomerViewModel, Customer>(customer)));
                             return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                         default:
+                            customer.customerAddress.logDetailsObj = new LogDetailsViewModel();
+                            //Getting UA
+                            customer.customerAddress.logDetailsObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                            customer.customerAddress.logDetailsObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                            OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.InsertUpdateCustomerAddress(Mapper.Map<CustomerViewModel, Customer>(customer)));
+                            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                    }
+                            
                        
                 
                 }

@@ -13,5 +13,6 @@ namespace PartyEC.RepositoryServices.Contracts
         Customer GetCustomer(int CustomerID, OperationsStatus Status);
         OperationsStatus CustomerEnableORDisable(Customer customer);
         OperationsStatus InsertUpdateCustomerAddress(Customer customer);
+        List<CustomerAddress> GetAllCustomerAddresses(int CustomerID);
     }
 }

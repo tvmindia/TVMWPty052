@@ -210,6 +210,7 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter statusCode = null;
+                SqlParameter addressID = null;
                
 
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
@@ -242,6 +243,8 @@ namespace PartyEC.RepositoryServices.Services
                                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = customer.customerAddress.logDetailsObj.CreatedBy;
                                 cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime, 250).Value = customer.customerAddress.logDetailsObj.CreatedDate;
                                 statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                                addressID = cmd.Parameters.Add("@ID", SqlDbType.Int);
+                                addressID.Direction= ParameterDirection.Output;
                                 statusCode.Direction = ParameterDirection.Output;
                                 cmd.ExecuteNonQuery();
                                 operationsStatusObj = new OperationsStatus();
@@ -256,6 +259,7 @@ namespace PartyEC.RepositoryServices.Services
                                         //Insert Successfull
                                         operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                         operationsStatusObj.StatusMessage = constObj.InsertSuccess;
+                                        operationsStatusObj.ReturnValues = addressID.Value.ToString();
                                         break;
                                     default:
                                         break;
@@ -277,10 +281,11 @@ namespace PartyEC.RepositoryServices.Services
                                 cmd.Parameters.Add("@ContactNo", SqlDbType.NVarChar, 20).Value = customer.customerAddress.ContactNo;
                                 cmd.Parameters.Add("@BillDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.BillDefaultYN;
                                 cmd.Parameters.Add("@ShipDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.ShipDefaultYN;
-                                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = customer.logDetailsObj.UpdatedBy;
-                                cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = customer.logDetailsObj.UpdatedDate;
+                                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = customer.customerAddress.logDetailsObj.UpdatedBy;
+                                cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = customer.customerAddress.logDetailsObj.UpdatedDate;
                                 statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                                 statusCode.Direction = ParameterDirection.Output;
+                               
                                 cmd.ExecuteNonQuery();
                                 operationsStatusObj = new OperationsStatus();
                                 switch (statusCode.Value.ToString())
@@ -291,10 +296,11 @@ namespace PartyEC.RepositoryServices.Services
                                         operationsStatusObj.StatusMessage = constObj.UpdateFailure;
                                         break;
                                     case "1":
-                                        //Insert Successfull
+                                        //update Successfull
                                         operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                         operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
-                                       
+                                        
+
                                         break;
                                     default:
                                         break;
@@ -316,6 +322,64 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         
     }
+
+
+        public List<CustomerAddress> GetAllCustomerAddresses(int CustomerID)
+        {
+            List<CustomerAddress> CustomerAddresslist = null;
+            try
+            {
+                //using (SqlConnection con = _databaseFactory.GetDBConnection())
+                //{
+                //    using (SqlCommand cmd = new SqlCommand())
+                //    {
+                //        if (con.State == ConnectionState.Closed)
+                //        {
+                //            con.Open();
+                //        }
+                //        cmd.Connection = con;
+                //        cmd.CommandText = "[GetAllAddressesByCustomer]";
+                //        cmd.CommandType = CommandType.StoredProcedure;
+                //        using (SqlDataReader sdr = cmd.ExecuteReader())
+                //        {
+                //            if ((sdr != null) && (sdr.HasRows))
+                //            {
+                //                CustomerAddresslist = new List<CustomerAddress>();
+                //                while (sdr.Read())
+                //                {
+                //                    CustomerAddress _customerAddresObj = new CustomerAddress();
+                //                    {
+                //                        _customerAddresObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _customerObj.ID);
+                //                        _customerObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _customerObj.Name);
+                //                        _customerObj.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : _customerObj.Email);
+                //                        _customerObj.Mobile = (sdr["Mobile"].ToString() != "" ? sdr["Mobile"].ToString() : _customerObj.Mobile);
+                //                        _customerObj.Language = (sdr["Language"].ToString() != "" ? sdr["Language"].ToString() : _customerObj.Language);
+                //                        _customerObj.Gender = (sdr["Gender"].ToString() != "" ? sdr["Gender"].ToString() : _customerObj.Gender);
+                //                        _customerObj.ProfileImageID = (sdr["ProfileImageID"].ToString() != "" ? Guid.Parse(sdr["ProfileImageID"].ToString()) : _customerObj.ProfileImageID);
+                //                        _customerObj.OrdersCount = (sdr["OrdersCount"].ToString() != "" ? int.Parse(sdr["OrdersCount"].ToString()) : _customerObj.OrdersCount);
+                //                        _customerObj.BookingsCount = (sdr["BookingsCount"].ToString() != "" ? int.Parse(sdr["BookingsCount"].ToString()) : _customerObj.BookingsCount);
+                //                        _customerObj.QuotationsCount = (sdr["QuotationsCount"].ToString() != "" ? int.Parse(sdr["QuotationsCount"].ToString()) : _customerObj.QuotationsCount);
+                //                        _customerObj.OrdersCountHistory = (sdr["OrdersCountHistory"].ToString() != "" ? int.Parse(sdr["OrdersCountHistory"].ToString()) : _customerObj.OrdersCountHistory);
+                //                        _customerObj.BookingsCountHistory = (sdr["BookingsCountHistory"].ToString() != "" ? int.Parse(sdr["BookingsCountHistory"].ToString()) : _customerObj.BookingsCountHistory);
+                //                        _customerObj.QuotationsCountHistory = (sdr["QuotationsCountHistory"].ToString() != "" ? int.Parse(sdr["QuotationsCountHistory"].ToString()) : _customerObj.QuotationsCountHistory);
+                //                        _customerObj.IsActive = bool.Parse(sdr["ActiveYN"].ToString());
+                //                        _customerObj.logDetailsObj = new LogDetails();
+                //                        _customerObj.logDetailsObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _customerObj.logDetailsObj.CreatedDate);
+
+                //                    }
+                //                    Customerlist.Add(_customerObj);
+                //                }
+                //            }//if
+                //        }
+                //    }
+                //}
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return CustomerAddresslist;
+        }
         #endregion Methods
 
 

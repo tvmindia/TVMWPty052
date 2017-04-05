@@ -444,8 +444,12 @@ function AddressSaveSuccess(data, status, xhr) {
     switch (JsonResult.Result) {
         case "OK":
             notyAlert('success', JsonResult.Record.StatusMessage);
-          //  $(".productID").val(JsonResult.Record.ReturnValues);
-            RefreshProducts();
+            if (JsonResult.Record.ReturnValues != null)
+            {
+                $("#customerAddress_ID").val(JsonResult.Record.ReturnValues);
+            }
+          
+        
           //  $("#productDetails h4").text($("#Name").val() + '(' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ')');
             break;
         case "ERROR":
