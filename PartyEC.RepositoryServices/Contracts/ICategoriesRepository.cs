@@ -17,5 +17,6 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus DeleteCategory(int CategoryID);
         OperationsStatus UpdatePositionNo(Categories CategoryObj);
         bool ExistOrNot(int CategoryID);
+        List<Categories> GetNavigationalCategoriesForApp(Categories categoryObj);
     }
 }
