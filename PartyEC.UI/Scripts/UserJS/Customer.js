@@ -424,3 +424,8 @@ function goback()
 {
     $("#tabcustomerList a").click();
 }
+
+function AddressSave()
+{
+    alert("save");
+}
