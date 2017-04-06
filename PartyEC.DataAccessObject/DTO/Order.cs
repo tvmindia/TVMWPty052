@@ -24,7 +24,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string CustomerURL { get; set; }
         public string ProfileImageID { get; set; }
         //
-        public int ShippingLocationID { get; set; }
+        public string ShippingLocationName { get; set; }
         public string PaymentType { get; set; }
         public string CurrencyCode { get; set; }
         public float CurrencyRate { get; set; }
@@ -68,9 +68,17 @@ namespace PartyEC.DataAccessObject.DTO
         public float Total { get; set; }
         public float SubTotal { get; set; }
         //Sales Statistics
-
         public string LifeTimeSales { get; set; }
         public string AverageSales { get; set; }
         public string LastMonthSales { get; set; }
+        //Comments
+        public EventsLog EventsLogObj { get; set; }
+
+        //OrderSummery
+        public float SubTotalOrderSummery { get; set; }
+        public float TaxAmtOrderSummery { get; set; }
+        public float ShippingCostOrderSummery { get; set; }
+        public float DiscountAmtOrderSummery { get; set; }
+        public float GrandTotalOrderSummery { get; set; }
     }
 }

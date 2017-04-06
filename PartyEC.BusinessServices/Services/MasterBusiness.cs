@@ -63,6 +63,32 @@ namespace PartyEC.BusinessServices.Services
             }
             return otherImagesList;
         }
+        public OperationsStatus InsertEventsLog(EventsLog eventLogObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _masterRepository.InsertEventsLog(eventLogObj);
+            }
+            catch (Exception)
+            {
+            }
+            return OperationsStatusObj;
+        }
+        public List<EventsLog> GetEventsLog(int ID,string ParentType)
+        {
+            List<EventsLog> EventsLogLists = null;
+            try
+            {
+                EventsLogLists = _masterRepository.GetEventsLog(ID,ParentType);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return EventsLogLists;
+        }
 
         #region Suppliers
 

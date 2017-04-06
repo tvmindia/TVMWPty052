@@ -80,7 +80,101 @@ namespace PartyEC.RepositoryServices.Services
             }
             return operrationstatusObj;
         }
-              
+        public OperationsStatus InsertEventsLog(EventsLog eventLogObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertEventsLog]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@ParentID", SqlDbType.SmallInt).Value = eventLogObj.ParentID;
+                        cmd.Parameters.Add("@ParentType", SqlDbType.NVarChar, 20).Value = eventLogObj.ParentType;
+                        cmd.Parameters.Add("@Comment", SqlDbType.NVarChar, -1).Value = eventLogObj.Comment;
+                        cmd.Parameters.Add("@CustomerNotifiedYN", SqlDbType.Bit).Value = eventLogObj.CustomerNotifiedYN;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 50).Value = eventLogObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = eventLogObj.commonObj.CreatedDate;
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
+        public List<EventsLog> GetEventsLog(int ID,string ParentType)
+        {
+            List<EventsLog> Requestslist = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@ParentID", SqlDbType.Int).Value = ID;
+                        cmd.Parameters.Add("@ParentType", SqlDbType.NVarChar, 20).Value = ParentType;
+                        cmd.CommandText = "[GetEventLogs]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                Requestslist = new List<EventsLog>();
+                                while (sdr.Read())
+                                {
+                                    EventsLog _eventRequestsObj = new EventsLog();
+                                    {
+                                        _eventRequestsObj.Comment = (sdr["Comment"].ToString() != "" ? sdr["Comment"].ToString() : _eventRequestsObj.Comment);
+                                        _eventRequestsObj.CommentDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : "");
+                                    }
+                                    Requestslist.Add(_eventRequestsObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Requestslist;
+        }
         public List<OrderStatusMaster> GetAllOrderStatus()
         {
             List<OrderStatusMaster> orderstatusList = null;

@@ -82,4 +82,15 @@ namespace PartyEC.UI.Models
         public int Code { get; set; }
         public string Description { get; set; }
     }
+    public class EventsLogViewModel
+    {
+        public int ID { get; set; }
+        public int ParentID { get; set; }
+        public string ParentType { get; set; }
+        public bool CustomerNotifiedYN { get; set; }
+        public string Comment { get; set; }
+        public string CommentDate { get; set; }
+        public LogDetailsViewModel commonObj { get; set; }
+    }
+
 }

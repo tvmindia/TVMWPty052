@@ -95,8 +95,10 @@ function Edit(this_obj)
         BindBillDetails(Result);
         BindShippingDetails(Result);
         BindPaymentInformation(Result);
-
-        BindTableOrderDetailList(Result.ID)
+        BindShippingHandlingSection(Result);
+        BindTableOrderDetailList(Result.ID);
+        BindOrderComments(Result);
+        BindOrderSummery(Result);
     }
 }
 function BindGeneralSection(Result)
@@ -104,7 +106,7 @@ function BindGeneralSection(Result)
     $("#lblOrderNo").text(Result.OrderNo);
     $("#lblOrderDate").text(Result.OrderDate);
     $("#lblOrderStatus").text(Result.OrderStatus);
-   // $("#lblSourceIP").text(Result.OrderNo);
+    $("#lblSourceIP").text(Result.SourceIP);
 }
 function BindAccountSection(Result)
 {
@@ -133,12 +135,6 @@ function BindBillDetails(Result)
     $('#hdnOrderHID').val(Result.ID);
     $('#BillCountryCode').val(Result.BillCountryCode);
 }
-function BindPaymentInformation(Result)
-{
-    $('#lblPaymentType').text(Result.PaymentType)
-    $('#lblCurrencyCode').text(Result.CurrencyCode)
-    $('#lblPaymentStatus').text(Result.PaymentStatus)
-}
 function BindShippingDetails(Result)
 {
     $('#lblShipDisName').text(Result.ShipFirstName + "." + Result.ShipMidName + "." + Result.ShipLastName)
@@ -158,9 +154,41 @@ function BindShippingDetails(Result)
     $('#hdnOrderHIDShip').val(Result.ID);
     $('#ShipCountryCode').val(Result.ShipCountryCode);
 }
+function BindPaymentInformation(Result) {
+    $('#lblPaymentType').text(Result.PaymentType)
+    $('#lblCurrencyCode').text(Result.CurrencyCode)
+    $('#lblPaymentStatus').text(Result.PaymentStatus)
+}
+function BindShippingHandlingSection(Result)
+{
+    $('#lblShippingLocation').text(Result.ShippingLocationName)
+    $('#lblShippingAmt').text(Result.TotalShippingAmt)
+}
 function BindTableOrderDetailList(ID)
 {
     DataTables.orderDetailstable.clear().rows.add(GetAllOrdersList(ID)).draw(false);
+}
+function BindOrderComments(Result)
+{
+    $("#CommentsDisplay").empty();
+    $("#hdnEventsLogParentID").val(Result.ID);
+    var CommentList = GetAllOrderComments(Result.ID);
+    if (CommentList != null) {
+
+        for (var i = 0; i < CommentList.length; i++) {
+            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12"><span class="badge">' + CommentList[i].CommentDate + '</span>' + CommentList[i].Comment + '</li>');
+            $("#CommentsDisplay").append(cnt);
+        }
+    }
+}
+function BindOrderSummery(Result)
+{
+    var OrderSummeryList=GetOrderSummery(Result.ID);
+    $('#tdSubTotal').text(OrderSummeryList.SubTotalOrderSummery)
+    $('#tdTaxTotal').text(OrderSummeryList.TaxAmtOrderSummery)
+    $('#tdDeliveryCosts').text(OrderSummeryList.ShippingCostOrderSummery)
+    $('#tdOrderDiscount').text(OrderSummeryList.DiscountAmtOrderSummery)
+    $('#strGrandTotal').text(OrderSummeryList.GrandTotalOrderSummery)
 }
 function CheckinBillingChanges(data)
 {
@@ -193,6 +221,21 @@ function CheckinShipingChanges(data) {
 
     }
 }
+function CheckinCommentInsert(data) {
+    debugger;
+    var i = JSON.parse(data.responseText)
+    switch (i.Result) {
+        case "OK":
+            notyAlert('success', i.Record.StatusMessage);
+            var Result = GetOrderDetails($("#hdnEventsLogParentID").val());
+            BindOrderComments(Result);
+            break;
+        case "ERROR":
+            notyAlert('success', i.Record.StatusMessage);
+            break;
+
+    }
+}
 function GetOrderDetails(ID)
 {
     try {
@@ -213,5 +256,33 @@ function GetOrderDetails(ID)
     }
     catch (e) {
 
+    }
+}
+function GetAllOrderComments(ID)
+{
+    try {
+        data = { "ID": ID };
+        var ds = {};
+        ds = GetDataFromServer("Order/GetEventsLog/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+function GetOrderSummery(ID)
+{
+    try {
+        data = { "ID": ID };
+        var ds = {};
+        ds = GetDataFromServer("Order/GetOrderSummery/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
     }
 }
