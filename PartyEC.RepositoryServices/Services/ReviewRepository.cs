@@ -20,7 +20,7 @@ namespace PartyEC.RepositoryServices.Services
             _databaseFactory = databaseFactory;
         }
 
-        public List<ProductReview> GetAllReviews(string Condition)
+        public List<ProductReview> GetAllReviews(string Condition,string FromDate,string ToDate)
         {
             List<ProductReview> reviewList = null;
           
@@ -38,6 +38,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[GetAllReviewsandRating]";
                         cmd.Parameters.Add("@Condition", SqlDbType.NVarChar,20).Value = Condition;
+                        cmd.Parameters.Add("@FromDate", SqlDbType.NVarChar, 20).Value = FromDate;
+                        cmd.Parameters.Add("@ToDate", SqlDbType.NVarChar, 20).Value = ToDate;
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {

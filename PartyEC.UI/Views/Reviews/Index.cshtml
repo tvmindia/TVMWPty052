@@ -19,15 +19,20 @@
         <div class="panel-body">
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="tab1">
+               
                     <form class="form-horizontal" role="form" style="position:absolute;width:86%;left:17%;">
-
                         <div class="form-group">
                             <label class="col-sm-1 control-label"></label>
                             <div id="MYFORM" class="col-sm-8">
-                                <label class="radio-inline"> <input type="radio" name="REVIEW" id="rdoreviewAll"  value="ALL">All Reviews</label>
-                                <label class="radio-inline"> <input type="radio" name="REVIEW" id="rdoreviewApproved"  value="APPROVED" >Approved Reviews</label>
-                                <label class="radio-inline"> <input type="radio" name="REVIEW" id="rdoreviewUnapprove" value="TOAPPROVE">Reviews to Approve</label>
-                                
+                                <label class="radio-inline"> <input type="radio" onchange="BindReviews()" name="REVIEW" id="rdoreviewAll"  value="ALL">All</label>
+                                <label class="radio-inline"> <input type="radio" onchange="BindReviews()" name="REVIEW" id="rdoreviewApproved"  value="APPROVED" >Approved</label>
+                                <label class="radio-inline"> <input type="radio" onchange="BindReviews()" name="REVIEW" id="rdoreviewPending" value="PENDING">Pending</label>
+                                <label class="radio-inline"><b>Date From</b></label>
+                                <input class="datepicker"  type="text" name="From" id="fromdate" />
+                                <label class="radio-inline"><b>To Date</b> </label>
+                                <input class="datepicker"  type="text" name="To" id="todate" />  
+                                <b><a onclick="BindReviews()"> GO</a></b>
+                                                           
                             </div>
                         </div>
                     </form> 
@@ -96,6 +101,7 @@
 @section Scripts {
     @Scripts.Render("~/bundles/datatable")
     @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
+
     @Scripts.Render("~/bundles/Review")
 }
 

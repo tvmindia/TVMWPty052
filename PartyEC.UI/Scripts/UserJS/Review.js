@@ -20,43 +20,49 @@ $(document).ready(function () {
                { "data": "IsApproved", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
-             columnDefs: [ 
-              {
+             columnDefs: [{
                   'targets': 3,
-                  'render': function (data, type, row) {
-                   
+                  'render': function (data, type, row) {                   
                       if (data)
                           if (data.length > 30)
-                          {
-                              var newdata = data.substring(0, 30);
+                          {   var newdata = data.substring(0, 30);
                               return newdata +'.....';
                           }
-                          else
-                          {
-                           
-                              return data ;
-                          }                   
-                  }
-              }]
-         });
+                          else  {  return data ; }                  
+                  }},
+                  {
+                      'targets': 7,
+                 'render': function (data, type, row) { 
+                     if (row.IsApproved =='True') {
+                         return 'Approved';   }
+                     else {
+                         return 'Pending';   } }
+             }]
+         }); 
     }
     catch (e) { 
         notyAlert('error', e.message);
 
-    }
-    $('#MYFORM label input').on('change', function () {
-        BindAllReviews();
-    });
+    } 
   
 });
 
 function GetAllReviews() {
-    try {
-        debugger; 
+    try {  
          var condition= $('input[name=REVIEW]:checked', '#MYFORM').val();
+         var FromDate;
+         var ToDate;
+         if ($("#fromdate").val() != "") {
+             FromDate = $("#fromdate").val();
+         }
+         else { FormDate = null; }              
+         if ($("#todate").val() != "") {
+             ToDate = $("#todate").val();
+         }
+         else { ToDate = null; }
+      
        
-       
-        var data = {"Condition":condition };
+         var data = { "Condition": condition, "FromDate": FromDate, "ToDate": ToDate };
         var ds = {};
         ds = GetDataFromServer("Reviews/GetAllReviews/", data);
         if (ds != '') {
@@ -74,7 +80,9 @@ function GetAllReviews() {
     }
 }
 
-//---------------------------------------Bind All Attributes----------------------------------------------//
+//---------------------------------------Bind All Reviews----------------------------------------------//
+
+ 
 function BindAllReviews() {
     try {
         DataTables.ReviewTable.clear().rows.add(GetAllReviews()).draw(false);
@@ -82,4 +90,37 @@ function BindAllReviews() {
     catch (e) {
         notyAlert('error', e.message);
     }
+}
+
+function BindReviews()
+{
+    debugger;
+    var res = DateValidation();
+    if (res)
+    {
+        BindAllReviews();
+    }
+    else {
+        return false;
+    } 
+}
+
+function DateValidation() {
+    debugger;
+    var fromdate = $("#fromdate").val();
+    var todate = $("#todate").val();
+   
+    if (fromdate == "" && todate != "") {
+    notyAlert('error', 'Fill From Date');
+    return false;
+    }     
+    else if (todate == "" &&  fromdate != "") {
+            
+    notyAlert('error', 'Fill To Date');
+    return false;
+    } 
+
+    return true;
+      
+
 }
