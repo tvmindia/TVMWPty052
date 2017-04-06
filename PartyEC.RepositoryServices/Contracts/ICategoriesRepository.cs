@@ -18,5 +18,6 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus UpdatePositionNo(Categories CategoryObj);
         bool ExistOrNot(int CategoryID);
         List<Categories> GetNavigationalCategoriesForApp(Categories categoryObj);
+        List<Categories> GetFilterCategoriesForApp(Categories categoryObj);
     }
 }

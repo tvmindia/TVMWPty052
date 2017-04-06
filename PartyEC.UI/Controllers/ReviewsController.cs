@@ -28,15 +28,19 @@ namespace PartyEC.UI.Controllers
         // GET: Reviews
         public ActionResult Index()
         {
+            
+            //ViewBag.CurrentDate= _commonBusiness.GetCurrentDateTime().ToString("dd-MMM-yyyy");
+            //ViewBag.LastMonthDate = _commonBusiness.GetCurrentDateTime().AddMonths(-1).ToString("dd-MMM-yyyy");
+
             return View();
         }
 
         [HttpGet]
-        public string GetAllReviews(string Condition)
+        public string GetAllReviews(string Condition, string FromDate, string ToDate)
         {
             try
             {
-                List<ProductReviewViewModel> productList = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_reviewBusiness.GetAllReviews(Condition));
+                List<ProductReviewViewModel> productList = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_reviewBusiness.GetAllReviews(Condition,FromDate,ToDate));
 
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
             }

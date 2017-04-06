@@ -178,8 +178,22 @@ namespace PartyEC.BusinessServices.Services
 
             try
             {
-
                 Categorylist = _categoryRepository.GetNavigationalCategoriesForApp(categoryObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Categorylist;
+        }
+
+        public List<Categories> GetFilterCategoriesForApp(Categories categoryObj)
+        {
+            List<Categories> Categorylist = null;
+
+            try
+            {
+                Categorylist = _categoryRepository.GetFilterCategoriesForApp(categoryObj);
             }
             catch (Exception ex)
             {

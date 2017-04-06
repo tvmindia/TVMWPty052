@@ -337,6 +337,20 @@ namespace PartyEC.BusinessServices.Services
             return productlist;
         }
 
+        public List<Product> GetProductsOfCategory(Categories categoryObj)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetProductsOfCategory(categoryObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productlist;
+        }
+
         #endregion
     }
 }
