@@ -64,8 +64,9 @@ namespace PartyEC.UI.API
             try
             {
                 List<ProductsOfCategoryAppViewModel> ProductsList = Mapper.Map<List<Product>, List<ProductsOfCategoryAppViewModel>>(_productBusiness.GetProductsOfCategory(categoryObj));
-                if (ProductsList.Count == 0 ) throw new Exception(messages.NoItems);
-                return JsonConvert.SerializeObject(new { Result = true, Records = ProductsList });
+                List<FilterCatsOfCategoryAppViewModel> CategoryList = Mapper.Map<List<Categories>, List<FilterCatsOfCategoryAppViewModel>>(_categoryBusiness.GetFilterCategoriesForApp(categoryObj));
+                if (ProductsList.Count == 0 && CategoryList.Count == 0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = new { Products = ProductsList, SubCategories = CategoryList } });
             }
             catch (Exception ex)
             {

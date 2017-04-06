@@ -18,5 +18,6 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertImageCategory(Categories CategoryObj);
         OperationsStatus UpdatePositionNo(Categories CategoryObj);
         List<Categories> GetNavigationalCategoriesForApp(Categories categoryObj);
+        List<Categories> GetFilterCategoriesForApp(Categories categoryObj);
     }
 }
