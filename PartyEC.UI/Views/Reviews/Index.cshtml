@@ -18,77 +18,83 @@
         </div>
         <div class="panel-body">
             <div class="tab-content">
-                <div class="tab-pane fade in active" id="tab1">
-               
-                    <form class="form-horizontal" role="form" style="position:absolute;width:86%;left:17%;">
-                        <div class="form-group">
-                            <label class="col-sm-1 control-label"></label>
-                            <div id="MYFORM" class="col-sm-8">
-                                <label class="radio-inline"> <input type="radio" onchange="BindReviews()" name="REVIEW" id="rdoreviewAll"  value="ALL">All</label>
-                                <label class="radio-inline"> <input type="radio" onchange="BindReviews()" name="REVIEW" id="rdoreviewApproved"  value="APPROVED" >Approved</label>
-                                <label class="radio-inline"> <input type="radio" onchange="BindReviews()" name="REVIEW" id="rdoreviewPending" value="PENDING">Pending</label>
-                                <label class="radio-inline"><b>Date From</b></label>
-                                <input class="datepicker"  type="text" name="From" id="fromdate" />
-                                <label class="radio-inline"><b>To Date</b> </label>
-                                <input class="datepicker"  type="text" name="To" id="todate" />  
-                                <b><a onclick="BindReviews()"> GO</a></b>
-                                                           
+                <div class="tab-pane fade in active" id="tab1"> 
+                    <form class="form-horizontal" role="form" style="position:absolute;width:86%;left:20%;">
+                       
+                        <div class="form-group">                           
+                            <div id="MYFORM" class="col-sm-8">                               
+                                <label class="radio-inline col-md-1"> <input type="radio" onchange="BindReviews()" name="REVIEW" id="rdoreviewApproved" value="APPROVED"><b>Approved</b></label>
+                                <label class="radio-inline col-md-1"> <input type="radio" onchange="BindReviews()" name="REVIEW" id="rdoreviewPending" value="PENDING"><b>Pending</b></label>
+                                <label class="radio-inline col-md-1"> <input type="radio" onchange="BindReviews()" name="REVIEW" id="rdoreviewAll" value="ALL"><b>All</b></label>
                             </div>
                         </div>
-                    </form> 
-                        <table id="tblReview" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-                            <thead>
-                                <tr>
-                                    <th>Product ID</th>
-                                    <th>Product Name</th>
-                                    <th>Customer Name</th>
-                                    <th>Review</th>
-                                    <th>Review Date</th>
-                                    <th>Rating</th>
-                                    <th>Rating Date</th>
-                                    <th>Status</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                        </table> 
-                @*table*@
-            </div>
-            <div class="tab-pane fade" id="tab2">
-                <div class="" id="btnPatchReviewtab2">
-                @{
-                    PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab2 = new PartyEC.UI.Models.ToolboxViewModel();
-                    ToolBoxControltab2.deletebtn.Visible = true;
-                    ToolBoxControltab2.resetbtn.Visible = true;
-                    ToolBoxControltab2.savebtn.Visible = true;
-                    ToolBoxControltab2.backbtn.Visible = true;
-                    ToolBoxControltab2.deletebtn.Event = "clickdelete()";
-                    ToolBoxControltab2.resetbtn.Event = "btnreset()";
-                    ToolBoxControltab2.savebtn.Event = "clicksave()";
-                    ToolBoxControltab2.backbtn.Event = "goback()";
-                    Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
-                }
-                </div>
-                <h4>Review Details</h4>
-                <div class="col-md-12" id="InsertReview">
-                    <div class="col-md-2">
+                        <div class="form-group" style="position:center;">
+                            <div class="col-sm-8">
+                                <label><b>Date From</b></label>
+                                <input class="datepicker" onchange="countDays()" type="Date" style="width:120px" name="From" id="fromdate" />
+                                <label><b>To Date</b> </label>
+                                <input class="datepicker" onchange="countDays()" type="Date" style="width:120px" name="To" id="todate" />
+                                <label id="dayscount" style="padding-left:10px"><b></b></label>
+                                <b><a href="#" style="padding-left:10px" onclick="BindReviews()"> APPLY</a></b>
 
-                        <div class="panel with-nav-tabs js panel-primary">
-                            <div class="panel-heading" style="min-height:300px">
-                                <ul class="nav nav-tabs nav-stacked">
-                                    <li class="active"><a id="tabGeneral">General</a></li>
-                                </ul>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 ">
-                        @using (Ajax.BeginForm("UpdateReview", "Review", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "mainform" }))
-                        {
-                            @Html.AntiForgeryToken()
-                        
+                    </form>
+                    <br /><br />
+                    <table id="tblReview" class="table table-striped table-bordered table-hover dt[-head|-body]-center" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Product ID</th>
+                                <th>Product Name</th>
+                                <th>Customer Name</th>
+                                <th>Review</th>
+                                <th>Review Date</th>
+                                <th>Rating</th>
+                                <th>Rating Date</th>
+                                <th>Status</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                    </table>
+                    @*table*@
+                </div>
+                <div class="tab-pane fade" id="tab2">
+                    <div class="" id="btnPatchReviewtab2">
+                        @{
+                            PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab2 = new PartyEC.UI.Models.ToolboxViewModel();
+                            ToolBoxControltab2.deletebtn.Visible = true;
+                            ToolBoxControltab2.resetbtn.Visible = true;
+                            ToolBoxControltab2.savebtn.Visible = true;
+                            ToolBoxControltab2.backbtn.Visible = true;
+                            ToolBoxControltab2.deletebtn.Event = "clickdelete()";
+                            ToolBoxControltab2.resetbtn.Event = "btnreset()";
+                            ToolBoxControltab2.savebtn.Event = "clicksave()";
+                            ToolBoxControltab2.backbtn.Event = "goback()";
+                            Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
                         }
                     </div>
-                    <div class="col-md-4">
+                    <h4>Review Details</h4>
+                    <div class="col-md-12" id="InsertReview">
+                        <div class="col-md-2">
 
+                            <div class="panel with-nav-tabs js panel-primary">
+                                <div class="panel-heading" style="min-height:300px">
+                                    <ul class="nav nav-tabs nav-stacked">
+                                        <li class="active"><a id="tabGeneral">General</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-6 ">
+                            @using (Ajax.BeginForm("UpdateReview", "Review", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "mainform" }))
+                            {
+                                @Html.AntiForgeryToken()
+
+                            }
+                        </div>
+                        <div class="col-md-4">
+
+                        </div>
                     </div>
                 </div>
             </div>

@@ -21,28 +21,29 @@ $(document).ready(function () {
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [{
-                  'targets': 3,
-                  'render': function (data, type, row) {                   
-                      if (data)
-                          if (data.length > 30)
-                          {   var newdata = data.substring(0, 30);
-                              return newdata +'.....';
-                          }
-                          else  {  return data ; }                  
-                  }},
-                  {
-                      'targets': 7,
-                 'render': function (data, type, row) { 
-                     if (row.IsApproved =='True') {
-                         return 'Approved';   }
-                     else {
-                         return 'Pending';   } }
-             }]
-         }); 
+                 'targets': 3, 'render': function (data, type, row) {
+                     if (data)
+                         if (data.length > 30)
+                         {
+                             var newdata = data.substring(0, 30);
+                             return newdata + '.....';
+                         }
+                         else { return data; }
+                 }
+             }, {
+                 'targets': 7, 'render': function (data, type, row) {
+                     if (row.IsApproved == 'True') {
+                         return 'Approved';
+                     }
+                     else { return 'Pending'; }
+                 }
+             }
+          ]
+         });
+        $("#rdoreviewPending").prop('checked', true);
     }
     catch (e) { 
         notyAlert('error', e.message);
-
     } 
   
 });
@@ -94,9 +95,9 @@ function BindAllReviews() {
 
 function BindReviews()
 {
-    debugger;
+    var res1 = countDays();
     var res = DateValidation();
-    if (res)
+    if (res && res1)
     {
         BindAllReviews();
     }
@@ -106,21 +107,39 @@ function BindReviews()
 }
 
 function DateValidation() {
-    debugger;
     var fromdate = $("#fromdate").val();
-    var todate = $("#todate").val();
-   
+    var todate = $("#todate").val(); 
     if (fromdate == "" && todate != "") {
     notyAlert('error', 'Fill From Date');
     return false;
     }     
-    else if (todate == "" &&  fromdate != "") {
-            
+    else if (todate == "" &&  fromdate != "") {            
     notyAlert('error', 'Fill To Date');
     return false;
     } 
-
     return true;
-      
+}
 
+function countDays() {
+    var fromdate = $("#fromdate").val();
+    var todate = $("#todate").val();
+
+    if (fromdate != "" && todate != "") {
+        var date1 = new Date(fromdate);
+        var date2 = new Date(todate);
+        var diff = date2.getTime() - date1.getTime();        
+        if (diff > 0) {
+            var ONE_DAY = 1000 * 60 * 60 * 24;
+            $("#dayscount").text(Math.round(diff / ONE_DAY) + ' Days');
+        }
+        else {
+            notyAlert('error', 'Please check the dates entered');
+            $("#dayscount").text('');
+            return false;
+        }
+    }
+    else {
+        $("#dayscount").text('');
+    }
+    return true;
 }
