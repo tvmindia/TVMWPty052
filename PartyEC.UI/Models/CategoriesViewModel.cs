@@ -54,11 +54,23 @@ namespace PartyEC.UI.Models
         public string Name { get; set; }
         public string ImageURL { get; set; }
     }
+    public class ProductsOfCategoryAppViewModel
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string ImageURL { get; set; }
+    }
     public class NavigationalCatsOfCategoryAppViewModel
     {
         public int ID { get; set; }
         public string Name { get; set; }
         public int ChildrenCount { get; set; }
+        public string Description { get; set; }
+    }
+    public class FilterCatsOfCategoryAppViewModel
+    {
+        public int ID { get; set; }
+        public string Name { get; set; }
         public string Description { get; set; }
     }
 }

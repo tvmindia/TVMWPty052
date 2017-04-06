@@ -36,5 +36,6 @@ namespace PartyEC.RepositoryServices.Contracts
         List<ProductReview> GetRatingSummary(int ProductID, int AttributesetId);
 
         List<Product> GetTopProductsOfCategory(Categories categoryObj);
+        List<Product> GetProductsOfCategory(Categories categoryObj);
     }
 }

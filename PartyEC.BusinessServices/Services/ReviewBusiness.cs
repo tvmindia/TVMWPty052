@@ -18,12 +18,12 @@ namespace PartyEC.BusinessServices.Services
         }
 
 
-        public List<ProductReview> GetAllReviews(string Condition)
+        public List<ProductReview> GetAllReviews(string Condition,string FromDate,string ToDate)
         {
             List<ProductReview> reviewlist = null;
             try
             {
-                reviewlist = _reviewRepository.GetAllReviews(Condition);
+                reviewlist = _reviewRepository.GetAllReviews(Condition,FromDate,ToDate);
 
             }
             catch (Exception ex)

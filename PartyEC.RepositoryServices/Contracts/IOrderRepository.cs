@@ -13,6 +13,7 @@ namespace PartyEC.RepositoryServices.Contracts
         Order GetSalesStatistics(int CustomerID,DateTime CurrentDate);
         List<Order> GetOrderSummary(int CustomerID);
         Order GetOrderDetails(string ID);
+        Order GetOrderSummery(int ID);
         OperationsStatus UpdateBillingDetails(Order orderObj);
         OperationsStatus UpdateShipingDetails(Order orderObj);
 

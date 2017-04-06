@@ -1958,7 +1958,7 @@ namespace PartyEC.RepositoryServices.Services
                         }
                         cmd.Connection = con;
                         cmd.Parameters.Add("@CategoryID", SqlDbType.Int).Value = categoryObj.ID;
-                        cmd.CommandText = "[GetTopProductsOfCategory]";
+                        cmd.CommandText = "[GetTopProductsOfCategoryForApp]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
@@ -1972,6 +1972,51 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.ID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _productObj.ID);
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _productObj.ImageURL);                                      
+                                    }
+                                    productList.Add(_productObj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productList;
+        }
+
+        public List<Product> GetProductsOfCategory(Categories categoryObj)
+        {
+            List<Product> productList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@CategoryID", SqlDbType.Int).Value = categoryObj.ID;
+                        cmd.CommandText = "[GetProductsOfCategoryForApp]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                productList = new List<Product>();
+                                while (sdr.Read())
+                                {
+                                    Product _productObj = new Product();
+                                    {
+                                        _productObj.ID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _productObj.ID);
+                                        _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
+                                        _productObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _productObj.ImageURL);
                                     }
                                     productList.Add(_productObj);
                                 }

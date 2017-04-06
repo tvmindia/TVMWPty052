@@ -79,16 +79,19 @@
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblOrderNo" class="h5 label-display">-</label>
                                             </div>
+                                            <div class="col-md-12"></div>
                                             @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblOrderDate" class="h5 label-display">-</label>
                                             </div>
+                                            <div class="col-md-12"></div>
                                             @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblOrderStatus" class="h5 label-display">-</label>
                                             </div>
+                                            <div class="col-md-12"></div>
                                             @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
@@ -104,17 +107,19 @@
                                             <div class="col-md-12">
                                                 <img src="~/Content/images/Person1.png" id="imgPreviewCustomer" />
                                             </div>
-                                            
+                                            <div class="col-md-12"></div>
                                             @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblCustomerName" class="h5 label-display">-</label>
                                             </div>
+                                            <div class="col-md-12"></div>
                                             @Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblContactNo" class="h5 label-display">-</label>
                                             </div>
+                                            <div class="col-md-12"></div>
                                             @Html.LabelFor(model => model.CustomerEmail, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
@@ -136,11 +141,13 @@
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblName" class="h5 label-display">-</label>
                                             </div>
+                                            <div class="col-md-12"></div>
                                             <label class="h5 col-md-6" for="lblAddress">Address :</label>
                                             <div class="col-md-6">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblAddress" class="h5 label-display">-</label>
                                             </div>
+                                            <div class="col-md-12"></div>
                                             <label class="h5 col-md-6" for="lblContact">Contact No :</label>
                                             <div class="col-md-6">
                                                 @*style="font-weight:bold"*@
@@ -162,11 +169,14 @@
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblShipDisName" class="h5 label-display">-</label>
                                             </div>
+                                            <div class="col-md-12"></div>
                                             <label class="h5 col-md-6" for="lblShipDisAddress">Address :</label>
                                             <div class="col-md-6">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblShipDisAddress" class="h5 label-display">-</label>
                                             </div>
+                                            <div class="col-md-12"></div>
+                                            <div class="col-md-12"></div>
                                             <label class="h5 col-md-6" for="lblShipDisContact">Contact No :</label>
                                             <div class="col-md-6">
                                                 @*style="font-weight:bold"*@
@@ -176,7 +186,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="panel panel-default" style="min-height:250px">
+                                    <div class="panel panel-default" style="min-height:150px">
                                         <div class="panel-heading">Payment Information</div>
                                         <div class="panel-body">
                                             <label class="h5 col-md-6" for="lblPaymentType">Payment Mode:</label>
@@ -200,10 +210,20 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="panel panel-default" style="min-height:250px">
+                                    <div class="panel panel-default" style="min-height:150px">
                                         <div class="panel-heading">Shipping & Handling information</div>
                                         <div class="panel-body">
-
+                                            <label class="h5 col-md-6" for="lblShippingLocation">Shipping Location:</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblShippingLocation" class="h5 label-display">-</label>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            <label class="h5 col-md-6" for="lblShippingAmt">Shipping Charges :</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblShippingAmt" class="h5 label-display">-</label>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -226,20 +246,92 @@
                                         </thead>
                                     </table>
                                 </div>
-                                <div class="col-md-12">
                                     <div class="col-md-6">
-                                        <div class="panel panel-default" style="min-height:250px">
-                                            <div class="panel-heading">Order Comments</div>
-                                            <div class="panel-body">
-
+                                    @using (Ajax.BeginForm("UpdateEventsLog", "Order", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "CheckinCommentInsert" }, new { @class = "form-horizontal", role = "form", id = "formComments" }))
+                                    {
+                                        @Html.AntiForgeryToken()
+                                            <div class="panel panel-default" style="min-height:250px">
+                                                <div class="panel-heading">Order Comments</div>
+                                                <div class="panel-body">
+                                                <div class="form-group col-md-12">
+                                                @Html.LabelFor(model => model.EventsLogViewObj.Comment, htmlAttributes: new { @class = "control-label col-md-6" })
+                                                <div class="col-md-12">
+                                                @Html.TextAreaFor(model => model.EventsLogViewObj.Comment, new { @class = "form-control" })
+                                                @Html.ValidationMessageFor(model => model.EventsLogViewObj.Comment, "", new { @class = "text-danger" })
+                                                </div>
+                                                </div>
+                                                    <div class="col-md-12"></div>
+                                                   <div class="form-group">
+                                                   <div class="col-md-offset-4 col-md-10">
+                                                   @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Order" })
+                                                   @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = "2",id="hdnEventsLogParentID" })
+                                                   <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
+                                                   </div>
+                                                   </div>
+                                                    <div class="col-md-12"></div>
+                                                   <div class="form-group col-md-12">
+                                                    <label id="lblHistroy" class="control-label">Earlier Comments</label>
+                                                    <hr />
+                                                     <div style="height: 150px;width: 107%;overflow: hidden;position: relative;">
+                                                    <div id="CommentsDisplay" style="max-height: 150px;min-height: 150px;overflow-y: auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: -15px;white-space: pre;">
+                                                    </div>
+                                                       </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                }
                                             </div>
-                                        </div>
-                                    </div>
                                     <div class="col-md-6">
                                         <div class="panel panel-default" style="min-height:250px">
                                             <div class="panel-heading">Order Summery</div>
                                             <div class="panel-body">
+                                                <table width="100%" border="0" align="right" cellpadding="0" cellspacing="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                                                                <strong>Sub-total</strong>
+                                                            </td>
+                                                            <td width="0" id="tdSubTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                                                                ₹4650.00
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                                                                <strong>Tax:</strong>
+                                                            </td>
+                                                            <td width="0" id="tdTaxTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                                                                ₹347.50
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px">
+                                                                <strong>Delivery costs:</strong>
+                                                            </td>
+                                                            <td width="62" id="tdDeliveryCosts" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px">
+                                                                ₹150.00
+                                                            </td>
+                                                        </tr>
 
+                                                        <tr>
+                                                            <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px;border-bottom:solid 1px #999999">
+                                                                <strong>Order discount:</strong>
+                                                            </td>
+                                                            <td width="62" id="tdOrderDiscount" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px;border-bottom:solid 1px #999999">
+                                                                ₹300.00
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" valign="bottom" style="color:#404041;font-size:13px;line-height:16px;padding:5px 0px 3px 0px">
+                                                                <strong>Grand Total:</strong>
+                                                            </td>
+                                                            <td width="62" align="right" valign="bottom" style="color:#339933;font-size:13px;line-height:16px;padding:5px 5px 3px 5px">
+                                                                <strong id="strGrandTotal">₹4500.50</strong>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+
+
+                                                </table>
                                             </div>
                                         </div>
                                     </div>

@@ -14,9 +14,10 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertManufacturer(Manufacturer ManufacturerObj);
         OperationsStatus UpdateManufacturer(Manufacturer ManufacturerObj);
         OperationsStatus DeleteManufacturer(int ManufacturerID);
-
+        OperationsStatus InsertEventsLog(EventsLog eventsLogObj);
+        List<EventsLog> GetEventsLog(int ID,string ParentType);
         List<Country> GetAllCountries();
-
+        
         List<OrderStatusMaster> GetAllOrderStatus();
         List<OtherImages> GetAllStickers();
 

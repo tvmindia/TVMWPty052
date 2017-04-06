@@ -153,6 +153,8 @@ namespace PartyEC.RepositoryServices.Services
                                     orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
                                     orderObj.OrderNo = sdr["OrderNo"].ToString();
                                     orderObj.OrderRev = sdr["OrderRev"].ToString();
+                                    orderObj.ShippingLocationName = sdr["ShippingLocationName"].ToString();
+                                    orderObj.SourceIP = sdr["SourceIP"].ToString();
                                     orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : "";
                                     orderObj.CustomerID = sdr["CustomerID"].ToString()!=null? int.Parse(sdr["CustomerID"].ToString()): orderObj.CustomerID;
                                     orderObj.CustomerName = sdr["CustomerName"].ToString();
@@ -176,7 +178,6 @@ namespace PartyEC.RepositoryServices.Services
                                     orderObj.ShipFirstName = sdr["ShipFirstName"].ToString();
                                     orderObj.ShipLastName = sdr["ShipLastName"].ToString();
                                     orderObj.ShipMidName = sdr["ShipMidName"].ToString();
-                                    orderObj.ShippingLocationID = sdr["ShippingLocationID"].ToString()!=""?int.Parse(sdr["ShippingLocationID"].ToString()): orderObj.ShippingLocationID;
                                     orderObj.ShipStateProvince = sdr["ShipStateProvince"].ToString();
                                     orderObj.TotalShippingAmt = sdr["TotalShippingAmt"].ToString()!=""?float.Parse(sdr["TotalShippingAmt"].ToString()):orderObj.TotalShippingAmt;
                                     orderObj.PaymentType = sdr["PaymentType"].ToString();
@@ -240,7 +241,48 @@ namespace PartyEC.RepositoryServices.Services
             return orderObj;
         }
 
-
+        public Order GetOrderSummery(int ID)
+        {
+            Order orderObj = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[]";
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ID;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                if (sdr.Read())
+                                {
+                                    orderObj = new Order();
+                                    {
+                                        //orderObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : orderObj.ID);
+                                        //orderObj.LifeTimeSales = (sdr["LifeTimeSales"].ToString() != "" ? sdr["LifeTimeSales"].ToString() : orderObj.LifeTimeSales);
+                                        //orderObj.AverageSales = (sdr["AverageSales"].ToString() != "" ? sdr["AverageSales"].ToString() : orderObj.AverageSales);
+                                        //orderObj.LastMonthSales = (sdr["LastMonthSales"].ToString() != "" ? sdr["LastMonthSales"].ToString() : orderObj.LastMonthSales);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return orderObj;
+        }
         public List<Order> GetOrderSummary(int CustomerID)
         {
             List<Order> OrderHeaderList = null;

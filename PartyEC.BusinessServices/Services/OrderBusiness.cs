@@ -38,6 +38,19 @@ namespace PartyEC.BusinessServices.Services
             }
             return orderObj;
         }
+        public Order GetOrderSummery(int ID)
+        {
+            Order orderObj = null;
+            try
+            {
+                orderObj = _orderRepository.GetOrderSummery(ID);
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return orderObj;
+        }
         public List<Order> GetOrderSummary(int CustomerID)
         {
             return _orderRepository.GetOrderSummary(CustomerID);
