@@ -1,6 +1,6 @@
 ﻿var DataTables = {};
 $(document).ready(function () {
-
+    
 
     try {
 
@@ -502,7 +502,7 @@ function BindAddress(custid)
             {
                 if (Records.hasOwnProperty(adrs))
                 {
-                    $('#addressUL').append('<li><a href="#" onclick="FillAddressForm(' + Records[adrs]['ID'] + ')" class="list-group-item"><address>' + ((Records[adrs]['Address'] != null) && (Records[adrs]['Address'] != "") ? Records[adrs]['Address'] : '-') + '<br>' + ((Records[adrs]['City'] != null) && (Records[adrs]['City'] != "") ? Records[adrs]['City'] : '-') + '<br>' + ((Records[adrs]['StateProvince'] != null) && (Records[adrs]['StateProvince'] != "") ? Records[adrs]['StateProvince'] : '-') + '<br>' + ((Records[adrs]['country'].Name != null) && (Records[adrs]['country'].Name != "") ? Records[adrs]['country'].Name : '-') + '</address><div>' + (Records[adrs]['BillDefaultYN'] != false ? '<span class="badge">Bill Default</span>' : '') + '' + (Records[adrs]['ShipDefaultYN'] != false ? '<span class="badge">Shipping Default</span>' : '') + '</div></a></li>');
+                    $('#addressUL').append('<li><a href="#" onclick="FillAddressForm(' + Records[adrs]['ID'] + ');return false;" class="list-group-item"><address>' + ((Records[adrs]['Address'] != null) && (Records[adrs]['Address'] != "") ? Records[adrs]['Address'] : '-') + '<br>' + ((Records[adrs]['City'] != null) && (Records[adrs]['City'] != "") ? Records[adrs]['City'] : '-') + '<br>' + ((Records[adrs]['StateProvince'] != null) && (Records[adrs]['StateProvince'] != "") ? Records[adrs]['StateProvince'] : '-') + '<br>' + ((Records[adrs]['country'].Name != null) && (Records[adrs]['country'].Name != "") ? Records[adrs]['country'].Name : '-') + '</address><div>' + (Records[adrs]['BillDefaultYN'] != false ? '<span class="badge">Bill Default</span>' : '') + '' + (Records[adrs]['ShipDefaultYN'] != false ? '<span class="badge">Shipping Default</span>' : '') + '</div></a></li>');
                 }
             }
         }
@@ -571,6 +571,7 @@ function FillAddressForm(adid)
     {
         notyAlert('errror', e.message);
     }
+    
 }
 
 function AddressViewClick()
