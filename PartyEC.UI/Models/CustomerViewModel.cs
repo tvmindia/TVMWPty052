@@ -51,9 +51,11 @@ namespace PartyEC.UI.Models
         public int ID { get; set; }
         public int CustomerID { get; set; }
         public string Prefix { get; set; }
+        [Required(ErrorMessage = "Please enter First Name  ")]
         public string FirstName { get; set; }
         public string MidName { get; set; }
         public string LastName { get; set; }
+        [Required(ErrorMessage = "Please enter Address")]
         public string Address { get; set; }
         public string City { get; set; }
         public List<SelectListItem> Countries { get; set; }

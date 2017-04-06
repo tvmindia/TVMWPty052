@@ -13,5 +13,8 @@ namespace PartyEC.BusinessServices.Contracts
         Customer GetCustomer(int CustomerID, OperationsStatus Status);
         OperationsStatus CustomerEnableORDisable(Customer customer);
         OperationsStatus InsertUpdateCustomerAddress(Customer customer);
+        List<CustomerAddress> GetAllCustomerAddresses(int CustomerID);
+        CustomerAddress GetAddressByAddress(int AddressID);
+        OperationsStatus DeleteAddress(CustomerAddress customerAddress);
     }
 }

@@ -264,6 +264,69 @@ namespace PartyEC.UI.Controllers
         }
 
         #endregion CustomerAddressInsertUpdate
+
+        #region GetAllAddressByCustomer
+        [HttpGet]
+        public string GetAllAddressByCustomer(string customerID)
+        {
+            try
+            {
+                List<CustomerAddressViewModel> addressList = null;
+                if (!string.IsNullOrEmpty(customerID))
+                {
+                    OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                    addressList = Mapper.Map<List<CustomerAddress>, List<CustomerAddressViewModel>>(_customerBusiness.GetAllCustomerAddresses(int.Parse(customerID)));
+                }
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = addressList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        #endregion GetAllAddressByCustomer
+
+        #region GetAddressByAddress
+        [HttpGet]
+        public string GetAddressByAddress(string addressID)
+        {
+            try
+            {
+                CustomerAddressViewModel address = null;
+                if (!string.IsNullOrEmpty(addressID))
+                {
+                    OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                    address = Mapper.Map<CustomerAddress,CustomerAddressViewModel>(_customerBusiness.GetAddressByAddress(int.Parse(addressID)));
+                }
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = address });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        #endregion GetAddressByAddress
+
+        [HttpPost]
+        public string DeleteCustomerAddress(CustomerAddressViewModel customerAddress)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            if (!ModelState.IsValid)
+            {
+                try
+                {
+                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.DeleteAddress(Mapper.Map<CustomerAddressViewModel,CustomerAddress>(customerAddress)));
+                }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+             }
+            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+        }
+
+
+
         #region ChangeButtonStyle
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)
@@ -276,9 +339,9 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.actDeactbtn.Event = "ActivateORDeactivate()";
                     ToolboxViewModelObj.actDeactbtn.Title = "Deactivate";
 
-                    ToolboxViewModelObj.savebtn.Visible = true;
-                    ToolboxViewModelObj.savebtn.Event = "AddressSave()";
-                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    //ToolboxViewModelObj.savebtn.Visible = true;
+                    //ToolboxViewModelObj.savebtn.Event = "AddressSave()";
+                    //ToolboxViewModelObj.savebtn.Title = "Save";
 
                     //ToolboxViewModelObj.resetbtn.Visible = true;
                     //ToolboxViewModelObj.resetbtn.Event = "btnreset()";
@@ -295,6 +358,22 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.actDeactbtn.Event = "ActivateORDeactivate()";
                     ToolboxViewModelObj.actDeactbtn.Title = "Activate";
 
+                    //ToolboxViewModelObj.savebtn.Visible = true;
+                    //ToolboxViewModelObj.savebtn.Event = "AddressSave()";
+                    //ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
+
+                   case "Add":
+                  
+
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Event = "NewAddress()";
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Event = "AddressSave()";
                     ToolboxViewModelObj.savebtn.Title = "Save";
@@ -302,6 +381,25 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
+
+                case "Edit":
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Event = "NewAddress()";
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "AddressSave()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Event = "DeleteCustomerAddress()";
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
+
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
                     break;
                                             
                 default:

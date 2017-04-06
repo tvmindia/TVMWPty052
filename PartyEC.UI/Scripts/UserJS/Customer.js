@@ -177,6 +177,8 @@ function EditCustomer(currentObj)
                     ChangeButtonPatchView("Customer", "customerToolBox", "Activate"); //ControllerName,id of the container div,Name of the action
                 break;
             }
+            
+           $("#tabCustomerView").trigger('click');
             var thiscustomer = GetCustomerDetail(rowData.ID);
             if(thiscustomer)
             {
@@ -200,6 +202,8 @@ function EditCustomer(currentObj)
             RefreshCustomerOrders(rowData.ID);
             RefreshCustomerCartList(rowData.ID);
             RefreshCustomerWishList(rowData.ID);
+            BindAddress(rowData.ID);
+            ClearAddressForm();
         }
     }
     catch(e)
@@ -447,11 +451,13 @@ function AddressSaveSuccess(data, status, xhr) {
             if (JsonResult.Record.ReturnValues != null)
             {
                 $("#customerAddress_ID").val(JsonResult.Record.ReturnValues);
+                BindAddress($("#ID").val());
             }
-          
-        
-          //  $("#productDetails h4").text($("#Name").val() + '(' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ')');
-            break;
+            else
+            {
+                BindAddress($("#ID").val());
+            }
+             break;
         case "ERROR":
             notyAlert('error', JsonResult.Record.StatusMessage);
             break;
@@ -459,5 +465,205 @@ function AddressSaveSuccess(data, status, xhr) {
         default:
             notyAlert('error', JsonResult.Message);
             break;
+    }
+}
+function GetAllAddress(custid)
+{
+    try {
+        if ((custid) && (custid > 0)) {
+            var data = { "customerID": custid };
+            var ds = {};
+            ds = GetDataFromServer("Customer/GetAllAddressByCustomer/", data);
+            if (ds != '') {
+                ds = JSON.parse(ds);
+            }
+            if (ds.Result == "OK") {
+                return ds.Records;
+            }
+            if (ds.Result == "ERROR") {
+                notyAlert('error', ds.Message);
+            }
+        }
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
+}
+
+function BindAddress(custid)
+{
+    try
+    {
+        var Records = GetAllAddress(custid);
+        $('#addressUL').html('');
+        if ((Records) && (Records.length > 0))
+        {
+            for (var adrs in Records)
+            {
+                if (Records.hasOwnProperty(adrs))
+                {
+                    $('#addressUL').append('<li><a href="#" onclick="FillAddressForm(' + Records[adrs]['ID'] + ')" class="list-group-item"><address>' + ((Records[adrs]['Address'] != null) && (Records[adrs]['Address'] != "") ? Records[adrs]['Address'] : '-') + '<br>' + ((Records[adrs]['City'] != null) && (Records[adrs]['City'] != "") ? Records[adrs]['City'] : '-') + '<br>' + ((Records[adrs]['StateProvince'] != null) && (Records[adrs]['StateProvince'] != "") ? Records[adrs]['StateProvince'] : '-') + '<br>' + ((Records[adrs]['country'].Name != null) && (Records[adrs]['country'].Name != "") ? Records[adrs]['country'].Name : '-') + '</address><div>' + (Records[adrs]['BillDefaultYN'] != false ? '<span class="badge">Bill Default</span>' : '') + '' + (Records[adrs]['ShipDefaultYN'] != false ? '<span class="badge">Shipping Default</span>' : '') + '</div></a></li>');
+                }
+            }
+        }
+        else
+        {
+            $('#addressUL').append('<li><div class="alert-message alert-message-warning"><p>Address not available for this customer</p></div></li>');
+        }
+       
+    }
+    catch(e)
+    {
+        notyAlert('errror', e.message);
+    }
+}
+
+function GetAddressDetailsByAddress(adid) {
+    try {
+        if ((adid) && (adid > 0)) {
+            var data = { "addressID": adid };
+            var ds = {};
+            ds = GetDataFromServer("Customer/GetAddressByAddress/", data);
+            if (ds != '') {
+                ds = JSON.parse(ds);
+            }
+            if (ds.Result == "OK") {
+                return ds.Record;
+            }
+            if (ds.Result == "ERROR") {
+                notyAlert('error', ds.Message);
+            }
+        }
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
+}
+
+function FillAddressForm(adid)
+{
+    try
+    {
+        ChangeButtonPatchView("Customer", "customerToolBox", "Edit"); //ControllerName,id of the container div,Name of the action
+        var thisaddres = GetAddressDetailsByAddress(adid);
+        if(thisaddres)
+        {
+            $("#customerAddress_Prefix").val((thisaddres.Prefix != null) && (thisaddres.Prefix != "") ? thisaddres.Prefix : "");
+            $("#customerAddress_FirstName").val((thisaddres.FirstName != null) && (thisaddres.FirstName != "") ? thisaddres.FirstName : "");
+            $("#customerAddress_MidName").val((thisaddres.MidName != null) && (thisaddres.MidName != "") ? thisaddres.MidName : "");
+            $("#customerAddress_LastName").val((thisaddres.LastName != null) && (thisaddres.LastName != "") ? thisaddres.LastName : "");
+            $("#customerAddress_Address").val((thisaddres.Address != null) && (thisaddres.Address != "") ? thisaddres.Address : "");
+            $("#customerAddress_City").val((thisaddres.City != null) && (thisaddres.City != "") ? thisaddres.City : "");
+            $("#CountryCode").val((thisaddres.country.Code != null) && (thisaddres.country.Code != "") ? thisaddres.country.Code : "");
+            $("#customerAddress_StateProvince").val((thisaddres.StateProvince != null) && (thisaddres.StateProvince != "") ? thisaddres.StateProvince : "");
+            $("#customerAddress_ContactNo").val((thisaddres.ContactNo != null) && (thisaddres.ContactNo != "") ? thisaddres.ContactNo : "");
+            if (thisaddres.BillDefaultYN == true)
+            { $("#customerAddress_BillDefaultYN").prop('checked', true); }
+            else { $("#customerAddress_BillDefaultYN").prop('checked', false); }
+            if (thisaddres.ShipDefaultYN == true)
+            { $("#customerAddress_ShipDefaultYN").prop('checked', true); }
+            else { $("#customerAddress_ShipDefaultYN").prop('checked', false); }
+
+            $("#customerAddress_ID").val(thisaddres.ID);
+        }
+    }
+    catch(e)
+    {
+        notyAlert('errror', e.message);
+    }
+}
+
+function AddressViewClick()
+{
+    try
+    {
+        ChangeButtonPatchView("Customer", "customerToolBox", "Add"); //ControllerName,id of the container div,Name of the action
+        ClearAddressForm();
+    }
+    catch(e)
+    {
+        notyAlert('errror', e.message);
+    }
+}
+
+function CustomerViewClick() {
+    try {
+        var isact = $("#IsActive").val();
+        if (isact)
+        {
+            switch (isact) {
+                case "true":
+                    ChangeButtonPatchView("Customer", "customerToolBox", "Deactivate"); //ControllerName,id of the container div,Name of the action
+                    break;
+                case "false":
+                    ChangeButtonPatchView("Customer", "customerToolBox", "Activate"); //ControllerName,id of the container div,Name of the action
+                    break;
+            }
+        }
+       
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
+}
+
+function ClearAddressForm()
+{
+    try
+    {
+        var validator = $("#Addressform").validate();
+        $('#Addressform').find('.field-validation-error span').each(function () {
+            validator.settings.success($(this));
+        });
+        $('#Addressform')[0].reset();
+        $('#customerAddress_ID').val(0);
+       
+    }
+    catch(e)
+    {
+        notyAlert('errror', e.message);
+    }
+   
+}
+
+function NewAddress()
+{
+    ClearAddressForm();
+    $("#customerAddress_Prefix").focus();
+}
+
+function DeleteCustomerAddress()
+{
+    try {
+        var custid = $('#ID').val();
+        var cusaddid = $('#customerAddress_ID').val();
+        if (((custid) && (custid > 0)) && ((cusaddid) && (cusaddid > 0))) {
+            if (confirm("Are you Sure!") == true) {
+                var CustomerAddressViewModel = new Object();
+                CustomerAddressViewModel.ID = cusaddid;
+                CustomerAddressViewModel.CustomerID = custid;
+                var data = "{'customerAddress':" + JSON.stringify(CustomerAddressViewModel) + "}";
+                PostDataToServer('Customer/DeleteCustomerAddress/', data, function (JsonResult) {
+                    if (JsonResult != '') {
+                        switch (JsonResult.Result) {
+                            case "OK":
+                                notyAlert('success', JsonResult.Record.StatusMessage);
+                                BindAddress(custid);
+                                ClearAddressForm();
+                                break;
+                            case "ERROR":
+                                notyAlert('error', JsonResult.Record.StatusMessage);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                });
+            }
+        }
+    }
+    catch(e)
+    {
+        notyAlert('errror', e.message);
     }
 }
