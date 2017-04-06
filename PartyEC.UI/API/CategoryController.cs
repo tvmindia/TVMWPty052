@@ -58,6 +58,21 @@ namespace PartyEC.UI.API
             }
         }
 
+        [HttpPost]
+        public object GetProductsOfCategory(Categories categoryObj)
+        {
+            try
+            {
+                List<ProductsOfCategoryAppViewModel> ProductsList = Mapper.Map<List<Product>, List<ProductsOfCategoryAppViewModel>>(_productBusiness.GetProductsOfCategory(categoryObj));
+                if (ProductsList.Count == 0 ) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = ProductsList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
 
 
     }
