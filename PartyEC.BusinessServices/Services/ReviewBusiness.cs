@@ -32,5 +32,20 @@ namespace PartyEC.BusinessServices.Services
             }
             return reviewlist;
         }
+
+        public List<ProductReview> GetProductRatingByCustomer(int ProductID, int CustomerID, int AttributesetId)
+        {
+            List<ProductReview> reviewlist = null;
+            try
+            {
+                reviewlist = _reviewRepository.GetProductRatingByCustomer(ProductID, CustomerID, AttributesetId);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return reviewlist;
+        }
     }
 }
