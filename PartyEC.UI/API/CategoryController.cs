@@ -66,7 +66,7 @@ namespace PartyEC.UI.API
                 List<ProductsOfCategoryAppViewModel> ProductsList = Mapper.Map<List<Product>, List<ProductsOfCategoryAppViewModel>>(_productBusiness.GetProductsOfCategory(categoryObj));
                 List<FilterCatsOfCategoryAppViewModel> CategoryList = Mapper.Map<List<Categories>, List<FilterCatsOfCategoryAppViewModel>>(_categoryBusiness.GetFilterCategoriesForApp(categoryObj));
                 if (ProductsList.Count == 0 && CategoryList.Count == 0) throw new Exception(messages.NoItems);
-                return JsonConvert.SerializeObject(new { Result = true, Records = new { Products = ProductsList, SubCategories = CategoryList } });
+                return JsonConvert.SerializeObject(new { Result = true, Records = new { Products = ProductsList, Filters = CategoryList } });
             }
             catch (Exception ex)
             {
@@ -74,7 +74,20 @@ namespace PartyEC.UI.API
             }
         }
 
-
+        [HttpPost]
+        public object GetProductsByFiltering(FilterCriteria filterCritiria)
+        {
+            try
+            {
+                List<ProductsOfCategoryAppViewModel> ProductList = Mapper.Map<List<Product>, List<ProductsOfCategoryAppViewModel>>(_productBusiness.GetProductsByFiltering(filterCritiria));
+                if (ProductList.Count == 0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = ProductList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
 
     }
 }

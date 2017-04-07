@@ -80,6 +80,53 @@ function GetAllOrdersList(ID) {
         notyAlert('error', e.message);
     }
 }
+function GetAllOrderComments(ID) {
+    try {
+        data = { "ID": ID };
+        var ds = {};
+        ds = GetDataFromServer("Order/GetEventsLog/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+function GetOrderSummery(ID) {
+    try {
+        data = { "ID": ID };
+        var ds = {};
+        ds = GetDataFromServer("Order/GetOrderSummery/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+function GetOrderDetails(ID) {
+    try {
+
+        var ds = {};
+        data = { "ID": ID };
+        ds = GetDataFromServer("Order/GetOrderDetails/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            alert(ds.Message);
+        }
+
+    }
+    catch (e) {
+
+    }
+}
 //Edit For Order Header
 function Edit(this_obj)
 {
@@ -176,19 +223,20 @@ function BindOrderComments(Result)
     if (CommentList != null) {
 
         for (var i = 0; i < CommentList.length; i++) {
-            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12"><span class="badge">' + CommentList[i].CommentDate + '</span>' + CommentList[i].Comment + '</li>');
+            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12" style="background-color:#f4f0f0;"><span class="badge">' + CommentList[i].CommentDate + '</span>' + CommentList[i].Comment + '</li>');
             $("#CommentsDisplay").append(cnt);
         }
     }
 }
 function BindOrderSummery(Result)
 {
+    debugger;
     var OrderSummeryList=GetOrderSummery(Result.ID);
-    $('#tdSubTotal').text(OrderSummeryList.SubTotalOrderSummery)
-    $('#tdTaxTotal').text(OrderSummeryList.TaxAmtOrderSummery)
-    $('#tdDeliveryCosts').text(OrderSummeryList.ShippingCostOrderSummery)
-    $('#tdOrderDiscount').text(OrderSummeryList.DiscountAmtOrderSummery)
-    $('#strGrandTotal').text(OrderSummeryList.GrandTotalOrderSummery)
+    $('#tdSubTotal').text(OrderSummeryList.SubTotalOrderSummery+ Result.CurrencyCode)
+    $('#tdTaxTotal').text(OrderSummeryList.TaxAmtOrderSummery+ Result.CurrencyCode)
+    $('#tdDeliveryCosts').text(OrderSummeryList.ShippingCostOrderSummery+ Result.CurrencyCode)
+    $('#tdOrderDiscount').text(OrderSummeryList.DiscountAmtOrderSummery+ Result.CurrencyCode)
+    $('#strGrandTotal').text(OrderSummeryList.GrandTotalOrderSummery+ Result.CurrencyCode)
 }
 function CheckinBillingChanges(data)
 {
@@ -236,53 +284,4 @@ function CheckinCommentInsert(data) {
 
     }
 }
-function GetOrderDetails(ID)
-{
-    try {
 
-        var ds = {};
-        data = { "ID": ID };
-        ds = GetDataFromServer("Order/GetOrderDetails/", data);
-        if (ds != '') {
-            ds = JSON.parse(ds);
-        }
-        if (ds.Result == "OK") {
-            return ds.Records;
-        }
-        if (ds.Result == "ERROR") {
-            alert(ds.Message);
-        }
-
-    }
-    catch (e) {
-
-    }
-}
-function GetAllOrderComments(ID)
-{
-    try {
-        data = { "ID": ID };
-        var ds = {};
-        ds = GetDataFromServer("Order/GetEventsLog/", data);
-        if (ds != '') { ds = JSON.parse(ds); }
-        if (ds.Result == "OK") { return ds.Records; }
-        if (ds.Result == "ERROR") { alert(ds.Message); }
-    }
-    catch (e) {
-        notyAlert('error', e.message);
-    }
-}
-function GetOrderSummery(ID)
-{
-    try {
-        data = { "ID": ID };
-        var ds = {};
-        ds = GetDataFromServer("Order/GetOrderSummery/", data);
-        if (ds != '') { ds = JSON.parse(ds); }
-        if (ds.Result == "OK") { return ds.Records; }
-        if (ds.Result == "ERROR") { alert(ds.Message); }
-    }
-    catch (e) {
-        notyAlert('error', e.message);
-    }
-}

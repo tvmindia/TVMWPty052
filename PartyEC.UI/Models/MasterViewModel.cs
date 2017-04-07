@@ -87,6 +87,7 @@ namespace PartyEC.UI.Models
         public int ID { get; set; }
         public int ParentID { get; set; }
         public string ParentType { get; set; }
+        [Display(Name = "Notify Client")]
         public bool CustomerNotifiedYN { get; set; }
         public string Comment { get; set; }
         public string CommentDate { get; set; }

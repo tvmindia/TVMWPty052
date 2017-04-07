@@ -360,6 +360,7 @@
     <Content Include="Content\uploadify.swf" />
     <Content Include="Content\UserCSS\Customer.css" />
     <Content Include="Content\UserCSS\EventRequests.css" />
+    <Content Include="Content\UserCSS\Notifications.css" />
     <Content Include="Content\UserCSS\Product.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -381,6 +382,7 @@
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="PartyEcTemplates\OrderComment.html" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
@@ -485,6 +487,7 @@
     <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\EventRequests.js" />
     <Content Include="Scripts\UserJS\Manufacturers.js" />
+    <Content Include="Scripts\UserJS\Notifiations.js" />
     <Content Include="Scripts\UserJS\Order.js" />
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
@@ -521,6 +524,7 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventRequestsController.cs" />
     <Compile Include="Controllers\ManufacturersController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\ShippingLocationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -539,6 +543,7 @@
     <Compile Include="Models\EventRequestsViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\FileUploadViewModel.cs" />
+    <Compile Include="Models\MailViewModel.cs" />
     <Compile Include="Models\MasterViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
     <Compile Include="Models\OperationsStatusViewModel.cs" />
@@ -582,6 +587,7 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
     <Folder Include="Views\Location\" />
+    <Folder Include="Views\Notifications\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

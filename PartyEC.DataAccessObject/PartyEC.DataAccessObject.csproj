@@ -88,6 +88,7 @@
     <Compile Include="DTO\Customer.cs" />
     <Compile Include="DTO\Event.cs" />
     <Compile Include="DTO\EventRequests.cs" />
+    <Compile Include="DTO\Mail.cs" />
     <Compile Include="DTO\Master.cs" />
     <Compile Include="DTO\Menu.cs" />
     <Compile Include="DTO\OperationsStatus.cs" />

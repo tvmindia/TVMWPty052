@@ -126,10 +126,11 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        
         [HttpPost]
         public string UpdateEventsLog(OrderViewModel orderObj)
         {
-                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
                 try
                 {
                     orderObj.EventsLogViewObj.commonObj = new LogDetailsViewModel();
