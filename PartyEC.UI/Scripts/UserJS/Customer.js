@@ -160,7 +160,7 @@ function GetAllCustomers()
 
 function EditCustomer(currentObj)
 {
-    debugger;
+  
     try
     {
         var rowData = DataTables.customerTable.row($(currentObj).parents('tr')).data();
@@ -443,7 +443,7 @@ function AddressSave()
 }
 
 function AddressSaveSuccess(data, status, xhr) {
-    debugger;
+   
     var JsonResult = JSON.parse(data)
     switch (JsonResult.Result) {
         case "OK":
@@ -502,7 +502,7 @@ function BindAddress(custid)
             {
                 if (Records.hasOwnProperty(adrs))
                 {
-                    $('#addressUL').append('<li class="box-shadow"><a href="#" onclick="FillAddressForm(' + Records[adrs]['ID'] + ');return false;" class="list-group-item"><address>' + ((Records[adrs]['Address'] != null) && (Records[adrs]['Address'] != "") ? Records[adrs]['Address'] : '-') + '<br>' + ((Records[adrs]['City'] != null) && (Records[adrs]['City'] != "") ? Records[adrs]['City'] : '-') + '<br>' + ((Records[adrs]['StateProvince'] != null) && (Records[adrs]['StateProvince'] != "") ? Records[adrs]['StateProvince'] : '-') + '<br>' + ((Records[adrs]['country'].Name != null) && (Records[adrs]['country'].Name != "") ? Records[adrs]['country'].Name : '-') + '</address><div>' + (Records[adrs]['BillDefaultYN'] != false ? '<span class="badge">Bill Default</span>' : '') + '' + (Records[adrs]['ShipDefaultYN'] != false ? '<span class="badge">Shipping Default</span>' : '') + '</div></a></li>');
+                    $('#addressUL').append('<li class="box-shadow"><a href="#" onclick="FillAddressForm(' + Records[adrs]['ID'] + ');return false;" class="list-group-item"><span class="label label-danger">Edit</span><address>' + ((Records[adrs]['Address'] != null) && (Records[adrs]['Address'] != "") ? Records[adrs]['Address'] : '-') + '<br>' + ((Records[adrs]['City'] != null) && (Records[adrs]['City'] != "") ? Records[adrs]['City'] : '-') + '<br>' + ((Records[adrs]['StateProvince'] != null) && (Records[adrs]['StateProvince'] != "") ? Records[adrs]['StateProvince'] : '-') + '<br>' + ((Records[adrs]['country'].Name != null) && (Records[adrs]['country'].Name != "") ? Records[adrs]['country'].Name : '-') + '</address><div>' + (Records[adrs]['BillDefaultYN'] != false ? '<span class="badge">Bill Default</span>' : '') + '' + (Records[adrs]['ShipDefaultYN'] != false ? '<span class="badge">Shipping Default</span>' : '') + '</div></a></li>');
                 }
             }
         }
@@ -545,6 +545,7 @@ function FillAddressForm(adid)
     try
     {
         ChangeButtonPatchView("Customer", "customerToolBox", "Edit"); //ControllerName,id of the container div,Name of the action
+        ClearAddressForm();
         var thisaddres = GetAddressDetailsByAddress(adid);
         if(thisaddres)
         {
