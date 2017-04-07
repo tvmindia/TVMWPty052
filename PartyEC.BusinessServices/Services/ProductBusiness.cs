@@ -351,6 +351,20 @@ namespace PartyEC.BusinessServices.Services
             return productlist;
         }
 
+        public List<Product> GetProductsByFiltering(FilterCriteria filterCriteria)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetProductsByFiltering(filterCriteria);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productlist;
+        }
+
         #endregion
     }
 }

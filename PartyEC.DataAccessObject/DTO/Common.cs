@@ -83,4 +83,9 @@ namespace PartyEC.DataAccessObject.DTO
         }
         #endregion
     }
+
+    public class FilterCriteria
+    {
+        public string filterCriteriaCSV { get; set; }
+    }
 }
