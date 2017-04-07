@@ -47,5 +47,20 @@ namespace PartyEC.BusinessServices.Services
             }
             return reviewlist;
         }
+
+        public ProductReview GetReview(int ReviewID)
+        {
+            ProductReview  ReviewObj = null;
+            try
+            {
+                ReviewObj = _reviewRepository.GetReview(ReviewID);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return ReviewObj;
+        }
     }
 }

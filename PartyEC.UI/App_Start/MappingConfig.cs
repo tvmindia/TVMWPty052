@@ -1,7 +1,4 @@
-﻿
-
-
-using PartyEC.DataAccessObject.DTO;
+﻿using PartyEC.DataAccessObject.DTO;
 using PartyEC.UI.Models;
 namespace PartyEC.UI.App_Start
 {
@@ -48,6 +45,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<ShippingLocationViewModel, ShippingLocations>().ReverseMap();
                 config.CreateMap<SupplierLocationsViewModel, SupplierLocations>().ReverseMap();
                 config.CreateMap<EventsLogViewModel, EventsLog>().ReverseMap();
+                config.CreateMap<NotifiationViewModel, Notification>().ReverseMap();
                 config.CreateMap<MailViewModel, Mail>().ReverseMap();
             });
         }

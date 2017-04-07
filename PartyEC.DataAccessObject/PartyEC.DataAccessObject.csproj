@@ -91,6 +91,7 @@
     <Compile Include="DTO\Mail.cs" />
     <Compile Include="DTO\Master.cs" />
     <Compile Include="DTO\Menu.cs" />
+    <Compile Include="DTO\Notification.cs" />
     <Compile Include="DTO\OperationsStatus.cs" />
     <Compile Include="DTO\Order.cs" />
     <Compile Include="DTO\Product.cs" />

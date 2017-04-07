@@ -360,6 +360,7 @@
     <Content Include="Content\uploadify.swf" />
     <Content Include="Content\UserCSS\Customer.css" />
     <Content Include="Content\UserCSS\EventRequests.css" />
+    <Content Include="Content\UserCSS\Notifications.css" />
     <Content Include="Content\UserCSS\Product.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
     <Content Include="fonts\fontawesome-webfont.svg" />
@@ -486,6 +487,7 @@
     <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\EventRequests.js" />
     <Content Include="Scripts\UserJS\Manufacturers.js" />
+    <Content Include="Scripts\UserJS\Notifiations.js" />
     <Content Include="Scripts\UserJS\Order.js" />
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
@@ -522,6 +524,7 @@
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventRequestsController.cs" />
     <Compile Include="Controllers\ManufacturersController.cs" />
+    <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\ShippingLocationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -543,6 +546,7 @@
     <Compile Include="Models\MailViewModel.cs" />
     <Compile Include="Models\MasterViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
+    <Compile Include="Models\NotifiationViewModel.cs" />
     <Compile Include="Models\OperationsStatusViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
@@ -573,6 +577,7 @@
     <Content Include="Views\Manufacturers\Index.cshtml" />
     <Content Include="Views\Countries\Index.cshtml" />
     <Content Include="Views\Reviews\Index.cshtml" />
+    <Content Include="Views\Notifications\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
