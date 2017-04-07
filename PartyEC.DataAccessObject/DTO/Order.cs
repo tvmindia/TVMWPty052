@@ -75,10 +75,10 @@ namespace PartyEC.DataAccessObject.DTO
         public EventsLog EventsLogObj { get; set; }
 
         //OrderSummery
-        public float SubTotalOrderSummery { get; set; }
-        public float TaxAmtOrderSummery { get; set; }
-        public float ShippingCostOrderSummery { get; set; }
-        public float DiscountAmtOrderSummery { get; set; }
-        public float GrandTotalOrderSummery { get; set; }
+        public string SubTotalOrderSummery { get; set; }
+        public string TaxAmtOrderSummery { get; set; }
+        public string ShippingCostOrderSummery { get; set; }
+        public string DiscountAmtOrderSummery { get; set; }
+        public string GrandTotalOrderSummery { get; set; }
     }
 }
