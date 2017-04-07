@@ -1,18 +1,20 @@
 ﻿var DataTables = {};
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
-    try { 
+    try {
+        ChangeButtonPatchView("Reviews", "btnPatchReviewtab2", "Edit");
         DataTables.ReviewTable = $('#tblReview').DataTable(
          {
+
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
              order: [],
              searching: true,
              paging: true,
              data: GetAllReviews(),
              columns: [
+               { "data": "ID" },
                { "data": "ProductID" },
-               { "data": "ProductName" },
-               { "data": "CustomerID" },
+               { "data": "ProductName" }, 
                { "data": "CustomerName" },
                { "data": "Review" },
                { "data": "ReviewCreatedDate", "defaultContent": "<i>-</i>" },
@@ -37,7 +39,7 @@ $(document).ready(function () {
                  }
              }, {
                  'targets': 8, 'render': function (data, type, row) {
-                     if (row.IsApproved == 'True') {
+                     if (row.IsApproved == true) {
                          return 'Approved';
                      }
                      else { return 'Pending'; }
@@ -46,8 +48,7 @@ $(document).ready(function () {
  {
      'targets': 7, 'render': function (data, type, row) {
       
-         if (row.RatingDate == null) {
-             debugger;
+         if (row.RatingDate == null) { 
              return row.RatingCreatedDate;
          }
          else { 
@@ -78,13 +79,10 @@ function GetAllReviews() {
              ToDate = $("#todate").val();
          }
          else { ToDate = null; }
-      
-       
+
          var data = { "Condition": condition, "FromDate": FromDate, "ToDate": ToDate };
         var ds = {};
-        ds = GetDataFromServer("Reviews/GetAllReviews/", data);
-
-        debugger;
+        ds = GetDataFromServer("Reviews/GetAllReviews/", data); 
         if (ds != '') {
             ds = JSON.parse(ds);
         }
@@ -99,6 +97,78 @@ function GetAllReviews() {
         notyAlert('error', e.message);
     }
 }
+
+function GetReviewByID(id) {
+    try {
+        debugger;
+        var data = { "ID": id };
+        var ds = {};
+        ds = GetDataFromServer("Reviews/GetReview/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
+//---------------------------------------Edit Suppliers--------------------------------------------------//
+function Edit(currentObj) {
+    //Tab Change on edit click
+    debugger;
+    $('#tabReviewDetails').trigger('click');
+    ChangeButtonPatchView("Reviews", "btnPatchReviewtab2", "Edit");//ControllerName,id of the container div,Name of the action
+
+    var rowData = DataTables.ReviewTable.row($(currentObj).parents('tr')).data();
+    if ((rowData != null) && (rowData.ID != null)) {
+        fillReview(rowData.ID);
+        var thisRatingSummary = GetProductRatingByCustomer(rowData.ProductID, rowData.CustomerID,rowData.AttributeSetID);
+        if (thisRatingSummary.length > 0) {
+            $("#CustomerRating").empty();
+            var ratinglists=ratingArea(thisRatingSummary)
+            $("#CustomerRating").append(ratinglists);
+        }//if
+        else {
+            $("#CustomerRating").empty();
+            var ratinglists = '<div class="col-xs-12 text-center"><h3>No Ratings Yet.. </h3></div>'
+            $("#CustomerRating").append(ratinglists);
+        }
+
+
+    }
+}
+//---------------------------------------Fill Suppliers--------------------------------------------------//
+function fillReview(ID) {
+    debugger; 
+    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Edit");
+    var thisReview = GetReviewByID(ID); //Binding Data  
+    $("#ID").val(thisReview.ID);
+    $("#ProductID").val(thisReview.ProductID);
+    $("#ProductName").val(thisReview.ProductName);
+    $("#CustomerName").val(thisReview.CustomerName);
+    $("#Review").val(thisReview.Review);
+    $("#ReviewCreatedDate").val(thisReview.ReviewCreatedDate);
+    $("#RatingDate").val(thisReview.RatingDate);
+    $("#IsApproved").val(thisReview.IsApproved);
+
+ 
+    
+
+}
+
+
+//---------------------------------------Back-------------------------------------------------------//
+function goback() {
+    $('#tabReviewList').trigger('click');
+}
+
 
 //---------------------------------------Bind All Reviews----------------------------------------------// 
 function BindAllReviews() {
@@ -169,23 +239,24 @@ function ModelProductsRating(currentObj) {
         var thisRatingSummary = GetProductRatingByCustomer(rowData.ProductID, rowData.CustomerID,rowData.AttributeSetID);
         if (thisRatingSummary.length > 0) {
             $("#RatingPopupDisplay").empty();
-            var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
-            var ratinglists = ""
-            for (var i = 0; i < attributecount; i++) {
-                var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value);
-                ratingstar = Math.round(ratingstar); //count of Rating to display as star
-                var ratebtnstring = '';
-                for (var count = 0; count < 5; count++) {
-                    if (count < ratingstar) {
-                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
-                    }
-                    else {
-                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
-                    }
-                }//for
-                ratinglists = ratinglists + '<div class="col-xs-5 ">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
-                                            '<div class="col-xs-7 "><div  class="rating-block">' + ratebtnstring + '</div></div>';
-            }//for
+            var ratinglists=ratingArea(thisRatingSummary)
+            //var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
+            //var ratinglists = ""
+            //for (var i = 0; i < attributecount; i++) {
+            //    var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value);
+            //    ratingstar = Math.round(ratingstar); //count of Rating to display as star
+            //    var ratebtnstring = '';
+            //    for (var count = 0; count < 5; count++) {
+            //        if (count < ratingstar) {
+            //            ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+            //        }
+            //        else {
+            //            ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+            //        }
+            //    }//for
+            //    ratinglists = ratinglists + '<div class="col-xs-5 ">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
+            //                                '<div class="col-xs-7 "><div  class="rating-block">' + ratebtnstring + '</div></div>';
+            //}//for
             $("#RatingPopupDisplay").append(ratinglists);
         }//if
         else {
@@ -196,6 +267,33 @@ function ModelProductsRating(currentObj) {
     }//if
     $('#btnmodelproductrating').trigger('click');
 }
+
+
+function ratingArea(thisRatingSummary)
+{
+    var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
+    var ratinglists = ""
+    for (var i = 0; i < attributecount; i++) {
+        var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value);
+        ratingstar = Math.round(ratingstar); //count of Rating to display as star
+        var ratebtnstring = '';
+        for (var count = 0; count < 5; count++) {
+            if (count < ratingstar) {
+                ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+            }
+            else {
+                ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+            }
+        }//for
+        ratinglists = ratinglists + '<div class="col-xs-5 ">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
+                                    '<div class="col-xs-7 "><div  class="rating-block">' + ratebtnstring + '</div></div>';
+    }//for
+return ratinglists
+}
+
+
+
+
 
 function GetProductRatingByCustomer(productid, customerid, AttributesetID) {
     try {
