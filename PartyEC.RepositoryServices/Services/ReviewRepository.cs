@@ -62,7 +62,8 @@ namespace PartyEC.RepositoryServices.Services
                                         _reviewObj.ReviewCreatedDate = (sdr["ReviewDate"].ToString() != "" ? DateTime.Parse(sdr["ReviewDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _reviewObj.ReviewCreatedDate);
                                         _reviewObj.RatingDate = (sdr["RatingDate"].ToString() != "" ? DateTime.Parse(sdr["RatingDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _reviewObj.RatingDate);
                                         _reviewObj.IsApproved = (sdr["ApprovedYN"].ToString() != "" ? sdr["ApprovedYN"].ToString() : _reviewObj.IsApproved);
-                                        
+                                        _reviewObj.RatingCreatedDate = (sdr["RatingCreatedDate"].ToString() != "" ? DateTime.Parse(sdr["RatingCreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _reviewObj.RatingCreatedDate);
+
 
 
                                     }
@@ -114,7 +115,6 @@ namespace PartyEC.RepositoryServices.Services
                                     ProductReview _pReviewObj = new ProductReview();
                                     {
                                         _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
-                                        //_pReviewObj.RatingCount = (sdr["RatingCount"].ToString() != "" ? sdr["RatingCount"].ToString() : _pReviewObj.RatingCount);
 
                                         if (myAttributeStructure == null)
                                         {

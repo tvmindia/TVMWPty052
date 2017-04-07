@@ -42,7 +42,19 @@ $(document).ready(function () {
                      }
                      else { return 'Pending'; }
                  }
-             }
+             },
+ {
+     'targets': 7, 'render': function (data, type, row) {
+      
+         if (row.RatingDate == null) {
+             debugger;
+             return row.RatingCreatedDate;
+         }
+         else { 
+             return row.RatingDate
+         }
+     }
+ }
           ]
          });
         $("#rdoreviewPending").prop('checked', true);
@@ -71,6 +83,8 @@ function GetAllReviews() {
          var data = { "Condition": condition, "FromDate": FromDate, "ToDate": ToDate };
         var ds = {};
         ds = GetDataFromServer("Reviews/GetAllReviews/", data);
+
+        debugger;
         if (ds != '') {
             ds = JSON.parse(ds);
         }
