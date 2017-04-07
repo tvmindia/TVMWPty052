@@ -21,3 +21,14 @@ address {
   margin-top: -1px!important;
   margin-bottom: -1px!important;
 }
+#addressUL address{
+  margin-bottom: 4px;
+}
+
+#addressUL li {
+    margin-bottom: 10px;
+}
+.box-shadow {
+    -webkit-box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
+    box-shadow: 0 0 10px 0 rgba(0,0,0,.10);
+}
