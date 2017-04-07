@@ -255,7 +255,7 @@ namespace PartyEC.RepositoryServices.Services
                             con.Open();
                         }
                         cmd.Connection = con;
-                        cmd.CommandText = "[]";
+                        cmd.CommandText = "[GetOrderSummeryFigure]";
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ID;
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -266,10 +266,11 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     orderObj = new Order();
                                     {
-                                        //orderObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : orderObj.ID);
-                                        //orderObj.LifeTimeSales = (sdr["LifeTimeSales"].ToString() != "" ? sdr["LifeTimeSales"].ToString() : orderObj.LifeTimeSales);
-                                        //orderObj.AverageSales = (sdr["AverageSales"].ToString() != "" ? sdr["AverageSales"].ToString() : orderObj.AverageSales);
-                                        //orderObj.LastMonthSales = (sdr["LastMonthSales"].ToString() != "" ? sdr["LastMonthSales"].ToString() : orderObj.LastMonthSales);
+                                        orderObj.SubTotalOrderSummery = sdr["SubTotalOrderSummery"].ToString();
+                                        orderObj.DiscountAmtOrderSummery = sdr["DiscountAmtOrderSummery"].ToString();
+                                        orderObj.TaxAmtOrderSummery = sdr["TaxAmtOrderSummery"].ToString();
+                                        orderObj.ShippingCostOrderSummery = sdr["ShippingCostOrderSummery"].ToString();
+                                        orderObj.GrandTotalOrderSummery = sdr["GrandTotalOrderSummery"].ToString();
                                     }
                                 }
                             }

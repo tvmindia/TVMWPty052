@@ -126,10 +126,17 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        
         [HttpPost]
         public string UpdateEventsLog(OrderViewModel orderObj)
         {
-                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+
+            MailViewModel modelObj = new MailViewModel();
+            modelObj.UserName = "Thomson K Varkey";
+            modelObj.OrderID = "O_1002";
+            modelObj.comment = "Thank you for purchasing with us PartyEc.com";
+            var MailBod= PartialView("_OrderCommentView", modelObj);
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
                 try
                 {
                     orderObj.EventsLogViewObj.commonObj = new LogDetailsViewModel();
