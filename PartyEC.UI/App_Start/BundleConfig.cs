@@ -12,7 +12,6 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/jstree/default/jstreecss").Include("~/Content/jstree/default/jstreestyle.css"));
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css", "~/Content/bootstrap-theme.min.css", "~/Content/font-awesome.min.css", "~/Content/custom.css"));
             bundles.Add(new StyleBundle("~/Content/lightbox").Include("~/Content/lightbox.min.css"));
-
             bundles.Add(new StyleBundle("~/Content/DataTables/css/datatable").Include("~/Content/DataTables/css/dataTables.bootstrap.min.css", "~/Content/DataTables/css/responsive.bootstrap.min.css"));
             bundles.Add(new StyleBundle("~/Content/DataTables/css/datatablecheckbox").Include("~/Content/DataTables/css/dataTables.checkboxes.css"));
             bundles.Add(new StyleBundle("~/Content/DataTables/css/datatableSelect").Include("~/Content/DataTables/css/select.dataTables.min.css"));
@@ -20,9 +19,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/UserCSS/customer").Include("~/Content/UserCSS/Customer.css"));
             bundles.Add(new StyleBundle("~/Content/Uplodify").Include("~/Content/uploadify.css"));
             bundles.Add(new StyleBundle("~/Content/UserCSS/EventRequest").Include("~/Content/UserCSS/EventRequests.css"));
-            
-
-
+            bundles.Add(new StyleBundle("~/Content/UserCSS/Notifications").Include("~/Content/UserCSS/Notifications.css"));
 
             //jquery bundles
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-3.1.1.min.js"));
@@ -40,7 +37,6 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/userpluginjs").Include("~/Scripts/jquery.noty.packaged.min.js","~/Scripts/custom.js"));
             bundles.Add(new ScriptBundle("~/bundles/Uploadify").Include("~/Scripts/jquery.uploadify.js"));
             bundles.Add(new ScriptBundle("~/bundles/Lightbox").Include("~/Scripts/lightbox.min.js"));
-
             bundles.Add(new ScriptBundle("~/bundles/product").Include("~/Scripts/UserJS/Products.js"));
             bundles.Add(new ScriptBundle("~/bundles/attributes").Include("~/Scripts/UserJS/Attributes.js"));
             bundles.Add(new ScriptBundle("~/bundles/AttributeSet").Include("~/Scripts/UserJS/AttributeSet.js"));
@@ -57,6 +53,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/Countries").Include("~/Scripts/UserJS/Countries.js"));
             bundles.Add(new ScriptBundle("~/bundles/Manufacturers").Include("~/Scripts/UserJS/Manufacturers.js"));
             bundles.Add(new ScriptBundle("~/bundles/Review").Include("~/Scripts/UserJS/Review.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Notifications").Include("~/Scripts/UserJS/Notifiations.js"));
         }
     }
 }

@@ -546,6 +546,7 @@
     <Compile Include="Models\MailViewModel.cs" />
     <Compile Include="Models\MasterViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
+    <Compile Include="Models\NotifiationViewModel.cs" />
     <Compile Include="Models\OperationsStatusViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
@@ -576,6 +577,7 @@
     <Content Include="Views\Manufacturers\Index.cshtml" />
     <Content Include="Views\Countries\Index.cshtml" />
     <Content Include="Views\Reviews\Index.cshtml" />
+    <Content Include="Views\Notifications\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -587,7 +589,6 @@
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
     <Folder Include="Views\Location\" />
-    <Folder Include="Views\Notifications\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

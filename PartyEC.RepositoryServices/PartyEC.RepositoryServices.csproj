@@ -90,6 +90,7 @@
     <Compile Include="Contracts\IEventRepositry.cs" />
     <Compile Include="Contracts\IEventRequestsRepositry.cs" />
     <Compile Include="Contracts\IMasterRepository.cs" />
+    <Compile Include="Contracts\INotificationRepository.cs" />
     <Compile Include="Contracts\IOrderRepository.cs" />
     <Compile Include="Contracts\IProductRepository.cs" />
     <Compile Include="Contracts\IReviewRepository.cs" />
@@ -103,6 +104,7 @@
     <Compile Include="Services\EventRepositry.cs" />
     <Compile Include="Services\EventRequestsRepositry.cs" />
     <Compile Include="Services\MasterRepository.cs" />
+    <Compile Include="Services\NotificationRepository.cs" />
     <Compile Include="Services\OrderRepository.cs" />
     <Compile Include="Services\ProductRepository.cs" />
     <Compile Include="Services\ReviewRepository.cs" />
