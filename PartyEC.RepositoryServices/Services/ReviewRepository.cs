@@ -52,7 +52,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     ProductReview _reviewObj = new ProductReview();
                                     {
-                                        
+                                        _reviewObj.ID = (sdr["ReviewID"].ToString() != "" ? int.Parse(sdr["ReviewID"].ToString()) : _reviewObj.ID);
                                         _reviewObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : _reviewObj.CustomerID);
                                         _reviewObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _reviewObj.CustomerName);
                                         _reviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString() ): _reviewObj.ProductID);
@@ -113,7 +113,7 @@ namespace PartyEC.RepositoryServices.Services
                                 while (sdr.Read())
                                 {
                                     ProductReview _pReviewObj = new ProductReview();
-                                    {
+                                    { 
                                         _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
 
                                         if (myAttributeStructure == null)
@@ -143,6 +143,57 @@ namespace PartyEC.RepositoryServices.Services
             }
 
             return RatingSummary;
+        }
+
+        public ProductReview GetReview(int ReviewID)
+        {
+            ProductReview myReview = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ReviewID;
+                        cmd.CommandText = "[GetReview]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                if (sdr.Read())
+                                {
+                                    myReview = new ProductReview();
+                                    myReview.ID = (sdr["ReviewID"].ToString() != "" ? int.Parse(sdr["ReviewID"].ToString()) : myReview.ID);
+                                    myReview.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : myReview.ProductID);
+                                    myReview.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : myReview.ProductName);
+                                    myReview.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : myReview.CustomerID);
+                                    myReview.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : myReview.CustomerName);
+                                    myReview.Review = (sdr["Review"].ToString() != "" ? sdr["Review"].ToString() : myReview.Review);
+
+                                    myReview.AttributeSetID = (sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : myReview.AttributeSetID);
+                                    myReview.IsApproved = (sdr["ApprovedYN"].ToString() != "" ?  sdr["ApprovedYN"].ToString(): myReview.IsApproved);
+
+                                    myReview.ReviewCreatedDate = (sdr["ReviewDate"].ToString() != "" ? DateTime.Parse(sdr["ReviewDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : myReview.ReviewCreatedDate);
+                                    myReview.RatingDate = (sdr["RatingDate"].ToString() != "" ? DateTime.Parse(sdr["RatingDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : myReview.RatingDate);
+                                    myReview.RatingCreatedDate = (sdr["RatingCreatedDate"].ToString() != "" ? DateTime.Parse(sdr["RatingCreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : myReview.RatingCreatedDate);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return myReview;
         }
     }
 }
