@@ -130,12 +130,6 @@ namespace PartyEC.UI.Controllers
         [HttpPost]
         public string UpdateEventsLog(OrderViewModel orderObj)
         {
-
-            MailViewModel modelObj = new MailViewModel();
-            modelObj.UserName = "Thomson K Varkey";
-            modelObj.OrderID = "O_1002";
-            modelObj.comment = "Thank you for purchasing with us PartyEc.com";
-            var MailBod= PartialView("_OrderCommentView", modelObj);
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
                 try
                 {
