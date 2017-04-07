@@ -25,13 +25,10 @@ $(document).ready(function () {
         var $el = $(this);
         var $parent = $(this).offsetParent(".dropdown-menu");
         $(this).parent("li").toggleClass('open');
-
         if (!$parent.parent().hasClass('nav')) {
             $el.next().css({ "top": $el[0].offsetTop, "left": $parent.outerWidth() - 4 });
         }
-
         $('.nav li.open').not($(this).parents("li")).removeClass("open");
-
         return false;
     });
    
@@ -105,6 +102,7 @@ function GetDataFromServer(page, formData) {
          jsonResult = data;
         },
         error: function (jqXHR, textStatus, errorThrown) {
+          jsonResult = '';
           notyAlert('error',errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
         },
         complete: function () {

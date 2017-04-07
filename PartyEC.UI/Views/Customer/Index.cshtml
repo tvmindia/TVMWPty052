@@ -79,8 +79,8 @@
                         <div class="panel with-nav-tabs js panel-primary">
                             <div class="panel-heading">
                                 <ul class="nav nav-tabs nav-stacked" id="LHSNavbarCustomers">
-                                    <li id="customerViewLI" onclick="return true;" class="active"><a href="#CustomerView" data-toggle="tab" id="tabCustomerView">Customer View</a></li>
-                                    <li onclick="return true;"><a href="#AddressView" data-toggle="tab" id="tabcustomerAddress">Addresses</a></li>
+                                    <li id="customerViewLI" onclick="CustomerViewClick()" class="active"><a href="#CustomerView" data-toggle="tab" id="tabCustomerView">Customer View</a></li>
+                                    <li onclick="AddressViewClick()"><a href="#AddressView" data-toggle="tab" id="tabcustomerAddress">Addresses</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -246,41 +246,16 @@
                                    <div class="container-fluid">
                                        <div class="row">
 
-                                           <div class="col-md-4">
+                                           <div class="col-md-4 h4">
                                                
-                                               <ul class="list-unstyled list-group">
-                                                   <li>
-                                                       <a href="#" class="list-group-item">
-                                                           <address>Thirthvam Technology Pvt Ltd. <br>Chalakudy<br>Kerala<br>India</address>
-                                                           <div>
-                                                               <span class="badge">Bill Default</span>
-                                                               <span class="badge">Shipping Default</span>
-                                                           </div>
-                                                       </a>
-                                                       
-                                                   </li>
-                                                   <li>
-                                                       <a href="#" class="list-group-item">
-                                                           <address>Thirthvam Technology Pvt Ltd. <br>Chalakudy<br>Kerala<br>India</address>
-                                                           
-                                                       </a>
-
-                                                   </li>
-                                                   <li>
-                                                       <a href="#" class="list-group-item">
-                                                           <address>Thirthvam Technology Pvt Ltd. <br>Chalakudy<br>Kerala<br>India</address>
-                                                           
-                                                       </a>
-
-                                                   </li>
+                                               <ul id="addressUL" class="list-unstyled list-group">
+                                                                                              
                                                   
                                                   
                                                </ul>
                                            </div>
-                                           <div class="col-md-1">
-
-                                           </div>
-                                           <div class="col-md-7">
+                                          
+                                           <div class="col-md-8">
                                              @using (Ajax.BeginForm("CustomerAddressInsertUpdate", "Customer", new AjaxOptions { HttpMethod = "POST", OnSuccess = "AddressSaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "Addressform" }))
 
                                              {
@@ -297,6 +272,7 @@
                                                        <label class="control-label col-md-4" for="FirstName">First Name</label>
                                                        <div class="col-md-8">
                                                            @Html.EditorFor(model => model.customerAddress.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                                           @Html.ValidationMessageFor(model => model.customerAddress.FirstName, "", new { @class = "text-danger" })
                                                        </div>
                                                    </div>
 
@@ -320,7 +296,7 @@
                                                        <label class="control-label col-md-4" for="Address">Address</label>
                                                        <div class="col-md-8">
                                                            @Html.EditorFor(model => model.customerAddress.Address, new { htmlAttributes = new { @class = "form-control" } })
-
+                                                           @Html.ValidationMessageFor(model => model.customerAddress.Address, "", new { @class = "text-danger" })
                                                         </div>
                                                        </div>
                                                    <div class="form-group">
@@ -399,12 +375,8 @@
 
 
                                 </div>
-                               
-                              
                             </div>
-                           
-                        
-                    </div>
+                     </div>
                 </div>
             </div>
         </div>
@@ -414,9 +386,6 @@
 
 
 @Html.HiddenFor(model => model.IsActive)
-
-@*<input type="hidden" id="hdfCustomerID" />
-<input type="hidden" id="hdfCustomerActive"/>*@
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
     @Scripts.Render("~/bundles/datatable")

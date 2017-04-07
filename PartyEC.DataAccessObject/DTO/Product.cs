@@ -106,6 +106,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string Review { get; set; }
         public int DaysCount { get; set; }
         public string ReviewCreatedDate { get; set; }
+        public string RatingCreatedDate { get; set; }
         public string RatingDate { get; set; }
         public string CustomerName { get; set; }
         public string ProductName { get; set; }
@@ -115,7 +116,8 @@ namespace PartyEC.DataAccessObject.DTO
         public List<AttributeValues> ProductRatingAttributes { get; set; }
         public string RatingCount { get; set; }
         public string IsApproved { get; set; }
-        
+        public int AttributeSetID { get; set; }
+
 
     }
     

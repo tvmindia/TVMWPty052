@@ -28,17 +28,41 @@ namespace PartyEC.UI.Controllers
         // GET: Reviews
         public ActionResult Index()
         {
+            
+            //ViewBag.CurrentDate= _commonBusiness.GetCurrentDateTime().ToString("dd-MMM-yyyy");
+            //ViewBag.LastMonthDate = _commonBusiness.GetCurrentDateTime().AddMonths(-1).ToString("dd-MMM-yyyy");
+
             return View();
         }
 
         [HttpGet]
-        public string GetAllReviews(string Condition)
+        public string GetAllReviews(string Condition, string FromDate, string ToDate)
         {
             try
             {
-                List<ProductReviewViewModel> productList = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_reviewBusiness.GetAllReviews(Condition));
+                List<ProductReviewViewModel> productList = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_reviewBusiness.GetAllReviews(Condition,FromDate,ToDate));
 
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
+
+        [HttpGet]
+        public string GetProductRatingByCustomer(string productid, string customerid,string AttributesetID)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(productid))
+                {
+                    List<ProductReviewViewModel> productReviewList = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_reviewBusiness.GetProductRatingByCustomer(int.Parse(productid), int.Parse(customerid), int.Parse(AttributesetID)));
+
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productReviewList });
+                }
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "id is empty" });
             }
             catch (Exception ex)
             {

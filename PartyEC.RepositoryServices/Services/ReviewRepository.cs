@@ -13,14 +13,16 @@ namespace PartyEC.RepositoryServices.Services
     {
         Const ConstObj = new Const();
 
-        private IDatabaseFactory _databaseFactory; 
+        private IDatabaseFactory _databaseFactory;
+        private IAttributesRepository _attributesRepository;
 
-        public ReviewRepository(IDatabaseFactory databaseFactory)
+        public ReviewRepository(IDatabaseFactory databaseFactory,IAttributesRepository attributesRepository)
         {
             _databaseFactory = databaseFactory;
+            _attributesRepository = attributesRepository;
         }
 
-        public List<ProductReview> GetAllReviews(string Condition)
+        public List<ProductReview> GetAllReviews(string Condition,string FromDate,string ToDate)
         {
             List<ProductReview> reviewList = null;
           
@@ -38,6 +40,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[GetAllReviewsandRating]";
                         cmd.Parameters.Add("@Condition", SqlDbType.NVarChar,20).Value = Condition;
+                        cmd.Parameters.Add("@FromDate", SqlDbType.NVarChar, 20).Value = FromDate;
+                        cmd.Parameters.Add("@ToDate", SqlDbType.NVarChar, 20).Value = ToDate;
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
@@ -54,11 +58,12 @@ namespace PartyEC.RepositoryServices.Services
                                         _reviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString() ): _reviewObj.ProductID);
                                         _reviewObj.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : _reviewObj.ProductName);
                                         _reviewObj.Review = (sdr["Review"].ToString() != "" ? sdr["Review"].ToString() : _reviewObj.Review);
-                                       // _reviewObj.ProductRatingAttributes = (sdr["Rating"].ToString() != "" ? sdr["Rating"].ToString() : _reviewObj.ProductRatingAttributes);
+                                        _reviewObj.AttributeSetID = (sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : _reviewObj.AttributeSetID);
                                         _reviewObj.ReviewCreatedDate = (sdr["ReviewDate"].ToString() != "" ? DateTime.Parse(sdr["ReviewDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _reviewObj.ReviewCreatedDate);
                                         _reviewObj.RatingDate = (sdr["RatingDate"].ToString() != "" ? DateTime.Parse(sdr["RatingDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _reviewObj.RatingDate);
                                         _reviewObj.IsApproved = (sdr["ApprovedYN"].ToString() != "" ? sdr["ApprovedYN"].ToString() : _reviewObj.IsApproved);
-                                        
+                                        _reviewObj.RatingCreatedDate = (sdr["RatingCreatedDate"].ToString() != "" ? DateTime.Parse(sdr["RatingCreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _reviewObj.RatingCreatedDate);
+
 
 
                                     }
@@ -79,9 +84,65 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
+        public List<ProductReview> GetProductRatingByCustomer(int ProductID, int CustomerID, int AttributesetId)
+        {
+            List<ProductReview> RatingSummary = null;
+            List<AttributeValues> myAttributeStructure = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetProductRatingByCustomer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CustomerID;
 
 
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                RatingSummary = new List<ProductReview>();
+                                while (sdr.Read())
+                                {
+                                    ProductReview _pReviewObj = new ProductReview();
+                                    {
+                                        _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
 
+                                        if (myAttributeStructure == null)
+                                        {
+                                            myAttributeStructure = _attributesRepository.GetAttributeContainer(AttributesetId, "Rating");
+                                        }
 
+                                        _pReviewObj.ProductRatingAttributes = new List<AttributeValues>();
+                                        foreach (AttributeValues att in myAttributeStructure)
+                                        {
+                                            att.Value = sdr[att.Caption].ToString();
+                                            _pReviewObj.ProductRatingAttributes.Add(att);
+
+                                        }
+                                    }
+                                    RatingSummary.Add(_pReviewObj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return RatingSummary;
+        }
     }
 }

@@ -221,6 +221,7 @@ namespace PartyEC.UI.Models
         public string Review { get; set; }
         public int DaysCount { get; set; }
         public string ReviewCreatedDate { get; set; }
+        public string RatingCreatedDate { get; set; }
         public string CustomerName { get; set; }
         public string AvgRating { get; set; }
         public string ImageUrl { get; set; }
@@ -230,6 +231,7 @@ namespace PartyEC.UI.Models
         public string RatingDate { get; set; }
         public string IsApproved { get; set; }
         public string ProductName { get; set; }
-      
+        public int AttributeSetID { get; set; }
+
     }
 }

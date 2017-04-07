@@ -35,7 +35,7 @@ namespace PartyEC.UI.Models
         public int ParentOrderID { get; set; }
 	 public string SourceIP { get; set; }
 	 public int CustomerID { get; set; }
-	 public int ShippingLocationID { get; set; }
+	 public string ShippingLocationName { get; set; }
 	 public string PaymentType { get; set; }
 	 public string CurrencyCode { get; set; }
 	 public float CurrencyRate { get; set; }
@@ -90,6 +90,15 @@ namespace PartyEC.UI.Models
         public string AverageSales { get; set; }
         public string LastMonthSales { get; set; }
 
+        //Comments
+        public EventsLogViewModel EventsLogViewObj { get; set; }
+
+        //OrderSummery
+        public float SubTotalOrderSummery { get; set; }
+        public float TaxAmtOrderSummery { get; set; }
+        public float ShippingCostOrderSummery { get; set; }
+        public float DiscountAmtOrderSummery { get; set; }
+        public float GrandTotalOrderSummery { get; set; }
 
     }
 }

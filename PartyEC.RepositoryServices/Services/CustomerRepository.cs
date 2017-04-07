@@ -329,56 +329,166 @@ namespace PartyEC.RepositoryServices.Services
             List<CustomerAddress> CustomerAddresslist = null;
             try
             {
-                //using (SqlConnection con = _databaseFactory.GetDBConnection())
-                //{
-                //    using (SqlCommand cmd = new SqlCommand())
-                //    {
-                //        if (con.State == ConnectionState.Closed)
-                //        {
-                //            con.Open();
-                //        }
-                //        cmd.Connection = con;
-                //        cmd.CommandText = "[GetAllAddressesByCustomer]";
-                //        cmd.CommandType = CommandType.StoredProcedure;
-                //        using (SqlDataReader sdr = cmd.ExecuteReader())
-                //        {
-                //            if ((sdr != null) && (sdr.HasRows))
-                //            {
-                //                CustomerAddresslist = new List<CustomerAddress>();
-                //                while (sdr.Read())
-                //                {
-                //                    CustomerAddress _customerAddresObj = new CustomerAddress();
-                //                    {
-                //                        _customerAddresObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _customerObj.ID);
-                //                        _customerObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _customerObj.Name);
-                //                        _customerObj.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : _customerObj.Email);
-                //                        _customerObj.Mobile = (sdr["Mobile"].ToString() != "" ? sdr["Mobile"].ToString() : _customerObj.Mobile);
-                //                        _customerObj.Language = (sdr["Language"].ToString() != "" ? sdr["Language"].ToString() : _customerObj.Language);
-                //                        _customerObj.Gender = (sdr["Gender"].ToString() != "" ? sdr["Gender"].ToString() : _customerObj.Gender);
-                //                        _customerObj.ProfileImageID = (sdr["ProfileImageID"].ToString() != "" ? Guid.Parse(sdr["ProfileImageID"].ToString()) : _customerObj.ProfileImageID);
-                //                        _customerObj.OrdersCount = (sdr["OrdersCount"].ToString() != "" ? int.Parse(sdr["OrdersCount"].ToString()) : _customerObj.OrdersCount);
-                //                        _customerObj.BookingsCount = (sdr["BookingsCount"].ToString() != "" ? int.Parse(sdr["BookingsCount"].ToString()) : _customerObj.BookingsCount);
-                //                        _customerObj.QuotationsCount = (sdr["QuotationsCount"].ToString() != "" ? int.Parse(sdr["QuotationsCount"].ToString()) : _customerObj.QuotationsCount);
-                //                        _customerObj.OrdersCountHistory = (sdr["OrdersCountHistory"].ToString() != "" ? int.Parse(sdr["OrdersCountHistory"].ToString()) : _customerObj.OrdersCountHistory);
-                //                        _customerObj.BookingsCountHistory = (sdr["BookingsCountHistory"].ToString() != "" ? int.Parse(sdr["BookingsCountHistory"].ToString()) : _customerObj.BookingsCountHistory);
-                //                        _customerObj.QuotationsCountHistory = (sdr["QuotationsCountHistory"].ToString() != "" ? int.Parse(sdr["QuotationsCountHistory"].ToString()) : _customerObj.QuotationsCountHistory);
-                //                        _customerObj.IsActive = bool.Parse(sdr["ActiveYN"].ToString());
-                //                        _customerObj.logDetailsObj = new LogDetails();
-                //                        _customerObj.logDetailsObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _customerObj.logDetailsObj.CreatedDate);
-
-                //                    }
-                //                    Customerlist.Add(_customerObj);
-                //                }
-                //            }//if
-                //        }
-                //    }
-                //}
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetAllAddressesByCustomer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = CustomerID;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                CustomerAddresslist = new List<CustomerAddress>();
+                                while (sdr.Read())
+                                {
+                                    CustomerAddress _customerAddresObj = new CustomerAddress();
+                                    {
+                                        _customerAddresObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _customerAddresObj.ID);
+                                        _customerAddresObj.CustomerID= (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : _customerAddresObj.CustomerID);
+                                        _customerAddresObj.Prefix = (sdr["Prefix"].ToString() != "" ? sdr["Prefix"].ToString() : _customerAddresObj.Prefix);
+                                        _customerAddresObj.FirstName = (sdr["FirstName"].ToString() != "" ? sdr["FirstName"].ToString() : _customerAddresObj.FirstName);
+                                        _customerAddresObj.MidName = (sdr["MidName"].ToString() != "" ? sdr["MidName"].ToString() : _customerAddresObj.MidName);
+                                        _customerAddresObj.LastName = (sdr["LastName"].ToString() != "" ? sdr["LastName"].ToString() : _customerAddresObj.LastName);
+                                        _customerAddresObj.Address = (sdr["Address"].ToString() != "" ? sdr["Address"].ToString() : _customerAddresObj.Address);
+                                        _customerAddresObj.City = (sdr["City"].ToString() != "" ? sdr["City"].ToString() : _customerAddresObj.City);
+                                        _customerAddresObj.country = new Country();
+                                        _customerAddresObj.country.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : _customerAddresObj.country.Code);
+                                        _customerAddresObj.country.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : _customerAddresObj.country.Name);
+                                        _customerAddresObj.StateProvince = (sdr["StateProvince"].ToString() != "" ? sdr["StateProvince"].ToString() : _customerAddresObj.StateProvince);
+                                        _customerAddresObj.ContactNo = (sdr["ContactNo"].ToString() != "" ? sdr["ContactNo"].ToString() : _customerAddresObj.ContactNo);
+                                        _customerAddresObj.BillDefaultYN = (sdr["BillDefaultYN"].ToString() != "" ? bool.Parse(sdr["BillDefaultYN"].ToString()) : _customerAddresObj.BillDefaultYN);
+                                        _customerAddresObj.ShipDefaultYN = (sdr["ShipDefaultYN"].ToString() != "" ? bool.Parse(sdr["ShipDefaultYN"].ToString()) : _customerAddresObj.ShipDefaultYN);
+                                        _customerAddresObj.logDetailsObj = new LogDetails();
+                                        _customerAddresObj.logDetailsObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _customerAddresObj.logDetailsObj.CreatedDate);
+                                    }
+                                    CustomerAddresslist.Add(_customerAddresObj);
+                                }
+                            }
+                        }
+                    }
+                }
             }
             catch (Exception ex)
             {
                 throw ex;
             }
             return CustomerAddresslist;
+        }
+
+
+        public CustomerAddress GetAddressByAddress(int AddressID)
+        {
+            CustomerAddress _customerAddresObj = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetAddressByCustomerAddress]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = AddressID;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                             if (sdr.Read())
+                                {
+                                    _customerAddresObj = new CustomerAddress();
+                                    {
+                                        _customerAddresObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _customerAddresObj.ID);
+                                        _customerAddresObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : _customerAddresObj.CustomerID);
+                                        _customerAddresObj.Prefix = (sdr["Prefix"].ToString() != "" ? sdr["Prefix"].ToString() : _customerAddresObj.Prefix);
+                                        _customerAddresObj.FirstName = (sdr["FirstName"].ToString() != "" ? sdr["FirstName"].ToString() : _customerAddresObj.FirstName);
+                                        _customerAddresObj.MidName = (sdr["MidName"].ToString() != "" ? sdr["MidName"].ToString() : _customerAddresObj.MidName);
+                                        _customerAddresObj.LastName = (sdr["LastName"].ToString() != "" ? sdr["LastName"].ToString() : _customerAddresObj.LastName);
+                                        _customerAddresObj.Address = (sdr["Address"].ToString() != "" ? sdr["Address"].ToString() : _customerAddresObj.Address);
+                                        _customerAddresObj.City = (sdr["City"].ToString() != "" ? sdr["City"].ToString() : _customerAddresObj.City);
+                                        _customerAddresObj.country = new Country();
+                                        _customerAddresObj.country.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : _customerAddresObj.country.Code);
+                                        _customerAddresObj.country.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : _customerAddresObj.country.Name);
+                                        _customerAddresObj.StateProvince = (sdr["StateProvince"].ToString() != "" ? sdr["StateProvince"].ToString() : _customerAddresObj.StateProvince);
+                                        _customerAddresObj.ContactNo = (sdr["ContactNo"].ToString() != "" ? sdr["ContactNo"].ToString() : _customerAddresObj.ContactNo);
+                                        _customerAddresObj.BillDefaultYN = (sdr["BillDefaultYN"].ToString() != "" ? bool.Parse(sdr["BillDefaultYN"].ToString()) : _customerAddresObj.BillDefaultYN);
+                                        _customerAddresObj.ShipDefaultYN = (sdr["ShipDefaultYN"].ToString() != "" ? bool.Parse(sdr["ShipDefaultYN"].ToString()) : _customerAddresObj.ShipDefaultYN);
+                                        _customerAddresObj.logDetailsObj = new LogDetails();
+                                        _customerAddresObj.logDetailsObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _customerAddresObj.logDetailsObj.CreatedDate);
+                                    }
+                               }
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return _customerAddresObj;
+        }
+
+
+        public OperationsStatus DeleteAddress(CustomerAddress customerAddress)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteCustomerAddressByAddress]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerAddress.CustomerID;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = customerAddress.ID;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.DeleteFailure;
+                                break;
+                            case "1":
+                                //Deletion Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.DeleteSuccess;
+                                
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                operationsStatusObj.StatusMessage = ex.Message;
+                throw ex;
+            }
+
+            return operationsStatusObj;
         }
         #endregion Methods
 

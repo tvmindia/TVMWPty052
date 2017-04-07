@@ -77,6 +77,50 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationStatus;
         }
+
+       
+        public List<CustomerAddress> GetAllCustomerAddresses(int CustomerID)
+        {
+            List<CustomerAddress> AddressLists = null;
+            try
+            {
+                AddressLists = _customerRepository.GetAllCustomerAddresses(CustomerID);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return AddressLists;
+        }
+
+        public CustomerAddress GetAddressByAddress(int AddressID)
+        {
+            CustomerAddress Address = null;
+            try
+            {
+                Address = _customerRepository.GetAddressByAddress(AddressID);
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return Address;
+        }
+        public OperationsStatus DeleteAddress(CustomerAddress customerAddress)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                operationsStatusObj= _customerRepository.DeleteAddress(customerAddress);
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return operationsStatusObj;
+        }
         #endregion Methods
     }
 }

@@ -99,7 +99,58 @@ namespace PartyEC.UI.Controllers
             }
             //return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
         }
+
+        [HttpGet]
+        public string GetEventsLog(string ID)
+        {
+            try
+            {
+                List<EventsLogViewModel> eventsLogList = Mapper.Map<List<EventsLog>, List<EventsLogViewModel>>(_masterBusiness.GetEventsLog(int.Parse(ID), "Order"));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = eventsLogList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        [HttpGet]
+        public string GetOrderSummery(string ID)
+        {
+            try
+            {
+                OrderViewModel OrderViewModelObj = Mapper.Map<Order, OrderViewModel>(_orderBusiness.GetOrderSummery(int.Parse(ID)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = OrderViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
         [HttpPost]
+        public string UpdateEventsLog(OrderViewModel orderObj)
+        {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                try
+                {
+                    orderObj.EventsLogViewObj.commonObj = new LogDetailsViewModel();
+                    orderObj.EventsLogViewObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                    orderObj.EventsLogViewObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertEventsLog(Mapper.Map<EventsLogViewModel, EventsLog>(orderObj.EventsLogViewObj)));
+                }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
+        }
         [ValidateAntiForgeryToken]
         public string UpdateBillingDetails(OrderViewModel orderViewModelObj)
         {

@@ -14,7 +14,8 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertManufacturer(Manufacturer ManufacturerObj);
         OperationsStatus UpdateManufacturer(Manufacturer ManufacturerObj);
         OperationsStatus DeleteManufacturer(int ManufacturerID);
-
+        OperationsStatus InsertEventsLog(EventsLog eventLogObj);
+        List<EventsLog> GetEventsLog(int ID, string ParentType);
         List<Country> GetAllCountries();
 
         OperationsStatus InsertImage(OtherImages otherimgObj);
