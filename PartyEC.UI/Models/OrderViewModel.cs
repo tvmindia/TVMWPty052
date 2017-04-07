@@ -100,5 +100,8 @@ namespace PartyEC.UI.Models
         public string DiscountAmtOrderSummery { get; set; }
         public string GrandTotalOrderSummery { get; set; }
 
+        //Mailing Comments
+        public MailViewModel mailViewModelObj { get; set; }
+
     }
 }

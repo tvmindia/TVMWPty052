@@ -7,5 +7,9 @@ namespace PartyEC.UI.Models
 {
     public class MailViewModel
     {
+        public string CustomerName { get; set; }
+        public string CustomerEmail { get; set; }
+        public string OrderComment { get; set; }
+        public int OrderNo { get; set; }
     }
 }

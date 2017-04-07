@@ -278,7 +278,9 @@
                                                    <div class="">
                                                    <div class="col-md-6">
                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Order" })
-                                                   @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = "2",id="hdnEventsLogParentID" })
+                                                   @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0",id="hdnEventsLogParentID" })
+                                                   @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountEmailID" })
+                                                       @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountCustomerName" })
                                                    <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
                                                    </div>
                                                    </div>

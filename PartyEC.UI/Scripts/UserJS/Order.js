@@ -161,6 +161,8 @@ function BindAccountSection(Result)
     $("#lblCustomerName").text(Result.CustomerName);
     $("#lblContactNo").text(Result.ContactNo);
     $("#lblCustomerEmail").text(Result.CustomerEmail);
+    $("#hdnAccountEmailID").val(Result.CustomerEmail);
+    $("#hdnAccountCustomerName").val(Result.CustomerName);
 }
 function BindBillDetails(Result)
 {
@@ -217,9 +219,11 @@ function BindTableOrderDetailList(ID)
 }
 function BindOrderComments(Result)
 {
+    debugger;
     $("#CommentsDisplay").empty();
     $("#hdnEventsLogParentID").val(Result.ID);
     var CommentList = GetAllOrderComments(Result.ID);
+    //$("#CustomerNotifiedYN").prop('checked', Result.CustomerNotifiedYN);
     if (CommentList != null) {
 
         for (var i = 0; i < CommentList.length; i++) {

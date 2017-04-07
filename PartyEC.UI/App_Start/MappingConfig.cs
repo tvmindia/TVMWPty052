@@ -48,6 +48,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<ShippingLocationViewModel, ShippingLocations>().ReverseMap();
                 config.CreateMap<SupplierLocationsViewModel, SupplierLocations>().ReverseMap();
                 config.CreateMap<EventsLogViewModel, EventsLog>().ReverseMap();
+                config.CreateMap<MailViewModel, Mail>().ReverseMap();
             });
         }
 

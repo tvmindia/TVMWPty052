@@ -17,11 +17,13 @@ namespace PartyEC.UI.Controllers
         IOrderBusiness _orderBusiness;
         ICommonBusiness _commonBusiness;
         IMasterBusiness _masterBusiness;
-        public OrderController(IOrderBusiness orderBusiness, ICommonBusiness commonBusiness,IMasterBusiness masterBusiness)
+        IMailBusiness _mailBusiness;
+        public OrderController(IOrderBusiness orderBusiness, ICommonBusiness commonBusiness,IMasterBusiness masterBusiness,IMailBusiness mailBusiness)
         {
             _orderBusiness = orderBusiness;
             _commonBusiness = commonBusiness;
             _masterBusiness = masterBusiness;
+            _mailBusiness = mailBusiness;
         }
         #endregion Constructor_Injection
         // GET: Order
@@ -131,11 +133,20 @@ namespace PartyEC.UI.Controllers
         public string UpdateEventsLog(OrderViewModel orderObj)
         {
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            bool Mailstatus = false;
                 try
                 {
+                   
                     orderObj.EventsLogViewObj.commonObj = new LogDetailsViewModel();
                     orderObj.EventsLogViewObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                     orderObj.EventsLogViewObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    if(orderObj.mailViewModelObj.CustomerEmail!=""&&orderObj.EventsLogViewObj.CustomerNotifiedYN==true)
+                {
+                    orderObj.mailViewModelObj.OrderNo = orderObj.EventsLogViewObj.ParentID;
+                    orderObj.mailViewModelObj.OrderComment = orderObj.EventsLogViewObj.Comment;
+                    Mailstatus = _mailBusiness.Send(Mapper.Map<MailViewModel, Mail>(orderObj.mailViewModelObj));
+                    orderObj.EventsLogViewObj.CustomerNotifiedYN = Mailstatus;
+                }
                     OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertEventsLog(Mapper.Map<EventsLogViewModel, EventsLog>(orderObj.EventsLogViewObj)));
                 }
                 catch (Exception ex)
