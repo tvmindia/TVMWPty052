@@ -235,7 +235,7 @@ namespace PartyEC.RepositoryServices.Services
                                 cmd.Parameters.Add("@LastName", SqlDbType.NVarChar, 100).Value = customer.customerAddress.LastName;
                                 cmd.Parameters.Add("@Address", SqlDbType.NVarChar, -1).Value = customer.customerAddress.Address;
                                 cmd.Parameters.Add("@City", SqlDbType.NVarChar, -1).Value = customer.customerAddress.City;
-                                cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = customer.customerAddress.country.Code;
+                                cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = customer.customerAddress.CountryCode;
                                 cmd.Parameters.Add("@StateProvince", SqlDbType.NVarChar, 100).Value = customer.customerAddress.StateProvince;
                                 cmd.Parameters.Add("@ContactNo", SqlDbType.NVarChar, 20).Value = customer.customerAddress.ContactNo;
                                 cmd.Parameters.Add("@BillDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.BillDefaultYN;
@@ -276,7 +276,7 @@ namespace PartyEC.RepositoryServices.Services
                                 cmd.Parameters.Add("@LastName", SqlDbType.NVarChar, 100).Value = customer.customerAddress.LastName;
                                 cmd.Parameters.Add("@Address", SqlDbType.NVarChar, -1).Value = customer.customerAddress.Address;
                                 cmd.Parameters.Add("@City", SqlDbType.NVarChar, -1).Value = customer.customerAddress.City;
-                                cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = customer.customerAddress.country.Code;
+                                cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = customer.customerAddress.CountryCode;
                                 cmd.Parameters.Add("@StateProvince", SqlDbType.NVarChar, 100).Value = customer.customerAddress.StateProvince;
                                 cmd.Parameters.Add("@ContactNo", SqlDbType.NVarChar, 20).Value = customer.customerAddress.ContactNo;
                                 cmd.Parameters.Add("@BillDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.BillDefaultYN;
