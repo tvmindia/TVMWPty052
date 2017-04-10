@@ -185,5 +185,21 @@
             </a>
         }
     }
+    @if (Model.approve.Visible)
+    {
+        if (Model.approve.Disable)
+        {
+            <a class="thr_disbtn">
+                <img src="@Url.Content("~/Content/images/approve.PNG")">
+            </a>
+        }
+        else
+        {
+            <a  title=@Model.approve.Title class="thr_btn" onclick=@Model.approve.Event>
+                <img src="@Url.Content("~/Content/images/approve.PNG")">
+            </a>
+        }
+
+    }
 
 </div>

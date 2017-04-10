@@ -62,5 +62,19 @@ namespace PartyEC.BusinessServices.Services
             }
             return ReviewObj;
         }
+
+        public OperationsStatus UpdateReview(ProductReview ReviewObj)
+        {
+            OperationsStatus OperationsStatusObj = null;
+            try
+            {
+                OperationsStatusObj = _reviewRepository.UpdateReview(ReviewObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OperationsStatusObj;
+        }
     }
 }

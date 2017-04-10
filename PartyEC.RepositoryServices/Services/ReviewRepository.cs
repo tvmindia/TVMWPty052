@@ -195,5 +195,58 @@ namespace PartyEC.RepositoryServices.Services
             }
             return myReview;
         }
+
+        public OperationsStatus UpdateReview(ProductReview ReviewObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+
+            try
+            {
+                SqlParameter outparameter = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateReview]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ReviewObj.ID;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = ReviewObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = ReviewObj.commonObj.UpdatedDate;
+
+
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        outparameter.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                operationsStatusObj.ReturnValues = ReviewObj.ID;
+                                break; 
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
     }
 }

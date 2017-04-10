@@ -12,5 +12,6 @@ namespace PartyEC.RepositoryServices.Contracts
         List<ProductReview> GetAllReviews(string Condition,string FromDate,string ToDate);
         List<ProductReview> GetProductRatingByCustomer(int ProductID, int CustomerID, int AttributesetId);
         ProductReview GetReview(int ReviewID);
+        OperationsStatus UpdateReview(ProductReview ReviewObj);
     }
 }
