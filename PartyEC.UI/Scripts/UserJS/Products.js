@@ -388,7 +388,7 @@ function BindStickers()
 function BindImages() {
     try
     {
-        
+        $('#ImageID').val(0);
         var Table = GetRelatedImages($('#ID').val());
         var MainFlag = 0;
         var OtherFlag = 0;
