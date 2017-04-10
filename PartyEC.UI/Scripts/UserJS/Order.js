@@ -34,6 +34,7 @@ $(document).ready(function () {
         data: null,
         columns: [
           { "data": "OrderDetailID" },
+          {"data": "ProductSpecXML"},
           { "data": "ItemStatus" },
           { "data": "Qty" },
           { "data": "Price" },
@@ -48,7 +49,99 @@ $(document).ready(function () {
              "targets": [0],
              "visible": true,
              "searchable": true
+         },
+         {//hiding hidden column 
+             "targets": [1],
+             "visible": true,
+             "searchable": false,
+             "render": function (data, type, full, meta) {
+                 debugger;
+                 var Name="<b>"+data.split("||")[0]+"</b>";
+                 var Spec = (data.split("||")[1]).split("><");
+                 for (var i = 0; i < Spec.length-1; i++)
+                 {
+                     if (i > 0)
+                     {
+                         var html = Spec[i].replace(">"," : ");
+                         Name=Name +"</br>"+ (html.split("</")[0]);
+                     }
+                    
+                 }
+                 return Name;
+             }
          }
+        ]
+    });
+    DataTables.orderModificationtable = $('#tblOrderModification').DataTable(
+    {
+        dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+        order: [],
+        searching: true,
+        paging: true,
+        data: null,
+        columns: [
+          {"data":null},
+          { "data": "OrderDetailID" },
+          { "data": "ProductSpecXML" },
+          { "data": "ItemStatus" },
+          { "data": "Qty" },
+          { "data": "Price" },
+          { "data": "Total" },
+          { "data": "ShippingAmt" },
+          { "data": "TaxAmt" },
+          { "data": "DiscountAmt" },
+          { "data": "SubTotal" }
+        ],
+        columnDefs: [
+         {//hiding hidden column 
+             "targets": [2],
+             "visible": true,
+             "searchable": false,
+             "render": function (data, type, full, meta) {
+                 debugger;
+                 if (data != "" && data != null)
+                  {
+                 var Name = "<b>" + data.split("||")[0] + "</b>";
+                 var Spec = (data.split("||")[1]).split("><");
+                 for (var i = 0; i < Spec.length - 1; i++) {
+                     if (i > 0) {
+                         var html = Spec[i].replace(">", " : ");
+                         Name = Name + "</br>" + (html.split("</")[0]);
+                     }
+
+                 }
+                 }
+                 return Name;
+             }
+         },
+         {
+             'targets': 0,
+             'render': function (data, type, full, meta) {
+                 var checkbox = $("<input/>", {
+                     "type": "checkbox"
+                 });
+                 if (data.CategoryID) {
+                     checkbox.attr("checked", "checked");
+                     checkbox.addClass("checkbox_checked");
+                 } else {
+                     checkbox.addClass("checkbox_unchecked");
+                 }
+                 return checkbox.prop("outerHTML")
+             }
+         },
+                     {
+                         'targets': 4,
+                         'render': function (data, type, full, meta) {
+                             if (data.Qty == 0) {
+                                 var txtbox = '--'
+                             }
+                             else {
+                                 var txtbox = '<input class="col-lg-4" type="text" id="txt' + data.ID + '" value="' + (data.Qty) + '"></input> <a class="btn" onclick="GetValue(this)" id="' + data.ID + '">Update</a> '
+                             }
+
+                             return txtbox
+                         }
+                     }
         ]
     });
 });
@@ -68,6 +161,7 @@ function GetAllOrderHeader()
     }
 }
 function GetAllOrdersList(ID) {
+    debugger;
     try {
         data = { "ID": ID };
         var ds = {};
@@ -135,6 +229,7 @@ function Edit(this_obj)
 
     var rowData = DataTables.orderHeadertable.row($(this_obj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
+        debugger;
         $("#ID").val(rowData.ID);
         var Result = GetOrderDetails(rowData.ID);
         BindGeneralSection(Result);
@@ -147,6 +242,29 @@ function Edit(this_obj)
         BindOrderComments(Result);
         BindOrderSummery(Result);
     }
+}
+function CancelIssue()
+{
+    debugger;
+    var r = confirm("Are You Sure ?, This will cancel your Current Order..");
+    if (r == true)
+    {
+        $('#tabCreateRevision').click();
+        DataTables.orderModificationtable.clear().rows.add(GetAllOrdersList($('#hdnOrderHID').val())).draw(false);
+    }
+    
+}
+function AddNewRevision()
+{
+    $('#ModelCreateNewOrder').modal('show');
+}
+function gobackDetails()
+{
+    $('#taborderDetails').trigger('click');
+}
+function goback()
+{
+    $('#taborderListgrid').trigger('click');
 }
 function BindGeneralSection(Result)
 {

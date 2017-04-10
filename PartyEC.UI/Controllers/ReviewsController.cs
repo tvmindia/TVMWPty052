@@ -91,6 +91,42 @@ namespace PartyEC.UI.Controllers
 
         #endregion GetReviewByID
 
+   
+
+        #region UpdateReview
+
+        [HttpPost]
+        public string UpdateReview(ProductReviewViewModel reviewObj)
+        {
+            if (ModelState.IsValid)
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;               
+                    try
+                    {
+                        reviewObj.commonObj = new LogDetailsViewModel();
+                        reviewObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                        reviewObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_reviewBusiness.UpdateReview(Mapper.Map<ProductReviewViewModel, ProductReview>(reviewObj)));
+                    }
+                    catch (Exception ex)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                    } 
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+
+        #endregion UpdateReview
+
+
         #region ChangeButtonStyle
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)
@@ -99,25 +135,24 @@ namespace PartyEC.UI.Controllers
             switch (ActionType)
             {
                 case "Edit":
-                 
 
-                    ToolboxViewModelObj.savebtn.Visible = true;
-                    ToolboxViewModelObj.savebtn.Event = "clicksave()";
-                    ToolboxViewModelObj.savebtn.Title = "Save"; 
+
+                    ToolboxViewModelObj.approve.Visible = true;
+                    ToolboxViewModelObj.approve.Event = "clickapprove()";
+                    ToolboxViewModelObj.approve.Title = "Approve";
 
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
 
                     break;
-              
+
                 default:
                     return Content("Nochange");
             }
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
         #endregion ChangeButtonStyle
-
 
     }
 }

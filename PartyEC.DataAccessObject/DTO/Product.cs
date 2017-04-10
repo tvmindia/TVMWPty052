@@ -117,6 +117,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string RatingCount { get; set; }
         public string IsApproved { get; set; }
         public int AttributeSetID { get; set; }
+        public LogDetails commonObj { get; set; }
 
 
     }

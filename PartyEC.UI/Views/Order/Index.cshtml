@@ -15,7 +15,7 @@
             <ul class="nav nav-tabs">
                 <li class="active"><a href="#taborderListgrid" data-toggle="tab">Orders List</a></li>
                 <li><a href="#taborderDetails" data-toggle="tab" id="tabOrderDetails">Order Detail</a></li>
-                <li><a href="#taborderEditDetails" data-toggle="tab" id="tabEdit">Order Detail</a></li>
+                <li><a href="#taborderEditDetails" data-toggle="tab" id="tabCreateRevision" style="display:none;">Create New Revision</a></li>
             </ul>
         </div>
 
@@ -45,14 +45,17 @@
                                 PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab2 = new PartyEC.UI.Models.ToolboxViewModel();
                                 ToolBoxControltab2.backbtn.Visible = true;
                                 ToolBoxControltab2.backbtn.Event = "goback()";
+                                ToolBoxControltab2.backbtn.Title = "Back";
                                 ToolBoxControltab2.editbtn.Visible = true;
+                                ToolBoxControltab2.editbtn.Title = "Revise";
+                                ToolBoxControltab2.editbtn.Event = "CancelIssue()";
                                 ToolBoxControltab2.cancelbtn.Visible = true;
                                 ToolBoxControltab2.sendbtn.Visible = true;
                                 ToolBoxControltab2.invoicebtn.Visible = true;
                                 ToolBoxControltab2.shipbtn.Visible = true;
                                 Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
                             }
-                        </div> 
+                        </div>
                         <h3>Order Detail</h3>
                         <hr />
                         <div class="col-md-2">
@@ -133,9 +136,9 @@
                                         <div class="panel-heading">Billing Address</div>
                                         <div class="panel-body">
                                             <div class="col-md-12">
-                                            <a id="btnmodelrelproduct" style="position:relative;left:89%" class="btn btn-info" data-toggle="modal" data-target="#ModelBillingDetails">Edit</a>
+                                                <a id="btnmodelrelproduct" style="position:relative;left:89%" class="btn btn-info" data-toggle="modal" data-target="#ModelBillingDetails">Edit</a>
                                             </div>
-                                           
+
                                             <label class="h5 col-md-6" for="lblName">Name :</label>
                                             <div class="col-md-6">
                                                 @*style="font-weight:bold"*@
@@ -155,7 +158,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    </div>
+                                </div>
                                 <div class="col-md-6">
                                     <div class="panel panel-default" style="min-height:250px">
                                         <div class="panel-heading">Shipping Address</div>
@@ -233,6 +236,7 @@
                                     <table id="tblOrderDetailList" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
+                                                <th>ID</th>
                                                 <th>Poduct</th>
                                                 <th>Item Status</th>
                                                 <th>Qty</th>
@@ -246,141 +250,171 @@
                                         </thead>
                                     </table>
                                 </div>
-                                    <div class="col-md-6">
+                                <div class="col-md-6">
                                     @using (Ajax.BeginForm("UpdateEventsLog", "Order", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "CheckinCommentInsert" }, new { @class = "form-horizontal", role = "form", id = "formComments" }))
                                     {
                                         @Html.AntiForgeryToken()
-                                            <div class="panel panel-default" style="min-height:250px">
-                                                <div class="panel-heading">Order Comments</div>
-                                                <div class="panel-body">
-                                                <div class="form-group col-md-12">
-                                                @Html.LabelFor(model => model.EventsLogViewObj.Comment, htmlAttributes: new { @class = "control-label col-md-6" })
-                                                <div class="col-md-12">
-                                                @Html.TextAreaFor(model => model.EventsLogViewObj.Comment, new { @class = "form-control" })
-                                                @Html.ValidationMessageFor(model => model.EventsLogViewObj.Comment, "", new { @class = "text-danger" })
-                                                </div>
-                                                </div>
-                                                    <div class="col-md-12"></div>
-                                                    <div class="">
-                                                        @Html.LabelFor(model => model.EventsLogViewObj.CustomerNotifiedYN, htmlAttributes: new { @class = "control-label col-md-4" })
-                                                        <div class="col-lg-2">
-                                                            <div class="checkbox">
-                                                                <div>
-                                                                    @Html.EditorFor(model => model.EventsLogViewObj.CustomerNotifiedYN)
-                                                                    @Html.ValidationMessageFor(model => model.EventsLogViewObj.CustomerNotifiedYN, "", new { @class = "text-danger" })
-                                                                </div>
-
-                                                            </div>
-
-                                                        </div>
-                                                    </div>
-                                                    
-                                                   <div class="">
-                                                   <div class="col-md-6">
-                                                   @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Order" })
-                                                   @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0",id="hdnEventsLogParentID" })
-                                                   @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountEmailID" })
-                                                       @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountCustomerName" })
-                                                   <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
-                                                   </div>
-                                                   </div>
-                                                    <div class="col-md-12"></div>
-                                                   <div class="form-group col-md-12">
-                                                       <hr />
-                                                    <label id="lblHistroy" class="control-label" style="font-size:14px;margin-left:1%">Earlier Comments</label>
-                                                    
-                                                     <div style="height: 150px;width: 107%;overflow: hidden;position: relative;">
-                                                    <div id="CommentsDisplay" style="max-height: 150px;min-height: 150px;overflow-y: auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: -15px;white-space: pre;">
-                                                    </div>
-                                                       </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                }
-                                            </div>
-                                    <div class="col-md-6">
                                         <div class="panel panel-default" style="min-height:250px">
-                                            <div class="panel-heading">Order Summery</div>
+                                            <div class="panel-heading">Order Comments</div>
                                             <div class="panel-body">
-                                                <table width="100%" border="0" align="right" cellpadding="0" cellspacing="0">
-                                                    <tbody>
-                                                        <tr>
-                                                            <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
-                                                                <strong>Sub-total</strong>
-                                                            </td>
-                                                            <td width="0" id="tdSubTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
-                                                                ₹4650.00
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
-                                                                <strong>Tax:</strong>
-                                                            </td>
-                                                            <td width="0" id="tdTaxTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
-                                                                ₹347.50
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px">
-                                                                <strong>Delivery costs:</strong>
-                                                            </td>
-                                                            <td width="62" id="tdDeliveryCosts" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px">
-                                                                ₹150.00
-                                                            </td>
-                                                        </tr>
+                                                <div class="form-group col-md-12">
+                                                    @Html.LabelFor(model => model.EventsLogViewObj.Comment, htmlAttributes: new { @class = "control-label col-md-6" })
+                                                    <div class="col-md-12">
+                                                        @Html.TextAreaFor(model => model.EventsLogViewObj.Comment, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(model => model.EventsLogViewObj.Comment, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <div class="">
+                                                    @Html.LabelFor(model => model.EventsLogViewObj.CustomerNotifiedYN, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                    <div class="col-lg-2">
+                                                        <div class="checkbox">
+                                                            <div>
+                                                                @Html.EditorFor(model => model.EventsLogViewObj.CustomerNotifiedYN)
+                                                                @Html.ValidationMessageFor(model => model.EventsLogViewObj.CustomerNotifiedYN, "", new { @class = "text-danger" })
+                                                            </div>
 
-                                                        <tr>
-                                                            <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px;border-bottom:solid 1px #999999">
-                                                                <strong>Order discount:</strong>
-                                                            </td>
-                                                            <td width="62" id="tdOrderDiscount" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px;border-bottom:solid 1px #999999">
-                                                                ₹300.00
-                                                            </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td align="left" valign="bottom" style="color:#404041;font-size:13px;line-height:16px;padding:5px 0px 3px 0px">
-                                                                <strong>Grand Total:</strong>
-                                                            </td>
-                                                            <td width="62" align="right" valign="bottom" style="color:#339933;font-size:13px;line-height:16px;padding:5px 5px 3px 5px">
-                                                                <strong id="strGrandTotal">₹4500.50</strong>
-                                                            </td>
-                                                        </tr>
-                                                    </tbody>
+                                                        </div>
 
+                                                    </div>
+                                                </div>
 
-                                                </table>
+                                                <div class="">
+                                                    <div class="col-md-6">
+                                                        @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Order" })
+                                                        @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0",id="hdnEventsLogParentID" })
+                                                        @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountEmailID" })
+                                                        @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountCustomerName" })
+                                                        <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <div class="form-group col-md-12">
+                                                    <hr />
+                                                    <label id="lblHistroy" class="control-label" style="font-size:14px;margin-left:1%">Earlier Comments</label>
+
+                                                    <div style="height: 150px;width: 107%;overflow: hidden;position: relative;">
+                                                        <div id="CommentsDisplay" style="max-height: 150px;min-height: 150px;overflow-y: auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: -15px;white-space: pre;">
+                                                        </div>
+                                                    </div>
+                                                </div>
                                             </div>
+                                        </div>
+                                                }
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="panel panel-default" style="min-height:250px">
+                                        <div class="panel-heading">Order Summery</div>
+                                        <div class="panel-body">
+                                            <table width="100%" border="0" align="right" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                                                            <strong>Sub-total</strong>
+                                                        </td>
+                                                        <td width="0" id="tdSubTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                                                            ₹4650.00
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                                                            <strong>Tax:</strong>
+                                                        </td>
+                                                        <td width="0" id="tdTaxTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                                                            ₹347.50
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px">
+                                                            <strong>Delivery costs:</strong>
+                                                        </td>
+                                                        <td width="62" id="tdDeliveryCosts" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px">
+                                                            ₹150.00
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px;border-bottom:solid 1px #999999">
+                                                            <strong>Order discount:</strong>
+                                                        </td>
+                                                        <td width="62" id="tdOrderDiscount" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px;border-bottom:solid 1px #999999">
+                                                            ₹300.00
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="left" valign="bottom" style="color:#404041;font-size:13px;line-height:16px;padding:5px 0px 3px 0px">
+                                                            <strong>Grand Total:</strong>
+                                                        </td>
+                                                        <td width="62" align="right" valign="bottom" style="color:#339933;font-size:13px;line-height:16px;padding:5px 5px 3px 5px">
+                                                            <strong id="strGrandTotal">₹4500.50</strong>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+
+                                            </table>
                                         </div>
                                     </div>
                                 </div>
-                               
                             </div>
 
-                            <div class="form-group">
-                                <div class="col-md-offset-2 col-md-12">
-                                    <input type="submit" value="Create" class="btn btn-default" style="display:none;" />
-                                </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="col-md-offset-2 col-md-12">
+                                <input type="submit" value="Create" class="btn btn-default" style="display:none;" />
                             </div>
                         </div>
                     </div>
                 </div>
+
                 <div class="tab-pane fade" id="taborderEditDetails">
                     <div class="col-md-12">
-                        
-                        <h4>Order Detail</h4>
+                        <div class="" id="btnPatchOrderModification">
+                            @{
+                                PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab3 = new PartyEC.UI.Models.ToolboxViewModel();
+                                ToolBoxControltab3.backbtn.Visible = true;
+                                ToolBoxControltab3.backbtn.Event = "gobackDetails()";
+                                ToolBoxControltab3.backbtn.Title = "Back";
+                                ToolBoxControltab3.deletebtn.Visible = true;
+                                ToolBoxControltab3.deletebtn.Disable = true;
+                                ToolBoxControltab3.addbtn.Visible = true;
+                                ToolBoxControltab3.addbtn.Event = "AddNewRevision()";
+                                ToolBoxControltab3.addbtn.Title = "Add";
+                                Html.RenderPartial("_ToolboxView", ToolBoxControltab3);
+                            }
+                        </div>
+                        <h3>Create Revision</h3>
                         <hr />
+                            <table id="tblOrderModification" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>ID</th>
+                                        <th>Poduct</th>
+                                        <th>Item Status</th>
+                                        <th>Qty</th>
+                                        <th>Price</th>
+                                        <th>Sub Total</th>
+                                        <th>Shipping Charges</th>
+                                        <th>Tax Amount</th>
+                                        <th>Discount</th>
+                                        <th>Total</th>
+                                    </tr>
+                                </thead>
+                            </table>
                     </div>
                 </div>
             </div>
+            </div>
                 </div>
             </div>
-        </div>
 <div id="ModelBillingDetails" class="modal fade" tabindex="-1" role="dialog" style="left:50%;" aria-labelledby="gridSystemModalLabel">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="titleProductRating">Edit Billing Details</h4>
+                <h4 class="modal-title">Edit Billing Details</h4>
             </div>
             <div class="modal-body">
                 @using (Ajax.BeginForm("UpdateBillingDetails", "Order", new AjaxOptions { HttpMethod = "POST", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "CheckinBillingChanges" }, new { @class = "form-horizontal", role = "form", id = "formBillingModal" }))
@@ -470,7 +504,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="titleProductRating">Edit Shipping Details</h4>
+                <h4 class="modal-title">Edit Shipping Details</h4>
             </div>
             <div class="modal-body">
                 @using (Ajax.BeginForm("UpdateShipingDetails", "Order", new AjaxOptions { HttpMethod = "POST", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "CheckinShipingChanges" }, new { @class = "form-horizontal", role = "form", id = "formBillingModal" }))
@@ -550,6 +584,19 @@
                             @*</div>
                                 </div>*@
                 }
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+<div id="ModelCreateNewOrder" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Cancel & Create new revision</h4>
+            </div>
+            <div class="modal-body">
+               
             </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->

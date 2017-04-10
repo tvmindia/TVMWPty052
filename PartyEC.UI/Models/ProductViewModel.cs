@@ -232,6 +232,7 @@ namespace PartyEC.UI.Models
         public string IsApproved { get; set; }
         public string ProductName { get; set; }
         public int AttributeSetID { get; set; }
+        public LogDetailsViewModel commonObj { get; set; }
 
     }
 }

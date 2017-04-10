@@ -19,6 +19,7 @@ $(document).ready(function () {
                { "data": "Review" },
                { "data": "ReviewCreatedDate", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="ModelProductsRating(this)">Rating</a>' },
+               //{ "data": null, "orderable": false },
                { "data": "RatingDate", "defaultContent": "<i>-</i>" },
                { "data": "IsApproved", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
@@ -27,7 +28,13 @@ $(document).ready(function () {
                  "targets": [0],
                  "visible": false,
                  "searchable": false
-             },{
+             },
+              //{
+              //   'targets': 6, 'render': function (data, type, row) {
+              //       return ' <a href = "#" title = "titldhe" data-container = "body"  data-toggle = "popover" data-content = "sdfsdfsdf"> popover </a>'
+              //   }
+              //},
+                {
                  'targets': 4, 'render': function (data, type, row) {
                      if (data)
                          if (data.length > 30)
@@ -39,7 +46,7 @@ $(document).ready(function () {
                  }
              }, {
                  'targets': 8, 'render': function (data, type, row) {
-                     if (row.IsApproved == true) {
+                     if (row.IsApproved == 'True') {
                          return 'Approved';
                      }
                      else { return 'Pending'; }
@@ -58,7 +65,8 @@ $(document).ready(function () {
  }
           ]
          });
-        $("#rdoreviewPending").prop('checked', true);
+    
+        //$(function () { $("[data-toggle = 'popover']").popover(); });
     }
     catch (e) { 
         notyAlert('error', e.message);
@@ -146,7 +154,6 @@ function Edit(currentObj) {
 }
 //---------------------------------------Fill Suppliers--------------------------------------------------//
 function fillReview(ID) {
-    debugger; 
     ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Edit");
     var thisReview = GetReviewByID(ID); //Binding Data  
     $("#ID").val(thisReview.ID);
@@ -169,6 +176,37 @@ function goback() {
     $('#tabReviewList').trigger('click');
 }
 
+
+function clickapprove() {
+    debugger;
+    
+    $('#btnFormUpdate').trigger('click');
+
+}
+
+
+function SaveSuccess(data, status, xhr) {
+    BindAllReviews();
+    var i = JSON.parse(data)
+    debugger;
+
+    switch (i.Result) {
+
+        case "OK":
+            notyAlert('success', i.Record.StatusMessage);
+            var returnId = i.Record.ReturnValues
+            fillReview(returnId);
+            break;
+        case "Error":
+            notyAlert('error', i.Record.StatusMessage);
+            break;
+        case "ERROR":
+            notyAlert('error', i.Message);
+            break;
+        default:
+            break;
+    }
+}
 
 //---------------------------------------Bind All Reviews----------------------------------------------// 
 function BindAllReviews() {
@@ -286,7 +324,7 @@ function ratingArea(thisRatingSummary)
             }
         }//for
         ratinglists = ratinglists + '<div class="col-xs-5 ">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
-                                    '<div class="col-xs-7 "><div  class="rating-block">' + ratebtnstring + '</div></div>';
+                                    '<div class="col-xs-7 "><div  class="rating-block" style="padding-bottom: 5px;">' + ratebtnstring + '</div></div>';
     }//for
 return ratinglists
 }
