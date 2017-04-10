@@ -310,7 +310,7 @@
                                                    <div class="form-group">
                                                        <label class="control-label col-md-4" for="Country">Country</label>
                                                        <div class="col-md-8">
-                                                           @Html.DropDownListFor(model => model.customerAddress.country.Code, Model.customerAddress.Countries, "--Select Country--", new { @class = "form-control", id = "CountryCode", value = -1 })
+                                                           @Html.DropDownListFor(model => model.customerAddress.CountryCode, Model.customerAddress.Countries, "--Select Country--", new { @class = "form-control", id = "CountryCode", value = 0 })
                                                          
                                                        </div>
                                                    </div>
