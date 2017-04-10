@@ -21,7 +21,15 @@ namespace PartyEC.BusinessServices.Services
             List<Notification> notificationList = null;
             try
             {
-                notificationList = _notificationRepository.GetAllNotifications();
+                notificationList = new List<Notification>();
+                foreach(Notification notif in _notificationRepository.GetAllNotifications())
+                {
+                    //takes only first few characters for the message
+                    notif.Message = notif.Message!=null?new string(notif.Message.Take(50).ToArray()):null;
+                    notificationList.Add(notif);
+                   
+                }
+
             }
             catch (Exception ex)
             {

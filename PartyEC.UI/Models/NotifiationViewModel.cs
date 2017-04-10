@@ -11,6 +11,7 @@ namespace PartyEC.UI.Models
         public int CustomerID { get; set; }
         public CustomerViewModel customer { get; set; }
         public string Type { get; set; }
+        public string Title { get; set; }
         public string Message { get; set; }
         public Int16 Status { get; set; }
         public LogDetailsViewModel logDetailsObj { get; set; }
