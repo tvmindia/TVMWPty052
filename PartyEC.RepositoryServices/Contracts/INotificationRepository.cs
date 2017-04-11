@@ -10,5 +10,7 @@ namespace PartyEC.RepositoryServices.Contracts
   public interface INotificationRepository
   {
         List<Notification> GetAllNotifications();
-  }
+        Notification GetNotification(int ID);
+        OperationsStatus NotificationPush(Notification notification);
+    }
 }

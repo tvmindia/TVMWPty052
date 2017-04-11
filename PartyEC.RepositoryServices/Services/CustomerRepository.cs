@@ -68,6 +68,8 @@ namespace PartyEC.RepositoryServices.Services
                                         _customerObj.BookingsCountHistory = (sdr["BookingsCountHistory"].ToString() != "" ? int.Parse(sdr["BookingsCountHistory"].ToString()) : _customerObj.BookingsCountHistory);
                                         _customerObj.QuotationsCountHistory = (sdr["QuotationsCountHistory"].ToString() != "" ? int.Parse(sdr["QuotationsCountHistory"].ToString()) : _customerObj.QuotationsCountHistory);
                                         _customerObj.IsActive = bool.Parse(sdr["ActiveYN"].ToString());
+                                   
+                                        _customerObj.Address = (sdr["CustomerAddress"].ToString() != "" ? sdr["CustomerAddress"].ToString() : _customerObj.Address);
                                         _customerObj.logDetailsObj = new LogDetails();
                                         _customerObj.logDetailsObj.CreatedDate= (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _customerObj.logDetailsObj.CreatedDate);
 

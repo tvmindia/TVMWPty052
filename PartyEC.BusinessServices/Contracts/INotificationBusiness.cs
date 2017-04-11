@@ -10,5 +10,7 @@ namespace PartyEC.BusinessServices.Contracts
     public  interface INotificationBusiness
     {
         List<Notification> GetAllNotifications();
+        Notification GetNotification(int ID);
+        OperationsStatus NotificationPush(Notification notification);
     }
 }
