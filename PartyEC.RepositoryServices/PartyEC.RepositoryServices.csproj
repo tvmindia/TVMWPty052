@@ -93,6 +93,7 @@
     <Compile Include="Contracts\INotificationRepository.cs" />
     <Compile Include="Contracts\IOrderRepository.cs" />
     <Compile Include="Contracts\IProductRepository.cs" />
+    <Compile Include="Contracts\IQuotationsRepository.cs" />
     <Compile Include="Contracts\IReviewRepository.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AttributesRepository.cs" />
@@ -107,6 +108,7 @@
     <Compile Include="Services\NotificationRepository.cs" />
     <Compile Include="Services\OrderRepository.cs" />
     <Compile Include="Services\ProductRepository.cs" />
+    <Compile Include="Services\QuotationsRepository.cs" />
     <Compile Include="Services\ReviewRepository.cs" />
   </ItemGroup>
   <ItemGroup>

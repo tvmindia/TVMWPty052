@@ -47,6 +47,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<EventsLogViewModel, EventsLog>().ReverseMap();
                 config.CreateMap<NotifiationViewModel, Notification>().ReverseMap();
                 config.CreateMap<MailViewModel, Mail>().ReverseMap();
+                config.CreateMap<QuotationsViewModel, Quotations>().ReverseMap();
             });
         }
 
