@@ -53,6 +53,7 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
                                         orderObj.OrderNo = sdr["OrderNo"].ToString();
                                         orderObj.OrderRev = sdr["OrderRev"].ToString();
+
                                         orderObj.OrderDate =sdr["OrderDate"].ToString()!=""?DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") :orderObj.OrderDate;
                                         orderObj.CustomerName =sdr["CustomerName"].ToString();
                                         orderObj.ContactNo =sdr["ContactNo"].ToString();
@@ -102,6 +103,7 @@ namespace PartyEC.RepositoryServices.Services
                                     Order orderObj = new Order();
                                     {
                                         orderObj.OrderDetailID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
+                                        orderObj.ProductSpecXML = sdr["ProductName"].ToString() + "||" + sdr["ProductSpecXML"].ToString();
                                         orderObj.ItemStatus = sdr["ItemStatus"].ToString();
                                         orderObj.Qty = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : 0);
                                         orderObj.Price = (sdr["Price"].ToString() != "" ? float.Parse(sdr["Price"].ToString()) : 0);

@@ -47,6 +47,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _notificationObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _notificationObj.ID);
                                         _notificationObj.Type = (sdr["Type"].ToString() != "" ? sdr["Type"].ToString() : _notificationObj.Type);
                                         _notificationObj.Message = (sdr["Message"].ToString() != "" ? sdr["Message"].ToString() : _notificationObj.Message);
+                                        _notificationObj.Title = (sdr["Title"].ToString() != "" ? sdr["Title"].ToString() : _notificationObj.Title);
                                         _notificationObj.Status = (sdr["Status"].ToString() != "" ?Int16.Parse(sdr["Status"].ToString()) : _notificationObj.Status);
                                         _notificationObj.logDetailsObj = new LogDetails();
                                         _notificationObj.logDetailsObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _notificationObj.logDetailsObj.CreatedDate);

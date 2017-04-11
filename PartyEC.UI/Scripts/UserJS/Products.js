@@ -115,7 +115,9 @@ $(document).ready(function () {
              order: [[1, 'asc']]
 
          });
-      
+        //$('#tblRelatedproducts').on('change', 'input[type="checkbox"]', function () {
+        //    $(this).closest('tr').toggleClass('selected');
+        //});
     }
     catch (e) {
         notyAlert('errror', e.message);
@@ -388,7 +390,7 @@ function BindStickers()
 function BindImages() {
     try
     {
-        
+        $('#ImageID').val(0);
         var Table = GetRelatedImages($('#ID').val());
         var MainFlag = 0;
         var OtherFlag = 0;

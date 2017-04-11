@@ -583,7 +583,7 @@ namespace PartyEC.UI.Controllers
             OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
 
             var file = Request.Files["Filedata"];
-            var FileNameCustom = ProductViewObj.Name + ".png";
+            var FileNameCustom = (ProductViewObj.Name).Replace("%", "_") + ".png";
             string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
             file.SaveAs(savePath);
             ProductViewObj.ImageURL = "/Content/ProductImages/" + FileNameCustom;
@@ -605,7 +605,7 @@ namespace PartyEC.UI.Controllers
             OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
             Random rnd = new Random();
             var file = Request.Files["Filedata"];
-            var FileNameCustom = ProductViewObj.Name+"Other"+rnd.Next(111,9999).ToString()+ ".png";
+            var FileNameCustom = ((ProductViewObj.Name).Replace("%", "_")) + "Other"+rnd.Next(111,9999).ToString()+ ".png";
             string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
             file.SaveAs(savePath);
             ProductViewObj.ImageURL = "/Content/ProductImages/" + FileNameCustom;
