@@ -18,8 +18,7 @@ $(document).ready(function () {
                { "data": "CustomerName" },
                { "data": "Review" },
                { "data": "ReviewCreatedDate", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="ModelProductsRating(this)">Rating</a>' },
-               //{ "data": null, "orderable": false },
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="ModelProductsRating(this)">Rating</a>' }, 
                { "data": "RatingDate", "defaultContent": "<i>-</i>" },
                { "data": "IsApproved", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
@@ -29,11 +28,11 @@ $(document).ready(function () {
                  "visible": false,
                  "searchable": false
              },
-              //{
-              //   'targets': 6, 'render': function (data, type, row) {
-              //       return ' <a href = "#" title = "titldhe" data-container = "body"  data-toggle = "popover" data-content = "sdfsdfsdf"> popover </a>'
-              //   }
-              //},
+              {
+                  'targets': [6],
+                  "visible": false,
+                  "searchable": false
+              },
                 {
                  'targets': 4, 'render': function (data, type, row) {
                      if (data)
@@ -66,7 +65,7 @@ $(document).ready(function () {
           ]
          });
     
-        //$(function () { $("[data-toggle = 'popover']").popover(); });
+        $("#rdoreviewPending").prop('checked', true);
     }
     catch (e) { 
         notyAlert('error', e.message);
@@ -154,6 +153,7 @@ function Edit(currentObj) {
 }
 //---------------------------------------Fill Suppliers--------------------------------------------------//
 function fillReview(ID) {
+    debugger;
     ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Edit");
     var thisReview = GetReviewByID(ID); //Binding Data  
     $("#ID").val(thisReview.ID);
@@ -163,7 +163,10 @@ function fillReview(ID) {
     $("#Review").val(thisReview.Review);
     $("#ReviewCreatedDate").val(thisReview.ReviewCreatedDate);
     $("#RatingDate").val(thisReview.RatingDate);
-    $("#IsApproved").val(thisReview.IsApproved);
+    if (thisReview.IsApproved=='False')
+    $("#IsApproved").val('Not Approved');
+    else
+        $("#IsApproved").val('Approved');
 
  
     
