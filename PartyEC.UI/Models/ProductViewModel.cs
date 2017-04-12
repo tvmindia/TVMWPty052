@@ -220,19 +220,44 @@ namespace PartyEC.UI.Models
         public int CustomerID { get; set; }
         public string Review { get; set; }
         public int DaysCount { get; set; }
-        public string ReviewCreatedDate { get; set; }
-        public string RatingCreatedDate { get; set; }
+        [Display(Name = "Review Date")]
+        public string ReviewCreatedDate { get; set; } 
+     
+        [Display(Name = "Customer Name")]
         public string CustomerName { get; set; }
         public string AvgRating { get; set; }
         public string ImageUrl { get; set; }
 
         public List<AttributeValues> ProductRatingAttributes { get; set; }
         public string RatingCount { get; set; }
+
+        [Display(Name = "Rating Date")]
         public string RatingDate { get; set; }
+        [Display(Name = "Status")]
         public string IsApproved { get; set; }
+        [Display(Name = "Product Name")]
         public string ProductName { get; set; }
         public int AttributeSetID { get; set; }
         public LogDetailsViewModel commonObj { get; set; }
 
+    }
+
+    public class ProductAppViewModel
+    {
+        public string Name { get; set; }
+        public string SKU { get; set; }
+        public bool ShowPrice { get; set; }
+        public char ActionType { get; set; }
+        public int SupplierID { get; set; }
+        public string SupplierName { get; set; }
+        public decimal BaseSellingPrice { get; set; }
+        public string ShortDescription { get; set; }
+        public string LongDescription { get; set; }
+        public char ProductType { get; set; }
+        public bool FreeDelivery { get; set; }
+        public string StickerURL { get; set; }
+        public decimal? PriceDifference { get; set; }
+        public bool StockAvailable { get; set; }
+        public decimal? DiscountAmount { get; set; }
     }
 }

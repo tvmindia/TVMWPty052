@@ -365,6 +365,20 @@ namespace PartyEC.BusinessServices.Services
             return productlist;
         }
 
+        public Product GetProductDetailsForApp(Product productObj, DateTime currentDateTime)
+        {
+            Product product = null;
+            try
+            {
+                product = _productRepository.GetProductDetailsForApp(productObj, currentDateTime);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return product;
+        }
+
         #endregion
     }
 }

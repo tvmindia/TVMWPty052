@@ -493,6 +493,7 @@
     <Content Include="Scripts\UserJS\Order.js" />
     <Content Include="Scripts\UserJS\Products.js" />
     <Content Include="Scripts\UserJS\AttributeSet.js" />
+    <Content Include="Scripts\UserJS\Quotations.js" />
     <Content Include="Scripts\UserJS\Review.js" />
     <Content Include="Scripts\UserJS\ShippingLocation.js" />
     <Content Include="Scripts\UserJS\SupplierLocations.js" />
@@ -527,6 +528,7 @@
     <Compile Include="Controllers\EventRequestsController.cs" />
     <Compile Include="Controllers\ManufacturersController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
+    <Compile Include="Controllers\QuotationsController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
     <Compile Include="Controllers\ShippingLocationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
@@ -552,6 +554,7 @@
     <Compile Include="Models\OperationsStatusViewModel.cs" />
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
+    <Compile Include="Models\QuotationsViewModel.cs" />
     <Compile Include="Models\ToolboxViewModel.cs" />
     <Compile Include="Models\TreeViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -580,6 +583,7 @@
     <Content Include="Views\Countries\Index.cshtml" />
     <Content Include="Views\Reviews\Index.cshtml" />
     <Content Include="Views\Notifications\Index.cshtml" />
+    <Content Include="Views\Quotations\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

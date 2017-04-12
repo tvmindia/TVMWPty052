@@ -95,6 +95,7 @@
     <Compile Include="Contracts\INotificationBusiness.cs" />
     <Compile Include="Contracts\IOrderBusiness.cs" />
     <Compile Include="Contracts\IProductBusiness.cs" />
+    <Compile Include="Contracts\IQuotationsBusiness.cs" />
     <Compile Include="Contracts\IReviewBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AttributesBusiness.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Services\NotificationBusiness.cs" />
     <Compile Include="Services\OrderBusiness.cs" />
     <Compile Include="Services\ProductBusiness.cs" />
+    <Compile Include="Services\QuotationsBusiness.cs" />
     <Compile Include="Services\ReviewBusiness.cs" />
   </ItemGroup>
   <ItemGroup />

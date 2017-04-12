@@ -115,7 +115,9 @@ $(document).ready(function () {
              order: [[1, 'asc']]
 
          });
-      
+        //$('#tblRelatedproducts').on('change', 'input[type="checkbox"]', function () {
+        //    $(this).closest('tr').toggleClass('selected');
+        //});
     }
     catch (e) {
         notyAlert('errror', e.message);

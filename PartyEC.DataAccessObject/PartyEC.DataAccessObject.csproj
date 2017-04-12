@@ -95,6 +95,7 @@
     <Compile Include="DTO\OperationsStatus.cs" />
     <Compile Include="DTO\Order.cs" />
     <Compile Include="DTO\Product.cs" />
+    <Compile Include="DTO\Quotations.cs" />
     <Compile Include="DTO\UA.cs" />
     <Compile Include="DTO\Treeview.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

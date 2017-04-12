@@ -125,8 +125,11 @@ function ChangeButtonPatchView(Controller,Dom, Action) {
 }
 
 function NetworkFailure(data, status, xhr) {
-    var i = JSON.parse(data)
-    notyAlert('error', status);
+    if (status)
+    {
+        notyAlert('error', status);
+    }
+   
 }
 
 //Common function for clearing input fields

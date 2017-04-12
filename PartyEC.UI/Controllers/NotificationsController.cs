@@ -14,9 +14,11 @@ namespace PartyEC.UI.Controllers
     public class NotificationsController : Controller
     {
         private INotificationBusiness _notificationBusiness;
-        public NotificationsController(INotificationBusiness notificationBusiness)
+        private ICommonBusiness _commonBusiness;
+        public NotificationsController(INotificationBusiness notificationBusiness, ICommonBusiness commonBusiness)
         {
             _notificationBusiness = notificationBusiness;
+            _commonBusiness = commonBusiness;
         }
         // GET: Notifications
         public ActionResult Index()
@@ -39,5 +41,101 @@ namespace PartyEC.UI.Controllers
             }
         }
         #endregion  GetAllNotifications
+
+        #region GetNotification
+        [HttpGet]
+        public string GetNotification(string ID)
+        {
+            try
+            {
+                NotifiationViewModel NotifObj = null;
+                if (!string.IsNullOrEmpty(ID))
+                {
+                    NotifObj = Mapper.Map<Notification, NotifiationViewModel>(_notificationBusiness.GetNotification(Int32.Parse(ID)));
+                }
+
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = NotifObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        #endregion GetNotification
+
+        #region InserUpdateNotification
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string NotificationPush(NotifiationViewModel notification)
+        {
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                  
+                    OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                    //INSERT
+                    notification.logDetailsObj = new LogDetailsViewModel();
+                    //Getting UA
+                    notification.logDetailsObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                    notification.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    string[] CustomerIDList= notification.CustomerIDList!=null?notification.CustomerIDList.Split(','):null;
+                    foreach(string cid in CustomerIDList)
+                    {
+                        notification.customer.ID = int.Parse(cid);
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_notificationBusiness.NotificationPush(Mapper.Map<NotifiationViewModel, Notification>(notification)));
+                    }
+                          
+                 
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                 }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+            }
+            //Model state errror
+            else
+            {
+                List<string> modelErrors = new List<string>();
+                foreach (var modelState in ModelState.Values)
+                {
+                    foreach (var modelError in modelState.Errors)
+                    {
+                        modelErrors.Add(modelError.ErrorMessage);
+                    }
+                }
+                return JsonConvert.SerializeObject(new { Result = "VALIDATION", Message = string.Join(",", modelErrors) });
+            }
+        }
+        #endregion InserUpdateNotification
+
+        #region ChangeButtonStyle
+        [HttpGet]
+        public ActionResult ChangeButtonStyle(string ActionType)
+        {
+            ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
+            switch (ActionType)
+            {
+                   case "Push":
+                    ToolboxViewModelObj.sendbtn.Visible = true;
+                    ToolboxViewModelObj.sendbtn.Event = "PushNotification()";
+                    ToolboxViewModelObj.sendbtn.Title = "Save";
+
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
+
+              
+
+                default:
+                    return Content("Nochange");
+            }
+            return PartialView("_ToolboxView", ToolboxViewModelObj);
+        }
+
+
+        #endregion ChangeButtonStyle
     }
 }

@@ -26,7 +26,7 @@ namespace PartyEC.UI.Models
         [Display(Name = "Gender")]
         public string Gender { get; set; }
 
-       
+        public string Address { get; set; }
 
         public Guid? ProfileImageID { get; set; }
 

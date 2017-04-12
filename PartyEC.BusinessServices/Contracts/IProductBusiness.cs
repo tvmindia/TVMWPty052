@@ -37,5 +37,6 @@ namespace PartyEC.BusinessServices.Contracts
         List<Product> GetTopProductsOfCategory(Categories categoryObj);
         List<Product> GetProductsOfCategory(Categories categoryObj);
         List<Product> GetProductsByFiltering(FilterCriteria filterCriteria);
+        Product GetProductDetailsForApp(Product productObj, DateTime currentDateTime);
     }
 }
