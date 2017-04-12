@@ -241,4 +241,23 @@ namespace PartyEC.UI.Models
         public LogDetailsViewModel commonObj { get; set; }
 
     }
+
+    public class ProductAppViewModel
+    {
+        public string Name { get; set; }
+        public string SKU { get; set; }
+        public bool ShowPrice { get; set; }
+        public char ActionType { get; set; }
+        public int SupplierID { get; set; }
+        public string SupplierName { get; set; }
+        public decimal BaseSellingPrice { get; set; }
+        public string ShortDescription { get; set; }
+        public string LongDescription { get; set; }
+        public char ProductType { get; set; }
+        public bool FreeDelivery { get; set; }
+        public string StickerURL { get; set; }
+        public decimal? PriceDifference { get; set; }
+        public bool StockAvailable { get; set; }
+        public decimal? DiscountAmount { get; set; }
+    }
 }

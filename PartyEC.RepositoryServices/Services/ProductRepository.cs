@@ -2079,6 +2079,59 @@ namespace PartyEC.RepositoryServices.Services
             return productList;
         }
 
+        public Product GetProductDetailsForApp(Product productObj,DateTime currentDateTime)
+        {
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = productObj.ID;
+                        cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = currentDateTime.Date;
+                        cmd.CommandText = "[GetProductDetailsForApp]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                productObj.ProductDetailObj = new ProductDetail();
+                                while (sdr.Read())
+                                {                                    
+                                    productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : productObj.Name);
+                                    productObj.SKU = (sdr["SKU"].ToString() != "" ? sdr["SKU"].ToString() : productObj.SKU);
+                                    productObj.ShowPrice = (sdr["ShowPriceYN"].ToString() != "" ? bool.Parse(sdr["ShowPriceYN"].ToString()) : productObj.ShowPrice);
+                                    productObj.ActionType = (sdr["ActionType"].ToString() != "" ? char.Parse(sdr["ActionType"].ToString()) : productObj.ActionType);
+                                    productObj.SupplierID= (sdr["SupplierID"].ToString() != "" ? int.Parse(sdr["SupplierID"].ToString()) : productObj.SupplierID);
+                                    productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : productObj.SupplierName);
+                                    productObj.BaseSellingPrice = (sdr["BaseSellingPrice"].ToString() != "" ? decimal.Parse(sdr["BaseSellingPrice"].ToString()) : productObj.BaseSellingPrice);
+                                    productObj.ShortDescription = (sdr["ShortDescription"].ToString() != "" ? sdr["ShortDescription"].ToString() : productObj.ShortDescription);
+                                    productObj.LongDescription = (sdr["LongDescription"].ToString() != "" ? sdr["LongDescription"].ToString() : productObj.LongDescription);
+                                    productObj.ProductType = (sdr["ProductType"].ToString() != "" ? char.Parse(sdr["ProductType"].ToString()) : productObj.ProductType);
+                                    productObj.FreeDelivery = (sdr["FreeDeliveryYN"].ToString() != "" ? bool.Parse(sdr["FreeDeliveryYN"].ToString()) : productObj.FreeDelivery);
+                                    productObj.StickerURL = (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : productObj.StickerURL); 
+                                    productObj.ProductDetailObj.PriceDifference = (sdr["PriceDiffAmt"].ToString() != "" ? decimal.Parse(sdr["PriceDiffAmt"].ToString()) : productObj.ProductDetailObj.PriceDifference);
+                                    productObj.StockAvailable = (sdr["InStock"].ToString() != "" ? (sdr["InStock"].ToString()=="0"?false:true) : productObj.StockAvailable);
+                                    productObj.ProductDetailObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? decimal.Parse(sdr["DiscountAmount"].ToString()) : productObj.ProductDetailObj.DiscountAmount);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productObj;
+        }
+
         #endregion
     }
 }
