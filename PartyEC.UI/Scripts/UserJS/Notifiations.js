@@ -62,26 +62,33 @@ $(document).ready(function () {
          {
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
              select: true,
+             autoWidth: false,
              order: [],
              searching: true,
              paging: true,
              pageLength: 5,
              data: GetAllCustomers(),
              columns: [
-               { "data": null,"defaultContent": '' },
-               { "data": null,"orderable": false, "defaultContent": '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>' },
-               { "data": "Name", "defaultContent": "<i>-</i>" },
-               { "data": "Mobile", "defaultContent": "<i>-</i>" },
-               { "data": "Address", "defaultContent": "<i>-</i>" },
+                  
+               { "data": null,"width": "3%","defaultContent": '' },
+               { "data": null,"width": "3%", "defaultContent": '<span class="glyphicon glyphicon-user" aria-hidden="true"></span>' },
+               { "data": "Name","width": "24%", "defaultContent": "<i>-</i>" },
+               { "data": "Mobile", "width": "20%", "defaultContent": "<i>-</i>" },
+               { "data": "Address", "width": "50%", "defaultContent": "<i>-</i>" },
                 { "data": "ID", "defaultContent": "<i>-</i>" }
               
 
              ],
              columnDefs: [
+                
                  {
                      orderable: false,
                      className: 'select-checkbox',
                      targets: 0
+                 },
+                 {
+                     ordering: false,
+                     targets: 1
                  },
                   {
                       visible: false,
@@ -89,12 +96,12 @@ $(document).ready(function () {
                       targets: 5
                   }
                 
-             ]
-             //select: {
-             //    style: 'multi',
-             //    selector: 'td:first-child'
-             //},
-             //order: [[1, 'asc']]
+             ],
+             select: {
+                 style: 'multi',
+                 selector: 'tr'
+             },
+             order: [[1, 'asc']]
                  
             
 
@@ -105,9 +112,10 @@ $(document).ready(function () {
         //});
         $('#tblCustomersInNotificatoin tbody').on('click', 'tr', function () {
            
-            var rowData = DataTables.customerinNotificaton.row(".selected").data();
-            $("#CustomerName").val(rowData.Name);
-            $("#customer_ID").val(rowData.ID);
+            $("#RadioSelected").prop('checked', true);
+            BindCustomerNameFromGrid();
+          //  $("#CustomerName").val(rowData.Name);
+            $("#customer_ID").val(0);
         });
     }
     catch (e) {
@@ -118,6 +126,36 @@ $(document).ready(function () {
     //});
 
 });
+
+function BindCustomerNameFromGrid()
+{
+    var rowsData = DataTables.customerinNotificaton.rows(".selected").data();
+    var maxrows=DataTables.customerinNotificaton.data().count();
+    if ((rowsData) && (rowsData.length > 0)) {
+        if (rowsData.length > 1) {
+            var Namelist = [];
+            for (var r = 0; r < rowsData.length; r++) {
+                Namelist.push(rowsData[r].Name);
+            }
+            if (maxrows == rowsData.length)
+            {
+                $("#CustomerName").val('All');
+            }
+            else
+            {
+                $("#CustomerName").val(Namelist);
+            }
+           
+        }
+        else {
+            $("#CustomerName").val(rowsData[0].Name);
+        }
+    }
+    else {
+        $("#CustomerName").val('');
+    }
+}
+
 function SelectCustomerTable(curObje)
 {
     //alert(curObje.value);
@@ -125,9 +163,11 @@ function SelectCustomerTable(curObje)
     {
         case "All":
             DataTables.customerinNotificaton.rows().select();
+            BindCustomerNameFromGrid();
             break;
         case "Selected":
             DataTables.customerinNotificaton.rows().deselect();
+            BindCustomerNameFromGrid();
             break;
     }
    
@@ -186,12 +226,13 @@ function EditNotification(curObj)
     if ((rowData != null) && (rowData.ID != null))
     {
         $('#tabNotificationsDetails a').trigger('click');
-    
+        $("#RadioSelected").prop('checked', true);
+        DataTables.customerinNotificaton.rows().deselect();
         var thisnoti = GetNotificationDetail(rowData.ID);
         if (thisnoti)
         {
             $("#customer_ID").val(thisnoti.customer.ID);
-            $('#customer_Name').val(thisnoti.customer.Name);
+            $('#CustomerName').val(thisnoti.customer.Name);
             $('#Title').val(thisnoti.Title);
             $('#Message').val(thisnoti.Message);
         }
@@ -248,6 +289,7 @@ function NotificationPushSuccess(data, status, xhr)
         case "OK":
             notyAlert('success', JsonResult.Record.StatusMessage);
             RefreshNotificationTable();
+            ClearForm();
             break;
         case "ERROR":
             notyAlert('error', JsonResult.Record.StatusMessage);
@@ -262,6 +304,7 @@ function NotificationPushSuccess(data, status, xhr)
 }
 
 function goback() {
+    ClearForm();
     $("#tabNotificationsList a").click();
 }
 
@@ -270,6 +313,7 @@ function AddNotification()
 try
 {
     $("#RadioSelected").prop('checked', true);
+    ClearForm();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
     DataTables.customerinNotificaton.rows().deselect();
     ChangeButtonPatchView("Notifications", "NotificationPushToolbox", "Push"); //ControllerName,id of the container div,Name of the action
     $("#tabNotificationsDetails a").click();
@@ -284,16 +328,38 @@ catch(e)
 
 function ClearForm() {
     try {
-        var validator = $("#Addressform").validate();
-        $('#Addressform').find('.field-validation-error span').each(function () {
+        var validator = $("#NotificationForm").validate();
+        $('#NotificationForm').find('.field-validation-error span').each(function () {
             validator.settings.success($(this));
         });
-        $('#Addressform')[0].reset();
-        $('#customerAddress_ID').val(0);
-
+        $('#NotificationForm')[0].reset();
+        $('#CustomerName').val('');
+        $('#Title').val('');
+        $('#Message').val('');
+        $("#customer_ID").val(0);
+        DataTables.customerinNotificaton.rows().deselect();
     }
     catch (e) {
         notyAlert('errror', e.message);
     }
 
+}
+
+function ConstructMultiCustomersList() {
+    try {
+        var rowsData = DataTables.customerinNotificaton.rows(".selected").data();
+        if ((rowsData) && (rowsData.length>0))
+        {
+            var IDlist = [];
+            for (var r = 0; r < rowsData.length; r++)
+            {
+                IDlist.push(rowsData[r].ID);
+            }
+            $("#CustomerIDList").val('');
+            $("#CustomerIDList").val(IDlist);
+        }
+    }
+    catch (e) {
+        notyAlert('errror', e.message);
+    }
 }

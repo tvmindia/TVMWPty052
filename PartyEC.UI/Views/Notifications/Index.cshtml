@@ -82,10 +82,10 @@
                                         <div id="NotificationPushToolbox">
                                             @{
                                                 PartyEC.UI.Models.ToolboxViewModel ToolBoxControlNoti = new PartyEC.UI.Models.ToolboxViewModel();
-                                                ToolBoxControlNoti.savebtn.Visible = true;
-                                                ToolBoxControlNoti.savebtn.Title = "Save";
-                                                ToolBoxControlNoti.savebtn.Event = "PushNotification()";
-                                                ToolBoxControlNoti.savebtn.Disable = true; 
+                                                ToolBoxControlNoti.sendbtn.Visible = true;
+                                                ToolBoxControlNoti.sendbtn.Title = "Save";
+                                                ToolBoxControlNoti.sendbtn.Event = "PushNotification()";
+                                                ToolBoxControlNoti.sendbtn.Disable = true; 
                                                 ToolBoxControlNoti.backbtn.Visible = true;
                                                 ToolBoxControlNoti.backbtn.Title = "Back";
                                                 ToolBoxControlNoti.backbtn.Event = "goback()";
@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="container-fluid">
                                     <div class="row">
-@using (Ajax.BeginForm("NotificationPush", "Notifications", new AjaxOptions { HttpMethod = "POST", OnSuccess = "NotificationPushSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "NotificationForm" }))
+@using (Ajax.BeginForm("NotificationPush", "Notifications", new AjaxOptions { HttpMethod = "POST", OnSuccess = "NotificationPushSuccess", Confirm="Push Notifications!Are You Sure?", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "NotificationForm" }))
 
 {
     @Html.AntiForgeryToken()
@@ -119,8 +119,9 @@
                                             <div class="form-group">
                                                 <label class="control-label col-md-4" for="Name">Customer Name</label>
                                                 <div class="col-md-8">
-                                                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control" } })
+                                                    @Html.EditorFor(model => model.CustomerName, new { htmlAttributes = new { @class = "form-control", @onkeypress = "return false;" } })
                                                     @Html.HiddenFor(model => model.customer.ID)
+                                                    @Html.HiddenFor(model => model.CustomerIDList)
                                                     @Html.ValidationMessageFor(model => model.CustomerName, "", new { @class = "text-danger" })
                                                 </div>
                                             </div>
@@ -145,7 +146,7 @@
 
                                             <div class="form-group" hidden="hidden">
                                                 <div class="col-md-offset-2 col-md-10">
-                                                    <input id="btnNotificationSubmit" type="submit" value="Create" class="btn btn-default" />
+                                                    <input id="btnNotificationSubmit" type="submit" onclick="ConstructMultiCustomersList()" value="Create" class="btn btn-default" />
                                                 </div>
                                             </div>
 

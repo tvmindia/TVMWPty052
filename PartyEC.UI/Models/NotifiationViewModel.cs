@@ -18,6 +18,7 @@ namespace PartyEC.UI.Models
         public string Title { get; set; }
         [Required(ErrorMessage = "Please enter Message  ")]
         public string Message { get; set; }
+        public string CustomerIDList { get; set; }
         public Int16 Status { get; set; }
         public LogDetailsViewModel logDetailsObj { get; set; }
 

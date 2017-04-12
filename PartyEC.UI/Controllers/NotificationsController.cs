@@ -72,14 +72,21 @@ namespace PartyEC.UI.Controllers
             {
                 try
                 {
+                  
                     OperationsStatusViewModel OperationsStatusViewModelObj = null;
                     //INSERT
                     notification.logDetailsObj = new LogDetailsViewModel();
                     //Getting UA
                     notification.logDetailsObj.CreatedBy = _commonBusiness.GetUA().UserName;
                     notification.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
-                    notification.customer.Name = notification.CustomerName;
-                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_notificationBusiness.NotificationPush(Mapper.Map<NotifiationViewModel, Notification>(notification)));
+                    string[] CustomerIDList= notification.CustomerIDList!=null?notification.CustomerIDList.Split(','):null;
+                    foreach(string cid in CustomerIDList)
+                    {
+                        notification.customer.ID = int.Parse(cid);
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_notificationBusiness.NotificationPush(Mapper.Map<NotifiationViewModel, Notification>(notification)));
+                    }
+                          
+                 
                     return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                  }
                 catch (Exception ex)
@@ -111,9 +118,9 @@ namespace PartyEC.UI.Controllers
             switch (ActionType)
             {
                    case "Push":
-                    ToolboxViewModelObj.savebtn.Visible = true;
-                    ToolboxViewModelObj.savebtn.Event = "PushNotification()";
-                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    ToolboxViewModelObj.sendbtn.Visible = true;
+                    ToolboxViewModelObj.sendbtn.Event = "PushNotification()";
+                    ToolboxViewModelObj.sendbtn.Title = "Save";
 
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";
