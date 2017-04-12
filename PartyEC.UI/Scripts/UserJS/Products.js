@@ -278,7 +278,7 @@ function Edit(currentObj)
         var thisproduct = GetProduct(rowData.ID);
         if (thisproduct != null)
         {
-            $("#productDetails h4").text(thisproduct.Name + '(' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ')');
+            $("#titleSpanPro").text(thisproduct.Name + '(' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ')');
             //disables some drop downs
             
             ((thisproduct.ProductType == "C") && (thisproduct.ProductDetails.length > 1) ? $("#AttributeSetID").attr({ 'disabled': 'disabled' }) : $("#AttributeSetID").removeAttr('disabled'));

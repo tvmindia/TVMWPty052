@@ -311,6 +311,7 @@
     <Content Include="Content\images\browse-btn.png" />
     <Content Include="Content\images\closelt.png" />
     <Content Include="Content\images\closemodel.png" />
+    <Content Include="Content\images\texture11.jpg" />
     <Content Include="Content\images\delete.PNG" />
     <Content Include="Content\images\power-button.png" />
     <Content Include="Content\images\ship.png" />
