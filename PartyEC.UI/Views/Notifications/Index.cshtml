@@ -8,6 +8,7 @@
 @section styles {
     @Styles.Render("~/Content/DataTables/css/datatable")
     @Styles.Render("~/Content/DataTables/css/datatableSelect")
+    @Styles.Render("~/Content/datatablefilter")
     @Styles.Render("~/Content/UserCSS/Notifications")
 }
 
@@ -36,7 +37,14 @@
                             Html.RenderPartial("_ToolboxView", ToolBoxControl);
                         }
                     </div>
-
+                    <div id="external_filter" class="form-inline">
+                        <label><b>Date From</b></label>
+                        <input class="form-control datepicker" onchange="countDays()" style="width:190px" name="fromdate" id="fromdate" type="Date">
+                        <label><b>To Date</b> </label>
+                        <input class="form-control datepicker" onchange="countDays()" style="width:190px" name="todate" id="todate" type="Date">
+                        <label id="dayscount" style="padding-left:10px"></label>
+                        <b><a href="#" style="padding-left:10px" onclick="GetAllNotifications()"> APPLY</a></b>
+                    </div>
                         @*table*@
                         <table id="tblNotifications" class="table table-striped table-bordered table-hover" width="100%">
                             <thead>
@@ -174,6 +182,8 @@
             @Scripts.Render("~/bundles/datatable")
             @Scripts.Render("~/bundles/datatableSelect")
             @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
+            @Scripts.Render("~/bundles/jqueryui")
+            @Scripts.Render("~/bundles/datatablefilter")
             @Scripts.Render("~/bundles/Notifications")
         }
 

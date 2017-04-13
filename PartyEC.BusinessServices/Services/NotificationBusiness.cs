@@ -21,13 +21,21 @@ namespace PartyEC.BusinessServices.Services
             _notificationRepository = notificationRepository;
         }
 
-        public List<Notification> GetAllNotifications()
+        public List<Notification> GetAllNotifications(string fromdate = null, string todate = null)
         {
             List<Notification> notificationList = null;
             try
             {
-                notificationList = new List<Notification>();
-                foreach(Notification notif in _notificationRepository.GetAllNotifications())
+                notificationList = _notificationRepository.GetAllNotifications();
+                if((!string.IsNullOrEmpty(fromdate))&&(!string.IsNullOrEmpty(todate)))
+                {
+                    var f = DateTime.Parse(fromdate);
+                    var t = DateTime.Parse(todate);
+                    notificationList.Where((noti => (noti.logDetailsObj.CreatedDate >= DateTime.Parse(f.Day+"-"+f.Month+"-"+f.Year))&&(noti.logDetailsObj.CreatedDate<= DateTime.Parse(t.Day + "-" + t.Month + "-" + t.Year))));
+                    //.Where(i => i.CreatedDate.Date >= DateX && i.CreatedDate.Date <= DateY);
+                }
+
+                foreach (Notification notif in notificationList)
                 {
                     //takes only first few characters for the message
                     notif.Message = notif.Message!=null?new string(notif.Message.Take(50).ToArray()):null;
