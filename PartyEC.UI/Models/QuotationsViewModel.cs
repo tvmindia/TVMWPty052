@@ -3,48 +3,56 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartyEC.UI.Models
 {
     public class QuotationsViewModel
     {
 
-        public int ID;
-       
+        public int ID { get; set; }
+
         [Display(Name = "Quotation No")]
-        public string QuotationReqNo;
-        public int ProductID;
-        public int CustomerID;
-     
+        public string QuotationNo { get; set; }
+        public int ProductID { get; set; }
+        public int CustomerID { get; set; }
+
 
         [Display(Name = "Required Date")]
-        public string RequiredDate;
+        public string RequiredDate { get; set; }
         [Display(Name = "Quotation Date")]
-        public string QuotationDate;
+        public string QuotationDate { get; set; }
         [Display(Name = "Quotation Status")]
-        public int Status;
+        public string Status { get; set; }
         [Display(Name = "Qty")]
-        public int Qty;
+        public int Qty { get; set; }
         [Display(Name = "Price")]
-        public decimal Price;
+        public decimal Price { get; set; }
         [Display(Name = "Additional Charges")]
-        public decimal AdditionalCharges;
+        public decimal AdditionalCharges { get; set; }
         [Display(Name = "Tax Amount")]
-        public decimal TaxAmt;
+        public decimal TaxAmt { get; set; }
         [Display(Name = "Discount")]
-        public decimal DiscountAmt;
+        public decimal DiscountAmt { get; set; }
         [Display(Name = "Message")]
-        public string Message;
+        public string Message { get; set; }
 
-        public decimal GrandTotal;
-        public decimal SubTotal;
-        
+        public decimal Total { get; set; }
+        public decimal GrandTotal { get; set; }
+        public decimal SubTotal { get; set; }
+
+        public string ImageUrl { get; set; }
+        public string SourceIP { get; set; }
+        public string ProductSpecXML { get; set; }
+
         //Customer Details
-        public CustomerViewModel customer { get; set; }
+        public CustomerViewModel customerObj { get; set; }
         //Log Details
         public LogDetailsViewModel commonObj { get; set; }
         //Comments
         public EventsLogViewModel EventsLogViewObj { get; set; }
+
+        public List<SelectListItem> QuotationstatusList { get; set; }
 
 
     }

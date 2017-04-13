@@ -222,6 +222,53 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
+        public List<QuotationStatusMaster> GetAllQuotationStatus()
+        {
+            List<QuotationStatusMaster> QuotationStatusList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetMasterQuotationStatus]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                QuotationStatusList = new List<QuotationStatusMaster>();
+                                while (sdr.Read())
+                                {
+                                    QuotationStatusMaster _quotationstatus = new QuotationStatusMaster();
+                                    {
+                                        _quotationstatus.Code = (sdr["Code"].ToString() != "" ? int.Parse(sdr["Code"].ToString()) : _quotationstatus.Code);
+                                        _quotationstatus.Description = (sdr["Description"].ToString() != "" ? sdr["Description"].ToString() : _quotationstatus.Description);
+
+                                    }
+                                    QuotationStatusList.Add(_quotationstatus);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return QuotationStatusList;
+
+
+        }
+
         public List<OtherImages> GetAllStickers()
         {
             List<OtherImages> otherImagesList = null;

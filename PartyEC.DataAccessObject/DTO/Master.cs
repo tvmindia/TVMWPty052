@@ -64,6 +64,14 @@ namespace PartyEC.DataAccessObject.DTO
         public int Code { get; set; }
         public string Description { get; set; }
     }
+
+    public class QuotationStatusMaster
+    {
+        public int Code { get; set; }
+        public string Description { get; set; }
+    }
+
+
     public class EventsLog
     {
         public int ID { get; set; }

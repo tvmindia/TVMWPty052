@@ -19,6 +19,7 @@ namespace PartyEC.BusinessServices.Contracts
         List<Country> GetAllCountries();
         
         List<OrderStatusMaster> GetAllOrderStatus();
+        List<QuotationStatusMaster> GetAllQuotationStatus();
         List<OtherImages> GetAllStickers();
 
         //Supplier

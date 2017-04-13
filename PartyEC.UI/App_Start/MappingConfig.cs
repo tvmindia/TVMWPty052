@@ -48,6 +48,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<NotifiationViewModel, Notification>().ReverseMap();
                 config.CreateMap<MailViewModel, Mail>().ReverseMap();
                 config.CreateMap<QuotationsViewModel, Quotations>().ReverseMap();
+                config.CreateMap<QuotationStatusViewModel, QuotationStatusMaster>().ReverseMap();
             });
         }
 

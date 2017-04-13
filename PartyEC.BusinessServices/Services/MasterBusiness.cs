@@ -50,6 +50,21 @@ namespace PartyEC.BusinessServices.Services
             return orderStatuslist;
         }
 
+        public List<QuotationStatusMaster> GetAllQuotationStatus()
+        {
+            List<QuotationStatusMaster> quotationStatuslist = null;
+            try
+            {
+                quotationStatuslist = _masterRepository.GetAllQuotationStatus();
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return quotationStatuslist;
+        }
+
         public List<OtherImages> GetAllStickers()
         {
             List<OtherImages> otherImagesList = null;
@@ -390,7 +405,6 @@ namespace PartyEC.BusinessServices.Services
             }
             return OperationsStatusObj;
         }
-
 
         #endregion Manufacturers
 
