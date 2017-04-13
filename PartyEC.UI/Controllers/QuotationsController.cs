@@ -132,5 +132,40 @@ namespace PartyEC.UI.Controllers
         }
 
         #endregion UpdateQuotationStatus
+
+
+        #region InsertEventsLog
+        [HttpPost]
+        public string InsertEventsLog(QuotationsViewModel quotationObj)
+        {
+            if (ModelState.IsValid)
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                try
+                {
+                    quotationObj.EventsLogViewObj.commonObj = new LogDetailsViewModel();
+                    quotationObj.EventsLogViewObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                    quotationObj.EventsLogViewObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertEventsLog(Mapper.Map<EventsLogViewModel, EventsLog>(quotationObj.EventsLogViewObj)));
+                }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+
+
+        #endregion InsertEventsLog
     }
 }

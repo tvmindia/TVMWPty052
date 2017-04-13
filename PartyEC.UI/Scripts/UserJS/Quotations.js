@@ -129,7 +129,8 @@ function fillQuotations(ID) {
   //  ChangeButtonPatchView("Supplier", "btnPatchtab2", "Edit");
     var thisQuotations = GetQuotationsByID(ID); //Binding Data  
     debugger;
-    $("#ID").val(thisQuotations.ID)
+    $("#ID").val(thisQuotations.ID);
+    $("#EventLogParentID").val(thisQuotations.ID);
     $("#lblQuotationsNo").text(thisQuotations.QuotationNo);
     $("#lblQuotationDate").text(thisQuotations.QuotationDate);
     $("#lblRequiredDate").text(thisQuotations.RequiredDate);
