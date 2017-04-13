@@ -13,10 +13,28 @@
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#taborderListgrid" data-toggle="tab">Orders List</a></li>
-                <li><a href="#taborderDetails" data-toggle="tab" id="tabOrderDetails">Order Detail</a></li>
+                <li class="active"><a href="#taborderListgrid" data-toggle="tab"><i class="fa fa-list">&nbsp;</i>Orders List</a></li>
+                <li><a href="#taborderDetails" data-toggle="tab" id="tabOrderDetails"><i class="fa fa-file-o">&nbsp;</i> Order Detail</a></li>
                 <li><a href="#taborderEditDetails" data-toggle="tab" id="tabCreateRevision" style="display:none;">Create New Revision</a></li>
+                <div class="" id="btnPatcheventRequeststab2">
+                    @{
+                        PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab2 = new PartyEC.UI.Models.ToolboxViewModel();
+                        ToolBoxControltab2.backbtn.Visible = true;
+                        ToolBoxControltab2.backbtn.Event = "goback()";
+                        ToolBoxControltab2.backbtn.Title = "Back";
+                        ToolBoxControltab2.editbtn.Visible = true;
+                        ToolBoxControltab2.editbtn.Title = "Revise";
+                        ToolBoxControltab2.editbtn.Event = "CancelIssue()";
+                        ToolBoxControltab2.cancelbtn.Visible = true;
+                        ToolBoxControltab2.sendbtn.Visible = true;
+                        ToolBoxControltab2.invoicebtn.Visible = true;
+                        ToolBoxControltab2.shipbtn.Visible = true;
+                        Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
+                    }
+                </div>
             </ul>
+            
+
         </div>
 
         <div class="panel-body">
@@ -40,25 +58,10 @@
                 </div>
                 <div class="tab-pane fade" id="taborderDetails">
                     <div class="col-md-12">
-                        <div class="" id="btnPatcheventRequeststab2">
-                            @{
-                                PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab2 = new PartyEC.UI.Models.ToolboxViewModel();
-                                ToolBoxControltab2.backbtn.Visible = true;
-                                ToolBoxControltab2.backbtn.Event = "goback()";
-                                ToolBoxControltab2.backbtn.Title = "Back";
-                                ToolBoxControltab2.editbtn.Visible = true;
-                                ToolBoxControltab2.editbtn.Title = "Revise";
-                                ToolBoxControltab2.editbtn.Event = "CancelIssue()";
-                                ToolBoxControltab2.cancelbtn.Visible = true;
-                                ToolBoxControltab2.sendbtn.Visible = true;
-                                ToolBoxControltab2.invoicebtn.Visible = true;
-                                ToolBoxControltab2.shipbtn.Visible = true;
-                                Html.RenderPartial("_ToolboxView", ToolBoxControltab2);
-                            }
-                        </div>
-                        <h3>Order Detail</h3>
-                        <hr />
-                        <div class="col-md-2">
+                        
+                        @*<h3>Order Detail</h3>
+                        <hr />*@
+                        @*<div class="col-md-2">
                             <div class="panel with-nav-tabs js panel-primary">
                                 <div class="panel-heading">
                                     <ul class="nav nav-tabs nav-stacked">
@@ -70,12 +73,26 @@
                             </div>
 
 
+                        </div>*@
+                        <div class="col-md-3">
+                            
+                            <div class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down"></i> General Info</div>
+                            <div class="col-md-12 Sidebar_Party" style="min-height:1580px;">
+                                <ul class="nav nav-tabs nav-stacked">
+                                    <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="label label-danger">E</span></a></li>
+                                    <li><a href="#price" data-toggle="tab" id="tabPrice">Invoice</a></li>
+                                    <li><a href="#images" data-toggle="tab" id="tabImages">Shiping</a></li>
+                                </ul>
+
+                            </div>
                         </div>
-                        <div class="col-md-10">
+                        <div class="col-md-9">
                             <div class="col-md-12">
+                                <h4 style="max-width:50%"><span class="fa fa-bfa fa-shopping-cart" style="font-size: 28px;color: #f3a70d;"></span><span> </span><span id="titleSpanPro" class="Spantitle">Order Details</span></h4>
+                                <hr />
                                 <div class="col-md-6">
-                                    <div class="panel panel-default" style="min-height:250px">
-                                        <div class="panel-heading">General</div>
+                                    <div class="infoBox panel panel-default" style="min-height:250px">
+                                        <div class="infoBoxHeader panel-heading">General</div>
                                         <div class="panel-body">
                                             @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
@@ -104,8 +121,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="panel panel-default" style="min-height:250px">
-                                        <div class="panel-heading">Account Information</div>
+                                    <div class="infoBox panel panel-default" style="min-height:250px">
+                                        <div class="infoBoxHeader panel-heading">Account Information</div>
                                         <div class="panel-body">
                                             <div class="col-md-12">
                                                 <img src="~/Content/images/Person1.png" id="imgPreviewCustomer" />
@@ -132,8 +149,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="panel panel-default" style="min-height:250px">
-                                        <div class="panel-heading">Billing Address</div>
+                                    <div class="infoBox panel-default" style="min-height:250px">
+                                        <div class="infoBoxHeader panel-heading">Billing Address</div>
                                         <div class="panel-body">
                                             <div class="col-md-12">
                                                 <a id="btnmodelrelproduct" style="position:relative;left:89%" class="btn btn-info" data-toggle="modal" data-target="#ModelBillingDetails">Edit</a>
@@ -160,8 +177,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="panel panel-default" style="min-height:250px">
-                                        <div class="panel-heading">Shipping Address</div>
+                                    <div class="infoBox panel panel-default" style="min-height:250px">
+                                        <div class="infoBoxHeader panel-heading">Shipping Address</div>
                                         <div class="panel-body">
                                             <div class="col-md-12">
                                                 <a id="btnmodelrelproduct" style="position:relative;left:89%" class="btn btn-info" data-toggle="modal" data-target="#ModelShipingDetails">Edit</a>
@@ -189,8 +206,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="panel panel-default" style="min-height:150px">
-                                        <div class="panel-heading">Payment Information</div>
+                                    <div class="infoBox panel panel-default" style="min-height:150px">
+                                        <div class="infoBoxHeader panel-heading">Payment Information</div>
                                         <div class="panel-body">
                                             <label class="h5 col-md-6" for="lblPaymentType">Payment Mode:</label>
                                             <div class="col-md-6">
@@ -213,8 +230,8 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="panel panel-default" style="min-height:150px">
-                                        <div class="panel-heading">Shipping & Handling information</div>
+                                    <div class="infoBox panel panel-default" style="min-height:150px">
+                                        <div class="infoBoxHeader panel-heading">Shipping & Handling information</div>
                                         <div class="panel-body">
                                             <label class="h5 col-md-6" for="lblShippingLocation">Shipping Location:</label>
                                             <div class="col-md-6">
@@ -254,8 +271,8 @@
                                     @using (Ajax.BeginForm("UpdateEventsLog", "Order", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "CheckinCommentInsert" }, new { @class = "form-horizontal", role = "form", id = "formComments" }))
                                     {
                                         @Html.AntiForgeryToken()
-                                        <div class="panel panel-default" style="min-height:250px">
-                                            <div class="panel-heading">Order Comments</div>
+                                        <div class="infoBox panel panel-default" style="min-height:250px">
+                                            <div class="infoBoxHeader panel-heading">Order Comments</div>
                                             <div class="panel-body">
                                                 <div class="form-group col-md-12">
                                                     @Html.LabelFor(model => model.EventsLogViewObj.Comment, htmlAttributes: new { @class = "control-label col-md-6" })
@@ -294,7 +311,7 @@
                                                     <label id="lblHistroy" class="control-label" style="font-size:14px;margin-left:1%">Earlier Comments</label>
 
                                                     <div style="height: 150px;width: 107%;overflow: hidden;position: relative;">
-                                                        <div id="CommentsDisplay" style="max-height: 150px;min-height: 150px;overflow-y: auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: -15px;white-space: pre;">
+                                                        <div id="CommentsDisplay" style="max-height: 150px;min-height: 150px;overflow-x: hidden;position: absolute;top: 0px;bottom: 0px;left: 0px;right: -15px;white-space: pre;">
                                                         </div>
                                                     </div>
                                                 </div>
@@ -303,8 +320,8 @@
                                                 }
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="panel panel-default" style="min-height:250px">
-                                        <div class="panel-heading">Order Summery</div>
+                                    <div class="infoBox panel panel-default" style="min-height:250px">
+                                        <div class="infoBoxHeader panel-heading">Order Summery</div>
                                         <div class="panel-body">
                                             <table width="100%" border="0" align="right" cellpadding="0" cellspacing="0">
                                                 <tbody>
