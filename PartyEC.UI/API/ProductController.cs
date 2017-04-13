@@ -3,8 +3,7 @@ using PartyEC.DataAccessObject.DTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
+using AutoMapper;
 using System.Web.Http;
 using Newtonsoft.Json;
 using PartyEC.UI.Models;
@@ -50,7 +49,23 @@ namespace PartyEC.UI.API
                 productApp.PriceDifference = product.ProductDetailObj.PriceDifference;
                 productApp.StockAvailable = product.StockAvailable;
                 productApp.DiscountAmount = product.ProductDetailObj.DiscountAmount;
+                productObj.AttributeSetID = product.AttributeSetID;
                 return JsonConvert.SerializeObject(new { Result = true, Records = productApp });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public object GetProductRatings(Product productObj)
+        {
+            try
+            {
+                List<ProductReviewViewModel> productRating = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_productBusiness.GetRatingSummary(productObj.ID,productObj.AttributeSetID));
+                if (productRating.Count == 0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = productRating });
             }
             catch (Exception ex)
             {

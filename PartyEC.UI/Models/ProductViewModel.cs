@@ -259,5 +259,6 @@ namespace PartyEC.UI.Models
         public decimal? PriceDifference { get; set; }
         public bool StockAvailable { get; set; }
         public decimal? DiscountAmount { get; set; }
+        public int AttributeSetID { get; set; }
     }
 }
