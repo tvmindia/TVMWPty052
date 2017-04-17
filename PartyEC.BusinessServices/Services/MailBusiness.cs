@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartyEC.BusinessServices.Services
 {
@@ -59,6 +61,13 @@ namespace PartyEC.BusinessServices.Services
 
         public bool SendMail(Mail mailObj)
         {
+            return false;
+        }
+
+        // public async Task SendMail(Mail mailObj)
+        public async Task SendMailAsync(Mail mailObj)
+        {
+          
             SmtpClient mailServer = new SmtpClient();
             MailMessage mail = new MailMessage();
             mail.From = new MailAddress(EmailFromAddress, "Admin_@_PartyEC");
@@ -73,15 +82,16 @@ namespace PartyEC.BusinessServices.Services
                 mailServer.Credentials = new System.Net.NetworkCredential(smtpUserName, smtpPassword);
                 mailServer.EnableSsl = true;
                 mail.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
-                mailServer.Send(mail);
+                await mailServer.SendMailAsync(mail);
             }
             catch (SmtpException e)
             {
                 //LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Error sending welcome email.", e);
-                return false;
+                //return false;
+                Console.Write(e.Message);
             }
 
-            return true;
+           // return true;
         }
 
     }

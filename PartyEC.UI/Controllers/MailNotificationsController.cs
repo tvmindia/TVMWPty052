@@ -67,9 +67,7 @@ namespace PartyEC.UI.Controllers
                         notification.customer.ID = int.Parse(cid);
                         OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_notificationBusiness.NotificationEmailPush(Mapper.Map<MailNotificationViewModel, Notification>(notification)));
                     }
-
-
-                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                  return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                 }
                 catch (Exception ex)
                 {
