@@ -25,14 +25,11 @@ $(document).ready(function () {
                  "visible": false,
                  "searchable": false
              }]
-         });
-         
+         });         
     }
     catch (e) {
         notyAlert('error', e.message);
-    }
-
-
+    } 
     try
     {
         DataTables.QuotationsItemTable = $('#tblQuotationsItemDetail').DataTable(
@@ -55,8 +52,7 @@ $(document).ready(function () {
                   { "data": "DiscountAmt" },
                   { "data": "GrandTotal"}
                 ],
-                columnDefs: [
-                 { 
+                columnDefs: [{ 
                      "targets": [0],
                      "visible": false,
                      "searchable": false,
@@ -66,8 +62,6 @@ $(document).ready(function () {
     catch (e) {
         notyAlert('error', e.message);
     }
-
-
 });
 
 function GetAllQuotations() {
@@ -127,7 +121,7 @@ function fillQuotations(ID) {
 
     var thisQuotations = GetQuotationsByID(ID); //Binding Data  
     $("#ID").val(thisQuotations.ID);
-    $("#EventLogParentID").val(thisQuotations.ID);
+    $("#hdnEventsLogParentID").val(thisQuotations.ID);
     $("#lblQuotationsNo").text(thisQuotations.QuotationNo);
     $("#lblQuotationDate").text(thisQuotations.QuotationDate);
     $("#lblRequiredDate").text(thisQuotations.RequiredDate);
@@ -137,6 +131,9 @@ function fillQuotations(ID) {
     $("#lblCustomerEmail").text(thisQuotations.customerObj.Email);
     $("#imgPreviewCustomer").attr("src", thisQuotations.ImageUrl);
     $("#lblMessage").text(thisQuotations.Message);
+
+    $("#hdnAccountEmailID").text(thisQuotations.customerObj.Email);
+    $("#hdnAccountCustomerName").text(thisQuotations.customerObj.Name);
 
     $("#Status").val(thisQuotations.Status);
     $("#lblSubTotal").text(thisQuotations.SubTotal);
@@ -148,7 +145,6 @@ function fillQuotations(ID) {
 }
 
 function BindTablQuotationDetailList(ID) {
-    debugger;
     DataTables.QuotationsItemTable.clear().rows.add(GetQuotationsDetailsByID(ID)).draw(false);
 }
 
@@ -179,10 +175,8 @@ function BindQuotationsTable() {
 function SaveSuccess(data, status, xhr) {
     debugger;
     BindQuotationsTable();
-    var i = JSON.parse(data)
-  
-    switch (i.Result) {
-
+    var i = JSON.parse(data) 
+    switch (i.Result) { 
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
             var returnId = i.Record.ReturnValues
@@ -201,15 +195,15 @@ function SaveSuccess(data, status, xhr) {
 }
 
 function BindComments()   // To Display Previous Comment history
-{
-
+{    
+    $("#Comments").val("");
     $("#CommentsDisplay").empty();
     id = $("#ID").val();// assigning id for binding comments.
-    var thisCommentList = GetEventsLog(id);
-    if (thisCommentList != null) {
+    var CommentList = GetEventsLog(id);
+    if (CommentList != null) {
         debugger;
-        for (var i = 0; i < thisCommentList.length; i++) {
-            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12"><span class="badge">' + thisCommentList[i].CommentDate + '</span>' + thisCommentList[i].Comment + '</li>');
+        for (var i = 0; i < CommentList.length; i++) {
+            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12" style="background-color:#f4f0f0;">' + CommentList[i].Comment + '<span class="badge">' + CommentList[i].CommentDate + '</span></li>');
             $("#CommentsDisplay").append(cnt);
         }
     }
@@ -235,7 +229,6 @@ function GetEventsLog(id) {
         notyAlert('error', e.message);
     }
 }
-
 
 function goback() {
     $('#tabQuotationsList').trigger('click');
