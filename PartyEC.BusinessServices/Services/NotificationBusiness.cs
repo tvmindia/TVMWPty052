@@ -15,12 +15,14 @@ namespace PartyEC.BusinessServices.Services
 {
     public class NotificationBusiness: INotificationBusiness
     {
-        private  INotificationRepository  _notificationRepository;
+        private INotificationRepository  _notificationRepository;
         private IMailBusiness _mailBusiness;
-        public NotificationBusiness(INotificationRepository notificationRepository, IMailBusiness mailBusiness)
+        private ICustomerBusiness _customerBusiness;
+        public NotificationBusiness(INotificationRepository notificationRepository, IMailBusiness mailBusiness, ICustomerBusiness customerBusiness)
         {
             _notificationRepository = notificationRepository;
             _mailBusiness = mailBusiness;
+            _customerBusiness = customerBusiness;
         }
 
         public List<Notification> GetAllNotifications(string fromdate = null, string todate = null, bool IsMobile = true)
@@ -86,6 +88,11 @@ namespace PartyEC.BusinessServices.Services
                 //Call SendToFCM(string titleString, string descriptionString, Boolean isCommon, string CustomerID = "");
                 //on success call NotificationPush
                 operationsStatus = _notificationRepository.NotificationPush(notification);
+                if(operationsStatus.StatusCode==1)
+                {
+                    //call customer detail
+                    //call notificatoin cloud system
+                }
             }
             catch(Exception ex)
             {
@@ -186,11 +193,23 @@ namespace PartyEC.BusinessServices.Services
             try
             {
               operationsStatus = _notificationRepository.NotificationPush(notification);
-              if(operationsStatus.StatusCode==1)
+                //Get customer information
+                OperationsStatus opstatus = new OperationsStatus();
+                Customer customer = null;
+                customer=_customerBusiness.GetCustomer(notification.customer.ID, opstatus);
+                if (operationsStatus.StatusCode==1)
                 {
                     Mail _mail = new Mail();
-                   // _mail.
-                   // _mailBusiness.Send();
+                    using(StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/Notifications.html")))
+                    {
+                        _mail.Body = reader.ReadToEnd();
+                    }
+                    _mail.Body = _mail.Body.Replace("{CustomerName}", customer.Name);
+                    _mail.Body = _mail.Body.Replace("{Message}", notification.Message);
+                    _mail.IsBodyHtml = true;
+                    _mail.Subject = notification.Title;
+                    _mail.To = customer.Email;
+                    _mailBusiness.SendMail(_mail);
                 }
 
             }

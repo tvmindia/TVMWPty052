@@ -59,25 +59,13 @@ namespace PartyEC.BusinessServices.Services
 
         public bool SendMail(Mail mailObj)
         {
-            string body = string.Empty;
-            //Mail mailObj = new Mail();
             SmtpClient mailServer = new SmtpClient();
             MailMessage mail = new MailMessage();
-
             mail.From = new MailAddress(EmailFromAddress, "Admin_@_PartyEC");
-            mail.To.Add(mailObj.CustomerEmail);
-            mail.Subject = "Shipping Tracking";
-            mail.IsBodyHtml = true;
-
-            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/OrderComment.html")))
-            {
-                body = reader.ReadToEnd();
-            }
-            body = body.Replace("{CustomerName}", mailObj.CustomerName);
-            body = body.Replace("{OrderNo}", mailObj.OrderNo.ToString());
-            body = body.Replace("{OrderComment}", mailObj.OrderComment);
-            mail.Body = body;
-
+            mail.To.Add(mailObj.To);
+            mail.Subject = mailObj.Subject;
+            mail.IsBodyHtml = mailObj.IsBodyHtml;
+            mail.Body = mailObj.Body;
             try
             {
                 mailServer.Host = host;

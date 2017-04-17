@@ -9,5 +9,6 @@ namespace PartyEC.BusinessServices.Contracts
     public interface IMailBusiness
     {
         bool Send(Mail mailObj);
+        bool SendMail(Mail mailObj);
     }
 }
