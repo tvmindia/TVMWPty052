@@ -345,7 +345,7 @@ function BindOrderComments(Result)
     if (CommentList != null) {
 
         for (var i = 0; i < CommentList.length; i++) {
-            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12" style="background-color:#f4f0f0;"><span class="badge">' + CommentList[i].CommentDate + '</span>' + CommentList[i].Comment + '</li>');
+            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12" style="background-color:#f4f0f0;">' + CommentList[i].Comment + '<span class="badge">' + CommentList[i].CommentDate + '</span></li>');
             $("#CommentsDisplay").append(cnt);
         }
     }

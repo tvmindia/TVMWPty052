@@ -312,6 +312,7 @@
     <Content Include="Content\images\browse-btn.png" />
     <Content Include="Content\images\closelt.png" />
     <Content Include="Content\images\closemodel.png" />
+    <Content Include="Content\images\Loader.gif" />
     <Content Include="Content\images\texture11.jpg" />
     <Content Include="Content\images\delete.PNG" />
     <Content Include="Content\images\power-button.png" />
@@ -331,6 +332,7 @@
     <Content Include="Content\images\reset.PNG" />
     <Content Include="Content\images\save.PNG" />
     <Content Include="Content\images\sentmail.png" />
+    <Content Include="Content\images\this_page_is_under_construc.jpg" />
     <Content Include="Content\images\updateButton.png" />
     <Content Include="Content\images\uploadify-cancel.png" />
     <Content Include="Content\images\invoice1.png" />
@@ -521,6 +523,7 @@
     <Compile Include="Controllers\AttributesController.cs" />
     <Compile Include="Controllers\AttributeSetController.cs" />
     <Compile Include="Controllers\AttributeSetLinkController.cs" />
+    <Compile Include="Controllers\BookingsController.cs" />
     <Compile Include="Controllers\Cart_WishlistController.cs" />
     <Compile Include="Controllers\CategoriesController.cs" />
     <Compile Include="Controllers\CountriesController.cs" />
@@ -529,16 +532,21 @@
     <Compile Include="Controllers\DynamicUIController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventRequestsController.cs" />
+    <Compile Include="Controllers\InvoicesController.cs" />
     <Compile Include="Controllers\MailNotificationsController.cs" />
     <Compile Include="Controllers\ManufacturersController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\QuotationsController.cs" />
+    <Compile Include="Controllers\ReportsController.cs" />
     <Compile Include="Controllers\ReviewsController.cs" />
+    <Compile Include="Controllers\RolesController.cs" />
+    <Compile Include="Controllers\ShipmentsController.cs" />
     <Compile Include="Controllers\ShippingLocationController.cs" />
     <Compile Include="Controllers\OrderController.cs" />
     <Compile Include="Controllers\ProductsController.cs" />
     <Compile Include="Controllers\SupplierController.cs" />
     <Compile Include="Controllers\SupplierLocationsController.cs" />
+    <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -590,6 +598,7 @@
     <Content Include="Views\Notifications\Index.cshtml" />
     <Content Include="Views\Quotations\Index.cshtml" />
     <Content Include="Views\MailNotifications\Index.cshtml" />
+    <Content Include="Views\UnderConstruction\UnderConstruction.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -600,7 +609,13 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
+    <Folder Include="Views\Bookings\" />
+    <Folder Include="Views\Invoices\" />
     <Folder Include="Views\Location\" />
+    <Folder Include="Views\Reports\" />
+    <Folder Include="Views\Roles\" />
+    <Folder Include="Views\Shipments\" />
+    <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

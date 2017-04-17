@@ -14,7 +14,28 @@
     @Styles.Render("~/Content/css")
     @RenderSection("styles", required: false)
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,800,700,900' rel='stylesheet' type='text/css'>
-
+    <style>
+        #loading-img {
+    background: url('../../Content/images/Loader.gif') center center no-repeat;
+    height: 100%;
+    z-index: 1040;
+}
+.mega-header {
+    text-align: center;
+    position: relative;
+}
+.overlayLoad {
+    background: #faf8f8;
+    display: none;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    opacity: 0.5;
+    z-index: 1040;
+}
+    </style>
 
 
 </head>
@@ -67,7 +88,10 @@
         <div class="container-fluid">
             @RenderBody()
         </div>
-   
+       <div class="overlayLoad" id="displaywait">
+        <!------ loading --->
+        <div id="loading-img"></div>
+        </div>
     <nav class="navbar navbar-default">
         
             <footer>

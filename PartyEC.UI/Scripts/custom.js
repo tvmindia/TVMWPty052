@@ -90,6 +90,7 @@ function PostDataToServer(page, formData, callback)
 
 function GetDataFromServer(page, formData) {
     var jsonResult = {};
+    
     $.ajax({
         
         type: "GET",
@@ -98,12 +99,17 @@ function GetDataFromServer(page, formData) {
         async: false,
         cache: false,
         contentType: "application/json; charset=utf-8",
+        beforeSend: function () {
+            $('#displaywait').show(1);
+        },
         success: function (data) {
-         jsonResult = data;
+            jsonResult = data;
+            $('#displaywait').hide(1);
         },
         error: function (jqXHR, textStatus, errorThrown) {
           jsonResult = '';
-          notyAlert('error',errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
+          notyAlert('error', errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
+          $('#displaywait').hide(1);
         },
         complete: function () {
           
