@@ -1,1 +1,17 @@
-﻿
+﻿.col-lg-2 > .panel-primary > .panel-heading {
+    min-height: 500px;
+}
+.radioBox{
+     position: absolute;
+     left:500px;   
+}
+
+#external_filter
+{
+position: absolute;
+    left: 258px;
+    top: 141px;
+}
+
+
+

@@ -238,12 +238,7 @@ function EditNotification(curObj)
             $('#Title').val(thisnoti.Title);
             $('#Message').val(thisnoti.Message);
         }
-      
-
-
     }
-
-
 }
 
 function GetNotificationDetail(id)

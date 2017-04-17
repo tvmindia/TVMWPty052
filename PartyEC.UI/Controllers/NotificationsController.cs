@@ -34,7 +34,7 @@ namespace PartyEC.UI.Controllers
             {
                 fromdate = (fromdate != "" ? fromdate : null);
                 todate = (todate != "" ? todate : null);
-                List <NotifiationViewModel> notifiationList = Mapper.Map<List<Notification>, List<NotifiationViewModel>>(_notificationBusiness.GetAllNotifications(fromdate,todate));
+                List <NotifiationViewModel> notifiationList = Mapper.Map<List<Notification>, List<NotifiationViewModel>>(_notificationBusiness.GetAllNotifications(fromdate,todate,true));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = notifiationList });
             }
             catch (Exception ex)
@@ -74,7 +74,6 @@ namespace PartyEC.UI.Controllers
             {
                 try
                 {
-                  
                     OperationsStatusViewModel OperationsStatusViewModelObj = null;
                     //INSERT
                     notification.logDetailsObj = new LogDetailsViewModel();
@@ -85,7 +84,7 @@ namespace PartyEC.UI.Controllers
                     foreach(string cid in CustomerIDList)
                     {
                         notification.customer.ID = int.Parse(cid);
-                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_notificationBusiness.NotificationPush(Mapper.Map<NotifiationViewModel, Notification>(notification)));
+                        OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_notificationBusiness.NotificationMobilePush(Mapper.Map<NotifiationViewModel, Notification>(notification)));
                     }
                           
                  

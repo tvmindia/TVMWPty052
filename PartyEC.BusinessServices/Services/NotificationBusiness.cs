@@ -16,40 +16,50 @@ namespace PartyEC.BusinessServices.Services
     public class NotificationBusiness: INotificationBusiness
     {
         private  INotificationRepository  _notificationRepository;
-        public NotificationBusiness(INotificationRepository notificationRepository)
+        private IMailBusiness _mailBusiness;
+        public NotificationBusiness(INotificationRepository notificationRepository, IMailBusiness mailBusiness)
         {
             _notificationRepository = notificationRepository;
+            _mailBusiness = mailBusiness;
         }
 
-        public List<Notification> GetAllNotifications(string fromdate = null, string todate = null)
+        public List<Notification> GetAllNotifications(string fromdate = null, string todate = null, bool IsMobile = true)
         {
-            List<Notification> notificationList = null;
+            List<Notification> notificationList = null,filteredList=null;
             try
             {
-                notificationList = _notificationRepository.GetAllNotifications();
-                if((!string.IsNullOrEmpty(fromdate))&&(!string.IsNullOrEmpty(todate)))
+                switch(IsMobile)
+                {
+                    case true:
+                        notificationList = _notificationRepository.GetAllNotifications().Where(noti => noti.Type == "Mobile").ToList();
+                        break;
+                    case false:
+                        notificationList = _notificationRepository.GetAllNotifications().Where(noti=>noti.Type == "Email").ToList();
+                        break;
+                }
+                if ((!string.IsNullOrEmpty(fromdate)) && (!string.IsNullOrEmpty(todate)))
                 {
                     var f = DateTime.Parse(fromdate);
                     var t = DateTime.Parse(todate);
-                    notificationList.Where((noti => (noti.logDetailsObj.CreatedDate >= DateTime.Parse(f.Day+"-"+f.Month+"-"+f.Year))&&(noti.logDetailsObj.CreatedDate<= DateTime.Parse(t.Day + "-" + t.Month + "-" + t.Year))));
-                    //.Where(i => i.CreatedDate.Date >= DateX && i.CreatedDate.Date <= DateY);
+                    notificationList.Where((noti => (noti.logDetailsObj.CreatedDate >= DateTime.Parse(f.Day + "-" + f.Month + "-" + f.Year)) && (noti.logDetailsObj.CreatedDate <= DateTime.Parse(t.Day + "-" + t.Month + "-" + t.Year))));
                 }
-
+                filteredList = new List<Notification>();
                 foreach (Notification notif in notificationList)
                 {
                     //takes only first few characters for the message
                     notif.Message = notif.Message!=null?new string(notif.Message.Take(50).ToArray()):null;
-                    notificationList.Add(notif);
-                   
+                    filteredList.Add(notif);
                 }
 
             }
             catch (Exception ex)
             {
             }
-            return notificationList;
+            return filteredList;
         }
 
+
+       
 
         public Notification GetNotification(int ID)
         {
@@ -68,7 +78,7 @@ namespace PartyEC.BusinessServices.Services
            
         }
 
-        public OperationsStatus NotificationPush(Notification notification)
+        public OperationsStatus NotificationMobilePush(Notification notification)
         {
             OperationsStatus operationsStatus = null;
             try
@@ -169,5 +179,27 @@ namespace PartyEC.BusinessServices.Services
             }
         }
         #endregion Notification message to Cloud messaging system
+        #region mailnotification
+        public OperationsStatus NotificationEmailPush(Notification notification)
+        {
+            OperationsStatus operationsStatus = null;
+            try
+            {
+              operationsStatus = _notificationRepository.NotificationPush(notification);
+              if(operationsStatus.StatusCode==1)
+                {
+                    Mail _mail = new Mail();
+                   // _mail.
+                   // _mailBusiness.Send();
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return operationsStatus;
+        }
+        #endregion mailnotification
     }
 }

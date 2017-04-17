@@ -9,8 +9,10 @@ namespace PartyEC.BusinessServices.Contracts
 {
     public  interface INotificationBusiness
     {
-        List<Notification> GetAllNotifications(string fromdate=null,string todate=null);
+        List<Notification> GetAllNotifications(string fromdate=null,string todate=null,bool IsMobile=false);
         Notification GetNotification(int ID);
-        OperationsStatus NotificationPush(Notification notification);
+        OperationsStatus NotificationMobilePush(Notification notification);
+        OperationsStatus NotificationEmailPush(Notification notification);
+
     }
 }
