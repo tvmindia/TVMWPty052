@@ -252,7 +252,7 @@ background-color: #fff;
 .twitter img { vertical-align: -8px;position:relative;left:6px }
 .dribble img { vertical-align: -8px;position:relative;left:6px }
 .thr_btn img { vertical-align: -16px;position:relative;left:8px;height:20px;width:20px;}
-.thr_disbtn img { vertical-align: -9px;position:relative;left:6px}
+.thr_disbtn img { vertical-align: -16px;position:relative;left:8px;height:20px;width:20px;}
 .thr_btn{cursor:pointer!important;opacity:1!important;}
 .buttonpatch a img { border: 0; }
 
@@ -415,12 +415,12 @@ hr{
     border-color: transparent!important;
 }
 .SidebarBlock{
-    font-size: 16px;
+    font-size: 15px;
     font-family: 'Raleway', Helvetica, Arial, sans-serif;
     margin-bottom: 3%;
     margin-left:-10%;
     font-weight:700;
-    text-transform:uppercase;
+    /*text-transform:uppercase;*/
    
 }
 .infoBoxHeader{

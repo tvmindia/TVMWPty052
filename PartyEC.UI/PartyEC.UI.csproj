@@ -306,6 +306,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\images\add.png" />
+    <Content Include="Content\images\addsub.png" />
     <Content Include="Content\images\approve.png" />
     <Content Include="Content\images\back.PNG" />
     <Content Include="Content\images\browse-btn.png" />
