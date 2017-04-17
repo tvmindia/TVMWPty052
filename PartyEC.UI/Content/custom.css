@@ -1,8 +1,8 @@
 /*menu hover*/
 @media (min-width: 768px) {
-  ul.nav li:hover > ul.dropdown-menu {
+  /*ul.nav li:hover > ul.dropdown-menu {
     display: block;
-    }
+    }*/
 }
 .navbar-default {
     background-image: -webkit-linear-gradient(top, #b9156e 0, #f25eaf 100%)!important;

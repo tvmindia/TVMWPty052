@@ -10,7 +10,9 @@ $(document).ready(function () {
     //    autoclose: true,
     //    todayHighlight: true
     //});
-
+    $('.Tom').hover(function () {
+        $('.dropdown-toggle', this).click();
+    });
     $('input[type="date"]').datepicker({
         format: "yyyy-mm-dd",//dd-M-yyyy",
         maxViewMode: 0,
