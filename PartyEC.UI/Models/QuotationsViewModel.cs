@@ -51,6 +51,8 @@ namespace PartyEC.UI.Models
         public LogDetailsViewModel commonObj { get; set; }
         //Comments
         public EventsLogViewModel EventsLogViewObj { get; set; }
+        //Mailing Comments
+        public MailViewModel mailViewModelObj { get; set; }
 
         public List<SelectListItem> QuotationstatusList { get; set; }
 

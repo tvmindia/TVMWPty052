@@ -191,36 +191,46 @@
                                                             <div class="form-group col-md-12">
                                                                 @Html.LabelFor(model => model.EventsLogViewObj.Comment, htmlAttributes: new { @class = "control-label col-md-6" })
                                                                 <div class="col-md-12">
-                                                                    @Html.TextAreaFor(model => model.EventsLogViewObj.Comment, new { @class = "form-control" })
+                                                                    @Html.TextAreaFor(model => model.EventsLogViewObj.Comment, new { @class = "form-control",id="Comments" })
                                                                     @Html.ValidationMessageFor(model => model.EventsLogViewObj.Comment, "", new { @class = "text-danger" })
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12"></div> 
-                                                            <div class="form-group">
-                                                                <div class="col-md-offset-2 col-md-10">
-                                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Quotations" })
-                                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4 UpdateId",id="EventLogParentID"})
-                                                                    <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
+                                                            <div class="col-md-12"></div>
+                                                            <div class="">
+                                                                @Html.LabelFor(model => model.EventsLogViewObj.CustomerNotifiedYN, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                                <div class="col-lg-2">
+                                                                    <div class="checkbox">
+                                                                        <div>
+                                                                            @Html.EditorFor(model => model.EventsLogViewObj.CustomerNotifiedYN)
+                                                                            @Html.ValidationMessageFor(model => model.EventsLogViewObj.CustomerNotifiedYN, "", new { @class = "text-danger" })
+                                                                        </div>
+
+                                                                    </div>
+
                                                                 </div>
                                                             </div>
 
-                                                            @*<div class="">
+                                                            <div class="">
                                                                 <div class="col-md-6">
+                                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Quotations" })
+                                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnEventsLogParentID" })
+                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountEmailID" })
+                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountCustomerName" })
                                                                     <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
                                                                 </div>
-                                                            </div>*@
+                                                            </div>
                                                             <div class="col-md-12"></div>
                                                             <div class="form-group col-md-12">
                                                                 <hr />
                                                                 <label id="lblHistroy" class="control-label" style="font-size:14px;margin-left:1%">Earlier Comments</label>
 
                                                                 <div style="height: 150px;width: 107%;overflow: hidden;position: relative;">
-                                                                    <div id="CommentsDisplay" style="max-height: 150px;min-height: 150px;overflow-y: auto;position: absolute;top: 0px;bottom: 0px;left: 0px;right: -15px;white-space: pre;">
+                                                                    <div id="CommentsDisplay" style="max-height: 150px;min-height: 150px;overflow-x: hidden;position: absolute;top: 0px;bottom: 0px;left: 0px;right: -15px;white-space: pre;">
                                                                     </div>
                                                                 </div>
                                                             </div>
-                                                            </div>
-                                                    </div>
+                                                        </div>
+                                                    </div> 
                                                 }
                                             </div>
                                             <div class="col-md-6">
