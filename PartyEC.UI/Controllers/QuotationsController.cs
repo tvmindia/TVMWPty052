@@ -132,8 +132,7 @@ namespace PartyEC.UI.Controllers
         }
 
         #endregion UpdateQuotationStatus
-
-
+        
         #region InsertEventsLog
         [HttpPost]
         public string InsertEventsLog(QuotationsViewModel quotationObj)
@@ -167,5 +166,46 @@ namespace PartyEC.UI.Controllers
 
 
         #endregion InsertEventsLog
+
+        #region GetEventsLog
+        [HttpGet]
+        public string GetEventsLog(string ID)
+        {
+            try
+            {
+                List<EventsLogViewModel> eventsLogList = Mapper.Map<List<EventsLog>, List<EventsLogViewModel>>(_masterBusiness.GetEventsLog(int.Parse(ID), "Quotations"));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = eventsLogList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        #endregion GetEventsLog
+
+        #region ChangeButtonStyle
+        [HttpGet]
+        public ActionResult ChangeButtonStyle(string ActionType)
+        {
+            ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
+            switch (ActionType)
+            {
+                case "Edit":  
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back"; 
+                    break;
+                case "Add":   
+                    ToolboxViewModelObj.backbtn.Visible = false;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
+
+                default:
+                    return Content("Nochange");
+            }
+            return PartialView("_ToolboxView", ToolboxViewModelObj);
+        }
+        #endregion ChangeButtonStyle
     }
 }

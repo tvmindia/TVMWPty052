@@ -179,11 +179,8 @@ namespace PartyEC.RepositoryServices.Services
                             case "1":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
-                                break;
-                            case "2":
-                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = constObj.Duplicate;
-                                break;
+                                operationsStatusObj.ReturnValues = quotationsObj.ID;
+                                break; 
                             default:
                                 break;
                         }
