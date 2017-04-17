@@ -177,8 +177,10 @@ function SelectCustomerTable(curObje)
 
 
 function GetAllNotifications() {
-    try {
-        var data = "";
+    try { 
+        var frdate=$("#fromdate").val();
+        var todat = $("#todate").val();
+        var data = { "fromdate": (frdate != "" ? frdate : null), "todate": (todat!=""?todat:null) };
         var ds = {};
         ds = GetDataFromServer("Notifications/GetAllNotifications/", data);
         if (ds != '') {
@@ -362,4 +364,29 @@ function ConstructMultiCustomersList() {
     catch (e) {
         notyAlert('errror', e.message);
     }
+}
+
+
+
+function countDays() {
+    var fromdate = $("#fromdate").val();
+    var todate = $("#todate").val();
+    if (fromdate != "" && todate != "") {
+        var date1 = new Date(fromdate);
+        var date2 = new Date(todate);
+        var diff = date2.getTime() - date1.getTime();
+        if (diff > 0) {
+            var ONE_DAY = 1000 * 60 * 60 * 24;
+            $("#dayscount").text(Math.round(diff / ONE_DAY) + ' Days');
+        }
+        else {
+            notyAlert('error', 'Please check the dates entered');
+            $("#dayscount").text('');
+            return false;
+        }
+    }
+    else {
+        $("#dayscount").text('');
+    }
+    return true;
 }

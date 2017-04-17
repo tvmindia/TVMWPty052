@@ -363,6 +363,7 @@
     <Content Include="Content\uploadify.swf" />
     <Content Include="Content\UserCSS\Customer.css" />
     <Content Include="Content\UserCSS\EventRequests.css" />
+    <Content Include="Content\UserCSS\MailNotifications.css" />
     <Content Include="Content\UserCSS\Notifications.css" />
     <Content Include="Content\UserCSS\Product.css" />
     <Content Include="fonts\fontawesome-webfont.eot" />
@@ -489,6 +490,7 @@
     <Content Include="Scripts\UserJS\Customer.js" />
     <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\EventRequests.js" />
+    <Content Include="Scripts\UserJS\MailNotifications.js" />
     <Content Include="Scripts\UserJS\Manufacturers.js" />
     <Content Include="Scripts\UserJS\Notifiations.js" />
     <Content Include="Scripts\UserJS\Order.js" />
@@ -527,6 +529,7 @@
     <Compile Include="Controllers\DynamicUIController.cs" />
     <Compile Include="Controllers\EventController.cs" />
     <Compile Include="Controllers\EventRequestsController.cs" />
+    <Compile Include="Controllers\MailNotificationsController.cs" />
     <Compile Include="Controllers\ManufacturersController.cs" />
     <Compile Include="Controllers\NotificationsController.cs" />
     <Compile Include="Controllers\QuotationsController.cs" />
@@ -548,6 +551,7 @@
     <Compile Include="Models\EventRequestsViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\FileUploadViewModel.cs" />
+    <Compile Include="Models\MailNotificationViewModel.cs" />
     <Compile Include="Models\MailViewModel.cs" />
     <Compile Include="Models\MasterViewModel.cs" />
     <Compile Include="Models\MenuViewModel.cs" />
@@ -585,6 +589,7 @@
     <Content Include="Views\Reviews\Index.cshtml" />
     <Content Include="Views\Notifications\Index.cshtml" />
     <Content Include="Views\Quotations\Index.cshtml" />
+    <Content Include="Views\MailNotifications\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

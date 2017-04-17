@@ -20,6 +20,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/Uplodify").Include("~/Content/uploadify.css"));
             bundles.Add(new StyleBundle("~/Content/UserCSS/EventRequest").Include("~/Content/UserCSS/EventRequests.css"));
             bundles.Add(new StyleBundle("~/Content/UserCSS/Notifications").Include("~/Content/UserCSS/Notifications.css"));
+            bundles.Add(new StyleBundle("~/Content/UserCSS/Mailnotifications").Include("~/Content/UserCSS/MailNotifications.css"));
 
             //jquery bundles
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-3.1.1.min.js"));
@@ -55,7 +56,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/Review").Include("~/Scripts/UserJS/Review.js"));
             bundles.Add(new ScriptBundle("~/bundles/Notifications").Include("~/Scripts/UserJS/Notifiations.js"));
             bundles.Add(new ScriptBundle("~/bundles/Quotations").Include("~/Scripts/UserJS/Quotations.js"));
-            
+            bundles.Add(new ScriptBundle("~/bundles/Mailnotifications").Include("~/Scripts/UserJS/MailNotifications.js"));
         }
     }
 }

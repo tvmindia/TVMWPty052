@@ -28,11 +28,13 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllNotifications
         [HttpGet]
-        public string GetAllNotifications()
+        public string GetAllNotifications(string fromdate=null,string todate=null)
         {
             try
             {
-                List<NotifiationViewModel> notifiationList = Mapper.Map<List<Notification>, List<NotifiationViewModel>>(_notificationBusiness.GetAllNotifications());
+                fromdate = (fromdate != "" ? fromdate : null);
+                todate = (todate != "" ? todate : null);
+                List <NotifiationViewModel> notifiationList = Mapper.Map<List<Notification>, List<NotifiationViewModel>>(_notificationBusiness.GetAllNotifications(fromdate,todate));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = notifiationList });
             }
             catch (Exception ex)
