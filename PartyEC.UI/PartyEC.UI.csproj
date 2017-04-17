@@ -388,6 +388,7 @@
     <Content Include="Content\DataTables\css\mixins.scss" />
     <Content Include="Content\DataTables\css\common.scss" />
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
+    <Content Include="PartyEcTemplates\Notifications.html" />
     <Content Include="PartyEcTemplates\OrderComment.html" />
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
