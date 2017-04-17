@@ -53,13 +53,13 @@
     border-bottom-color: transparent!important;
     font-family:'Raleway', Helvetica, Arial, sans-serif;
     font-size:15px;
-    font-weight:900;
+    font-weight:600;
 }
 .with-nav-tabs.panel-primary .nav-tabs > li > a{
     color: black!important;
     font-family:'Raleway', Helvetica, Arial, sans-serif!important;
     font-size:15px;
-    font-weight:900;
+    font-weight:600;
 }
 
 .panel with-nav-tabs panel-primary
@@ -419,7 +419,7 @@ hr{
     font-family: 'Raleway', Helvetica, Arial, sans-serif;
     margin-bottom: 3%;
     margin-left:-10%;
-    font-weight:700;
+    font-weight:600;
     /*text-transform:uppercase;*/
    
 }
@@ -428,7 +428,7 @@ hr{
     font-family: 'Raleway', Helvetica, Arial, sans-serif!important;
     font-size: 12.5px;
     color: black;
-    font-weight: 700;
+    font-weight: 600;
     text-transform: uppercase;
     padding: 6px;
     background-image: -webkit-linear-gradient(top,#dff0d8 0,#d0e9c6 100%)!important;
