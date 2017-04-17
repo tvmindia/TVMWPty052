@@ -115,10 +115,12 @@ namespace PartyEC.RepositoryServices.Services
                             case "0":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
+                                operationsStatusObj.ReturnValues = eventLogObj.ParentID;
                                 break;
                             case "1":
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
+                                operationsStatusObj.ReturnValues = eventLogObj.ParentID;
                                 break;
                             default:
                                 break;

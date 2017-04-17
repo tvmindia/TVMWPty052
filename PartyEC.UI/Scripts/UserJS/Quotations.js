@@ -2,7 +2,7 @@
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
     try {
-        //ChangeButtonPatchView("Quotations", "btnPatchtab2", "Edit");
+        //ChangeButtonPatchView("Quotations", "btnPatchtab1", "Add");
         DataTables.QuotationsTable = $('#tblQuotationsList').DataTable(
          {
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
@@ -115,7 +115,6 @@ function GetQuotationsByID(id) {
 function Edit(currentObj) {
     //Tab Change on edit click 
     $('#tabQuotationsDetails').trigger('click');
-  //  ChangeButtonPatchView("Reviews", "btnPatchtab2", "Edit");//ControllerName,id of the container div,Name of the action
 
     var rowData = DataTables.QuotationsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -125,10 +124,8 @@ function Edit(currentObj) {
 
 //---------------------------------------Fill Quotations--------------------------------------------------//
 function fillQuotations(ID) {
-   
-  //  ChangeButtonPatchView("Supplier", "btnPatchtab2", "Edit");
+
     var thisQuotations = GetQuotationsByID(ID); //Binding Data  
-    debugger;
     $("#ID").val(thisQuotations.ID);
     $("#EventLogParentID").val(thisQuotations.ID);
     $("#lblQuotationsNo").text(thisQuotations.QuotationNo);
@@ -146,9 +143,8 @@ function fillQuotations(ID) {
     $("#lblGrandTotal").text(thisQuotations.GrandTotal);
     $("#lblAdditionalCharges").text(thisQuotations.AdditionalCharges); 
    
-
-
     BindTablQuotationDetailList(thisQuotations.ID);
+    BindComments();
 }
 
 function BindTablQuotationDetailList(ID) {
@@ -157,8 +153,7 @@ function BindTablQuotationDetailList(ID) {
 }
 
 function GetQuotationsDetailsByID(id) {
-    try {
-        debugger;
+    try { 
         var data = { "ID": id };
         var ds = {};
         ds = GetDataFromServer("Quotations/GetQuotationsDetails/", data);
@@ -176,4 +171,74 @@ function GetQuotationsDetailsByID(id) {
         notyAlert('error', e.message);
     }
 }
+
+function BindQuotationsTable() {  
+    DataTables.QuotationsTable.clear().rows.add(GetAllQuotations()).draw(false);
+    }
+
+function SaveSuccess(data, status, xhr) {
+    debugger;
+    BindQuotationsTable();
+    var i = JSON.parse(data)
+  
+    switch (i.Result) {
+
+        case "OK":
+            notyAlert('success', i.Record.StatusMessage);
+            var returnId = i.Record.ReturnValues
+            fillQuotations(returnId);
+            BindComments();
+            break;
+        case "Error":
+            notyAlert('error', i.Record.StatusMessage);
+            break;
+        case "ERROR":
+            notyAlert('error', i.Message);
+            break;
+        default:
+            break;
+    }
+}
+
+function BindComments()   // To Display Previous Comment history
+{
+
+    $("#CommentsDisplay").empty();
+    id = $("#ID").val();// assigning id for binding comments.
+    var thisCommentList = GetEventsLog(id);
+    if (thisCommentList != null) {
+        debugger;
+        for (var i = 0; i < thisCommentList.length; i++) {
+            var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12"><span class="badge">' + thisCommentList[i].CommentDate + '</span>' + thisCommentList[i].Comment + '</li>');
+            $("#CommentsDisplay").append(cnt);
+        }
+    }
+}
+
+//---------------------------------------Get Events Logs Details By ID-------------------------------------//
+function GetEventsLog(id) {
+    try {
+        var data = { "ID": id };
+        var ds = {};
+        ds = GetDataFromServer("Quotations/GetEventsLog/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            alert(ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
+
+function goback() {
+    $('#tabQuotationsList').trigger('click');
+}
+ 
 
