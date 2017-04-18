@@ -127,6 +127,11 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
+                case "Initialize":
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Event = "AddNew()";
+                    ToolboxViewModelObj.addbtn.Title = "Add New";
+                    break;
                 case "Edit":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Event = "Delete()";
