@@ -56,8 +56,8 @@
                                 <th>Title</th>
                                 <th>Message</th>
                                 <th>Notification Date</th>
+                                <th>Status</th>
                                 <th>Actions</th>
-
                             </tr>
                         </thead>
                     </table>
@@ -120,7 +120,7 @@
                                 </div>
                                 <div class="container-fluid">
                                     <div class="row">
-                                        @using (Ajax.BeginForm("NotificationPush", "MailNotifications", new AjaxOptions { HttpMethod = "POST", OnSuccess = "NotificationPushSuccess", Confirm = "Push Notifications!Are You Sure?", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "NotificationForm" }))
+                                        @using (Ajax.BeginForm("MailNotificationPush", "MailNotifications", new AjaxOptions { HttpMethod = "POST", OnSuccess = "NotificationPushSuccess", Confirm = "Push Notifications!Are You Sure?", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "NotificationForm" }))
 
                                         {
                                             @Html.AntiForgeryToken()
