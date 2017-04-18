@@ -208,5 +208,45 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        #region ChangeButtonStyle
+        [HttpGet]
+        public ActionResult ChangeButtonStyle(string ActionType)
+        {
+            ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
+            switch (ActionType)
+            {
+                case "List":
+                    ToolboxViewModelObj.backbtn.Visible = false;
+                    break;
+                case "Edit_List":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.editbtn.Visible = true;
+                    ToolboxViewModelObj.editbtn.Title = "Revise";
+                    ToolboxViewModelObj.editbtn.Event = "CancelIssue()";
+                    ToolboxViewModelObj.cancelbtn.Visible = true;
+                    ToolboxViewModelObj.sendbtn.Visible = true;
+                    ToolboxViewModelObj.invoicebtn.Visible = true;
+                    ToolboxViewModelObj.shipbtn.Visible = true;
+                    break;
+                case "Revise":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "gobackDetails()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Event = "AddNewRevision()";
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+                    break;
+                default:
+                    return Content("Nochange");
+            }
+            return PartialView("_ToolboxView", ToolboxViewModelObj);
+        }
+
+
+        #endregion ChangeButtonStyle
     }
 }

@@ -33,5 +33,7 @@ namespace PartyEC.DataAccessObject.DTO
         public LogDetails logDetails { get; set; } 
         //Comments
         public EventsLog  EventsLogObj { get; set; }
+
+        public List<AttributeValues> AttributeValues { get; set; }
     }
 }

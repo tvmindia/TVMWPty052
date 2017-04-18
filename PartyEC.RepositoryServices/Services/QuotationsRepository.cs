@@ -159,12 +159,14 @@ namespace PartyEC.RepositoryServices.Services
                             con.Open();
                         }
                         cmd.Connection = con;
-                        cmd.CommandText = "[UpdateQuotationsStatus]";
+                        cmd.CommandText = "[UpdateQuotations]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = quotationsObj.ID;
+                        cmd.Parameters.Add("@Price", SqlDbType.Decimal).Value = quotationsObj.Price;
+                        cmd.Parameters.Add("@AdditionalCharges", SqlDbType.Decimal).Value = quotationsObj.AdditionalCharges;
+                        cmd.Parameters.Add("@DiscountAmt", SqlDbType.Decimal).Value = quotationsObj.DiscountAmt;
+                        cmd.Parameters.Add("@TaxAmt", SqlDbType.Decimal).Value = quotationsObj.TaxAmt;
                         cmd.Parameters.Add("@QuotationStatus", SqlDbType.VarChar, 50).Value = quotationsObj.Status;
-                       
-                
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
@@ -180,7 +182,7 @@ namespace PartyEC.RepositoryServices.Services
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
                                 operationsStatusObj.ReturnValues = quotationsObj.ID;
-                                break; 
+                                break;
                             default:
                                 break;
                         }
@@ -193,6 +195,6 @@ namespace PartyEC.RepositoryServices.Services
             }
             return operationsStatusObj;
 
-        }
+        } 
     }
 }

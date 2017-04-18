@@ -72,5 +72,20 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        public object GetProductReviews(ProductReviewAppViewModel productObj)
+        {
+            try
+            {
+                List<ProductReviewAppViewModel> productReviews = Mapper.Map<List<ProductReview>, List<ProductReviewAppViewModel>>(_productBusiness.GetProductReviewsForApp(productObj.ProductID,productObj.count));
+                if (productReviews.Count == 0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = productReviews });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
     }
 }

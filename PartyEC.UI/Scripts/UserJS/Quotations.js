@@ -43,7 +43,7 @@ $(document).ready(function () {
                 data: null,
                 columns: [
                      { "data": "ProductID" },
-                   //  { "data": "ProductSpecXML" },
+                    { "data": "AttributeValues" },
                   { "data": "Qty" },      
                   { "data": "Status" },
                   { "data": "Price" },
@@ -56,7 +56,19 @@ $(document).ready(function () {
                      "targets": [0],
                      "visible": false,
                      "searchable": false,
-                 }]
+                }, {
+                 "targets": [1],
+                 "render": function (data, type, row) {
+                     var returnstring = '';
+                     if (data) {
+                         debugger;
+                         for (var ik = 0; ik < data.length; ik++) {
+                             returnstring = returnstring + '<span><b>' +data[ik].Caption + '</b> : ' +(data[ik].Value != "" && data[ik].Value != null ? data[ik].Value: ' - ') + '</span><br/>';
+                         }
+                             }
+                     return returnstring;
+                     }
+                     }]
             });
     }
     catch (e) {
@@ -121,26 +133,43 @@ function fillQuotations(ID) {
 
     var thisQuotations = GetQuotationsByID(ID); //Binding Data  
     $("#ID").val(thisQuotations.ID);
-    $("#hdnEventsLogParentID").val(thisQuotations.ID);
+    $("#QuotationId").val(thisQuotations.ID);
+    $("#EventsLogViewObj_ParentID").val(thisQuotations.ID);
+
     $("#lblQuotationsNo").text(thisQuotations.QuotationNo);
     $("#lblQuotationDate").text(thisQuotations.QuotationDate);
     $("#lblRequiredDate").text(thisQuotations.RequiredDate);
     $("#lblSourceIP").text(thisQuotations.SourceIP);
+    debugger;
+    $("#lblQuotationstatus").text(thisQuotations.Status); 
+
     $("#lblCustomerName").text(thisQuotations.customerObj.Name);
     $("#lblContactNo").text(thisQuotations.customerObj.Mobile);
     $("#lblCustomerEmail").text(thisQuotations.customerObj.Email);
     $("#imgPreviewCustomer").attr("src", thisQuotations.ImageUrl);
+
     $("#lblMessage").text(thisQuotations.Message);
 
-    $("#hdnAccountEmailID").text(thisQuotations.customerObj.Email);
-    $("#hdnAccountCustomerName").text(thisQuotations.customerObj.Name);
 
+    $("#Price").val(thisQuotations.Price);
+    $("#AdditionalCharges").val(thisQuotations.AdditionalCharges);
+    $("#DiscountAmt").val(thisQuotations.DiscountAmt);
+    $("#TaxAmt").val(thisQuotations.TaxAmt);
     $("#Status").val(thisQuotations.Status);
+
+    $("#lblTaxAmt").text(thisQuotations.TaxAmt);
+    $("#lblDiscountAmt").text(thisQuotations.DiscountAmt);
     $("#lblSubTotal").text(thisQuotations.SubTotal);
     $("#lblGrandTotal").text(thisQuotations.GrandTotal);
-    $("#lblAdditionalCharges").text(thisQuotations.AdditionalCharges); 
+    $("#lblAdditionalCharges").text(thisQuotations.AdditionalCharges);
+    
    
     BindTablQuotationDetailList(thisQuotations.ID);
+    //region comments
+    
+    $("#mailViewModelObj_CustomerEmail").val(thisQuotations.customerObj.Email);
+    $("#mailViewModelObj_CustomerName").val(thisQuotations.customerObj.Name);
+    $("#QuotationNo").val(thisQuotations.QuotationNo);
     BindComments();
 }
 
