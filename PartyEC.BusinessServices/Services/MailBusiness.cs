@@ -5,7 +5,9 @@ using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
+using System.Threading.Tasks;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartyEC.BusinessServices.Services
 {
@@ -57,8 +59,9 @@ namespace PartyEC.BusinessServices.Services
             return true;
         }
 
-        public bool SendMail(Mail mailObj)
-        {
+       
+           public bool SendMail(Mail mailObj)
+          {
             SmtpClient mailServer = new SmtpClient();
             MailMessage mail = new MailMessage();
             mail.From = new MailAddress(EmailFromAddress, "Admin_@_PartyEC");
@@ -80,8 +83,37 @@ namespace PartyEC.BusinessServices.Services
                 //LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Error sending welcome email.", e);
                 return false;
             }
-
             return true;
+        }
+
+        // public async Task SendMail(Mail mailObj)
+        public async Task SendMailAsync(Mail mailObj)
+        {
+          
+            SmtpClient mailServer = new SmtpClient();
+            MailMessage mail = new MailMessage();
+            mail.From = new MailAddress(EmailFromAddress, "Admin_@_PartyEC");
+            mail.To.Add(mailObj.To);
+            mail.Subject = mailObj.Subject;
+            mail.IsBodyHtml = mailObj.IsBodyHtml;
+            mail.Body = mailObj.Body;
+            try
+            {
+                mailServer.Host = host;
+                mailServer.Port = int.Parse(port);
+                mailServer.Credentials = new System.Net.NetworkCredential(smtpUserName, smtpPassword);
+                mailServer.EnableSsl = true;
+                mail.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
+                await mailServer.SendMailAsync(mail);
+            }
+            catch (SmtpException e)
+            {
+                //LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Error sending welcome email.", e);
+                //return false;
+                Console.Write(e.Message);
+            }
+
+           // return true;
         }
 
     }
