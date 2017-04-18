@@ -108,7 +108,9 @@ namespace PartyEC.RepositoryServices.Services
                                     myQuotations.RequiredDate = (sdr["RequiredDate"].ToString() != "" ? DateTime.Parse(sdr["RequiredDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : myQuotations.RequiredDate);
                                     myQuotations.SourceIP = (sdr["SourceIP"].ToString() != "" ? sdr["SourceIP"].ToString() : myQuotations.SourceIP);
                                     myQuotations.Status = (sdr["Status"].ToString() != "" ? sdr["Status"].ToString() : myQuotations.Status);
-
+                                    myQuotations.StatusText = (sdr["StatusText"].ToString() != "" ? sdr["StatusText"].ToString() : myQuotations.StatusText);
+                                    myQuotations.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : myQuotations.ProductName);
+                                    
                                     myQuotations.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : myQuotations.ProductID);
                                     myQuotations.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : myQuotations.CustomerID); 
                                   

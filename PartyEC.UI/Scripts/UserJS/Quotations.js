@@ -2,7 +2,7 @@
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
     try {
-        //ChangeButtonPatchView("Quotations", "btnPatchtab1", "Add");
+      
         DataTables.QuotationsTable = $('#tblQuotationsList').DataTable(
          {
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
@@ -50,7 +50,7 @@ $(document).ready(function () {
                   { "data": "SubTotal" },
                   { "data": "TaxAmt" },
                   { "data": "DiscountAmt" },
-                  { "data": "GrandTotal"}
+                  { "data": "Total"}
                 ],
                 columnDefs: [{ 
                      "targets": [0],
@@ -62,11 +62,12 @@ $(document).ready(function () {
                      var returnstring = '';
                      if (data) {
                          debugger;
+                         var product = row.ProductName;
                          for (var ik = 0; ik < data.length; ik++) {
                              returnstring = returnstring + '<span><b>' +data[ik].Caption + '</b> : ' +(data[ik].Value != "" && data[ik].Value != null ? data[ik].Value: ' - ') + '</span><br/>';
                          }
                              }
-                     return returnstring;
+                     return product+'<br/>'+returnstring;
                      }
                      }]
             });
@@ -119,8 +120,11 @@ function GetQuotationsByID(id) {
 
 //---------------------------------------Edit Quotations--------------------------------------------------//
 function Edit(currentObj) {
-    //Tab Change on edit click 
-    $('#tabQuotationsDetails').trigger('click');
+    //Tab Change on edit click   
+    ChangeButtonPatchView("Quotations", "btnPatchQuotations", "Edit_List");
+    $('#tabQuotationsDetails').removeClass('disabled');
+    $('#tabQuotationsDetails a').attr('data-toggle', 'tab');
+    $('#tabQuotationsDetails a').trigger('click');
 
     var rowData = DataTables.QuotationsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -139,9 +143,8 @@ function fillQuotations(ID) {
     $("#lblQuotationsNo").text(thisQuotations.QuotationNo);
     $("#lblQuotationDate").text(thisQuotations.QuotationDate);
     $("#lblRequiredDate").text(thisQuotations.RequiredDate);
-    $("#lblSourceIP").text(thisQuotations.SourceIP);
-    debugger;
-    $("#lblQuotationstatus").text(thisQuotations.Status); 
+    $("#lblSourceIP").text(thisQuotations.SourceIP); 
+    $("#lblQuotationstatus").text(thisQuotations.StatusText);
 
     $("#lblCustomerName").text(thisQuotations.customerObj.Name);
     $("#lblContactNo").text(thisQuotations.customerObj.Mobile);
@@ -261,6 +264,12 @@ function GetEventsLog(id) {
 
 function goback() {
     $('#tabQuotationsList').trigger('click');
+}
+function tabListClick()
+{
+     ChangeButtonPatchView("Quotations", "btnPatchQuotations", "List");
+    $('#tabQuotationsDetails').addClass('disabled');
+    $('#tabQuotationsDetails a').attr('data-toggle', '');
 }
  
 

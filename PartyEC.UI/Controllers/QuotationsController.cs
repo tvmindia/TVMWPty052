@@ -135,8 +135,6 @@ namespace PartyEC.UI.Controllers
         }
 
         #endregion UpdateQuotations
-         
-      
 
         #region InsertEventsLog
         [HttpPost]
@@ -205,7 +203,7 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
-        #endregion GetEventsLog
+        #endregion GetEventsLog 
 
         #region ChangeButtonStyle
         [HttpGet]
@@ -214,22 +212,22 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
-                case "Edit":  
+                case "List":
+                    ToolboxViewModelObj.backbtn.Visible = false;
+                    break;
+                case "Edit_List":
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";
-                    ToolboxViewModelObj.backbtn.Title = "Back"; 
-                    break;
-                case "Add":   
-                    ToolboxViewModelObj.backbtn.Visible = false;
-                    ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
-                    break;
-
+                  
+                    break; 
                 default:
                     return Content("Nochange");
             }
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
+
+
         #endregion ChangeButtonStyle
     }
 }
