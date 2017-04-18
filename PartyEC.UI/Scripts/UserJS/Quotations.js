@@ -121,7 +121,7 @@ function fillQuotations(ID) {
 
     var thisQuotations = GetQuotationsByID(ID); //Binding Data  
     $("#ID").val(thisQuotations.ID);
-    $("#hdnEventsLogParentID").val(thisQuotations.ID);
+    $("#EventsLogViewObj_ParentID").val(thisQuotations.ID);
     $("#lblQuotationsNo").text(thisQuotations.QuotationNo);
     $("#lblQuotationDate").text(thisQuotations.QuotationDate);
     $("#lblRequiredDate").text(thisQuotations.RequiredDate);
@@ -132,8 +132,9 @@ function fillQuotations(ID) {
     $("#imgPreviewCustomer").attr("src", thisQuotations.ImageUrl);
     $("#lblMessage").text(thisQuotations.Message);
 
-    $("#hdnAccountEmailID").text(thisQuotations.customerObj.Email);
-    $("#hdnAccountCustomerName").text(thisQuotations.customerObj.Name);
+    $("#mailViewModelObj_CustomerEmail").val(thisQuotations.customerObj.Email);
+    $("#mailViewModelObj_CustomerName").val(thisQuotations.customerObj.Name);
+    $("#QuotationNo").val(thisQuotations.QuotationNo);
 
     $("#Status").val(thisQuotations.Status);
     $("#lblSubTotal").text(thisQuotations.SubTotal);

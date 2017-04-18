@@ -212,10 +212,11 @@
 
                                                             <div class="">
                                                                 <div class="col-md-6">
+                                                                    @Html.HiddenFor(model => model.QuotationNo, htmlAttributes: new { @class = "control-label col-md-4"})
                                                                     @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Quotations" })
-                                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnEventsLogParentID" })
-                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountEmailID" })
-                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountCustomerName" })
+                                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value =0 })
+                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "" })
+                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = ""})
                                                                     <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
                                                                 </div>
                                                             </div>
