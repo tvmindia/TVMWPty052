@@ -144,6 +144,7 @@ $(document).ready(function () {
                      }
         ]
     });
+    ChangeButtonPatchView("Order", "btnPatchOrders", "List");
 });
 //Table Data Bind for Order Header
 function GetAllOrderHeader()
@@ -226,7 +227,7 @@ function Edit(this_obj)
 {
     debugger;
     $('#tabOrderDetails').trigger('click');
-
+    ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
     var rowData = DataTables.orderHeadertable.row($(this_obj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         debugger;
@@ -251,6 +252,7 @@ function CancelIssue()
     {
         $('#tabCreateRevision').click();
         DataTables.orderModificationtable.clear().rows.add(GetAllOrdersList($('#hdnOrderHID').val())).draw(false);
+        ChangeButtonPatchView("Order", "btnPatchOrders", "Revise");
     }
     
 }
@@ -264,7 +266,13 @@ function gobackDetails()
 }
 function goback()
 {
-    $('#taborderListgrid').trigger('click');
+    $('#tabOrderList').trigger('click');
+    ChangeButtonPatchView("Order", "btnPatchOrders", "List");
+}
+function gobackDetails()
+{
+    $('#tabOrderDetails').trigger('click');
+    ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
 }
 function BindGeneralSection(Result)
 {

@@ -109,7 +109,8 @@ $(document).ready(function () {
         $('#hdnTreeList').val("0");
     });
    
-    
+    $.jstree.reference('#jstree_Drag').open_all();
+    $.jstree.reference('#jstree_DragUpdate').open_all();
 });
 function MainClick()
 {
@@ -134,6 +135,8 @@ function Edit(currentObj) {
     }
     //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
     ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Edit");
+    $.jstree.reference('#jstree_Drag').open_all();
+    $.jstree.reference('#jstree_DragUpdate').open_all();
 }
 
 function GetAllAttributeSet() {
@@ -227,11 +230,14 @@ function EditAttibuteSet(id)
 {
     try
     {
+        debugger;
         $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft(id);
         $('#jstree_Drag').jstree(true).refresh(true);
-
+        
         $('#jstree_DragUpdate').jstree(true).settings.core.data = GetTreeDataRight(id);
         $('#jstree_DragUpdate').jstree(true).refresh(true);
+
+       
     }
     catch(e)
     {
