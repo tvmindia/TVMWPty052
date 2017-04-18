@@ -379,6 +379,23 @@ namespace PartyEC.BusinessServices.Services
             return product;
         }
 
+        public List<ProductReview> GetProductReviewsForApp(int ProductID,int count)
+        {
+            List<ProductReview> productReview = null;
+            try
+            {
+                productReview = _productRepository.GetProductReviews(ProductID).OrderByDescending(prodR => prodR.ReviewCreatedDate).ToList();
+                if (count != -1 && count<=productReview.Count)  //taking only top reviews sorted by date
+                {
+                    productReview = productReview.GetRange(0,count);
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productReview;
+        }
         #endregion
     }
 }
