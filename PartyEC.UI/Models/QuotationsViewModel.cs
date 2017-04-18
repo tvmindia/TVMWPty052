@@ -56,6 +56,8 @@ namespace PartyEC.UI.Models
 
         public List<SelectListItem> QuotationstatusList { get; set; }
 
+        public List<AttributeValuesViewModel> AttributeValues { get; set; }
+
 
     }
 }

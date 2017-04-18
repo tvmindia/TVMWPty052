@@ -102,10 +102,10 @@ namespace PartyEC.UI.Controllers
         }
         #endregion GetQuotations
 
-        #region  UpdateQuotationStatus
+        #region  UpdateQuotations
 
         [HttpPost]
-        public string UpdateQuotationStatus(QuotationsViewModel quotationObj)
+        public string UpdateQuotations(QuotationsViewModel quotationObj)
         {
             if (ModelState.IsValid)
             {
@@ -134,8 +134,10 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
 
-        #endregion UpdateQuotationStatus
-        
+        #endregion UpdateQuotations
+         
+      
+
         #region InsertEventsLog
         [HttpPost]
         public string InsertEventsLog(QuotationsViewModel quotationObj)

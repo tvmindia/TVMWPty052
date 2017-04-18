@@ -11,6 +11,6 @@ namespace PartyEC.RepositoryServices.Contracts
     {
         List<Quotations> GetAllQuotations();
         Quotations GetQuotations(int QuotationsID);
-        OperationsStatus UpdateQuotations(Quotations quotationsObj);
+        OperationsStatus UpdateQuotations(Quotations quotationsObj); 
     }
 }
