@@ -177,6 +177,23 @@ function ConvertJsonToDate(jsonDate) {
     }
    
 }
+
+function ConvertDateFormats(thisdate)
+{
+    try {
+        if (thisdate != null) {
+            thisdate= thisdate.replace(/-/g, ' ');
+            var converteddate = new Date(thisdate);
+            result = ('0' + (converteddate.getMonth() + 1)).slice(-2) + ' ' + ('0' + converteddate.getDate()).slice(-2) + ' '
+             + converteddate.getFullYear();
+            //var result = converteddate.getDate() + '-' + (converteddate.getMonth()+1) + '-' + converteddate.getFullYear();
+            return result;
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
 //only number validation
 function isNumber(e) {
     var unicode = e.charCode ? e.charCode : e.keyCode
