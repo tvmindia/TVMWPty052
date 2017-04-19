@@ -1,4 +1,5 @@
 ﻿@model PartyEC.UI.Models.QuotationsViewModel
+
 @{
     ViewBag.Title = "Quotations";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
@@ -6,12 +7,7 @@
 @section styles {
     @Styles.Render("~/Content/DataTables/css/datatable")
 
-}
-
-
-
-
-
+} 
 <div class="container-fluid">
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
@@ -46,10 +42,9 @@
                     @*table*@
                 </div>
                 <div class="tab-pane fade" id="Tab2">
-                    <div class="col-md-12"> 
-                        <div class="col-md-12" id="QuotationsDetails">
+                    <div class="col-md-12" id="QuotationsDetails">
                             <div class="col-md-3">@* left hand side Tab  *@
-                                <div class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down"></i> General Info</div>
+                                <div style="visibility:hidden" class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down"></i> General Info</div>
                                 <div class="col-md-12 Sidebar_Party" style="min-height:1250px;">
                                     <ul class="nav nav-tabs nav-stacked">
                                         <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General</a></li>
@@ -303,7 +298,6 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
                 </div>
             </div>
         </div>
