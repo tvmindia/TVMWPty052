@@ -2,8 +2,8 @@
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function ()
 {
-    ChangeButtonPatchView("Attributes", "btnPatchAttributestab2", "Add"); //ControllerName,id of the container div,Name of the action
-    clearfields();
+    //ChangeButtonPatchView("Attributes", "btnPatchAttributestab2", "Add"); //ControllerName,id of the container div,Name of the action
+    //clearfields();
     try {       
         var AttributesViewModel = new Object();
         DataTables.attributeTable = $('#tblattributes').DataTable(
@@ -29,29 +29,89 @@ $(document).ready(function ()
              columnDefs: [{ "targets": [0], "visible": false, "searchable": false }, {
                  "render": function (data, type, row) {
                      if (row.ConfigurableYN == true) {
-                         return 'configurable';
+                         return 'Product Options';
                      }
                      else{
-                         return 'simple';
+                         return 'Other Attributes';
                      }
                  },
                  "targets": 4
-             }]
+             },
+             {
+                 "render": function (data, type, row) {
+                     if (row.MandatoryYN == true) {
+                         return 'Yes';
+                     }
+                     else {
+                         return 'No';
+                     }
+                 },
+                 "targets": 8
+             },
+             {
+                 "render": function (data, type, row) {
+                     if (row.ComparableYN == true) {
+                         return 'Yes';
+                     }
+                     else {
+                         return 'No';
+                     }
+                 },
+                 "targets": 9
+             },
+                {
+                    "render": function (data, type, row) {
+                        if (row.FilterYN == true) {
+                            return 'Yes';
+                        }
+                        else {
+                            return 'No';
+                        }
+                    },
+                    "targets": 5
+                },
+                {
+                    "render": function (data, type, row) {
+                        if (row.AttributeType == "D") {
+                            return 'Date';
+                        }
+                        else if (row.AttributeType == "N") {
+                            return 'Number';
+                        }
+                        else if(row.AttributeType == "C")
+                        {
+                            return 'Combo';
+                        }
+                        else
+                        {
+                            return 'Text';
+                        }
+                    },
+                    "targets": 3
+                }]
          });
     }
     catch (e) {
         notyAlert('error', e.message);
       
     }
+    InitializeAttributes();
 });
 
 //------------------------------$$$$$----FUNCTIONS----$$$$$-----------------------------------------------//
+
+//---------------------------- Initialization-------------------------------------------------//
+
+function InitializeAttributes()
+{
+    ChangeButtonPatchView("Attributes", "btnPatchAttribute", "AttributeList"); //ControllerName,id of the container div,Name of the action
+}
 
 //---------------------------------------Edit Attributes--------------------------------------------------//
 function Edit(currentObj) {
     //Tab Change on edit click
     $('#tabattributeDetails').trigger('click');
-    ChangeButtonPatchView("Attributes", "btnPatchAttributestab2", "Edit"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Attributes", "btnPatchAttribute", "EditDetails"); //ControllerName,id of the container div,Name of the action
     var rowData = DataTables.attributeTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         fillAttributes(rowData.ID);
@@ -89,6 +149,14 @@ function fillAttributes(ID)
     
     DataTypeOnChange();  
 }
+//-----------------------------------------Reset Validation Messages--------------------------------------//
+function ResetForm() {
+    var validator = $("#formIns_Up").validate();
+    $('#formIns_Up').find('.field-validation-error span').each(function () {
+        validator.settings.success($(this));
+    });
+    validator.resetForm();
+}
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
     $("#Name").attr('disabled', false);
@@ -105,9 +173,15 @@ function clearfields() {
     $("#married-false").prop('checked', false);
     $("#married-true").prop('checked', false);
     $("#AttributeType").attr('disabled', false);
+    $("#married-false").prop('checked', true);
+    $("#AttributeType").attr('disabled', false);
+    $("#married-false").prop('disabled', false);
+    $("#married-true").prop('disabled', false);
+    $("#CSValues").attr('disabled', false);
+    ResetForm();
 }
 //---------------------------------------Button Patch Click Events------------------------------------------------//
-function btnreset() {
+function btnReset() {
     if ($("#ID").val() == 0) {
         clearfields();
     }
@@ -119,18 +193,19 @@ function btnreset() {
     }
 }
 //---------------------------------------Save-------------------------------------------------------//
-function clicksave() {
+function clickSave() {
     var res = Validation();
     if (res) {
         $("#btnFormSave").click();
     }  
 }
 //---------------------------------------Back-------------------------------------------------------//
-function goback() {    
+function goBack() {    
     $('#tabattibutesList').trigger('click');
+    InitializeAttributes();
 }
 //---------------------------------------Delete-------------------------------------------------------//
-function clickdelete() {
+function clickDelete() {
     var id = $("#ID").val();
     if (id != 0) {
         $("#btnFormDelete").click();
@@ -138,6 +213,27 @@ function clickdelete() {
     else {
         notyAlert('error', 'Please Select Attributes');       
     }    
+}
+//---------------------------------------Entity Type Onchange---------------------------------------------//
+function entityTypeOnChange() {
+    var value = $("#EntityType").val();
+    if(value=="Rating")
+    {
+        $("#AttributeType").val("N");
+        $("#AttributeType").attr('disabled', true);
+        $("#married-false").prop('checked', true);
+        $("#married-false").prop('disabled', true);
+        $("#married-true").prop('disabled', true);
+        $("#CSValues").attr('disabled', true);
+    }
+    else
+    {
+        $("#AttributeType").val("");
+        $("#AttributeType").attr('disabled', false);
+        $("#married-false").prop('disabled', false);
+        $("#married-true").prop('disabled', false);
+        $("#CSValues").attr('disabled', false);
+    }
 }
 //---------------------------------------Validation Functions---------------------------------------------//
 function DataTypeOnChange(){
@@ -177,10 +273,15 @@ function Validation() {
 }
 
 //---------------------------------------Add New Click----------------------------------------------------//
-function btnAddNew() {
-    $('#tabattributeDetails').trigger('click');    
-    ChangeButtonPatchView("Attributes", "btnPatchAttributestab2", "Add"); //ControllerName,id of the container div,Name of the action
+function btnAddNew(id) {
+    debugger;
+    if (id!=1)
+    {
+        $('#tabattributeDetails').trigger('click');
+    }  
+    ChangeButtonPatchView("Attributes", "btnPatchAttribute", "AddNew"); //ControllerName,id of the container div,Name of the action
     clearfields();
+   
 }
 //---------------------------------------Save Click alerts------------------------------------------------//
 function attributeSaveSuccess(data, status, xhr) {
@@ -191,8 +292,8 @@ function attributeSaveSuccess(data, status, xhr) {
         
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
-            clearfields();
-            goback();
+            //clearfields();
+            //goBack();
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -207,9 +308,9 @@ function attributeSaveSuccess(data, status, xhr) {
 }
 function attributeDeleteSuccess(data, status, xhr) {
     BindAllAttributes();
-    clearfields();
-    goback();
-    ChangeButtonPatchView("Attributes", "btnPatchAttributestab2", "Add"); //ControllerName,id of the container div,Name of the action
+    //clearfields();
+    //goback();
+    //ChangeButtonPatchView("Attributes", "btnPatchAttributestab2", "Add"); //ControllerName,id of the container div,Name of the action
     var i = JSON.parse(data)
     switch (i.Result) {
         case "OK":

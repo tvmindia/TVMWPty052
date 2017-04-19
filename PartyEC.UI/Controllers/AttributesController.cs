@@ -160,37 +160,43 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
-                case "Edit":
+                case "AttributeList":
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Event = "btnAddNew()";
+                    ToolboxViewModelObj.addbtn.Title = "Add New";
+                    break;
+                case "AddNew":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goBack()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+
                     ToolboxViewModelObj.deletebtn.Visible = true;
-                    ToolboxViewModelObj.deletebtn.Event = "clickdelete()";
+                    ToolboxViewModelObj.deletebtn.Disable = true;
+
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "clickSave()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    ToolboxViewModelObj.resetbtn.Visible = true;
+                    ToolboxViewModelObj.resetbtn.Event = "btnReset()";
+                    ToolboxViewModelObj.resetbtn.Title = "Reset";
+                    break;
+                case "EditDetails":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goBack()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Event = "clickDelete()";
                     ToolboxViewModelObj.deletebtn.Title = "Delete";
 
                     ToolboxViewModelObj.savebtn.Visible = true;
-                    ToolboxViewModelObj.savebtn.Event = "clicksave()";
+                    ToolboxViewModelObj.savebtn.Event = "clickSave()";
                     ToolboxViewModelObj.savebtn.Title = "Save";
 
                     ToolboxViewModelObj.resetbtn.Visible = true;
-                    ToolboxViewModelObj.resetbtn.Event = "btnreset()";
-
-                    ToolboxViewModelObj.backbtn.Visible = true; 
-                    ToolboxViewModelObj.backbtn.Event = "goback()";
-                    ToolboxViewModelObj.backbtn.Title = "Back";
-
-                    break;
-                case "Add":
-                    ToolboxViewModelObj.deletebtn.Visible = true;
-                    ToolboxViewModelObj.deletebtn.Disable = true;
-                    ToolboxViewModelObj.savebtn.Visible = true;
-                    ToolboxViewModelObj.savebtn.Event = "clicksave()";
-                    ToolboxViewModelObj.savebtn.Title = "Save";
-
-                    ToolboxViewModelObj.resetbtn.Visible = true;
-                    ToolboxViewModelObj.resetbtn.Event = "btnreset()";
+                    ToolboxViewModelObj.resetbtn.Event = "btnReset()";
                     ToolboxViewModelObj.resetbtn.Title = "Reset";
-
-                    ToolboxViewModelObj.backbtn.Visible = true;
-                    ToolboxViewModelObj.backbtn.Event = "goback()";
-                    ToolboxViewModelObj.backbtn.Title = "Back";
                     break;
                 default:
                     return Content("Nochange");
