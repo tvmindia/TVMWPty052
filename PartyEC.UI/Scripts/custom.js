@@ -2,14 +2,14 @@ var appAddress = window.location.protocol + "//" + window.location.host + "/";  
 
 $(document).ready(function () {
   
-    //$('input.datepicker').datepicker({
-    //    format: "dd-M-yyyy",//dd-M-yyyy",
-    //    maxViewMode: 0,
-    //    todayBtn: "linked",
-    //    clearBtn: true,
-    //    autoclose: true,
-    //    todayHighlight: true
-    //});
+    $('input.datepicker').datepicker({
+        format: "dd-M-yyyy",//dd-M-yyyy",
+        maxViewMode: 0,
+        todayBtn: "linked",
+        clearBtn: true,
+        autoclose: true,
+        todayHighlight: true
+    });
     $('.Tom').hover(function () {
         $('.dropdown-toggle', this).click();
     });

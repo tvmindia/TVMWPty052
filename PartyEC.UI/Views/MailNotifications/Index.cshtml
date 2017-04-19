@@ -40,11 +40,11 @@
                     </div>
                     <div id="external_filter" class="form-inline">
                         <label><b>Date From</b></label>
-                        <input class="form-control datepicker" onchange="countDays()" style="width:190px" name="fromdate" id="fromdate" type="Date">
+                        <input class="form-control datepicker" onchange="countDays()" style="width:190px" name="fromdate" id="fromdate" type="text">
                         <label><b>To Date</b> </label>
-                        <input class="form-control datepicker" onchange="countDays()" style="width:190px" name="todate" id="todate" type="Date">
+                        <input class="form-control datepicker" onchange="countDays()" style="width:190px" name="todate" id="todate" type="text">
                         <label id="dayscount" style="padding-left:10px"></label>
-                        <b><a href="#" style="padding-left:10px" onclick="GetAllNotifications()"> APPLY</a></b>
+                        <b><a href="#" style="padding-left:10px" onclick="RefreshNotificationTable()"> APPLY</a></b>
                     </div>
                     @*table*@
                     <table id="tblMailNotifications" class="table table-striped table-bordered table-hover" width="100%">
