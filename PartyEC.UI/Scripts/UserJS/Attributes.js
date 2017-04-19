@@ -81,7 +81,7 @@ $(document).ready(function ()
                         else if(row.AttributeType == "C")
                         {
                             return 'Combo';
-                        }
+                        } 
                         else
                         {
                             return 'Text';
