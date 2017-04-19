@@ -400,11 +400,12 @@ background-image: -o-linear-gradient(top, #ffffff, #eeeeee);
     border-bottom: 1px solid #b0aeae!important;
 }
 .Spantitle{
-    position: absolute;
+    /*position: absolute;*/
     width: 50%;
     left: 7%;
     font-weight: 600;
     color: #f3a70d;
+    vertical-align:super;
 }
 hr{
     border-top: 2px solid #dbd9d9;
