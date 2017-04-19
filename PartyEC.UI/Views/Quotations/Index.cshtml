@@ -43,132 +43,133 @@
                 </div>
                 <div class="tab-pane fade" id="Tab2">
                     <div class="col-md-12" id="QuotationsDetails">
-                            <div class="col-md-3">@* left hand side Tab  *@
-                                <div style="visibility:hidden" class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down"></i> General Info</div>
-                                <div class="col-md-12 Sidebar_Party" style="min-height:1250px;">
-                                    <ul class="nav nav-tabs nav-stacked">
-                                        <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General</a></li>
-                                    </ul> 
-                                </div>
-                            </div>  
-                            <div class="tab-content EventTabContent">
-                                <div class="tab-pane fade in active" id="general">
-                                    <div class="col-md-9">
+                        <div class="col-md-3">@* left hand side Tab  *@
+                            <div style="visibility:hidden" class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down"></i> General Info</div>
+                            <div class="col-md-12 Sidebar_Party" style="min-height:1250px;">
+                                <ul class="nav nav-tabs nav-stacked">
+                                    <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General</a></li>
+                                </ul> 
+                            </div>
+                        </div>  
+                        <div class="col-md-9">
+                                <div class="tab-content EventTabContent">
+                                    <div class="tab-pane fade in active" id="general">
+
+                                    <div class="col-md-12">
+                                        <h4 style="max-width:50%"><span class="fa fa-sticky-note-o" style="font-size: 28px;color: #f3a70d;"></span><span> </span><span id="titleSpanPro" class="Spantitle">Quotation Detail</span></h4>
+                                        <hr />
+                                        <div class="col-md-6">
+                                            <div class="infoBox panel panel-default" style="min-height:250px">
+                                                <div class="infoBoxHeader panel-heading">General</div>
+                                                <div class="panel-body">
+
+                                                    @*QuotationId*@
+                                                    @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4" })
+
+                                                    <div class="col-md-12"> </div>
+                                                    @Html.LabelFor(model => model.QuotationNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                    <div class="col-md-8">
+                                                        <label id="lblQuotationsNo" class="h5 label-display">-</label>
+                                                    </div>
+                                                    <div class="col-md-12"></div>
+                                                    @Html.LabelFor(model => model.QuotationDate, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                    <div class="col-md-8">
+                                                        <label id="lblQuotationDate" class="h5 label-display">-</label>
+                                                    </div>
+
+                                                    <div class="col-md-12"></div>
+                                                    @Html.LabelFor(model => model.RequiredDate, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                    <div class="col-md-8">
+                                                        <label id="lblRequiredDate" class="h5 label-display">-</label>
+                                                    </div>
+
+                                                    <div class="col-md-12"></div>
+                                                    @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                    <div class="col-md-8">
+                                                        <label id="lblSourceIP" class="h5 label-display">-</label>
+                                                    </div>
+                                                    <div class="col-md-12"> </div>
+                                                    @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                    <div class="col-md-8">
+                                                        <label id="lblQuotationstatus" class="h5 label-display">-</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="infoBox panel panel-default" style="min-height:250px">
+                                                <div class="infoBoxHeader panel-heading">Account Information</div>
+                                                <div class="panel-body">
+                                                    <div class="col-md-12">
+                                                        <img src="~/Content/images/Person1.png" id="imgPreviewCustomer" />
+                                                    </div>
+                                                    <br />
+                                                    <div class="col-md-12"></div>
+                                                    @Html.LabelFor(model => model.customerObj.Name, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                    <div class="col-md-8">
+                                                        @*style="font-weight:bold"*@
+                                                        <label id="lblCustomerName" class="h5 label-display">-</label>
+                                                    </div>
+                                                    <div class="col-md-12"></div>
+                                                    @Html.LabelFor(model => model.customerObj.Mobile, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                    <div class="col-md-8">
+                                                        @*style="font-weight:bold"*@
+                                                        <label id="lblContactNo" class="h5 label-display">-</label>
+                                                    </div>
+                                                    <div class="col-md-12"></div>
+                                                    @Html.LabelFor(model => model.customerObj.Email, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                    <div class="col-md-8">
+                                                        @*style="font-weight:bold"*@
+                                                        <label id="lblCustomerEmail" class="h5 label-display">-</label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                                         <div class="col-md-12">
-                                            <h4 style="max-width:50%"><span class="fa fa-sticky-note-o" style="font-size: 28px;color: #f3a70d;"></span><span> </span><span id="titleSpanPro" class="Spantitle">Quotation Detail</span></h4>
-                                            <hr />
-                                            <div class="col-md-6"> 
-                                                    <div class="infoBox panel panel-default" style="min-height:250px">
-                                                        <div class="infoBoxHeader panel-heading">General</div>
-                                                        <div class="panel-body">
+                                            <div class="infoBox panel panel-default" style="min-height:200px">
+                                                <div class="infoBoxHeader panel-heading">Quotation Item Details</div>
+                                                <div class="panel-body">
+                                                    <table id="tblQuotationsItemDetail" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                                        <thead>
+                                                            <tr>
+                                                                <th>ProductID</th>
+                                                                <th>Product</th>
+                                                                <th>Qty</th>
+                                                                <th>Item Status</th>
+                                                                <th>Price</th>
+                                                                <th>Sub Total</th>
+                                                                <th>Tax Amount</th>
+                                                                <th>Discount</th>
+                                                                <th>Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                    </table>
 
-                                                            @*QuotationId*@
-                                                            @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4" })
 
-                                                            <div class="col-md-12"> </div>
-                                                            @Html.LabelFor(model => model.QuotationNo, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                            <div class="col-md-8">
-                                                                <label id="lblQuotationsNo" class="h5 label-display">-</label>
-                                                            </div>
-                                                            <div class="col-md-12"></div>
-                                                            @Html.LabelFor(model => model.QuotationDate, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                            <div class="col-md-8">
-                                                                <label id="lblQuotationDate" class="h5 label-display">-</label>
-                                                            </div>
-
-                                                            <div class="col-md-12"></div>
-                                                            @Html.LabelFor(model => model.RequiredDate, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                            <div class="col-md-8">
-                                                                <label id="lblRequiredDate" class="h5 label-display">-</label>
-                                                            </div>
-
-                                                            <div class="col-md-12"></div>
-                                                            @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                            <div class="col-md-8">
-                                                                <label id="lblSourceIP" class="h5 label-display">-</label>
-                                                            </div>
-                                                            <div class="col-md-12"> </div>
-                                                            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                            <div class="col-md-8">
-                                                                <label id="lblQuotationstatus" class="h5 label-display">-</label>
-                                                            </div>
-                                                        </div>
-                                                    </div> 
+                                                </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                <div class="infoBox panel panel-default" style="min-height:250px">
-                                                    <div class="infoBoxHeader panel-heading">Account Information</div>
-                                                    <div class="panel-body">
-                                                        <div class="col-md-12">
-                                                            <img src="~/Content/images/Person1.png" id="imgPreviewCustomer" />
-                                                        </div>
-                                                        <br />
-                                                        <div class="col-md-12"></div>
-                                                        @Html.LabelFor(model => model.customerObj.Name, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                        <div class="col-md-8">
-                                                            @*style="font-weight:bold"*@
-                                                            <label id="lblCustomerName" class="h5 label-display">-</label>
-                                                        </div>
-                                                        <div class="col-md-12"></div>
-                                                        @Html.LabelFor(model => model.customerObj.Mobile, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                        <div class="col-md-8">
-                                                            @*style="font-weight:bold"*@
-                                                            <label id="lblContactNo" class="h5 label-display">-</label>
-                                                        </div>
-                                                        <div class="col-md-12"></div>
-                                                        @Html.LabelFor(model => model.customerObj.Email, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                        <div class="col-md-8">
-                                                            @*style="font-weight:bold"*@
-                                                            <label id="lblCustomerEmail" class="h5 label-display">-</label>
-                                                        </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="infoBox panel panel-default" style="min-height:270px">
+                                                <div class="infoBoxHeader panel-heading">Customer Message</div>
+                                                <div class="panel-body">
+                                                    <div class="col-md-12"></div>
+                                                    @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                    <div class="col-md-8">
+                                                        @*style="font-weight:bold"*@
+                                                        <label id="lblMessage" class="h5 label-display">-</label>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-12">
-                                                <div class="infoBox panel panel-default" style="min-height:200px">
-                                                    <div class="infoBoxHeader panel-heading">Quotation Item Details</div>
-                                                    <div class="panel-body">
-                                                        <table id="tblQuotationsItemDetail" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-                                                            <thead>
-                                                                <tr>
-                                                                    <th>ProductID</th>
-                                                                    <th>Product</th>
-                                                                    <th>Qty</th>
-                                                                    <th>Item Status</th>
-                                                                    <th>Price</th>
-                                                                    <th>Sub Total</th>
-                                                                    <th>Tax Amount</th>
-                                                                    <th>Discount</th>
-                                                                    <th>Total</th>
-                                                                </tr>
-                                                            </thead>
-                                                        </table>
-                                                        
-                                                        
-                                                    </div>
-                                                </div>
-                                            </div> 
-                                            <div class="col-md-6">
-                                                <div class="infoBox panel panel-default" style="min-height:270px">
-                                                    <div class="infoBoxHeader panel-heading">Customer Message</div>
-                                                    <div class="panel-body"> 
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="infoBox panel panel-default" style="min-height:270px">
+                                                <div class="infoBoxHeader panel-heading">Quotation Details</div>
+                                                <div class="panel-body">
+                                                    @using (Ajax.BeginForm("UpdateQuotations", "Quotations", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formGeneral" }))
+                                                    {
+                                                        @Html.AntiForgeryToken()
                                                         <div class="col-md-12"></div>
-                                                        @Html.LabelFor(model => model.Message, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                        <div class="col-md-8">
-                                                            @*style="font-weight:bold"*@
-                                                            <label id="lblMessage" class="h5 label-display">-</label>
-                                                        </div> 
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="infoBox panel panel-default" style="min-height:270px">
-                                                    <div class="infoBoxHeader panel-heading">Quotation Details</div>
-                                                    <div class="panel-body">
-                                                       @using (Ajax.BeginForm("UpdateQuotations", "Quotations", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formGeneral" }))
-                                                       {
-                                                        @Html.AntiForgeryToken() 
-                                                            <div class="col-md-12"></div>
                                                             @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "h5 col-md-5" })
                                                             <div class="col-md-7">
                                                                 @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", style = "text-align:right;" } })
@@ -179,17 +180,17 @@
                                                             <div class="col-md-7">
                                                                 @Html.EditorFor(model => model.TaxAmt, new { htmlAttributes = new { @class = "form-control", style = "text-align:right;" } })
                                                                 @Html.ValidationMessageFor(model => model.TaxAmt, "", new { @class = "text-danger" })
-                                                            </div>                                                           
+                                                            </div>
                                                             <div class="col-md-12"></div>
                                                             @Html.LabelFor(model => model.AdditionalCharges, htmlAttributes: new { @class = "h5 col-md-5" })
                                                             <div class="col-md-7">
-                                                                @Html.EditorFor(model => model.AdditionalCharges, new { htmlAttributes = new { @class = "form-control",style= "text-align:right;" } })
+                                                                @Html.EditorFor(model => model.AdditionalCharges, new { htmlAttributes = new { @class = "form-control", style = "text-align:right;" } })
                                                                 @Html.ValidationMessageFor(model => model.AdditionalCharges, "", new { @class = "text-danger" })
                                                             </div>
                                                             <div class="col-md-12"></div>
                                                             @Html.LabelFor(model => model.DiscountAmt, htmlAttributes: new { @class = "h5 col-md-5" })
-                                                            <div class="col-md-7" >
-                                                                @Html.EditorFor(model => model.DiscountAmt, new { htmlAttributes = new { @class = "form-control",style= "text-align:right;" } })
+                                                            <div class="col-md-7">
+                                                                @Html.EditorFor(model => model.DiscountAmt, new { htmlAttributes = new { @class = "form-control", style = "text-align:right;" } })
                                                                 @Html.ValidationMessageFor(model => model.DiscountAmt, "", new { @class = "text-danger" })
                                                             </div>
                                                             <div class="col-md-12"> </div>
@@ -203,101 +204,101 @@
                                                             <div class="col-md-7">
                                                                 @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", id = "QuotationId" })
                                                                 <input type="submit" id="BtnSave" value="Save Changes" class="btn btn-default btn-right" />
-                                                            </div> 
-                                                       }  
-                                                    </div>
+                                                            </div>
+                                                    }
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
-                                                @using (Ajax.BeginForm("InsertEventsLog", "Quotations", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formComments" }))
-                                                {
-                                                    @Html.AntiForgeryToken()
-                                                    <div class="infoBox panel panel-default" style="min-height:300px">
-                                                        <div class="infoBoxHeader panel-heading">Order Comments</div>
-                                                        <div class="panel-body">
-                                                            <div class="form-group col-md-12">
-                                                                @Html.LabelFor(model => model.EventsLogViewObj.Comment, htmlAttributes: new { @class = "control-label col-md-6" })
-                                                                <div class="col-md-12">
-                                                                    @Html.TextAreaFor(model => model.EventsLogViewObj.Comment, new { @class = "form-control",id="Comments" })
-                                                                    @Html.ValidationMessageFor(model => model.EventsLogViewObj.Comment, "", new { @class = "text-danger" })
-                                                                </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            @using (Ajax.BeginForm("InsertEventsLog", "Quotations", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formComments" }))
+                                            {
+                                                @Html.AntiForgeryToken()
+                                                <div class="infoBox panel panel-default" style="min-height:300px">
+                                                    <div class="infoBoxHeader panel-heading">Order Comments</div>
+                                                    <div class="panel-body">
+                                                        <div class="form-group col-md-12">
+                                                            @Html.LabelFor(model => model.EventsLogViewObj.Comment, htmlAttributes: new { @class = "control-label col-md-6" })
+                                                            <div class="col-md-12">
+                                                                @Html.TextAreaFor(model => model.EventsLogViewObj.Comment, new { @class = "form-control", id = "Comments" })
+                                                                @Html.ValidationMessageFor(model => model.EventsLogViewObj.Comment, "", new { @class = "text-danger" })
                                                             </div>
-                                                            <div class="col-md-12"></div>
-                                                            <div class="">
-                                                                @Html.LabelFor(model => model.EventsLogViewObj.CustomerNotifiedYN, htmlAttributes: new { @class = "control-label col-md-4" })
-                                                                <div class="col-lg-2">
-                                                                    <div class="checkbox">
-                                                                        <div>
-                                                                            @Html.EditorFor(model => model.EventsLogViewObj.CustomerNotifiedYN)
-                                                                            @Html.ValidationMessageFor(model => model.EventsLogViewObj.CustomerNotifiedYN, "", new { @class = "text-danger" })
-                                                                        </div>
-
+                                                        </div>
+                                                        <div class="col-md-12"></div>
+                                                        <div class="">
+                                                            @Html.LabelFor(model => model.EventsLogViewObj.CustomerNotifiedYN, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                            <div class="col-lg-2">
+                                                                <div class="checkbox">
+                                                                    <div>
+                                                                        @Html.EditorFor(model => model.EventsLogViewObj.CustomerNotifiedYN)
+                                                                        @Html.ValidationMessageFor(model => model.EventsLogViewObj.CustomerNotifiedYN, "", new { @class = "text-danger" })
                                                                     </div>
 
                                                                 </div>
-                                                            </div>
 
-                                                            <div class="">
-                                                                <div class="col-md-6">
-                                                                    @Html.HiddenFor(model => model.QuotationNo, htmlAttributes: new { @class = "control-label col-md-4"})
-                                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Quotations" })
-                                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value =0 })
-                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "" })
-                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = ""})
-                                                                    <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="">
+                                                            <div class="col-md-6">
+                                                                @Html.HiddenFor(model => model.QuotationNo, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                                @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Quotations" })
+                                                                @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = 0 })
+                                                                @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "" })
+                                                                @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = "" })
+                                                                <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-md-12"></div>
+                                                        <div class="form-group col-md-12">
+                                                            <hr />
+                                                            <label id="lblHistroy" class="control-label" style="font-size:14px;margin-left:1%">Earlier Comments</label>
+
+                                                            <div style="height: 150px;width: 107%;overflow: hidden;position: relative;">
+                                                                <div id="CommentsDisplay" style="max-height: 150px;min-height: 150px;overflow-x: hidden;position: absolute;top: 0px;bottom: 0px;left: 0px;right: -15px;white-space: pre;">
                                                                 </div>
                                                             </div>
-                                                            <div class="col-md-12"></div>
-                                                            <div class="form-group col-md-12">
-                                                                <hr />
-                                                                <label id="lblHistroy" class="control-label" style="font-size:14px;margin-left:1%">Earlier Comments</label>
-
-                                                                <div style="height: 150px;width: 107%;overflow: hidden;position: relative;">
-                                                                    <div id="CommentsDisplay" style="max-height: 150px;min-height: 150px;overflow-x: hidden;position: absolute;top: 0px;bottom: 0px;left: 0px;right: -15px;white-space: pre;">
-                                                                    </div>
-                                                                </div>
-                                                            </div>
                                                         </div>
-                                                    </div> 
-                                                }
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="infoBox panel panel-default" style="min-height:250px">
-                                                    <div class="infoBoxHeader panel-heading">Quotation Summary</div>
-                                                    <div class="panel-body"> 
-                                                        <div class="col-md-12"></div>
-                                                        @Html.LabelFor(model => model.SubTotal, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
-                                                        <div class="col-md-2" align="right">
-                                                            <label id="lblSubTotal" style = "font-weight:bold" class="h5 label-display">-</label>
-                                                        </div>
-                                                        <div class="col-md-12"></div>
-                                                        @Html.LabelFor(model => model.TaxAmt, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
-                                                        <div class="col-md-2" align="right">                                                            
-                                                            <label id="lblTaxAmt" style="font-weight:bold" class="h5 label-display">-</label>
-                                                        </div>
-                                                        <div class="col-md-12"></div>
-                                                        @Html.LabelFor(model => model.AdditionalCharges, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
-                                                        <div class="col-md-2" align="right"> 
-                                                            <label id="lblAdditionalCharges" style = "font-weight:bold" class="h5 label-display">-</label>
-                                                        </div>
-                                                        <div class="col-md-12"></div>
-                                                        @Html.LabelFor(model => model.DiscountAmt, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
-                                                        <div class="col-md-2" align="right"> 
-                                                            <label id="lblDiscountAmt" style = "font-weight:bold" class="h5 label-display">-</label>
-                                                        </div>
-                                                        <div class="col-md-12"><hr></div>
-                                                        @Html.LabelFor(model => model.GrandTotal, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
-                                                        <div class="col-md-2" align="right"> 
-                                                            <label id="lblGrandTotal" style = "font-weight:bold" class="h5 label-display">-</label>
-                                                        </div>
+                                                    </div>
+                                                </div>
+                                            }
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="infoBox panel panel-default" style="min-height:250px">
+                                                <div class="infoBoxHeader panel-heading">Quotation Summary</div>
+                                                <div class="panel-body">
+                                                    <div class="col-md-12"></div>
+                                                    @Html.LabelFor(model => model.SubTotal, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
+                                                    <div class="col-md-2" align="right">
+                                                        <label id="lblSubTotal" style="font-weight:bold" class="h5 label-display">-</label>
+                                                    </div>
+                                                    <div class="col-md-12"></div>
+                                                    @Html.LabelFor(model => model.TaxAmt, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
+                                                    <div class="col-md-2" align="right">
+                                                        <label id="lblTaxAmt" style="font-weight:bold" class="h5 label-display">-</label>
+                                                    </div>
+                                                    <div class="col-md-12"></div>
+                                                    @Html.LabelFor(model => model.AdditionalCharges, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
+                                                    <div class="col-md-2" align="right">
+                                                        <label id="lblAdditionalCharges" style="font-weight:bold" class="h5 label-display">-</label>
+                                                    </div>
+                                                    <div class="col-md-12"></div>
+                                                    @Html.LabelFor(model => model.DiscountAmt, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
+                                                    <div class="col-md-2" align="right">
+                                                        <label id="lblDiscountAmt" style="font-weight:bold" class="h5 label-display">-</label>
+                                                    </div>
+                                                    <div class="col-md-12"><hr></div>
+                                                    @Html.LabelFor(model => model.GrandTotal, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
+                                                    <div class="col-md-2" align="right">
+                                                        <label id="lblGrandTotal" style="font-weight:bold" class="h5 label-display">-</label>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                </div>
                         </div>
+                    </div>
                 </div>
             </div>
         </div>
