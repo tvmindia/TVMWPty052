@@ -250,12 +250,14 @@ function countDays() {
     var fromdate = $("#fromdate").val();
     var todate = $("#todate").val();
     if (fromdate != "" && todate != "") {
+        fromdate = ConvertDateFormats(fromdate);
+        todate = ConvertDateFormats(todate);
         var date1 = new Date(fromdate);
         var date2 = new Date(todate);
         var diff = date2.getTime() - date1.getTime();        
         if (diff > 0) {
             var ONE_DAY = 1000 * 60 * 60 * 24;
-            $("#dayscount").text(Math.round(diff / ONE_DAY) + ' Days');
+            $("#dayscount").text((Math.round(diff / ONE_DAY)+1) + ' Days');
         }
         else {
             notyAlert('error', 'Please check the dates entered');

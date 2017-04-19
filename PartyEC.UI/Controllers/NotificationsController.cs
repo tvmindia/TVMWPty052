@@ -128,6 +128,12 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     break;
 
+                case "Add":
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+                    ToolboxViewModelObj.addbtn.Event = "AddNotification()";
+                    break;
+
               
 
                 default:

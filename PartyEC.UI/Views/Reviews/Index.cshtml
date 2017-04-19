@@ -8,7 +8,7 @@
     @Styles.Render("~/Content/DataTables/css/datatable")
 
 }
-<div class="container-fluid">
+<div class="container-fluid" style="min-height:950px;">
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
@@ -31,9 +31,9 @@
                         <div class="form-group" style="position:center;">
                             <div class="col-sm-8">
                                 <label><b>Date From</b></label>
-                                <input class="datepicker" onchange="countDays()" type="Date" style="width:120px" name="From" id="fromdate" />
+                                <input class="datepicker" onchange="countDays()" type="text" style="width:120px" name="From" id="fromdate" />
                                 <label><b>To Date</b> </label>
-                                <input class="datepicker" onchange="countDays()" type="Date" style="width:120px" name="To" id="todate" />
+                                <input class="datepicker" onchange="countDays()" type="text" style="width:120px" name="To" id="todate" />
                                 <label id="dayscount" style="padding-left:10px"><b></b></label>
                                 <b><a href="#" style="padding-left:10px" onclick="BindReviews()"> APPLY</a></b>
 

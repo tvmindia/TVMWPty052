@@ -50,10 +50,10 @@ $(document).ready(function () {
           },
             {
                 "render": function (data, type, row) {
-                    if (data) {
+                    
                        
                         return (data != 0 ? "Success" : "Failed");
-                    }
+                    
                 },
                 "targets": 6
             }
@@ -134,6 +134,8 @@ $(document).ready(function () {
     //$('#tblCustomersInNotificatoin tbody').on('click', 'tr', function () {
     //    $(this).toggleClass('selected');
     //});
+
+    ChangeButtonPatchView("Notifications", "NotificationToolBox", "Add"); //ControllerName,id of the container div,Name of the action
 
 });
 
@@ -249,6 +251,8 @@ function EditNotification(curObj)
             $('#Message').val(thisnoti.Message);
         }
     }
+   
+   
 }
 
 function GetNotificationDetail(id)
@@ -313,6 +317,7 @@ function NotificationPushSuccess(data, status, xhr)
 function goback() {
     ClearForm();
     $("#tabNotificationsList a").click();
+    ChangeButtonPatchView("Notifications", "NotificationToolBox", "Add"); //ControllerName,id of the container div,Name of the action
 }
 
 function AddNotification()
@@ -322,7 +327,7 @@ try
     $("#RadioSelected").prop('checked', true);
     ClearForm();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
     DataTables.customerinNotificaton.rows().deselect();
-    ChangeButtonPatchView("Notifications", "NotificationPushToolbox", "Push"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Notifications", "NotificationToolBox", "Push"); //ControllerName,id of the container div,Name of the action
     $("#tabNotificationsDetails a").click();
 }
 catch(e)
@@ -377,12 +382,14 @@ function countDays() {
     var fromdate = $("#fromdate").val();
     var todate = $("#todate").val();
     if (fromdate != "" && todate != "") {
+        fromdate = ConvertDateFormats(fromdate);
+        todate = ConvertDateFormats(todate);
         var date1 = new Date(fromdate);
         var date2 = new Date(todate);
         var diff = date2.getTime() - date1.getTime();
         if (diff > 0) {
             var ONE_DAY = 1000 * 60 * 60 * 24;
-            $("#dayscount").text(Math.round(diff / ONE_DAY) + ' Days');
+            $("#dayscount").text((Math.round(diff / ONE_DAY)+1) + ' Days');
         }
         else {
             notyAlert('error', 'Please check the dates entered');
