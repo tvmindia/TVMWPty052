@@ -270,7 +270,98 @@ namespace PartyEC.RepositoryServices.Services
 
 
         }
+        public List<Graph> GetWeeklySalesDetails()
+        {
+            List<Graph> weeklySalesSummeryList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetWeeklySales]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                weeklySalesSummeryList = new List<Graph>();
+                                while (sdr.Read())
+                                {
+                                    Graph _weeklysalesDetailObj = new Graph();
+                                    {
+                                        _weeklysalesDetailObj.Value = (sdr["Value"].ToString() != "" ? int.Parse(sdr["Value"].ToString()) : _weeklysalesDetailObj.Value);
+                                        _weeklysalesDetailObj.Label = (sdr["Label"].ToString() != "" ? sdr["Label"].ToString() : _weeklysalesDetailObj.Label);
 
+                                    }
+                                    weeklySalesSummeryList.Add(_weeklysalesDetailObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return weeklySalesSummeryList;
+
+
+        }
+        public List<Graph> GetRootCategoryWiseSalesDetail()
+        {
+            List<Graph> GraphList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetRootCategorySales]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                GraphList = new List<Graph>();
+                                while (sdr.Read())
+                                {
+                                    Graph _GraphObj = new Graph();
+                                    {
+                                        _GraphObj.Value = (sdr["Value"].ToString() != "" ? int.Parse(sdr["Value"].ToString()) : _GraphObj.Value);
+                                        _GraphObj.Label = (sdr["Label"].ToString() != "" ? sdr["Label"].ToString() : _GraphObj.Label);
+
+                                    }
+                                    GraphList.Add(_GraphObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return GraphList;
+
+
+        }
         public List<OtherImages> GetAllStickers()
         {
             List<OtherImages> otherImagesList = null;

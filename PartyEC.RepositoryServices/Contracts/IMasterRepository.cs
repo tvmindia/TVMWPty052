@@ -43,5 +43,9 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertSupplierLocations(SupplierLocations supplier_locObj);
         OperationsStatus UpdateSupplierLocations(SupplierLocations supplier_locObj);
         OperationsStatus DeleteSupplierLocations(int ShippingLocationID);
+
+        //Dashboard
+        List<Graph> GetWeeklySalesDetails();
+        List<Graph> GetRootCategoryWiseSalesDetail();
     }
 }

@@ -102,5 +102,11 @@ namespace PartyEC.UI.Models
         public string CommentDate { get; set; }
         public LogDetailsViewModel commonObj { get; set; }
     }
+    public class GraphViewModel
+    {
+        public string Label { get; set; }
+        public int Value { get; set; }
+    }
+
 
 }
