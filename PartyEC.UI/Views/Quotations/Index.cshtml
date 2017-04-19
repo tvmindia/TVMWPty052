@@ -203,7 +203,7 @@
                                                             </div>
                                                             <div class="col-md-7">
                                                                 @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", id = "QuotationId" })
-                                                                <input type="submit" id="BtnSave" value="Save Changes" class="btn btn-default btn-right" />
+                                                                <input type="submit" id="BtnSave" value="Save Changes" class="btn btn-info btn-right" style="float:right;"/>
                                                             </div>
                                                     }
                                                 </div>
@@ -219,12 +219,12 @@
                                                         <div class="form-group col-md-12">
                                                             @Html.LabelFor(model => model.EventsLogViewObj.Comment, htmlAttributes: new { @class = "control-label col-md-6" })
                                                             <div class="col-md-12">
-                                                                @Html.TextAreaFor(model => model.EventsLogViewObj.Comment, new { @class = "form-control", id = "Comments" })
+                                                                @Html.TextAreaFor(model => model.EventsLogViewObj.Comment, new { @class = "form-control", id = "Comments", style = "width:100%; height: 100px;" })
                                                                 @Html.ValidationMessageFor(model => model.EventsLogViewObj.Comment, "", new { @class = "text-danger" })
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12"></div>
-                                                        <div class="">
+                                                        <div class="col-md-12">
                                                             @Html.LabelFor(model => model.EventsLogViewObj.CustomerNotifiedYN, htmlAttributes: new { @class = "control-label col-md-4" })
                                                             <div class="col-lg-2">
                                                                 <div class="checkbox">
@@ -232,25 +232,19 @@
                                                                         @Html.EditorFor(model => model.EventsLogViewObj.CustomerNotifiedYN)
                                                                         @Html.ValidationMessageFor(model => model.EventsLogViewObj.CustomerNotifiedYN, "", new { @class = "text-danger" })
                                                                     </div>
-
                                                                 </div>
-
-                                                            </div>
-                                                        </div>
-
-                                                        <div class="">
+                                                            </div> 
                                                             <div class="col-md-6">
                                                                 @Html.HiddenFor(model => model.QuotationNo, htmlAttributes: new { @class = "control-label col-md-4" })
                                                                 @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Quotations" })
                                                                 @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = 0 })
                                                                 @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "" })
                                                                 @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = "" })
-                                                                <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
+                                                                <input type="submit" value="Submit Comment" class="btn btn-info btn-right" style="float:right;" />
                                                             </div>
                                                         </div>
                                                         <div class="col-md-12"></div>
-                                                        <div class="form-group col-md-12">
-                                                            <hr />
+                                                        <div class="form-group col-md-12"> 
                                                             <label id="lblHistroy" class="control-label" style="font-size:14px;margin-left:1%">Earlier Comments</label>
 
                                                             <div style="height: 150px;width: 107%;overflow: hidden;position: relative;">
