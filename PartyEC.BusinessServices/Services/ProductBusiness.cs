@@ -396,6 +396,24 @@ namespace PartyEC.BusinessServices.Services
             }
             return productReview;
         }
+
+        public List<Product> GetRelatedProductsForApp(int productID,int count)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetRelatedProducts(productID);
+                if (count != -1 && count <= productlist.Count)  //taking only top items
+                {
+                    productlist = productlist.GetRange(0, count);
+                }
+            }
+            catch (Exception)
+            {
+
+            }
+            return productlist;
+        }
         #endregion
     }
 }
