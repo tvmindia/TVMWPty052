@@ -87,5 +87,19 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+        [HttpPost]
+        public object GetRelatedProducts(RelatedProductsAppViewModel productObj)
+        {
+            try
+            {
+                List<RelatedProductsAppViewModel> relatedProducts = Mapper.Map<List<Product>, List<RelatedProductsAppViewModel>>(_productBusiness.GetRelatedProductsForApp(productObj.ID, productObj.count));
+                if (relatedProducts.Count == 0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = relatedProducts });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
     }
 }

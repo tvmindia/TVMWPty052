@@ -43,9 +43,13 @@ namespace PartyEC.BusinessServices.Services
                 }
                 if ((!string.IsNullOrEmpty(fromdate)) && (!string.IsNullOrEmpty(todate)))
                 {
-                    var f = DateTime.Parse(fromdate);
-                    var t = DateTime.Parse(todate);
-                    notificationList.Where((noti => (noti.logDetailsObj.CreatedDate >= DateTime.Parse(f.Day + "-" + f.Month + "-" + f.Year)) && (noti.logDetailsObj.CreatedDate <= DateTime.Parse(t.Day + "-" + t.Month + "-" + t.Year))));
+                    //DateTime f = DateTime.Parse(fromdate).Date;
+                  //  DateTime t = DateTime.Parse(todate).Date;
+                    
+                     notificationList = (from k in notificationList
+                                        where k.logDetailsObj.CreatedDate.Value.Date >= DateTime.Parse(fromdate).Date
+                                        && k.logDetailsObj.CreatedDate.Value.Date <= DateTime.Parse(todate).Date
+                                        select k).ToList();
                 }
                 filteredList = new List<Notification>();
                 foreach (Notification notif in notificationList)

@@ -26,6 +26,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<CategoriesListAppViewModel, Categories>().ReverseMap();
                 config.CreateMap<TopProductsOfCategoryAppViewModel, Product>().ReverseMap();
                 config.CreateMap<ProductsOfCategoryAppViewModel, Product>().ReverseMap();
+                config.CreateMap<RelatedProductsAppViewModel, Product>().ReverseMap();
                 config.CreateMap<NavigationalCatsOfCategoryAppViewModel, Categories>().ReverseMap();
                 config.CreateMap<FilterCatsOfCategoryAppViewModel, Categories>().ReverseMap();
                 config.CreateMap<ManufacturerViewModel,Manufacturer >().ReverseMap();

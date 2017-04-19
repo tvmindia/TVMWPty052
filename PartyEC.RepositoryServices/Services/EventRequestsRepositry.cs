@@ -235,8 +235,11 @@ namespace PartyEC.RepositoryServices.Services
 
                         cmd.Parameters.Add("@AdminRemarks", SqlDbType.NVarChar,-1).Value = eventObj.AdminRemarks;
                         cmd.Parameters.Add("@EventStatus", SqlDbType.SmallInt).Value = eventObj.EventStatus;
-                        cmd.Parameters.Add("@FollowUpDate", SqlDbType.DateTime).Value = DateTime.Parse(eventObj.FollowUpDate);
 
+                        if (eventObj.FollowUpDate!=null && eventObj.FollowUpDate!="")
+                        {
+                            cmd.Parameters.Add("@FollowUpDate", SqlDbType.DateTime).Value = DateTime.Parse(eventObj.FollowUpDate);
+                        }
                         cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 50).Value = eventObj.logDetailsObj.UpdatedBy;
                         cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = eventObj.logDetailsObj.UpdatedDate;
 

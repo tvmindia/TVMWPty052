@@ -17,6 +17,7 @@ $(document).ready(function () {
                { "data": "Title", "defaultContent": "<i>-</i>" },
                 { "data": "Message", "defaultContent": "<i>-</i>" },
                  { "data": "logDetailsObj", "defaultContent": "<i>-</i>" },
+                    { "data": "Status", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="EditNotification(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              
              ],
@@ -46,7 +47,16 @@ $(document).ready(function () {
                   }
               },
               "targets": 5
-          }
+          },
+            {
+                "render": function (data, type, row) {
+                    if (data) {
+                       
+                        return (data != 0 ? "Success" : "Failed");
+                    }
+                },
+                "targets": 6
+            }
              ]
              
          });

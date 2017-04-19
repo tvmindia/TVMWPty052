@@ -273,4 +273,11 @@ namespace PartyEC.UI.Models
         public string AvgRating { get; set; }
         public string ImageUrl { get; set; }        
     }
+    public class RelatedProductsAppViewModel
+    {
+        public int count { get; set; }
+        public int ID { get; set; }
+        public string Name { get; set; }
+        public string ImageURL { get; set; }
+    }
 }
