@@ -10,6 +10,7 @@ $(document).ready(function () {
     //    autoclose: true,
     //    todayHighlight: true
     //});
+    
     $('.Tom').hover(function () {
         $('.dropdown-toggle', this).click();
     });

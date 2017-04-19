@@ -8,125 +8,75 @@
     @Styles.Render("~/Content/UserCSS/Home")*@
 }
 <div class="container-fluid">
- 
-    <div class="row">
-        <div class="col-lg-8">
+    <div class="col-lg-12">
+        <div class="col-lg-1">
 
-            <div class="col-lg-6">
-                <div class="panel panel-default panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-6">
-                <div class="panel panel-default panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-6">
-                <div class="panel panel-default panel-primary">
-                    <div class="panel-heading">Panel heading without title</div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                    <div class="panel-footer">Panel footer</div>
-                </div>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-6">
-                <div class="panel panel-default panel-primary">
-                    <div class="panel-heading">Panel heading without title</div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                    <div class="panel-footer">Panel footer</div>
-                </div>
-            </div><!-- /.col-lg-4 -->
-           
-            <div class="col-lg-6">
-                <div class="panel panel-default panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-            </div><!-- /.col-lg-4 -->
-            <div class="col-lg-6">
-                <div class="panel panel-default panel-success">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Panel title</h3>
-                    </div>
-                    <div class="panel-body">
-                        Panel content
-                    </div>
-                </div>
-            </div><!-- /.col-lg-4 -->
-            
         </div>
-            
+        <div class="col-lg-4">
+            <canvas id="myChart" style="width:300px;height:300px;"></canvas>
+        </div>
+        <div class="col-lg-2"></div>
+        <div class="col-lg-4">
+            <canvas id="myChartpi" style="width:300px;height:300px;"></canvas>
+        </div>
+        <div class="col-lg-12" style="min-height:50px"></div>
+        <div class="col-lg-12" style="background:#fff9f1">
             <div class="col-lg-4">
-                <img class="img-circle" src="data:image/gif;base64,R0lGODlhAQABAIAAAHd3dwAAACH5BAAAAAAALAAAAAABAAEAAAICRAEAOw==" alt="Generic placeholder image" width="140" height="140">
-                <h2>Sales</h2>
-                <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Cras mattis consectetur purus sit amet fermentum. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh.</p>
-                <p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p>
-            </div><!-- /.col-lg-4 -->
-        </div>
- 
-
-    
-
-    <div class="row">
-        <div class="col-lg-6">
-            <div class="panel panel-default panel-success">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Panel title</h3>
-                </div>
-                <div class="panel-body">
-                    Panel content
-                </div>
+                <div><h3>Latest Products</h3></div>
+                <ul class="list-group">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
             </div>
-
-        </div>
-        <div class="col-lg-6">
-            <div class="panel panel-default panel-info">
-                <div class="panel-heading">
-                    <h3 class="panel-title">Panel title</h3>
-                </div>
-                <div class="panel-body">
-                    Panel content
-                </div>
+            <div class="col-lg-4">
+                <div><h3>Latest Orders</h3></div>
+                <ul class="list-group">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
+            </div>
+            <div class="col-lg-4">
+                <div><h3>Reorder Items</h3></div>
+                <ul class="list-group">
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                    <li class="list-group-item">Cras justo odio</li>
+                    <li class="list-group-item">Dapibus ac facilisis in</li>
+                    <li class="list-group-item">Morbi leo risus</li>
+                    <li class="list-group-item">Porta ac consectetur ac</li>
+                    <li class="list-group-item">Vestibulum at eros</li>
+                </ul>
             </div>
         </div>
-
+        
     </div>
-
-        <hr class="featurette-divider">
-
-        <div class="row">
-
-            <div class="panel panel-default panel-primary">
-                <div class="panel-heading">Panel heading without title</div>
-                <div class="panel-body">
-                    Panel content
-                </div>
-                <div class="panel-footer">Panel footer</div>
-            </div>
-        </div>
+    
     </div>
 
 
 
 @section Scripts {
+<script src="~/Scripts/Chart.js"></script>
+<script src="~/Scripts/UserJS/Dashboard.js"></script>
     @*@Scripts.Render("~/bundles/angularuigrid")
     @Scripts.Render("~/bundles/homeangular")*@
 }
