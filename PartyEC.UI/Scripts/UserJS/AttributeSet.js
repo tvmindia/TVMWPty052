@@ -97,7 +97,7 @@ $(document).ready(function () {
    
     $('#tabattributeSetDetails').click(function (e) {
         //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
-        ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
+        ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSet", "Add");
         $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft(0);
         $('#jstree_Drag').jstree(true).refresh(true);
 
@@ -108,9 +108,14 @@ $(document).ready(function () {
         $('#ID').val(0);
         $('#hdnTreeList').val("0");
     });
-   
+    $('#tabattributeSetList').click(function (e) {
+        ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSet", "Initialize");
+    });
+    OpenAllNodes();
+    ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSet", "Initialize");
     
 });
+
 function MainClick()
 {
     
@@ -118,9 +123,13 @@ function MainClick()
 }
 function AddNew()
 {
+    debugger;
     $('#tabattributeSetDetails').trigger('click');
+    ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSet", "Add");
+
 }
 function Edit(currentObj) {
+    debugger;
     //Tab Change on edit click
     $('#tabattributeSetDetails').trigger('click');
     
@@ -133,9 +142,18 @@ function Edit(currentObj) {
         $("#Name").val(rowData.Name);
     }
     //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
-    ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Edit");
+    ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSet", "Edit");
+    OpenAllNodes();
+    
 }
-
+function OpenAllNodes()
+{
+    setTimeout(function () {
+        debugger;
+        $.jstree.reference('#jstree_Drag').open_all();
+        $.jstree.reference('#jstree_DragUpdate').open_all();
+    }, 500);
+}
 function GetAllAttributeSet() {
 
     try {
@@ -227,11 +245,14 @@ function EditAttibuteSet(id)
 {
     try
     {
+        debugger;
         $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft(id);
         $('#jstree_Drag').jstree(true).refresh(true);
-
+        
         $('#jstree_DragUpdate').jstree(true).settings.core.data = GetTreeDataRight(id);
         $('#jstree_DragUpdate').jstree(true).refresh(true);
+
+       
     }
     catch(e)
     {
@@ -277,7 +298,7 @@ function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
                 $('#ID').val(i.Records.ReturnValues);
             }
             //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
-            ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Edit");
+            ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSet", "Edit");
             $('#jstree_Drag').jstree(true).settings.core.data = GetTreeDataLeft($("#ID").val());
             $('#jstree_Drag').jstree(true).refresh(true);
 
@@ -285,6 +306,7 @@ function CheckSubmitted(data) { //function CouponSubmitted(data) in the question
             $('#jstree_DragUpdate').jstree(true).refresh(true);
 
             DataTables.attributeSetTable.clear().rows.add(GetAllAttributeSet()).draw(false);
+            OpenAllNodes();
             break;
         case "ERROR":
             notyAlert('success', i.Records.StatusMessage);
@@ -301,7 +323,7 @@ function CheckSubmittedDelete(data) { //function CouponSubmitted(data) in the qu
             notyAlert('success', i.Records.StatusMessage);
             DataTables.attributeSetTable.clear().rows.add(GetAllAttributeSet()).draw(false);
             //ChangeButtonPatchView(//ControllerName,//Name of the container, //Name of the action);
-            ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSettab2", "Add");
+            ChangeButtonPatchView("AttributeSet", "btnPatchAttributeSet", "Add");
             $('#tabattributeSetDetails').trigger('click');
             break;
         case "ERROR":

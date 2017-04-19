@@ -261,4 +261,16 @@ namespace PartyEC.UI.Models
         public decimal? DiscountAmount { get; set; }
         public int AttributeSetID { get; set; }
     }
+    public class ProductReviewAppViewModel
+    {
+        public int count { get; set; }
+        public int ID { get; set; }
+        public int ProductID { get; set; }
+        public int CustomerID { get; set; }
+        public string Review { get; set; }
+        public string ReviewCreatedDate { get; set; }
+        public string CustomerName { get; set; }
+        public string AvgRating { get; set; }
+        public string ImageUrl { get; set; }        
+    }
 }

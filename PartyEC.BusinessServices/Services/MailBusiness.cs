@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
 using System.Web;
@@ -86,35 +87,42 @@ namespace PartyEC.BusinessServices.Services
             return true;
         }
 
-        // public async Task SendMail(Mail mailObj)
-        public async Task SendMailAsync(Mail mailObj)
+
+
+
+        #region MailSendAsync
+        /// <summary>
+        /// send mail asynchronously one address at a time
+        /// </summary>
+        /// <param name="mailObj"></param>
+        /// <returns>bool</returns>
+        public async Task<bool> MailSendAsync(Mail mailObj)
         {
-          
-            SmtpClient mailServer = new SmtpClient();
-            MailMessage mail = new MailMessage();
-            mail.From = new MailAddress(EmailFromAddress, "Admin_@_PartyEC");
-            mail.To.Add(mailObj.To);
-            mail.Subject = mailObj.Subject;
-            mail.IsBodyHtml = mailObj.IsBodyHtml;
-            mail.Body = mailObj.Body;
             try
             {
-                mailServer.Host = host;
-                mailServer.Port = int.Parse(port);
-                mailServer.Credentials = new System.Net.NetworkCredential(smtpUserName, smtpPassword);
-                mailServer.EnableSsl = true;
-                mail.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
-                await mailServer.SendMailAsync(mail);
+               using (var mail = new MailMessage(new MailAddress(EmailFromAddress, "Admin_@_PartyEC"), new MailAddress(mailObj.To)))
+                {
+                    mail.Subject = mailObj.Subject;
+                    mail.Body = mailObj.Body;
+                    mail.IsBodyHtml = true;
+                   using (var client = new SmtpClient())
+                    {
+                        client.Host = host;
+                        client.Port = int.Parse(port);
+                        client.EnableSsl = true;
+                        client.DeliveryMethod = SmtpDeliveryMethod.Network;
+                        client.Credentials = new NetworkCredential(smtpUserName, smtpPassword);
+                        await client.SendMailAsync(mail);
+                    }
+                }
             }
-            catch (SmtpException e)
+            catch (Exception ex)
             {
-                //LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Error sending welcome email.", e);
-                //return false;
-                Console.Write(e.Message);
+                return false;
             }
+            return true;
 
-           // return true;
         }
-
+        #endregion MailSendAsync
     }
 }

@@ -7,7 +7,9 @@ using System.Configuration;
 using System.IO;
 using System.Linq;
 using System.Net;
+using System.Net.Mail;
 using System.Text;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Script.Serialization;
 
@@ -187,30 +189,13 @@ namespace PartyEC.BusinessServices.Services
         }
         #endregion Notification message to Cloud messaging system
         #region mailnotification
-        public OperationsStatus NotificationEmailPush(Notification notification)
+        public OperationsStatus InsertNotification(Notification notification)
         {
             OperationsStatus operationsStatus = null;
             try
             {
               operationsStatus = _notificationRepository.NotificationPush(notification);
-                //Get customer information
-                OperationsStatus opstatus = new OperationsStatus();
-                Customer customer = null;
-                customer=_customerBusiness.GetCustomer(notification.customer.ID, opstatus);
-                if (operationsStatus.StatusCode==1)
-                {
-                    Mail _mail = new Mail();
-                    using(StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/Notifications.html")))
-                    {
-                        _mail.Body = reader.ReadToEnd();
-                    }
-                    _mail.Body = _mail.Body.Replace("{CustomerName}", customer.Name);
-                    _mail.Body = _mail.Body.Replace("{Message}", notification.Message);
-                    _mail.IsBodyHtml = true;
-                    _mail.Subject = notification.Title;
-                    _mail.To = customer.Email;
-                    _mailBusiness.SendMail(_mail);
-                }
+            
 
             }
             catch (Exception ex)
@@ -220,5 +205,152 @@ namespace PartyEC.BusinessServices.Services
             return operationsStatus;
         }
         #endregion mailnotification
+
+
+        //public async Task<bool> albertMail(Notification notification)
+        //{
+        //    try
+        //    {
+        //        string EmailFromAddress = System.Web.Configuration.WebConfigurationManager.AppSettings["EmailFromAddress"];
+        //        string smtpUserName = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-UserName"];
+        //        string smtpPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-Password"];
+        //        string myport = System.Web.Configuration.WebConfigurationManager.AppSettings["Port"];
+        //        var from = new MailAddress(EmailFromAddress, "Admin_@_PartyEC");
+        //        var to = new MailAddress("albertthomson2008@gmail.com");
+        //        var useDefaultCredentials = true;
+        //        var enableSsl = false;
+        //      //  var replyto = "albertthomson2008@gmail.com"; // set here your email; 
+        //        var userName = smtpUserName;
+        //        var password = smtpPassword;
+        //        var port = int.Parse(myport);
+        //        var host = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-host"];
+        //        userName = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-UserName"];  // setup here the username; 
+        //        password = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-Password"]; // setup here the password; 
+        //        bool.TryParse("true", out useDefaultCredentials); //setup here if it uses defaault credentials 
+        //        bool.TryParse("true", out enableSsl); //setup here if it uses ssl 
+        //       // int.TryParse(myport, out port); //setup here the port 
+        //        host = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-host"]; //setup here the host 
+
+        //        using (var mail = new MailMessage(from, to))
+        //        {
+        //            mail.Subject = "testing mail by albert";
+        //            mail.Body = "<table><tr>Thrithavam from table</tr></table>";
+        //            mail.IsBodyHtml = true;
+
+        //           // mail.ReplyToList.Add(new MailAddress(replyto, "albertthomson2008@gmail.com"));
+        //            mail.ReplyToList.Add(from);
+        //            mail.DeliveryNotificationOptions = DeliveryNotificationOptions.Delay |
+        //                                               DeliveryNotificationOptions.OnFailure |
+        //                                               DeliveryNotificationOptions.OnSuccess;
+        //            using (var client = new SmtpClient())
+        //            {
+        //                client.Host = host;
+        //                client.Port = int.Parse(myport);
+        //                client.EnableSsl = enableSsl;
+        //                client.UseDefaultCredentials = useDefaultCredentials;
+        //                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+        //               // client.Credentials=
+        //                if (!client.UseDefaultCredentials && !string.IsNullOrEmpty(userName) &&
+        //                    !string.IsNullOrEmpty(password))
+        //                {
+        //                    client.Credentials = new NetworkCredential(userName, password);
+        //                }
+        //                client.Credentials = new NetworkCredential(userName, password);
+        //                await client.SendMailAsync(mail);
+        //            }
+        //        }
+        //    }
+        //    catch(Exception ex)
+        //    {
+
+        //    }
+        //    return true;
+
+        //}
+
+
+        //public async Task<bool> albertMail(Notification notification)
+        //{
+        //    try
+        //    {
+        //        string EmailFromAddress = System.Web.Configuration.WebConfigurationManager.AppSettings["EmailFromAddress"];
+        //        string host = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-host"];
+        //        string smtpUserName = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-UserName"];
+        //        string smtpPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-Password"];
+        //        string port = System.Web.Configuration.WebConfigurationManager.AppSettings["Port"];
+        //        var from = new MailAddress(EmailFromAddress, "Admin_@_PartyEC");
+        //        var to = new MailAddress("albertthomson2008@gmail.com");
+        //        // var useDefaultCredentials = true;
+        //        var enableSsl = false;
+        //        //  var replyto = "albertthomson2008@gmail.com"; // set here your email; 
+        //        //  bool.TryParse("true", out useDefaultCredentials); //setup here if it uses defaault credentials 
+        //        bool.TryParse("true", out enableSsl); //setup here if it uses ssl 
+        //        // int.TryParse(myport, out port); //setup here the port 
+        //        // host = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-host"]; //setup here the host 
+        //        using (var mail = new MailMessage(from, to))
+        //        {
+        //            mail.Subject = "ATTN";
+        //            mail.Body = "wonderfull after ge";
+        //            mail.IsBodyHtml = true;
+
+        //            // mail.ReplyToList.Add(new MailAddress(replyto, "albertthomson2008@gmail.com"));
+        //          //  mail.ReplyToList.Add(from);
+        //            mail.DeliveryNotificationOptions = DeliveryNotificationOptions.Delay |
+        //                                               DeliveryNotificationOptions.OnFailure |
+        //                                               DeliveryNotificationOptions.OnSuccess;
+        //            using (var client = new SmtpClient())
+        //            {
+        //                client.Host = host;
+        //                client.Port = int.Parse(port);
+        //                client.EnableSsl = enableSsl;
+        //                //client.UseDefaultCredentials = useDefaultCredentials;
+        //                client.DeliveryMethod = SmtpDeliveryMethod.Network;
+        //                // client.Credentials=
+        //                //if (!client.UseDefaultCredentials && !string.IsNullOrEmpty(smtpUserName) &&
+        //                //    !string.IsNullOrEmpty(password))
+        //                //{
+        //                //    client.Credentials = new NetworkCredential(smtpUserName, smtpPassword);
+        //                //}
+        //                client.Credentials = new NetworkCredential(smtpUserName, smtpPassword);
+        //                await client.SendMailAsync(mail);
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return false;
+        //    }
+        //    return true;
+
+        // }
+
+         public async Task<bool> NotificationEmailPush(Notification notification)
+         {
+            bool sendsuccess = false;
+            try
+            {
+               
+                //Get customer information
+                OperationsStatus opstatus = new OperationsStatus();
+                Customer customer = null;
+                customer = _customerBusiness.GetCustomer(notification.customer.ID, opstatus);
+                
+                    Mail _mail = new Mail();
+                    using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/Notifications.html")))
+                    {
+                        _mail.Body = reader.ReadToEnd();
+                    }
+                    _mail.Body = _mail.Body.Replace("{CustomerName}", customer.Name);
+                    _mail.Body = _mail.Body.Replace("{Message}", notification.Message);
+                    _mail.Subject = notification.Title;
+                    _mail.To = customer.Email;
+                    sendsuccess=  await _mailBusiness.MailSendAsync(_mail);
+             }
+            catch (Exception ex)
+            {
+                return sendsuccess;
+            }
+            return sendsuccess;
+        }
     }
 }

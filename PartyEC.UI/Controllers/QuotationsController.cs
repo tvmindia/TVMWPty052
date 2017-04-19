@@ -5,6 +5,7 @@ using PartyEC.DataAccessObject.DTO;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
@@ -17,11 +18,13 @@ namespace PartyEC.UI.Controllers
         IQuotationsBusiness _quatationsBusiness;
         ICommonBusiness _commonBusiness;
         IMasterBusiness _masterBusiness;
-        public QuotationsController(IQuotationsBusiness quatationsBusiness, ICommonBusiness commonBusiness, IMasterBusiness masterBusiness)
+        IMailBusiness _mailBusiness;
+        public QuotationsController(IQuotationsBusiness quatationsBusiness, ICommonBusiness commonBusiness, IMasterBusiness masterBusiness, IMailBusiness mailBusiness)
         {
             _quatationsBusiness = quatationsBusiness;
             _commonBusiness = commonBusiness;
             _masterBusiness = masterBusiness;
+            _mailBusiness = mailBusiness;
         }
         #endregion Constructor_Injection
         // GET: Quatations
@@ -99,10 +102,10 @@ namespace PartyEC.UI.Controllers
         }
         #endregion GetQuotations
 
-        #region  UpdateQuotationStatus
+        #region  UpdateQuotations
 
         [HttpPost]
-        public string UpdateQuotationStatus(QuotationsViewModel quotationObj)
+        public string UpdateQuotations(QuotationsViewModel quotationObj)
         {
             if (ModelState.IsValid)
             {
@@ -131,8 +134,8 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
 
-        #endregion UpdateQuotationStatus
-        
+        #endregion UpdateQuotations
+
         #region InsertEventsLog
         [HttpPost]
         public string InsertEventsLog(QuotationsViewModel quotationObj)
@@ -140,11 +143,30 @@ namespace PartyEC.UI.Controllers
             if (ModelState.IsValid)
             {
                 OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                bool Mailstatus = false;
                 try
                 {
                     quotationObj.EventsLogViewObj.commonObj = new LogDetailsViewModel();
                     quotationObj.EventsLogViewObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                     quotationObj.EventsLogViewObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    if (quotationObj.mailViewModelObj.CustomerEmail != "" && quotationObj.EventsLogViewObj.CustomerNotifiedYN == true)
+                    {
+                        quotationObj.mailViewModelObj.OrderNo = quotationObj.EventsLogViewObj.ParentID;
+                        quotationObj.mailViewModelObj.OrderComment = quotationObj.EventsLogViewObj.Comment; 
+
+                            Mail _mail = new Mail();
+                            using (StreamReader reader = new StreamReader(HttpContext.Server.MapPath("~/PartyEcTemplates/Notifications.html")))
+                            {
+                                _mail.Body = reader.ReadToEnd();
+                            }
+                        _mail.Body = _mail.Body.Replace("{CustomerName}", quotationObj.mailViewModelObj.CustomerName);
+                        _mail.Body = _mail.Body.Replace("{Message}", quotationObj.EventsLogViewObj.Comment);
+                        _mail.IsBodyHtml = true;
+                        _mail.Subject = "Quotation No:"+ quotationObj.QuotationNo;
+                        _mail.To = quotationObj.mailViewModelObj.CustomerEmail;
+                        Mailstatus = _mailBusiness.SendMail(_mail);
+                        quotationObj.EventsLogViewObj.CustomerNotifiedYN = Mailstatus;
+                    }
                     OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertEventsLog(Mapper.Map<EventsLogViewModel, EventsLog>(quotationObj.EventsLogViewObj)));
                 }
                 catch (Exception ex)
@@ -181,7 +203,7 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
-        #endregion GetEventsLog
+        #endregion GetEventsLog 
 
         #region ChangeButtonStyle
         [HttpGet]
@@ -190,22 +212,22 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
-                case "Edit":  
+                case "List":
+                    ToolboxViewModelObj.backbtn.Visible = false;
+                    break;
+                case "Edit_List":
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";
-                    ToolboxViewModelObj.backbtn.Title = "Back"; 
-                    break;
-                case "Add":   
-                    ToolboxViewModelObj.backbtn.Visible = false;
-                    ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
-                    break;
-
+                  
+                    break; 
                 default:
                     return Content("Nochange");
             }
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
+
+
         #endregion ChangeButtonStyle
     }
 }

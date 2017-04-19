@@ -11,7 +11,6 @@ namespace PartyEC.BusinessServices.Contracts
     {
         bool Send(Mail mailObj);
         bool SendMail(Mail mailObj);
-        //void SendMail(Mail mailObj);
-         Task SendMailAsync(Mail mailObj);
+        Task<bool> MailSendAsync(Mail mailObj);
     }
 }

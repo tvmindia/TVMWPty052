@@ -101,12 +101,16 @@ $(document).ready(function () {
                 $(this).closest('tr').toggleClass('selected');
             });
             $('#divOverlayimage').show();
+        //Open all nodes of Jstree
+            setTimeout(function () {
+                $.jstree.reference('#jstree_Categories').open_all();
+            }, 500);
     }
     catch(e)
     {
 
     }
-   
+    
 
 });
 function GetValue(value)
@@ -464,6 +468,9 @@ function CheckSubmittedInsertCategory(data) { //function CouponSubmitted(data) i
                 $('#ID').val(i.Records.ReturnValues);
             }
             $('#divOverlayimage').hide();
+            setTimeout(function () {
+                $.jstree.reference('#jstree_Categories').open_all();
+            }, 500);
             break;
         case "ERROR":
             notyAlert('error', i.Records.StatusMessage);
@@ -481,6 +488,9 @@ function CheckSubmittedDeleteCategory(data) {
             $('#jstree_Categories').jstree(true).settings.core.data = GetCategoriesTree();
             $('#jstree_Categories').jstree(true).refresh(true);
             AddCategory();
+            setTimeout(function () {
+                $.jstree.reference('#jstree_Categories').open_all();
+            }, 500);
             break;
         case "ERROR":
             notyAlert('error', i.Records.StatusMessage);

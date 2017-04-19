@@ -16,23 +16,18 @@
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li class="active"><a href="#Tab1" id="tabQuotationsList" data-toggle="tab">Quotations List</a></li>
-                <li><a href="#Tab2" id="tabQuotationsDetails" data-toggle="tab">Quotations Details</a></li>
-                @{
-                    PartyEC.UI.Models.ToolboxViewModel ToolBoxControltab1 = new PartyEC.UI.Models.ToolboxViewModel();
-                    //ToolBoxControltab1.addbtn.Visible = true;
-                    //ToolBoxControltab1.addbtn.Event = "btnAddNew()";
-                    //ToolBoxControltab1.addbtn.Title = "Add New";
-                    ToolBoxControltab1.backbtn.Visible = true;
-                    ToolBoxControltab1.backbtn.Event = "goback()";
-                    ToolBoxControltab1.backbtn.Title = "Back";
-                    Html.RenderPartial("_ToolboxView", ToolBoxControltab1);
-                }
+                <li class="active"><a href="#Tab1" id="tabQuotationsList" onclick="tabListClick()" data-toggle="tab"><i class="fa fa-list">&nbsp;</i> Quotations List</a></li>
+                <li id="tabQuotationsDetails"  class="disabled"><a href="#Tab2"><i class="fa fa-file-o">&nbsp;</i> Quotations Details</a></li> 
+                <div class="" id="btnPatchQuotations">
+
+                    @*Here the Buttons should Paint as Partial View*@
+
+                </div>
             </ul>
         </div>
         <div class="panel-body">
             <div class="tab-content">
-                <div class="tab-pane fade in active" id="Tab1"> 
+                <div class="tab-pane fade in active" id="Tab1" style="min-height:444px;"> 
                     @*table*@
                     <table id="tblQuotationsList" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                         <thead>
@@ -53,26 +48,22 @@
                 <div class="tab-pane fade" id="Tab2">
                     <div class="col-md-12"> 
                         <div class="col-md-12" id="QuotationsDetails">
-                            <div class="col-md-2">
-                                @* left hand side Tab  *@
-                                <div class="panel with-nav-tabs js panel-primary">
-                                    <div class="panel-heading" style="min-height:300px">
-                                        <ul class="nav nav-tabs nav-stacked">
-                                            <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General</a></li>
-                                        </ul>
-                                    </div>
+                            <div class="col-md-3">@* left hand side Tab  *@
+                                <div class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down"></i> General Info</div>
+                                <div class="col-md-12 Sidebar_Party" style="min-height:1250px;">
+                                    <ul class="nav nav-tabs nav-stacked">
+                                        <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General</a></li>
+                                    </ul> 
                                 </div>
-                            </div>
-
+                            </div>  
                             <div class="tab-content EventTabContent">
                                 <div class="tab-pane fade in active" id="general">
-                                    <div class="col-md-10">
+                                    <div class="col-md-9">
                                         <div class="col-md-12">
-                                            <div class="col-md-6">
-                                                @using (Ajax.BeginForm("UpdateQuotationStatus", "Quotations", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formGeneral" }))
-                                                {
-                                                    @Html.AntiForgeryToken()
-                                                    <div class="infoBox panel panel-default" style="min-height:300px">
+                                            <h4 style="max-width:50%"><span class="fa fa-sticky-note-o" style="font-size: 28px;color: #f3a70d;"></span><span> </span><span id="titleSpanPro" class="Spantitle">Quotation Detail</span></h4>
+                                            <hr />
+                                            <div class="col-md-6"> 
+                                                    <div class="infoBox panel panel-default" style="min-height:250px">
                                                         <div class="infoBoxHeader panel-heading">General</div>
                                                         <div class="panel-body">
 
@@ -104,21 +95,13 @@
                                                             <div class="col-md-12"> </div>
                                                             @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "h5 col-md-4" })
                                                             <div class="col-md-8">
-                                                                @Html.DropDownListFor(model => model.Status, Model.QuotationstatusList, new { @class = "form-control eventstatus" })
+                                                                <label id="lblQuotationstatus" class="h5 label-display">-</label>
                                                             </div>
-                                                            <div class="col-md-12"><br /></div>
-                                                            <div class="col-md-4">
-                                                            </div>
-                                                            <div class="col-md-8">
-                                                                <input type="submit" id="BtnSave" value="Save" class="btn btn-default btn-right" />
-                                                            </div>
-
                                                         </div>
-                                                    </div>
-                                                }
+                                                    </div> 
                                             </div>
                                             <div class="col-md-6">
-                                                <div class="infoBox panel panel-default" style="min-height:300px">
+                                                <div class="infoBox panel panel-default" style="min-height:250px">
                                                     <div class="infoBoxHeader panel-heading">Account Information</div>
                                                     <div class="panel-body">
                                                         <div class="col-md-12">
@@ -147,14 +130,14 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-12">
-                                                <div class="infoBox panel panel-default">
+                                                <div class="infoBox panel panel-default" style="min-height:200px">
                                                     <div class="infoBoxHeader panel-heading">Quotation Item Details</div>
                                                     <div class="panel-body">
                                                         <table id="tblQuotationsItemDetail" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                                             <thead>
                                                                 <tr>
                                                                     <th>ProductID</th>
-                                                                    @*<th>Product</th>*@
+                                                                    <th>Product</th>
                                                                     <th>Qty</th>
                                                                     <th>Item Status</th>
                                                                     <th>Price</th>
@@ -165,11 +148,13 @@
                                                                 </tr>
                                                             </thead>
                                                         </table>
+                                                        
+                                                        
                                                     </div>
                                                 </div>
                                             </div> 
-                                            <div class="col-md-12">
-                                                <div class="infoBox panel panel-default" style="min-height:200px">
+                                            <div class="col-md-6">
+                                                <div class="infoBox panel panel-default" style="min-height:270px">
                                                     <div class="infoBoxHeader panel-heading">Customer Message</div>
                                                     <div class="panel-body"> 
                                                         <div class="col-md-12"></div>
@@ -182,10 +167,57 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-6">
+                                                <div class="infoBox panel panel-default" style="min-height:270px">
+                                                    <div class="infoBoxHeader panel-heading">Quotation Details</div>
+                                                    <div class="panel-body">
+                                                       @using (Ajax.BeginForm("UpdateQuotations", "Quotations", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formGeneral" }))
+                                                       {
+                                                        @Html.AntiForgeryToken() 
+                                                            <div class="col-md-12"></div>
+                                                            @Html.LabelFor(model => model.Price, htmlAttributes: new { @class = "h5 col-md-5" })
+                                                            <div class="col-md-7">
+                                                                @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control", style = "text-align:right;" } })
+                                                                @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+                                                            </div>
+                                                            <div class="col-md-12"></div>
+                                                            @Html.LabelFor(model => model.TaxAmt, htmlAttributes: new { @class = "h5 col-md-5" })
+                                                            <div class="col-md-7">
+                                                                @Html.EditorFor(model => model.TaxAmt, new { htmlAttributes = new { @class = "form-control", style = "text-align:right;" } })
+                                                                @Html.ValidationMessageFor(model => model.TaxAmt, "", new { @class = "text-danger" })
+                                                            </div>                                                           
+                                                            <div class="col-md-12"></div>
+                                                            @Html.LabelFor(model => model.AdditionalCharges, htmlAttributes: new { @class = "h5 col-md-5" })
+                                                            <div class="col-md-7">
+                                                                @Html.EditorFor(model => model.AdditionalCharges, new { htmlAttributes = new { @class = "form-control",style= "text-align:right;" } })
+                                                                @Html.ValidationMessageFor(model => model.AdditionalCharges, "", new { @class = "text-danger" })
+                                                            </div>
+                                                            <div class="col-md-12"></div>
+                                                            @Html.LabelFor(model => model.DiscountAmt, htmlAttributes: new { @class = "h5 col-md-5" })
+                                                            <div class="col-md-7" >
+                                                                @Html.EditorFor(model => model.DiscountAmt, new { htmlAttributes = new { @class = "form-control",style= "text-align:right;" } })
+                                                                @Html.ValidationMessageFor(model => model.DiscountAmt, "", new { @class = "text-danger" })
+                                                            </div>
+                                                            <div class="col-md-12"> </div>
+                                                            @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "h5 col-md-5" })
+                                                            <div class="col-md-7">
+                                                                @Html.DropDownListFor(model => model.Status, Model.QuotationstatusList, new { @class = "form-control eventstatus" })
+                                                            </div>
+                                                            <div class="col-md-12"><br /></div>
+                                                            <div class="col-md-5">
+                                                            </div>
+                                                            <div class="col-md-7">
+                                                                @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", id = "QuotationId" })
+                                                                <input type="submit" id="BtnSave" value="Save Changes" class="btn btn-default btn-right" />
+                                                            </div> 
+                                                       }  
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
                                                 @using (Ajax.BeginForm("InsertEventsLog", "Quotations", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "SaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "formComments" }))
                                                 {
                                                     @Html.AntiForgeryToken()
-                                                    <div class="infoBox panel panel-default" style="min-height:250px">
+                                                    <div class="infoBox panel panel-default" style="min-height:300px">
                                                         <div class="infoBoxHeader panel-heading">Order Comments</div>
                                                         <div class="panel-body">
                                                             <div class="form-group col-md-12">
@@ -212,10 +244,11 @@
 
                                                             <div class="">
                                                                 <div class="col-md-6">
+                                                                    @Html.HiddenFor(model => model.QuotationNo, htmlAttributes: new { @class = "control-label col-md-4"})
                                                                     @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Quotations" })
-                                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnEventsLogParentID" })
-                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountEmailID" })
-                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountCustomerName" })
+                                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value =0 })
+                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "" })
+                                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = ""})
                                                                     <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
                                                                 </div>
                                                             </div>
@@ -235,25 +268,32 @@
                                             </div>
                                             <div class="col-md-6">
                                                 <div class="infoBox panel panel-default" style="min-height:250px">
-                                                    <div class="infoBoxHeader panel-heading">Quotation Totals</div>
+                                                    <div class="infoBoxHeader panel-heading">Quotation Summary</div>
                                                     <div class="panel-body"> 
                                                         <div class="col-md-12"></div>
-                                                        @Html.LabelFor(model => model.SubTotal, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                        <div class="col-md-8">
-                                                            @*style="font-weight:bold"*@
-                                                            <label id="lblSubTotal" class="h5 label-display">-</label>
+                                                        @Html.LabelFor(model => model.SubTotal, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
+                                                        <div class="col-md-2" align="right">
+                                                            <label id="lblSubTotal" style = "font-weight:bold" class="h5 label-display">-</label>
                                                         </div>
                                                         <div class="col-md-12"></div>
-                                                        @Html.LabelFor(model => model.AdditionalCharges, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                        <div class="col-md-8">
-                                                            @*style="font-weight:bold"*@
-                                                            <label id="lblAdditionalCharges" class="h5 label-display">-</label>
+                                                        @Html.LabelFor(model => model.TaxAmt, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
+                                                        <div class="col-md-2" align="right">                                                            
+                                                            <label id="lblTaxAmt" style="font-weight:bold" class="h5 label-display">-</label>
                                                         </div>
                                                         <div class="col-md-12"></div>
-                                                        @Html.LabelFor(model => model.GrandTotal, htmlAttributes: new { @class = "h5 col-md-4" })
-                                                        <div class="col-md-8">
-                                                            @*style="font-weight:bold"*@
-                                                            <label id="lblGrandTotal" class="h5 label-display">-</label>
+                                                        @Html.LabelFor(model => model.AdditionalCharges, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
+                                                        <div class="col-md-2" align="right"> 
+                                                            <label id="lblAdditionalCharges" style = "font-weight:bold" class="h5 label-display">-</label>
+                                                        </div>
+                                                        <div class="col-md-12"></div>
+                                                        @Html.LabelFor(model => model.DiscountAmt, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
+                                                        <div class="col-md-2" align="right"> 
+                                                            <label id="lblDiscountAmt" style = "font-weight:bold" class="h5 label-display">-</label>
+                                                        </div>
+                                                        <div class="col-md-12"><hr></div>
+                                                        @Html.LabelFor(model => model.GrandTotal, htmlAttributes: new { @class = "h5 col-md-10", style = "font-weight:bold" })
+                                                        <div class="col-md-2" align="right"> 
+                                                            <label id="lblGrandTotal" style = "font-weight:bold" class="h5 label-display">-</label>
                                                         </div>
                                                     </div>
                                                 </div>

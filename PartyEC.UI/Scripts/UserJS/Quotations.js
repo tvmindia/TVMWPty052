@@ -2,7 +2,7 @@
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
     try {
-        //ChangeButtonPatchView("Quotations", "btnPatchtab1", "Add");
+      
         DataTables.QuotationsTable = $('#tblQuotationsList').DataTable(
          {
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
@@ -43,20 +43,33 @@ $(document).ready(function () {
                 data: null,
                 columns: [
                      { "data": "ProductID" },
-                   //  { "data": "ProductSpecXML" },
+                    { "data": "AttributeValues" },
                   { "data": "Qty" },      
                   { "data": "Status" },
                   { "data": "Price" },
                   { "data": "SubTotal" },
                   { "data": "TaxAmt" },
                   { "data": "DiscountAmt" },
-                  { "data": "GrandTotal"}
+                  { "data": "Total"}
                 ],
                 columnDefs: [{ 
                      "targets": [0],
                      "visible": false,
                      "searchable": false,
-                 }]
+                }, {
+                 "targets": [1],
+                 "render": function (data, type, row) {
+                     var returnstring = '';
+                     if (data) {
+                         debugger;
+                         var product = row.ProductName;
+                         for (var ik = 0; ik < data.length; ik++) {
+                             returnstring = returnstring + '<span><b>' +data[ik].Caption + '</b> : ' +(data[ik].Value != "" && data[ik].Value != null ? data[ik].Value: ' - ') + '</span><br/>';
+                         }
+                             }
+                     return product+'<br/>'+returnstring;
+                     }
+                     }]
             });
     }
     catch (e) {
@@ -107,8 +120,11 @@ function GetQuotationsByID(id) {
 
 //---------------------------------------Edit Quotations--------------------------------------------------//
 function Edit(currentObj) {
-    //Tab Change on edit click 
-    $('#tabQuotationsDetails').trigger('click');
+    //Tab Change on edit click   
+    ChangeButtonPatchView("Quotations", "btnPatchQuotations", "Edit_List");
+    $('#tabQuotationsDetails').removeClass('disabled');
+    $('#tabQuotationsDetails a').attr('data-toggle', 'tab');
+    $('#tabQuotationsDetails a').trigger('click');
 
     var rowData = DataTables.QuotationsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -121,26 +137,42 @@ function fillQuotations(ID) {
 
     var thisQuotations = GetQuotationsByID(ID); //Binding Data  
     $("#ID").val(thisQuotations.ID);
-    $("#hdnEventsLogParentID").val(thisQuotations.ID);
+    $("#QuotationId").val(thisQuotations.ID);
+    $("#EventsLogViewObj_ParentID").val(thisQuotations.ID);
+
     $("#lblQuotationsNo").text(thisQuotations.QuotationNo);
     $("#lblQuotationDate").text(thisQuotations.QuotationDate);
     $("#lblRequiredDate").text(thisQuotations.RequiredDate);
-    $("#lblSourceIP").text(thisQuotations.SourceIP);
+    $("#lblSourceIP").text(thisQuotations.SourceIP); 
+    $("#lblQuotationstatus").text(thisQuotations.StatusText);
+
     $("#lblCustomerName").text(thisQuotations.customerObj.Name);
     $("#lblContactNo").text(thisQuotations.customerObj.Mobile);
     $("#lblCustomerEmail").text(thisQuotations.customerObj.Email);
     $("#imgPreviewCustomer").attr("src", thisQuotations.ImageUrl);
+
     $("#lblMessage").text(thisQuotations.Message);
 
-    $("#hdnAccountEmailID").text(thisQuotations.customerObj.Email);
-    $("#hdnAccountCustomerName").text(thisQuotations.customerObj.Name);
 
+    $("#Price").val(thisQuotations.Price);
+    $("#AdditionalCharges").val(thisQuotations.AdditionalCharges);
+    $("#DiscountAmt").val(thisQuotations.DiscountAmt);
+    $("#TaxAmt").val(thisQuotations.TaxAmt);
     $("#Status").val(thisQuotations.Status);
+
+    $("#lblTaxAmt").text(thisQuotations.TaxAmt);
+    $("#lblDiscountAmt").text(thisQuotations.DiscountAmt);
     $("#lblSubTotal").text(thisQuotations.SubTotal);
     $("#lblGrandTotal").text(thisQuotations.GrandTotal);
-    $("#lblAdditionalCharges").text(thisQuotations.AdditionalCharges); 
+    $("#lblAdditionalCharges").text(thisQuotations.AdditionalCharges);
+    
    
     BindTablQuotationDetailList(thisQuotations.ID);
+    //region comments
+    
+    $("#mailViewModelObj_CustomerEmail").val(thisQuotations.customerObj.Email);
+    $("#mailViewModelObj_CustomerName").val(thisQuotations.customerObj.Name);
+    $("#QuotationNo").val(thisQuotations.QuotationNo);
     BindComments();
 }
 
@@ -232,6 +264,12 @@ function GetEventsLog(id) {
 
 function goback() {
     $('#tabQuotationsList').trigger('click');
+}
+function tabListClick()
+{
+     ChangeButtonPatchView("Quotations", "btnPatchQuotations", "List");
+    $('#tabQuotationsDetails').addClass('disabled');
+    $('#tabQuotationsDetails a').attr('data-toggle', '');
 }
  
 

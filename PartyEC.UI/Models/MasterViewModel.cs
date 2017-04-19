@@ -94,7 +94,11 @@ namespace PartyEC.UI.Models
         public string ParentType { get; set; }
         [Display(Name = "Notify Client")]
         public bool CustomerNotifiedYN { get; set; }
+
+        [Required(ErrorMessage = "Please Enter Comments")]
+        [Display(Name = "Comments")]
         public string Comment { get; set; }
+
         public string CommentDate { get; set; }
         public LogDetailsViewModel commonObj { get; set; }
     }

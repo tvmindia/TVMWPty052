@@ -16,6 +16,7 @@ namespace PartyEC.UI.Models
         public string QuotationNo { get; set; }
         public int ProductID { get; set; }
         public int CustomerID { get; set; }
+        public string ProductName { get; set; }
 
 
         [Display(Name = "Required Date")]
@@ -24,6 +25,7 @@ namespace PartyEC.UI.Models
         public string QuotationDate { get; set; }
         [Display(Name = "Quotation Status")]
         public string Status { get; set; }
+        public string StatusText { get; set; }
         [Display(Name = "Qty")]
         public int Qty { get; set; }
         [Display(Name = "Price")]
@@ -55,6 +57,8 @@ namespace PartyEC.UI.Models
         public MailViewModel mailViewModelObj { get; set; }
 
         public List<SelectListItem> QuotationstatusList { get; set; }
+
+        public List<AttributeValuesViewModel> AttributeValues { get; set; }
 
 
     }

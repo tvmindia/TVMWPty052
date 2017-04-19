@@ -10,10 +10,12 @@ namespace PartyEC.DataAccessObject.DTO
         public int ID { get; set; }
         public string QuotationNo { get; set; }
         public int ProductID { get; set; }
+        public string ProductName { get; set; }
         public int CustomerID { get; set; }
         public string RequiredDate { get; set; }
         public string QuotationDate { get; set; }
         public string Status { get; set; }
+        public string StatusText { get; set; }
         public int Qty { get; set; }
         public decimal Price { get; set; }
         public decimal AdditionalCharges { get; set; }
@@ -33,5 +35,7 @@ namespace PartyEC.DataAccessObject.DTO
         public LogDetails logDetails { get; set; } 
         //Comments
         public EventsLog  EventsLogObj { get; set; }
+
+        public List<AttributeValues> AttributeValues { get; set; }
     }
 }
