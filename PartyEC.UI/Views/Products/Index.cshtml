@@ -36,9 +36,12 @@
     <div class="panel with-nav-tabs panel-primary">
         <div class="panel-heading">
             <ul class="nav nav-tabs">
-                <li id="tabproductList" class="active"><a><i class="fa fa-list">&nbsp;</i> Product List</a></li>
-                <li id="tabproductDetails"><a><i class="fa fa-file-o">&nbsp;</i> Product Details</a></li>
-                    @{
+                <li id="tabproductList" class="active"><a href="#productList" data-toggle="tab"><i class="fa fa-list">&nbsp;</i> Product List</a></li>
+                <li id="tabproductDetails"><a href="#productDetails" data-toggle="tab"><i class="fa fa-file-o">&nbsp;</i> Product Details</a></li>
+                <div id="ProductToolBox">
+
+                </div>
+                    @*@{
                         PartyEC.UI.Models.ToolboxViewModel ToolBoxControl = new PartyEC.UI.Models.ToolboxViewModel();
                         ToolBoxControl.addbtn.Visible = true;
                         ToolBoxControl.addbtn.Event = "btnAddNewProduct()";
@@ -48,17 +51,17 @@
                         ToolBoxControl.backbtn.Event = "goback()";
 
                         Html.RenderPartial("_ToolboxView", ToolBoxControl);
-                    }
+                    }*@
 
-                @*<li id="tabproductDetails" class="disabled"><a href="#productDetails">Product Details</a></li>*@
-              @*<li class="dropdown">
-                    <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
-                    <ul class="dropdown-menu" role="menu">
-                        <li><a href="#tab4primary" data-toggle="tab">Primary 4</a></li>
-                        <li><a href="#tab5primary" data-toggle="tab">Primary 5</a></li>
-                    </ul>
-                </li>*@
-            </ul>
+                    @*<li id="tabproductDetails" class="disabled"><a href="#productDetails">Product Details</a></li>*@
+                    @*<li class="dropdown">
+                <a href="#" data-toggle="dropdown">Dropdown <span class="caret"></span></a>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a href="#tab4primary" data-toggle="tab">Primary 4</a></li>
+                    <li><a href="#tab5primary" data-toggle="tab">Primary 5</a></li>
+                </ul>
+            </li>*@
+</ul>
         </div>
         <div class="panel-body" style="min-height:925px;">
             <div class="tab-content">
@@ -94,7 +97,7 @@
                 <div class="tab-pane fade" id="productDetails">
                     <div class="col-lg-12">
                         @*ButtonPatch*@
-                        <div class="" id="btnPatchProductDetails" style="display:none;">
+                        @*<div class="" id="btnPatchProductDetails" style="display:none;">
                             @{
                                 PartyEC.UI.Models.ToolboxViewModel ToolBoxControlDetail = new PartyEC.UI.Models.ToolboxViewModel();
                                 ToolBoxControlDetail.savebtn.Visible = true;
@@ -108,7 +111,7 @@
                                 Html.RenderPartial("_ToolboxView", ToolBoxControlDetail);
                             }
 
-                        </div>
+                        </div>*@
                         @*EditArea*@ 
                         <div class="col-md-3">
                             <div class="SidebarBlock col-md-12"><i class="fa fa-arrow-down" aria-hidden="true"></i> Configuration</div>
@@ -166,7 +169,6 @@
                                         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                         <div class="form-group">
                                             <label for="Name" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.Name)<span class="required">*</span></label>
-
                                             <div class="col-lg-4">
                                                 @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-lg-2 productID", Value = "0" })
                                                 @Html.HiddenFor(model => model.ImageID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
@@ -422,10 +424,6 @@
                                                 @Html.ValidationMessageFor(model => model.OutOfStockAlertQty, "", new { @class = "text-danger productDetailGroup" })
                                             </div>
                                         </div>
-
-
-
-
                                     </div>
                                     <div class="tab-pane fade" id="productTags">
                                         @* <div class="col-lg-8">

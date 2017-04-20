@@ -213,7 +213,18 @@ $(document).ready(function () {
     //Validation for associatedproducts
    
     
-
+    ChangeButtonPatchView("Products", "ProductToolBox", "Add"); //ControllerName,id of the container div,Name of the action
+    $("#tabproductList").click(function () {
+        ChangeButtonPatchView("Products", "ProductToolBox", "Add"); //ControllerName,id of the container div,Name of the action
+    });
+    $("#tabproductDetails").click(function () {
+        $("#productDetails h4").text('New Product');
+        $("#AttributeSetID").removeAttr('disabled');
+        $("#ProductType").removeAttr('disabled');
+        $('#tabGeneral').trigger('click');
+        clearform();
+        ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
+    });
 
 });
 
@@ -230,24 +241,26 @@ function btnAddNewProduct() {
    
     //$('#tabproductList').addClass('disabled');
     //$('#tabproductList a').attr('data-toggle', '');
-    $('#tabproductDetails a').attr({ 'data-toggle': 'tab', 'href': '#productDetails' });
-    $('#tabproductList a').removeAttr('data-toggle href');
+   // $('#tabproductDetails a').attr({ 'data-toggle': 'tab', 'href': '#productDetails' });
+   // $('#tabproductList a').removeAttr('data-toggle href');
     $('#tabproductDetails a').trigger('click');
     $("#productDetails h4").text('New Product');
     $("#AttributeSetID").removeAttr('disabled');
     $("#ProductType").removeAttr('disabled');
     $('#tabGeneral').trigger('click');
     clearform();
+    ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
 }
 function goback() {
    
-    $('#tabproductList a').attr({ 'data-toggle': 'tab', 'href': '#productList' });
+   // $('#tabproductList a').attr({ 'data-toggle': 'tab', 'href': '#productList' });
     //Remove attributes from current tab
     
-    $('#tabproductDetails a').removeAttr('data-toggle href');
+  //  $('#tabproductDetails a').removeAttr('data-toggle href');
     $('#tabproductList a').trigger('click');
     // tabproductList
     clearform();
+    ChangeButtonPatchView("Products", "ProductToolBox", "Add"); //ControllerName,id of the container div,Name of the action
 }
 
 function RenderContentForImages()
@@ -259,9 +272,9 @@ function RenderContentForImages()
 function Edit(currentObj)
 {
     //Tab Change
-    ChangeButtonPatchView("Products", "btnPatchProductDetails", "Edit"); //ControllerName,id of the container div,Name of the action
-    $('#tabproductDetails a').attr({ 'data-toggle': 'tab', 'href': '#productDetails' });
-    $('#tabproductList a').removeAttr('data-toggle href');
+    //ChangeButtonPatchView("Products", "btnPatchProductDetails", "Edit"); //ControllerName,id of the container div,Name of the action
+   // $('#tabproductDetails a').attr({ 'data-toggle': 'tab', 'href': '#productDetails' });
+   // $('#tabproductList a').removeAttr('data-toggle href');
     $('#tabproductDetails a').trigger('click');
     //$('#tabproductDetails').removeClass('disabled');
    // $('#tabproductDetails a').attr('data-toggle', 'tab');
@@ -697,14 +710,10 @@ function ConstructproductDetailObject()
     $("#HeaderTags").val(tagval);
     
     var ProductDetailViewModel = new Object();
-   
     ProductDetailViewModel.ID = ($('#productform :input[name="ProductDetailObj.ID"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="ProductDetailObj.ID"]').serializeArray()[0].value) :"");
     ProductDetailViewModel.Qty = ($('#productform :input[name="Qty"]').serializeArray()[0].value!=""?$.parseJSON($('#productform :input[name="Qty"]').serializeArray()[0].value): "");
-  
-   
     ProductDetailViewModel.OutOfStockAlertQty = ($('#productform :input[name="OutOfStockAlertQty"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="OutOfStockAlertQty"]').serializeArray()[0].value) : "");
     ProductDetailViewModel.StockAvailable = ($('#productform :input[name="StockAvailable"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="StockAvailable"]').serializeArray()[0].value) : "");
-
     ProductDetailViewModel.DiscountAmount =($('#productform :input[name="DiscountAmount"]').serializeArray()[0].value!=""?$.parseJSON($('#productform :input[name="DiscountAmount"]').serializeArray()[0].value):"");
     ProductDetailViewModel.DiscountStartDate =$('#productform :input[name="DiscountStartDate"]').serializeArray()[0].value;
     ProductDetailViewModel.DiscountEndDate = $('#productform :input[name="DiscountEndDate"]').serializeArray()[0].value;
@@ -712,12 +721,11 @@ function ConstructproductDetailObject()
     var ar = [];
     ar.push(ProductDetailViewModel);
     $("#productDetailhdf").val(JSON.stringify(ar));
-    
+   
 }
 
 function productSaveSuccess(data, status, xhr)
 {
-    
     var JsonResult=JSON.parse(data)
     switch (JsonResult.Result) {
         case "OK":

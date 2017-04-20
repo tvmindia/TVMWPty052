@@ -512,17 +512,17 @@ namespace PartyEC.UI.Controllers
                     //ToolboxViewModelObj.deletebtn.Event = "Productdelete()";
                     //ToolboxViewModelObj.deletebtn.Title = "Delete";
 
-                    ToolboxViewModelObj.savebtn.Visible = true;
-                    ToolboxViewModelObj.savebtn.Event = "ProductSave()";
-                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    //ToolboxViewModelObj.savebtn.Visible = true;
+                    //ToolboxViewModelObj.savebtn.Event = "ProductSave()";
+                    //ToolboxViewModelObj.savebtn.Title = "Save";
 
                     //ToolboxViewModelObj.resetbtn.Visible = true;
                     //ToolboxViewModelObj.resetbtn.Event = "btnreset()";
                     //ToolboxViewModelObj.resetbtn.Title = "Reset";
 
-                    ToolboxViewModelObj.backbtn.Visible = true;
-                    ToolboxViewModelObj.backbtn.Event = "goback()";
-                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    //ToolboxViewModelObj.backbtn.Visible = true;
+                    //ToolboxViewModelObj.backbtn.Event = "goback()";
+                    //ToolboxViewModelObj.backbtn.Title = "Back";
 
                     break;
                 case "Delete":
@@ -555,16 +555,27 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.savebtn.Disable = true;
                     break;
                 case "Add":
-                    ToolboxViewModelObj.deletebtn.Visible = true;
-                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Event = "btnAddNewProduct();";
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+                    // ToolboxViewModelObj.deletebtn.Visible = true;
+                    // ToolboxViewModelObj.deletebtn.Disable = true;
+                    //ToolboxViewModelObj.savebtn.Visible = true;
+                    //ToolboxViewModelObj.savebtn.Event = "clicksave()";
+                    //ToolboxViewModelObj.savebtn.Title = "Save";
+
+                    // ToolboxViewModelObj.resetbtn.Visible = true;
+                    //  ToolboxViewModelObj.resetbtn.Event = "btnreset()";
+                    // ToolboxViewModelObj.resetbtn.Title = "Reset";
+
+                    //ToolboxViewModelObj.backbtn.Visible = true;
+                    //ToolboxViewModelObj.backbtn.Event = "goback()";
+                    //ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
+                case "Save":
                     ToolboxViewModelObj.savebtn.Visible = true;
-                    ToolboxViewModelObj.savebtn.Event = "clicksave()";
+                    ToolboxViewModelObj.savebtn.Event = "ProductSave()";
                     ToolboxViewModelObj.savebtn.Title = "Save";
-
-                    ToolboxViewModelObj.resetbtn.Visible = true;
-                    ToolboxViewModelObj.resetbtn.Event = "btnreset()";
-                    ToolboxViewModelObj.resetbtn.Title = "Reset";
-
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
