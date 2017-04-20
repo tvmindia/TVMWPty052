@@ -580,6 +580,40 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     break;
+                case "RPAdd":
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Event = "RelatedProductsModel()";
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Event = "CallbtnDeleteRelatedProductSubmit()";
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+
+                    break;
+                case "APAdd":
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    ToolboxViewModelObj.savebtn.Event = "AssociatedProductSave()";
+                    ToolboxViewModelObj.deletebtn.Visible = true;
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
+                    ToolboxViewModelObj.deletebtn.Event = "AssociatedProductDelete()";
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.resetbtn.Visible = true;
+                    ToolboxViewModelObj.resetbtn.Title = "Reset";
+                    ToolboxViewModelObj.resetbtn.Event = "clearAssociatedProductform()";
+                    break;
+                case "OASave":
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    ToolboxViewModelObj.savebtn.Event = "OtherAttributeSave()";
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    break;
                 default:
                     return Content("Nochange");
             }

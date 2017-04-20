@@ -862,14 +862,15 @@ function RelatedproductDeleteSuccess(data, status, xhr)
 
 function HideProductDetalsToolBox()
 {
-   
-    $("#btnPatchProductDetails").css('visibility', 'hidden');
+    ChangeButtonPatchView("Products", "ProductToolBox", "RPAdd"); //ControllerName,id of the container div,Name of the action
+   // $("#btnPatchProductDetails").css('visibility', 'hidden');
    
 }
 function ShowProductDetalsToolBox()
 {
+    ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
     // $('#btnPatchProductDetails').show();
-    $("#btnPatchProductDetails").css('visibility', 'visible');
+   // $("#btnPatchProductDetails").css('visibility', 'visible');
 }
 function RenderContentsForAttributes()
 {
@@ -900,6 +901,7 @@ function RenderContentsForAttributes()
                         autoclose: true,
                         todayHighlight: true
                     });
+                    ChangeButtonPatchView("Products", "ProductToolBox", "OASave"); //ControllerName,id of the container div,Name of the action
                 }
                 else
                 {
@@ -992,8 +994,7 @@ function OtherAttributeSave()
 
 function RenderContentsForAssocProdAttributes()
 {
-   
-    HideProductDetalsToolBox();
+   // HideProductDetalsToolBox();
     try {
         var proid = $('.productID').val();
         var atsetID = $("#AttributeSetID").val();
@@ -1020,6 +1021,8 @@ function RenderContentsForAssocProdAttributes()
                     $("#associatedStaticfields").show();
                     //Refresh associated products table
                     RefreshAssociatedProducts(proid);
+                    //Button patch
+                    ChangeButtonPatchView("Products", "ProductToolBox", "APAdd"); //ControllerName,id of the container div,Name of the action
                 }
                 else {
                     $("#associatedStaticfields").hide();

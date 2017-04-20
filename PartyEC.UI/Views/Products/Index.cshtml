@@ -63,9 +63,9 @@
             </li>*@
 </ul>
         </div>
-        <div class="panel-body" style="min-height:925px;">
+        <div class="panel-body" style="min-height:925px;padding:0px;">
             <div class="tab-content">
-                <div class="tab-pane fade in active" id="productList">
+                <div class="tab-pane fade in active" id="productList" style="padding:1%">
 
                     @*<h4>Product List</h4>*@
                     
@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="productDetails">
-                    <div class="col-lg-12">
+                    <div class="col-lg-12" style="padding:0;">
                         @*ButtonPatch*@
                         @*<div class="" id="btnPatchProductDetails" style="display:none;">
                             @{
@@ -113,43 +113,49 @@
 
                         </div>*@
                         @*EditArea*@ 
-                        <div class="col-md-3">
-                            <div class="SidebarBlock col-md-12"><i class="fa fa-arrow-down" aria-hidden="true"></i> Configuration</div>
-                            <div class="col-md-12 Sidebar_Party">
-                                <ul class="nav nav-tabs nav-stacked">
-                                    <li><a href="#Settings" data-toggle="tab" id="tabratingAndReviews">Settings</a></li>
+                        <div class="col-md-2" style="padding:0;">
+                            @*<div class="SidebarBlock col-md-12"><i class="fa fa-arrow-down" aria-hidden="true"></i> Configuration</div>*@
+                            @*<div class="col-md-12 Sidebar_Party">*@
+                                @*<ul class="nav nav-tabs nav-stacked">
+                                <li><a href="#Settings" data-toggle="tab" id="tabratingAndReviews">Settings</a></li>
+                                </ul>*@
+
+
+                                @*<div class="col-md-12" style="height:13px"></div>*@
+                                @*<div class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down" aria-hidden="true"></i> Product Info</div>
+            <div class="col-md-12 Sidebar_Party">*@
+                                <ul class="nav nav-tabs nav-stacked Sidebar_Party" id="LHSNavbarProductDetails">
+                                    <li class="liHead"><a disabled><i class="fa fa-arrow-down" aria-hidden="true"></i> Configuration</a></li>
+                                    <li onclick="RenderContentForPrice()"><a href="#price" data-toggle="tab" id="tabPrice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Settings</a></li>
+                                    <li class="liHead"><a disabled><i class="fa fa-arrow-down" aria-hidden="true"></i> Product Info</a></li>
+                                    <li id="GeneralLI" onclick="ShowProductDetalsToolBox()" class="active"><a href="#general" data-toggle="tab" id="tabGeneral">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General <span class="label label-danger">E</span></a></li>
+                                    <li onclick="RenderContentForPrice()"><a href="#price" data-toggle="tab" id="tabPrice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price</a></li>
+                                    <li onclick="ShowProductDetalsToolBox()"><a href="#discription" data-toggle="tab" id="tabDiscrption">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Discription</a></li>
+                                    <li onclick="RenderContentForInventory()"><a href="#inventory" data-toggle="tab" id="tabInventory">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inventory <span class="label label-danger">E</span></a></li>
+                                    <li onclick="ShowProductDetalsToolBox()"><a href="#productTags" data-toggle="tab" id="tabproducttags">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Product Tags <span class="label label-danger">E</span></a></li>
+                                    <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Related Products</a></li>
+                                    <li class="liHead"><a disabled><i class="fa fa-arrow-down" aria-hidden="true"></i> Additional Product Info</a></li>
+                                    <li onclick="RenderContentForImages()"><a href="#images" data-toggle="tab" id="tabImages">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Images</a></li>
+                                    <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other Attributes</a></li>
+                                    <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Associated Products</a></li>
+                                    <li onclick="BindProductReviews()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ratings & Reviews</a></li>
+                                   
                                 </ul>
 
-                            </div>
-                            <div class="col-md-12" style="height:13px"></div>
-                            <div class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down" aria-hidden="true"></i> Product Info</div>
-                            <div class="col-md-12 Sidebar_Party">                                
-                                <ul class="nav nav-tabs nav-stacked" id="LHSNavbarProductDetails">
-                                    <li id="GeneralLI" onclick="ShowProductDetalsToolBox()" class="active"><a href="#general" data-toggle="tab" id="tabGeneral">General <span class="label label-danger">E</span></a></li>
-                                    <li onclick="RenderContentForPrice()"><a href="#price" data-toggle="tab" id="tabPrice">Price</a></li>
-                                    <li onclick="ShowProductDetalsToolBox()"><a href="#discription" data-toggle="tab" id="tabDiscrption">Discription</a></li>
-                                    <li onclick="RenderContentForInventory()"><a href="#inventory" data-toggle="tab" id="tabInventory">Inventory <span class="label label-danger">E</span></a></li>
-                                    <li onclick="ShowProductDetalsToolBox()"><a href="#productTags" data-toggle="tab" id="tabproducttags">Product Tags <span class="label label-danger">E</span></a></li>
-                                    @*<li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
-                                    <li onclick="RenderContentForImages()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
-                                    <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
-                                    <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
-                                    <li onclick="BindProductReviews()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>*@
-                                </ul>
+                                @*</div>*@
+                                @*<div class="col-md-12" style="height:13px"></div>
+            <div class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down"></i> Additional Product Info</div>
+            <div class="col-md-12 Sidebar_Party" style="min-height:500px;">
+                <ul class="nav nav-tabs nav-stacked" id="LHSNavbarProductDetails">
+                    <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
+                    <li onclick="RenderContentForImages()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
+                    <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
+                    <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
+                    <li onclick="BindProductReviews()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
+                </ul>
 
-                            </div>
-                            <div class="col-md-12" style="height:13px"></div>
-                            <div class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down"></i> Additional Product Info</div>
-                            <div class="col-md-12 Sidebar_Party" style="min-height:500px;">
-                                <ul class="nav nav-tabs nav-stacked" id="LHSNavbarProductDetails">
-                                    <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
-                                    <li onclick="RenderContentForImages()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
-                                    <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
-                                    <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
-                                    <li onclick="BindProductReviews()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
-                                </ul>
-
-                            </div>
+            </div>*@
+                            @*</div>*@
                         </div>
                         
                         <div class="col-lg-9">
@@ -461,7 +467,7 @@
                                     </div>
                                     <div class="tab-pane fade" id="relatedProducts">
 
-                                        <div>
+                                        @*<div>
                                             @{
                                                 PartyEC.UI.Models.ToolboxViewModel ToolBoxControlRelProduct = new PartyEC.UI.Models.ToolboxViewModel();
                                                 ToolBoxControlRelProduct.addbtn.Visible = true;
@@ -476,7 +482,7 @@
                                                 Html.RenderPartial("_ToolboxView", ToolBoxControlRelProduct);
                                             }
 
-                                        </div>
+                                        </div>*@
 
                                         @*table*@
                                         <table id="tblRelatedproducts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
@@ -620,7 +626,7 @@
 
                                     </div>
                                     <div class="tab-pane fade" id="otherAttributes">
-                                        <div>
+                                        @*<div>
                                             @{
                                                 PartyEC.UI.Models.ToolboxViewModel ToolBoxControlforOtherAttr = new PartyEC.UI.Models.ToolboxViewModel();
                                                 ToolBoxControlforOtherAttr.savebtn.Visible = true;
@@ -632,7 +638,7 @@
                                                 Html.RenderPartial("_ToolboxView", ToolBoxControlforOtherAttr);
                                             }
 
-                                        </div>
+                                        </div>*@
 
                                         <div id="dynamicOtherAttributes">
                                             <div class="col-sm-6 col-md-6">
@@ -645,24 +651,9 @@
 
                                     </div>
                                     <div class="tab-pane fade" id="associatedProducts">
-                                        <div>
-                                            @{
-                                                PartyEC.UI.Models.ToolboxViewModel ToolBoxControlforAssocProductAttr = new PartyEC.UI.Models.ToolboxViewModel();
-                                                ToolBoxControlforAssocProductAttr.savebtn.Visible = true;
-                                                ToolBoxControlforAssocProductAttr.savebtn.Title = "Save";
-                                                ToolBoxControlforAssocProductAttr.savebtn.Event = "AssociatedProductSave()";
-                                                ToolBoxControlforAssocProductAttr.deletebtn.Visible = true;
-                                                ToolBoxControlforAssocProductAttr.deletebtn.Title = "Delete";
-                                                ToolBoxControlforAssocProductAttr.deletebtn.Event = "AssociatedProductDelete()";
-                                                ToolBoxControlforAssocProductAttr.backbtn.Visible = true;
-                                                ToolBoxControlforAssocProductAttr.backbtn.Title = "Back";
-                                                ToolBoxControlforAssocProductAttr.backbtn.Event = "goback()";
-                                                Html.RenderPartial("_ToolboxView", ToolBoxControlforAssocProductAttr);
-                                            }
-
-                                        </div>
-                                        <div class="container">
-                                            <div id="DivtblAssociatedProducts">
+                                       
+                                        <div class="container-fluid">
+                                        <div class="row" id="DivtblAssociatedProducts">
                                                 @*table*@
                                                 <table id="tblAssociatedProducts" class="table table-striped table-bordered table-hover" cellspacing="0">
                                                     <thead>
