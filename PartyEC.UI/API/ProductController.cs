@@ -101,5 +101,18 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+        [HttpPost]
+        public object GetProductDetailsForOrder(Product productObj)
+        {
+            try
+            {
+                ProductViewModel productDetailsForOrder = Mapper.Map<Product, ProductViewModel>(_productBusiness.GetProduct(productObj.ID,new OperationsStatus()));
+                return JsonConvert.SerializeObject(new { Result = true, Records = productDetailsForOrder });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
     }
 }
