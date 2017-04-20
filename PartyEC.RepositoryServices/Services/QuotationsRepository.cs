@@ -78,6 +78,75 @@ namespace PartyEC.RepositoryServices.Services
             return QuotationsList;
         }
 
+        public List<Quotations> GetCustomerQuotations(int CustomerID)
+        {
+            List<Quotations> QuotationsList = null;
+
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CustomerID;
+                        cmd.CommandText = "[GetCustomerQuotations]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                QuotationsList = new List<Quotations>();
+                                while (sdr.Read())
+                                {
+                                    Quotations _QuotationsObj = new Quotations();
+                                    {
+                                        _QuotationsObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _QuotationsObj.ID);
+                                        _QuotationsObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _QuotationsObj.ProductID);
+                                        _QuotationsObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : _QuotationsObj.CustomerID);
+                                        _QuotationsObj.QuotationNo = (sdr["QuotationNo"].ToString() != "" ? sdr["QuotationNo"].ToString() : _QuotationsObj.QuotationNo);
+                                        _QuotationsObj.RequiredDate = (sdr["RequiredDate"].ToString() != "" ? DateTime.Parse(sdr["RequiredDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _QuotationsObj.RequiredDate);
+                                        _QuotationsObj.QuotationDate = (sdr["QuotationDate"].ToString() != "" ? DateTime.Parse(sdr["QuotationDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _QuotationsObj.QuotationDate);
+                                        _QuotationsObj.Status = (sdr["Status"].ToString() != "" ? sdr["Status"].ToString() : _QuotationsObj.Status);                                      
+                                        _QuotationsObj.SourceIP = (sdr["SourceIP"].ToString() != "" ? sdr["SourceIP"].ToString() : _QuotationsObj.SourceIP);
+                                        _QuotationsObj.StatusText = (sdr["StatusText"].ToString() != "" ? sdr["StatusText"].ToString() : _QuotationsObj.StatusText);
+                                        _QuotationsObj.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : _QuotationsObj.ProductName); 
+                                        _QuotationsObj.Qty = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : _QuotationsObj.Qty);
+                                        _QuotationsObj.Price = (sdr["Price"].ToString() != "" ? decimal.Parse(sdr["Price"].ToString()) : _QuotationsObj.Price);
+                                        _QuotationsObj.AdditionalCharges = (sdr["AdditionalCharges"].ToString() != "" ? decimal.Parse(sdr["AdditionalCharges"].ToString()) : _QuotationsObj.AdditionalCharges);
+                                        _QuotationsObj.DiscountAmt = (sdr["DiscountAmt"].ToString() != "" ? decimal.Parse(sdr["DiscountAmt"].ToString()) : _QuotationsObj.DiscountAmt);
+                                        _QuotationsObj.TaxAmt = (sdr["TaxAmt"].ToString() != "" ? decimal.Parse(sdr["TaxAmt"].ToString()) : _QuotationsObj.TaxAmt);
+                                        _QuotationsObj.SubTotal = (sdr["SubTotal"].ToString() != "" ? decimal.Parse(sdr["SubTotal"].ToString()) : _QuotationsObj.SubTotal);
+                                        _QuotationsObj.Total = (sdr["Total"].ToString() != "" ? decimal.Parse(sdr["Total"].ToString()) : _QuotationsObj.Total);
+                                        _QuotationsObj.GrandTotal = (sdr["GrandTotal"].ToString() != "" ? decimal.Parse(sdr["GrandTotal"].ToString()) : _QuotationsObj.GrandTotal);
+                                        _QuotationsObj.ProductSpecXML = (sdr["ProductSpecXML"].ToString() != "" ? sdr["ProductSpecXML"].ToString() : _QuotationsObj.ProductSpecXML);
+
+                                        _QuotationsObj.customerObj = new Customer();
+                                        _QuotationsObj.customerObj.Name = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _QuotationsObj.customerObj.Name);
+                                        _QuotationsObj.customerObj.Mobile = (sdr["CustomerMobile"].ToString() != "" ? sdr["CustomerMobile"].ToString() : _QuotationsObj.customerObj.Mobile);
+                                        _QuotationsObj.customerObj.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : _QuotationsObj.customerObj.Email);
+                                        _QuotationsObj.ImageUrl = (sdr["ImageUrl"].ToString() != "" ? sdr["ImageUrl"].ToString() : _QuotationsObj.ImageUrl);
+
+                                        _QuotationsObj.Message = (sdr["Message"].ToString() != "" ? sdr["Message"].ToString() : _QuotationsObj.Message);
+                                    }
+                                    QuotationsList.Add(_QuotationsObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return QuotationsList;
+        }
+
         public Quotations GetQuotations(int QuotationsID)
         {
             Quotations myQuotations = null;

@@ -22,14 +22,16 @@ namespace PartyEC.UI.API
         IEventBusiness _eventBusiness;
         ICart_WishlistBusiness _cartwishlistBusiness;
         IOrderBusiness _orderBusiness;
+        IQuotationsBusiness _quotationBusiness;
 
-        public CustomerController(ICustomerBusiness customerBusiness, ICommonBusiness commonBusiness, IEventBusiness eventBusiness, ICart_WishlistBusiness cartwishlistBusiness, IOrderBusiness orderBusiness)
+        public CustomerController(ICustomerBusiness customerBusiness,ICommonBusiness commonBusiness, IEventBusiness eventBusiness,ICart_WishlistBusiness cartwishlistBusiness, IOrderBusiness orderBusiness, IQuotationsBusiness quotationBusiness)
         {
             _customerBusiness = customerBusiness;
             _commonBusiness = commonBusiness;
             _eventBusiness = eventBusiness;
             _cartwishlistBusiness = cartwishlistBusiness;
              _orderBusiness=orderBusiness;
+            _quotationBusiness = quotationBusiness;
         }
         #endregion Constructor_Injection
         Const constants = new Const();
@@ -91,13 +93,28 @@ namespace PartyEC.UI.API
 
         #endregion Orders
 
+        #region Quotations
+        [HttpPost]
+        public object GetCustomerQuotations(Quotations QuotationsObj)
+        {
+            try
+            {
+                List<QuotationsAppViewModel> CartList = Mapper.Map<List<Quotations>, List<QuotationsAppViewModel>>(_quotationBusiness.GetCustomerQuotations(QuotationsObj.CustomerID));
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+        #endregion Quotations
+
         #region Bookings
 
         #endregion Bookings
 
-        #region Quotations
 
-        #endregion Quotations
 
         #region history
 

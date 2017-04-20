@@ -50,7 +50,8 @@ namespace PartyEC.BusinessServices.Services
             }
             return QuotationsObj;
         }
-
+        
+        //have to write as common function GetAttributeValueFromXML
         private List<AttributeValues> GetAttributeValueFromXML(string XML)
         {
             List<AttributeValues> myAttributeValueList = null;
@@ -105,6 +106,21 @@ namespace PartyEC.BusinessServices.Services
             {
             }
             return OperationsStatusObj;
+        }
+
+        public List<Quotations> GetCustomerQuotations(int CustomerID)
+        {
+            List<Quotations> Quotationslist = null;
+            try
+            {
+                Quotationslist = _QuotationsRepository.GetCustomerQuotations(CustomerID);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Quotationslist;
         }
     }
 }
