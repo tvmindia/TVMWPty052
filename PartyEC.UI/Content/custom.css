@@ -390,8 +390,8 @@ background-image: -o-linear-gradient(top, #ffffff, #eeeeee);
     /*min-height:894px;*/
     /*width:22%;*/
     margin-top:0%;
-    margin-left:-16.2%;
-    border-right:2px solid #808080;
+    /*margin-left:-16.2%;*/
+    /*border-right:1px solid #808080;*/
     background-color:antiquewhite;
     overflow:hidden;
 }
@@ -399,12 +399,19 @@ background-image: -o-linear-gradient(top, #ffffff, #eeeeee);
 {
     border-bottom: 1px solid #b0aeae!important;
 }
+.Sidebar_Party>li
+{
+    border-bottom: 1px solid #b0aeae!important;
+    /*border-right:1px solid #b0aeae!important;*/
+    /*width:90%;*/
+    /*left:5%;*/
+}
 .Spantitle{
     /*position: absolute;*/
     width: 50%;
     left: 7%;
     font-weight: 600;
-    color: #f3a70d;
+    color: #f46f25;
     vertical-align:super;
 }
 hr{
@@ -414,6 +421,13 @@ hr{
 {
     background-color: rgba(93, 97, 100, 0.31)!important;
     border-color: transparent!important;
+    border:none!important;
+}
+.Sidebar_Party> li.active >a
+{
+    background-color: rgba(93, 97, 100, 0.31)!important;
+    border-color: transparent!important;
+    border:none!important;
 }
 .SidebarBlock{
     font-size: 15px;
@@ -421,8 +435,6 @@ hr{
     margin-bottom: 3%;
     margin-left:-10%;
     font-weight:600;
-    /*text-transform:uppercase;*/
-   
 }
 .infoBoxHeader{
     border-bottom: 2px solid #b6b4b4;
@@ -448,4 +460,18 @@ hr{
 }
 .list-group-item:hover{
     box-shadow:0px 2px 6px 0px;
+}
+.liHead
+{
+    background:#fff9f1;    
+    width:101%!important;
+    left:0!important;
+    /*border-bottom:2px solid transparent!important;*/
+}
+.liHead> a{
+font-size:16px;
+}
+.liHead> a:hover{
+    cursor:default;
+    background:#fff9f1!important;
 }
