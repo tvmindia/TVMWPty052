@@ -62,7 +62,7 @@ $(document).ready(function () {
                { "data": "SupplierName", "defaultContent": "<i>-</i>" },
                { "data": "SKU", "defaultContent": "<i>-</i>" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
-               { "data": "Qty", "defaultContent": "<i>-</i>" },
+               { "data": "TotalQty", "defaultContent": "<i>-</i>" },
                { "data": "StockAvailable", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="ModelProductsRating(this)">Rating</a>' },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }

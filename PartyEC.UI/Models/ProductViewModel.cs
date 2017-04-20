@@ -62,7 +62,7 @@ namespace PartyEC.UI.Models
         public List<SelectListItem> AttributeSets { get; set; }
         
         public Boolean FreeDelivery { get; set; }
-
+        public int TotalQty { get; set; }
         public string productDetailhdf { get; set; }
 
         #endregion General
