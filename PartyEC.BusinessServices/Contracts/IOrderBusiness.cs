@@ -16,5 +16,8 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus UpdateBillingDetails(Order orderObj);
         OperationsStatus UpdateShipingDetails(Order orderObj);
         Order GetOrderSummery(int ID);
+
+        //For App
+        List<Order> GetCustomerOrders(int CustomerID);
     }
 }

@@ -67,5 +67,10 @@ namespace PartyEC.BusinessServices.Services
         {
             return _orderRepository.UpdateShipingDetails(orderObj);
         }
+
+        public List<Order> GetCustomerOrders(int CustomerID)
+        {
+            return _orderRepository.GetCustomerOrders(CustomerID);
+        }
     }
 }
