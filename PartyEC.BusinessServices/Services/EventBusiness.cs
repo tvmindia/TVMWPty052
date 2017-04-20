@@ -141,6 +141,21 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationsStatusObj;
         }
+        #region DeleteOtherImage
+        public OperationsStatus DeleteOtherImage(string imageID,string type)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                operationsStatusObj = _masterRepository.DeleteOtherImage(imageID,type);
+            }
+            catch(Exception)
+            {
+
+            }
+            return operationsStatusObj;
+        }
+        #endregion DeleteOtherImage
         #endregion Method
     }
 }

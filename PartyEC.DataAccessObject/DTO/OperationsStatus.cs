@@ -12,5 +12,6 @@ namespace PartyEC.DataAccessObject.DTO
         public object ReturnValues { get; set; }
         public string StatusMessage { get; set; }
         public Exception Exception { get; set; }
+       
     }
 }

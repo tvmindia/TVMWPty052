@@ -1537,6 +1537,76 @@ namespace PartyEC.RepositoryServices.Services
 
         #endregion Manufacturer
 
+        #region DeleteOtherImage
+        public OperationsStatus DeleteOtherImage(string imageID,string type)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter outparameter = null;
+                SqlParameter OutparameterURL = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteOtherImageByID]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.UniqueIdentifier).Value = Guid.Parse(imageID);
+                        cmd.Parameters.Add("@type", SqlDbType.NVarChar, 50).Value = type;
+                        outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        OutparameterURL = cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1);
+                        outparameter.Direction = ParameterDirection.Output;
+                        OutparameterURL.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (outparameter.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
+                                break;
+                            case "1":
+                                if (outparameter.Value.ToString() == "1")
+                                {
+                                    try
+                                    {
+                                        if (OutparameterURL.Value.ToString() != "")
+                                        {
+                                            System.IO.File.Delete(HttpContext.Current.Server.MapPath(OutparameterURL.Value.ToString()));
+                                        }
 
+
+                                    }
+                                    catch (System.IO.IOException e)
+                                    {
+                                        throw e;
+
+                                    }
+                                }
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
+                                break;
+                            case "2":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.FKviolation;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
+        #endregion DeleteOtherImage
     }
 }

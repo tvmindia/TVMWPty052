@@ -18,12 +18,14 @@ namespace PartyEC.UI.Controllers
         IEventBusiness _eventBusiness;
         ICategoriesBusiness _categoryBusiness;
         ICommonBusiness _commonBusiness;
+        IMasterBusiness _masterBusiness;
 
-        public EventController(IEventBusiness eventBusiness, ICommonBusiness commonBusiness,ICategoriesBusiness categoryBusiness)
+        public EventController(IEventBusiness eventBusiness, ICommonBusiness commonBusiness,ICategoriesBusiness categoryBusiness,IMasterBusiness masterBusiness)
         {    
             _eventBusiness = eventBusiness;            
             _commonBusiness = commonBusiness;
             _categoryBusiness = categoryBusiness;
+            _masterBusiness = masterBusiness;
         }
 
         #endregion Constructor_Injection
@@ -157,7 +159,35 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select attribute" });
         }
 
-        #endregion DeleteEvent    
+        #endregion DeleteEvent   
+        #region DeleteOtherImage
+
+        [HttpPost]
+        public string DeleteOtherImage(EventViewModel EventObj)
+        {
+            if (!ModelState.IsValid)
+            {
+                try
+                {
+                    OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                    OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_eventBusiness.DeleteOtherImage(EventObj.EventImageID,EventObj.imageType));
+                    if (OperationsStatusViewModelObj.StatusCode == 1)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                    }
+                    else
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                    }
+                }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+        #endregion DeleteOtherImage
 
         #region ChangeButtonStyle
         [HttpGet]
@@ -166,6 +196,11 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
+                case "EventList":
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Event = "btnAddNew()";
+                    ToolboxViewModelObj.addbtn.Title = "Add New";
+                    break;
                 case "Edit":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Event = "clickdelete()";
@@ -211,11 +246,11 @@ namespace PartyEC.UI.Controllers
             OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
 
             var file = Request.Files["Filedata"];
-            var FileNameCustom = eventViewObj.Name + ".png";
+            var FileNameCustom = eventViewObj.Name+ ".png";
             string savePath = Server.MapPath(@"~\Content\OtherImages\" + FileNameCustom);
             file.SaveAs(savePath);
             eventViewObj.URL = "/Content/OtherImages/" + FileNameCustom;
-            if (eventViewObj.EventImageID == null)
+            if ((eventViewObj.EventImageID == null) || (eventViewObj.EventImageID == ""))
             {
                 eventViewObj.commonObj = new LogDetailsViewModel();
                 eventViewObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
