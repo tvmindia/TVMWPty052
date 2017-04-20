@@ -10,6 +10,7 @@ namespace PartyEC.BusinessServices.Contracts
     public interface IProductBusiness
     {
         List<Product> GetAllProducts(Product productObj);
+        List<Product> GetTop10Products();
         List<Product> GetAllProductswithCategory(string CategoryID);
         List<Product> GetAssignedPro(string CategoryID);
         List<Product> GetUnAssignedPro(string CategoryID);

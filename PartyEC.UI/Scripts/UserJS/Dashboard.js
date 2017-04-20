@@ -4,6 +4,7 @@
         debugger;
         BindBarChart();
         BindPieChart();
+        BindLatestProducts();
     }
     catch(e)
     {
@@ -31,6 +32,20 @@ function GetRootCategoryWiseSalesDetail()
         var ds = {};
         data = "";
         ds = GetDataFromServer("DashBoard/GetRootCategoryWiseSalesDetail/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
+    }
+    catch (e) {
+
+    }
+}
+function Gettop10LatestProducts()
+{
+    try {
+        var ds = {};
+        data = "";
+        ds = GetDataFromServer("DashBoard/GetTop10Products/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
         if (ds.Result == "ERROR") { alert(ds.Message); }
@@ -137,4 +152,41 @@ function BindPieChart()
             }
         }
     });
+}
+function BindLatestProducts()
+{
+    try
+    {
+        debugger;
+        var LatestProductList = Gettop10LatestProducts()
+        if (LatestProductList.length > 0)
+        {
+            $('#ulLatestProduct').empty();
+        }
+        for(var i=0;i<LatestProductList.length;i++)
+        {
+            
+           var html= '<li class="list-group-item">'
+                       +'<div class="col-lg-12" style="padding:0px">'
+                           +'<div class="col-lg-3">'
+                               +'<img src="'+LatestProductList[i].URL+'" style="width:60px;height:60px;object-fit:contain;" />'
+                           +'</div><div class="col-lg-9">'
+                               +'<div class="col-lg-12">'
+                                   + '<span>' + LatestProductList[i].Name +'</span>'
+                               +'</div><div class="col-lg-12"></div>'
+                               +'<div class="col-lg-12">'
+                                   +'<i class="fa fa-info-circle"></i>'
+                                   +'<i class="fa fa-star-half-o"></i>'
+                               +'</div>'
+
+                           +'</div>'
+                       +'</div>'
+                   + '</li>'
+           $('#ulLatestProduct').append(html);
+        }
+    }
+    catch(e)
+    {
+
+    }
 }

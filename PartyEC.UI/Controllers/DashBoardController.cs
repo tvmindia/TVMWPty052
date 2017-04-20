@@ -17,10 +17,12 @@ namespace PartyEC.UI.Controllers
 
         IMasterBusiness _masterBusiness;
         IOrderBusiness _orderBusiness;
-        public DashBoardController(IMasterBusiness masterBusiness,IOrderBusiness orderBusiness)
+        IProductBusiness _productBusiness;
+        public DashBoardController(IMasterBusiness masterBusiness,IOrderBusiness orderBusiness,IProductBusiness productBusiness)
         {
             _masterBusiness = masterBusiness;
             _orderBusiness = orderBusiness;
+            _productBusiness = productBusiness;
         }
 
         #endregion Constructor_Injection
@@ -43,8 +45,8 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
-        #endregion  GetRootCategorySalesSummeryForChart
-        #region GetWeeklySalesSummeryForChart
+        #endregion  GetWeeklySalesSummeryForChart
+        #region GetRootCategorySalesSummeryForChart
         [HttpGet]
         public string GetRootCategoryWiseSalesDetail()
         {
@@ -59,5 +61,20 @@ namespace PartyEC.UI.Controllers
             }
         }
         #endregion  GetRootCategorySalesSummeryForChart
+        [HttpGet]
+        public string GetTop10Products()
+        {
+            try
+            {
+                List<ProductViewModel> productList = Mapper.Map<List<Product>, List<ProductViewModel>>(_productBusiness.GetTop10Products());
+
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
     }
 }
