@@ -2,14 +2,14 @@ var appAddress = window.location.protocol + "//" + window.location.host + "/";  
 
 $(document).ready(function () {
   
-    //$('input.datepicker').datepicker({
-    //    format: "dd-M-yyyy",//dd-M-yyyy",
-    //    maxViewMode: 0,
-    //    todayBtn: "linked",
-    //    clearBtn: true,
-    //    autoclose: true,
-    //    todayHighlight: true
-    //});
+    $('input.datepicker').datepicker({
+        format: "dd-M-yyyy",//dd-M-yyyy",
+        maxViewMode: 0,
+        todayBtn: "linked",
+        clearBtn: true,
+        autoclose: true,
+        todayHighlight: true
+    });
     $('.Tom').hover(function () {
         $('.dropdown-toggle', this).click();
     });
@@ -23,16 +23,16 @@ $(document).ready(function () {
     });
     
     //menu submenu popup on click 3rd level menus
-    $('.navbar a.dropdown-toggle').on('click', function (e) {
-        var $el = $(this);
-        var $parent = $(this).offsetParent(".dropdown-menu");
-        $(this).parent("li").toggleClass('open');
-        if (!$parent.parent().hasClass('nav')) {
-            $el.next().css({ "top": $el[0].offsetTop, "left": $parent.outerWidth() - 4 });
-        }
-        $('.nav li.open').not($(this).parents("li")).removeClass("open");
-        return false;
-    });
+    //$('.navbar a.dropdown-toggle').on('click', function (e) {
+    //    var $el = $(this);
+    //    var $parent = $(this).offsetParent(".dropdown-menu");
+    //    $(this).parent("li").toggleClass('open');
+    //    if (!$parent.parent().hasClass('nav')) {
+    //        $el.next().css({ "top": $el[0].offsetTop, "left": $parent.outerWidth() - 4 });
+    //    }
+    //    $('.nav li.open').not($(this).parents("li")).removeClass("open");
+    //    return false;
+    //});
    
     //$(".dropdown, .btn-group").hover(function () {
     //    var dropdownMenu = $(this).children(".dropdown-menu");
@@ -176,6 +176,23 @@ function ConvertJsonToDate(jsonDate) {
         notyAlert('error', e.message);
     }
    
+}
+
+function ConvertDateFormats(thisdate)
+{
+    try {
+        if (thisdate != null) {
+            thisdate= thisdate.replace(/-/g, ' ');
+            var converteddate = new Date(thisdate);
+            result = ('0' + (converteddate.getMonth() + 1)).slice(-2) + ' ' + ('0' + converteddate.getDate()).slice(-2) + ' '
+             + converteddate.getFullYear();
+            //var result = converteddate.getDate() + '-' + (converteddate.getMonth()+1) + '-' + converteddate.getFullYear();
+            return result;
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
 }
 //only number validation
 function isNumber(e) {

@@ -82,4 +82,10 @@ namespace PartyEC.DataAccessObject.DTO
         public string CommentDate { get; set; }
         public LogDetails commonObj { get; set; }
     }
+    public class Graph
+    {
+        public string Label { get; set; }
+        public int Value { get; set; }
+    }
+
 }

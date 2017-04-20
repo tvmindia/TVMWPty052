@@ -75,6 +75,8 @@ function bindeventrequestTable() {
 
 function tabeventRequestListClick()
 {
+    ChangeButtonPatchView("EventRequests", "btnPatchEventRequest", "List");
+    
     $('#tabeventRequestDetails').addClass('disabled');
     $('#tabeventRequestDetails a').attr('data-toggle', '');
 }
@@ -82,7 +84,7 @@ function tabeventRequestListClick()
 //---------------------------------------Edit Bind Functions-------------------------------------//
 function Edit(currentObj) {
     //Tab Change
-    ChangeButtonPatchView("EventRequests", "btnPatcheventRequeststab2", "Edit"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("EventRequests", "btnPatchEventRequest", "Edit_List");
     $('#tabeventRequestDetails').removeClass('disabled');
     $('#tabeventRequestDetails a').attr('data-toggle', 'tab');
     $('#tabeventRequestDetails a').trigger('click');

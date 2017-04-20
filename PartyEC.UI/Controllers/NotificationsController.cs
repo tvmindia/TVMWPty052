@@ -128,7 +128,22 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     break;
 
-              
+                case "Add":
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+                    ToolboxViewModelObj.addbtn.Event = "AddNotification()";
+                    break;
+
+                case "Edit":
+                    ToolboxViewModelObj.sendbtn.Visible = true;
+                    ToolboxViewModelObj.sendbtn.Disable = true;
+                    ToolboxViewModelObj.sendbtn.Event = "PushNotification()";
+                    ToolboxViewModelObj.sendbtn.Title = "Save";
+
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
 
                 default:
                     return Content("Nochange");

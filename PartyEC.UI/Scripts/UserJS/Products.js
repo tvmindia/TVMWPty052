@@ -363,23 +363,23 @@ function BindStickers()
             if (thisproduct.StickerID == Table[i].ID)
             {
                 ActiveSticker = 1;
-                $('#ulMainStickerArea').append(' <li class="col-sm-3"><a class="thumbnail" onclick="SelectForDeleteSticker(this)" id="' + Table[i].ID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].URL + '?' + new Date().getTime() + '">'
+                $('#ulMainStickerArea').append(' <li class="col-sm-4"><a class="thumbnail" onclick="SelectForDeleteSticker(this)" id="' + Table[i].ID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].URL + '?' + new Date().getTime() + '">'
                     + '<a style="top: 2%;left: 14%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].URL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a></li>')
             }
             else
             {
                 AvailableSticker = 1;
-                $('#ulStickerArea').append(' <li class="col-sm-3"><a class="thumbnail" onclick="SelectForAddSticker(this)" id="' + Table[i].ID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].URL + '?' + new Date().getTime() + '">'
+                $('#ulStickerArea').append(' <li class="col-sm-4"><a class="thumbnail" onclick="SelectForAddSticker(this)" id="' + Table[i].ID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].URL + '?' + new Date().getTime() + '">'
                     + '<a style="top: 2%;left: 14%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].URL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a></li>')
             }
         }
         if(ActiveSticker==0)
         {
             ChangeButtonPatchView("Products", "buttonPatchStickerImages", "NoSticker");
-            $('#ulMainStickerArea').append('<li class="col-sm-3"><a class="thumbnail" id="carousel-selector-0"><img src="http://placehold.it/150x150&text=zero"></a></li>');
+            $('#ulMainStickerArea').append('<li class="col-sm-4"><a class="thumbnail" id="carousel-selector-0"><img src="http://placehold.it/150x150&text=zero"></a></li>');
         }
         if (AvailableSticker == 0) {
-            $('#ulStickerArea').append('<li class="col-sm-3"><a class="thumbnail" id="carousel-selector-0"><img src="http://placehold.it/150x150&text=zero"></a></li>');
+            $('#ulStickerArea').append('<li class="col-sm-4"><a class="thumbnail" id="carousel-selector-0"><img src="http://placehold.it/150x150&text=zero"></a></li>');
         }
     }
     catch(e)
@@ -403,7 +403,7 @@ function BindImages() {
             }
             else {
                 OtherFlag = 1;
-                $('#ulOtherImages').append(' <li class="col-sm-3"><a class="thumbnail" onclick="SelectImagesForDelete(this)" id="' + Table[i].ImageID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].ImageURL + '?' + new Date().getTime() + '">'
+                $('#ulOtherImages').append(' <li class="col-sm-4"><a class="thumbnail" onclick="SelectImagesForDelete(this)" id="' + Table[i].ImageID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].ImageURL + '?' + new Date().getTime() + '">'
                     + '<a style="top: 2%;left: 14%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].ImageURL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a></li>')
             }
         }
@@ -412,7 +412,7 @@ function BindImages() {
         }
         if(OtherFlag==0)
         {
-            $('#ulOtherImages').append('<li class="col-sm-3"><a class="thumbnail" id="carousel-selector-0"><img src="http://placehold.it/150x150&text=zero"></a></li>');
+            $('#ulOtherImages').append('<li class="col-sm-4"><a class="thumbnail" id="carousel-selector-0"><img src="http://placehold.it/150x150&text=zero"></a></li>');
         }
     }
     catch(e)

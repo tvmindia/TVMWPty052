@@ -313,6 +313,8 @@
     <Content Include="Content\images\closelt.png" />
     <Content Include="Content\images\closemodel.png" />
     <Content Include="Content\images\Loader.gif" />
+    <Content Include="Content\images\OrderDefault.png" />
+    <Content Include="Content\images\ReorderDefault.jpg" />
     <Content Include="Content\images\texture11.jpg" />
     <Content Include="Content\images\delete.PNG" />
     <Content Include="Content\images\power-button.png" />
@@ -393,6 +395,8 @@
     <Content Include="Scripts\bootstrap-datepicker.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\Chart.js" />
+    <Content Include="Scripts\Chart.min.js" />
     <Content Include="Scripts\custom.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.js" />
     <Content Include="Scripts\DataTables\autoFill.bootstrap.min.js" />
@@ -491,6 +495,7 @@
     <Content Include="Scripts\UserJS\Categories.js" />
     <Content Include="Scripts\UserJS\Countries.js" />
     <Content Include="Scripts\UserJS\Customer.js" />
+    <Content Include="Scripts\UserJS\Dashboard.js" />
     <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\EventRequests.js" />
     <Content Include="Scripts\UserJS\MailNotifications.js" />
@@ -511,6 +516,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\CategoryController.cs" />
+    <Compile Include="API\CustomerController.cs" />
     <Compile Include="API\EventController.cs" />
     <Compile Include="API\ProductController.cs" />
     <Compile Include="App_Start\BundleConfig.cs" />

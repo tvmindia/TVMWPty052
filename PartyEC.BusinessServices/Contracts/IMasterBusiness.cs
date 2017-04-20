@@ -43,5 +43,8 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus UpdateSupplierLocations(SupplierLocations supplier_locObj);
         OperationsStatus DeleteSupplierLocations(int ShippingLocationID);
 
+        //Dashboard
+        List<Graph> GetWeeklySalesDetails();
+        List<Graph> GetRootCategoryWiseSalesDetail();
     }
 }

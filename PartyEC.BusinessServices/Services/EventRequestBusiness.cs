@@ -71,8 +71,9 @@ namespace PartyEC.BusinessServices.Services
             {
                 OperationsStatusObj = _eventRequestsRepositry.UpdateEventRequests(eventObj);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw ex;
             }
             return OperationsStatusObj;
         }
