@@ -58,12 +58,12 @@ $(document).ready(function () {
                { "data": "ID" },
                { "data": "Name" },
                { "data": "ProductType", "defaultContent": "<i>-</i>" },
-               { "data": "EnableYN", "defaultContent": "<i>-</i>" },
+               { "data": "Enabled", "defaultContent": "<i>-</i>" },
                { "data": "SupplierName", "defaultContent": "<i>-</i>" },
                { "data": "SKU", "defaultContent": "<i>-</i>" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "Qty", "defaultContent": "<i>-</i>" },
-               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" },
+               { "data": "StockAvailable", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="ModelProductsRating(this)">Rating</a>' },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
@@ -72,7 +72,25 @@ $(document).ready(function () {
                   "targets": [0],
                   "visible": false,
                   "searchable": false
-              }
+              },
+                {
+                    "render": function (data, type, row) {
+                        return (data == true ? "Yes" : "No");
+                    },
+                    "targets": 4
+                },
+               {
+                   "render": function (data, type, row) {
+                       return (data == "C" ? "Configurable" : "Simple");
+                   },
+                   "targets": 3
+               },
+               {
+                   "render": function (data, type, row) {
+                       return (data == true ? "In Stock" : "Empty");
+                   },
+                   "targets": 9
+               }
              ]
          });
     }
@@ -1447,7 +1465,7 @@ function BindProductReviews()   // To Display Previous Comment history
     var id = $(".productID").val();// assigning id for binding reviews.
     var attributesetId = $("#AttributeSetID").val();
 
-    if (attributesetId != null && id != null) {
+    if ((attributesetId)&&(id)) {
         //Rating
         var thisRatingSummary = GetRatingSummary(id, attributesetId);
         if (thisRatingSummary.length>0) {          

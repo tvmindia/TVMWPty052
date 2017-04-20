@@ -951,7 +951,7 @@ namespace PartyEC.RepositoryServices.Services
                                 myProduct.ProductOtherAttributesXML = (sdr["OtherAttributeXML"].ToString() != "" ? sdr["OtherAttributeXML"].ToString() : myProduct.ProductOtherAttributesXML);
                                 myProduct.OrderAttributes = _attributesRepository.GetAttributeContainer(myProduct.AttributeSetID, "Order", false);
                                 myProduct.RatingAttributes = _attributesRepository.GetAttributeContainer(myProduct.AttributeSetID, "Rating", false);
-                                if (myProduct.ProductOtherAttributesXML != "")
+                                if (!string.IsNullOrEmpty(myProduct.ProductOtherAttributesXML))
                                 {
                                     myProduct.ProductOtherAttributes = _attributesRepository.GetAttributeFromXML(myProduct.ProductOtherAttributesXML, myProduct.AttributeSetID, "Product", false);
                                     myProduct.ProductOtherAttributes = myProduct.OrderAttributes.FindAll(n => n.Isconfigurable == false);
