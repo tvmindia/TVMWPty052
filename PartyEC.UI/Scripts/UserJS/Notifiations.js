@@ -136,7 +136,12 @@ $(document).ready(function () {
     //});
 
     ChangeButtonPatchView("Notifications", "NotificationToolBox", "Add"); //ControllerName,id of the container div,Name of the action
-
+    $("#tabNotificationsList").click(function () {
+        ChangeButtonPatchView("Notifications", "NotificationToolBox", "Add"); //ControllerName,id of the container div,Name of the action
+    });
+    $("#tabNotificationsDetails").click(function () {
+        ChangeButtonPatchView("Notifications", "NotificationToolBox", "Push"); //ControllerName,id of the container div,Name of the action
+    });
 });
 
 function BindCustomerNameFromGrid()
@@ -249,6 +254,7 @@ function EditNotification(curObj)
             $('#CustomerName').val(thisnoti.customer.Name);
             $('#Title').val(thisnoti.Title);
             $('#Message').val(thisnoti.Message);
+            ChangeButtonPatchView("Notifications", "NotificationToolBox", "Edit"); //ControllerName,id of the container div,Name of the action
         }
     }
    

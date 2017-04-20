@@ -62,7 +62,19 @@
                 @Html.Action("_MenuNavBar", "DynamicUI")
               
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#">User</a></li>
+                    <li role="presentation" class="dropdown">
+                        <a href="/Order">
+                            <i class="fa fa-envelope-o"></i>
+                            @*<span class="badge bg-green">6</span>*@
+                        </a>
+                    </li>
+                    <li role="presentation" class="dropdown">
+                        <a href="/Reviews" >
+                            <i class="fa fa-truck"></i>
+                            @*<span class="badge bg-green">6</span>*@
+                        </a>
+                    </li>
+                    <li><a href="#">Jomon</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></a>
                         <ul class="dropdown-menu">

@@ -31,6 +31,20 @@ namespace PartyEC.BusinessServices.Services
             }
             return productlist;
         }
+        public List<Product> GetTop10Products()
+        {
+            Product productObj = new Product();
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.GetAllProducts(productObj).OrderByDescending(prod => prod.logDetails.CreatedDate).Take(10).ToList();
+            }
+            catch (Exception)
+            {
+
+            }
+            return productlist;
+        }
         public List<Product> GetAllProductswithCategory(string CategoryID)
         {
             List<Product> productlist = null;

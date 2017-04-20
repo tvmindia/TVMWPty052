@@ -104,6 +104,33 @@ namespace PartyEC.BusinessServices.Services
             }
             return EventsLogLists;
         }
+        public List<Graph> GetWeeklySalesDetails()
+        {
+            List<Graph> WeeklySalesDeatails = null;
+            try
+            {
+                WeeklySalesDeatails = _masterRepository.GetWeeklySalesDetails();
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return WeeklySalesDeatails;
+        }
+        public List<Graph> GetRootCategoryWiseSalesDetail()
+        {
+            List<Graph> GraphList = null;
+            try
+            {
+                GraphList = _masterRepository.GetRootCategoryWiseSalesDetail();
+            }
+            catch (Exception ex)
+            {
+
+            }
+            return GraphList;
+        }
+
 
         #region Suppliers
 
