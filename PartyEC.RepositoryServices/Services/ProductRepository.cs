@@ -383,7 +383,11 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@ShowPriceYN", SqlDbType.Bit).Value = productObj.ShowPrice;
                         cmd.Parameters.Add("@ActionType", SqlDbType.NVarChar, 1).Value = productObj.ActionType;
                         cmd.Parameters.Add("@SupplierID", SqlDbType.Int).Value = productObj.SupplierID;
-                        cmd.Parameters.Add("@ManufacturerID", SqlDbType.Int).Value = productObj.ManufacturerID;
+                        if(productObj.ManufacturerID>0)
+                        {
+                            cmd.Parameters.Add("@ManufacturerID", SqlDbType.Int).Value = productObj.ManufacturerID;
+                        }
+                       
                         cmd.Parameters.Add("@BaseSellingPrice", SqlDbType.Decimal).Value = productObj.BaseSellingPrice;
                         cmd.Parameters.Add("@CostPrice", SqlDbType.Decimal).Value = productObj.CostPrice;
                         cmd.Parameters.Add("@ShortDescription", SqlDbType.VarChar, 250).Value = productObj.ShortDescription;
@@ -683,7 +687,11 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@ShowPriceYN", SqlDbType.Bit).Value = productObj.ShowPrice;
                         cmd.Parameters.Add("@ActionType", SqlDbType.NVarChar, 1).Value = productObj.ActionType;
                         cmd.Parameters.Add("@SupplierID", SqlDbType.Int).Value = productObj.SupplierID;
-                        cmd.Parameters.Add("@ManufacturerID", SqlDbType.Int).Value = productObj.ManufacturerID;
+                        if(productObj.ManufacturerID>0)
+                        {
+                            cmd.Parameters.Add("@ManufacturerID", SqlDbType.Int).Value = productObj.ManufacturerID;
+                        }
+                        
                         cmd.Parameters.Add("@BaseSellingPrice", SqlDbType.Decimal).Value = productObj.BaseSellingPrice;
                         cmd.Parameters.Add("@CostPrice", SqlDbType.Decimal).Value = productObj.CostPrice;
                         cmd.Parameters.Add("@ShortDescription", SqlDbType.VarChar, 250).Value = productObj.ShortDescription;
