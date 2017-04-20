@@ -83,6 +83,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Contracts\IAttributesBusiness.cs" />
+    <Compile Include="Contracts\IBookingsBusiness.cs" />
     <Compile Include="Contracts\ICart_WishlistBusiness.cs" />
     <Compile Include="Contracts\ICategoriesBusiness.cs" />
     <Compile Include="Contracts\ICommonBusiness.cs" />
@@ -99,6 +100,7 @@
     <Compile Include="Contracts\IReviewBusiness.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\AttributesBusiness.cs" />
+    <Compile Include="Services\BookingsBusiness.cs" />
     <Compile Include="Services\Cart_WishlistBusiness.cs" />
     <Compile Include="Services\CategoriesBusiness.cs" />
     <Compile Include="Services\CommonBusiness.cs">

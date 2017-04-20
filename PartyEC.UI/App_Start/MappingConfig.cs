@@ -56,6 +56,8 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<QuotationsAppViewModel, Quotations>().ReverseMap();
                 config.CreateMap<QuotationStatusViewModel, QuotationStatusMaster>().ReverseMap();
                 config.CreateMap<GraphViewModel, Graph>().ReverseMap();
+                config.CreateMap<BookingsViewModel, Bookings>().ReverseMap();
+                config.CreateMap<BookingsAppViewModel, Bookings>().ReverseMap();
             });
         }
 

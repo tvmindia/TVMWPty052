@@ -554,6 +554,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AttributesViewModel.cs" />
+    <Compile Include="Models\BookingsViewModel.cs" />
     <Compile Include="Models\Cart_WishlistViewModel.cs" />
     <Compile Include="Models\CategoriesViewModel.cs" />
     <Compile Include="Models\CommonViewModel.cs" />
@@ -602,6 +603,7 @@
     <Content Include="Views\Quotations\Index.cshtml" />
     <Content Include="Views\MailNotifications\Index.cshtml" />
     <Content Include="Views\UnderConstruction\UnderConstruction.cshtml" />
+    <Content Include="Views\Bookings\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -612,7 +614,6 @@
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Views\AttributeSetLink\" />
-    <Folder Include="Views\Bookings\" />
     <Folder Include="Views\Invoices\" />
     <Folder Include="Views\Location\" />
     <Folder Include="Views\Reports\" />

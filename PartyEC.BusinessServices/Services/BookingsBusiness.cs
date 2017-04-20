@@ -1,0 +1,39 @@
+﻿using PartyEC.BusinessServices.Contracts;
+using PartyEC.RepositoryServices.Contracts;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Web;
+using PartyEC.DataAccessObject.DTO;
+
+namespace PartyEC.BusinessServices.Services
+{
+    public class BookingsBusiness: IBookingsBusiness
+    {
+        #region ConstructorInjection
+
+        private IBookingsRepository _bookingsRepository;
+
+        public BookingsBusiness(IBookingsRepository bookingsRepository)
+        {
+            _bookingsRepository = bookingsRepository;
+        }
+        #endregion ConstructorInjection 
+
+        public List<Bookings> GetCustomerBookings(int customerID)
+        {
+            List<Bookings> Bookingslist = null;
+            try
+            {
+                Bookingslist = _bookingsRepository.GetCustomerBookings(customerID);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return Bookingslist;
+        }
+
+    }
+}
