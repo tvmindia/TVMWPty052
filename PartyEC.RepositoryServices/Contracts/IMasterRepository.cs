@@ -19,6 +19,7 @@ namespace PartyEC.RepositoryServices.Contracts
         List<Country> GetAllCountries();
 
         OperationsStatus InsertImage(OtherImages otherimgObj);
+        OperationsStatus DeleteOtherImage(string imageID,string type);
         List<OrderStatusMaster> GetAllOrderStatus();
         List<QuotationStatusMaster> GetAllQuotationStatus();
         List<OtherImages> GetAllStickers();
