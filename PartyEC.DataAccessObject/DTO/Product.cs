@@ -47,7 +47,11 @@ namespace PartyEC.DataAccessObject.DTO
 
         public List<ProductImages>ProductHeaderImages { get; set; }
         public LogDetails logDetails { get; set; }
+       
+        public string ProductOtherAttributesXML { get; set; }
         public List<AttributeValues> ProductOtherAttributes { get; set; }
+        public List<AttributeValues> OrderAttributes { get; set; }
+        public List<AttributeValues> RatingAttributes { get; set; }
     }
     public class ProductDetail {
         public int ID { get; set; }

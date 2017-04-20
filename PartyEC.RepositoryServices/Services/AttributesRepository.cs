@@ -6,6 +6,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
+using System.Xml.Linq;
 
 namespace PartyEC.RepositoryServices.Services
 {
@@ -346,7 +347,29 @@ namespace PartyEC.RepositoryServices.Services
             return myProductAttributeList;
         }
 
-        
+        public List<AttributeValues> GetAttributeFromXML(string xmlData, int AttributeSetID, string Type, bool isForAssociated = false)
+        {
+
+            var doc = XDocument.Parse(xmlData);
+            var dict = new Dictionary<string, int>();
+           
+
+            List<AttributeValues> myProductAttributeList = GetAttributeContainer(AttributeSetID, Type, isForAssociated);
+
+            foreach (AttributeValues att in myProductAttributeList)
+            {
+                if (doc.Root.Element(att.Name) != null)
+                {
+                    att.Value = doc.Root.Element(att.Name).Value;
+                }
+
+            }
+
+
+            return myProductAttributeList;
+        }
+
+
         public string GetAttributeXML(List<AttributeValues> AttributeContainerWithValues) {
            
             string myXML = "";

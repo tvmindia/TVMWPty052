@@ -17,6 +17,7 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus DeleteAttributes(int attributeID);
         List<AttributeValues> GetAttributeContainer(int AttributeSetID, string Type, bool isForAssociated = false);
         List<Attributes> GetAllAttributeBySet(int AttributeSetID);
+        List<AttributeValues> GetAttributeFromXML(string xmlData, int AttributeSetID, string Type, bool isForAssociated = false);
     }
     public interface IAttributeSetRepository
     {
