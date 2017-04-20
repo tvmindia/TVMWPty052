@@ -13,7 +13,7 @@ namespace PartyEC.UI.Models
         [Required(ErrorMessage = "Please Enter Attribute name")]
         [Display(Name = "Attribute Name")]
         [MaxLength(50)]
-        [RegularExpression("^([a-zA-Z9 .&'-]+)$", ErrorMessage = "Invalid Attribute Name")]
+        [RegularExpression("^([a-zA-Z0-9]+)$", ErrorMessage = "Invalid Attribute Name")]
         public string Name { get; set; }
 
         [Required(ErrorMessage = "Please Enter Attribute Caption")]
