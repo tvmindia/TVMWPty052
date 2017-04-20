@@ -23,8 +23,9 @@ namespace PartyEC.UI.API
         ICart_WishlistBusiness _cartwishlistBusiness;
         IOrderBusiness _orderBusiness;
         IQuotationsBusiness _quotationBusiness;
+        IBookingsBusiness _bookingsBusiness;
 
-        public CustomerController(ICustomerBusiness customerBusiness,ICommonBusiness commonBusiness, IEventBusiness eventBusiness,ICart_WishlistBusiness cartwishlistBusiness, IOrderBusiness orderBusiness, IQuotationsBusiness quotationBusiness)
+        public CustomerController(ICustomerBusiness customerBusiness,ICommonBusiness commonBusiness, IEventBusiness eventBusiness,ICart_WishlistBusiness cartwishlistBusiness, IOrderBusiness orderBusiness, IQuotationsBusiness quotationBusiness, IBookingsBusiness bookingsBusiness)
         {
             _customerBusiness = customerBusiness;
             _commonBusiness = commonBusiness;
@@ -32,6 +33,7 @@ namespace PartyEC.UI.API
             _cartwishlistBusiness = cartwishlistBusiness;
              _orderBusiness=orderBusiness;
             _quotationBusiness = quotationBusiness;
+            _bookingsBusiness = bookingsBusiness;
         }
         #endregion Constructor_Injection
         Const constants = new Const();
@@ -111,12 +113,25 @@ namespace PartyEC.UI.API
         #endregion Quotations
 
         #region Bookings
-
+        [HttpPost]
+        public object GetCustomerBookings(Bookings bookingsObj)
+        {
+            try
+            {
+                List<BookingsAppViewModel> CartList = Mapper.Map<List<Bookings>, List<BookingsAppViewModel>>(_bookingsBusiness.GetCustomerBookings(bookingsObj.CustomerID));
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
         #endregion Bookings
 
-
-
         #region history
+
+
 
         #endregion history
 

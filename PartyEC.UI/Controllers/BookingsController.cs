@@ -8,10 +8,11 @@ namespace PartyEC.UI.Controllers
 {
     public class BookingsController : Controller
     {
+
         // GET: Bookings
         public ActionResult Index()
         {
-            return View("../UnderConstruction/UnderConstruction");
+            return View();
         }
     }
 }
