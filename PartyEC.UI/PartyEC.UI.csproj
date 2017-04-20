@@ -314,6 +314,7 @@
     <Content Include="Content\images\closemodel.png" />
     <Content Include="Content\images\Loader.gif" />
     <Content Include="Content\images\OrderDefault.png" />
+    <Content Include="Content\images\ProductDefault.png" />
     <Content Include="Content\images\ReorderDefault.jpg" />
     <Content Include="Content\images\texture11.jpg" />
     <Content Include="Content\images\delete.PNG" />
@@ -354,15 +355,10 @@
     <Content Include="Content\OtherImages\Sticker6724.png" />
     <Content Include="Content\OtherImages\Sticker728.png" />
     <Content Include="Content\OtherImages\weddigcake.jpg" />
-    <Content Include="Content\ProductImages\wonderfull cake.png" />
-    <Content Include="Content\ProductImages\wonderfull cakeOther1596.png" />
-    <Content Include="Content\ProductImages\wonderfull cakeOther2312.png" />
-    <Content Include="Content\ProductImages\wonderfull cakeOther2976.png" />
-    <Content Include="Content\ProductImages\wonderfull cakeOther4792.png" />
-    <Content Include="Content\ProductImages\wonderfull cakeOther4990.png" />
-    <Content Include="Content\ProductImages\wonderfull cakeOther5456.png" />
-    <Content Include="Content\ProductImages\wonderfull cakeOther6927.png" />
-    <Content Include="Content\ProductImages\wonderfull cakeOther9925.png" />
+    <Content Include="Content\ProductImages\Ahmedabad Cotton Printed 160 TC Cotton Double Bedsheet with 2 Pillow Covers - Multicolour.png" />
+    <Content Include="Content\ProductImages\Ambroise De Raspberry Cake.png" />
+    <Content Include="Content\ProductImages\Regency Hall Doha.png" />
+    <Content Include="Content\ProductImages\Story%40Home 120 TC 100_ Cotton Yellow 1 Double Bedsheet With 2 Pillow Cover.png" />
     <Content Include="Content\uploadify.css" />
     <Content Include="Content\uploadify.swf" />
     <Content Include="Content\UserCSS\Customer.css" />

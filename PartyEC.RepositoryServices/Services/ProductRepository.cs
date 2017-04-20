@@ -63,6 +63,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.Unit = (sdr["Unit"].ToString() != "" ? sdr["Unit"].ToString() : _productObj.Unit);
                                         _productObj.TaxClass = (sdr["TaxClass"].ToString() != "" ? sdr[""].ToString() : _productObj.TaxClass);
                                         _productObj.URL = (sdr["URL"].ToString() != "" ? sdr["URL"].ToString() : _productObj.URL);
+                                        _productObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _productObj.ImageURL);
                                         _productObj.ShowPrice = (sdr["ShowPriceYN"].ToString() != "" ? bool.Parse(sdr["ShowPriceYN"].ToString()) : _productObj.ShowPrice);
                                         _productObj.ActionType = (sdr["ActionType"].ToString() != "" ? char.Parse(sdr["ActionType"].ToString()) : _productObj.ActionType);
                                         _productObj.SupplierID = (sdr["SupplierID"].ToString() != "" ? int.Parse(sdr["SupplierID"].ToString()) : _productObj.SupplierID);
