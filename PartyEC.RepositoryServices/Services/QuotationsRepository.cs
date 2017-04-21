@@ -78,7 +78,7 @@ namespace PartyEC.RepositoryServices.Services
             return QuotationsList;
         }
 
-        public List<Quotations> GetCustomerQuotations(int CustomerID)
+        public List<Quotations> GetCustomerQuotations(int CustomerID, bool IsHistory)
         {
             List<Quotations> QuotationsList = null;
 
@@ -94,6 +94,7 @@ namespace PartyEC.RepositoryServices.Services
                         }
                         cmd.Connection = con;
                         cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CustomerID;
+                        cmd.Parameters.Add("@IsHistory", SqlDbType.Int).Value = IsHistory;
                         cmd.CommandText = "[GetCustomerQuotations]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())

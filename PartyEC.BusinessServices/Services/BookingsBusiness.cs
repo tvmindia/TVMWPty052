@@ -20,12 +20,12 @@ namespace PartyEC.BusinessServices.Services
         }
         #endregion ConstructorInjection 
 
-        public List<Bookings> GetCustomerBookings(int customerID)
+        public List<Bookings> GetCustomerBookings(int customerID,bool Ishistory)
         {
             List<Bookings> Bookingslist = null;
             try
             {
-                Bookingslist = _bookingsRepository.GetCustomerBookings(customerID);
+                Bookingslist = _bookingsRepository.GetCustomerBookings(customerID, Ishistory);
 
             }
             catch (Exception)

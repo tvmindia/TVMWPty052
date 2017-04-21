@@ -108,12 +108,12 @@ namespace PartyEC.BusinessServices.Services
             return OperationsStatusObj;
         }
 
-        public List<Quotations> GetCustomerQuotations(int CustomerID)
+        public List<Quotations> GetCustomerQuotations(int CustomerID, bool Ishistory)
         {
             List<Quotations> Quotationslist = null;
             try
             {
-                Quotationslist = _QuotationsRepository.GetCustomerQuotations(CustomerID);
+                Quotationslist = _QuotationsRepository.GetCustomerQuotations(CustomerID,Ishistory);
 
             }
             catch (Exception ex)

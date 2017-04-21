@@ -18,6 +18,6 @@ namespace PartyEC.BusinessServices.Contracts
         Order GetOrderSummery(int ID);
 
         //For App
-        List<Order> GetCustomerOrders(int CustomerID);
+        List<Order> GetCustomerOrders(int CustomerID,bool Ishistory);
     }
 }

@@ -56,8 +56,7 @@ namespace PartyEC.UI.API
         }
 
         #endregion shoppingCart
-
-
+        
         #region Wishlist
         [HttpPost]
         public object GetCustomerWishlist(Cart_Wishlist CartWishObj)
@@ -83,7 +82,24 @@ namespace PartyEC.UI.API
         {
             try
             {
-                List<OrderAppViewModel> CartList = Mapper.Map<List<Order>, List<OrderAppViewModel>>(_orderBusiness.GetCustomerOrders(OrderObj.CustomerID));
+                bool Ishistory = false;
+                List<OrderAppViewModel> CartList = Mapper.Map<List<Order>, List<OrderAppViewModel>>(_orderBusiness.GetCustomerOrders(OrderObj.CustomerID, Ishistory));
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public object GetCustomerOrdersHistory(Order OrderObj)
+        {
+            try
+            {
+                bool Ishistory = true;
+                List<OrderAppViewModel> CartList = Mapper.Map<List<Order>, List<OrderAppViewModel>>(_orderBusiness.GetCustomerOrders(OrderObj.CustomerID, Ishistory));
                 if (CartList.Count == 0) throw new Exception(constants.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
             }
@@ -101,7 +117,8 @@ namespace PartyEC.UI.API
         {
             try
             {
-                List<QuotationsAppViewModel> CartList = Mapper.Map<List<Quotations>, List<QuotationsAppViewModel>>(_quotationBusiness.GetCustomerQuotations(QuotationsObj.CustomerID));
+                bool Ishistory = false;
+                List<QuotationsAppViewModel> CartList = Mapper.Map<List<Quotations>, List<QuotationsAppViewModel>>(_quotationBusiness.GetCustomerQuotations(QuotationsObj.CustomerID, Ishistory));
                 if (CartList.Count == 0) throw new Exception(constants.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
             }
@@ -110,6 +127,26 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
+
+        [HttpPost]
+        public object GetCustomerQuotationsHistory(Quotations QuotationsObj)
+        {           
+            try
+            {
+                bool Ishistory = true;
+                List<QuotationsAppViewModel> CartList = Mapper.Map<List<Quotations>, List<QuotationsAppViewModel>>(_quotationBusiness.GetCustomerQuotations(QuotationsObj.CustomerID, Ishistory));
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+
+
         #endregion Quotations
 
         #region Bookings
@@ -118,7 +155,8 @@ namespace PartyEC.UI.API
         {
             try
             {
-                List<BookingsAppViewModel> CartList = Mapper.Map<List<Bookings>, List<BookingsAppViewModel>>(_bookingsBusiness.GetCustomerBookings(bookingsObj.CustomerID));
+                bool Ishistory = false;
+                List<BookingsAppViewModel> CartList = Mapper.Map<List<Bookings>, List<BookingsAppViewModel>>(_bookingsBusiness.GetCustomerBookings(bookingsObj.CustomerID, Ishistory));
                 if (CartList.Count == 0) throw new Exception(constants.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
             }
@@ -127,6 +165,24 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        public object GetCustomerBookingsHistory(Bookings bookingsObj)
+        {
+            try
+            {
+                bool Ishistory = true;
+                List<BookingsAppViewModel> CartList = Mapper.Map<List<Bookings>, List<BookingsAppViewModel>>(_bookingsBusiness.GetCustomerBookings(bookingsObj.CustomerID, Ishistory));
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+
         #endregion Bookings
 
         #region history
