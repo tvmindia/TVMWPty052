@@ -10,8 +10,11 @@ $(document).ready(function () {
         autoclose: true,
         todayHighlight: true
     });
-    $('.Tom').hover(function () {
+    $('.Partynavbar').hover(function () {
+        
         $('.dropdown-toggle', this).click();
+        //$('.Tom').removeAttr('style');
+        //$(this).css('background', 'rgba(36, 34, 34, 0.45)');
     });
     $('input[type="date"]').datepicker({
         format: "yyyy-mm-dd",//dd-M-yyyy",
@@ -102,7 +105,7 @@ function GetDataFromServer(page, formData) {
         cache: false,
         contentType: "application/json; charset=utf-8",
         beforeSend: function () {
-            $('#displaywait').show(1);
+            $('#displaywait').show(.0000001);
         },
         success: function (data) {
             jsonResult = data;
@@ -111,7 +114,7 @@ function GetDataFromServer(page, formData) {
         error: function (jqXHR, textStatus, errorThrown) {
           jsonResult = '';
           notyAlert('error', errorThrown + ',' + textStatus + ',' + jqXHR.statusText);
-          $('#displaywait').hide(1);
+          $('#displaywait').hide(.0000001);
         },
         complete: function () {
           

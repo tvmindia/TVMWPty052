@@ -68,9 +68,9 @@ namespace PartyEC.BusinessServices.Services
             return _orderRepository.UpdateShipingDetails(orderObj);
         }
 
-        public List<Order> GetCustomerOrders(int CustomerID)
+        public List<Order> GetCustomerOrders(int CustomerID,bool Ishistory)
         {
-            return _orderRepository.GetCustomerOrders(CustomerID);
+            return _orderRepository.GetCustomerOrders(CustomerID, Ishistory);
         }
     }
 }

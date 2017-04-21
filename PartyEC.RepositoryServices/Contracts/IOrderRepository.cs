@@ -17,7 +17,7 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus UpdateBillingDetails(Order orderObj);
         OperationsStatus UpdateShipingDetails(Order orderObj);
         //For App
-        List<Order> GetCustomerOrders(int CustomerID);
+        List<Order> GetCustomerOrders(int CustomerID,bool Ishistory);
 
     }
 }
