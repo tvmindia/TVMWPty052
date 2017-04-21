@@ -120,6 +120,7 @@ namespace PartyEC.BusinessServices.Services
         {
             return _attributeSetRepository.GetAllAttributeSet();
         }
+       
         public OperationsStatus InsertAttributeSet(AttributeSet attributeSetObj)
         {
             return _attributeSetRepository.InsertAttributeSet(attributeSetObj);

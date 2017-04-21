@@ -159,7 +159,7 @@
                                         <div class="tab-content productTabContent">
                                             <div class="tab-pane fade" id="settings">
                                               
-
+                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                               
                                                 <div class="form-group">
                                                     <label for="ProductType" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ProductType)<span class="required">*</span></label>
@@ -192,7 +192,7 @@
                                                 <!--Edit form column-->
 
 
-                                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                              
                                                 <div class="form-group">
                                                     <label for="Name" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.Name)<span class="required">*</span></label>
                                                     <div class="col-lg-4">
@@ -243,18 +243,19 @@
 
                                                     <div class="col-lg-4">
                                                         @{
-                                                    List<SelectListItem> actionTypeList = new List<SelectListItem>();
-                                                    actionTypeList.Add(new SelectListItem
-                                                    { Text = "Buy", Value = "A" });
-                                                    actionTypeList.Add(new SelectListItem
-                                                    { Text = "Book", Value = "B" });
-                                                    actionTypeList.Add(new SelectListItem
-                                                    { Text = "Quotation", Value = "Q" });
+                                                            List<SelectListItem> actionTypeList = new List<SelectListItem>();
+                                                            actionTypeList.Add(new SelectListItem
+                                                            { Text = "Book", Value = "B" });
+                                                            actionTypeList.Add(new SelectListItem
+                                                            { Text = "Buy", Value = "A" });
+                                                            actionTypeList.Add(new SelectListItem
+                                                            { Text = "Quotation", Value = "Q" });
                                                         }
 
                                                         @Html.DropDownListFor(model => model.ActionType, actionTypeList, "-- Select Action Type --", new { @class = "form-control", @onchange = "ActionTypeOnChange()", value = -1 })
+                                                        <span><i style="color: grey;">Action Type defines the nature of the product</i></span><br />
                                                         @Html.ValidationMessageFor(model => model.ActionType, "", new { @class = "text-danger" })
-
+                                                       
                                                     </div>
                                                 </div>
 
@@ -307,7 +308,7 @@
                                             <div class="tab-pane fade" id="price">
                                                 <div class="col-sm-6 col-md-6 divPriceMessage">
                                                     <div class="alert-message alert-message-warning">
-                                                        <p>Please Select Product Type in General that you want to work with!</p>
+                                                        <p>Please Select Product Type in Settings that you want to work with!</p>
                                                     </div>
                                                 </div>
                                                 <div class="form-group">
@@ -340,15 +341,16 @@
                                                 <div class="form-group">
                                                     @Html.LabelFor(model => model.TaxClass, htmlAttributes: new { @class = "control-label col-lg-2" })
                                                     <div class="col-lg-4">
-                                                        @Html.EditorFor(model => model.TaxClass, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })
-                                                        @Html.ValidationMessageFor(model => model.TaxClass, "", new { @class = "text-danger" })
+                                                        @*@Html.EditorFor(model => model.TaxClass, new { htmlAttributes = new { @class = "form-control", @disabled = "disabled" } })*@
+                                                        <span class="form-control" disabled>N/A</span>
+                                                        @*@Html.ValidationMessageFor(model => model.TaxClass, "", new { @class = "text-danger" })*@
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
                                                     <div class="col-sm-6 col-md-6 divMsgconfigurable">
                                                         <div class="alert-message alert-message-warning">
-                                                            <p>For Configurable products, Price section is available in 'Associated products' tab.</p>
+                                                            <p>For Configurable products, Discount info can be filled through product option section.</p>
                                                         </div>
                                                     </div>
                                                     @Html.LabelFor(model => model.DiscountAmount, htmlAttributes: new { @class = "control-label col-lg-2 productDetailGroup" })

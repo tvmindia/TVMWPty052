@@ -139,7 +139,8 @@ namespace PartyEC.BusinessServices.Services
             List<Supplier> supplierlist = null;
             try
             {
-                supplierlist = _masterRepository.GetAllSuppliers();
+                supplierlist= _masterRepository.GetAllSuppliers();
+                supplierlist = supplierlist==null?null: supplierlist.OrderBy(sup=>sup.Name).ToList();
 
             }
             catch (Exception ex)
@@ -368,6 +369,7 @@ namespace PartyEC.BusinessServices.Services
             {
                 manufacturelist = _masterRepository.GetAllManufacturers();
 
+                manufacturelist = manufacturelist == null ? null : manufacturelist.OrderBy(manu => manu.Name).ToList();
             }
             catch (Exception)
             {

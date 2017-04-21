@@ -73,6 +73,7 @@ namespace PartyEC.UI.Controllers
 
                 //AttributeSet Drop down bind
                 List<AttributeSetViewModel> AttributeSetListVM = Mapper.Map<List<AttributeSet>, List<AttributeSetViewModel>>(_attributeSetBusiness.GetAllAttributeSet());
+                AttributeSetListVM = AttributeSetListVM == null ? null : AttributeSetListVM.OrderBy(attset => attset.Name).ToList();
                 selectListItem = null;
                 selectListItem = new List<SelectListItem>();
                 foreach (AttributeSetViewModel avm in AttributeSetListVM)

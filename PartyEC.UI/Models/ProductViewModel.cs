@@ -23,8 +23,8 @@ namespace PartyEC.UI.Models
         [StringLength(250)]
         public string SKU { get; set; }
 
-        [Required(ErrorMessage = "Please enter Enabled")]
-        [Display(Name = "Active(Yes/No)")]
+        [Required(ErrorMessage = "Please choose Active or not")]
+        [Display(Name = "Active (Yes/No)")]
         public Boolean Enabled { get; set; }
 
         [Required(ErrorMessage = "Please enter Unit")]
@@ -60,7 +60,8 @@ namespace PartyEC.UI.Models
         public int AttributeSetID { get; set; }
 
         public List<SelectListItem> AttributeSets { get; set; }
-        
+        [Required(ErrorMessage = "Please choose Free Delivery or not")]
+        [Display(Name = "FreeDelivery (Yes/No)")]
         public Boolean FreeDelivery { get; set; }
         public int TotalQty { get; set; }
         public string productDetailhdf { get; set; }
@@ -80,14 +81,14 @@ namespace PartyEC.UI.Models
         [Range(0, 9999999999999999.99)]
         public decimal? BaseSellingPrice { get; set; }
 
-        [Required(ErrorMessage = "Please enter Show Price  ")]
-        [Display(Name = "Show Price")]
+        [Required(ErrorMessage = "Please Choose Show Price or not  ")]
+        [Display(Name = "Show Price (Yes/No)")]
         public Boolean ShowPrice { get; set; }
         
         [Display(Name = "Tax Class")]
         public string TaxClass { get; set; }
        
-        [Display(Name = "Discount Price")]
+        [Display(Name = "Discount amount")]
         //[RegularExpression(@"[0-9]{0,}\.[0-9]{2}", ErrorMessage = "Must be a Decimal ie:(85.50)")]
         [Range(0, 9999999999999999.99)]
         public decimal? DiscountAmount { get; set; }

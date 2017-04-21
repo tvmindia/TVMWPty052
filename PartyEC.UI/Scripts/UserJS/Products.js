@@ -1,6 +1,7 @@
 ﻿var DataTables = {};
 $(document).ready(function () {
    
+
     $("#HeaderTagsPicker").on({
         focusout: function () {
             var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
@@ -243,7 +244,7 @@ $(document).ready(function () {
         clearform();
         ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
     });
-
+    
 });
 
 
@@ -262,7 +263,7 @@ function btnAddNewProduct() {
    // $('#tabproductDetails a').attr({ 'data-toggle': 'tab', 'href': '#productDetails' });
    // $('#tabproductList a').removeAttr('data-toggle href');
     $('#tabproductDetails a').trigger('click');
-    
+   
     $("#titleSpanPro").text('New Product');
    // $("#productDetails h4").text('New Product');
     $("#AttributeSetID").removeAttr('disabled');
@@ -313,7 +314,7 @@ function Edit(currentObj)
         var thisproduct = GetProduct(rowData.ID);
         if (thisproduct != null)
         {
-            $("#titleSpanPro").text(thisproduct.Name + '(' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ')');
+            $("#titleSpanPro").text(thisproduct.Name + '-(Type:' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ',Attribute set:'+'-'+')');
             //disables some drop downs
             
             ((thisproduct.ProductType == "C") && (thisproduct.ProductDetails.length > 1) ? $("#AttributeSetID").attr({ 'disabled': 'disabled' }) : $("#AttributeSetID").removeAttr('disabled'));
@@ -752,15 +753,14 @@ function productSaveSuccess(data, status, xhr)
             notyAlert('success', JsonResult.Record.StatusMessage);
             $(".productID").val(JsonResult.Record.ReturnValues);
             RefreshProducts();
-           
-            $("#titleSpanPro").text($("#Name").val() + '(' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ')');
+            $("#titleSpanPro").text($("#Name").val() + '-(Type:' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + '-' + ')');
+            //$("#titleSpanPro").text($("#Name").val() + '(' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ')');
             //$("#productDetails h4 titleSpanPro").text('New Product');
             RefreshUNRelatedProducts(JsonResult.Record.ReturnValues);
             break;
         case "ERROR":
             notyAlert('error', JsonResult.Record.StatusMessage);
             break;
-        
         default:
             notyAlert('error', JsonResult.Message);
             break;
@@ -1165,6 +1165,9 @@ function ProductTypeOnChange(curobj)
 {
     try
     {
+        if (curobj.value != "") {
+            notyAlert('warning', 'Once selected can not be changed!');
+        }
         $("#ProductTypehdf").val(curobj.value);
     }
     catch(e)
@@ -1685,11 +1688,3 @@ function ModelProductsRating(currentObj) {
     $('#btnmodelproductrating').trigger('click');
 }
 
-function ProductTypeOnChange(curobj)
-{
-    if (curobj.value != "")
-    {
-        notyAlert('warning', 'Once selected can not be changed!');
-    }
-    
-}
