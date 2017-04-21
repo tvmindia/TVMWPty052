@@ -407,12 +407,12 @@ background-image: -o-linear-gradient(top, #ffffff, #eeeeee);
     /*left:5%;*/
 }
 .Spantitle{
-    /*position: absolute;*/
+    position: absolute;
     width: 50%;
-    left: 7%;
+    left: 5%;
     font-weight: 600;
     color: #f46f25;
-    vertical-align:super;
+    /*vertical-align:super;*/
 }
 hr{
     border-top: 2px solid #dbd9d9;
