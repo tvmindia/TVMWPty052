@@ -10,7 +10,7 @@ $(document).ready(function () {
         autoclose: true,
         todayHighlight: true
     });
-    $('.Tom').hover(function () {
+    $('.Partynavbar').hover(function () {
         
         $('.dropdown-toggle', this).click();
         //$('.Tom').removeAttr('style');
