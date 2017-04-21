@@ -393,7 +393,7 @@ function countDays() {
         var date1 = new Date(fromdate);
         var date2 = new Date(todate);
         var diff = date2.getTime() - date1.getTime();
-        if (diff > 0) {
+        if (diff >= 0) {
             var ONE_DAY = 1000 * 60 * 60 * 24;
             $("#dayscount").text((Math.round(diff / ONE_DAY)+1) + ' Days');
         }
