@@ -1,7 +1,7 @@
 ﻿var DataTables = {};
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
-    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Add"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocations", "Add"); //ControllerName,id of the container div,Name of the action
     try {
         debugger;
         DataTables.SupplierLocationsTable = $('#tblSupplierLocations').DataTable(
@@ -24,8 +24,13 @@ $(document).ready(function () {
         notyAlert('error', e.message);
 
     }
+    InitializeEvents();
 });
+//------------------------------ Initialize Events------------------------------------------------------//
 
+function InitializeEvents() {
+    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocations", "SupplierLocationsList"); //ControllerName,id of the container div,Name of the action
+}
 function GetAllSupplierLocations() {
     try {
         debugger;
@@ -75,7 +80,7 @@ function Edit(currentObj) {
     //Tab Change on edit click
     debugger;
     $('#tabSupplierLocationsDetails').trigger('click');
-    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Edit");//ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocations", "Edit");//ControllerName,id of the container div,Name of the action
 
     var rowData = DataTables.SupplierLocationsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -99,7 +104,7 @@ function fillSupplierLocations(ID) {
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
     debugger;
-    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Add");
+    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocations", "Add");
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
@@ -151,7 +156,7 @@ function SaveSuccess(data, status, xhr) {
             notyAlert('success', i.Record.StatusMessage);
             var returnId = i.Record.ReturnValues
             fillSupplierLocations(returnId);
-            ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Edit");
+            ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocations", "Edit");
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -205,10 +210,13 @@ function clickdelete() {
 }
 
 //---------------------------------------Add New Click----------------------------------------------------//
-function btnAddNew() {
-    debugger;
-    $('#tabSupplierLocationsDetails').trigger('click');
-    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocationstab2", "Add"); //ControllerName,id of the container div,Name of the action
+function btnAddNew(id) {
+    if (id != 1)
+    {
+        $('#tabSupplierLocationsDetails').trigger('click');
+    }
+    
+    ChangeButtonPatchView("SupplierLocations", "btnPatchSupplierLocations", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
 }
 

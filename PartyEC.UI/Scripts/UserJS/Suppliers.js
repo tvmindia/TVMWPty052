@@ -1,7 +1,7 @@
 ﻿var DataTables = {};
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
-    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Add"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Supplier", "btnPatchSuppliers", "Add"); //ControllerName,id of the container div,Name of the action
     try {
         debugger; 
         DataTables.supplierTable = $('#tblsuppliers').DataTable(
@@ -23,6 +23,7 @@ $(document).ready(function () {
         notyAlert('error', e.message);
 
     }
+    InitializeEvents();
 });
 
 function GetAllSuppliers() {
@@ -66,14 +67,18 @@ function GetSupplierByID(id) {
         notyAlert('error', e.message);
     }
 }
+//------------------------------ Initialize Events------------------------------------------------------//
 
+function InitializeEvents() {
+    ChangeButtonPatchView("Supplier", "btnPatchSuppliers", "SuppliersList"); //ControllerName,id of the container div,Name of the action
+}
 
 //---------------------------------------Edit Suppliers--------------------------------------------------//
 function Edit(currentObj) {
     //Tab Change on edit click
     debugger;
     $('#tabSupplierDetails').trigger('click');
-    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Edit");//ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Supplier", "btnPatchSuppliers", "Edit");//ControllerName,id of the container div,Name of the action
  
     var rowData = DataTables.supplierTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -84,7 +89,7 @@ function Edit(currentObj) {
 function fillSupplier(ID) {
     debugger;
     ResetForm();
-    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Edit");
+    ChangeButtonPatchView("Supplier", "btnPatchSuppliers", "Edit");
     var thissupplier = GetSupplierByID(ID); //Binding Data  
     $("#ID").val(thissupplier.ID);
     $("#deleteId").val(thissupplier.ID);
@@ -163,7 +168,7 @@ function DeleteSuccess(data, status, xhr) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
             clearfields();
-            ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Add");
+            ChangeButtonPatchView("Supplier", "btnPatchSuppliers", "Add");
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -194,9 +199,12 @@ function clickdelete() {
 } 
 
 //---------------------------------------Add New Click----------------------------------------------------//
-function btnAddNew() {
-    $('#tabSupplierDetails').trigger('click');
-    ChangeButtonPatchView("Supplier", "btnPatchSupplierstab2", "Add"); //ControllerName,id of the container div,Name of the action
+function btnAddNew(id) {
+    if (id != 1)
+    {
+        $('#tabSupplierDetails').trigger('click');
+    }
+    ChangeButtonPatchView("Supplier", "btnPatchSuppliers", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
 }
 
