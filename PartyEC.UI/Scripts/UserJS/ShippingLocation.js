@@ -1,7 +1,7 @@
 ﻿var DataTables = {};
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
-    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Add"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocation", "Add"); //ControllerName,id of the container div,Name of the action
     try {
         debugger;       
         DataTables.ShippingLocationTable = $('#tblshippinglocation').DataTable(
@@ -23,6 +23,7 @@ $(document).ready(function () {
         notyAlert('error', e.message);
 
     }
+    InitializeEvents();
 });
 
 function GetAllShippingLocation() {
@@ -44,7 +45,11 @@ function GetAllShippingLocation() {
         notyAlert('error', e.message);
     }
 }
+//------------------------------ Initialize Events------------------------------------------------------//
 
+function InitializeEvents() {
+    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocation", "ShippingLocationsList"); //ControllerName,id of the container div,Name of the action
+}
 //---------------------------------------Get ShippingLocation Details By ID-------------------------------------//
 function GetShippingLocationByID(id) {
     try {
@@ -73,7 +78,7 @@ function Edit(currentObj) {
     //Tab Change on edit click
     debugger;
     $('#tabShippingLocationDetails').trigger('click');
-    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Edit");//ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocation", "Edit");//ControllerName,id of the container div,Name of the action
 
     var rowData = DataTables.ShippingLocationTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -84,7 +89,7 @@ function Edit(currentObj) {
 function fillShippingLocation(ID) {
     debugger;
     ResetForm();
-    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Edit");
+    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocation", "Edit");
     var thisShippingLocation = GetShippingLocationByID(ID); //Binding Data  
     $("#ID").val(thisShippingLocation.ID);
     $("#Shipping_locId").val(thisShippingLocation.ID);
@@ -165,7 +170,7 @@ function DeleteSuccess(data, status, xhr) {
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
             clearfields();
-            ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Add");
+            ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocation", "Add");
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -196,9 +201,13 @@ function clickdelete() {
 }
 
 //---------------------------------------Add New Click----------------------------------------------------//
-function btnAddNew() {
-    $('#tabShippingLocationDetails').trigger('click');
-    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocationtab2", "Add"); //ControllerName,id of the container div,Name of the action
+function btnAddNew(id) {
+    if (id != 1)
+    {
+        $('#tabShippingLocationDetails').trigger('click');
+    }
+   
+    ChangeButtonPatchView("ShippingLocation", "btnPatchShippingLocation", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
 }
 

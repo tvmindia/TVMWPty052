@@ -2,6 +2,7 @@
 
 @{
     ViewBag.Title = "Attributes";
+    ViewBag.PageName = "Attributes";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 @section styles {
@@ -20,9 +21,9 @@
                 </div>
              </ul>            
         </div>
-        <div class="panel-body" style="min-height:550px;padding:0;">
+        <div class="panel-body" style="min-height:500px;padding:0;">
             <div class="tab-content">
-                <div class="tab-pane fade in active" id="attibutesList" style="padding:1%">
+                <div class="tab-pane fade in active" id="attibutesList" style="padding:1%;">
                 
                                 
                     @*table*@
@@ -51,17 +52,21 @@
                     <div class="col-md-12" id="InsertAttribute" style="padding:0;">
                         <div class="col-md-2" style="padding:0;">
                             @* left hand side Tab  *@
-                                <ul class="nav nav-tabs nav-stacked Sidebar_Party" style="min-height:550px;">
+                           
+                            <div class="col-md-12 " style="padding:0;">
+                                <ul class="nav nav-tabs nav-stacked Sidebar_Party" style="min-height:500px;">
                                     <li class="liHead"><a disabled>&nbsp;</a></li>
                                     <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General </a></li>
                                     
                                 </ul>
+
+                            </div>
                         </div>
                         <div class="col-lg-9">
-                            <h4 style="max-width:50%"><span class="fa fa-briefcase" style="font-size: 28px;color: #f3a70d;"></span><span> </span><span id="titleSpanPro" class="Spantitle">Attribute Details</span></h4>
+                            <h4 style="max-width:50%;padding:1%;" ><span class="fa fa-crosshairs" style="font-size: 16px;color: #f46f25;"></span><span> </span><span id="titleSpanPro" class="Spantitle">Attribute Details</span></h4>
                             <hr />
 
-                            <div class="col-md-12">
+                            <div class="col-md-12 ">
                                 @using (Ajax.BeginForm("InsertUpdateAttributes", "Attributes", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnSuccess = "attributeSaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form",id="formIns_Up" }))
                             {
                                     @Html.AntiForgeryToken()
