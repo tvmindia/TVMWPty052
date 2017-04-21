@@ -475,3 +475,6 @@ font-size:16px;
     cursor:default;
     background:#fff9f1!important;
 }
+/*.open> a:hover{
+    background:rgba(36, 34, 34, 0.45);
+}*/

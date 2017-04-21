@@ -95,7 +95,7 @@
                     </div>
                 </div>
                 <div class="tab-pane fade" id="productDetails">
-                    <div class="container-fluid" style="padding:0;">
+                    <div class="col-md-12" style="padding:0;">
                        
                         @*EditArea*@ 
                         <div class="col-md-2" style="padding:0;">
@@ -108,18 +108,18 @@
 
                                 @*<div class="col-md-12" style="height:13px"></div>*@
                                 @*<div class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down" aria-hidden="true"></i> Product Info</div>
-            <div class="col-md-12 Sidebar_Party">*@
+                               <div class="col-md-12 Sidebar_Party">*@
                                 <ul class="nav nav-tabs nav-stacked Sidebar_Party" id="LHSNavbarProductDetails" style="min-height:925px;">
                                     <li class="liHead"><a disabled><i class="fa fa-arrow-down" aria-hidden="true"></i> Configuration</a></li>
-                                    <li onclick="RenderContentForPrice()"><a href="#price" data-toggle="tab" id="tabPrice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Settings</a></li>
+                                    <li onclick="ShowProductDetalsToolBox()"><a href="#settings" data-toggle="tab" id="tabsettings">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Settings</a></li>
                                     <li class="liHead"><a disabled><i class="fa fa-arrow-down" aria-hidden="true"></i> Product Info</a></li>
                                     <li id="GeneralLI" onclick="ShowProductDetalsToolBox()" class="active"><a href="#general" data-toggle="tab" id="tabGeneral">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General <span class="label label-danger">E</span></a></li>
                                     <li onclick="RenderContentForPrice()"><a href="#price" data-toggle="tab" id="tabPrice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price</a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#discription" data-toggle="tab" id="tabDiscrption">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Discription</a></li>
                                     <li onclick="RenderContentForInventory()"><a href="#inventory" data-toggle="tab" id="tabInventory">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inventory <span class="label label-danger">E</span></a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#productTags" data-toggle="tab" id="tabproducttags">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Product Tags <span class="label label-danger">E</span></a></li>
-                                    <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Related Products</a></li>
                                     <li class="liHead"><a disabled><i class="fa fa-arrow-down" aria-hidden="true"></i> Additional Product Info</a></li>
+                                    <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Related Products</a></li>
                                     <li onclick="RenderContentForImages()"><a href="#images" data-toggle="tab" id="tabImages">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Images</a></li>
                                     <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other Attributes</a></li>
                                     <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Associated Products</a></li>
@@ -129,17 +129,17 @@
 
                                 @*</div>*@
                                 @*<div class="col-md-12" style="height:13px"></div>
-            <div class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down"></i> Additional Product Info</div>
-            <div class="col-md-12 Sidebar_Party" style="min-height:500px;">
-                <ul class="nav nav-tabs nav-stacked" id="LHSNavbarProductDetails">
-                    <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
-                    <li onclick="RenderContentForImages()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
-                    <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
-                    <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
-                    <li onclick="BindProductReviews()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
-                </ul>
+                                <div class="SidebarBlock col-md-12"> <i class="fa fa-arrow-down"></i> Additional Product Info</div>
+                                <div class="col-md-12 Sidebar_Party" style="min-height:500px;">
+                                    <ul class="nav nav-tabs nav-stacked" id="LHSNavbarProductDetails">
+                                <li onclick="HideProductDetalsToolBox()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">Related Products</a></li>
+                                <li onclick="RenderContentForImages()"><a href="#images" data-toggle="tab" id="tabImages">Images</a></li>
+                                <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">Other Attributes</a></li>
+                                <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">Associated Products</a></li>
+                                <li onclick="BindProductReviews()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">Ratings & Reviews</a></li>
+                            </ul>
 
-            </div>*@
+                        </div>*@
                             @*</div>*@
                         </div>
                        
@@ -147,15 +147,47 @@
                             <div class="col-md-12">
 
 
-                                <h4 style="max-width:50%"><span class="fa fa-briefcase" style="font-size: 28px;color: #f3a70d;"></span><span> </span><span id="titleSpanPro" class="Spantitle"></span></h4>
+                                <h4 style="max-width:50%"><span class="fa fa-briefcase" style="font-size: 28px;color: #f46f25;"></span><span> </span><span id="titleSpanPro" class="Spantitle"></span></h4>
+
                                 <hr />
 
                                 <div class="col-md-12">
-                                    @using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "productform" }))
-                            {
+                                    @using (Ajax.BeginForm("ProductInsertUpdate", "Products", new AjaxOptions { HttpMethod = "POST", OnSuccess = "productSaveSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "", OnBegin="", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "productform" }))
+                                    {
                                         @Html.AntiForgeryToken()
 
                                         <div class="tab-content productTabContent">
+                                            <div class="tab-pane fade" id="settings">
+                                              
+
+                                              
+                                                <div class="form-group">
+                                                    <label for="ProductType" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ProductType)<span class="required">*</span></label>
+                                                    <div class="col-lg-4">
+                                                        @{
+                                                            List<SelectListItem> productTypeList = new List<SelectListItem>();
+                                                            productTypeList.Add(new SelectListItem
+                                                            { Text = "Configurable", Value = "C" });
+                                                            productTypeList.Add(new SelectListItem
+                                                            { Text = "Simple", Value = "S" });
+                                                        }
+
+                                                        @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange(this)", value = -1 })
+                                                        @Html.HiddenFor(model => model.ProductType, htmlAttributes: new { @class = "control-label col-lg-2", id = "ProductTypehdf", Value = "" })
+                                                        @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+
+                                                <div class="form-group">
+                                                    @Html.LabelFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                                    <div class="col-lg-4">
+                                                        @*@Html.EditorFor(model => model.AttributeSetID, new { htmlAttributes = new { @class = "form-control" } })*@
+                                                        @Html.DropDownListFor(model => model.AttributeSetID, Model.AttributeSets, "--Select AttributeSets--", new { @class = "form-control", @onchange = "attributeSetOnChange(this)" })
+                                                        @Html.HiddenFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2", id = "AttributeSetIDhdf", Value = "" })
+                                                        @Html.ValidationMessageFor(model => model.AttributeSetID, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
                                             <div class="tab-pane fade in active" id="general">
                                                 <!--Edit form column-->
 
@@ -168,7 +200,7 @@
                                                         @Html.HiddenFor(model => model.ImageID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
                                                         @Html.HiddenFor(model => model.ProductDetailObj.ID, htmlAttributes: new { @class = "control-label col-lg-2", Value = "0", id = "productdetailsID" })
                                                         @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger secGeneral",Value="ST" })
                                                     </div>
                                                 </div>
 
@@ -244,32 +276,9 @@
                                                     </div>
                                                 </div>
 
-                                                <div class="form-group">
-                                                    <label for="ProductType" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ProductType)<span class="required">*</span></label>
-                                                    <div class="col-lg-4">
-                                                        @{
-                                                    List<SelectListItem> productTypeList = new List<SelectListItem>();
-                                                    productTypeList.Add(new SelectListItem
-                                                    { Text = "Configurable", Value = "C" });
-                                                    productTypeList.Add(new SelectListItem
-                                                    { Text = "Simple", Value = "S" });
-                                                        }
+                                           
 
-                                                        @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange(this)", value = -1 })
-                                                        @Html.HiddenFor(model => model.ProductType, htmlAttributes: new { @class = "control-label col-lg-2", id = "ProductTypehdf", Value = "" })
-                                                        @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    @Html.LabelFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2" })
-                                                    <div class="col-lg-4">
-                                                        @*@Html.EditorFor(model => model.AttributeSetID, new { htmlAttributes = new { @class = "form-control" } })*@
-                                                        @Html.DropDownListFor(model => model.AttributeSetID, Model.AttributeSets, "--Select AttributeSets--", new { @class = "form-control", @onchange = "attributeSetOnChange(this)" })
-                                                        @Html.HiddenFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2", id = "AttributeSetIDhdf", Value = "" })
-                                                        @Html.ValidationMessageFor(model => model.AttributeSetID, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
+                                               
 
 
                                                 <div class="form-group">

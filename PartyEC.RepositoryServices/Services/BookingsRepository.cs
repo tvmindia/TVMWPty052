@@ -24,7 +24,7 @@ namespace PartyEC.RepositoryServices.Services
         } 
         #endregion DataBaseFactory
 
-        public List<Bookings> GetCustomerBookings(int customerID)
+        public List<Bookings> GetCustomerBookings(int customerID,bool Ishistory)
         {
             List<Bookings> BookingsList = null;
             try
@@ -40,6 +40,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[GetCustomerBookings]";
                         cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID;
+                        cmd.Parameters.Add("@Ishistory", SqlDbType.Bit).Value = Ishistory;
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {

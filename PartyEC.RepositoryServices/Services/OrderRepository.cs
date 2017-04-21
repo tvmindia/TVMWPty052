@@ -461,7 +461,7 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-        public List<Order> GetCustomerOrders(int CustomerID)
+        public List<Order> GetCustomerOrders(int CustomerID,bool Ishistory)
         {
 
             List<Order> OrderHeaderList = null;
@@ -478,6 +478,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[GetCustomerOrders]";
                         cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CustomerID;
+                        cmd.Parameters.Add("@Ishistory", SqlDbType.Bit).Value = Ishistory;
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {

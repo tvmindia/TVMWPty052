@@ -62,7 +62,7 @@ $(document).ready(function () {
                { "data": "SupplierName", "defaultContent": "<i>-</i>" },
                { "data": "SKU", "defaultContent": "<i>-</i>" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
-               { "data": "Qty", "defaultContent": "<i>-</i>" },
+               { "data": "TotalQty", "defaultContent": "<i>-</i>" },
                { "data": "StockAvailable", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="ModelProductsRating(this)">Rating</a>' },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
@@ -236,10 +236,10 @@ $(document).ready(function () {
         ChangeButtonPatchView("Products", "ProductToolBox", "Add"); //ControllerName,id of the container div,Name of the action
     });
     $("#tabproductDetails").click(function () {
-        $("#productDetails h4").text('New Product');
+        $("#titleSpanPro").text('New Product');
         $("#AttributeSetID").removeAttr('disabled');
         $("#ProductType").removeAttr('disabled');
-        $('#tabGeneral').trigger('click');
+        $('#tabsettings').trigger('click');
         clearform();
         ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
     });
@@ -262,10 +262,12 @@ function btnAddNewProduct() {
    // $('#tabproductDetails a').attr({ 'data-toggle': 'tab', 'href': '#productDetails' });
    // $('#tabproductList a').removeAttr('data-toggle href');
     $('#tabproductDetails a').trigger('click');
-    $("#productDetails h4").text('New Product');
+    
+    $("#titleSpanPro").text('New Product');
+   // $("#productDetails h4").text('New Product');
     $("#AttributeSetID").removeAttr('disabled');
     $("#ProductType").removeAttr('disabled');
-    $('#tabGeneral').trigger('click');
+    $('#tabsettings').trigger('click');
     clearform();
     ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
 }
@@ -299,7 +301,7 @@ function Edit(currentObj)
     //$('#tabproductDetails a').trigger('click');
 
     //Make General tab active
-    $('#tabGeneral').trigger('click');
+    $('#tabsettings').trigger('click');
     //$("#LHSNavbarProductDetails li").removeClass('active');
    // $("#LHSNavbarProductDetails li.active").removeClass('active');
    // $("#LHSNavbarProductDetails li").first().addClass('active');
@@ -750,7 +752,10 @@ function productSaveSuccess(data, status, xhr)
             notyAlert('success', JsonResult.Record.StatusMessage);
             $(".productID").val(JsonResult.Record.ReturnValues);
             RefreshProducts();
-            $("#productDetails h4").text($("#Name").val() + '(' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ')');
+           
+            $("#titleSpanPro").text($("#Name").val() + '(' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ')');
+            //$("#productDetails h4 titleSpanPro").text('New Product');
+            RefreshUNRelatedProducts(JsonResult.Record.ReturnValues);
             break;
         case "ERROR":
             notyAlert('error', JsonResult.Record.StatusMessage);
@@ -772,14 +777,32 @@ function onbeginProductSave()
 function ProductSave()
 {
     $('#btnProductSubmit').trigger('click');
+
+    //Bubble logic should be here
+
+    if($('.field-validation-error').length>0)
+    {
+        notyAlert('error', 'Need to fill all mandatory fields to save the product info!');
+    }
+    //$('.field-validation-error').each(function () {
+
+    //    var ab = $(this);
+
+    //}); 
+
 }
 
 function clearform()
 {
     //Clear form
-    $('#productform')[0].reset();
+   
     //Clear Hidden form fields
     //$("#productform input:hidden").val('').trigger('change');
+    var validator = $("#productform").validate();
+    $('#productform').find('.field-validation-error span').each(function () {
+        validator.settings.success($(this));
+    });
+    $('#productform')[0].reset();
     $(".productID").val(0);
     $("#productdetailsID").val(0);
     $("#productDetailhdf").val('');
@@ -928,7 +951,7 @@ function RenderContentsForAttributes()
                     //append dynamic html to div from partialview
                     $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>No Attributes Available for this product.</p></div></div>');
                 }
-                
+ 
             }
             else {
                 //clear otherattributes div
@@ -1660,4 +1683,13 @@ function ModelProductsRating(currentObj) {
     }//if
 
     $('#btnmodelproductrating').trigger('click');
+}
+
+function ProductTypeOnChange(curobj)
+{
+    if (curobj.value != "")
+    {
+        notyAlert('warning', 'Once selected can not be changed!');
+    }
+    
 }

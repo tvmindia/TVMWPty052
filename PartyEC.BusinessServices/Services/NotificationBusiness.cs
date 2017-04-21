@@ -35,36 +35,43 @@ namespace PartyEC.BusinessServices.Services
                 switch(IsMobile)
                 {
                     case true:
-                        notificationList = _notificationRepository.GetAllNotifications().Where(noti => noti.Type == "Mobile").ToList();
+                        notificationList = _notificationRepository.GetAllNotifications();
+                        notificationList = notificationList==null ?null: notificationList.Where(noti => noti.Type == "Mobile").ToList();
                         break;
                     case false:
-                        notificationList = _notificationRepository.GetAllNotifications().Where(noti=>noti.Type == "Email").ToList();
+                        notificationList = _notificationRepository.GetAllNotifications();
+                        notificationList = notificationList == null?null: notificationList.Where(noti=>noti.Type == "Email").ToList();
                         break;
                 }
                 if ((!string.IsNullOrEmpty(fromdate)) && (!string.IsNullOrEmpty(todate)))
                 {
                     //DateTime f = DateTime.Parse(fromdate).Date;
                   //  DateTime t = DateTime.Parse(todate).Date;
-                    
-                     notificationList = (from k in notificationList
+                 
+                     notificationList = notificationList==null?null:(from k in notificationList
                                         where k.logDetailsObj.CreatedDate.Value.Date >= DateTime.Parse(fromdate).Date
                                         && k.logDetailsObj.CreatedDate.Value.Date <= DateTime.Parse(todate).Date
                                         select k).ToList();
                 }
-                filteredList = new List<Notification>();
-                foreach (Notification notif in notificationList)
+                
+                if(notificationList!=null)
                 {
-                    //takes only first few characters for the message
-                    notif.Message = notif.Message!=null?new string(notif.Message.Take(50).ToArray()):null;
-                    filteredList.Add(notif);
+                    filteredList = new List<Notification>();
+                    foreach (Notification notif in notificationList)
+                    {
+                        //takes only first few characters for the message
+                        notif.Message = notif.Message != null ? new string(notif.Message.Take(50).ToArray()) : null;
+                        filteredList.Add(notif);
+                    }
                 }
+              
 
             }
             catch (Exception ex)
             {
             }
             //sort by descending date
-            return filteredList.OrderByDescending(fl=>fl.logDetailsObj.CreatedDate).ToList();
+            return filteredList==null?null:filteredList.OrderByDescending(fl=>fl.logDetailsObj.CreatedDate).ToList();
         }
 
 

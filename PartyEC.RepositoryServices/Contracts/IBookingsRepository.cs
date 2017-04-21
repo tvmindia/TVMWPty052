@@ -9,6 +9,6 @@ namespace PartyEC.RepositoryServices.Contracts
 {
     public interface IBookingsRepository
     {
-        List<Bookings> GetCustomerBookings(int customerID);
+        List<Bookings> GetCustomerBookings(int customerID,bool Ishistory);
     }
 }

@@ -42,6 +42,7 @@ namespace PartyEC.DataAccessObject.DTO
         public int LinkID { get; set; }
         public int CategoryID { get; set; }
         public float PositionNo { get; set; }
+        public int TotalQty { get; set; }
         public List<ProductDetail> ProductDetails { get; set; }
         public ProductDetail ProductDetailObj { get; set; }
 

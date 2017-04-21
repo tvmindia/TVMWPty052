@@ -331,6 +331,7 @@ namespace PartyEC.RepositoryServices.Services
                                 myAttribute.Name = sdr["Name"].ToString();
                                 myAttribute.Caption = sdr["Caption"].ToString();
                                 myAttribute.DataType = sdr["AttributeType"].ToString();
+                                myAttribute.Isconfigurable = (bool)sdr["ConfigurableYN"];
                                 myProductAttributeList.Add(myAttribute);
                             }
                         }

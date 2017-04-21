@@ -14,7 +14,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus UpdateQuotations(Quotations quotationsObj);
 
         //App
-        List<Quotations> GetCustomerQuotations(int CustomerID);
+        List<Quotations> GetCustomerQuotations(int CustomerID,bool Ishistory);
 
     }
 }
