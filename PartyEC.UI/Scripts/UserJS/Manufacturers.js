@@ -1,7 +1,7 @@
 ﻿var DataTables = {};
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
-    ChangeButtonPatchView("Manufacturers", "btnPatchManufacturerstab2", "Add"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Manufacturers", "btnPatchManufacturers", "Add"); //ControllerName,id of the container div,Name of the action
     try {       
         DataTables.ManufacturersTable = $('#tblManufacturers').DataTable(
          {
@@ -31,8 +31,13 @@ $(document).ready(function () {
         notyAlert('error', e.message);
 
     }
+    InitializeEvents();
 });
+//------------------------------ Initialize Events------------------------------------------------------//
 
+function InitializeEvents() {
+    ChangeButtonPatchView("Manufacturers", "btnPatchManufacturers", "ManufacturersList"); //ControllerName,id of the container div,Name of the action
+}
 function GetAllManufacturers() {
     try {
         debugger;
@@ -82,7 +87,7 @@ function Edit(currentObj) {
     //Tab Change on edit click
     debugger;
     $('#tabManufacturersDetails').trigger('click');
-    ChangeButtonPatchView("Manufacturers", "btnPatchManufacturerstab2", "Edit");//ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Manufacturers", "btnPatchManufacturers", "Edit");//ControllerName,id of the container div,Name of the action
 
     var rowData = DataTables.ManufacturersTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -103,7 +108,7 @@ function fillManufacturers(ID) {
 //---------------------------------------Clear Fields-----------------------------------------------------//
 function clearfields() {
     debugger;
-    ChangeButtonPatchView("Manufacturers", "btnPatchManufacturerstab2", "Add");
+    ChangeButtonPatchView("Manufacturers", "btnPatchManufacturers", "Add");
     $("#ID").val("0")//ID is zero for New
     $("#deleteId").val("0")
     $("#Name").val("")
@@ -153,7 +158,7 @@ function SaveSuccess(data, status, xhr) {
             notyAlert('success', i.Record.StatusMessage);
             var returnId = i.Record.ReturnValues
             fillManufacturers(returnId);
-            ChangeButtonPatchView("Manufacturers", "btnPatchManufacturerstab2", "Edit");
+            ChangeButtonPatchView("Manufacturers", "btnPatchManufacturers", "Edit");
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
@@ -207,10 +212,12 @@ function clickdelete() {
 }
 
 //---------------------------------------Add New Click----------------------------------------------------//
-function btnAddNew() {
-    debugger;
-    $('#tabManufacturersDetails').trigger('click');
-    ChangeButtonPatchView("Manufacturers", "btnPatchManufacturerstab2", "Add"); //ControllerName,id of the container div,Name of the action
+function btnAddNew(id) {
+    if (id != 1)
+    {
+        $('#tabManufacturersDetails').trigger('click');
+    }
+    ChangeButtonPatchView("Manufacturers", "btnPatchManufacturers", "Add"); //ControllerName,id of the container div,Name of the action
     clearfields();
 }
 

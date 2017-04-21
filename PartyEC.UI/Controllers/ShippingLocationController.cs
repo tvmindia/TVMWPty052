@@ -160,6 +160,11 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
+                case "ShippingLocationsList":
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Event = "btnAddNew()";
+                    ToolboxViewModelObj.addbtn.Title = "Add New";
+                    break;
                 case "Edit":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Event = "clickdelete()";

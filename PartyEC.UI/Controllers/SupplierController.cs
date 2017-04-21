@@ -161,6 +161,11 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
+                case "SuppliersList":
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Event = "btnAddNew()";
+                    ToolboxViewModelObj.addbtn.Title = "Add New";
+                    break;
                 case "Edit":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Event = "clickdelete()";
@@ -172,6 +177,7 @@ namespace PartyEC.UI.Controllers
 
                     ToolboxViewModelObj.resetbtn.Visible = true;
                     ToolboxViewModelObj.resetbtn.Event = "btnreset()";
+                    ToolboxViewModelObj.resetbtn.Title = "Reset";
 
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";
