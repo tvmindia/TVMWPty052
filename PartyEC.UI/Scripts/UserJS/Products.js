@@ -751,6 +751,7 @@ function productSaveSuccess(data, status, xhr)
             $(".productID").val(JsonResult.Record.ReturnValues);
             RefreshProducts();
             $("#productDetails h4").text($("#Name").val() + '(' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ')');
+            RefreshUNRelatedProducts(JsonResult.Record.ReturnValues);
             break;
         case "ERROR":
             notyAlert('error', JsonResult.Record.StatusMessage);
@@ -928,7 +929,7 @@ function RenderContentsForAttributes()
                     //append dynamic html to div from partialview
                     $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>No Attributes Available for this product.</p></div></div>');
                 }
-                
+ 
             }
             else {
                 //clear otherattributes div
