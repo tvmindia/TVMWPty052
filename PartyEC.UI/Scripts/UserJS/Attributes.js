@@ -146,7 +146,20 @@ function fillAttributes(ID)
     if (thisattribute.ComparableYN == false)
     { $("#ComparableYN").prop('checked', false); }
     else { $("#ComparableYN").prop('checked', true); }
-    
+    if (thisattribute.EntityType == "Rating")
+    {
+        $("#AttributeType").attr('disabled', true);
+        $("#married-false").prop('checked', true);
+        $("#married-false").prop('disabled', true);
+        $("#married-true").prop('disabled', true);
+        $("#CSValues").attr('disabled', true);
+    }
+    if (thisattribute.EntityType == "Order")
+    {
+        $("#married-false").prop('checked', true);
+        $("#married-false").prop('disabled', true);
+        $("#married-true").prop('disabled', true);
+    }
     DataTypeOnChange();  
 }
 //-----------------------------------------Reset Validation Messages--------------------------------------//
@@ -226,6 +239,13 @@ function entityTypeOnChange() {
         $("#married-true").prop('disabled', true);
         $("#CSValues").attr('disabled', true);
     }
+    else if(value=="Order")
+    {
+    $("#married-false").prop('checked', true);
+    $("#married-false").prop('disabled', true);
+    $("#married-true").prop('disabled', true);
+    $("#AttributeType").attr('disabled', false);
+    }
     else
     {
         $("#AttributeType").val("");
@@ -294,6 +314,7 @@ function attributeSaveSuccess(data, status, xhr) {
             notyAlert('success', i.Record.StatusMessage);
             //clearfields();
             //goBack();
+
             break;
         case "Error":
             notyAlert('error', i.Record.StatusMessage);
