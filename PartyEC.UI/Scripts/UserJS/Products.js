@@ -89,7 +89,7 @@ $(document).ready(function () {
                },
                {
                    "render": function (data, type, row) {
-                       return (data == true ? "In Stock" : "Empty");
+                       return (data == true ? "In Stock" : "Out Of Stock");
                    },
                    "targets": 9
                }
@@ -371,9 +371,20 @@ function Edit(currentObj)
             $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0?thisproduct.ProductDetails[0].DiscountEndDate:""));
             $("#ShortDescription").val(thisproduct.ShortDescription);
             $("#LongDescription").val(thisproduct.LongDescription);
+
+            debugger;
+
             if (thisproduct.StockAvailable == true)
-            { $("#StockAvailable").prop('checked', true); }
-            else { $("#StockAvailable").prop('checked', false); }
+            {
+                $("#StockAvailable").val("true");
+            }
+            else {
+                $("#StockAvailable").val("false");
+            }
+
+         
+        
+
           
             $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
             $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
@@ -1015,11 +1026,31 @@ function ShowProductDetalsToolBox()
     ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
   
 }
+
+function GetOtherAttributeValues(id) {
+    try {
+        var data = { "id": id };
+        var ds = {};
+        ds = GetDataFromServer("Products/GetAttributeValuesByProduct/", data);
+
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
 function RenderContentsForAttributes()
 {
-   
- 
-    try {
+   try {
        
         var atsetID = $("#AttributeSetIDhdf").val();
         var proid = $('.productID').val();
@@ -1044,6 +1075,18 @@ function RenderContentsForAttributes()
                         autoclose: true,
                         todayHighlight: true
                     });
+                    //values bind in dynamic input controls
+                    var thisattr = GetOtherAttributeValues(proid);
+                    if (thisattr)
+                    {
+                        for (var at = 0; at < thisattr.length; at++)
+                        {
+                           
+                            $("#" + thisattr[at].Name).val(thisattr[at].Value);
+                        }
+                    }
+
+
                     ChangeButtonPatchView("Products", "ProductToolBox", "OASave"); //ControllerName,id of the container div,Name of the action
                 }
                 else
@@ -1817,24 +1860,3 @@ function ModelProductsRating(currentObj) {
 }
 
 
-function GetOtherAttributeValues()
-{
-    try {
-        var data = { "id": id };
-        var ds = {};
-        ds = GetDataFromServer("Products/GetAttributeValuesByProduct/", data);
-
-        if (ds != '') {
-            ds = JSON.parse(ds);
-        }
-        if (ds.Result == "OK") {
-            return ds.Records;
-        }
-        if (ds.Result == "ERROR") {
-            notyAlert('error', ds.Message);
-        }
-    }
-    catch (e) {
-        notyAlert('error', e.message);
-    }
-}
