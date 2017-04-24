@@ -259,6 +259,7 @@ $(document).ready(function () {
         $('#tabsettings').trigger('click');
         clearform();
         ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
+        DisEnableSectionAdditional();
     });
     
 });
@@ -287,6 +288,7 @@ function btnAddNewProduct() {
     $('#tabsettings').trigger('click');
     clearform();
     ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
+    DisEnableSectionAdditional();
 }
 function goback() {
    
@@ -302,7 +304,8 @@ function goback() {
 
 function RenderContentForImages()
 {
-  
+    // HideProductDetalsToolBox();
+    ChangeButtonPatchView("Products", "ProductToolBox", "Back");
     BindImages();
     BindStickers();
 }
@@ -331,7 +334,8 @@ function Edit(currentObj)
         if (thisproduct != null)
         {
             $("#titleSpanPro").text(thisproduct.Name);
-            $("#spandetail").text('(Type:' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((thisproduct.AttributeSetName != null) && (thisproduct.AttributeSetName != "") ? thisproduct.AttributeSetName : 'N/A') + ')');
+            $("#spandetailType").text((thisproduct.ProductType == "S" ? 'Simple' : 'Configurable'));
+            $("#spandetailSet").text(((thisproduct.AttributeSetName != null) && (thisproduct.AttributeSetName != "") ? thisproduct.AttributeSetName : 'N/A') + '');
             //$("#titleSpanPro").text(thisproduct.Name + '-(Type:' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((thisproduct.AttributeSetName != "") && (thisproduct.AttributeSetName != null)?thisproduct.AttributeSetName:'N/A') + ')');
             //disables some drop downs
             
@@ -394,11 +398,30 @@ function Edit(currentObj)
             $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
             //RefreshRelatedProducts(thisproduct.ID);
             RefreshUNRelatedProducts(thisproduct.ID);
+            EnableSectionAdditional();
         }
        
     }
 
    
+}
+function EnableSectionAdditional(){
+    $('#additioanlLi').show(100);
+    $('#additioanlRelatedLi').show(200);
+    $('#additioanlImageLi').show(300);
+    $('#additioanlAttributesLi').show(400);
+    $('#additioanlProdAttributeLi').show(500);
+    $('#additioanlReviewsLi').show(600);
+
+}
+function DisEnableSectionAdditional() {
+    $('#additioanlLi').hide(600);
+    $('#additioanlRelatedLi').hide(500);
+    $('#additioanlImageLi').hide(400);
+    $('#additioanlAttributesLi').hide(300);
+    $('#additioanlProdAttributeLi').hide(200);
+    $('#additioanlReviewsLi').hide(100);
+
 }
 function BindStickers()
 {
@@ -784,6 +807,7 @@ function productSaveSuccess(data, status, xhr)
             $("#titleSpanPro").text($("#Name").val());
             $("#spandetail").text('(Type:' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((JsonResult.Record.ReturnValues.attributesetname != null) && (JsonResult.Record.ReturnValues.attributesetname != "") ? JsonResult.Record.ReturnValues.attributesetname : 'N/A') + ')');
             RefreshUNRelatedProducts(JsonResult.Record.ReturnValues.productid);
+            EnableSectionAdditional();
             break;
         case "ERROR":
             notyAlert('error', JsonResult.Record.StatusMessage);

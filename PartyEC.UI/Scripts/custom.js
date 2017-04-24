@@ -13,7 +13,7 @@ $(document).ready(function () {
     $('.Partynavbar').hover(function () {
         
         $('.dropdown-toggle', this).click();
-        //$('.Tom').removeAttr('style');
+        //$('.Partynavbar').removeAttr('style');
         //$(this).css('background', 'rgba(36, 34, 34, 0.45)');
     });
     $('input[type="date"]').datepicker({
