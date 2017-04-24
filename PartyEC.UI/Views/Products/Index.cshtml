@@ -385,7 +385,7 @@
                                             <div class="tab-pane fade" id="discription">
                                                 <div class="form-group">
                                                     <label for="ShortDescription" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ShortDescription)<span class="required">*</span></label>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-8">
                                                         @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
                                                         @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
                                                     </div>
@@ -393,9 +393,9 @@
 
                                                 <div class="form-group">
                                                     <label for="LongDescription" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.LongDescription)<span class="required">*</span></label>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-8">
                                                      
-                                                        @Html.TextAreaFor(model => model.LongDescription, new { @class = "form-control", @rows = 12, placeholder = "Rich text allowed here.." })
+                                                        @Html.TextAreaFor(model => model.LongDescription, new { @class = "form-control", @rows = 20, placeholder = "Rich text allowed here.." })
                                                         @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>

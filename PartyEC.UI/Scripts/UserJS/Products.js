@@ -207,7 +207,7 @@ $(document).ready(function () {
     }
 
     try {
-
+        
         DataTables.AssociatedProductsTable = $('#tblAssociatedProducts').DataTable(
          {
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
@@ -229,7 +229,7 @@ $(document).ready(function () {
              ],
              columnDefs: [
               {
-                  "render": function (data, type, row) {
+                   "render": function (data, type, row) {
                       var returnstring='';
                       if (data)
                       {
@@ -245,6 +245,8 @@ $(document).ready(function () {
              ]
             
          });
+
+     
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -343,8 +345,8 @@ function Edit(currentObj)
             //$("#titleSpanPro").text(thisproduct.Name + '-(Type:' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((thisproduct.AttributeSetName != "") && (thisproduct.AttributeSetName != null)?thisproduct.AttributeSetName:'N/A') + ')');
             //disables some drop downs
             
-            ((thisproduct.ProductType == "C") && (thisproduct.ProductDetails.length > 1) ? $("#AttributeSetID").attr({ 'disabled': 'disabled' }) : $("#AttributeSetID").removeAttr('disabled'));
-            
+         //   ((thisproduct.ProductType == "C") && (thisproduct.ProductDetails.length > 1) ? $("#AttributeSetID").attr({ 'disabled': 'disabled' }) : $("#AttributeSetID").removeAttr('disabled'));
+            $("#AttributeSetID").attr({ 'disabled': 'disabled' });
             $("#ProductType").attr({ 'disabled': 'disabled' });
             $("#Name").val(thisproduct.Name);
             $("#SKU").val(thisproduct.SKU);
@@ -1524,6 +1526,12 @@ function AssociatedProductDelete(this_Obj)
 }
 function EditAssocProduct(currentObj) {
     debugger;
+
+    //$(currentObj).closest('tr').removeClass('selected');
+    //if ($('#tblAssociatedProducts').hasClass('selected')) {
+    //    $('#tblAssociatedProducts').removeClass('selected');
+    //}
+    //$(currentObj).closest('tr').toggleClass('selected');
     var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         var thisproduct = GetProductDetailsByProductDetailID(rowData.ProductID,rowData.ID );
