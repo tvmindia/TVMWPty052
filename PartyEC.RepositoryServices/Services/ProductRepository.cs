@@ -905,7 +905,7 @@ namespace PartyEC.RepositoryServices.Services
             return ProductList;
         }
 
-        private Product GetProductHeader(int ProductID)
+        public Product GetProductHeader(int ProductID)
         {
             Product myProduct = null;
             try
@@ -967,7 +967,10 @@ namespace PartyEC.RepositoryServices.Services
                                 if (!string.IsNullOrEmpty(myProduct.ProductOtherAttributesXML))
                                 {
                                     myProduct.ProductOtherAttributes = _attributesRepository.GetAttributeFromXML(myProduct.ProductOtherAttributesXML, myProduct.AttributeSetID, "Product", false);
-                                    myProduct.ProductOtherAttributes = myProduct.OrderAttributes.FindAll(n => n.Isconfigurable == false);
+                                    myProduct.ProductOtherAttributes = myProduct.ProductOtherAttributes.FindAll(n => n.Isconfigurable == false);
+                                }
+                                else {
+                                    myProduct.ProductOtherAttributes = _attributesRepository.GetAttributeContainer(myProduct.AttributeSetID, "Product");
                                 }
                             }
 
