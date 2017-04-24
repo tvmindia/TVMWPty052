@@ -990,11 +990,31 @@ function ShowProductDetalsToolBox()
     ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
   
 }
+
+function GetOtherAttributeValues(id) {
+    try {
+        var data = { "id": id };
+        var ds = {};
+        ds = GetDataFromServer("Products/GetAttributeValuesByProduct/", data);
+
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
 function RenderContentsForAttributes()
 {
-   
- 
-    try {
+   try {
        
         var atsetID = $("#AttributeSetIDhdf").val();
         var proid = $('.productID').val();
@@ -1019,6 +1039,17 @@ function RenderContentsForAttributes()
                         autoclose: true,
                         todayHighlight: true
                     });
+                    //values bind in dynamic input controls
+                    var thisattr = GetOtherAttributeValues(proid);
+                    if (thisattr)
+                    {
+                        for(var attr in thisattr)
+                        {
+                            $("#++")
+                        }
+                    }
+
+
                     ChangeButtonPatchView("Products", "ProductToolBox", "OASave"); //ControllerName,id of the container div,Name of the action
                 }
                 else
@@ -1784,24 +1815,3 @@ function ModelProductsRating(currentObj) {
 }
 
 
-function GetOtherAttributeValues()
-{
-    try {
-        var data = { "id": id };
-        var ds = {};
-        ds = GetDataFromServer("Products/GetAttributeValuesByProduct/", data);
-
-        if (ds != '') {
-            ds = JSON.parse(ds);
-        }
-        if (ds.Result == "OK") {
-            return ds.Records;
-        }
-        if (ds.Result == "ERROR") {
-            notyAlert('error', ds.Message);
-        }
-    }
-    catch (e) {
-        notyAlert('error', e.message);
-    }
-}
