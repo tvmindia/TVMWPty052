@@ -147,7 +147,13 @@
                             <div class="col-md-12">
 
 
-                                <h4 style="max-width:50%;padding:1%;"><span class="fa fa-crosshairs " style="font-size: 16px;color: #f46f25;"></span><span> </span><span id="titleSpanPro" class="Spantitle"></span></h4>
+                                <h4 style="max-width:50%;padding:1%;">
+                                <span class="fa fa-crosshairs " style="font-size: 16px;color: #f46f25;"></span>
+                                <span> </span>
+                                <span id="titleSpanPro" class="Spantitle"></span>
+                                <br/>
+                                <span id="spandetail" style="position: absolute;width: 50%;left: 5%;font-weight: 300;color: #f46f25;"></span>
+                                </h4>
 
                                 <hr />
 
@@ -380,7 +386,7 @@
                                             <div class="tab-pane fade" id="discription">
                                                 <div class="form-group">
                                                     <label for="ShortDescription" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ShortDescription)<span class="required">*</span></label>
-                                                    <div class="col-lg-4">
+                                                    <div class="col-lg-8">
                                                         @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
                                                         @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
                                                     </div>
@@ -389,7 +395,8 @@
                                                 <div class="form-group">
                                                     <label for="LongDescription" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.LongDescription)<span class="required">*</span></label>
                                                     <div class="col-lg-6">
-                                                        @Html.EditorFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" } })
+                                                     
+                                                        @Html.TextAreaFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" }, @cols = 110, @rows = 10 })
                                                         @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
