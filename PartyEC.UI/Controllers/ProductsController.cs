@@ -412,6 +412,8 @@ namespace PartyEC.UI.Controllers
                 //Getting UA
                 productObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
                 productObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                productObj.logDetails.UpdatedBy = _commonBusiness.GetUA().UserName;
+                productObj.logDetails.UpdatedDate = _commonBusiness.GetCurrentDateTime();
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertUpdateProductDetails(Mapper.Map<ProductViewModel, Product>(productObj)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
 

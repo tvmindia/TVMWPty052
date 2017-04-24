@@ -12,7 +12,8 @@ $(document).ready(function () {
                 this.value = "";
                
             }
-            $("#HeaderTagsPicker").focus();
+      
+            setTimeout(function () { document.getElementById('HeaderTagsPicker').focus() }, 10);
         },
         keypress: function (ev) {
             if (ev.keyCode == 13) {
@@ -33,6 +34,8 @@ $(document).ready(function () {
                 this.value = "";
                // $("#lblDetailTags").trigger('click');
             }
+           
+            setTimeout(function () { document.getElementById('detailTagsPicker').focus() }, 10);
         },
         keypress: function (ev) {
             if (ev.keyCode == 13) {
@@ -1477,7 +1480,7 @@ function AssociatedProductDelete(this_Obj)
 {
     
     var rowData = DataTables.AssociatedProductsTable.row($(this_Obj).parents('tr')).data();
-    if (!rowData.DefaultOptionYN)
+    if (!rowData.DefaultOption)
     {
         //rowData.ProductID, rowData.ID
         var prodetid = rowData.ProductID;//$("#productDetailID").val();
