@@ -1067,9 +1067,10 @@ function RenderContentsForAttributes()
                     var thisattr = GetOtherAttributeValues(proid);
                     if (thisattr)
                     {
-                        for(var attr in thisattr)
+                        for (var at = 0; at < thisattr.length; at++)
                         {
-                            $("#++")
+                           
+                            $("#" + thisattr[at].Name).val(thisattr[at].Value);
                         }
                     }
 
