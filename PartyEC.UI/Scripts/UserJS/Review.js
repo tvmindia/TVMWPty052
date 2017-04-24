@@ -2,7 +2,7 @@
 //---------------------------------------Docuement Ready--------------------------------------------------//
 $(document).ready(function () {
     try {
-        ChangeButtonPatchView("Reviews", "btnPatchReviewtab2", "Edit");
+       
         DataTables.ReviewTable = $('#tblReview').DataTable(
          {
 
@@ -73,6 +73,17 @@ $(document).ready(function () {
   
 });
 
+//------------------------------------ Review Details Initialization---------------------------------//
+function ReviewDetailsInitialization()
+{
+    ChangeButtonPatchView("Reviews", "btnPatchReview", "Edit");
+}
+
+function ReviewListInitialization()
+{
+    ChangeButtonPatchView("Reviews", "btnPatchReview", "ReviewList");
+}
+
 function GetAllReviews() {
     try {  
          var condition= $('input[name=REVIEW]:checked', '#MYFORM').val();
@@ -131,7 +142,7 @@ function Edit(currentObj) {
     //Tab Change on edit click
     debugger;
     $('#tabReviewDetails').trigger('click');
-    ChangeButtonPatchView("Reviews", "btnPatchReviewtab2", "Edit");//ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Reviews", "btnPatchReview", "Edit");//ControllerName,id of the container div,Name of the action
 
     var rowData = DataTables.ReviewTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
@@ -220,6 +231,8 @@ function BindAllReviews() {
         notyAlert('error', e.message);
     }
 }
+
+
 function BindReviews()
 {
     var res1 = countDays();
