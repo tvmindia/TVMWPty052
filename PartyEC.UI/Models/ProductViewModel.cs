@@ -199,6 +199,8 @@ namespace PartyEC.UI.Models
         public string ProductName { get; set; }
         public decimal BaseSellingPrice { get; set; }
         public decimal? ActualPrice { get; set; }
+      
+        
     }
     public class ProductCategoryLinkViewModel
     {
