@@ -1360,6 +1360,7 @@ function AssociatedProductSave()
     try {
         if (!ValidateAssociatedProducts())
         {
+            debugger;
             //Serialize dynamic other attribute elements
             //var Associatedpro = $('#dynamicAssociatedProducts').find('select,input').serializeArray();
             var Associatedpro = $('#dynamicAssociatedProductContents').find('select,input').serializeArray();
@@ -1384,7 +1385,7 @@ function AssociatedProductSave()
                 ProductDetailViewModel.Qty = (detqty != "" ? detqty : "");
                 var outstockqty = $("#detailOutOfStockAlertQty").val();
                 ProductDetailViewModel.OutOfStockAlertQty = (outstockqty != "" ? outstockqty : "");
-                var stockavail = $("#detailStockAvailable").val();
+                var stockavail = $("#detailStockAvailable").prop('checked');
                 ProductDetailViewModel.StockAvailable = (stockavail != "" ? stockavail : "");
                 var detailDiscAmount = $("#detailDiscountAmount").val();
                 ProductDetailViewModel.DiscountAmount = (detailDiscAmount != "" ? detailDiscAmount : "");
@@ -1394,9 +1395,9 @@ function AssociatedProductSave()
                 ProductDetailViewModel.DiscountStartDate = (detailDiscStart != "" ? detailDiscStart : "");
                 var detailDiscEnd = $("#detailDiscountEndDate").val();
                 ProductDetailViewModel.DiscountEndDate = (detailDiscEnd != "" ? detailDiscEnd : "");
-                var detailEnable = $("#detailEnable").val();
+                var detailEnable = $("#detailEnable").prop('checked');
                 ProductDetailViewModel.Enabled = detailEnable;
-                var detailDefaultOption = $("#detailDefaultOption").val();
+                var detailDefaultOption = $("#detailDefaultOption").prop('checked');
                 ProductDetailViewModel.DefaultOption = detailDefaultOption;
                 var tagval = [];
                 $('#detailkeywordsDiv .Htags').each(function () {
@@ -1519,7 +1520,7 @@ function AssociatedProductDelete(this_Obj)
     
 }
 function EditAssocProduct(currentObj) {
-   
+    debugger;
     var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         var thisproduct = GetProductDetailsByProductDetailID(rowData.ProductID,rowData.ID );
