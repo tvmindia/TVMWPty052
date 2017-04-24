@@ -473,6 +473,7 @@ namespace PartyEC.RepositoryServices.Services
                             {
                                 cmd.CommandText = "[InsertProductDetails]";
                                 IsinsertOrUpdate = true;
+                                detail.DefaultOption = true;
                             }
                             else
                             {

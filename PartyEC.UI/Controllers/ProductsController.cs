@@ -262,6 +262,7 @@ namespace PartyEC.UI.Controllers
                             productObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
                             productObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
                             productObj.ProductDetails = JsonConvert.DeserializeObject<List<ProductDetailViewModel>>(productObj.productDetailhdf);
+                           
                             OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertProduct(Mapper.Map<ProductViewModel, Product>(productObj)));
                             return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                         default:
