@@ -120,6 +120,8 @@ function Edit(currentObj) {
 //---------------------------------------Fill Attributes--------------------------------------------------//
 function fillAttributes(ID)
 {
+    debugger;
+    ChangeButtonPatchView("Attributes", "btnPatchAttribute", "EditDetails");
     var thisattribute = GetAttributesDetailsByID(ID); //Binding Data
     //Hidden
     $("#ID").val(thisattribute.ID)
@@ -309,9 +311,10 @@ function attributeSaveSuccess(data, status, xhr) {
     var i = JSON.parse(data)
     
     switch (i.Result) {
-        
+      
         case "OK":
             notyAlert('success', i.Record.StatusMessage);
+            fillAttributes(i.Record.ReturnValues);
             //clearfields();
             //goBack();
 
