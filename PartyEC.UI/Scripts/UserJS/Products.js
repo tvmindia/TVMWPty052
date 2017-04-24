@@ -1476,7 +1476,7 @@ function AssociatedProductDelete(this_Obj)
 {
     debugger;
     var rowData = DataTables.AssociatedProductsTable.row($(this_Obj).parents('tr')).data();
-    if (!rowData.DefaultOptionYN)
+    if (!rowData.DefaultOption)
     {
         //rowData.ProductID, rowData.ID
         var prodetid = rowData.ProductID;//$("#productDetailID").val();
