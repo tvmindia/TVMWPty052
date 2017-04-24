@@ -115,15 +115,15 @@
                                     <li class="liHead"><a disabled><i class="fa fa-arrow-down" aria-hidden="true"></i> Product Info</a></li>
                                     <li id="GeneralLI" onclick="ShowProductDetalsToolBox()" class="active"><a href="#general" data-toggle="tab" id="tabGeneral">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General <span class="label label-danger">E</span></a></li>
                                     <li onclick="RenderContentForPrice()"><a href="#price" data-toggle="tab" id="tabPrice">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Price</a></li>
-                                    <li onclick="ShowProductDetalsToolBox()"><a href="#discription" data-toggle="tab" id="tabDiscrption">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Discription</a></li>
+                                    <li onclick="ShowProductDetalsToolBox()"><a href="#discription" data-toggle="tab" id="tabDiscrption">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Description</a></li>
                                     <li onclick="RenderContentForInventory()"><a href="#inventory" data-toggle="tab" id="tabInventory">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Inventory <span class="label label-danger">E</span></a></li>
                                     <li onclick="ShowProductDetalsToolBox()"><a href="#productTags" data-toggle="tab" id="tabproducttags">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Product Tags <span class="label label-danger">E</span></a></li>
-                                    <li class="liHead"><a disabled><i class="fa fa-arrow-down" aria-hidden="true"></i> Additional Product Info</a></li>
-                                    <li onclick="RenderContentForRelatedProducts()"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Related Products</a></li>
-                                    <li onclick="RenderContentForImages()"><a href="#images" data-toggle="tab" id="tabImages">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Images</a></li>
-                                    <li onclick="RenderContentsForAttributes()"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other Attributes</a></li>
-                                    <li onclick="RenderContentsForAssocProdAttributes()"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Associated Products</a></li>
-                                    <li onclick="BindProductReviews()"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ratings & Reviews</a></li>
+                                    <li class="liHead" style="display:none;" id="additioanlLi"><a disabled><i class="fa fa-arrow-down" aria-hidden="true"></i> Additional Product Info</a></li>
+                                    <li onclick="RenderContentForRelatedProducts()" style="display:none;" id="additioanlRelatedLi"><a href="#relatedProducts" data-toggle="tab" id="tabRelatedProducts">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Related Products</a></li>
+                                    <li onclick="RenderContentForImages()" style="display:none;" id="additioanlImageLi"><a href="#images" data-toggle="tab" id="tabImages">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Images</a></li>
+                                    <li onclick="RenderContentsForAttributes()" style="display:none;" id="additioanlAttributesLi"><a href="#otherAttributes" data-toggle="tab" id="tabotherAttributes">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Other Attributes</a></li>
+                                    <li onclick="RenderContentsForAssocProdAttributes()" style="display:none;" id="additioanlProdAttributeLi"><a href="#associatedProducts" data-toggle="tab" id="tabassociatedProducts">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Associated Products</a></li>
+                                    <li onclick="BindProductReviews()" style="display:none;" id="additioanlReviewsLi"><a href="#ratingAndReviews" data-toggle="tab" id="tabratingAndReviews">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Ratings & Reviews</a></li>
                                    
                                 </ul>
 
@@ -150,11 +150,10 @@
                                 <h4 style="max-width:50%;padding:1%;">
                                 <span class="fa fa-crosshairs " style="font-size: 16px;color: #f46f25;"></span>
                                 <span> </span>
-                                <span id="titleSpanPro" class="Spantitle"></span>
-                                <br/>
-                                <span id="spandetail" style="position: absolute;width: 50%;left: 5%;font-weight: 300;color: #f46f25;"></span>
+                                <span id="titleSpanPro" class="Spantitle"></span>                                
                                 </h4>
-
+                                <span style="position: relative;width: 50%;left: 2%;font-weight: 300;color: #ab8571;"><span style="font-weight:700">Type: </span><span id="spandetailType">__</span><span>&nbsp;&nbsp;</span><span style="font-weight:700">Attribute Set: </span><span id="spandetailSet">__</span></span>
+                                @*<span id="spandetailSet" style="position: relative;width: 50%;left: 2%;font-weight: 300;color: #ab8571;"></span>*@
                                 <hr />
 
                                 <div class="col-md-12">
@@ -386,7 +385,7 @@
                                             <div class="tab-pane fade" id="discription">
                                                 <div class="form-group">
                                                     <label for="ShortDescription" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ShortDescription)<span class="required">*</span></label>
-                                                    <div class="col-lg-8">
+                                                    <div class="col-lg-4">
                                                         @Html.EditorFor(model => model.ShortDescription, new { htmlAttributes = new { @class = "form-control" } })
                                                         @Html.ValidationMessageFor(model => model.ShortDescription, "", new { @class = "text-danger" })
                                                     </div>
@@ -394,9 +393,9 @@
 
                                                 <div class="form-group">
                                                     <label for="LongDescription" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.LongDescription)<span class="required">*</span></label>
-                                                    <div class="col-lg-6">
+                                                    <div class="col-lg-4">
                                                      
-                                                        @Html.TextAreaFor(model => model.LongDescription, new { htmlAttributes = new { @class = "form-control" }, @cols = 110, @rows = 25, placeholder = "Rich text allowed here.." })
+                                                        @Html.TextAreaFor(model => model.LongDescription, new { @class = "form-control", @rows = 12, placeholder = "Rich text allowed here.." })
                                                         @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
@@ -906,8 +905,11 @@
                 <h4 class="modal-title">Assign Sticker</h4>
             </div>
             <div class="col-lg-12">
-                <h3>Available Stickers</h3>
-                <hr />
+                @*<h3>Available Stickers</h3>
+                <hr />*@
+                <div class="w3-note w3-panel" style="margin-top:1%;">
+                    <p><strong>Tip:</strong><br> Click and select the sticker for adding to products.</p>
+                </div>
                 <ul class="hide-bullets" id="ulStickerArea"></ul>
             </div>
             <div class="modal-footer">

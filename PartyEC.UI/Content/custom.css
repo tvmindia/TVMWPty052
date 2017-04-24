@@ -475,10 +475,32 @@ font-size:16px;
     cursor:default;
     background:#fff9f1!important;
 }
-/*.open> a:hover{
-    background:rgba(36, 34, 34, 0.45);
-}*/
+.open> a:hover{
+    background:rgba(36, 34, 34, 0.45)!important;
+}
 .Stickerbtn:hover{
     background-color:#7EB438!important;
     border-color:#7EB438!important;
+}
+.w3-note {
+    background-color: #ffffcc;
+    border-left: 6px solid #ffeb3b;
+}
+.w3-panel {
+    padding: 0.01em 16px;
+    margin-bottom: 16px!important;
+}
+.w3-panel:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+a{
+    text-decoration:none!important;
+}
+.dropdown-menu> li> a:hover{
+    background:rgba(36, 34, 34, 0.45)!important;
+}
+.navbar-default .navbar-nav > .open > a {
+background:rgba(36, 34, 34, 0.45)!important;
 }
