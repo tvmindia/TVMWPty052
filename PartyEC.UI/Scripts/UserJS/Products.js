@@ -12,7 +12,8 @@ $(document).ready(function () {
                 this.value = "";
                
             }
-            $("#HeaderTagsPicker").focus();
+      
+            setTimeout(function () { document.getElementById('HeaderTagsPicker').focus() }, 10);
         },
         keypress: function (ev) {
             if (ev.keyCode == 13) {
@@ -33,6 +34,8 @@ $(document).ready(function () {
                 this.value = "";
                // $("#lblDetailTags").trigger('click');
             }
+           
+            setTimeout(function () { document.getElementById('detailTagsPicker').focus() }, 10);
         },
         keypress: function (ev) {
             if (ev.keyCode == 13) {
