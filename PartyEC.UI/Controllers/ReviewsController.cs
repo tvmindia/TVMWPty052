@@ -146,6 +146,10 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Title = "Back";
 
                     break;
+                case "ReviewList":
+                    ToolboxViewModelObj.approve.Visible = false;
+                    ToolboxViewModelObj.backbtn.Visible = false;
+                    break;
 
                 default:
                     return Content("Nochange");
