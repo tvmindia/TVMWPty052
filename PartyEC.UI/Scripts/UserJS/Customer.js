@@ -134,6 +134,12 @@ $(document).ready(function () {
 
 });
 
+//----------------------------------- customer list tab active click---------------------------------//
+function CustomerListClick()
+{
+    ChangeButtonPatchView("Customer", "customerToolBox", "CustomerList"); //ControllerName,id of the container div,Name of the action
+}
+
 function GetAllCustomers()
 {
     try

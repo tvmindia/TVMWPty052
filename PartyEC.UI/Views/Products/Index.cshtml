@@ -514,20 +514,11 @@
 
                                             </div>
                                             <div class="tab-pane fade" id="images">
-                                                <div>
-                                                    @{
-                                                PartyEC.UI.Models.ToolboxViewModel ToolBoxImageProduct = new PartyEC.UI.Models.ToolboxViewModel();
-                                                ToolBoxImageProduct.backbtn.Visible = true;
-                                                ToolBoxImageProduct.backbtn.Title = "Back";
-                                                ToolBoxImageProduct.backbtn.Event = "goback()";
-                                                Html.RenderPartial("_ToolboxView", ToolBoxImageProduct);
-                                                    }
-
-                                                </div>
+                                                
 
                                                 <div class="col-lg-12">
 
-                                                    <h2>Product Image</h2>
+                                                    <h2>Product Main Image</h2>
                                                     <hr />
                                                     <div class="col-md-5" id="divImageUpload">
                                                         <div>
@@ -542,16 +533,17 @@
                                                         </div>
                                                     </div>
                                                     <div class="col-lg-7" style="object-fit:fill;">
-                                                        <div class="col-lg-12">
+                                                        <div class="col-lg-12" id="divMainImagePro">
                                                             <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="" id="imgProduct" class="img-thumbnail" style="max-height:250px;margin-left:3%">
 
                                                         </div>
                                                     </div>
                                                 </div>
                                                 <div class="col-lg-12">
-                                                    <h2>Other Images</h2>
+                                                    <h2>Product Additional Images</h2>
                                                     <hr />
-                                                    <div id="buttonPatchOtherImages">
+                                                    
+                                                    @*<div id="buttonPatchOtherImages">
                                                         @{
                                                     PartyEC.UI.Models.ToolboxViewModel ToolBoxControlOtherImage = new PartyEC.UI.Models.ToolboxViewModel();
                                                     ToolBoxControlOtherImage.deletebtn.Visible = true;
@@ -559,9 +551,9 @@
                                                     Html.RenderPartial("_ToolboxView", ToolBoxControlOtherImage);
                                                         }
 
-                                                    </div>
-
-                                                    <div class="col-md-5" id="divImageUploadOther" style="margin-top:5%">
+                                                    </div>*@
+                                                    
+                                                    <div class="col-md-5" id="divImageUploadOther">
                                                         <div>
                                                             <a id="alinkUploadOther" style="display:none" class="btn btn-info" href="javascript:$('#file_uploadOther').uploadify('upload','*')">Upload</a>
                                                             <input type="file" class="uploadify" name="file_uploadOther" id="file_uploadOther" />
@@ -583,7 +575,7 @@
                                                 <div class="col-lg-12">
                                                     <h2>Stickers</h2>
                                                     <hr />
-                                                    <div id="buttonPatchStickerImages">
+                                                    @*<div id="buttonPatchStickerImages">
                                                         @{
                                                     PartyEC.UI.Models.ToolboxViewModel ToolBoxControlStickerImage = new PartyEC.UI.Models.ToolboxViewModel();
                                                     ToolBoxControlStickerImage.savebtn.Visible = true;
@@ -594,12 +586,16 @@
                                                     Html.RenderPartial("_ToolboxView", ToolBoxControlStickerImage);
                                                         }
 
+                                                    </div>*@
+                                                    <div class="col-lg-12">
+                                                        <span class="Stickerbtn" id="myButton" data-toggle="modal" data-target="#ModelStickers" style="background-color: rgb(0, 88, 151); border-radius: 31px; border: 1px solid rgb(0, 88, 151); display: inline-block; cursor: pointer; color: rgb(255, 255, 255); font-family: Arial; font-size: 15px; font-weight: bold; padding: 3px 23px; text-decoration: none; text-shadow: rgb(9, 20, 2) 0px 1px 0px;">+ Existing</span>
+                                                        <p style="font-style:italic;font-family:cursive;margin-top:1%">(Add sticker from Available)</p>
                                                     </div>
-
-                                                    <div class="col-lg-5" style="margin-top:30%">
+                                                    <div class="col-lg-5">
                                                         <div>
                                                             <a id="alinkUploadSticker" style="display:none" class="btn btn-info" href="javascript:$('#file_uploadSticker').uploadify('upload','*')">Upload</a>
                                                             <input type="file" class="uploadify" name="file_uploadOther" id="file_uploadSticker" />
+                                                            <p style="font-style:italic;font-family:cursive;">(Add sticker as New)</p>
 
                                                         </div>
                                                         <div id="uploaded">
@@ -611,16 +607,16 @@
                                                     </div>
                                                     <div class="col-lg-7">
                                                         <div class="col-lg-12">
-                                                            <h3>Attached Sticker</h3>
-                                                            <hr />
+                                                            @*<h3>Attached Sticker</h3>
+                                                            <hr />*@
                                                             <ul class="hide-bullets" id="ulMainStickerArea"></ul>
                                                         </div>
                                                         @* ----------------------------------------------------------------------------- *@
-                                                        <div class="col-lg-12">
+                                                        @*<div class="col-lg-12">
                                                             <h3>Available Stickers</h3>
                                                             <hr />
                                                             <ul class="hide-bullets" id="ulStickerArea"></ul>
-                                                        </div>
+                                                        </div>*@
 
                                                     </div>
                                                 </div>
@@ -905,6 +901,27 @@
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 <button type="button" class="btn btn-primary">Save changes</button>
             </div>*@
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+@* ----------------------------------------------Product sticker assign *@
+<div id="ModelStickers" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="gridSystemModalLabel">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Assign Sticker</h4>
+            </div>
+            <div class="col-lg-12">
+                <h3>Available Stickers</h3>
+                <hr />
+                <ul class="hide-bullets" id="ulStickerArea"></ul>
+            </div>
+            <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    <button type="button" id="Savesticker" class="btn btn-primary">Save changes</button>
+                </div>
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->

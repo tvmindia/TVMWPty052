@@ -124,7 +124,7 @@ function GetAllCustomerCartWishlistSummary() {
 }
 //---------------------------------Edit Click-----------------------------------------//
 function View(currentObj) {
-    ChangeButtonPatchView("EventRequests", "btnPatcheventRequeststab2", "Edit"); //ControllerName,id of the container div,Name of the action
+    ChangeButtonPatchView("Cart_Wishlist", "btnPatchtab2", "Edit"); //ControllerName,id of the container div,Name of the action
     $('#tabshoppingCartWishlist').removeClass('disabled');
     $('#tabshoppingCartWishlist a').attr('data-toggle', 'tab');
     $('#tabshoppingCartWishlist a').trigger('click');
@@ -202,6 +202,7 @@ function Tab1Click() {
     $("#WL_TableHead").text("");
     $('#tabshoppingCartWishlist').addClass('disabled');
     $('#tabshoppingCartWishlist a').attr('data-toggle', '');
+    ChangeButtonPatchView("Cart_Wishlist", "btnPatchtab2", "CustomersList"); //ControllerName,id of the container div,Name of the action
 }
 function goback() {
     $('#tabCustomerList').trigger('click');

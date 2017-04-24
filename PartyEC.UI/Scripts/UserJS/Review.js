@@ -149,6 +149,7 @@ function Edit(currentObj) {
         fillReview(rowData.ID);
         var thisRatingSummary = GetProductRatingByCustomer(rowData.ProductID, rowData.CustomerID,rowData.AttributeSetID);
         if (thisRatingSummary.length > 0) {
+            debugger;
             $("#CustomerRating").empty();
             var ratinglists=ratingArea(thisRatingSummary)
             $("#CustomerRating").append(ratinglists);
@@ -341,8 +342,8 @@ function ratingArea(thisRatingSummary)
                 ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
             }
         }//for
-        ratinglists = ratinglists + '<div class="col-xs-5 ">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
-                                    '<div class="col-xs-7 "><div  class="rating-block" style="padding-bottom: 5px;">' + ratebtnstring + '</div></div>';
+        ratinglists = ratinglists + '<div class="col-xs-3 ">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
+                                    '<div class="col-xs-9 "><div  class="rating-block" style="padding-bottom: 5px;">' + ratebtnstring + '</div></div>';
     }//for
 return ratinglists
 }

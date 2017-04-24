@@ -400,8 +400,14 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     break;
-                   
-                                            
+                case "CustomerList":
+                    ToolboxViewModelObj.backbtn.Visible = false;
+                    ToolboxViewModelObj.addbtn.Visible = false;
+                    ToolboxViewModelObj.deletebtn.Visible = false;
+                    ToolboxViewModelObj.savebtn.Visible = false;
+                    break;
+
+
                 default:
                     return Content("Nochange");
             }

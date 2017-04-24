@@ -478,3 +478,7 @@ font-size:16px;
 /*.open> a:hover{
     background:rgba(36, 34, 34, 0.45);
 }*/
+.Stickerbtn:hover{
+    background-color:#7EB438!important;
+    border-color:#7EB438!important;
+}
