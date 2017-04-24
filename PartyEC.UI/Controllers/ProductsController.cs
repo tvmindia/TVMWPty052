@@ -605,9 +605,9 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Title = "Save";
                     ToolboxViewModelObj.savebtn.Event = "AssociatedProductSave()";
-                    ToolboxViewModelObj.deletebtn.Visible = true;
-                    ToolboxViewModelObj.deletebtn.Title = "Delete";
-                    ToolboxViewModelObj.deletebtn.Event = "AssociatedProductDelete()";
+                    //ToolboxViewModelObj.deletebtn.Visible = true;
+                    //ToolboxViewModelObj.deletebtn.Title = "Delete";
+                    //ToolboxViewModelObj.deletebtn.Event = "AssociatedProductDelete()";
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.backbtn.Event = "goback()";
