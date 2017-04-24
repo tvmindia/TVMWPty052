@@ -416,8 +416,18 @@
                                                     <label for="StockAvailable" class="control-label col-lg-2 productDetailGroup">@Html.DisplayNameFor(model => model.StockAvailable)<span class="required">*</span></label>
                                                     <div class="col-lg-4 productDetailGroup">
                                                         <div>
-                                                            @Html.EditorFor(model => model.StockAvailable)
+                                                            @*@Html.EditorFor(model => model.StockAvailable)
+                                                            @Html.ValidationMessageFor(model => model.StockAvailable, "", new { @class = "text-danger" })*@
+
                                                             @Html.ValidationMessageFor(model => model.StockAvailable, "", new { @class = "text-danger" })
+                                                            @{
+                                                                List<SelectListItem> listItems = new List<SelectListItem>();
+                                                                listItems.Add(new SelectListItem
+                                                                { Text = "Out of Stock", Value ="false" });
+                                                                listItems.Add(new SelectListItem
+                                                                { Text = "In Stock", Value ="true" });
+                                                            }
+                                                            @Html.DropDownListFor(model => model.StockAvailable, listItems, "-- Select Entity Type --", new { @class = "form-control" })
                                                         </div>
                                                     </div>
                                                 </div>

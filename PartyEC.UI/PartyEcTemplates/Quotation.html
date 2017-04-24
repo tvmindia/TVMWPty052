@@ -23,18 +23,96 @@
                 </table>
             </td> 
         </tr> 
+        <tr>
+            <td colspan="2" style="width:640px"> <p style="font:18px Arial,sans-serif;color:brown;text-align:center; margin:15px 20px 0 20px">Quotation</p>  </td>
+        </tr>
+        <tr>
+            <td colspan="2" style="width:640px"> <p style="font:18px Arial,sans-serif; margin:0px 50px 0px 20px">Hello {CustomerName},</p> <br>
+             <p style="margin:4px 20px 18px 20px;width:640px">
+                Thank for yours quotation of<b> {QuotationDate} </b>.We are glad to enclose the following quotation of <b>{ProductName}</b> <br> </p>
+                <p style="margin:4px 20px 18px 20px;width:640px">
+                    If you need any further details to meet your customer's requirements,you should feel free to contact us. <br>
+                </p>
+             </td>
+        </tr> 
+        <tr>
+            <td colspan="2">
+                <table  width="100%" style="padding:0px 20px 0px 20px" >
+                    <tbody>
+                        <tr style="font:14px Arial,sans-serif; margin:0px 50px 0px 20px"> 
+                            <td align="left" width="20%">Quotation No</td>
+                            <td align="center" width="20%">Quotation Date</td>
+                            <td align="center" width="20%">Required Date</td> 
+                            <td align="center" width="20%">Quantity</td>
+                            <td align="right" width="20%">Price</td> 
+                        </tr>
+                        <tr><td colspan="8"><hr style="border:1px dotted #aaaaaa"></td></tr>
+                        <tr style="font:14px Arial,sans-serif; margin:0px 50px 0px 20px"> 
+                            <td align="left">{QuotationNo}</td>
+                            <td align="center">{QuotationDate}</td>
+                            <td align="center">{RequiredDate}</td> 
+                            <td align="center">{Qty}</td>
+                            <td align="right">{Price}</td>
+                           
+                        </tr>
+                    </tbody>
+                </table>
+            </td>
+        </tr> 
+        <tr>
         
-        <tr>
-            <td colspan="2" style="width:640px"> <p style="font:18px Arial,sans-serif;color:#cc6600;margin:15px 20px 0 20px">Hello {CustomerName},</p> <br> <p style="margin:4px 20px 18px 20px;width:640px"> {Message} <br> </p> </td>
         </tr>
-        <tr>
-            <td colspan="2" style="width:640px"> <p style="font:18px Arial,sans-serif;color:brown;text-align:center; margin:15px 20px 0 20px">Quotation Details</p>  </td>
-        </tr>
-        <tr>
-            <td colspan="2" style="padding:0 20px;width:640px"> </td>
-        </tr>
-        <tr></tr>
+        <tr> 
+           <td>
+               <table width="100%" border="0" style="background:rgb(204,204,204);margin-left:25px"  cellpadding="0" cellspacing="0">
+                   <thead> <p style="font:14px Arial,sans-serif;color:brown;text-align:center; margin:15px 20px 10px 20px">Quotation Summary</p></thead>
+                   <tbody>
+                       <tr>
+                           <td align="left" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                               <strong>Sub-total</strong>
+                           </td>
+                           <td width="62" id="tdSubTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                               {subTotal}
+                           </td>
+                       </tr> 
+                       <tr>
+                           <td  align="left" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                               <strong>Tax:</strong>
+                           </td>
+                           <td width="62" id="tdTaxTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                               {tax}
+                           </td>
+                       </tr>
+                       <tr>
+                           <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px">
+                               <strong>Additional Charges:</strong>
+                           </td>
+                           <td width="62" id="tdDeliveryCosts" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px">
+                               {additionalCharges}
+                           </td>
+                       </tr>
 
+                       <tr>
+                           <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px;border-bottom:solid 1px #999999">
+                               <strong>Discount:</strong>
+                           </td>
+                           <td width="62" id="tdOrderDiscount" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px;border-bottom:solid 1px #999999">
+                               {discount}
+                           </td>
+                       </tr>
+                       <tr>
+                           <td align="left" valign="bottom" style="color:#404041;font-size:13px;line-height:16px;padding:5px 0px 3px 0px">
+                               <strong>Grand Total:</strong>
+                           </td>
+                           <td width="62" align="right" valign="bottom" style="color:#339933;font-size:13px;line-height:16px;padding:5px 5px 3px 5px">
+                               <strong id="strGrandTotal">{grandTotal}</strong>
+                           </td>
+                       </tr>
+                   </tbody> 
+               </table>
+            </td>  
+        </tr>
+       
         <tr>
             <td colspan="2" style="padding:0 20px 0 20px;line-height:22px;width:640px"> <p style="margin:10px 0;padding:0 0 20px 0;border-bottom:1px solid #eaeaea">We hope to see you again soon!<br> <span style="font:14px Arial,san-serif"> <strong>PartyEc.com</strong> </span> </p> </td>
         </tr>
