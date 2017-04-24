@@ -221,7 +221,8 @@ $(document).ready(function () {
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
                { "data": "ActualPrice", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="EditAssocProduct(this)"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>Edit</a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="EditAssocProduct(this)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><span> | </span><a href="#" onclick="AssociatedProductDelete(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>' }
+          
              ],
              columnDefs: [
               {
@@ -1470,43 +1471,51 @@ function GetProductDetailsByProductId(id)
     }
 }
 
-function AssociatedProductDelete()
+function AssociatedProductDelete(this_Obj)
 {
-  
-    var prodetid = $("#productDetailID").val();
-    var prodid = $('.productID').val();
-    if ((prodetid) && (prodid))
+    debugger;
+    var rowData = DataTables.AssociatedProductsTable.row($(this_Obj).parents('tr')).data();
+    if (!rowData.DefaultOptionYN)
     {
-        if (confirm("Are you Sure!") == true) {
-            var ProductDetailViewModel = new Object();
-            ProductDetailViewModel.ID = prodetid;
-            ProductDetailViewModel.ProductID = prodid;
-            var data = "{'productDeails':" + JSON.stringify(ProductDetailViewModel) + "}";
-            PostDataToServer('Products/DeleteProductDetail/', data, function (JsonResult) {
-                if (JsonResult != '') {
-                    switch (JsonResult.Result) {
-                        case "OK":
-                 
-                            notyAlert('success', JsonResult.Record.StatusMessage);
-                            RefreshAssociatedProducts(prodid);
-                            clearAssociatedProductform();
-                            break;
-                        case "ERROR":
-                            notyAlert('error', JsonResult.Record.StatusMessage);
-                            break;
-                        default:
-                            break;
+        //rowData.ProductID, rowData.ID
+        var prodetid = rowData.ProductID;//$("#productDetailID").val();
+        var prodid = rowData.ID//$('.productID').val();
+        if ((prodetid) && (prodid)) {
+            if (confirm("Are you Sure!") == true) {
+                var ProductDetailViewModel = new Object();
+                ProductDetailViewModel.ID = prodid;
+                ProductDetailViewModel.ProductID = prodetid;
+                var data = "{'productDeails':" + JSON.stringify(ProductDetailViewModel) + "}";
+                PostDataToServer('Products/DeleteProductDetail/', data, function (JsonResult) {
+                    if (JsonResult != '') {
+                        switch (JsonResult.Result) {
+                            case "OK":
+
+                                notyAlert('success', JsonResult.Record.StatusMessage);
+                                RefreshAssociatedProducts(prodetid);
+                                clearAssociatedProductform();
+                                break;
+                            case "ERROR":
+                                notyAlert('error', JsonResult.Record.StatusMessage);
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                }
-            })
+                })
+            }
+
+
         }
-        
+        else {
+            notyAlert('error', 'Please Select a product');
+        }
 
     }
     else {
-        notyAlert('error', 'Please Select a product');
+        notyAlert('error', 'Default Option cant be deleted');
     }
- 
+    
     
 }
 function EditAssocProduct(currentObj) {
