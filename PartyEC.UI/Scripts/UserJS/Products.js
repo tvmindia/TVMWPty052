@@ -12,6 +12,7 @@ $(document).ready(function () {
                 this.value = "";
                
             }
+            $("#HeaderTagsPicker").focus();
         },
         keypress: function (ev) {
             if (ev.keyCode == 13) {
@@ -129,14 +130,16 @@ $(document).ready(function () {
              }],
              select: {
                  style: 'multi',
-                 selector: 'td:first-child'
+                 selector: 'tr'
              },
              order: [[1, 'asc']]
 
          });
-        //$('#tblRelatedproducts').on('change', 'input[type="checkbox"]', function () {
-        //    $(this).closest('tr').toggleClass('selected');
-        //});
+       
+        $('#tblRelatedproducts tbody').on('click', 'tr', function () {
+
+            $(this).closest('tr').toggleClass('selected');
+        });
     }
     catch (e) {
         notyAlert('errror', e.message);
@@ -152,7 +155,7 @@ $(document).ready(function () {
              paging: true,
              data: null,
              columns: [
-               {"data":null},
+               { "data": null, "defaultContent": '' },
                { "data": "ID" },
                { "data": "Name" },
                { "data": "ProductType", "defaultContent": "<i>-</i>" },
@@ -165,21 +168,34 @@ $(document).ready(function () {
              
              ],
              columnDefs: [
-              {//hiding hidden column 
-                  "targets": [0],
-                  "visible": true,
-                  "searchable": false,
-                  "render": function (data, type, full, meta) {
-                      if (type === 'display') {
-                          data = '<input type="checkbox" class="dt-checkboxes">';
-                      }
-                      return data;
-                  }
-              }
-             ]
+              //{//hiding hidden column 
+              //    "targets": [0],
+              //    "visible": true,
+              //    "searchable": false,
+              //    "render": function (data, type, full, meta) {
+              //        if (type === 'display') {
+              //            data = '<input type="checkbox" class="dt-checkboxes">';
+              //        }
+              //        return data;
+              //    }
+              //}
+              {
+                  orderable: false,
+                  className: 'select-checkbox',
+                  targets: 0
+              }],
+             select: {
+                 style: 'multi',
+                 selector: 'tr'
+             },
+             order: [[1, 'asc']]
          });
 
-        $('#tblUNRelatedproducts').on('change', 'input[type="checkbox"]', function () {
+        //$('#tblUNRelatedproducts').on('change', 'input[type="checkbox"]', function () {
+        //    $(this).closest('tr').toggleClass('selected');
+        //});
+        $('#tblUNRelatedproducts tbody').on('click', 'tr', function () {
+
             $(this).closest('tr').toggleClass('selected');
         });
     }
@@ -286,7 +302,7 @@ function goback() {
 
 function RenderContentForImages()
 {
-   // HideProductDetalsToolBox();
+  
     BindImages();
     BindStickers();
 }
@@ -376,7 +392,7 @@ function Edit(currentObj)
             $(".productID").val(thisproduct.ID);
             //ProductDetailID
             $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
-            RefreshRelatedProducts(thisproduct.ID);
+            //RefreshRelatedProducts(thisproduct.ID);
             RefreshUNRelatedProducts(thisproduct.ID);
         }
        
@@ -878,9 +894,36 @@ function ConstructRelatdProductIDListForDelete()
                 AddList.push(tabledata[i].ID);
             }
             $("#relatedproductlistID").val(AddList);
+            return true;
+        }
+        else
+        {
+            //not selected table items
+            notyAlert('error', 'Please Select products to delete!');
+            return false;
         }
     }
     catch (e) {
+        notyAlert('error', e.Message);
+        return false;
+    }
+}
+
+function ValidateTableSelection()
+{
+    try
+    {
+
+        var tabledata = DataTables.RelatedproductsTable.rows('.selected').data();
+        if(tabledata.length > 0)
+        {
+            return true;
+        }
+        return false;
+
+    }
+    catch(e)
+    {
         notyAlert('error', e.Message);
     }
 }
@@ -910,14 +953,17 @@ function RenderContentForRelatedProducts()
         var proid = $('.productID').val();
         if ((proid) && (proid>0))
         {
-
-
-
+            $("#divtablerelatedproducts").show();
+            RefreshRelatedProducts(proid);
+         
+            $(".divMsgconfigurable").hide();
             ChangeButtonPatchView("Products", "ProductToolBox", "RPAdd"); //ControllerName,id of the container div,Name of the action
         }
         else
         {
-
+            $("#divtablerelatedproducts").hide();
+            $(".divMsgconfigurable").show();
+            ChangeButtonPatchView("Products", "ProductToolBox", "Back"); //ControllerName,id of the container div,Name of the action
         }
     
     }
@@ -933,13 +979,12 @@ function RenderContentForRelatedProducts()
 function ShowProductDetalsToolBox()
 {
     ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
-    // $('#btnPatchProductDetails').show();
-   // $("#btnPatchProductDetails").css('visibility', 'visible');
+  
 }
 function RenderContentsForAttributes()
 {
    
-   // HideProductDetalsToolBox();
+ 
     try {
        
         var atsetID = $("#AttributeSetIDhdf").val();
@@ -973,6 +1018,7 @@ function RenderContentsForAttributes()
                     $("#dynamicOtherAttributes").empty();
                     //append dynamic html to div from partialview
                     $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>No Attributes Available for this product.</p></div></div>');
+                    ChangeButtonPatchView("Products", "ProductToolBox", "Back"); //ControllerName,id of the container div,Name of the action
                 }
  
             }
@@ -1058,7 +1104,7 @@ function OtherAttributeSave()
 
 function RenderContentsForAssocProdAttributes()
 {
-   // HideProductDetalsToolBox();
+  
     try {
         var proid = $('.productID').val();
         var atsetID = $("#AttributeSetID").val();
@@ -1501,6 +1547,9 @@ function clearAssociatedProductform() {
     $("#productDetailID").val(0);
     $('#associatedStaticfields').find('input').val('');
     $('#associatedStaticfields').find('.check-box').prop('checked', false);
+
+    
+    //associatedStaticfields
  
 }
 
@@ -1725,3 +1774,25 @@ function ModelProductsRating(currentObj) {
     $('#btnmodelproductrating').trigger('click');
 }
 
+
+function GetOtherAttributeValues()
+{
+    try {
+        var data = { "id": id };
+        var ds = {};
+        ds = GetDataFromServer("Products/GetAttributeValuesByProduct/", data);
+
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}

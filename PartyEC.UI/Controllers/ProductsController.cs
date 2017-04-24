@@ -608,9 +608,9 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.backbtn.Event = "goback()";
-                    ToolboxViewModelObj.resetbtn.Visible = true;
-                    ToolboxViewModelObj.resetbtn.Title = "Reset";
-                    ToolboxViewModelObj.resetbtn.Event = "clearAssociatedProductform()";
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Title = "Addproductoption";
+                    ToolboxViewModelObj.addbtn.Event = "clearAssociatedProductform()";
                     break;
                 case "OASave":
                     ToolboxViewModelObj.savebtn.Visible = true;
@@ -728,6 +728,32 @@ namespace PartyEC.UI.Controllers
             }
 
         }
+
+
+        #region GetAttributeValuesByProduct
+        [HttpGet]
+        public string GetAttributeValuesByProduct(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    List<AttributeValuesViewModel> attributevalueList = Mapper.Map<List<AttributeValues>, List<AttributeValuesViewModel>>(_productBusiness.GetAttributeValuesByProduct(int.Parse(id)));
+
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = attributevalueList });
+                }
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "id is empty" });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
+
+        #endregion GetAttributeValuesByProduct
+
+
 
 
 

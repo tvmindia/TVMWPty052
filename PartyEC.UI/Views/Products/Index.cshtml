@@ -474,7 +474,7 @@
                                             <div class="tab-pane fade" id="relatedProducts">
 
                                              <div class="container-fluid">
-                                                 <div class="row">
+                                                 <div class="row" id="divtablerelatedproducts">
                                                      @*table*@
                                                      <table id="tblRelatedproducts" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                                          <thead>
@@ -500,6 +500,11 @@
                                                              <button id="btnmodelrelproduct" type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#ModelRelatedProducts"></button>
 
                                                          </div>
+                                                     </div>
+                                                 </div>
+                                                 <div class="col-sm-6 col-md-6 divMsgconfigurable">
+                                                     <div class="alert-message alert-message-warning">
+                                                         <p>First save the product...</p>
                                                      </div>
                                                  </div>
                                              </div>
@@ -668,124 +673,127 @@
                                                     </div>
 
                                                 </div>
-                                                <div id="dynamicAssociatedProducts">
-                                                    <div class="form-group">
-                                                        <div class="col-sm-6 col-md-6">
-                                                            <div class="alert-message alert-message-warning">
-                                                                <p>Please Create a product from general section and come back:).</p>
+
+                                                <div class="container-fluid">
+                                                    <div class="row">
+                                                        <div id="dynamicAssociatedProducts">
+                                                            <div class="form-group">
+                                                                <div class="col-sm-6 col-md-6">
+                                                                    <div class="alert-message alert-message-warning">
+                                                                        <p>Please Create a product from general section and come back:).</p>
+                                                                    </div>
+                                                                </div>
                                                             </div>
+
                                                         </div>
-                                                    </div>
+                                                        <div id="associatedStaticfields">
 
-                                                </div>
-
-                                                <div id="associatedStaticfields">
-
-                                                    <div class="form-group">
-                                                        <label for=detailQty class="col-lg-2 control-label">Qty<span class="required">*</span></label>
-                                                        <div class="col-lg-4 input-group">
-                                                            <input type="text" class="form-control" onkeypress="return isNumber(event)" id="detailQty" name="detailQty">
-                                                            <span id="errorQty" style="color: Red; display: none">Qty is Required</span>
-                                                            <input type="hidden" class="form-control" id="productDetailID" name="productDetailID" />
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty<span class="required">*</span></label>
-                                                        <div class="col-lg-4 input-group">
-                                                            <input type="text" class="form-control" onkeypress="return isNumber(event)" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
-                                                            <span id="errorAlertQty" style="color: Red; display: none">Reorder Alert Qty is Required</span>
-                                                        </div>
-                                                    </div>
-
-
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-2" for="detailStockAvailable" style="">Stock Status<span class="required">*</span></label>
-                                                        <div class="col-lg-4 input-group">
-                                                            <div>
-                                                                <input class="check-box" data-val="true" id="detailStockAvailable" name="detailStockAvailable" value="true" type="checkbox">
-                                                                <input name="detailStockAvailable" value="false" type="hidden">
+                                                            <div class="form-group">
+                                                                <label for=detailQty class="col-lg-2 control-label">Qty<span class="required">*</span></label>
+                                                                <div class="col-lg-4 input-group">
+                                                                    <input type="text" class="form-control" onkeypress="return isNumber(event)" id="detailQty" name="detailQty">
+                                                                    <span id="errorQty" style="color: Red; display: none">Qty is Required</span>
+                                                                    <input type="hidden" class="form-control" id="productDetailID" name="productDetailID" />
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
 
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-2" for="detailDiscountAmount">Discount Price</label>
-                                                        <div class="col-lg-4 input-group">
-                                                            <input class="form-control text-box single-line" id="detailDiscountAmount" name="detailDiscountAmount" value="" type="text">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-2" for="detailPriceDifference">Price Difference</label>
-                                                        <div class="col-lg-4 input-group">
-                                                            <input class="form-control text-box single-line" id="detailPriceDifference" name="detailPriceDifference" value="" type="text">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-2" for="detailDiscountStartDate" style="">Discount Start Date</label>
-                                                        <div class="col-lg-4 input-group">
-                                                            <input class="form-control text-box single-line datepicker" id="detailDiscountStartDate" name="detailDiscountStartDate" value="" type="text">
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-2" for="detailDiscountEndDate" style="">Discount End Date</label>
-                                                        <div class="col-lg-4 input-group">
-                                                            <input class="form-control text-box single-line datepicker" id="detailDiscountEndDate" name="detailDiscountEndDate" value="" type="text">
-                                                        </div>
-                                                    </div>
-
-
-
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-2" for="detailEnable" style="">Enable</label>
-                                                        <div class="col-lg-4 input-group">
-                                                            <div>
-                                                                <input class="check-box" data-val="true" id="detailEnable" name="detailEnable" value="true" type="checkbox">
-                                                                <input name="detailEnable" value="false" type="hidden">
+                                                            <div class="form-group">
+                                                                <label for=detailOutOfStockAlertQty class="col-lg-2 control-label">Reorder Alert Qty<span class="required">*</span></label>
+                                                                <div class="col-lg-4 input-group">
+                                                                    <input type="text" class="form-control" onkeypress="return isNumber(event)" id="detailOutOfStockAlertQty" name="detailOutOfStockAlertQty">
+                                                                    <span id="errorAlertQty" style="color: Red; display: none">Reorder Alert Qty is Required</span>
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </div>
 
 
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-2" for="detailDefaultOption" style="">Default Option</label>
-                                                        <div class="col-lg-4 input-group">
-                                                            <div>
-                                                                <input class="check-box" data-val="true" id="detailDefaultOption" name="detailDefaultOption" value="true" type="checkbox">
-                                                                <input name="detailDefaultOption" value="false" type="hidden">
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-2" for="detailStockAvailable" style="">Stock Status<span class="required">*</span></label>
+                                                                <div class="col-lg-4 input-group">
+                                                                    <div>
+                                                                        <input class="check-box" data-val="true" id="detailStockAvailable" name="detailStockAvailable" value="true" type="checkbox">
+                                                                        <input name="detailStockAvailable" value="false" type="hidden">
+                                                                    </div>
+                                                                </div>
                                                             </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-2" for="detailDiscountAmount">Discount Price</label>
+                                                                <div class="col-lg-4 input-group">
+                                                                    <input class="form-control text-box single-line" id="detailDiscountAmount" name="detailDiscountAmount" value="" type="text">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-2" for="detailPriceDifference">Price Difference</label>
+                                                                <div class="col-lg-4 input-group">
+                                                                    <input class="form-control text-box single-line" id="detailPriceDifference" name="detailPriceDifference" value="" type="text">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-2" for="detailDiscountStartDate" style="">Discount Start Date</label>
+                                                                <div class="col-lg-4 input-group">
+                                                                    <input class="form-control text-box single-line datepicker" id="detailDiscountStartDate" name="detailDiscountStartDate" value="" type="text">
+                                                                </div>
+                                                            </div>
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-2" for="detailDiscountEndDate" style="">Discount End Date</label>
+                                                                <div class="col-lg-4 input-group">
+                                                                    <input class="form-control text-box single-line datepicker" id="detailDiscountEndDate" name="detailDiscountEndDate" value="" type="text">
+                                                                </div>
+                                                            </div>
+
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-2" for="detailEnable" style="">Enable</label>
+                                                                <div class="col-lg-4 input-group">
+                                                                    <div>
+                                                                        <input class="check-box" data-val="true" id="detailEnable" name="detailEnable" value="true" type="checkbox">
+                                                                        <input name="detailEnable" value="false" type="hidden">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-2" for="detailDefaultOption" style="">Default Option</label>
+                                                                <div class="col-lg-4 input-group">
+                                                                    <div>
+                                                                        <input class="check-box" data-val="true" id="detailDefaultOption" name="detailDefaultOption" value="true" type="checkbox">
+                                                                        <input name="detailDefaultOption" value="false" type="hidden">
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+
+                                                            <div class="form-group">
+                                                                <label class="control-label col-lg-2" id="lblDetailTags" for="detailTagsPicker" style="">New Tags</label>
+                                                                <div class="col-lg-4 input-group" id="detailTagsdiv">
+                                                                    <input class="form-control text-box single-line" id="detailTagsPicker" placeholder="Add key Words....." name="detailTagsPicker" value="" type="text">
+                                                                    <input id="detailDetailTags" value="" type="hidden">
+                                                                    <span class="input-group-btn">
+                                                                        <button class="btn btn-default" type="button">+</button>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+
+
+
+
+
+                                                            <div class="form-group">
+                                                                <span class="col-lg-2"></span>
+
+                                                                <div id="detailkeywordsDiv" class="col-lg-4">
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
                                                         </div>
                                                     </div>
-
-
-                                                    <div class="form-group">
-                                                        <label class="control-label col-lg-2" id="lblDetailTags" for="detailTagsPicker" style="">New Tags</label>
-                                                        <div class="col-lg-4 input-group" id="detailTagsdiv">
-                                                            <input class="form-control text-box single-line" id="detailTagsPicker" placeholder="Add key Words....." name="detailTagsPicker" value="" type="text">
-                                                            <input id="detailDetailTags" value="" type="hidden">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn btn-default" type="button">+</button>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-
-
-
-
-
-                                                    <div class="form-group">
-                                                        <span class="col-lg-2"></span>
-
-                                                        <div id="detailkeywordsDiv" class="col-lg-4">
-
-                                                        </div>
-                                                    </div>
-
-                                                </div>
-
                                             </div>
                                             <div class="tab-pane fade" id="ratingAndReviews">
                                                 <div id="RatingDisplay" class="well well-sm">
@@ -818,7 +826,7 @@
                                             </div>
                                         </div>
                                         @Html.HiddenFor(model => model.productDetailhdf)
-                                                }
+                                        }
                                 </div>
                             </div>
                         </div>
@@ -919,14 +927,13 @@
 </div><!-- /.modal -->
 
 @*--------------------------------------DeleteForm------------------------------------------------------------------*@
-@using (Ajax.BeginForm("DeleteRelatedProducts", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "Are You Sure?...", OnSuccess = "RelatedproductDeleteSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "" }, new { @class = "form-horizontal", role = "form", id = "relatedproductDeleteform" }))
+@using (Ajax.BeginForm("DeleteRelatedProducts", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "Are You Sure?...",OnBegin = "return ValidateTableSelection()", OnSuccess = "RelatedproductDeleteSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "" }, new { @class = "form-horizontal", role = "form", id = "relatedproductDeleteform" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.IDList, htmlAttributes: new { @class = "control-label col-lg-2 IDList",id="relatedproductlistID", Value = "0" })
     @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-lg-2 productID", id = "productIDInDelete", Value = "0" })
     <div class="form-group" hidden="hidden">
         <div class="col-md-offset-2 col-md-10">
-
             <input id="btnDeleteRelatedProductSubmit" type="submit" value="Create" class="btn btn-default" onclick="ConstructRelatdProductIDListForDelete()" />
         </div>
     </div>

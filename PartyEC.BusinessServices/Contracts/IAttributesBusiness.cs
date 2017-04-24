@@ -14,7 +14,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertAttributes(Attributes attributesObj);
         OperationsStatus UpdateAttributes(Attributes attributesObj);
         OperationsStatus DeleteAttributes(int AttributeID);
-        List<Attributes> GetAllAttributeBySet(int AttributeSetID,bool IsConfigurable);
+        List<Attributes> GetAllAttributeBySet(int AttributeSetID,bool IsConfigurable, string EntityType = "Product");
 
 
     }

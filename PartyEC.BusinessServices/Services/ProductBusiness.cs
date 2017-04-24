@@ -138,6 +138,21 @@ namespace PartyEC.BusinessServices.Services
 
             return _productRepository.GetProduct(ProductID, Status);
         }
+
+        public List<AttributeValues> GetAttributeValuesByProduct(int ProductID)
+        {
+            List<AttributeValues> attrvalues = null;
+            try
+            {
+                attrvalues= _productRepository.GetProductHeader(ProductID).ProductOtherAttributes;
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return attrvalues;
+        }
+
         public List<Product> GetRelatedImages(int ProductID, OperationsStatus Status)
         {
 

@@ -90,15 +90,15 @@ namespace PartyEC.BusinessServices.Services
             return OperationsStatusObj;
         }
         
-        public List<Attributes> GetAllAttributeBySet(int AttributeSetID,bool IsConfigurable)
+        public List<Attributes> GetAllAttributeBySet(int AttributeSetID,bool IsConfigurable,string EntityType="Product")
         {
             List<Attributes> attributelist = null;
             try
             {
                 //Filters the list with  IsConfigurable boolean,
                 //sorts the list by  DisplayOrder
-                attributelist = _attributesRepository.GetAllAttributeBySet(AttributeSetID)
-                .Where(attr => attr.ConfigurableYN == IsConfigurable)
+                attributelist = _attributesRepository.GetAllAttributeBySet(AttributeSetID);
+                attributelist= attributelist.Where((attr => attr.ConfigurableYN == IsConfigurable && attr.EntityType== EntityType))
                 .OrderBy(attr => attr.attributeSetLinkObj.DisplayOrder).ToList();
             }
             catch (Exception ex)
