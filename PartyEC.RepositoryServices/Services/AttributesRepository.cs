@@ -136,7 +136,7 @@ namespace PartyEC.RepositoryServices.Services
             OperationsStatus operationsStatusObj = null;
             try
             {
-                SqlParameter outparameter = null;
+                SqlParameter outparameter,outparameter1 = null;
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
                     using (SqlCommand cmd = new SqlCommand())
@@ -162,6 +162,8 @@ namespace PartyEC.RepositoryServices.Services
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
+                        outparameter1 = cmd.Parameters.Add("@ID", SqlDbType.Int);
+                        outparameter1.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
@@ -172,6 +174,7 @@ namespace PartyEC.RepositoryServices.Services
                                 break;
                             case "1": 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.ReturnValues = Int32.Parse(outparameter1.Value.ToString());
                                 operationsStatusObj.StatusMessage = constObj.InsertSuccess;
                                 break;
                             case "2":                                 
@@ -199,7 +202,7 @@ namespace PartyEC.RepositoryServices.Services
 
             try
             {
-                SqlParameter outparameter = null;
+                SqlParameter outparameter,outparameter1 = null;
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
                     using (SqlCommand cmd = new SqlCommand())
@@ -226,6 +229,8 @@ namespace PartyEC.RepositoryServices.Services
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
+                        outparameter1 = cmd.Parameters.Add("@ReturnID",SqlDbType.Int);
+                        outparameter1.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
@@ -236,6 +241,7 @@ namespace PartyEC.RepositoryServices.Services
                                 break;
                             case "1": 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.ReturnValues = Int32.Parse(outparameter1.Value.ToString());
                                 operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
                                 break;
                             case "2":

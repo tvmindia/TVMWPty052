@@ -531,6 +531,11 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.deletebtn.Event = "DeleteOtherImage()";
                     ToolboxViewModelObj.deletebtn.Title = "Delete";
                     break;
+                case "Back":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
                 case "CancelDelete":
                     ToolboxViewModelObj.deletebtn.Visible = true;
                     ToolboxViewModelObj.deletebtn.Disable = true;

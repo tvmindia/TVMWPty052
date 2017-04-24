@@ -1487,22 +1487,23 @@ function clearAssociatedProductform() {
 
 function BindProductReviews()   // To Display Previous Comment history
 {
-
-    HideProductDetalsToolBox();
+    
+    ChangeButtonPatchView("Products", "ProductToolBox", "Back");
     
     var id = $(".productID").val();// assigning id for binding reviews.
     var attributesetId = $("#AttributeSetID").val();
 
-    if ((attributesetId)&&(id)) {
+    if (attributesetId)
+    {
         //Rating
         var thisRatingSummary = GetRatingSummary(id, attributesetId);
-        if (thisRatingSummary.length>0) {          
-            $("#RatingDisplay").empty();
+        $("#RatingDisplay").empty();
+        if (thisRatingSummary.length > 0) {
             var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
             var ratinglists = ""
             var TotalRating = parseFloat(0);
             var AvgRating;
-            
+
 
             for (var i = 0; i < attributecount; i++) {
                 var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value);
@@ -1518,8 +1519,8 @@ function BindProductReviews()   // To Display Previous Comment history
                         ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
                     }
                 }
-                ratinglists = ratinglists + '<div class="col-xs-3 col-md-3 text-right">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
-                                            '<div class="col-xs-8 col-md-9"><div  class="rating-block">' + ratebtnstring + '</div></div>';
+                ratinglists = ratinglists + '<div class="col-xs-4 text-right">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
+                                            '<div class="col-xs-8"><div  class="rating-block">' + ratebtnstring + '</div></div>';
             }
             AvgRating = Math.round(TotalRating / attributecount); //total rating by attribute count
             var Avgratebtnstring = '';
@@ -1542,17 +1543,25 @@ function BindProductReviews()   // To Display Previous Comment history
                                                   '</div>' +
                                                   '<div class="col-xs-12 col-md-6">' +
                                                       '<div id ="RatingAttributes" class="row rating-desc">' + ratinglists +
-                                                      '</div></div></div>');
-
-
-
+                                                      '</div></div></div>'); 
             $("#RatingDisplay").append(ratingdiv);
 
         }
+        else
+        {
+            debugger;
+            var ratingdiv = $(' <div class="row"><div class="col-xs-12 col-md-6 text-center"><h1 class="rating-num">0.0</h1><div class="rating">'+
+                              '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>'+
+                              '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>' +
+                              '<span class="glyphicon glyphicon-star-empty"></span>' +
+                             '</div><div><span class="glyphicon glyphicon-user"></span>0,000,000 total</div></div></div>');
+            $("#RatingDisplay").append(ratingdiv);
+        }
         //Reviews
         var thisReviewList = GetProductReviews(id);
+        $("#ReviewsDisplay").empty();
         if (thisReviewList.length>0) {
-            $("#ReviewsDisplay").empty();
+            
             for (var i = 0; i < thisReviewList.length; i++) {
                 var resultdate =thisReviewList[i].ReviewCreatedDate;
                 var imageurl;
@@ -1594,6 +1603,11 @@ function BindProductReviews()   // To Display Previous Comment history
                 //----------------------------------------------------------------------------------------------------------------------//
 
             }
+        }
+        else
+        {
+            var cnt = $('<div class="row"><div id="ReviewsDisplay" class="col-sm-7"><h2>No Reviews Yet</h2></div></div>');
+            $("#ReviewsDisplay").append(cnt);
         }
 }
    
