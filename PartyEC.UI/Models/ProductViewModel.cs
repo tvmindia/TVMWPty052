@@ -58,7 +58,7 @@ namespace PartyEC.UI.Models
 
         [Display(Name = "Attribute Set")]
         public int AttributeSetID { get; set; }
-
+        public string AttributeSetName { get; set; }
         public List<SelectListItem> AttributeSets { get; set; }
         [Required(ErrorMessage = "Please choose Free Delivery or not")]
         [Display(Name = "FreeDelivery (Yes/No)")]
@@ -134,6 +134,7 @@ namespace PartyEC.UI.Models
         [Display(Name = "Long Description")]
       
         [DataType(DataType.MultilineText)]
+        [AllowHtml]
         public string LongDescription { get; set; }
         #endregion Description
 

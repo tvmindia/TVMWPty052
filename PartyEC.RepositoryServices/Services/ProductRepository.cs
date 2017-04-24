@@ -364,6 +364,7 @@ namespace PartyEC.RepositoryServices.Services
             {
                 SqlParameter statusCode = null;
                 SqlParameter outparamID = null;
+                SqlParameter outAttributeset = null;
                
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
@@ -406,6 +407,8 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode.Direction = ParameterDirection.Output;
                         outparamID = cmd.Parameters.Add("@ProductID", SqlDbType.SmallInt);
                         outparamID.Direction = ParameterDirection.Output;
+                        outAttributeset = cmd.Parameters.Add("@AttributeSetName", SqlDbType.NVarChar,50);
+                        outAttributeset.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (statusCode.Value.ToString())
@@ -421,7 +424,11 @@ namespace PartyEC.RepositoryServices.Services
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "Insertion Successfull!";
                                 productObj.ID= int.Parse(outparamID.Value.ToString());
-                                operationsStatusObj.ReturnValues = productObj.ID;
+                                operationsStatusObj.ReturnValues = new {
+                                    productid = productObj.ID,
+                                    attributesetname = outAttributeset.Value.ToString()
+                                };
+                                
                                 break;
                             default:
                                 break;
@@ -667,7 +674,7 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter statusCode = null;
-              
+                SqlParameter outAttributeset = null;
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
                     using (SqlCommand cmd = new SqlCommand())
@@ -708,6 +715,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = productObj.logDetails.UpdatedDate;
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
+                        outAttributeset= cmd.Parameters.Add("@AttributeSetName", SqlDbType.NVarChar, 50);
+                        outAttributeset.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (statusCode.Value.ToString())
@@ -719,11 +728,14 @@ namespace PartyEC.RepositoryServices.Services
                                 operationsStatusObj.ReturnValues = productObj.ID;
                                 break;
                             case "1":
-                                //Insert Successfull
+                                //update Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = "updation Successfull!";
-                                operationsStatusObj.ReturnValues= productObj.ID;
-
+                                operationsStatusObj.ReturnValues = new
+                                {
+                                    productid = productObj.ID,
+                                    attributesetname = outAttributeset.Value.ToString()
+                                };
                                 break;
                             default:
                                 break;
@@ -941,9 +953,9 @@ namespace PartyEC.RepositoryServices.Services
                                 myProduct.HeaderTags = (sdr["HeaderTag"].ToString() != "" ? sdr["HeaderTag"].ToString() : myProduct.HeaderTags);
                                 myProduct.StickerURL = (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : myProduct.StickerURL);
                                 myProduct.StickerID = (sdr["StickerID"].ToString() != "" ? Guid.Parse(sdr["StickerID"].ToString()) : myProduct.StickerID); //sdr["StickerID"].ToString();
-
+                                myProduct.AttributeSetName= (sdr["AttributeSetName"].ToString() != "" ? sdr["AttributeSetName"].ToString() : myProduct.AttributeSetName);
                                 myProduct.ProductHeaderImages = GetProductImages(myProduct.ID);
-
+                                
                                 //myProduct.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
                                 //myProduct.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["CreatedDate"].ToString())) : myProduct.logDetails.CreatedDate);
                                 //myProduct.logDetails.UpdatedBy = sdr["UpdatedBy"].ToString();
