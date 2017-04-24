@@ -1552,7 +1552,7 @@ function BindProductReviews()   // To Display Previous Comment history
                               '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>'+
                               '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>' +
                               '<span class="glyphicon glyphicon-star-empty"></span>' +
-                             '</div><div><span class="glyphicon glyphicon-user"></span>0,000,000 total</div></div></div>');
+                             '</div><div><span class="glyphicon glyphicon-user"></span>0 total</div></div></div>');
             $("#RatingDisplay").append(ratingdiv);
         }
         //Reviews
