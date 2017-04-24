@@ -286,7 +286,7 @@ function goback() {
 
 function RenderContentForImages()
 {
-    HideProductDetalsToolBox();
+   // HideProductDetalsToolBox();
     BindImages();
     BindStickers();
 }
@@ -400,13 +400,14 @@ function BindStickers()
             {
                 ActiveSticker = 1;
                 $('#ulMainStickerArea').append(' <li class="col-sm-4"><a class="thumbnail" onclick="SelectForDeleteSticker(this)" id="' + Table[i].ID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].URL + '?' + new Date().getTime() + '">'
-                    + '<a style="top: 2%;left: 14%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].URL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a></li>')
+                    + '<a style="top: 2%;left: 14%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].URL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a>'
+                    + '<a onclick="UpdateStickerForProduct();" style="top: 2%;left: 22%;position: absolute;background: white;padding-left:1%;padding-right:1%;" class="fa fa-trash"/></a></li>');
             }
             else
             {
                 AvailableSticker = 1;
-                $('#ulStickerArea').append(' <li class="col-sm-4"><a class="thumbnail" onclick="SelectForAddSticker(this)" id="' + Table[i].ID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].URL + '?' + new Date().getTime() + '">'
-                    + '<a style="top: 2%;left: 14%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].URL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a></li>')
+                $('#ulStickerArea').append(' <li class="col-sm-2"><a class="thumbnail" onclick="SelectForAddSticker(this)" id="' + Table[i].ID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].URL + '?' + new Date().getTime() + '">'
+                    + '<a style="top: 2%;left: 14%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].URL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a></li>');
             }
         }
         if(ActiveSticker==0)
@@ -436,15 +437,20 @@ function BindImages() {
                 MainFlag = 1;
                 $('#imgProduct').attr('src', (Table[i].ImageURL != "" && Table[i].ImageURL != null ? Table[i].ImageURL + '?' + new Date().getTime() : "/Content/images/NoImageFound.png"));
                 $('#ImageID').val(Table[i].ImageID);
+                $('#divMainImagePro').append('<a style="top: 2%;left: 7%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].ImageURL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a>'
+                    + '<a onclick="DeleteOtherImage(' + Table[i].ImageID + ')" style="top: 2%;left: 9.2%;position: absolute;background: white;padding-left:1%;padding-right:1%;" class="fa fa-trash"/></a></li>')
             }
             else {
                 OtherFlag = 1;
-                $('#ulOtherImages').append(' <li class="col-sm-4"><a class="thumbnail" onclick="SelectImagesForDelete(this)" id="' + Table[i].ImageID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].ImageURL + '?' + new Date().getTime() + '">'
-                    + '<a style="top: 2%;left: 14%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].ImageURL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a></li>')
+                //onclick="SelectImagesForDelete(this)"
+                $('#ulOtherImages').append(' <li class="col-sm-4"><a class="thumbnail" id="' + Table[i].ImageID + '"><img style="width: 100px;height: 100px;object-fit: cover;" src="' + Table[i].ImageURL + '?' + new Date().getTime() + '">'
+                    + '<a style="top: 2%;left: 14%;position: absolute;background: white;" class="fa fa-search-plus" href="' + Table[i].ImageURL + '?' + new Date().getTime() + '" data-lightbox="roadtrip"/></a>'
+                    + '<a onclick="DeleteOtherImage('+ Table[i].ImageID +')" style="top: 2%;left: 22%;position: absolute;background: white;padding-left:1%;padding-right:1%;" class="fa fa-trash"/></a></li>')
             }
         }
         if (Table.length == 0 && MainFlag == 0) {
             $('#imgProduct').attr('src', '/Content/images/NoImageFound.png');
+            $('#divMainImagePro a').remove();
         }
         if(OtherFlag==0)
         {
@@ -457,16 +463,17 @@ function BindImages() {
     }
    
 }
-function DeleteOtherImage()
+function DeleteOtherImage(id)
 {
     try
     {
-        
+        debugger;
         var DeletedImageID = [];
-        var objectset = $('#ulOtherImages a.Selected');
-        for (var i = 0; i < objectset.length; i++) {
-            DeletedImageID.push(objectset[i].id);
-        }
+        //var objectset = $('#ulOtherImages a.Selected');
+        //for (var i = 0; i < objectset.length; i++) {
+        //    DeletedImageID.push(objectset[i].id);
+        //}
+        DeletedImageID.push(id);
         var ProductViewModel = new Object();
         ProductViewModel.IDSet = DeletedImageID;
         var data = "{'productViewObj':" + JSON.stringify(ProductViewModel) + "}";
@@ -520,12 +527,14 @@ function SelectForAddSticker(this_Obj)
        
         if ($('#ulStickerArea span.highlighted').length == 0) {
             $(this_Obj).append('<span class="highlighted">&#10004;</span>');
-            ChangeButtonPatchView("Products", "buttonPatchStickerImages", "Sticker");
+            $('#Savesticker').attr('onclick', 'UpdateStickerForProduct()');
+            //ChangeButtonPatchView("Products", "buttonPatchStickerImages", "Sticker");
         }
         else
         {
             $('span.highlighted').remove();
-            ChangeButtonPatchView("Products", "buttonPatchStickerImages", "CancelSticker");
+            $('#Savesticker').removeAttr('onclick');
+            //ChangeButtonPatchView("Products", "buttonPatchStickerImages", "CancelSticker");
         }
     }
     catch (e) {
@@ -903,10 +912,31 @@ function RelatedproductDeleteSuccess(data, status, xhr)
     }
 }
 
-function HideProductDetalsToolBox()
+function RenderContentForRelatedProducts()
 {
-    ChangeButtonPatchView("Products", "ProductToolBox", "RPAdd"); //ControllerName,id of the container div,Name of the action
-   // $("#btnPatchProductDetails").css('visibility', 'hidden');
+    try
+    {
+        var proid = $('.productID').val();
+        if ((proid) && (proid>0))
+        {
+
+
+
+            ChangeButtonPatchView("Products", "ProductToolBox", "RPAdd"); //ControllerName,id of the container div,Name of the action
+        }
+        else
+        {
+
+        }
+    
+    }
+    catch(e)
+    {
+        notyAlert('error', e.Message);
+    }
+   
+
+   
    
 }
 function ShowProductDetalsToolBox()
@@ -918,7 +948,7 @@ function ShowProductDetalsToolBox()
 function RenderContentsForAttributes()
 {
    
-    HideProductDetalsToolBox();
+   // HideProductDetalsToolBox();
     try {
        
         var atsetID = $("#AttributeSetIDhdf").val();
