@@ -427,7 +427,7 @@
                                                                 listItems.Add(new SelectListItem
                                                                 { Text = "In Stock", Value ="true" });
                                                             }
-                                                            @Html.DropDownListFor(model => model.StockAvailable, listItems, "-- Select Entity Type --", new { @class = "form-control" })
+                                                            @Html.DropDownListFor(model => model.StockAvailable, listItems, "-- Select Stock Status--", new { @class = "form-control" })
                                                         </div>
                                                     </div>
                                                 </div>
@@ -715,8 +715,16 @@
                                                                 <label class="control-label col-lg-2" for="detailStockAvailable" style="">Stock Status<span class="required">*</span></label>
                                                                 <div class="col-lg-4 input-group">
                                                                     <div>
-                                                                        <input class="check-box" data-val="true" id="detailStockAvailable" name="detailStockAvailable" value="true" type="checkbox">
-                                                                        <input name="detailStockAvailable" value="false" type="hidden">
+                                                                        @Html.ValidationMessageFor(model => model.StockAvailable, "", new { @class = "text-danger" })
+                                                                        @{
+                                                                            List<SelectListItem> listItems1 = new List<SelectListItem>();
+                                                                            listItems1.Add(new SelectListItem
+                                                                            { Text = "Out of Stock", Value = "false" });
+                                                                            listItems1.Add(new SelectListItem
+                                                                            { Text = "In Stock", Value = "true" });
+                                                                        }
+                                                                        @Html.DropDownListFor(model => model.StockAvailable, listItems1, "-- Select Stock Status--", new { @class = "form-control",id="AssociatedStockAvailabe" })
+                                                                      
                                                                     </div>
                                                                 </div>
                                                             </div>

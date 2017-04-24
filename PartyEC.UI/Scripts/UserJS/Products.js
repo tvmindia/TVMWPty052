@@ -371,8 +371,7 @@ function Edit(currentObj)
             $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0?thisproduct.ProductDetails[0].DiscountEndDate:""));
             $("#ShortDescription").val(thisproduct.ShortDescription);
             $("#LongDescription").val(thisproduct.LongDescription);
-
-            debugger;
+ 
 
             if (thisproduct.StockAvailable == true)
             {
@@ -518,7 +517,7 @@ function DeleteOtherImage(id)
 {
     try
     {
-        debugger;
+     
         var DeletedImageID = [];
         //var objectset = $('#ulOtherImages a.Selected');
         //for (var i = 0; i < objectset.length; i++) {
@@ -1180,9 +1179,9 @@ function OtherAttributeSave()
 }
 
 function RenderContentsForAssocProdAttributes()
-{
-  
+{ 
     try {
+        $("#AssociatedStockAvailabe").val("");
         var proid = $('.productID').val();
         var atsetID = $("#AttributeSetID").val();
         var protype = $("#ProductTypehdf").val();
@@ -1360,7 +1359,7 @@ function AssociatedProductSave()
     try {
         if (!ValidateAssociatedProducts())
         {
-            debugger;
+        
             //Serialize dynamic other attribute elements
             //var Associatedpro = $('#dynamicAssociatedProducts').find('select,input').serializeArray();
             var Associatedpro = $('#dynamicAssociatedProductContents').find('select,input').serializeArray();
@@ -1385,7 +1384,9 @@ function AssociatedProductSave()
                 ProductDetailViewModel.Qty = (detqty != "" ? detqty : "");
                 var outstockqty = $("#detailOutOfStockAlertQty").val();
                 ProductDetailViewModel.OutOfStockAlertQty = (outstockqty != "" ? outstockqty : "");
-                var stockavail = $("#detailStockAvailable").prop('checked');
+
+              
+                var stockavail = $("#AssociatedStockAvailabe").val();
                 ProductDetailViewModel.StockAvailable = (stockavail != "" ? stockavail : "");
                 var detailDiscAmount = $("#detailDiscountAmount").val();
                 ProductDetailViewModel.DiscountAmount = (detailDiscAmount != "" ? detailDiscAmount : "");
@@ -1474,7 +1475,7 @@ function GetProductDetailsByProductId(id)
 
 function AssociatedProductDelete(this_Obj)
 {
-    debugger;
+    
     var rowData = DataTables.AssociatedProductsTable.row($(this_Obj).parents('tr')).data();
     if (!rowData.DefaultOptionYN)
     {
@@ -1520,7 +1521,7 @@ function AssociatedProductDelete(this_Obj)
     
 }
 function EditAssocProduct(currentObj) {
-    debugger;
+   
     var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         var thisproduct = GetProductDetailsByProductDetailID(rowData.ProductID,rowData.ID );
@@ -1529,9 +1530,14 @@ function EditAssocProduct(currentObj) {
             $("#productDetailID").val(thisproduct.ID);
             $("#detailQty").val(thisproduct.Qty);
             $("#detailOutOfStockAlertQty").val(thisproduct.OutOfStockAlertQty);
+            
             if (thisproduct.StockAvailable == true)
-            { $("#detailStockAvailable").prop('checked', true); }
-            else { $("#detailStockAvailable").prop('checked', false); }
+            {
+                $("#AssociatedStockAvailabe").val("true");
+            }
+            else {
+                $("#AssociatedStockAvailabe").val("false");
+            }
             $("#detailDiscountAmount").val(thisproduct.DiscountAmount);
             $("#detailPriceDifference").val(thisproduct.PriceDifference);
             $("#detailDiscountStartDate").val(ConvertJsonToDate(thisproduct.DiscountStartDate));
@@ -1625,6 +1631,7 @@ function GetProductDetailsByProductDetailID(id,detailid)
 }
 
 function clearAssociatedProductform() {
+
     //Clear form
     //drop down clear
     $('#dynamicAssociatedProductContents').find('select,input').val(-1);
@@ -1633,7 +1640,8 @@ function clearAssociatedProductform() {
     $("#productDetailID").val(0);
     $('#associatedStaticfields').find('input').val('');
     $('#associatedStaticfields').find('.check-box').prop('checked', false);
-
+   
+    $("#AssociatedStockAvailabe").val("");
     
     //associatedStaticfields
  
@@ -1705,7 +1713,7 @@ function BindProductReviews()   // To Display Previous Comment history
         }
         else
         {
-            debugger;
+            
             var ratingdiv = $(' <div class="row"><div class="col-xs-12 col-md-6 text-center"><h1 class="rating-num">0.0</h1><div class="rating">'+
                               '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>'+
                               '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>' +
