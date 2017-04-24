@@ -20,6 +20,7 @@ namespace PartyEC.DataAccessObject.DTO
         public char ActionType { get; set; }//book //buy //Quote
         public char ProductType { get; set; }//simple //configurable
         public int AttributeSetID { get; set; }
+        public string AttributeSetName { get; set; }
 
         public int SupplierID { get; set; }
         public int ManufacturerID { get; set; }

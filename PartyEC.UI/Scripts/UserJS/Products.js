@@ -314,7 +314,9 @@ function Edit(currentObj)
         var thisproduct = GetProduct(rowData.ID);
         if (thisproduct != null)
         {
-            $("#titleSpanPro").text(thisproduct.Name + '-(Type:' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ',Attribute set:'+'-'+')');
+            $("#titleSpanPro").text(thisproduct.Name);
+            $("#spandetail").text('(Type:' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((thisproduct.AttributeSetName != null) && (thisproduct.AttributeSetName != "") ? thisproduct.AttributeSetName : 'N/A') + ')');
+            //$("#titleSpanPro").text(thisproduct.Name + '-(Type:' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((thisproduct.AttributeSetName != "") && (thisproduct.AttributeSetName != null)?thisproduct.AttributeSetName:'N/A') + ')');
             //disables some drop downs
             
             ((thisproduct.ProductType == "C") && (thisproduct.ProductDetails.length > 1) ? $("#AttributeSetID").attr({ 'disabled': 'disabled' }) : $("#AttributeSetID").removeAttr('disabled'));
@@ -751,12 +753,12 @@ function productSaveSuccess(data, status, xhr)
     switch (JsonResult.Result) {
         case "OK":
             notyAlert('success', JsonResult.Record.StatusMessage);
-            $(".productID").val(JsonResult.Record.ReturnValues);
+            $(".productID").val(JsonResult.Record.ReturnValues.productid);
             RefreshProducts();
-            $("#titleSpanPro").text($("#Name").val() + '-(Type:' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + '-' + ')');
-            //$("#titleSpanPro").text($("#Name").val() + '(' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ')');
-            //$("#productDetails h4 titleSpanPro").text('New Product');
-            RefreshUNRelatedProducts(JsonResult.Record.ReturnValues);
+            // $("#titleSpanPro").text($("#Name").val() + '-(Type:' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((JsonResult.Record.ReturnValues.attributesetname != null) && (JsonResult.Record.ReturnValues.attributesetname!="")?JsonResult.Record.ReturnValues.attributesetname:'N/A') + ')');
+            $("#titleSpanPro").text($("#Name").val());
+            $("#spandetail").text('(Type:' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((JsonResult.Record.ReturnValues.attributesetname != null) && (JsonResult.Record.ReturnValues.attributesetname != "") ? JsonResult.Record.ReturnValues.attributesetname : 'N/A') + ')');
+            RefreshUNRelatedProducts(JsonResult.Record.ReturnValues.productid);
             break;
         case "ERROR":
             notyAlert('error', JsonResult.Record.StatusMessage);
@@ -1552,7 +1554,7 @@ function BindProductReviews()   // To Display Previous Comment history
                               '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>'+
                               '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>' +
                               '<span class="glyphicon glyphicon-star-empty"></span>' +
-                             '</div><div><span class="glyphicon glyphicon-user"></span>0,000,000 total</div></div></div>');
+                             '</div><div><span class="glyphicon glyphicon-user"></span>0 total</div></div></div>');
             $("#RatingDisplay").append(ratingdiv);
         }
         //Reviews
