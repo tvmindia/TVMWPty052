@@ -61,7 +61,7 @@ $(document).ready(function () {
                  "render": function (data, type, row) {
                      var returnstring = '';
                      if (data) {
-                         debugger;
+                      
                          var product = row.ProductName;
                          for (var ik = 0; ik < data.length; ik++) {
                              returnstring = returnstring + '<span><b>' +data[ik].Caption + '</b> : ' +(data[ik].Value != "" && data[ik].Value != null ? data[ik].Value: ' - ') + '</span><br/>';
@@ -121,7 +121,7 @@ function GetQuotationsByID(id) {
 //---------------------------------------Edit Quotations--------------------------------------------------//
 function Edit(currentObj) {
     //Tab Change on edit click   
-    ChangeButtonPatchView("Quotations", "btnPatchQuotations", "Edit_List");
+ 
     $('#tabQuotationsDetails').removeClass('disabled');
     $('#tabQuotationsDetails a').attr('data-toggle', 'tab');
     $('#tabQuotationsDetails a').trigger('click');
@@ -153,7 +153,6 @@ function fillQuotations(ID) {
 
     $("#lblMessage").text(thisQuotations.Message);
 
-
     $("#Price").val(thisQuotations.Price);
     $("#AdditionalCharges").val(thisQuotations.AdditionalCharges);
     $("#DiscountAmt").val(thisQuotations.DiscountAmt);
@@ -166,7 +165,6 @@ function fillQuotations(ID) {
     $("#lblGrandTotal").text(thisQuotations.GrandTotal);
     $("#lblAdditionalCharges").text(thisQuotations.AdditionalCharges);
     
-   
     BindTablQuotationDetailList(thisQuotations.ID);
     //region comments
     
@@ -174,6 +172,13 @@ function fillQuotations(ID) {
     $("#mailViewModelObj_CustomerName").val(thisQuotations.customerObj.Name);
     $("#QuotationNo").val(thisQuotations.QuotationNo);
     BindComments();
+    if ($("#Price").val()==0 &&  $("#lblGrandTotal").text()==0)
+    {
+        ChangeButtonPatchView("Quotations", "btnPatchQuotations", "Edit_List");
+    }
+    else {
+        ChangeButtonPatchView("Quotations", "btnPatchQuotations", "Send");
+    }
 }
 
 function BindTablQuotationDetailList(ID) {
@@ -205,7 +210,7 @@ function BindQuotationsTable() {
     }
 
 function SaveSuccess(data, status, xhr) {
-    debugger;
+   
     BindQuotationsTable();
     var i = JSON.parse(data) 
     switch (i.Result) { 
@@ -233,7 +238,7 @@ function BindComments()   // To Display Previous Comment history
     id = $("#ID").val();// assigning id for binding comments.
     var CommentList = GetEventsLog(id);
     if (CommentList != null) {
-        debugger;
+     
         for (var i = 0; i < CommentList.length; i++) {
             var cnt = $('<li id="Comment' + i + '" class="list-group-item col-md-12" style="background-color:#f4f0f0;">' + CommentList[i].Comment + '<span class="badge">' + CommentList[i].CommentDate + '</span></li>');
             $("#CommentsDisplay").append(cnt);
@@ -272,4 +277,46 @@ function tabListClick()
     $('#tabQuotationsDetails a').attr('data-toggle', '');
 }
  
+
+function SendMail() {
+    debugger;
+    var QuotationsViewModel  = new Object();
+    QuotationsViewModel.CustomerName = $("#lblCustomerName").text();
+    QuotationsViewModel.ID = $("#ID").val();
+    QuotationsViewModel.QuotationNo = $("#lblQuotationsNo").text();
+    QuotationsViewModel.QuotationDate = $("#lblQuotationDate").text();
+    QuotationsViewModel.RequiredDate = $("#lblRequiredDate").text();
+    QuotationsViewModel.SourceIP = $("#lblSourceIP").text();
+    QuotationsViewModel.StatusText = $("#lblQuotationstatus").text();
+    QuotationsViewModel.Message = $("#lblMessage").text();
+    QuotationsViewModel.Price = $("#Price").val();
+    QuotationsViewModel.AdditionalCharges = $("#AdditionalCharges").val();
+    QuotationsViewModel.DiscountAmt = $("#DiscountAmt").val();
+    QuotationsViewModel.TaxAmt = $("#TaxAmt").val();
+    QuotationsViewModel.Status = $("#Status").val();
+    QuotationsViewModel.SubTotal = $("#lblSubTotal").text();
+    QuotationsViewModel.Total = $("#lblGrandTotal").text();
+    QuotationsViewModel.CustomerEmail = $("#mailViewModelObj_CustomerEmail").val();
+    debugger; 
+    var data = "{'quotationsObj':" + JSON.stringify(QuotationsViewModel) + "}";
+    PostDataToServer('Quotations/SendQuotation/', data, function (JsonResult) {
+        if (JsonResult != '') {
+            switch (JsonResult.Result) {
+                case "OK":
+                    notyAlert('success', JsonResult.Record.StatusMessage);
+                    break;
+                case "ERROR":
+                    notyAlert('error', JsonResult.Record.StatusMessage);
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
+   
+
+
+
+
+}
 

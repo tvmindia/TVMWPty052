@@ -89,7 +89,7 @@ $(document).ready(function () {
                },
                {
                    "render": function (data, type, row) {
-                       return (data == true ? "In Stock" : "Empty");
+                       return (data == true ? "In Stock" : "Out Of Stock");
                    },
                    "targets": 9
                }
@@ -370,9 +370,20 @@ function Edit(currentObj)
             $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0?thisproduct.ProductDetails[0].DiscountEndDate:""));
             $("#ShortDescription").val(thisproduct.ShortDescription);
             $("#LongDescription").val(thisproduct.LongDescription);
+
+            debugger;
+
             if (thisproduct.StockAvailable == true)
-            { $("#StockAvailable").prop('checked', true); }
-            else { $("#StockAvailable").prop('checked', false); }
+            {
+                $("#StockAvailable").val("true");
+            }
+            else {
+                $("#StockAvailable").val("false");
+            }
+
+         
+        
+
           
             $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
             $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));

@@ -47,6 +47,9 @@ namespace PartyEC.UI.Models
         public string SourceIP { get; set; }
         public string ProductSpecXML { get; set; }
 
+        public string CustomerEmail { get; set; }
+        public string CustomerName { get; set; }
+
         //Customer Details
         public CustomerViewModel customerObj { get; set; }
         //Log Details
