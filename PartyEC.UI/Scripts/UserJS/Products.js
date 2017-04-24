@@ -286,7 +286,7 @@ function goback() {
 
 function RenderContentForImages()
 {
-    HideProductDetalsToolBox();
+   // HideProductDetalsToolBox();
     BindImages();
     BindStickers();
 }
@@ -903,10 +903,31 @@ function RelatedproductDeleteSuccess(data, status, xhr)
     }
 }
 
-function HideProductDetalsToolBox()
+function RenderContentForRelatedProducts()
 {
-    ChangeButtonPatchView("Products", "ProductToolBox", "RPAdd"); //ControllerName,id of the container div,Name of the action
-   // $("#btnPatchProductDetails").css('visibility', 'hidden');
+    try
+    {
+        var proid = $('.productID').val();
+        if ((proid) && (proid>0))
+        {
+
+
+
+            ChangeButtonPatchView("Products", "ProductToolBox", "RPAdd"); //ControllerName,id of the container div,Name of the action
+        }
+        else
+        {
+
+        }
+    
+    }
+    catch(e)
+    {
+        notyAlert('error', e.Message);
+    }
+   
+
+   
    
 }
 function ShowProductDetalsToolBox()
@@ -918,7 +939,7 @@ function ShowProductDetalsToolBox()
 function RenderContentsForAttributes()
 {
    
-    HideProductDetalsToolBox();
+   // HideProductDetalsToolBox();
     try {
        
         var atsetID = $("#AttributeSetIDhdf").val();
