@@ -16,6 +16,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<LogDetailsViewModel, LogDetails>().ReverseMap();
                 config.CreateMap<OperationsStatusViewModel, OperationsStatus>().ReverseMap();
                 config.CreateMap<ProductViewModel, Product>().ReverseMap();
+                config.CreateMap<ProductAppViewModel, Product>().ReverseMap();
                 config.CreateMap<ProductDetailViewModel, ProductDetail>().ReverseMap();
                 config.CreateMap<AttributeValuesViewModel, AttributeValues>().ReverseMap();
                 config.CreateMap<ProductImagesViewModel, ProductImages>().ReverseMap();

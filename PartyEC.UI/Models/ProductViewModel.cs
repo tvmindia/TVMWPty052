@@ -176,8 +176,10 @@ namespace PartyEC.UI.Models
         public List<AttributeValues> RatingAttributes { get; set; }
         public string SupplierName { get; set; }
 
-    }
-  public class ProductDetailViewModel
+    } 
+
+
+    public class ProductDetailViewModel
   {
         public int ID { get; set; }
         public int ProductID { get; set; }
@@ -250,22 +252,36 @@ namespace PartyEC.UI.Models
 
     public class ProductAppViewModel
     {
+        
+        public int ID { get; set; }
         public string Name { get; set; }
         public string SKU { get; set; }
-        public bool ShowPrice { get; set; }
-        public char ActionType { get; set; }
+        public char ActionType { get; set; }//book //buy //Quote
         public int SupplierID { get; set; }
+        public List<SelectListItem> suppliers { get; set; }
+        public char? ProductType { get; set; }//simple //configurable
+        public Boolean FreeDelivery { get; set; }
         public string SupplierName { get; set; }
-        public decimal BaseSellingPrice { get; set; }
-        public string ShortDescription { get; set; }
-        public string LongDescription { get; set; }
-        public char ProductType { get; set; }
-        public bool FreeDelivery { get; set; }
-        public string StickerURL { get; set; }
         public decimal? PriceDifference { get; set; }
-        public bool StockAvailable { get; set; }
-        public decimal? DiscountAmount { get; set; }
         public int AttributeSetID { get; set; }
+        public decimal? BaseSellingPrice { get; set; }
+        public Boolean ShowPrice { get; set; }
+        public decimal? DiscountAmount { get; set; }     
+        public string ImageURL { get; set; }      
+        public string ShortDescription { get; set; }
+        public string LongDescription { get; set; }       
+        public Boolean StockAvailable { get; set; }
+        public int? Qty { get; set; }
+        public int? OutOfStockAlertQty { get; set; }
+        public string StickerURL { get; set; }
+        public int LinkID { get; set; }
+        public int CategoryID { get; set; }
+
+        public List<ProductDetailViewModel> ProductDetails { get; set; }
+        public List<AttributeValuesViewModel> ProductOtherAttributes { get; set; }
+        public List<AttributeValues> OrderAttributes { get; set; }
+        public List<AttributeValues> RatingAttributes { get; set; }
+       
     }
     public class ProductReviewAppViewModel
     {

@@ -19,6 +19,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus UpdateProductSticker(Product productObj);
         OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList,List<ProductCategoryLink> DeleteList);
         Product GetProduct(int ProductID, OperationsStatus Status);
+        Product GetProductForApp(int ProductID, OperationsStatus Status);
         List<AttributeValues> GetAttributeValuesByProduct(int ProductID);
         List<Product> GetRelatedImages(int ProductID, OperationsStatus Status);
         List<Product> GetRelatedProducts(int productID);

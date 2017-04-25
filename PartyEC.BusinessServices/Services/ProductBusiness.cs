@@ -88,7 +88,7 @@ namespace PartyEC.BusinessServices.Services
             return productlist;
         }
 
-         public List<Product> GetRelatedProducts(int productID)
+        public List<Product> GetRelatedProducts(int productID)
         {
             List<Product> productlist = null;
             try
@@ -138,6 +138,8 @@ namespace PartyEC.BusinessServices.Services
 
             return _productRepository.GetProduct(ProductID, Status);
         }
+
+
 
         public List<AttributeValues> GetAttributeValuesByProduct(int ProductID)
         {
@@ -240,7 +242,7 @@ namespace PartyEC.BusinessServices.Services
             return productDetailslist;
         }
 
-           public ProductDetail GetProductDetailsByProduct(int ProductID, int DetailID)
+        public ProductDetail GetProductDetailsByProduct(int ProductID, int DetailID)
           {
             ProductDetail productDetail = null;
             try
@@ -253,7 +255,7 @@ namespace PartyEC.BusinessServices.Services
             }
             return productDetail;
          }
-         public  OperationsStatus DeleteProductsDetails(int ProductDetailsID, int ProductID)
+        public  OperationsStatus DeleteProductsDetails(int ProductDetailsID, int ProductID)
          {
             OperationsStatus OS = null;
             try
@@ -437,12 +439,85 @@ namespace PartyEC.BusinessServices.Services
                     productlist = productlist.GetRange(0, count);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw ex;
 
             }
             return productlist;
         }
+
+        public Product GetProductForApp(int ProductID, OperationsStatus Status)
+        {
+             Product  product = null;
+            try
+            {
+                product = _productRepository.GetProduct(ProductID, Status);
+                int count = product.ProductDetails.Count;
+                for (int i= 0;i< count;i++)
+                {
+                    decimal? discount = product.ProductDetails[i].DiscountAmount;
+                    if (discount!=null && discount != 0)
+                    {
+                        DateTime? startdate, enddate,today;
+                        startdate =  product.ProductDetails[i].DiscountStartDate;
+                        enddate =  product.ProductDetails[i].DiscountEndDate;
+                        today = DateTime.Now ;
+                        if(startdate!=null && enddate != null)
+                        {
+                            if (startdate<=today && enddate >= today)
+                            {
+                                product.ProductDetails[i].DiscountAmount = discount;
+                            }
+                            else
+                            {
+                                product.ProductDetails[i].DiscountAmount = 0;
+                            }
+                        }
+                        else if (startdate != null )
+                        {
+                            if (startdate <= today)
+                            {
+                                product.ProductDetails[i].DiscountAmount = discount;
+                            }
+                            else
+                            {
+                                product.ProductDetails[i].DiscountAmount = 0;
+                            }
+                        }
+                        else if (enddate != null)
+                        {
+                            if ( enddate >= today)
+                            {
+                                product.ProductDetails[i].DiscountAmount = discount;
+                            }
+                            else
+                            {
+                                product.ProductDetails[i].DiscountAmount = 0;
+                            }
+                        }
+                        else
+                        {
+                            product.ProductDetails[i].DiscountAmount = discount;
+                        }
+                    }
+                    else
+                    {
+                        product.ProductDetails[i].DiscountAmount = 0;
+                    }
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return product; 
+        }
+        //GetProductImages
+
+
+
         #endregion
     }
 }
