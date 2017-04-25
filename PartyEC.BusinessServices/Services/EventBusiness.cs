@@ -33,23 +33,25 @@ namespace PartyEC.BusinessServices.Services
             {
                 Eventlist = _eventRepository.GetAllEvents();
                 Categorylist = _categoryRepositry.GetAllCategory();//All Category List for Id and Name  
-
-                foreach (Event eventObj in Eventlist)
+                if (Eventlist!=null)
                 {
-                    string CategoryNames = "";
-                    int[] Cat_Id = eventObj.RelatedCategoriesCSV.Split(',').Select(Int32.Parse).ToArray();
-                    foreach (int Id in Cat_Id)
+                    foreach (Event eventObj in Eventlist)
                     {
-                        List<Categories> CategoryResult = null;
-                        CategoryResult = Categorylist.Where(t => t.ID == Id).ToList(); //Find category with Id
-                        if (CategoryResult.Count>0)
+                        string CategoryNames = "";
+                        int[] Cat_Id = eventObj.RelatedCategoriesCSV.Split(',').Select(Int32.Parse).ToArray();
+                        foreach (int Id in Cat_Id)
                         {
-                            CategoryNames = CategoryNames + CategoryResult[0].Name + ",";//Adding Category Name to String
+                            List<Categories> CategoryResult = null;
+                            CategoryResult = Categorylist.Where(t => t.ID == Id).ToList(); //Find category with Id
+                            if (CategoryResult.Count > 0)
+                            {
+                                CategoryNames = CategoryNames + CategoryResult[0].Name + ",";//Adding Category Name to String
+                            }
                         }
+                        //Removing the last ',' character and assigning values to EventList Object
+                        eventObj.RelatedCategoriesCSV = CategoryNames.TrimEnd(',');
                     }
-                    //Removing the last ',' character and assigning values to EventList Object
-                    eventObj.RelatedCategoriesCSV=CategoryNames.TrimEnd(',');
-                }
+                }              
 
             }
             catch (Exception ex)

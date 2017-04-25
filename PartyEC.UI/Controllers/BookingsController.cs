@@ -28,7 +28,7 @@ namespace PartyEC.UI.Controllers
         // GET: Bookings
         public ActionResult Index()
         {
-            return View();
+            return View("../UnderConstruction/UnderConstruction");
         }
         #endregion Index
 
