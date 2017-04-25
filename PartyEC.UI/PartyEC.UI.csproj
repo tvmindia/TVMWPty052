@@ -353,6 +353,7 @@
     <Content Include="Content\OtherImages\Sticker7638.png" />
     <Content Include="Content\OtherImages\Sticker8155.png" />
     <Content Include="Content\OtherImages\Sticker9050.png" />
+    <Content Include="Content\ProductImages\Festivalseasoncake.png" />
     <Content Include="Content\uploadify.css" />
     <Content Include="Content\uploadify.swf" />
     <Content Include="Content\UserCSS\Customer.css" />
@@ -609,7 +610,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="Content\ProductImages\" />
     <Folder Include="Views\AttributeSetLink\" />
     <Folder Include="Views\Invoices\" />
     <Folder Include="Views\Location\" />
