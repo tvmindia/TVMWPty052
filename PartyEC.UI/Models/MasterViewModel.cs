@@ -60,10 +60,11 @@ namespace PartyEC.UI.Models
 
         public int LocationID { get; set; }
         public int SupplierID { get; set; }
-
+        [Display(Name = "Supplier Name")]
         public string SupplierName { get; set; }
+        [Display(Name = "Location Name")]
         public string LocationName { get; set; }
-
+        [Display(Name = "Shipping Charge")]
         public decimal ShippingCharge { get; set; }
         public string CreatedDate { get; set; }
 
