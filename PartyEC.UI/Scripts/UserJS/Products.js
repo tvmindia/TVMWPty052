@@ -1,4 +1,5 @@
 ﻿var DataTables = {};
+var tm;
 $(document).ready(function () {
    
 
@@ -10,10 +11,8 @@ $(document).ready(function () {
                 var h = $("<span/>", { text: txt }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' });
                 $('#keywordsDiv').append(h);
                 this.value = "";
-               
             }
-      
-            setTimeout(function () { document.getElementById('HeaderTagsPicker').focus() }, 10);
+           // setTimeout(function () { document.getElementById('HeaderTagsPicker').focus() }, 10);
         },
         keypress: function (ev) {
             if (ev.keyCode == 13) {
@@ -35,20 +34,20 @@ $(document).ready(function () {
                // $("#lblDetailTags").trigger('click');
             }
            
-            setTimeout(function () { document.getElementById('detailTagsPicker').focus() }, 10);
+           
         },
         keypress: function (ev) {
             if (ev.keyCode == 13) {
                 if (/(188|13)/.test(ev.which)) $(this).focusout();
                 var callbacks = $.Callbacks();
                 callbacks.disable();
+             //   tm = setTimeout(function () { settagfocus() }, 10);
                 return false;
             }
         }
 
     });
-    
-   
+ 
    try {
        
         DataTables.productTable = $('#tblproducts').DataTable(
@@ -1526,7 +1525,7 @@ function AssociatedProductDelete(this_Obj)
     
 }
 function EditAssocProduct(currentObj) {
-    debugger;
+   
 
     //$(currentObj).closest('tr').removeClass('selected');
     //if ($('#tblAssociatedProducts').hasClass('selected')) {
@@ -1880,3 +1879,8 @@ function ModelProductsRating(currentObj) {
 }
 
 
+//function settagfocus()
+//{
+//    window.clearTimeout(tm);
+//    document.getElementById('detailTagsPicker').focus();
+//}

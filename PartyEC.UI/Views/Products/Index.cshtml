@@ -394,7 +394,6 @@
                                                 <div class="form-group">
                                                     <label for="LongDescription" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.LongDescription)<span class="required">*</span></label>
                                                     <div class="col-lg-8">
-                                                     
                                                         @Html.TextAreaFor(model => model.LongDescription, new { @class = "form-control", @rows = 20, placeholder = "Rich text allowed here.." })
                                                         @Html.ValidationMessageFor(model => model.LongDescription, "", new { @class = "text-danger" })
                                                     </div>
