@@ -84,8 +84,8 @@
                                     <h4 style="max-width:50%;padding:1%;"><span class="fa fa-crosshairs" style="font-size: 16px;color: #f46f25;"></span><span> </span><span class="Spantitle">Customer View</span></h4>
                                     <hr />
                                     <div class="col-md-12">
-                                        <div class="col-md-6">
-                                            <div class="infoBox panel panel-default">
+                                        <div class="col-md-6" >
+                                            <div class="infoBox panel panel-default" style="min-height:350px;">
                                                 <div class="infoBoxHeader panel-heading"><strong>Personal Information</strong></div>
                                                 <div class="panel-body">
                                                     <div class="col-md-12">
@@ -139,8 +139,8 @@
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-md-6">
-                                            <div class="infoBox panel panel-default">
+                                        <div class="col-md-6" >
+                                            <div class="infoBox panel panel-default" style="min-height:350px;">
                                                 <div class="infoBoxHeader panel-heading"><strong>Sales Statistics</strong></div>
                                                 <div class="panel-body">
 
@@ -235,91 +235,91 @@
                                     <div class="col-md-12">
                                         <h4 style="max-width:50%;padding:1%;"><span class="fa fa-crosshairs" style="font-size: 16px;color: #f46f25;"></span><span> </span><span class="Spantitle">Addresses</span></h4>
                                         <hr />
+                                       
+                                            <div class="col-md-4">
 
-                                        <div class="col-md-12" >
-
-                                            <ul id="addressUL" class="list-unstyled list-group"></ul>
-                                        </div>
-
-                                        <div class="col-md-12">
-                                            @using (Ajax.BeginForm("CustomerAddressInsertUpdate", "Customer", new AjaxOptions { HttpMethod = "POST", OnSuccess = "AddressSaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "Addressform" }))
+                                                <ul id="addressUL" class="list-unstyled list-group"></ul>
+                                            </div>
+                                            <div class="col-md-1"></div>
+                                            <div class="col-md-7">
+                                                @using (Ajax.BeginForm("CustomerAddressInsertUpdate", "Customer", new AjaxOptions { HttpMethod = "POST", OnSuccess = "AddressSaveSuccess", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "Addressform" }))
 
                                              {
-                                                @Html.AntiForgeryToken()
-                                                @*<div class="form-horizontal" id="addressForm">*@
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-2" for="Prefix">Prefix</label>
-                                                    <div class="col-md-4">
-
-                                                        @Html.EditorFor(model => model.customerAddress.Prefix, new { htmlAttributes = new { @class = "form-control" } })
-                                                    </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-2" for="FirstName">First Name</label>
-                                                    <div class="col-md-4">
-                                                        @Html.EditorFor(model => model.customerAddress.FirstName, new { htmlAttributes = new { @class = "form-control" } })
-                                                        @Html.ValidationMessageFor(model => model.customerAddress.FirstName, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-2" for="MidName">Middle Name</label>
-                                                    <div class="col-md-4">
-                                                        @Html.EditorFor(model => model.customerAddress.MidName, new { htmlAttributes = new { @class = "form-control" } })
-                                                    </div>
-
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-2" for="LastName">Last Name</label>
-                                                    <div class="col-md-4">
-
-                                                        @Html.EditorFor(model => model.customerAddress.LastName, new { htmlAttributes = new { @class = "form-control" } })
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-2" for="Address">Address</label>
-                                                    <div class="col-md-4">
-                                                        @Html.EditorFor(model => model.customerAddress.Address, new { htmlAttributes = new { @class = "form-control" } })
-                                                        @Html.ValidationMessageFor(model => model.customerAddress.Address, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
+                                                    @Html.AntiForgeryToken()
+                                                    @*<div class="form-horizontal" id="addressForm">*@
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-2" for="City">City</label>
-                                                        <div class="col-md-4">
+                                                        <label class="control-label col-md-3" for="Prefix">Prefix</label>
+                                                        <div class="col-md-5">
+
+                                                            @Html.EditorFor(model => model.customerAddress.Prefix, new { htmlAttributes = new { @class = "form-control" } })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3" for="FirstName">First Name</label>
+                                                        <div class="col-md-5">
+                                                            @Html.EditorFor(model => model.customerAddress.FirstName, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.customerAddress.FirstName, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3" for="MidName">Middle Name</label>
+                                                        <div class="col-md-5">
+                                                            @Html.EditorFor(model => model.customerAddress.MidName, new { htmlAttributes = new { @class = "form-control" } })
+                                                        </div>
+
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3" for="LastName">Last Name</label>
+                                                        <div class="col-md-5">
+
+                                                            @Html.EditorFor(model => model.customerAddress.LastName, new { htmlAttributes = new { @class = "form-control" } })
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3" for="Address">Address</label>
+                                                        <div class="col-md-5">
+                                                            @Html.EditorFor(model => model.customerAddress.Address, new { htmlAttributes = new { @class = "form-control" } })
+                                                            @Html.ValidationMessageFor(model => model.customerAddress.Address, "", new { @class = "text-danger" })
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <label class="control-label col-md-3" for="City">City</label>
+                                                        <div class="col-md-5">
 
                                                             @Html.EditorFor(model => model.customerAddress.City, new { htmlAttributes = new { @class = "form-control" } })
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-2" for="Country">Country</label>
-                                                        <div class="col-md-4">
+                                                        <label class="control-label col-md-3" for="Country">Country</label>
+                                                        <div class="col-md-5">
                                                             @Html.DropDownListFor(model => model.customerAddress.CountryCode, Model.customerAddress.Countries, "--Select Country--", new { @class = "form-control", id = "CountryCode", value = 0 })
 
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-2" for="StateProvince">State/Province</label>
-                                                        <div class="col-md-4">
+                                                        <label class="control-label col-md-3" for="StateProvince">State/Province</label>
+                                                        <div class="col-md-5">
                                                             @Html.EditorFor(model => model.customerAddress.StateProvince, new { htmlAttributes = new { @class = "form-control" } })
 
                                                         </div>
                                                     </div>
 
                                                     <div class="form-group">
-                                                        <label class="control-label col-md-2" for="ContactNo">Contact No</label>
-                                                        <div class="col-md-4">
+                                                        <label class="control-label col-md-3" for="ContactNo">Contact No</label>
+                                                        <div class="col-md-5">
 
                                                             @Html.EditorFor(model => model.customerAddress.ContactNo, new { htmlAttributes = new { @class = "form-control" } })
                                                         </div>
                                                     </div>
                                                     <div class="form-group">
 
-                                                        <label class="control-label col-md-2" for="BillDefaultYN">Is Default Billing Address<span class="required">*</span></label>
-                                                        <div class="col-lg-2">
+                                                        <label class="control-label col-md-3" for="BillDefaultYN">Is Default Billing Address<span class="required">*</span></label>
+                                                        <div class="col-lg-3">
                                                             <div>
 
                                                                 @Html.EditorFor(model => model.customerAddress.BillDefaultYN)
@@ -329,8 +329,8 @@
 
                                                     <div class="form-group">
 
-                                                        <label class="control-label col-md-2" for="ShipDefaultYN">Is Default Shipping Address<span class="required">*</span></label>
-                                                        <div class="col-lg-2">
+                                                        <label class="control-label col-md-3" for="ShipDefaultYN">Is Default Shipping Address<span class="required">*</span></label>
+                                                        <div class="col-lg-3">
                                                             <div>
 
                                                                 @Html.EditorFor(model => model.customerAddress.ShipDefaultYN)
@@ -348,7 +348,8 @@
                                                     @Html.HiddenFor(model => model.ID)
                                                     @Html.HiddenFor(model => model.customerAddress.ID)
                                              }
-                                        </div>
+                                            </div>
+                                        
                                     </div>
 
 
