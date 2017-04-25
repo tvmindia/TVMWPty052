@@ -499,9 +499,11 @@
     <Content Include="Scripts\UserJS\AttributeSet.js" />
     <Content Include="Scripts\UserJS\Quotations.js" />
     <Content Include="Scripts\UserJS\Review.js" />
+    <Content Include="Scripts\UserJS\Role.js" />
     <Content Include="Scripts\UserJS\ShippingLocation.js" />
     <Content Include="Scripts\UserJS\SupplierLocations.js" />
     <Content Include="Scripts\UserJS\Suppliers.js" />
+    <Content Include="Scripts\UserJS\User.js" />
     <Content Include="Web.config" />
     <Content Include="Scripts\jquery-3.1.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.1.1.min.map" />
@@ -569,8 +571,10 @@
     <Compile Include="Models\OrderViewModel.cs" />
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\QuotationsViewModel.cs" />
+    <Compile Include="Models\RoleViewModel.cs" />
     <Compile Include="Models\ToolboxViewModel.cs" />
     <Compile Include="Models\TreeViewModel.cs" />
+    <Compile Include="Models\UserViewModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -601,6 +605,7 @@
     <Content Include="Views\MailNotifications\Index.cshtml" />
     <Content Include="Views\UnderConstruction\UnderConstruction.cshtml" />
     <Content Include="Views\Bookings\Index.cshtml" />
+    <Content Include="Views\Users\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -616,7 +621,6 @@
     <Folder Include="Views\Reports\" />
     <Folder Include="Views\Roles\" />
     <Folder Include="Views\Shipments\" />
-    <Folder Include="Views\Users\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

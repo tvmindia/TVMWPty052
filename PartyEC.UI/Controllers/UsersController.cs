@@ -11,7 +11,7 @@ namespace PartyEC.UI.Controllers
         // GET: Users
         public ActionResult Index()
         {
-            return View("../UnderConstruction/UnderConstruction");
+            return View();
         }
     }
 }
