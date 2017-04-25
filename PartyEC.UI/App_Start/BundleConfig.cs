@@ -57,6 +57,8 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/Notifications").Include("~/Scripts/UserJS/Notifiations.js"));
             bundles.Add(new ScriptBundle("~/bundles/Quotations").Include("~/Scripts/UserJS/Quotations.js"));
             bundles.Add(new ScriptBundle("~/bundles/Mailnotifications").Include("~/Scripts/UserJS/MailNotifications.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Roles").Include("~/Scripts/UserJS/Role.js"));
+            bundles.Add(new ScriptBundle("~/bundles/User").Include("~/Scripts/UserJS/User.js"));
         }
     }
 }
