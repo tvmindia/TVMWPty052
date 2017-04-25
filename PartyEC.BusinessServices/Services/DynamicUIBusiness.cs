@@ -39,32 +39,35 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 List<Treeview> TreeViewList = _dynamicUIRepository.GetTreeListForAttr(ID);
-
-                foreach (var i in TreeViewList)
+                if(TreeViewList!=null)
                 {
-                    if (i.level.ToString() == "0")
+                    foreach (var i in TreeViewList)
                     {
-                        JsTreeNode rootNode = new JsTreeNode();
-                        rootNode.id = i.ID.ToString();
-                        rootNode.text = i.Name.ToString();
-                        rootNode.icon = i.icon.ToString();
-                        rootNode.children = new List<JsTreeNode>();
-                        foreach (var j in TreeViewList)
+                        if (i.level.ToString() == "0")
                         {
-                            if ((j.ParentID.ToString() == i.ID.ToString())&&(j.level.ToString()=="1"))
+                            JsTreeNode rootNode = new JsTreeNode();
+                            rootNode.id = i.ID.ToString();
+                            rootNode.text = i.Name.ToString();
+                            rootNode.icon = i.icon.ToString();
+                            rootNode.children = new List<JsTreeNode>();
+                            foreach (var j in TreeViewList)
                             {
+                                if ((j.ParentID.ToString() == i.ID.ToString()) && (j.level.ToString() == "1"))
+                                {
 
-                                JsTreeNode Node = new JsTreeNode();
-                                Node.id = j.ID.ToString();
-                                Node.text = j.Name.ToString();
-                                Node.icon = j.icon.ToString();
-                                Node.children = new List<JsTreeNode>();
-                                rootNode.children.Add(Node);
+                                    JsTreeNode Node = new JsTreeNode();
+                                    Node.id = j.ID.ToString();
+                                    Node.text = j.Name.ToString();
+                                    Node.icon = j.icon.ToString();
+                                    Node.children = new List<JsTreeNode>();
+                                    rootNode.children.Add(Node);
+                                }
                             }
+                            nodesList.Add(rootNode);
                         }
-                        nodesList.Add(rootNode);
                     }
                 }
+               
             }
             catch (Exception ex)
             {
@@ -79,32 +82,35 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 List<Treeview> TreeViewList = _dynamicUIRepository.GetTreeListForAttrSet(ID);
-
-                foreach (var i in TreeViewList)
+                if(TreeViewList!=null)
                 {
-                    if (i.level.ToString() == "0")
+                    foreach (var i in TreeViewList)
                     {
-                        JsTreeNode rootNode = new JsTreeNode();
-                        rootNode.id = i.ID.ToString();
-                        rootNode.text = i.Name.ToString();
-                        rootNode.icon = i.icon.ToString();
-                        rootNode.children = new List<JsTreeNode>();
-                        foreach (var j in TreeViewList)
+                        if (i.level.ToString() == "0")
                         {
-                            if ((j.ParentID.ToString() == i.ID.ToString()) && (j.level.ToString() == "1"))
+                            JsTreeNode rootNode = new JsTreeNode();
+                            rootNode.id = i.ID.ToString();
+                            rootNode.text = i.Name.ToString();
+                            rootNode.icon = i.icon.ToString();
+                            rootNode.children = new List<JsTreeNode>();
+                            foreach (var j in TreeViewList)
                             {
+                                if ((j.ParentID.ToString() == i.ID.ToString()) && (j.level.ToString() == "1"))
+                                {
 
-                                JsTreeNode Node = new JsTreeNode();
-                                Node.id = j.ID.ToString();
-                                Node.text = j.Name.ToString();
-                                Node.icon = j.icon.ToString();
-                                Node.children = new List<JsTreeNode>();
-                                rootNode.children.Add(Node);
+                                    JsTreeNode Node = new JsTreeNode();
+                                    Node.id = j.ID.ToString();
+                                    Node.text = j.Name.ToString();
+                                    Node.icon = j.icon.ToString();
+                                    Node.children = new List<JsTreeNode>();
+                                    rootNode.children.Add(Node);
+                                }
                             }
+                            nodesList.Add(rootNode);
                         }
-                        nodesList.Add(rootNode);
                     }
                 }
+                
             }
             catch (Exception ex)
             {
@@ -119,20 +125,23 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 List<Treeview> TreeViewList = _dynamicUIRepository.GetTreeListForCategories();
-
-                foreach (var i in TreeViewList)
+                if(TreeViewList!=null)
                 {
-                    if (i.level.ToString() == "0")
+                    foreach (var i in TreeViewList)
                     {
-                        JsTreeNode rootNode = new JsTreeNode();
-                        rootNode.id = i.ID.ToString();
-                        rootNode.text = i.Name.ToString();
-                        rootNode.icon = "fa fa fa-list";
-                        rootNode.children = new List<JsTreeNode>();
-                        LookForChildNode(TreeViewList, rootNode, i);                       
-                        nodesList.Add(rootNode);
+                        if (i.level.ToString() == "0")
+                        {
+                            JsTreeNode rootNode = new JsTreeNode();
+                            rootNode.id = i.ID.ToString();
+                            rootNode.text = i.Name.ToString();
+                            rootNode.icon = "fa fa fa-list";
+                            rootNode.children = new List<JsTreeNode>();
+                            LookForChildNode(TreeViewList, rootNode, i);
+                            nodesList.Add(rootNode);
+                        }
                     }
                 }
+                
             }
             catch (Exception ex)
             {
