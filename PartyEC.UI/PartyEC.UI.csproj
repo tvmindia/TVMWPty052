@@ -355,10 +355,6 @@
     <Content Include="Content\OtherImages\Sticker6724.png" />
     <Content Include="Content\OtherImages\Sticker728.png" />
     <Content Include="Content\OtherImages\weddigcake.jpg" />
-    <Content Include="Content\ProductImages\Ahmedabad Cotton Printed 160 TC Cotton Double Bedsheet with 2 Pillow Covers - Multicolour.png" />
-    <Content Include="Content\ProductImages\Ambroise De Raspberry Cake.png" />
-    <Content Include="Content\ProductImages\Regency Hall Doha.png" />
-    <Content Include="Content\ProductImages\Story%40Home 120 TC 100_ Cotton Yellow 1 Double Bedsheet With 2 Pillow Cover.png" />
     <Content Include="Content\uploadify.css" />
     <Content Include="Content\uploadify.swf" />
     <Content Include="Content\UserCSS\Customer.css" />
@@ -615,6 +611,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Content\ProductImages\" />
     <Folder Include="Views\AttributeSetLink\" />
     <Folder Include="Views\Invoices\" />
     <Folder Include="Views\Location\" />

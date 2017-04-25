@@ -473,6 +473,7 @@ namespace PartyEC.RepositoryServices.Services
                             {
                                 cmd.CommandText = "[InsertProductDetails]";
                                 IsinsertOrUpdate = true;
+                                detail.DefaultOption = true;
                             }
                             else
                             {
@@ -905,7 +906,7 @@ namespace PartyEC.RepositoryServices.Services
             return ProductList;
         }
 
-        private Product GetProductHeader(int ProductID)
+        public Product GetProductHeader(int ProductID)
         {
             Product myProduct = null;
             try
@@ -967,7 +968,10 @@ namespace PartyEC.RepositoryServices.Services
                                 if (!string.IsNullOrEmpty(myProduct.ProductOtherAttributesXML))
                                 {
                                     myProduct.ProductOtherAttributes = _attributesRepository.GetAttributeFromXML(myProduct.ProductOtherAttributesXML, myProduct.AttributeSetID, "Product", false);
-                                    myProduct.ProductOtherAttributes = myProduct.OrderAttributes.FindAll(n => n.Isconfigurable == false);
+                                    myProduct.ProductOtherAttributes = myProduct.ProductOtherAttributes.FindAll(n => n.Isconfigurable == false);
+                                }
+                                else {
+                                    myProduct.ProductOtherAttributes = _attributesRepository.GetAttributeContainer(myProduct.AttributeSetID, "Product");
                                 }
                             }
 
@@ -1026,6 +1030,7 @@ namespace PartyEC.RepositoryServices.Services
                                 myProductDetail.ProductName=(sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : myProductDetail.ProductName);
                                 myProductDetail.BaseSellingPrice= sdr["BaseSellingPrice"].ToString() != "" ? decimal.Parse(sdr["BaseSellingPrice"].ToString()) : myProductDetail.BaseSellingPrice;
                                 myProductDetail.ActualPrice = (sdr["ActualPrice"].ToString() != "" ? decimal.Parse(sdr["ActualPrice"].ToString()) : myProductDetail.ActualPrice);
+                                myProductDetail.DefaultOption = (sdr["DefaultOptionYN"].ToString() != "" ? bool.Parse(sdr["DefaultOptionYN"].ToString()) : myProductDetail.DefaultOption);
                                 myProductDetail.logDetails = new LogDetails();
                                 myProductDetail.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
                                 myProductDetail.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (DateTime.Parse(sdr["CreatedDate"].ToString())) : myProductDetail.logDetails.CreatedDate);
@@ -1624,6 +1629,7 @@ namespace PartyEC.RepositoryServices.Services
                                 myProductDetail.DiscountStartDate = (sdr["DiscountStDate"].ToString() != "" ? (Convert.ToDateTime(sdr["DiscountStDate"].ToString())) : myProductDetail.DiscountStartDate);
                                 myProductDetail.DiscountEndDate = (sdr["DiscountEnDate"].ToString() != "" ? (Convert.ToDateTime(sdr["DiscountEnDate"].ToString())) : myProductDetail.DiscountEndDate);
                                 myProductDetail.ProductName = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : myProductDetail.ProductName);
+                                myProductDetail.DefaultOption= (sdr["DefaultOptionYN"].ToString() != "" ? bool.Parse(sdr["DefaultOptionYN"].ToString()) : myProductDetail.DefaultOption);
                                 myProductDetail.BaseSellingPrice = sdr["BaseSellingPrice"].ToString() != "" ? decimal.Parse(sdr["BaseSellingPrice"].ToString()) : myProductDetail.BaseSellingPrice;
                                 //myProductDetail.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
                                 //myProductDetail.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["CreatedDate"].ToString())) : myProductDetail.logDetails.CreatedDate);

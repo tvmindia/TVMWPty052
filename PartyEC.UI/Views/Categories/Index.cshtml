@@ -46,13 +46,13 @@
             </ul>
         </div>
 
-        <div class="panel-body">
-            <div class="col-lg-3" style="position: relative;left: -2.4%;">
-                <h4>..</h4>
+        <div class="panel-body" style="padding:0;">
+            <div class="col-lg-3" style="padding:0;margin-top:1%">
+                <h4>.</h4>
                 @*<hr />*@
                 <label id="lblHead" style="display:none;font-size:large;"></label>
-                    <div class="col-lg-12 panel panel-default panel-info" style="background: antiquewhite!important;border-right: 2px solid grey;">
-                        <div class="panel-body" id="jstree_Categories" style="background: antiquewhite!important;min-height: 968px;">
+                    <div class="col-lg-12 panel panel-default panel-info" style="background: antiquewhite!important;">
+                        <div class="panel-body" id="jstree_Categories" style="background: antiquewhite!important;min-height: 987px;">
 
 
                         </div>
@@ -62,101 +62,103 @@
                     </div>
                 
             </div>
-            <div class="tab-content">
+            <div class="tab-content" style="margin-top:1%;">
                 <ol class="breadcrumb" id="olCategory" style="position:absolute;">
                     <li><a href="#"><i class="fa fa fa-list"></i></a></li>
                 </ol>
-                <div style="min-height:55px;">
+                @*<div style="min-height:55px;">
                     
-                </div>
+                </div>*@
                 <div class="tab-pane fade in active col-lg-9" id="tab1primary">
-
-
-                    @using (Ajax.BeginForm("SaveOrUpdateCategory", "Categories", new AjaxOptions { HttpMethod = "POST", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "CheckSubmittedInsertCategory" }, new { @class = "form-horizontal", role = "form" }))
-                    {
-                        @Html.AntiForgeryToken()
-
-                        <div class="form-horizontal">
-                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                    <h4 style="max-width:50%;padding:1%;"><span class="fa fa-crosshairs " style="font-size: 16px;color: #f46f25;"></span><span> </span><span id="" class="Spantitle">General Information</span></h4>
+                    <hr />
+                    <div class="col-md-12">
                        
+                        @using (Ajax.BeginForm("SaveOrUpdateCategory", "Categories", new AjaxOptions { HttpMethod = "POST", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "CheckSubmittedInsertCategory" }, new { @class = "form-horizontal", role = "form" }))
+                        {
+                            @Html.AntiForgeryToken()
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
-                                </div>
-                            </div>
+                            <div class="form-horizontal">
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-md-10">
-                                    @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style="min-height:100px" } })
-                                   
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Name, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+                                        @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Filter, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-lg-10">
-                                    <div class="checkbox">
-                                        <div>
-                                            @Html.EditorFor(model => model.Filter)
-                                            @Html.ValidationMessageFor(model => model.Filter, "", new { @class = "text-danger" })
-                                        </div>
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-md-10">
+                                        @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control", style="min-height:100px" } })
 
                                     </div>
-
                                 </div>
-                            </div>
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Filter, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-lg-10">
+                                        <div class="checkbox">
+                                            <div>
+                                                @Html.EditorFor(model => model.Filter)
+                                                @Html.ValidationMessageFor(model => model.Filter, "", new { @class = "text-danger" })
+                                            </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Navigation, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-lg-10">
-                                    <div class="checkbox">
-                                        <div>
-                                            @Html.EditorFor(model => model.Navigation)
-                                            @Html.ValidationMessageFor(model => model.Navigation, "", new { @class = "text-danger" })
                                         </div>
 
                                     </div>
                                 </div>
-                            </div>
 
-                            <div class="form-group">
-                                @Html.LabelFor(model => model.Enable, htmlAttributes: new { @class = "control-label col-md-2" })
-                                <div class="col-lg-10">
-                                    <div class="checkbox">
-                                        <div>
-                                            @Html.EditorFor(model => model.Enable)
-                                            @Html.ValidationMessageFor(model => model.Enable, "", new { @class = "text-danger" })
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Navigation, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-lg-10">
+                                        <div class="checkbox">
+                                            <div>
+                                                @Html.EditorFor(model => model.Navigation)
+                                                @Html.ValidationMessageFor(model => model.Navigation, "", new { @class = "text-danger" })
+                                            </div>
+
                                         </div>
-
                                     </div>
                                 </div>
-                            </div>
-                            <div class="" id="images">
-                                <div class="col-lg-12">
-                                    <hr />
-                                    <div class="col-md-12" id="divImageUpload">
+
+                                <div class="form-group">
+                                    @Html.LabelFor(model => model.Enable, htmlAttributes: new { @class = "control-label col-md-2" })
+                                    <div class="col-lg-10">
+                                        <div class="checkbox">
+                                            <div>
+                                                @Html.EditorFor(model => model.Enable)
+                                                @Html.ValidationMessageFor(model => model.Enable, "", new { @class = "text-danger" })
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="" id="images">
+                                    <div class="col-lg-12">
+                                        <hr />
+                                        <div class="col-md-12" id="divImageUpload">
                                             <div>
                                                 <a id="alinkUpload" style="display:none" class="btn btn-info" href="javascript:$('#file_upload').uploadify('upload','*')">Upload</a>
                                                 <input type="file" class="uploadify" name="file_upload" id="file_upload" />
-                                                
+
                                             </div>
                                             <div id="uploaded">
                                             </div>
-                                        <div class="overlay" id="divOverlayimage" style="display:none;">
-                                            <div class="uploadify-button  disabled" title="Save Category to enable file browse" style="height: 30px; line-height: 30px; width: 120px;margin-left:1.55%;cursor:not-allowed;"><span class="uploadify-button-text">SELECT FILES</span></div>
+                                            <div class="overlay" id="divOverlayimage" style="display:none;">
+                                                <div class="uploadify-button  disabled" title="Save Category to enable file browse" style="height: 30px; line-height: 30px; width: 120px;margin-left:1.55%;cursor:not-allowed;"><span class="uploadify-button-text">SELECT FILES</span></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12" style="object-fit:fill;">
+                                            <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="" id="imgCategory" width="100%">
                                         </div>
                                     </div>
-                                    <div class="col-lg-12" style="object-fit:fill;">
-                                        <img src=@Url.Content("~/Content/images/NoImageFound.png") alt="" id="imgCategory" width="100%">
-                                    </div>
-                                </div>
                                 </div>
                                 <div class="form-group" style="display:none;">
                                     <div class="col-md-offset-2 col-md-10">
-                                        <input type="submit" value="Create" class="btn btn-default" id="btnFormSave"/>
+                                        <input type="submit" value="Create" class="btn btn-default" id="btnFormSave" />
                                         @Html.HiddenFor(model => model.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
                                         @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
                                         @Html.HiddenFor(model=>model.ImageID, htmlAttributes: new { @class = "control-label col-md-4", Value = "" })
@@ -164,19 +166,22 @@
                                     </div>
                                 </div>
                             </div>
-                    }
-                    <div id="CategoryDelete" hidden="hidden">
-                        @using (Ajax.BeginForm("DeleteCategory", "Categories", new AjaxOptions { HttpMethod = "POST", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "CheckSubmittedDeleteCategory" }, new { @class = "form-horizontal", role = "form" }))
-                        {
-                            @Html.AntiForgeryToken()
-                            <div class="form-actions no-color">
-                                @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnDeleteCatID" })
-                                <input id="btnFormDeleteCategory" type="submit" value="Delete" class="btn btn-default" />
-                            </div>
                         }
+                        <div id="CategoryDelete" hidden="hidden">
+                            @using (Ajax.BeginForm("DeleteCategory", "Categories", new AjaxOptions { HttpMethod = "POST", AllowCache = false, LoadingElementId = "", OnBegin = "", OnComplete = "CheckSubmittedDeleteCategory" }, new { @class = "form-horizontal", role = "form" }))
+                            {
+                                @Html.AntiForgeryToken()
+                                <div class="form-actions no-color">
+                                    @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnDeleteCatID" })
+                                    <input id="btnFormDeleteCategory" type="submit" value="Delete" class="btn btn-default" />
+                                </div>
+                            }
+                        </div>
                     </div>
                 </div>
                 <div class="tab-pane fade col-lg-9" id="tab2CategoryProducts">
+                    <h4 style="max-width:50%;padding:1%;"><span class="fa fa-crosshairs " style="font-size: 16px;color: #f46f25;"></span><span> </span><span id="" class="Spantitle">Category Products</span></h4>
+                    <hr />
                     <form class="form-horizontal" role="form" style="position:absolute;width:86%;left:17%;">
 
                         <div class="form-group">

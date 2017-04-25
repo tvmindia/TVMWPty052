@@ -12,6 +12,8 @@ $(document).ready(function () {
                 this.value = "";
                
             }
+      
+            setTimeout(function () { document.getElementById('HeaderTagsPicker').focus() }, 10);
         },
         keypress: function (ev) {
             if (ev.keyCode == 13) {
@@ -32,6 +34,8 @@ $(document).ready(function () {
                 this.value = "";
                // $("#lblDetailTags").trigger('click');
             }
+           
+            setTimeout(function () { document.getElementById('detailTagsPicker').focus() }, 10);
         },
         keypress: function (ev) {
             if (ev.keyCode == 13) {
@@ -88,7 +92,7 @@ $(document).ready(function () {
                },
                {
                    "render": function (data, type, row) {
-                       return (data == true ? "In Stock" : "Empty");
+                       return (data == true ? "In Stock" : "Out Of Stock");
                    },
                    "targets": 9
                }
@@ -129,14 +133,16 @@ $(document).ready(function () {
              }],
              select: {
                  style: 'multi',
-                 selector: 'td:first-child'
+                 selector: 'tr'
              },
              order: [[1, 'asc']]
 
          });
-        //$('#tblRelatedproducts').on('change', 'input[type="checkbox"]', function () {
-        //    $(this).closest('tr').toggleClass('selected');
-        //});
+       
+        $('#tblRelatedproducts tbody').on('click', 'tr', function () {
+
+            $(this).closest('tr').toggleClass('selected');
+        });
     }
     catch (e) {
         notyAlert('errror', e.message);
@@ -152,7 +158,7 @@ $(document).ready(function () {
              paging: true,
              data: null,
              columns: [
-               {"data":null},
+               { "data": null, "defaultContent": '' },
                { "data": "ID" },
                { "data": "Name" },
                { "data": "ProductType", "defaultContent": "<i>-</i>" },
@@ -165,21 +171,34 @@ $(document).ready(function () {
              
              ],
              columnDefs: [
-              {//hiding hidden column 
-                  "targets": [0],
-                  "visible": true,
-                  "searchable": false,
-                  "render": function (data, type, full, meta) {
-                      if (type === 'display') {
-                          data = '<input type="checkbox" class="dt-checkboxes">';
-                      }
-                      return data;
-                  }
-              }
-             ]
+              //{//hiding hidden column 
+              //    "targets": [0],
+              //    "visible": true,
+              //    "searchable": false,
+              //    "render": function (data, type, full, meta) {
+              //        if (type === 'display') {
+              //            data = '<input type="checkbox" class="dt-checkboxes">';
+              //        }
+              //        return data;
+              //    }
+              //}
+              {
+                  orderable: false,
+                  className: 'select-checkbox',
+                  targets: 0
+              }],
+             select: {
+                 style: 'multi',
+                 selector: 'tr'
+             },
+             order: [[1, 'asc']]
          });
 
-        $('#tblUNRelatedproducts').on('change', 'input[type="checkbox"]', function () {
+        //$('#tblUNRelatedproducts').on('change', 'input[type="checkbox"]', function () {
+        //    $(this).closest('tr').toggleClass('selected');
+        //});
+        $('#tblUNRelatedproducts tbody').on('click', 'tr', function () {
+
             $(this).closest('tr').toggleClass('selected');
         });
     }
@@ -188,7 +207,7 @@ $(document).ready(function () {
     }
 
     try {
-
+        
         DataTables.AssociatedProductsTable = $('#tblAssociatedProducts').DataTable(
          {
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
@@ -205,11 +224,12 @@ $(document).ready(function () {
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
                { "data": "ActualPrice", "defaultContent": "<i>-</i>" },
-               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="EditAssocProduct(this)"><i class="glyphicon glyphicon-pencil" aria-hidden="true"></i>Edit</a>' }
+               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="EditAssocProduct(this)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><span> | </span><a href="#" onclick="AssociatedProductDelete(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>' }
+          
              ],
              columnDefs: [
               {
-                  "render": function (data, type, row) {
+                   "render": function (data, type, row) {
                       var returnstring='';
                       if (data)
                       {
@@ -225,6 +245,8 @@ $(document).ready(function () {
              ]
             
          });
+
+     
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -243,6 +265,7 @@ $(document).ready(function () {
         $('#tabsettings').trigger('click');
         clearform();
         ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
+        DisEnableSectionAdditional();
     });
     
 });
@@ -271,6 +294,7 @@ function btnAddNewProduct() {
     $('#tabsettings').trigger('click');
     clearform();
     ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
+    DisEnableSectionAdditional();
 }
 function goback() {
    
@@ -286,7 +310,8 @@ function goback() {
 
 function RenderContentForImages()
 {
-   // HideProductDetalsToolBox();
+    // HideProductDetalsToolBox();
+    ChangeButtonPatchView("Products", "ProductToolBox", "Back");
     BindImages();
     BindStickers();
 }
@@ -315,12 +340,13 @@ function Edit(currentObj)
         if (thisproduct != null)
         {
             $("#titleSpanPro").text(thisproduct.Name);
-            $("#spandetail").text('(Type:' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((thisproduct.AttributeSetName != null) && (thisproduct.AttributeSetName != "") ? thisproduct.AttributeSetName : 'N/A') + ')');
+            $("#spandetailType").text((thisproduct.ProductType == "S" ? 'Simple' : 'Configurable'));
+            $("#spandetailSet").text(((thisproduct.AttributeSetName != null) && (thisproduct.AttributeSetName != "") ? thisproduct.AttributeSetName : 'N/A') + '');
             //$("#titleSpanPro").text(thisproduct.Name + '-(Type:' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((thisproduct.AttributeSetName != "") && (thisproduct.AttributeSetName != null)?thisproduct.AttributeSetName:'N/A') + ')');
             //disables some drop downs
             
-            ((thisproduct.ProductType == "C") && (thisproduct.ProductDetails.length > 1) ? $("#AttributeSetID").attr({ 'disabled': 'disabled' }) : $("#AttributeSetID").removeAttr('disabled'));
-            
+         //   ((thisproduct.ProductType == "C") && (thisproduct.ProductDetails.length > 1) ? $("#AttributeSetID").attr({ 'disabled': 'disabled' }) : $("#AttributeSetID").removeAttr('disabled'));
+            $("#AttributeSetID").attr({ 'disabled': 'disabled' });
             $("#ProductType").attr({ 'disabled': 'disabled' });
             $("#Name").val(thisproduct.Name);
             $("#SKU").val(thisproduct.SKU);
@@ -350,9 +376,19 @@ function Edit(currentObj)
             $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0?thisproduct.ProductDetails[0].DiscountEndDate:""));
             $("#ShortDescription").val(thisproduct.ShortDescription);
             $("#LongDescription").val(thisproduct.LongDescription);
+ 
+
             if (thisproduct.StockAvailable == true)
-            { $("#StockAvailable").prop('checked', true); }
-            else { $("#StockAvailable").prop('checked', false); }
+            {
+                $("#StockAvailable").val("true");
+            }
+            else {
+                $("#StockAvailable").val("false");
+            }
+
+         
+        
+
           
             $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
             $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
@@ -376,13 +412,32 @@ function Edit(currentObj)
             $(".productID").val(thisproduct.ID);
             //ProductDetailID
             $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
-            RefreshRelatedProducts(thisproduct.ID);
+            //RefreshRelatedProducts(thisproduct.ID);
             RefreshUNRelatedProducts(thisproduct.ID);
+            EnableSectionAdditional();
         }
        
     }
 
    
+}
+function EnableSectionAdditional(){
+    $('#additioanlLi').show(100);
+    $('#additioanlRelatedLi').show(200);
+    $('#additioanlImageLi').show(300);
+    $('#additioanlAttributesLi').show(400);
+    $('#additioanlProdAttributeLi').show(500);
+    $('#additioanlReviewsLi').show(600);
+
+}
+function DisEnableSectionAdditional() {
+    $('#additioanlLi').hide(600);
+    $('#additioanlRelatedLi').hide(500);
+    $('#additioanlImageLi').hide(400);
+    $('#additioanlAttributesLi').hide(300);
+    $('#additioanlProdAttributeLi').hide(200);
+    $('#additioanlReviewsLi').hide(100);
+
 }
 function BindStickers()
 {
@@ -467,7 +522,7 @@ function DeleteOtherImage(id)
 {
     try
     {
-        debugger;
+     
         var DeletedImageID = [];
         //var objectset = $('#ulOtherImages a.Selected');
         //for (var i = 0; i < objectset.length; i++) {
@@ -768,6 +823,7 @@ function productSaveSuccess(data, status, xhr)
             $("#titleSpanPro").text($("#Name").val());
             $("#spandetail").text('(Type:' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((JsonResult.Record.ReturnValues.attributesetname != null) && (JsonResult.Record.ReturnValues.attributesetname != "") ? JsonResult.Record.ReturnValues.attributesetname : 'N/A') + ')');
             RefreshUNRelatedProducts(JsonResult.Record.ReturnValues.productid);
+            EnableSectionAdditional();
             break;
         case "ERROR":
             notyAlert('error', JsonResult.Record.StatusMessage);
@@ -887,9 +943,36 @@ function ConstructRelatdProductIDListForDelete()
                 AddList.push(tabledata[i].ID);
             }
             $("#relatedproductlistID").val(AddList);
+            return true;
+        }
+        else
+        {
+            //not selected table items
+            notyAlert('error', 'Please Select products to delete!');
+            return false;
         }
     }
     catch (e) {
+        notyAlert('error', e.Message);
+        return false;
+    }
+}
+
+function ValidateTableSelection()
+{
+    try
+    {
+
+        var tabledata = DataTables.RelatedproductsTable.rows('.selected').data();
+        if(tabledata.length > 0)
+        {
+            return true;
+        }
+        return false;
+
+    }
+    catch(e)
+    {
         notyAlert('error', e.Message);
     }
 }
@@ -919,14 +1002,17 @@ function RenderContentForRelatedProducts()
         var proid = $('.productID').val();
         if ((proid) && (proid>0))
         {
-
-
-
+            $("#divtablerelatedproducts").show();
+            RefreshRelatedProducts(proid);
+         
+            $(".divMsgconfigurable").hide();
             ChangeButtonPatchView("Products", "ProductToolBox", "RPAdd"); //ControllerName,id of the container div,Name of the action
         }
         else
         {
-
+            $("#divtablerelatedproducts").hide();
+            $(".divMsgconfigurable").show();
+            ChangeButtonPatchView("Products", "ProductToolBox", "Back"); //ControllerName,id of the container div,Name of the action
         }
     
     }
@@ -942,14 +1028,33 @@ function RenderContentForRelatedProducts()
 function ShowProductDetalsToolBox()
 {
     ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
-    // $('#btnPatchProductDetails').show();
-   // $("#btnPatchProductDetails").css('visibility', 'visible');
+  
 }
+
+function GetOtherAttributeValues(id) {
+    try {
+        var data = { "id": id };
+        var ds = {};
+        ds = GetDataFromServer("Products/GetAttributeValuesByProduct/", data);
+
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
 function RenderContentsForAttributes()
 {
-   
-   // HideProductDetalsToolBox();
-    try {
+   try {
        
         var atsetID = $("#AttributeSetIDhdf").val();
         var proid = $('.productID').val();
@@ -974,6 +1079,18 @@ function RenderContentsForAttributes()
                         autoclose: true,
                         todayHighlight: true
                     });
+                    //values bind in dynamic input controls
+                    var thisattr = GetOtherAttributeValues(proid);
+                    if (thisattr)
+                    {
+                        for (var at = 0; at < thisattr.length; at++)
+                        {
+                           
+                            $("#" + thisattr[at].Name).val(thisattr[at].Value);
+                        }
+                    }
+
+
                     ChangeButtonPatchView("Products", "ProductToolBox", "OASave"); //ControllerName,id of the container div,Name of the action
                 }
                 else
@@ -982,6 +1099,7 @@ function RenderContentsForAttributes()
                     $("#dynamicOtherAttributes").empty();
                     //append dynamic html to div from partialview
                     $("#dynamicOtherAttributes").html('<div class="col-sm-6 col-md-6"><div class="alert-message alert-message-warning"> <p>No Attributes Available for this product.</p></div></div>');
+                    ChangeButtonPatchView("Products", "ProductToolBox", "Back"); //ControllerName,id of the container div,Name of the action
                 }
  
             }
@@ -1066,9 +1184,9 @@ function OtherAttributeSave()
 }
 
 function RenderContentsForAssocProdAttributes()
-{
-   // HideProductDetalsToolBox();
+{ 
     try {
+        $("#AssociatedStockAvailabe").val("");
         var proid = $('.productID').val();
         var atsetID = $("#AttributeSetID").val();
         var protype = $("#ProductTypehdf").val();
@@ -1246,6 +1364,7 @@ function AssociatedProductSave()
     try {
         if (!ValidateAssociatedProducts())
         {
+        
             //Serialize dynamic other attribute elements
             //var Associatedpro = $('#dynamicAssociatedProducts').find('select,input').serializeArray();
             var Associatedpro = $('#dynamicAssociatedProductContents').find('select,input').serializeArray();
@@ -1270,7 +1389,9 @@ function AssociatedProductSave()
                 ProductDetailViewModel.Qty = (detqty != "" ? detqty : "");
                 var outstockqty = $("#detailOutOfStockAlertQty").val();
                 ProductDetailViewModel.OutOfStockAlertQty = (outstockqty != "" ? outstockqty : "");
-                var stockavail = $("#detailStockAvailable").val();
+
+              
+                var stockavail = $("#AssociatedStockAvailabe").val();
                 ProductDetailViewModel.StockAvailable = (stockavail != "" ? stockavail : "");
                 var detailDiscAmount = $("#detailDiscountAmount").val();
                 ProductDetailViewModel.DiscountAmount = (detailDiscAmount != "" ? detailDiscAmount : "");
@@ -1280,9 +1401,9 @@ function AssociatedProductSave()
                 ProductDetailViewModel.DiscountStartDate = (detailDiscStart != "" ? detailDiscStart : "");
                 var detailDiscEnd = $("#detailDiscountEndDate").val();
                 ProductDetailViewModel.DiscountEndDate = (detailDiscEnd != "" ? detailDiscEnd : "");
-                var detailEnable = $("#detailEnable").val();
+                var detailEnable = $("#detailEnable").prop('checked');
                 ProductDetailViewModel.Enabled = detailEnable;
-                var detailDefaultOption = $("#detailDefaultOption").val();
+                var detailDefaultOption = $("#detailDefaultOption").prop('checked');
                 ProductDetailViewModel.DefaultOption = detailDefaultOption;
                 var tagval = [];
                 $('#detailkeywordsDiv .Htags').each(function () {
@@ -1357,47 +1478,61 @@ function GetProductDetailsByProductId(id)
     }
 }
 
-function AssociatedProductDelete()
+function AssociatedProductDelete(this_Obj)
 {
-  
-    var prodetid = $("#productDetailID").val();
-    var prodid = $('.productID').val();
-    if ((prodetid) && (prodid))
+    
+    var rowData = DataTables.AssociatedProductsTable.row($(this_Obj).parents('tr')).data();
+    if (!rowData.DefaultOption)
     {
-        if (confirm("Are you Sure!") == true) {
-            var ProductDetailViewModel = new Object();
-            ProductDetailViewModel.ID = prodetid;
-            ProductDetailViewModel.ProductID = prodid;
-            var data = "{'productDeails':" + JSON.stringify(ProductDetailViewModel) + "}";
-            PostDataToServer('Products/DeleteProductDetail/', data, function (JsonResult) {
-                if (JsonResult != '') {
-                    switch (JsonResult.Result) {
-                        case "OK":
-                 
-                            notyAlert('success', JsonResult.Record.StatusMessage);
-                            RefreshAssociatedProducts(prodid);
-                            clearAssociatedProductform();
-                            break;
-                        case "ERROR":
-                            notyAlert('error', JsonResult.Record.StatusMessage);
-                            break;
-                        default:
-                            break;
+        //rowData.ProductID, rowData.ID
+        var prodetid = rowData.ProductID;//$("#productDetailID").val();
+        var prodid = rowData.ID//$('.productID').val();
+        if ((prodetid) && (prodid)) {
+            if (confirm("Are you Sure!") == true) {
+                var ProductDetailViewModel = new Object();
+                ProductDetailViewModel.ID = prodid;
+                ProductDetailViewModel.ProductID = prodetid;
+                var data = "{'productDeails':" + JSON.stringify(ProductDetailViewModel) + "}";
+                PostDataToServer('Products/DeleteProductDetail/', data, function (JsonResult) {
+                    if (JsonResult != '') {
+                        switch (JsonResult.Result) {
+                            case "OK":
+
+                                notyAlert('success', JsonResult.Record.StatusMessage);
+                                RefreshAssociatedProducts(prodetid);
+                                clearAssociatedProductform();
+                                break;
+                            case "ERROR":
+                                notyAlert('error', JsonResult.Record.StatusMessage);
+                                break;
+                            default:
+                                break;
+                        }
                     }
-                }
-            })
+                })
+            }
+
+
         }
-        
+        else {
+            notyAlert('error', 'Please Select a product');
+        }
 
     }
     else {
-        notyAlert('error', 'Please Select a product');
+        notyAlert('error', 'Default Option cant be deleted');
     }
- 
+    
     
 }
 function EditAssocProduct(currentObj) {
-   
+    debugger;
+
+    //$(currentObj).closest('tr').removeClass('selected');
+    //if ($('#tblAssociatedProducts').hasClass('selected')) {
+    //    $('#tblAssociatedProducts').removeClass('selected');
+    //}
+    //$(currentObj).closest('tr').toggleClass('selected');
     var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
         var thisproduct = GetProductDetailsByProductDetailID(rowData.ProductID,rowData.ID );
@@ -1406,9 +1541,14 @@ function EditAssocProduct(currentObj) {
             $("#productDetailID").val(thisproduct.ID);
             $("#detailQty").val(thisproduct.Qty);
             $("#detailOutOfStockAlertQty").val(thisproduct.OutOfStockAlertQty);
+            
             if (thisproduct.StockAvailable == true)
-            { $("#detailStockAvailable").prop('checked', true); }
-            else { $("#detailStockAvailable").prop('checked', false); }
+            {
+                $("#AssociatedStockAvailabe").val("true");
+            }
+            else {
+                $("#AssociatedStockAvailabe").val("false");
+            }
             $("#detailDiscountAmount").val(thisproduct.DiscountAmount);
             $("#detailPriceDifference").val(thisproduct.PriceDifference);
             $("#detailDiscountStartDate").val(ConvertJsonToDate(thisproduct.DiscountStartDate));
@@ -1502,6 +1642,7 @@ function GetProductDetailsByProductDetailID(id,detailid)
 }
 
 function clearAssociatedProductform() {
+
     //Clear form
     //drop down clear
     $('#dynamicAssociatedProductContents').find('select,input').val(-1);
@@ -1510,6 +1651,10 @@ function clearAssociatedProductform() {
     $("#productDetailID").val(0);
     $('#associatedStaticfields').find('input').val('');
     $('#associatedStaticfields').find('.check-box').prop('checked', false);
+   
+    $("#AssociatedStockAvailabe").val("");
+    
+    //associatedStaticfields
  
 }
 
@@ -1579,7 +1724,7 @@ function BindProductReviews()   // To Display Previous Comment history
         }
         else
         {
-            debugger;
+            
             var ratingdiv = $(' <div class="row"><div class="col-xs-12 col-md-6 text-center"><h1 class="rating-num">0.0</h1><div class="rating">'+
                               '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>'+
                               '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>' +
@@ -1733,4 +1878,5 @@ function ModelProductsRating(currentObj) {
 
     $('#btnmodelproductrating').trigger('click');
 }
+
 

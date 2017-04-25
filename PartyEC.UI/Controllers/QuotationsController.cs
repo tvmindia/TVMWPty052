@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -83,6 +84,11 @@ namespace PartyEC.UI.Controllers
         #endregion GetQuotations
 
         #region GetQuotationsDetails
+        /// <summary>
+        /// to display in table
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         [HttpGet]
         public string GetQuotationsDetails(string id)
         {
@@ -137,6 +143,11 @@ namespace PartyEC.UI.Controllers
         #endregion UpdateQuotations
 
         #region InsertEventsLog
+        /// <summary>
+        /// Insert into event logs after notyfing the customer by mail if checked true
+        /// </summary>
+        /// <param name="quotationObj"></param>
+        /// <returns></returns>
         [HttpPost]
         public string InsertEventsLog(QuotationsViewModel quotationObj)
         {
@@ -189,6 +200,71 @@ namespace PartyEC.UI.Controllers
 
         #endregion InsertEventsLog
 
+
+        #region SendQuotation
+
+        [HttpPost]
+        public async Task<string> SendQuotation(QuotationsViewModel quotationsObj)
+        {
+            if (ModelState.IsValid)
+            {
+                OperationsStatusViewModel OperationsStatusViewModelObj = null;
+                  
+                try
+                {
+                    quotationsObj.commonObj = new LogDetailsViewModel();
+                    quotationsObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                    quotationsObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    if (quotationsObj.CustomerEmail != "")
+                    {
+                       
+
+                        Mail _mail = new Mail();
+                        using (StreamReader reader = new StreamReader(HttpContext.Server.MapPath("~/PartyEcTemplates/Quotation.html")))
+                        {
+                            _mail.Body = reader.ReadToEnd();
+                        }
+                        _mail.Body = _mail.Body.Replace("{CustomerName}", quotationsObj.CustomerName);
+                        _mail.Body = _mail.Body.Replace("{QuotationDate}", quotationsObj.QuotationDate);
+                        _mail.Body = _mail.Body.Replace("{ProductName}", quotationsObj.ProductName);
+                        _mail.Body = _mail.Body.Replace("{QuotationNo}", quotationsObj.QuotationNo);
+                        _mail.Body = _mail.Body.Replace("{RequiredDate}", quotationsObj.RequiredDate);
+                        _mail.Body = _mail.Body.Replace("{Qty}", quotationsObj.Qty.ToString());
+                        _mail.Body = _mail.Body.Replace("{Price}", quotationsObj.Price.ToString());
+                        _mail.Body = _mail.Body.Replace("{tax}", quotationsObj.TaxAmt.ToString());
+                        _mail.Body = _mail.Body.Replace("{additionalCharges}", quotationsObj.AdditionalCharges.ToString());
+                        _mail.Body = _mail.Body.Replace("{discount}", quotationsObj.DiscountAmt.ToString());
+                        _mail.Body = _mail.Body.Replace("{subTotal}", quotationsObj.SubTotal.ToString());
+                        
+                        _mail.IsBodyHtml = true;
+                        _mail.Subject = "Quotation No:" + quotationsObj.QuotationNo;
+                        _mail.To = quotationsObj.CustomerEmail;
+                        Task<bool> Mailstatus = _mailBusiness.MailSendAsync(_mail);
+                         //quotationsObj.EventsLogViewObj.CustomerNotifiedYN = Mailstatus;
+                    }
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertEventsLog(Mapper.Map<EventsLogViewModel, EventsLog>(quotationsObj.EventsLogViewObj)));
+                }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+
+
+        #endregion SendQuotation
+
+
         #region GetEventsLog
         [HttpGet]
         public string GetEventsLog(string ID)
@@ -214,13 +290,24 @@ namespace PartyEC.UI.Controllers
             {
                 case "List":
                     ToolboxViewModelObj.backbtn.Visible = false;
+                    ToolboxViewModelObj.sendbtn.Visible = false;
                     break;
                 case "Edit_List":
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
-                  
-                    break; 
+                    ToolboxViewModelObj.sendbtn.Visible = true;
+                    ToolboxViewModelObj.sendbtn.Disable = true; 
+                    break;
+                case "Send":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.sendbtn.Visible = true;
+                    ToolboxViewModelObj.sendbtn.Event = "SendMail()";
+                    ToolboxViewModelObj.sendbtn.Title = "Send";
+                    break;
+
                 default:
                     return Content("Nochange");
             }

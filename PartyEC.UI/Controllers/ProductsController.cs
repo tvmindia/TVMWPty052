@@ -262,6 +262,7 @@ namespace PartyEC.UI.Controllers
                             productObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
                             productObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
                             productObj.ProductDetails = JsonConvert.DeserializeObject<List<ProductDetailViewModel>>(productObj.productDetailhdf);
+                           
                             OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertProduct(Mapper.Map<ProductViewModel, Product>(productObj)));
                             return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                         default:
@@ -411,6 +412,8 @@ namespace PartyEC.UI.Controllers
                 //Getting UA
                 productObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
                 productObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                productObj.logDetails.UpdatedBy = _commonBusiness.GetUA().UserName;
+                productObj.logDetails.UpdatedDate = _commonBusiness.GetCurrentDateTime();
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertUpdateProductDetails(Mapper.Map<ProductViewModel, Product>(productObj)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
 
@@ -602,15 +605,15 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Title = "Save";
                     ToolboxViewModelObj.savebtn.Event = "AssociatedProductSave()";
-                    ToolboxViewModelObj.deletebtn.Visible = true;
-                    ToolboxViewModelObj.deletebtn.Title = "Delete";
-                    ToolboxViewModelObj.deletebtn.Event = "AssociatedProductDelete()";
+                    //ToolboxViewModelObj.deletebtn.Visible = true;
+                    //ToolboxViewModelObj.deletebtn.Title = "Delete";
+                    //ToolboxViewModelObj.deletebtn.Event = "AssociatedProductDelete()";
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.backbtn.Event = "goback()";
-                    ToolboxViewModelObj.resetbtn.Visible = true;
-                    ToolboxViewModelObj.resetbtn.Title = "Reset";
-                    ToolboxViewModelObj.resetbtn.Event = "clearAssociatedProductform()";
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Title = "Addproductoption";
+                    ToolboxViewModelObj.addbtn.Event = "clearAssociatedProductform()";
                     break;
                 case "OASave":
                     ToolboxViewModelObj.savebtn.Visible = true;
@@ -634,7 +637,7 @@ namespace PartyEC.UI.Controllers
             OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
 
             var file = Request.Files["Filedata"];
-            var FileNameCustom = (ProductViewObj.Name).Replace("%", "_") + ".png";
+            var FileNameCustom = (ProductViewObj.Name).Replace("%", "_").Replace(" ","") + ".png";
             string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
             file.SaveAs(savePath);
             ProductViewObj.ImageURL = "/Content/ProductImages/" + FileNameCustom;
@@ -656,7 +659,7 @@ namespace PartyEC.UI.Controllers
             OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
             Random rnd = new Random();
             var file = Request.Files["Filedata"];
-            var FileNameCustom = ((ProductViewObj.Name).Replace("%", "_")) + "Other"+rnd.Next(111,9999).ToString()+ ".png";
+            var FileNameCustom = ((ProductViewObj.Name).Replace("%", "_").Replace(" ", "")) + "Other"+rnd.Next(111,9999).ToString()+ ".png";
             string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
             file.SaveAs(savePath);
             ProductViewObj.ImageURL = "/Content/ProductImages/" + FileNameCustom;
@@ -728,6 +731,32 @@ namespace PartyEC.UI.Controllers
             }
 
         }
+
+
+        #region GetAttributeValuesByProduct
+        [HttpGet]
+        public string GetAttributeValuesByProduct(string id)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(id))
+                {
+                    List<AttributeValuesViewModel> attributevalueList = Mapper.Map<List<AttributeValues>, List<AttributeValuesViewModel>>(_productBusiness.GetAttributeValuesByProduct(int.Parse(id)));
+
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = attributevalueList });
+                }
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "id is empty" });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
+
+        #endregion GetAttributeValuesByProduct
+
+
 
 
 
