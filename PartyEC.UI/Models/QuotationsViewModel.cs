@@ -45,10 +45,7 @@ namespace PartyEC.UI.Models
 
         public string ImageUrl { get; set; }
         public string SourceIP { get; set; }
-        public string ProductSpecXML { get; set; }
-
-        public string CustomerEmail { get; set; }
-        public string CustomerName { get; set; }
+        public string ProductSpecXML { get; set; } 
 
         //Customer Details
         public CustomerViewModel customerObj { get; set; }

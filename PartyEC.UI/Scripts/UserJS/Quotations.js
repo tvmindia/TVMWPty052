@@ -281,7 +281,6 @@ function tabListClick()
 function SendMail() {
     debugger;
     var QuotationsViewModel  = new Object();
-    QuotationsViewModel.CustomerName = $("#lblCustomerName").text();
     QuotationsViewModel.ID = $("#ID").val();
     QuotationsViewModel.QuotationNo = $("#lblQuotationsNo").text();
     QuotationsViewModel.QuotationDate = $("#lblQuotationDate").text();
@@ -296,7 +295,12 @@ function SendMail() {
     QuotationsViewModel.Status = $("#Status").val();
     QuotationsViewModel.SubTotal = $("#lblSubTotal").text();
     QuotationsViewModel.Total = $("#lblGrandTotal").text();
-    QuotationsViewModel.CustomerEmail = $("#mailViewModelObj_CustomerEmail").val();
+
+    var CustomerViewModel = new Object();
+    CustomerViewModel.Email = $("#mailViewModelObj_CustomerEmail").val();
+    CustomerViewModel.Name = $("#lblCustomerName").text();
+    QuotationsViewModel.customerObj = CustomerViewModel;
+    
     debugger; 
     var data = "{'quotationsObj':" + JSON.stringify(QuotationsViewModel) + "}";
     PostDataToServer('Quotations/SendQuotation/', data, function (JsonResult) {

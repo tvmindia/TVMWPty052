@@ -16,13 +16,13 @@ namespace PartyEC.UI.Controllers
     public class QuotationsController : Controller
     {
         #region Constructor_Injection
-        IQuotationsBusiness _quatationsBusiness;
+        IQuotationsBusiness _quotationsBusiness;
         ICommonBusiness _commonBusiness;
         IMasterBusiness _masterBusiness;
         IMailBusiness _mailBusiness;
-        public QuotationsController(IQuotationsBusiness quatationsBusiness, ICommonBusiness commonBusiness, IMasterBusiness masterBusiness, IMailBusiness mailBusiness)
+        public QuotationsController(IQuotationsBusiness quotationsBusiness, ICommonBusiness commonBusiness, IMasterBusiness masterBusiness, IMailBusiness mailBusiness)
         {
-            _quatationsBusiness = quatationsBusiness;
+            _quotationsBusiness = quotationsBusiness;
             _commonBusiness = commonBusiness;
             _masterBusiness = masterBusiness;
             _mailBusiness = mailBusiness;
@@ -54,7 +54,7 @@ namespace PartyEC.UI.Controllers
         {
             try
             {
-                List<QuotationsViewModel> productList = Mapper.Map<List<Quotations>, List<QuotationsViewModel>>(_quatationsBusiness.GetAllQuotations());
+                List<QuotationsViewModel> productList = Mapper.Map<List<Quotations>, List<QuotationsViewModel>>(_quotationsBusiness.GetAllQuotations());
 
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
             }
@@ -73,7 +73,7 @@ namespace PartyEC.UI.Controllers
             try
             {
                
-                QuotationsViewModel quotation = Mapper.Map<Quotations, QuotationsViewModel>(_quatationsBusiness.GetQuotations(Int32.Parse(id)));
+                QuotationsViewModel quotation = Mapper.Map<Quotations, QuotationsViewModel>(_quotationsBusiness.GetQuotations(Int32.Parse(id)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = quotation });
             }
             catch (Exception ex)
@@ -96,7 +96,7 @@ namespace PartyEC.UI.Controllers
             {
 
                 List<QuotationsViewModel> quotationdetailslist = null;
-                QuotationsViewModel quotation = Mapper.Map<Quotations, QuotationsViewModel>(_quatationsBusiness.GetQuotations(Int32.Parse(id)));
+                QuotationsViewModel quotation = Mapper.Map<Quotations, QuotationsViewModel>(_quotationsBusiness.GetQuotations(Int32.Parse(id)));
                 quotationdetailslist = new List<QuotationsViewModel>();
                 quotationdetailslist.Add(quotation);
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = quotationdetailslist });
@@ -121,7 +121,7 @@ namespace PartyEC.UI.Controllers
                     quotationObj.commonObj = new LogDetailsViewModel();
                     quotationObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                     quotationObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
-                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_quatationsBusiness.UpdateQuotations(Mapper.Map<QuotationsViewModel, Quotations>(quotationObj)));
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_quotationsBusiness.UpdateQuotations(Mapper.Map<QuotationsViewModel, Quotations>(quotationObj)));
                 }
                 catch (Exception ex)
                 {
@@ -203,59 +203,34 @@ namespace PartyEC.UI.Controllers
 
         #region SendQuotation
 
-        [HttpPost]
+        [HttpPost] 
         public async Task<string> SendQuotation(QuotationsViewModel quotationsObj)
         {
             if (ModelState.IsValid)
             {
-                OperationsStatusViewModel OperationsStatusViewModelObj = null;
-                  
+                bool sendsuccess;
+
+
                 try
                 {
                     quotationsObj.commonObj = new LogDetailsViewModel();
                     quotationsObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                     quotationsObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
-                    if (quotationsObj.CustomerEmail != "")
-                    {
-                       
 
-                        Mail _mail = new Mail();
-                        using (StreamReader reader = new StreamReader(HttpContext.Server.MapPath("~/PartyEcTemplates/Quotation.html")))
-                        {
-                            _mail.Body = reader.ReadToEnd();
-                        }
-                        _mail.Body = _mail.Body.Replace("{CustomerName}", quotationsObj.CustomerName);
-                        _mail.Body = _mail.Body.Replace("{QuotationDate}", quotationsObj.QuotationDate);
-                        _mail.Body = _mail.Body.Replace("{ProductName}", quotationsObj.ProductName);
-                        _mail.Body = _mail.Body.Replace("{QuotationNo}", quotationsObj.QuotationNo);
-                        _mail.Body = _mail.Body.Replace("{RequiredDate}", quotationsObj.RequiredDate);
-                        _mail.Body = _mail.Body.Replace("{Qty}", quotationsObj.Qty.ToString());
-                        _mail.Body = _mail.Body.Replace("{Price}", quotationsObj.Price.ToString());
-                        _mail.Body = _mail.Body.Replace("{tax}", quotationsObj.TaxAmt.ToString());
-                        _mail.Body = _mail.Body.Replace("{additionalCharges}", quotationsObj.AdditionalCharges.ToString());
-                        _mail.Body = _mail.Body.Replace("{discount}", quotationsObj.DiscountAmt.ToString());
-                        _mail.Body = _mail.Body.Replace("{subTotal}", quotationsObj.SubTotal.ToString());
-                        
-                        _mail.IsBodyHtml = true;
-                        _mail.Subject = "Quotation No:" + quotationsObj.QuotationNo;
-                        _mail.To = quotationsObj.CustomerEmail;
-                        Task<bool> Mailstatus = _mailBusiness.MailSendAsync(_mail);
-                         //quotationsObj.EventsLogViewObj.CustomerNotifiedYN = Mailstatus;
-                    }
-                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertEventsLog(Mapper.Map<EventsLogViewModel, EventsLog>(quotationsObj.EventsLogViewObj)));
+                      sendsuccess = await _quotationsBusiness.QuotationEmail(Mapper.Map<QuotationsViewModel, Quotations>(quotationsObj));
                 }
                 catch (Exception ex)
                 {
                     return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                 }
 
-                if (OperationsStatusViewModelObj.StatusCode == 1)
+                 if (sendsuccess)
                 {
-                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                    return JsonConvert.SerializeObject(new { Result = "OK", Message = "Quotation Send Sucessfully" });
                 }
                 else
                 {
-                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                    return JsonConvert.SerializeObject(new { Result = "Error", Message = "Quotation Sending Failed" });
                 }
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
