@@ -107,6 +107,7 @@ namespace PartyEC.BusinessServices.Services
                     mail.IsBodyHtml = true;
                    using (var client = new SmtpClient())
                     {
+                        
                         client.Host = host;
                         client.Port = int.Parse(port);
                         client.EnableSsl = true;
