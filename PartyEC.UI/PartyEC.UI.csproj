@@ -606,6 +606,7 @@
     <Content Include="Views\UnderConstruction\UnderConstruction.cshtml" />
     <Content Include="Views\Bookings\Index.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Roles\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -619,7 +620,6 @@
     <Folder Include="Views\Invoices\" />
     <Folder Include="Views\Location\" />
     <Folder Include="Views\Reports\" />
-    <Folder Include="Views\Roles\" />
     <Folder Include="Views\Shipments\" />
   </ItemGroup>
   <ItemGroup>
