@@ -22,6 +22,6 @@ namespace PartyEC.UI.Models
         public string Password { get; set; }
         public int ProfileImageId { get; set; }
         public LogDetailsViewModel logDetails { get; set; }
-
+        public RoleViewModel RoleObj { get; set; }
     }
 }

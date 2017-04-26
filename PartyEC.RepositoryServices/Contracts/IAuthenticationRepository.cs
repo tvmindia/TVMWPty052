@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PartyEC.DataAccessObject.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,7 @@ namespace PartyEC.RepositoryServices.Contracts
 {
     public interface IAuthenticationRepository
     {
-
+        List<Role> GetAllRoles();
+        List<User> GetAllUsers();
     }
 }

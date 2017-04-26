@@ -60,6 +60,8 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<GraphViewModel, Graph>().ReverseMap();
                 config.CreateMap<BookingsViewModel, Bookings>().ReverseMap();
                 config.CreateMap<BookingsAppViewModel, Bookings>().ReverseMap();
+                config.CreateMap<RoleViewModel, Role>().ReverseMap();
+                config.CreateMap<UserViewModel, User>().ReverseMap();
             });
         }
 

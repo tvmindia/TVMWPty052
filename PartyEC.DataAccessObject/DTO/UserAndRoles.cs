@@ -11,6 +11,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string LoginName { get; set; }
         public string Password { get; set; }
         public int ProfileImageId { get; set; }
+        public Role RoleObj { get; set;}
         public LogDetails logDetails { get; set; }
     }
     public class Role
