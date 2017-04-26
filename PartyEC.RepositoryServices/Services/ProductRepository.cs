@@ -1511,12 +1511,12 @@ namespace PartyEC.RepositoryServices.Services
                             case "0":
                                 // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.DeleteFailure;
                                 return operationsStatusObj;
                             case "1":
                                 //Delete Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Delete Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.DeleteSuccess;
                                 return operationsStatusObj;
                             default:
                                 break;

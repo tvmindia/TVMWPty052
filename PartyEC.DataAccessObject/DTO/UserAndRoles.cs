@@ -10,7 +10,10 @@ namespace PartyEC.DataAccessObject.DTO
         public string UserName { get; set; }
         public string LoginName { get; set; }
         public string Password { get; set; }
-        public int ProfileImageId { get; set; }
+        public Guid? ProfileImageId { get; set; }
+        public int UserRoleLinkID { get; set; }
+        public int RoleID { get; set; }
+        public string RoleList { get; set; }
         public Role RoleObj { get; set;}
         public LogDetails logDetails { get; set; }
     }

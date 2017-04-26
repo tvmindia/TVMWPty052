@@ -11,5 +11,10 @@ namespace PartyEC.RepositoryServices.Contracts
     {
         List<Role> GetAllRoles();
         List<User> GetAllUsers();
+        List<User> GetUserDetailByUser(int UserID);
+        OperationsStatus InsertUser(User user);
+        OperationsStatus UpdateUser(User user);
+        OperationsStatus InsertUpdateUser(User user);
+        OperationsStatus DeleteUser(int UserID, int LinkID);
     }
 }

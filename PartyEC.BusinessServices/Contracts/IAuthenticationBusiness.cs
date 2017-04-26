@@ -11,5 +11,8 @@ namespace PartyEC.BusinessServices.Contracts
     {
         List<Role> GetAllRoles();
         List<User> GetAllUsers();
+        List<User> GetUserDetailByUser(int UserID);
+        OperationsStatus InsertUpdateUser(User user);
+        OperationsStatus DeleteUser(int UserID, int LinkID);
     }
 }
