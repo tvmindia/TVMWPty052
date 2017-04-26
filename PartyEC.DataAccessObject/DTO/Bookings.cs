@@ -31,5 +31,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string BillStateProvince { get; set; }
         public string BillContactNo { get; set; }
 
+        public LogDetails logDetails { get; set; }
+
     }
 }

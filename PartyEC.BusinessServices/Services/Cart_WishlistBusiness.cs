@@ -22,24 +22,24 @@ namespace PartyEC.BusinessServices.Services
             _attributesRepository = attributesRepository;
         }
 
-        public List<Cart_Wishlist> GetAllCustomerCartWishlistSummary()
+        public List<Customer> GetAllCustomerCartWishlistSummary()
         {
-            List<Cart_Wishlist> cartWishlist = null;
+            List<Customer> Customerlist = null;
             try
             {
-                cartWishlist = _cartWishlistRepository.GetAllCustomerCartWishlistSummary();
+                Customerlist = _cartWishlistRepository.GetAllCustomerCartWishlistSummary();
 
             }
             catch (Exception)
             {
 
             }
-            return cartWishlist;
+            return Customerlist;
         }
 
-        public List<Cart_Wishlist> GetCustomerShoppingCart(int customerID)
+        public List<ShoppingCart> GetCustomerShoppingCart(int customerID)
         {
-            List<Cart_Wishlist> cartlist = null;
+            List<ShoppingCart> cartlist = null;
             try
             {
                 cartlist = _cartWishlistRepository.GetCustomerShoppingCart(customerID);
@@ -56,9 +56,9 @@ namespace PartyEC.BusinessServices.Services
             return cartlist;
         }         
 
-        public List<Cart_Wishlist> GetCustomerWishlist(int customerID)
+        public List<Wishlist> GetCustomerWishlist(int customerID)
         {
-            List<Cart_Wishlist> wishlist = null;
+            List<Wishlist> wishlist = null;
             try
             {
                 wishlist = _cartWishlistRepository.GetCustomerWishlist(customerID);

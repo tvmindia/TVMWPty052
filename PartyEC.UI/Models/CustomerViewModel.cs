@@ -41,7 +41,8 @@ namespace PartyEC.UI.Models
         public int? BookingsCountHistory { get; set; }
 
         public int? QuotationsCountHistory { get; set; }
-
+        public int CartCount { get; set; }
+        public int WishCount { get; set; }
         public bool IsActive { get; set; }
         public CustomerAddressViewModel customerAddress { get; set; }
         public LogDetailsViewModel logDetailsObj { get; set; }

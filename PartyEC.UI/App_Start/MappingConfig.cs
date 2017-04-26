@@ -20,6 +20,7 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<ProductDetailViewModel, ProductDetail>().ReverseMap();
                 config.CreateMap<AttributeValuesViewModel, AttributeValues>().ReverseMap();
                 config.CreateMap<ProductImagesViewModel, ProductImages>().ReverseMap();
+                config.CreateMap<ProductImagesViewModel, ProductDetail>().ReverseMap();
                 config.CreateMap<AttributesViewModel, Attributes>().ReverseMap();
                 config.CreateMap<AttributeSetViewModel, AttributeSet>().ReverseMap();
                 config.CreateMap<AttributeSetLinkViewModel, AttributeSetLink>().ReverseMap();
@@ -42,8 +43,8 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<OrderViewModel, Order>().ReverseMap();
                 config.CreateMap<OrderAppViewModel, Order>().ReverseMap();
                 config.CreateMap<OrderStatusViewModel, OrderStatusMaster>().ReverseMap();
-                config.CreateMap<Cart_WishlistViewModel, Cart_Wishlist>().ReverseMap();
-                config.CreateMap<Cart_WishlistAppViewModel, Cart_Wishlist>().ReverseMap();
+                config.CreateMap<WishlistViewModel,Wishlist>().ReverseMap();
+                config.CreateMap<ShoppingCartViewModel,ShoppingCart>().ReverseMap();
                 config.CreateMap<ProductReviewViewModel, ProductReview>().ReverseMap();
                 config.CreateMap<ProductReviewAppViewModel, ProductReview>().ReverseMap();
                 config.CreateMap<OtherImagesViewModel, OtherImages>().ReverseMap();

@@ -23,9 +23,9 @@ namespace PartyEC.RepositoryServices.Services
         }
         #endregion DataBaseFactory
 
-        public List<Cart_Wishlist> GetAllCustomerCartWishlistSummary()
+        public List<Customer> GetAllCustomerCartWishlistSummary()
         {
-            List<Cart_Wishlist> Requestslist = null;
+            List<Customer> Requestslist = null;
             try
             {
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
@@ -43,20 +43,20 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             if ((sdr != null) && (sdr.HasRows))
                             {
-                                Requestslist = new List<Cart_Wishlist>();
+                                Requestslist = new List<Customer>();
                                 while (sdr.Read())
                                 {
-                                    Cart_Wishlist _cartwishlistObj = new Cart_Wishlist();
+                                    Customer CustomerObj = new Customer();
                                     {
-                                        _cartwishlistObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _cartwishlistObj.ID);
-                                        _cartwishlistObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _cartwishlistObj.Name);
-                                        _cartwishlistObj.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : _cartwishlistObj.Email);
-                                        _cartwishlistObj.Mobile = (sdr["Mobile"].ToString() != "" ? sdr["Mobile"].ToString() : _cartwishlistObj.Mobile);
-                                        _cartwishlistObj.CartCount = (sdr["CartCount"].ToString() != "" ? Int16.Parse(sdr["CartCount"].ToString()) : _cartwishlistObj.CartCount);
-                                        _cartwishlistObj.WishCount = (sdr["WishCount"].ToString() != "" ? Int16.Parse(sdr["WishCount"].ToString()) : _cartwishlistObj.WishCount);
+                                        CustomerObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : CustomerObj.ID);
+                                        CustomerObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : CustomerObj.Name);
+                                        CustomerObj.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : CustomerObj.Email);
+                                        CustomerObj.Mobile = (sdr["Mobile"].ToString() != "" ? sdr["Mobile"].ToString() : CustomerObj.Mobile);
+                                        CustomerObj.CartCount = (sdr["CartCount"].ToString() != "" ? Int16.Parse(sdr["CartCount"].ToString()) : CustomerObj.CartCount);
+                                        CustomerObj.WishCount = (sdr["WishCount"].ToString() != "" ? Int16.Parse(sdr["WishCount"].ToString()) : CustomerObj.WishCount);
 
                                     }
-                                    Requestslist.Add(_cartwishlistObj);
+                                    Requestslist.Add(CustomerObj);
                                 }
                             }//if
                         }
@@ -70,9 +70,9 @@ namespace PartyEC.RepositoryServices.Services
             return Requestslist;
         }
 
-        public List<Cart_Wishlist> GetCustomerShoppingCart(int customerID)
+        public List<ShoppingCart> GetCustomerShoppingCart(int customerID)
         {
-            List<Cart_Wishlist> Requestslist = null;
+            List<ShoppingCart> Cartlist = null;
             try
             {
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
@@ -91,10 +91,10 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             if ((sdr != null) && (sdr.HasRows))
                             {
-                                Requestslist = new List<Cart_Wishlist>();
+                                Cartlist = new List<ShoppingCart>();
                                 while (sdr.Read())
                                 {
-                                    Cart_Wishlist _ShoppingcartObj = new Cart_Wishlist();
+                                    ShoppingCart _ShoppingcartObj = new ShoppingCart();
                                     {
                                         _ShoppingcartObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _ShoppingcartObj.ProductID);
                                         _ShoppingcartObj.ProductName = (sdr["ProductName"].ToString() != "" ?  sdr["ProductName"].ToString() : _ShoppingcartObj.ProductName);
@@ -107,7 +107,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _ShoppingcartObj.ItemStatus = (sdr["ItemStatus"].ToString() != "" ? sdr["ItemStatus"].ToString() : _ShoppingcartObj.ItemStatus);
                                         _ShoppingcartObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _ShoppingcartObj.CreatedDate);    
                                     }
-                                    Requestslist.Add(_ShoppingcartObj);
+                                    Cartlist.Add(_ShoppingcartObj);
                                 }
                             }//if
                         }
@@ -118,12 +118,12 @@ namespace PartyEC.RepositoryServices.Services
             {
                 throw ex;
             }
-            return Requestslist;
+            return Cartlist;
         }
         
-        public List<Cart_Wishlist> GetCustomerWishlist(int customerID)
+        public List<Wishlist> GetCustomerWishlist(int customerID)
         {
-            List<Cart_Wishlist> Requestslist = null;
+            List<Wishlist> Requestslist = null;
             try
             {
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
@@ -142,21 +142,21 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             if ((sdr != null) && (sdr.HasRows))
                             {
-                                Requestslist = new List<Cart_Wishlist>();
+                                Requestslist = new List<Wishlist>();
                                 while (sdr.Read())
                                 {
-                                    Cart_Wishlist _ShoppingcartObj = new Cart_Wishlist();
+                                    Wishlist _wishlistObj = new Wishlist();
                                     {
-                                        _ShoppingcartObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _ShoppingcartObj.ProductID);
-                                        _ShoppingcartObj.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : _ShoppingcartObj.ProductName);
-                                        _ShoppingcartObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : _ShoppingcartObj.CustomerID);
-                                        _ShoppingcartObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _ShoppingcartObj.CustomerName);
-                                        _ShoppingcartObj.ProductSpecXML = (sdr["ProductSpecXML"].ToString() != "" ? sdr["ProductSpecXML"].ToString() : _ShoppingcartObj.ProductSpecXML);    
-                                        _ShoppingcartObj.DaysinWL = (sdr["DaysinWL"].ToString() != "" ? sdr["DaysinWL"].ToString() : _ShoppingcartObj.DaysinWL);
-                                        _ShoppingcartObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _ShoppingcartObj.CreatedDate);    
+                                        _wishlistObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _wishlistObj.ProductID);
+                                        _wishlistObj.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : _wishlistObj.ProductName);
+                                        _wishlistObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : _wishlistObj.CustomerID);
+                                        _wishlistObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _wishlistObj.CustomerName);
+                                        _wishlistObj.ProductSpecXML = (sdr["ProductSpecXML"].ToString() != "" ? sdr["ProductSpecXML"].ToString() : _wishlistObj.ProductSpecXML);    
+                                        _wishlistObj.DaysinWL = (sdr["DaysinWL"].ToString() != "" ? sdr["DaysinWL"].ToString() : _wishlistObj.DaysinWL);
+                                        _wishlistObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _wishlistObj.CreatedDate);    
                                         
                                     }
-                                    Requestslist.Add(_ShoppingcartObj);
+                                    Requestslist.Add(_wishlistObj);
                                 }
                             }//if
                         }

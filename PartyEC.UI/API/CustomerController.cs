@@ -41,11 +41,11 @@ namespace PartyEC.UI.API
         #region shoppingCart 
 
         [HttpPost]
-        public object GetCustomerShoppingCart(Cart_Wishlist CartWishObj)
+        public object GetCustomerShoppingCart(ShoppingCart CartWishObj)
         {
             try
             {
-                List<Cart_WishlistAppViewModel> CartList = Mapper.Map<List<Cart_Wishlist>, List<Cart_WishlistAppViewModel>>(_cartwishlistBusiness.GetCustomerShoppingCart(CartWishObj.ID));
+                List<Cart_WishlistAppViewModel> CartList = Mapper.Map<List<ShoppingCart>, List<Cart_WishlistAppViewModel>>(_cartwishlistBusiness.GetCustomerShoppingCart(CartWishObj.CustomerID));
                 if (CartList.Count == 0) throw new Exception(constants.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
             }
@@ -59,11 +59,11 @@ namespace PartyEC.UI.API
         
         #region Wishlist
         [HttpPost]
-        public object GetCustomerWishlist(Cart_Wishlist CartWishObj)
+        public object GetCustomerWishlist(Wishlist WishlistObj)
         {
             try
             {
-                List<Cart_WishlistAppViewModel> CartList = Mapper.Map<List<Cart_Wishlist>, List<Cart_WishlistAppViewModel>>(_cartwishlistBusiness.GetCustomerWishlist(CartWishObj.ID));
+                List<Cart_WishlistAppViewModel> CartList = Mapper.Map<List<Wishlist>, List<Cart_WishlistAppViewModel>>(_cartwishlistBusiness.GetCustomerWishlist(WishlistObj.ID));
                 if (CartList.Count == 0) throw new Exception(constants.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
             }
@@ -185,11 +185,6 @@ namespace PartyEC.UI.API
 
         #endregion Bookings
 
-        #region history
-
-
-
-        #endregion history
 
     }
 }
