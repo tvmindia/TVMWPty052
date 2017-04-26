@@ -57,7 +57,6 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
-
         [HttpPost]
         public object GetProductRatings(Product productObj)
         {
@@ -72,7 +71,6 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
-
         [HttpPost]
         public object GetProductReviews(ProductReviewAppViewModel productObj)
         {
@@ -114,7 +112,6 @@ namespace PartyEC.UI.API
         //        return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
         //    }
         //}
-
         [HttpPost]
         public object GetProductDetailsForOrder(Product productObj)
         {
@@ -139,6 +136,25 @@ namespace PartyEC.UI.API
                 ProductAppViewModel ProductImageStickers = Mapper.Map<Product,ProductAppViewModel>(_productBusiness.GetProductSticker(productObj.ID));
                 if (ProductImages.Count == 0 && ProductImageStickers!= null) throw new Exception(messages.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = new { Images= ProductImages, Stickers = ProductImageStickers } });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public object UpdateWishlist(Cart_Wishlist wishlistObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                wishlistObj.logDetails = new LogDetails();
+                wishlistObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                wishlistObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus,OperationsStatusViewModel>(_productBusiness.UpdateWishlist(wishlistObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
             }
             catch (Exception ex)
             {

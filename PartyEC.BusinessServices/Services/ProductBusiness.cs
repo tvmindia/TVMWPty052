@@ -12,6 +12,7 @@ namespace PartyEC.BusinessServices.Services
     {
         private IProductRepository _productRepository;
         private IMasterRepository _masterRepository;
+
         public ProductBusiness(IProductRepository productRepository,IMasterRepository masterRepository)
         {
             _productRepository = productRepository;
@@ -31,6 +32,7 @@ namespace PartyEC.BusinessServices.Services
             }
             return productlist;
         }
+
         public List<Product> GetTop10Products()
         {
             Product productObj = new Product();
@@ -45,6 +47,7 @@ namespace PartyEC.BusinessServices.Services
             }
             return productlist;
         }
+
         public List<Product> GetAllProductswithCategory(string CategoryID)
         {
             List<Product> productlist = null;
@@ -59,6 +62,7 @@ namespace PartyEC.BusinessServices.Services
             }
             return productlist;
         }
+
         public List<Product> GetAssignedPro(string CategoryID)
         {
             List<Product> productlist = null;
@@ -73,6 +77,7 @@ namespace PartyEC.BusinessServices.Services
             }
             return productlist;
         }
+
         public List<Product> GetUnAssignedPro(string CategoryID)
         {
             List<Product> productlist = null;
@@ -118,28 +123,28 @@ namespace PartyEC.BusinessServices.Services
             return productlist;
         }
 
-
         public OperationsStatus InsertProduct(Product productObj)
         {
             
               return _productRepository.InsertProduct(productObj);
             
         }
+
         public OperationsStatus UpdateProduct(Product productObj)
         {
             return _productRepository.UpdateProduct(productObj);
         }
+
         public OperationsStatus UpdateProductSticker(Product productObj)
         {
             return _productRepository.UpdateProductSticker(productObj);
         }
+
         public Product GetProduct(int ProductID, OperationsStatus Status)
         {
 
             return _productRepository.GetProduct(ProductID, Status);
         }
-
-
 
         public List<AttributeValues> GetAttributeValuesByProduct(int ProductID)
         {
@@ -160,6 +165,7 @@ namespace PartyEC.BusinessServices.Services
 
             return _productRepository.GetRelatedImages(ProductID, Status);
         }
+
         public OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList, List<ProductCategoryLink> DeleteList)
         {
 
@@ -195,7 +201,6 @@ namespace PartyEC.BusinessServices.Services
             }
         }
 
-
         public OperationsStatus InsertUpdateProductDetails(Product productObj)
         {
             try
@@ -210,7 +215,6 @@ namespace PartyEC.BusinessServices.Services
             }
         }
 
-
         public OperationsStatus UpdateProductHeaderOtherAttributes(Product productObj)
         {
             try
@@ -224,7 +228,6 @@ namespace PartyEC.BusinessServices.Services
                 return OS;
             }
         }
-
 
         public List<ProductDetail> GetProductDetail(int ProductID)
         {
@@ -255,6 +258,7 @@ namespace PartyEC.BusinessServices.Services
             }
             return productDetail;
          }
+
         public  OperationsStatus DeleteProductsDetails(int ProductDetailsID, int ProductID)
          {
             OperationsStatus OS = null;
@@ -268,6 +272,7 @@ namespace PartyEC.BusinessServices.Services
             }
             return OS;
         }
+
         public OperationsStatus DeleteProductsImage(string[] DeleteIDs)
         {
             OperationsStatus OS = null;
@@ -327,6 +332,7 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationsStatusObj;
         }
+
         public OperationsStatus InsertStickers(Product productObj)
         {
             OperationsStatus operationsStatusObj = null;
@@ -514,7 +520,7 @@ namespace PartyEC.BusinessServices.Services
             }
             return product; 
         }
-        //GetProductImages
+        
         public Product GetProductSticker(int productID)
         {
             Product product = null;
@@ -544,9 +550,21 @@ namespace PartyEC.BusinessServices.Services
             return productImages;
         }
 
-       
+        public OperationsStatus UpdateWishlist(Cart_Wishlist CartWishObj)
+        {
+            OperationsStatus OSatObj = null;
+            try
+            {
+                OSatObj = _productRepository.UpdateWishlist(CartWishObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OSatObj;
+        }
 
-
+        
         #endregion
     }
 }

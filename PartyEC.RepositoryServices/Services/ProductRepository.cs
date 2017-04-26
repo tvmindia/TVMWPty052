@@ -2244,6 +2244,58 @@ namespace PartyEC.RepositoryServices.Services
             return myImagesList;
         }
 
+        public OperationsStatus UpdateWishlist(Cart_Wishlist WishListObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateWishList]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = WishListObj.ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = WishListObj.CustomerID; 
+                        cmd.Parameters.Add("@ProductSpecXML", SqlDbType.NVarChar,-1).Value = WishListObj.ProductSpecXML;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = WishListObj.logDetails.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = WishListObj.logDetails.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":            
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
+                                return operationsStatusObj;
+                            case "1": 
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                return operationsStatusObj;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return operationsStatusObj;
+
+        }
+
         #endregion
     }
 }

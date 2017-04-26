@@ -185,11 +185,6 @@ namespace PartyEC.UI.API
 
         #endregion Bookings
 
-        #region history
-
-
-
-        #endregion history
 
     }
 }
