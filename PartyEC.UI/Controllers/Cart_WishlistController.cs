@@ -36,12 +36,12 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllCustomerCartWishlistSummary
         [HttpGet]
-        public string GetAllCustomerCartWishlistSummary(Cart_WishlistViewModel eventObj)
+        public string GetAllCustomerCartWishlistSummary(CustomerViewModel eventObj)
         {
             try
             {
-                List<Cart_WishlistViewModel> eventList = Mapper.Map<List<Cart_Wishlist>, List<Cart_WishlistViewModel>>(_cartWishlistBusiness.GetAllCustomerCartWishlistSummary());
-                return JsonConvert.SerializeObject(new { Result = "OK", Records = eventList });
+                List<CustomerViewModel> customerList = Mapper.Map<List<Customer>, List<CustomerViewModel>>(_cartWishlistBusiness.GetAllCustomerCartWishlistSummary());
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = customerList });
             }
             catch (Exception ex)
             {
@@ -57,7 +57,7 @@ namespace PartyEC.UI.Controllers
         {
             try
             {
-                List<Cart_WishlistViewModel> eventsLogList = Mapper.Map<List<Cart_Wishlist>, List<Cart_WishlistViewModel>>(_cartWishlistBusiness.GetCustomerShoppingCart(Int32.Parse(ID)));
+                List<ShoppingCartViewModel> eventsLogList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cartWishlistBusiness.GetCustomerShoppingCart(Int32.Parse(ID)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = eventsLogList });
             }
             catch (Exception ex)
@@ -74,7 +74,7 @@ namespace PartyEC.UI.Controllers
         {
             try
             {
-                List<Cart_WishlistViewModel> eventsLogList = Mapper.Map<List<Cart_Wishlist>, List<Cart_WishlistViewModel>>(_cartWishlistBusiness.GetCustomerWishlist(Int32.Parse(ID)));
+                List<WishlistViewModel> eventsLogList = Mapper.Map<List<Wishlist>, List<WishlistViewModel>>(_cartWishlistBusiness.GetCustomerWishlist(Int32.Parse(ID)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = eventsLogList });
             }
             catch (Exception ex)

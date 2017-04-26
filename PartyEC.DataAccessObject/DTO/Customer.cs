@@ -23,6 +23,8 @@ namespace PartyEC.DataAccessObject.DTO
         public int? BookingsCountHistory { get; set; }
         public int? QuotationsCountHistory { get; set; }
         public bool IsActive { get; set; }
+        public int CartCount { get; set; }
+        public int WishCount { get; set; }
         public CustomerAddress customerAddress { get; set; }
         public LogDetails logDetailsObj { get; set; }
 

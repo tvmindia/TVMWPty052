@@ -433,16 +433,12 @@ namespace PartyEC.RepositoryServices.Services
                             default:
                                 break;
                         }
-
-
-
                     }
                 }
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
             return operationsStatusObj;
@@ -547,8 +543,7 @@ namespace PartyEC.RepositoryServices.Services
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
             return operationsStatusObj;
@@ -664,8 +659,8 @@ namespace PartyEC.RepositoryServices.Services
             }
             catch (Exception ex)
             {
-              //  transaction.Rollback();
-
+                //  transaction.Rollback();
+                throw ex; 
             }
             return operationsStatusObjH;
         }
@@ -1059,6 +1054,7 @@ namespace PartyEC.RepositoryServices.Services
                                     }
                                     catch (Exception ex)
                                     {
+                                        throw ex;
                                     }
                                     myProductDetail.ProductAttributes.Add(myAttribute);
                                    
@@ -1648,6 +1644,7 @@ namespace PartyEC.RepositoryServices.Services
                                     }
                                     catch (Exception ex)
                                     {
+                                        throw ex;
                                     }
                                     myProductDetail.ProductAttributes.Add(myAttribute);
 
@@ -2244,7 +2241,7 @@ namespace PartyEC.RepositoryServices.Services
             return myImagesList;
         }
 
-        public OperationsStatus UpdateWishlist(Cart_Wishlist WishListObj)
+        public OperationsStatus UpdateWishlist(Wishlist WishListObj)
         {
             OperationsStatus operationsStatusObj = null;
             try

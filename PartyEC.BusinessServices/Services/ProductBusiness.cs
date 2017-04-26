@@ -155,7 +155,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return attrvalues;
         }
@@ -254,7 +254,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return productDetail;
          }
@@ -268,7 +268,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return OS;
         }
@@ -286,7 +286,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return OS;
         }
@@ -550,7 +550,7 @@ namespace PartyEC.BusinessServices.Services
             return productImages;
         }
 
-        public OperationsStatus UpdateWishlist(Cart_Wishlist CartWishObj)
+        public OperationsStatus UpdateWishlist(Wishlist CartWishObj)
         {
             OperationsStatus OSatObj = null;
             try

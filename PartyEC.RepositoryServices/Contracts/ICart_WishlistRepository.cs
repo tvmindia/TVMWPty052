@@ -9,11 +9,11 @@ namespace PartyEC.RepositoryServices.Contracts
 {
     public interface ICart_WishlistRepository
     {
-        List<Cart_Wishlist> GetAllCustomerCartWishlistSummary();
+        List<Customer> GetAllCustomerCartWishlistSummary();
         
-        List<Cart_Wishlist> GetCustomerShoppingCart(int customerID);
+        List<ShoppingCart> GetCustomerShoppingCart(int customerID);
 
-        List<Cart_Wishlist> GetCustomerWishlist(int customerID);
+        List<Wishlist> GetCustomerWishlist(int customerID);
         
     }
 }

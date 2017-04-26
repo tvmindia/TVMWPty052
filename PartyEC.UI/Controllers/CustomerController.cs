@@ -153,11 +153,11 @@ namespace PartyEC.UI.Controllers
         {
             try
             {
-                List<Cart_WishlistViewModel> cartList = null;
+                List<ShoppingCartViewModel> cartList = null;
                 if (!string.IsNullOrEmpty(customerID))
                 {
                     OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                    cartList = Mapper.Map<List<Cart_Wishlist>, List<Cart_WishlistViewModel>>(_cart_WishlistBusiness.GetCustomerShoppingCart(int.Parse(customerID)));
+                    cartList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cart_WishlistBusiness.GetCustomerShoppingCart(int.Parse(customerID)));
                 }
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = cartList });
             }
@@ -174,11 +174,11 @@ namespace PartyEC.UI.Controllers
         {
             try
             {
-                List<Cart_WishlistViewModel> wishList = null;
+                List<WishlistViewModel> wishList = null;
                 if (!string.IsNullOrEmpty(customerID))
                 {
                     OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                    wishList = Mapper.Map<List<Cart_Wishlist>, List<Cart_WishlistViewModel>>(_cart_WishlistBusiness.GetCustomerWishlist(int.Parse(customerID)));
+                    wishList = Mapper.Map<List<Wishlist>, List<WishlistViewModel>>(_cart_WishlistBusiness.GetCustomerWishlist(int.Parse(customerID)));
                 }
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = wishList });
             }

@@ -42,6 +42,6 @@ namespace PartyEC.RepositoryServices.Contracts
         Product GetProductDetailsForApp(Product productObj, DateTime currentDateTime);
         Product GetProductSticker(int productID);
         List<ProductImages> GetProductImagesforApp(int ProductID);
-        OperationsStatus UpdateWishlist(Cart_Wishlist CartWishObj);
+        OperationsStatus UpdateWishlist(Wishlist CartWishObj);
     }
 }

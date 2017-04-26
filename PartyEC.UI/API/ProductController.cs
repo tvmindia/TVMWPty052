@@ -144,7 +144,7 @@ namespace PartyEC.UI.API
         }
 
         [HttpPost]
-        public object UpdateWishlist(Cart_Wishlist wishlistObj)
+        public object UpdateWishlist(Wishlist wishlistObj)
         {
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
             try
