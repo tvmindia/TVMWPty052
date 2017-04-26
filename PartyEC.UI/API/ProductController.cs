@@ -49,7 +49,7 @@ namespace PartyEC.UI.API
                 productApp.PriceDifference = product.ProductDetailObj.PriceDifference;
                 productApp.StockAvailable = product.StockAvailable;
                 productApp.DiscountAmount = product.ProductDetailObj.DiscountAmount;
-                productObj.AttributeSetID = product.AttributeSetID;
+                productApp.AttributeSetID = product.AttributeSetID;
                 return JsonConvert.SerializeObject(new { Result = true, Records = productApp });
             }
             catch (Exception ex)
