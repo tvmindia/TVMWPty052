@@ -10,11 +10,11 @@ namespace PartyEC.BusinessServices.Contracts
     public interface ICart_WishlistBusiness
     {
 
-        List<Cart_Wishlist> GetAllCustomerCartWishlistSummary();
+        List<Customer> GetAllCustomerCartWishlistSummary();
 
-        List<Cart_Wishlist> GetCustomerShoppingCart(int customerID);
+        List<ShoppingCart> GetCustomerShoppingCart(int customerID);
 
-        List<Cart_Wishlist> GetCustomerWishlist(int customerID);
+        List<Wishlist> GetCustomerWishlist(int customerID);
         
 
     }

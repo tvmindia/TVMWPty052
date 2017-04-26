@@ -10,5 +10,6 @@ namespace PartyEC.BusinessServices.Contracts
     public interface IBookingsBusiness
     {
         List<Bookings> GetCustomerBookings(int customerID,bool Ishistory);
+        OperationsStatus InsertBookings(Bookings bookingsObj);
     }
 }

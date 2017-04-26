@@ -99,6 +99,7 @@
     <Compile Include="DTO\Quotations.cs" />
     <Compile Include="DTO\UA.cs" />
     <Compile Include="DTO\Treeview.cs" />
+    <Compile Include="DTO\UserAndRoles.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />

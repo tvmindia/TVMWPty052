@@ -49,7 +49,7 @@ namespace PartyEC.UI.API
                 productApp.PriceDifference = product.ProductDetailObj.PriceDifference;
                 productApp.StockAvailable = product.StockAvailable;
                 productApp.DiscountAmount = product.ProductDetailObj.DiscountAmount;
-                productObj.AttributeSetID = product.AttributeSetID;
+                productApp.AttributeSetID = product.AttributeSetID;
                 return JsonConvert.SerializeObject(new { Result = true, Records = productApp });
             }
             catch (Exception ex)
@@ -57,7 +57,6 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
-
         [HttpPost]
         public object GetProductRatings(Product productObj)
         {
@@ -72,7 +71,6 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
-
         [HttpPost]
         public object GetProductReviews(ProductReviewAppViewModel productObj)
         {
@@ -101,18 +99,68 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+        //[HttpPost]
+        //public object GetProductDetailsForOrder(Product productObj)
+        //{
+        //    try
+        //    {
+        //        ProductViewModel productDetailsForOrder = Mapper.Map<Product, ProductViewModel>(_productBusiness.GetProduct(productObj.ID,new OperationsStatus()));
+        //        return JsonConvert.SerializeObject(new { Result = true, Records = productDetailsForOrder });
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+        //    }
+        //}
         [HttpPost]
         public object GetProductDetailsForOrder(Product productObj)
         {
             try
             {
-                ProductViewModel productDetailsForOrder = Mapper.Map<Product, ProductViewModel>(_productBusiness.GetProduct(productObj.ID,new OperationsStatus()));
-                return JsonConvert.SerializeObject(new { Result = true, Records = productDetailsForOrder });
+                ProductAppViewModel GetProductForApp = Mapper.Map<Product, ProductAppViewModel>(_productBusiness.GetProductForApp(productObj.ID, new OperationsStatus()));
+                return JsonConvert.SerializeObject(new { Result = true, Records = GetProductForApp });
             }
             catch (Exception ex)
             {
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+        [HttpPost]
+        public object GetProductImages(Product productObj)
+        {
+            OperationsStatus Status = new OperationsStatus();
+            try
+            {
+                //[GetProductImages]
+                List<ProductImagesViewModel> ProductImages = Mapper.Map<List<ProductImages>, List<ProductImagesViewModel>>(_productBusiness.GetProductImagesforApp(productObj.ID));
+                ProductAppViewModel ProductImageStickers = Mapper.Map<Product,ProductAppViewModel>(_productBusiness.GetProductSticker(productObj.ID));
+                if (ProductImages.Count == 0 && ProductImageStickers!= null) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = new { Images= ProductImages, Stickers = ProductImageStickers } });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public object UpdateWishlist(Wishlist wishlistObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                wishlistObj.logDetails = new LogDetails();
+                wishlistObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                wishlistObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus,OperationsStatusViewModel>(_productBusiness.UpdateWishlist(wishlistObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
     }
 }

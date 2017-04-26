@@ -16,9 +16,11 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<LogDetailsViewModel, LogDetails>().ReverseMap();
                 config.CreateMap<OperationsStatusViewModel, OperationsStatus>().ReverseMap();
                 config.CreateMap<ProductViewModel, Product>().ReverseMap();
+                config.CreateMap<ProductAppViewModel, Product>().ReverseMap();
                 config.CreateMap<ProductDetailViewModel, ProductDetail>().ReverseMap();
                 config.CreateMap<AttributeValuesViewModel, AttributeValues>().ReverseMap();
                 config.CreateMap<ProductImagesViewModel, ProductImages>().ReverseMap();
+                config.CreateMap<ProductImagesViewModel, ProductDetail>().ReverseMap();
                 config.CreateMap<AttributesViewModel, Attributes>().ReverseMap();
                 config.CreateMap<AttributeSetViewModel, AttributeSet>().ReverseMap();
                 config.CreateMap<AttributeSetLinkViewModel, AttributeSetLink>().ReverseMap();
@@ -41,8 +43,8 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<OrderViewModel, Order>().ReverseMap();
                 config.CreateMap<OrderAppViewModel, Order>().ReverseMap();
                 config.CreateMap<OrderStatusViewModel, OrderStatusMaster>().ReverseMap();
-                config.CreateMap<Cart_WishlistViewModel, Cart_Wishlist>().ReverseMap();
-                config.CreateMap<Cart_WishlistAppViewModel, Cart_Wishlist>().ReverseMap();
+                config.CreateMap<WishlistViewModel,Wishlist>().ReverseMap();
+                config.CreateMap<ShoppingCartViewModel,ShoppingCart>().ReverseMap();
                 config.CreateMap<ProductReviewViewModel, ProductReview>().ReverseMap();
                 config.CreateMap<ProductReviewAppViewModel, ProductReview>().ReverseMap();
                 config.CreateMap<OtherImagesViewModel, OtherImages>().ReverseMap();
@@ -58,6 +60,8 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<GraphViewModel, Graph>().ReverseMap();
                 config.CreateMap<BookingsViewModel, Bookings>().ReverseMap();
                 config.CreateMap<BookingsAppViewModel, Bookings>().ReverseMap();
+                config.CreateMap<RoleViewModel, Role>().ReverseMap();
+                config.CreateMap<UserViewModel, User>().ReverseMap();
             });
         }
 
