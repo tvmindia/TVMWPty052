@@ -43,5 +43,8 @@ namespace PartyEC.BusinessServices.Contracts
         Product GetProductDetailsForApp(Product productObj, DateTime currentDateTime);
         List<ProductReview> GetProductReviewsForApp(int ProductID, int count);
         List<Product> GetRelatedProductsForApp(int productID, int count);
+
+        Product GetProductSticker(int productID);
+        List<ProductImages> GetProductImagesforApp(int ProductID);
     }
 }

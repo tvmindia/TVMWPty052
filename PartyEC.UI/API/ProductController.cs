@@ -128,5 +128,23 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+        [HttpPost]
+        public object GetProductImages(Product productObj)
+        {
+            OperationsStatus Status = new OperationsStatus();
+            try
+            {
+                //[GetProductImages]
+                List<ProductImagesViewModel> ProductImages = Mapper.Map<List<ProductImages>, List<ProductImagesViewModel>>(_productBusiness.GetProductImagesforApp(productObj.ID));
+                ProductAppViewModel ProductImageStickers = Mapper.Map<Product,ProductAppViewModel>(_productBusiness.GetProductSticker(productObj.ID));
+                if (ProductImages.Count == 0 && ProductImageStickers!= null) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = new { Images= ProductImages, Stickers = ProductImageStickers } });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
     }
 }

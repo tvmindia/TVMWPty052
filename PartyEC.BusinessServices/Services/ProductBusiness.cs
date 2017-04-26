@@ -515,7 +515,36 @@ namespace PartyEC.BusinessServices.Services
             return product; 
         }
         //GetProductImages
+        public Product GetProductSticker(int productID)
+        {
+            Product product = null;
+            try
+            {
+                product = _productRepository.GetProductSticker(productID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return product;
+        }
+       
+        public List<ProductImages> GetProductImagesforApp(int ProductID)
+        {
 
+            List<ProductImages> productImages = null;
+            try
+            {
+                productImages = _productRepository.GetProductImagesforApp(ProductID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productImages;
+        }
+
+       
 
 
         #endregion
