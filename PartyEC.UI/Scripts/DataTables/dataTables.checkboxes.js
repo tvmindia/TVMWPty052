@@ -367,7 +367,7 @@ Checkboxes.prototype = {
 
    // Updates row selection
    updateSelect: function (type, selector, isSelected) {
-       
+       debugger;
       var self = this;
       var dt = self.s.dt;
       var ctx = dt.settings()[0];

@@ -187,4 +187,22 @@ namespace PartyEC.UI.Models
         public MailViewModel mailViewModelObj { get; set; }
 
     }
+    public class OrderDetailViewModel
+    {
+        public int OrderDetailID { get; set; }
+        public int OrderID { get; set; }
+        public int ItemID { get; set; }
+        public int ProductID { get; set; }
+        public string ProductSpecXML { get; set; }
+        public string ItemStatus { get; set; }
+        public int Qty { get; set; }
+        public float Price { get; set; }
+        public float ShippingAmt { get; set; }
+        public float TaxAmt { get; set; }
+        public float DiscountAmt { get; set; }
+        public float Total { get; set; }
+        public float SubTotal { get; set; }
+        public List<OrderViewModel> OrderDetails { get; set; }
+        public LogDetailsViewModel commonObj { get; set; }
+    }
 }

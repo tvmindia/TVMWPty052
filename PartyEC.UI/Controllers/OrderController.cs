@@ -18,12 +18,14 @@ namespace PartyEC.UI.Controllers
         ICommonBusiness _commonBusiness;
         IMasterBusiness _masterBusiness;
         IMailBusiness _mailBusiness;
-        public OrderController(IOrderBusiness orderBusiness, ICommonBusiness commonBusiness,IMasterBusiness masterBusiness,IMailBusiness mailBusiness)
+        IProductBusiness _productBusiness;
+        public OrderController(IProductBusiness productBusiness, IOrderBusiness orderBusiness, ICommonBusiness commonBusiness,IMasterBusiness masterBusiness,IMailBusiness mailBusiness)
         {
             _orderBusiness = orderBusiness;
             _commonBusiness = commonBusiness;
             _masterBusiness = masterBusiness;
             _mailBusiness = mailBusiness;
+            _productBusiness = productBusiness;
         }
         #endregion Constructor_Injection
         // GET: Order
@@ -101,7 +103,22 @@ namespace PartyEC.UI.Controllers
             }
             //return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
         }
+       
+        [HttpGet]
+        public string GetProductsListtoAdd()
+        {
+            try
+            {
+                    List<ProductDetailViewModel> productList = Mapper.Map<List<ProductDetail>, List<ProductDetailViewModel>>(_productBusiness.GetAllProductDetail());
 
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
         [HttpGet]
         public string GetEventsLog(string ID)
         {
@@ -162,6 +179,11 @@ namespace PartyEC.UI.Controllers
                 {
                     return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
                 }
+        }
+        [HttpPost]
+        public string InsertNewOrderRevision(OrderDetailViewModel OrderDetailsViewModelObj)
+        {
+            return "";
         }
         [ValidateAntiForgeryToken]
         public string UpdateBillingDetails(OrderViewModel orderViewModelObj)
@@ -231,6 +253,9 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.shipbtn.Visible = true;
                     break;
                 case "Revise":
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    ToolboxViewModelObj.savebtn.Event = "InsertNewOrder()";
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "gobackDetails()";
                     ToolboxViewModelObj.backbtn.Title = "Back";

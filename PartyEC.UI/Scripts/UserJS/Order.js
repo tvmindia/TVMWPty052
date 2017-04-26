@@ -53,7 +53,7 @@ $(document).ready(function () {
          {//hiding hidden column 
              "targets": [1],
              "visible": true,
-             "searchable": false,
+             "searchable": true,
              "render": function (data, type, full, meta) {
                  debugger;
                  var Name="<b>"+data.split("||")[0]+"</b>";
@@ -132,18 +132,77 @@ $(document).ready(function () {
                      {
                          'targets': 4,
                          'render': function (data, type, full, meta) {
+                             debugger;
                              if (data.Qty == 0) {
                                  var txtbox = '--'
                              }
                              else {
-                                 var txtbox = '<input class="col-lg-4" type="text" id="txt' + data.ID + '" value="' + (data.Qty) + '"></input> <a class="btn" onclick="GetValue(this)" id="' + data.ID + '">Update</a> '
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + (data) + '" onkeyup="Calculatesum(this)"></input> '
                              }
 
                              return txtbox
                          }
                      }
-        ]
+        ],
+        select: {
+            style: 'multi',
+            selector: 'tr'
+        }
     });
+    DataTables.tblProductList = $('#tblProductList').DataTable(
+         {
+             dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+             order: [],
+             searching: true,
+             paging: true,
+             data: null,
+             columns: [
+               { "data": null, "defaultContent": '' },
+               { "data": "ID" },
+               { "data": "ProductName" },
+               { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
+               { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
+               { "data": "DiscountAmount", "defaultContent": "<i>-</i>" },
+               { "data": "ActualPrice", "defaultContent": "<i>-</i>" }
+             ],
+             columnDefs: [
+              {
+                  orderable: false,
+                  className: 'select-checkbox',
+                  targets: 0
+              },
+             {//hiding hidden column 
+                 "targets": [2],
+                 "visible": true,
+                 "searchable": true,
+                 "render": function (data, type, full, meta) {
+                     debugger;
+                     var Name = "<b>" + data.split("||")[0] + "</b>";
+                     var Spec = (data.split("||")[1]).split("><");
+                     for (var i = 0; i < Spec.length - 1; i++) {
+                         if (i > 0) {
+                             var html = Spec[i].replace(">", " : ");
+                             Name = Name + "</br>" + (html.split("</")[0]);
+                         }
+
+                     }
+                     return Name;
+                 }
+             }],
+             select: {
+                 style: 'multi',
+                 selector: 'tr'
+             },
+             order: [[1, 'asc']]
+         });
+    $('#tblProductList tbody').on('click', 'tr', function () {  
+        var tabledata = DataTables.tblProductList.rows('.selected').data();
+        var Total = 0;
+        for (i = 0; i < tabledata.length; i++) {
+            Total=Total + tabledata[i].ActualPrice
+        }
+        $('#h4Total').text("Total Excluding Shipping Charges: " + Total+" QAR");
+        });
     ChangeButtonPatchView("Order", "btnPatchOrders", "List");
 });
 //Table Data Bind for Order Header
@@ -222,6 +281,47 @@ function GetOrderDetails(ID) {
 
     }
 }
+function GetProductsListtoAdd()
+{
+    try {
+        var data = "";
+        var ds = {};
+        ds = GetDataFromServer("Order/GetProductsListtoAdd/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+//function InsertNewOrderRevision(tabledata, OrderID)
+//{
+//    try {
+//        debugger;
+//        var data = { "OrderDetailList": tabledata};
+//        var ds = {};
+//        ds = GetDataFromServer("Order/InsertNewOrderRevision/", data);
+//        if (ds != '') {
+//            ds = JSON.parse(ds);
+//        }
+//        if (ds.Result == "OK") {
+//            return ds.Records;
+//        }
+//        if (ds.Result == "ERROR") {
+//            notyAlert('error', ds.Message);
+//        }
+//    }
+//    catch (e) {
+//        notyAlert('error', e.message);
+//    }
+//}
 //Edit For Order Header
 function Edit(this_obj)
 {
@@ -256,9 +356,58 @@ function CancelIssue()
     }
     
 }
+function AddReviseOrder()
+{
+    debugger;
+
+    var tabledata = DataTables.tblProductList.rows('.selected').data();
+    var ordertabledata = DataTables.orderModificationtable.rows().data();
+    var OrderID = $("#ID").val();
+    var OrderDetailList = [];
+    for (i = 0; i < tabledata.length; i++)
+    {
+        var Order = new Object();
+        Order.OrderDetailID = null;
+        Order.Qty = 1;
+        Order.Total = tabledata[i].ActualPrice;
+        Order.ShippingAmt = 0;
+        Order.TaxAmt = 0;
+        Order.DiscountAmt = tabledata[i].DiscountAmount;
+        Order.SubTotal = tabledata[i].ActualPrice - tabledata[i].DiscountAmount;
+        Order.ItemStatus = "Pending";
+        Order.Price = tabledata[i].ActualPrice;
+        Order.ProductSpecXML = tabledata[i].ProductName;
+        ordertabledata.push(Order);
+    }
+    DataTables.orderModificationtable.clear().rows.add(ordertabledata).draw(false);
+}
+function InsertNewOrder()
+{
+    debugger;
+    var newdata = [];
+    var newOrderData = DataTables.orderModificationtable.rows().data();
+}
+function Calculatesum(this_obj)
+{
+    debugger;
+    var Qty = this_obj.value;
+    var rowData = DataTables.orderModificationtable.row($(this_obj).parents('tr')).data();
+    var SubTotal = ((rowData.Total - rowData.DiscountAmt) * Qty);
+    var rowsData= DataTables.orderModificationtable.rows().data();
+    for(i=0;i<rowsData.length;i++)
+    {
+        if(rowsData[i].ProductSpecXML==rowData.ProductSpecXML)
+        {
+            rowsData[i].SubTotal = SubTotal;
+            rowsData[i].Qty = Qty;
+        }
+    }
+    DataTables.orderModificationtable.clear().rows.add(rowsData).draw(false);
+}
 function AddNewRevision()
 {
     $('#ModelCreateNewOrder').modal('show');
+    DataTables.tblProductList.clear().rows.add(GetProductsListtoAdd()).draw(false);
 }
 function gobackDetails()
 {

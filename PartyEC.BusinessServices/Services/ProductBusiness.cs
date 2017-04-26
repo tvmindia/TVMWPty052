@@ -239,8 +239,22 @@ namespace PartyEC.BusinessServices.Services
             }
             return productDetailslist;
         }
+        public List<ProductDetail> GetAllProductDetail()
+        {
+            List<ProductDetail> productDetailslist = null;
+            try
+            {
 
-           public ProductDetail GetProductDetailsByProduct(int ProductID, int DetailID)
+                productDetailslist = _productRepository.GetAllProductDetail();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productDetailslist;
+        }
+        public ProductDetail GetProductDetailsByProduct(int ProductID, int DetailID)
           {
             ProductDetail productDetail = null;
             try
