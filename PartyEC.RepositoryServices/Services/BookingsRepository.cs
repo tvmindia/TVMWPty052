@@ -92,5 +92,75 @@ namespace PartyEC.RepositoryServices.Services
             return BookingsList;
 
         }
+
+        public OperationsStatus InsertBookings(Bookings bookingsObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null; 
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertBookings]";
+                        cmd.CommandType = CommandType.StoredProcedure;                     
+                        cmd.Parameters.Add("@BookingNo", SqlDbType.NVarChar, 20).Value = bookingsObj.BookingNo;
+                        cmd.Parameters.Add("@BookingDate", SqlDbType.SmallDateTime).Value = bookingsObj.BookingDate;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = bookingsObj.ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = bookingsObj.CustomerID;
+                        cmd.Parameters.Add("@RequiredDate", SqlDbType.SmallDateTime).Value = bookingsObj.RequiredDate;
+                        cmd.Parameters.Add("@SourceIP", SqlDbType.NVarChar, 50).Value = bookingsObj.SourceIP;
+                        cmd.Parameters.Add("@Status", SqlDbType.Int).Value = bookingsObj.Status;
+
+                        cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = bookingsObj.Qty;
+                        cmd.Parameters.Add("@Price", SqlDbType.Decimal).Value = bookingsObj.Price;
+                        cmd.Parameters.Add("@AdditionalCharges", SqlDbType.Decimal).Value = bookingsObj.AdditionalCharges;
+                        cmd.Parameters.Add("@TaxAmt", SqlDbType.Decimal).Value = bookingsObj.TaxAmt;
+                        cmd.Parameters.Add("@DiscountAmt", SqlDbType.Decimal).Value = bookingsObj.DiscountAmt;
+                        cmd.Parameters.Add("@Message", SqlDbType.NVarChar, -1).Value = bookingsObj.Message;
+                        cmd.Parameters.Add("@BillPrefix", SqlDbType.NVarChar, 100).Value = bookingsObj.BillPrefix;
+                        cmd.Parameters.Add("@BillFirstName", SqlDbType.NVarChar, 100).Value = bookingsObj.BillFirstName;
+                        cmd.Parameters.Add("@BillMidName", SqlDbType.NVarChar, 100).Value = bookingsObj.BillMidName;
+                        cmd.Parameters.Add("@BillLastName", SqlDbType.NVarChar, 100).Value = bookingsObj.BillLastName;
+                        cmd.Parameters.Add("@BillAddress", SqlDbType.NVarChar, 100).Value = bookingsObj.BillAddress;
+                        cmd.Parameters.Add("@BillCity", SqlDbType.NVarChar, 100).Value = bookingsObj.BillCity;
+                        cmd.Parameters.Add("@BillCountryCode", SqlDbType.NVarChar, 3).Value = bookingsObj.BillCountryCode;
+                        cmd.Parameters.Add("@BillStateProvince", SqlDbType.NVarChar, 100).Value = bookingsObj.BillStateProvince;
+                        cmd.Parameters.Add("@BillContactNo", SqlDbType.NVarChar, 20).Value = bookingsObj.BillContactNo;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = bookingsObj.logDetails.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = bookingsObj.logDetails.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
     }
 }
