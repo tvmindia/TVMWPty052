@@ -180,7 +180,6 @@ namespace PartyEC.RepositoryServices.Services
                                     myQuotations.Status = (sdr["Status"].ToString() != "" ? sdr["Status"].ToString() : myQuotations.Status);
                                     myQuotations.StatusText = (sdr["StatusText"].ToString() != "" ? sdr["StatusText"].ToString() : myQuotations.StatusText);
                                     myQuotations.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : myQuotations.ProductName);
-                                    
                                     myQuotations.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : myQuotations.ProductID);
                                     myQuotations.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : myQuotations.CustomerID); 
                                   
@@ -241,7 +240,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@Status", SqlDbType.Int).Value = quotationsObj.Status;
                         cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = quotationsObj.Qty;                       
                         cmd.Parameters.Add("@Message", SqlDbType.NVarChar, -1).Value = quotationsObj.Message;
-                      
+                        cmd.Parameters.Add("@ProductSpecXML", SqlDbType.Xml).Value = quotationsObj.ProductSpecXML;
                         cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = quotationsObj.logDetails.CreatedBy;
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = quotationsObj.logDetails.CreatedDate;
                         statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);

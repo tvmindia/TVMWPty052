@@ -48,6 +48,7 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
         [HttpPost]
         public object InsertQuotations(Quotations QuotationsObj)
         {
