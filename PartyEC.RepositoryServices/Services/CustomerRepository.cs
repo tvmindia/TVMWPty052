@@ -205,7 +205,6 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-
         public OperationsStatus InsertUpdateCustomerAddress(Customer customer)
         {
             OperationsStatus operationsStatusObj = null;
@@ -333,7 +332,6 @@ namespace PartyEC.RepositoryServices.Services
         
     }
 
-
         public List<CustomerAddress> GetAllCustomerAddresses(int CustomerID)
         {
             List<CustomerAddress> CustomerAddresslist = null;
@@ -393,7 +391,6 @@ namespace PartyEC.RepositoryServices.Services
             return CustomerAddresslist;
         }
 
-
         public CustomerAddress GetAddressByAddress(int AddressID)
         {
             CustomerAddress _customerAddresObj = null;
@@ -450,7 +447,6 @@ namespace PartyEC.RepositoryServices.Services
             return _customerAddresObj;
         }
 
-
         public OperationsStatus DeleteAddress(CustomerAddress customerAddress)
         {
             OperationsStatus operationsStatusObj = null;
@@ -501,6 +497,67 @@ namespace PartyEC.RepositoryServices.Services
 
             return operationsStatusObj;
         }
+
+        public OperationsStatus InsertCustomer(Customer customer)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertCustomer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = customer.Name;
+                        cmd.Parameters.Add("@Email", SqlDbType.NVarChar, -1).Value = customer.Email;
+                        cmd.Parameters.Add("@Gender", SqlDbType.NVarChar,1).Value = customer.Gender;
+                        cmd.Parameters.Add("@Mobile", SqlDbType.NVarChar, 50).Value = customer.Mobile;
+                        cmd.Parameters.Add("@Language", SqlDbType.NVarChar, 10).Value = customer.Language;
+                        cmd.Parameters.Add("@ProfileImageID", SqlDbType.UniqueIdentifier).Value = customer.ProfileImageID; 
+
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = customer.logDetailsObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = customer.logDetailsObj.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                operationsStatusObj.StatusMessage = ex.Message;
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
+
+
         #endregion Methods
 
 

@@ -63,7 +63,6 @@ namespace PartyEC.BusinessServices.Services
             return operationStatus;
         }
 
-
         public OperationsStatus InsertUpdateCustomerAddress(Customer customer)
         {
             OperationsStatus operationStatus = null;
@@ -73,12 +72,11 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return operationStatus;
         }
 
-       
         public List<CustomerAddress> GetAllCustomerAddresses(int CustomerID)
         {
             List<CustomerAddress> AddressLists = null;
@@ -108,6 +106,7 @@ namespace PartyEC.BusinessServices.Services
             }
             return Address;
         }
+
         public OperationsStatus DeleteAddress(CustomerAddress customerAddress)
         {
             OperationsStatus operationsStatusObj = null;
@@ -121,6 +120,21 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationsStatusObj;
         }
+
+        public OperationsStatus InsertCustomer(Customer customer)
+        {
+            OperationsStatus operationStatus = null;
+            try
+            {
+                operationStatus = _customerRepository.InsertCustomer(customer);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationStatus;
+        }
+
         #endregion Methods
     }
 }
