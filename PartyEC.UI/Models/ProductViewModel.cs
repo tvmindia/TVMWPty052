@@ -276,6 +276,8 @@ namespace PartyEC.UI.Models
         public string StickerURL { get; set; }
         public int LinkID { get; set; }
         public int CategoryID { get; set; }
+        public int CustomerID { get; set; }
+        public Boolean IsFav { get; set; }
 
         public List<ProductDetailViewModel> ProductDetails { get; set; }
         public List<AttributeValuesViewModel> ProductOtherAttributes { get; set; }

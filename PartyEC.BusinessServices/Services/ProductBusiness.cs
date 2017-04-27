@@ -416,12 +416,12 @@ namespace PartyEC.BusinessServices.Services
             return productlist;
         }
 
-        public Product GetProductDetailsForApp(Product productObj, DateTime currentDateTime)
+        public Product GetProductDetailsForApp(int productID, DateTime currentDateTime, int customerID)
         {
             Product product = null;
             try
             {
-                product = _productRepository.GetProductDetailsForApp(productObj, currentDateTime);
+                product = _productRepository.GetProductDetailsForApp(productID, currentDateTime, customerID);
             }
             catch (Exception ex)
             {
