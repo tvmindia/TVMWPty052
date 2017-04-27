@@ -58,7 +58,7 @@
                         </div>
                         <div class="col-md-9">
                             <div class="col-md-12">
-                                <h4 style="max-width:50%;padding:1%;"><span class="fa fa-envelope" style="font-size: 16px;color: #f46f25;"></span><span> </span><span id="titleSpanPro" class="Spantitle">User Details</span></h4>
+                                <h4 style="max-width:50%;padding:1%;"><span class="fa fa-user" style="font-size: 16px;color: #f46f25;"></span><span> </span><span id="titleSpanPro" class="Spantitle">User Details</span></h4>
                                 <hr />
                                 <div class="col-md-12">
                                     <div class="tab-content productTabContent">
@@ -66,23 +66,23 @@
                                            
                                             <div class="container-fluid">
                                                 <div class="row">
-                                                    @using (Ajax.BeginForm("UserInsertUpdate", "Users", new AjaxOptions { HttpMethod = "POST", OnSuccess = "usersaveSuccess",  OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "userForm" }))
+                                                    @using (Ajax.BeginForm("UserInsertUpdate", "Users", new AjaxOptions { HttpMethod = "POST", OnSuccess = "usersaveSuccess", OnBegin = "return ValidatePassword()", OnFailure = "NetworkFailure", AllowCache = false, LoadingElementId = "", OnComplete = "" }, new { @class = "form-horizontal", role = "form", id = "userForm" }))
 
                                                     {
                                                         @Html.AntiForgeryToken()
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                            <div class="col-md-10">
+                                                            <div class="col-md-4">
                                                                 @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
                                                                 @Html.HiddenFor(model => model.ID)
-                                                                @Html.HiddenFor(model => model.UserRoleLinkID)
+                                                               
                                                                 @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.RoleID, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                            <div class="col-md-10">
+                                                            <div class="col-md-4">
                                                                 <label class="checkbox-inline">
                                                                     <input type="checkbox" id="RoleCheckbox1" value="2"> Admin
                                                                 </label>
@@ -97,24 +97,25 @@
 
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.LoginName, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                            <div class="col-md-10">
+                                                            <div class="col-md-4">
                                                                 @Html.EditorFor(model => model.LoginName, new { htmlAttributes = new { @class = "form-control" } })
+
                                                                 @Html.ValidationMessageFor(model => model.LoginName, "", new { @class = "text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                            <div class="col-md-10">
-                                                                @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                                                            <div class="col-md-4">
+                                                                @Html.PasswordFor(model => model.Password, new {  @class = "form-control" })
                                                                 @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
                                                             </div>
                                                         </div>
 
                                                         <div class="form-group">
                                                             @Html.LabelFor(model => model.ConfirmPassword, htmlAttributes: new { @class = "control-label col-md-2" })
-                                                            <div class="col-md-10">
-                                                                @Html.EditorFor(model => model.ConfirmPassword, new { htmlAttributes = new { @class = "form-control" } })
+                                                            <div class="col-md-4">
+                                                                @Html.PasswordFor(model => model.ConfirmPassword, new { @class = "form-control" })
                                                                 @Html.ValidationMessageFor(model => model.ConfirmPassword, "", new { @class = "text-danger" })
                                                             </div>
                                                         </div>
@@ -149,6 +150,21 @@
     </div>
 </div>
 
+
+@using (Ajax.BeginForm("DeleteUser", "Users", new AjaxOptions { HttpMethod = "POST", OnSuccess = "userDeleteSuccess", Confirm = "Are You Sure?...", OnFailure = "userDeleteFailure", AllowCache = false, LoadingElementId = "" }, new { @class = "form-horizontal", role = "form", id = "userdeleteform" }))
+{
+    @Html.AntiForgeryToken()
+  
+    @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-lg-2", id = "userID", Value = "0" })
+    <div class="form-group" hidden="hidden">
+        <div class="col-md-offset-2 col-md-10">
+
+            <input id="btndeleteuserSubmit" type="submit" value="Create" class="btn btn-default"  />
+        </div>
+    </div>
+
+
+}
 
 
 @section Scripts {

@@ -5,23 +5,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PartyEC.DataAccessObject.DTO;
+using System.Text;
+using System.Security.Cryptography;
 
 namespace PartyEC.BusinessServices.Services
 {
     public class AuthenticationBusiness: IAuthenticationBusiness
     {
+        //Encryption key
+        string key = System.Web.Configuration.WebConfigurationManager.AppSettings["cryptography"];
         private IAuthenticationRepository _authenticationRepository;
         public AuthenticationBusiness(IAuthenticationRepository authenticationRepository)
         {
             _authenticationRepository = authenticationRepository;
         }
 
-        public OperationsStatus DeleteUser(int UserID, int LinkID)
+        public OperationsStatus DeleteUser(int UserID)
         {
             OperationsStatus operationsStatus = null;
             try
             {
-                operationsStatus= _authenticationRepository.DeleteUser(UserID, LinkID);
+                operationsStatus= _authenticationRepository.DeleteUser(UserID);
             }
             catch(Exception ex)
             {
@@ -78,14 +82,22 @@ namespace PartyEC.BusinessServices.Services
             OperationsStatus operationsStatus = null;
             try
             {
-                if((user.ID==0)&&(user.UserRoleLinkID==0))
+                //Encryption
+                if (!string.IsNullOrEmpty(user.Password))
                 {
-                    operationsStatus = _authenticationRepository.InsertUser(user);
+                    user.Password = Encrypt(user.Password);
                 }
-                else
+                switch (user.ID)
                 {
+                    case 0:
+                       
+                     operationsStatus = _authenticationRepository.InsertUser(user);
+                    break;
+                    default:
                     operationsStatus = _authenticationRepository.UpdateUser(user);
+                    break;
                 }
+               
 
             }
             catch (Exception ex)
@@ -94,5 +106,61 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationsStatus;
         }
+
+        private string Encrypt(string plainText)
+        {
+            //AES 128bit Cross Platform (Java and C#) Encryption Compatibility
+            
+            string encryptedText = "";
+            try
+            {
+
+                var plainBytes = Encoding.UTF8.GetBytes(plainText);
+                var keyBytes = new byte[16];
+                var secretKeyBytes = Encoding.UTF8.GetBytes(key);
+                Array.Copy(secretKeyBytes, keyBytes, Math.Min(keyBytes.Length, secretKeyBytes.Length));
+                encryptedText = Convert.ToBase64String(new RijndaelManaged
+                {
+                    Mode = CipherMode.CBC,
+                    Padding = PaddingMode.PKCS7,
+                    KeySize = 128,
+                    BlockSize = 128,
+                    Key = keyBytes,
+                    IV = keyBytes
+                }.CreateEncryptor().TransformFinalBlock(plainBytes, 0, plainBytes.Length));
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return encryptedText;
+        }
+
+        private string Decrypt(string encryptedText)
+        {
+            string plainText = "";
+            try
+            {
+                var encryptedBytes = Convert.FromBase64String(encryptedText);
+                var keyBytes = new byte[16];
+                var secretKeyBytes = Encoding.UTF8.GetBytes(key);
+                Array.Copy(secretKeyBytes, keyBytes, Math.Min(keyBytes.Length, secretKeyBytes.Length));
+                plainText = Encoding.UTF8.GetString(
+                    new RijndaelManaged
+                    {
+                        Mode = CipherMode.CBC,
+                        Padding = PaddingMode.PKCS7,
+                        KeySize = 128,
+                        BlockSize = 128,
+                        Key = keyBytes,
+                        IV = keyBytes
+                    }.CreateDecryptor().TransformFinalBlock(encryptedBytes, 0, encryptedBytes.Length));
+            }
+            catch (Exception ex)
+            {
+            }
+            return plainText;
+        }
+
     }
 }
