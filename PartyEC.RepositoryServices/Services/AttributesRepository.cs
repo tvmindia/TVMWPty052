@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 using System.Xml.Linq;
@@ -368,9 +369,17 @@ namespace PartyEC.RepositoryServices.Services
 
             foreach (AttributeValues att in myProductAttributeList)
             {
+                string attNameCamelCased = att.Name;
+                TextInfo textInfo = new CultureInfo("en-US", false).TextInfo;
+                attNameCamelCased = textInfo.ToTitleCase(attNameCamelCased); 
+
                 if (doc.Root.Element(att.Name) != null)
                 {
                     att.Value = doc.Root.Element(att.Name).Value;
+                }
+                else if (doc.Root.Element(attNameCamelCased) != null)
+                {
+                    att.Value = doc.Root.Element(attNameCamelCased).Value;
                 }
 
             }
