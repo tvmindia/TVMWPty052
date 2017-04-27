@@ -19,6 +19,7 @@ namespace PartyEC.UI.Controllers
             _dynamicUIBusiness = dynamicUIBusiness;
         }
 
+    
 
         // GET: DynamicUI
         public ActionResult _MenuNavBar()

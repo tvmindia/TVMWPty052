@@ -10,7 +10,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css", "~/Content/bootstrap-theme.min.css", "~/Content/font-awesome.min.css","~/Content/custom.css"));
             bundles.Add(new StyleBundle("~/Content/bootstrapdatepicker").Include("~/Content/bootstrap-datepicker3.min.css"));
             bundles.Add(new StyleBundle("~/Content/jstree/default/jstreecss").Include("~/Content/jstree/default/jstreestyle.css"));
-            bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css", "~/Content/bootstrap-theme.min.css", "~/Content/font-awesome.min.css", "~/Content/custom.css"));
+            //bundles.Add(new StyleBundle("~/Content/css").Include("~/Content/bootstrap.min.css", "~/Content/bootstrap-theme.min.css", "~/Content/font-awesome.min.css", "~/Content/custom.css"));
             bundles.Add(new StyleBundle("~/Content/lightbox").Include("~/Content/lightbox.min.css"));
             bundles.Add(new StyleBundle("~/Content/DataTables/css/datatable").Include("~/Content/DataTables/css/dataTables.bootstrap.min.css", "~/Content/DataTables/css/responsive.bootstrap.min.css"));
             bundles.Add(new StyleBundle("~/Content/DataTables/css/datatablecheckbox").Include("~/Content/DataTables/css/dataTables.checkboxes.css"));
@@ -21,6 +21,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new StyleBundle("~/Content/UserCSS/EventRequest").Include("~/Content/UserCSS/EventRequests.css"));
             bundles.Add(new StyleBundle("~/Content/UserCSS/Notifications").Include("~/Content/UserCSS/Notifications.css"));
             bundles.Add(new StyleBundle("~/Content/UserCSS/Mailnotifications").Include("~/Content/UserCSS/MailNotifications.css"));
+            bundles.Add(new StyleBundle("~/Content/UserCSS/Login").Include("~/Content/UserCSS/Login.css"));
 
             //jquery bundles
             bundles.Add(new ScriptBundle("~/bundles/jquery").Include("~/Scripts/jquery-3.1.1.min.js"));
@@ -59,6 +60,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/Mailnotifications").Include("~/Scripts/UserJS/MailNotifications.js"));
             bundles.Add(new ScriptBundle("~/bundles/Roles").Include("~/Scripts/UserJS/Role.js"));
             bundles.Add(new ScriptBundle("~/bundles/User").Include("~/Scripts/UserJS/User.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Login").Include("~/Scripts/UserJS/Login.js"));
         }
     }
 }
