@@ -15,13 +15,15 @@ namespace PartyEC.RepositoryServices.Services
 
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
+        private IAttributesRepository _attributesRepository;
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
         /// <param name="databaseFactory"></param>
-        public Cart_WishlistRepository(IDatabaseFactory databaseFactory)
+        public Cart_WishlistRepository(IDatabaseFactory databaseFactory, IAttributesRepository attributesRepository)
         {
             _databaseFactory = databaseFactory;
+            _attributesRepository = attributesRepository;
         }         
         #endregion DataBaseFactory
 
@@ -191,7 +193,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = cartObj.ProductID;
                         cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = cartObj.CustomerID;
-                        cmd.Parameters.Add("@ProductSpecXML", SqlDbType.Xml).Value = cartObj.ProductSpecXML;
+                        cmd.Parameters.Add("@ProductSpecXML", SqlDbType.Xml).Value =_attributesRepository.GetAttributeXML(cartObj.ProductAttributes);
                         cmd.Parameters.Add("@ItemStatus", SqlDbType.Int).Value = cartObj.ItemStatus;
                         cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = cartObj.Qty;
                         cmd.Parameters.Add("@CurrencyCode", SqlDbType.NVarChar, 3).Value = cartObj.CurrencyCode;

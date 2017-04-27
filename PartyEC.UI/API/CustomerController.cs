@@ -184,7 +184,26 @@ namespace PartyEC.UI.API
 
         #endregion Bookings
 
-        
+
+        [HttpPost]
+        public object InsertCustomerAddress(Customer addressObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                addressObj.logDetailsObj = new LogDetails();
+                addressObj.logDetailsObj.CreatedBy = "AppUser";
+                addressObj.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.InsertUpdateCustomerAddress(addressObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
         [HttpPost]
         public object GetCustomerAddress(CustomerAddress addressObj)
         {
@@ -200,5 +219,25 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        public object RegisterUser (Customer customerObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                customerObj.logDetailsObj = new LogDetails();
+                customerObj.logDetailsObj.CreatedBy = "AppUser";
+                customerObj.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.InsertCustomer(customerObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
     }
 }
