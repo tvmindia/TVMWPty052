@@ -51,6 +51,7 @@ namespace PartyEC.UI.API
                 productApp.DiscountAmount = product.ProductDetailObj.DiscountAmount;
                 productApp.AttributeSetID = product.AttributeSetID;
                 productApp.IsFav = product.IsFav;
+                productApp.ProductOtherAttributes = product.ProductOtherAttributes;
                 return JsonConvert.SerializeObject(new { Result = true, Records = productApp });
             }
             catch (Exception ex)

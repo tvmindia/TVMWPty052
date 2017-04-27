@@ -2233,6 +2233,13 @@ namespace PartyEC.RepositoryServices.Services
                                     productObj.ProductDetailObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? decimal.Parse(sdr["DiscountAmount"].ToString()) : productObj.ProductDetailObj.DiscountAmount);
                                     productObj.AttributeSetID = (sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : productObj.AttributeSetID);
                                     productObj.IsFav= (sdr["IsFav"].ToString() != "" ? (sdr["IsFav"].ToString() == "0" ? false : true) : productObj.IsFav);
+
+                                    productObj.ProductOtherAttributesXML = (sdr["OtherAttributeXML"].ToString() != "" ? sdr["OtherAttributeXML"].ToString() : productObj.ProductOtherAttributesXML);
+                                    if (!string.IsNullOrEmpty(productObj.ProductOtherAttributesXML))
+                                    {
+                                        productObj.ProductOtherAttributes = _attributesRepository.GetAttributeFromXML(productObj.ProductOtherAttributesXML, productObj.AttributeSetID, "Product", false);
+                                        productObj.ProductOtherAttributes = productObj.ProductOtherAttributes.FindAll(n => n.Isconfigurable == false);
+                                    }
                                 }
                             }
                         }

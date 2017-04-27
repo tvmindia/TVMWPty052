@@ -280,7 +280,7 @@ namespace PartyEC.UI.Models
         public Boolean IsFav { get; set; }
 
         public List<ProductDetailViewModel> ProductDetails { get; set; }
-        public List<AttributeValuesViewModel> ProductOtherAttributes { get; set; }
+        public List<AttributeValues> ProductOtherAttributes { get; set; }
         public List<AttributeValues> OrderAttributes { get; set; }
         public List<AttributeValues> RatingAttributes { get; set; }
        
