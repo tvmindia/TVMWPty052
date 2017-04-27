@@ -1293,7 +1293,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.SupplierName);
                                         _productObj.ManufacturerName = (sdr["ManufacturerName"].ToString() != "" ? sdr["ManufacturerName"].ToString() : _productObj.ManufacturerName);
                                         _productObj.StickerURL = (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : _productObj.StickerURL);
-
+                                        _productObj.ImageURL= (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _productObj.ImageURL);
                                     }
                                     productList.Add(_productObj);
                                 }
