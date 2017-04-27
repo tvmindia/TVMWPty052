@@ -74,7 +74,6 @@ namespace PartyEC.BusinessServices.Services
             return wishlist;
         }
 
-
         private List<AttributeValues> GetAttributeValueFromXML(string XML)
         {
             List<AttributeValues> myAttributeValueList = null;
@@ -122,5 +121,19 @@ namespace PartyEC.BusinessServices.Services
 
         }
 
+        public OperationsStatus AddProductToCart(ShoppingCart cartObj)
+        {
+            OperationsStatus OSatObj = null;
+            try
+            {
+                OSatObj = _cartWishlistRepository.AddProductToCart(cartObj);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return OSatObj;
+        }
     }
 }
