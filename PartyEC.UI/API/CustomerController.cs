@@ -182,9 +182,23 @@ namespace PartyEC.UI.API
             }
         }
 
-
         #endregion Bookings
 
-
+        
+        [HttpPost]
+        public object GetCustomerAddress(CustomerAddress addressObj)
+        {
+            try
+            {
+              
+                List<CustomerAddressViewModel> CartList = Mapper.Map<List<CustomerAddress>, List<CustomerAddressViewModel>>(_customerBusiness.GetAllCustomerAddresses(addressObj.CustomerID));
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
     }
 }

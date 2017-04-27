@@ -15,5 +15,6 @@ namespace PartyEC.RepositoryServices.Contracts
 
         //App
         List<Quotations> GetCustomerQuotations(int CustomerID,bool Ishistory);
+        OperationsStatus InsertQuotations(Quotations quotationsObj);
     }
 }

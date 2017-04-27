@@ -359,6 +359,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _customerAddresObj.MidName = (sdr["MidName"].ToString() != "" ? sdr["MidName"].ToString() : _customerAddresObj.MidName);
                                         _customerAddresObj.LastName = (sdr["LastName"].ToString() != "" ? sdr["LastName"].ToString() : _customerAddresObj.LastName);
                                         _customerAddresObj.Address = (sdr["Address"].ToString() != "" ? sdr["Address"].ToString() : _customerAddresObj.Address);
+                                        _customerAddresObj.Location = (sdr["Location"].ToString() != "" ? sdr["Location"].ToString() : _customerAddresObj.Location);
                                         _customerAddresObj.City = (sdr["City"].ToString() != "" ? sdr["City"].ToString() : _customerAddresObj.City);
                                         _customerAddresObj.country = new Country();
                                         _customerAddresObj.country.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : _customerAddresObj.country.Code);

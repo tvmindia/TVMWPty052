@@ -58,6 +58,7 @@ namespace PartyEC.UI.Models
         public string LastName { get; set; }
         [Required(ErrorMessage = "Please enter Address")]
         public string Address { get; set; }
+        public string Location { get; set; }
         public string City { get; set; }
         public List<SelectListItem> Countries { get; set; }
         public string CountryCode { get; set; }

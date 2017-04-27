@@ -11,6 +11,8 @@ namespace PartyEC.RepositoryServices.Services
 {
     public class Cart_WishlistRepository: ICart_WishlistRepository
     {
+        Const constObj = new Const();
+
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
         /// <summary>
@@ -20,7 +22,7 @@ namespace PartyEC.RepositoryServices.Services
         public Cart_WishlistRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
-        }
+        }         
         #endregion DataBaseFactory
 
         public List<Customer> GetAllCustomerCartWishlistSummary()
@@ -168,6 +170,61 @@ namespace PartyEC.RepositoryServices.Services
                 throw ex;
             }
             return Requestslist;
+        }
+
+        public OperationsStatus AddProductToCart(ShoppingCart cartObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertShoppingCart]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = cartObj.ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = cartObj.CustomerID;
+                        cmd.Parameters.Add("@ProductSpecXML", SqlDbType.Xml).Value = cartObj.ProductSpecXML;
+                        cmd.Parameters.Add("@ItemStatus", SqlDbType.Int).Value = cartObj.ItemStatus;
+                        cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = cartObj.Qty;
+                        cmd.Parameters.Add("@CurrencyCode", SqlDbType.NVarChar, 3).Value = cartObj.CurrencyCode;
+                        cmd.Parameters.Add("@CurrencyRate", SqlDbType.Decimal).Value = cartObj.CurrencyRate;
+                        cmd.Parameters.Add("@Price", SqlDbType.Decimal).Value = cartObj.Price;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = cartObj.logDetails.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = cartObj.logDetails.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
         }
     }
 }

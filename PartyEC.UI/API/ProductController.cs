@@ -28,11 +28,11 @@ namespace PartyEC.UI.API
         Const messages = new Const();
 
         [HttpPost]
-        public object GetProductDetails(Product productObj)
+        public object GetProductDetails(ProductAppViewModel productObj)
         {
             try
             {
-                Product product=_productBusiness.GetProductDetailsForApp(productObj, _commonBusiness.GetCurrentDateTime());
+                Product product=_productBusiness.GetProductDetailsForApp(productObj.ID, _commonBusiness.GetCurrentDateTime(),productObj.CustomerID);
                 ProductAppViewModel productApp = new ProductAppViewModel();
                 productApp.Name = product.Name;
                 productApp.SKU = product.SKU;
@@ -50,6 +50,8 @@ namespace PartyEC.UI.API
                 productApp.StockAvailable = product.StockAvailable;
                 productApp.DiscountAmount = product.ProductDetailObj.DiscountAmount;
                 productApp.AttributeSetID = product.AttributeSetID;
+                productApp.IsFav = product.IsFav;
+                productApp.ProductOtherAttributes = product.ProductOtherAttributes;
                 return JsonConvert.SerializeObject(new { Result = true, Records = productApp });
             }
             catch (Exception ex)
@@ -150,7 +152,7 @@ namespace PartyEC.UI.API
             try
             {
                 wishlistObj.logDetails = new LogDetails();
-                wishlistObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                wishlistObj.logDetails.CreatedBy = "AppUser";
                 wishlistObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus,OperationsStatusViewModel>(_productBusiness.UpdateWishlist(wishlistObj));
