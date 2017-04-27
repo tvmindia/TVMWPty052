@@ -14,6 +14,7 @@ namespace PartyEC.UI.API
 {
     public class OrderController : ApiController
     {
+        Const constants = new Const();
         #region Constructor_Injection
 
         IOrderBusiness _OrderBusiness;
@@ -21,14 +22,16 @@ namespace PartyEC.UI.API
         IBookingsBusiness _bookingBusiness;
         IQuotationsBusiness _quotationsBusiness;
         ICart_WishlistBusiness _cart_WishlistBusiness;
+        IMasterBusiness _masterBusiness;
 
-        public OrderController(IOrderBusiness orderBusiness, ICommonBusiness commonBusiness, IBookingsBusiness bookingBusiness, IQuotationsBusiness quotationsBusiness, ICart_WishlistBusiness cart_WishlistBusiness)
+        public OrderController(IOrderBusiness orderBusiness, ICommonBusiness commonBusiness, IBookingsBusiness bookingBusiness, IQuotationsBusiness quotationsBusiness, ICart_WishlistBusiness cart_WishlistBusiness, IMasterBusiness masterBusiness)
         {
             _OrderBusiness = orderBusiness;
             _commonBusiness = commonBusiness;
             _bookingBusiness = bookingBusiness;
             _quotationsBusiness = quotationsBusiness;
             _cart_WishlistBusiness = cart_WishlistBusiness;
+            _masterBusiness = masterBusiness;
         }
         #endregion Constructor_Injection
 
@@ -70,7 +73,6 @@ namespace PartyEC.UI.API
             }
         }
 
-        // AddProductToCart
         [HttpPost]
         public object AddProductToCart(ShoppingCart cartObj)
         {
@@ -83,6 +85,23 @@ namespace PartyEC.UI.API
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_cart_WishlistBusiness.AddProductToCart(cartObj));
                 return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+
+        [HttpPost]
+        public object GetLocationDetails()
+        {
+            try
+            {
+
+                List<ShippingLocationViewModel> Locations = Mapper.Map<List<ShippingLocations>, List<ShippingLocationViewModel>>(_masterBusiness.GetAllShippingLocation());
+                if (Locations.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = Locations });
             }
             catch (Exception ex)
             {
