@@ -19,12 +19,14 @@ namespace PartyEC.UI.API
         IOrderBusiness _OrderBusiness;
         ICommonBusiness _commonBusiness;
         IBookingsBusiness _bookingBusiness;
+        IQuotationsBusiness _quotationsBusiness;
 
-        public OrderController(IOrderBusiness orderBusiness, ICommonBusiness commonBusiness, IBookingsBusiness bookingBusiness)
+        public OrderController(IOrderBusiness orderBusiness, ICommonBusiness commonBusiness, IBookingsBusiness bookingBusiness, IQuotationsBusiness quotationsBusiness)
         {
             _OrderBusiness = orderBusiness;
             _commonBusiness = commonBusiness;
             _bookingBusiness = bookingBusiness;
+            _quotationsBusiness = quotationsBusiness;
         }
         #endregion Constructor_Injection
 
@@ -35,10 +37,28 @@ namespace PartyEC.UI.API
             try
             {
                 BookingsObj.logDetails = new LogDetails();
-                BookingsObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                BookingsObj.logDetails.CreatedBy = "AppUser";
                 BookingsObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_bookingBusiness.InsertBookings(BookingsObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+        [HttpPost]
+        public object InsertQuotations(Quotations QuotationsObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                QuotationsObj.logDetails = new LogDetails();
+                QuotationsObj.logDetails.CreatedBy = "AppUser";
+                QuotationsObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_quotationsBusiness.InsertQuotations(QuotationsObj));
                 return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
             }
             catch (Exception ex)

@@ -215,6 +215,63 @@ namespace PartyEC.RepositoryServices.Services
             return myQuotations;
         }
 
+        public OperationsStatus InsertQuotations(Quotations quotationsObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertQuotations]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@QuotationNo", SqlDbType.NVarChar, 20).Value = quotationsObj.QuotationNo;
+                        cmd.Parameters.Add("@QuotationDate", SqlDbType.SmallDateTime).Value = quotationsObj.QuotationDate;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = quotationsObj.ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = quotationsObj.CustomerID;
+                        cmd.Parameters.Add("@RequiredDate", SqlDbType.SmallDateTime).Value = quotationsObj.RequiredDate;
+                        cmd.Parameters.Add("@SourceIP", SqlDbType.NVarChar, 50).Value = quotationsObj.SourceIP;
+                        cmd.Parameters.Add("@Status", SqlDbType.Int).Value = quotationsObj.Status;
+                        cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = quotationsObj.Qty;                       
+                        cmd.Parameters.Add("@Message", SqlDbType.NVarChar, -1).Value = quotationsObj.Message;
+                      
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = quotationsObj.logDetails.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = quotationsObj.logDetails.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
+
         public OperationsStatus UpdateQuotations(Quotations quotationsObj)
         {
             OperationsStatus operationsStatusObj = null;

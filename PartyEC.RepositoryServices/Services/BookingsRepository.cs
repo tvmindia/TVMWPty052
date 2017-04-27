@@ -114,6 +114,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@BookingDate", SqlDbType.SmallDateTime).Value = bookingsObj.BookingDate;
                         cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = bookingsObj.ProductID;
                         cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = bookingsObj.CustomerID;
+
                         cmd.Parameters.Add("@RequiredDate", SqlDbType.SmallDateTime).Value = bookingsObj.RequiredDate;
                         cmd.Parameters.Add("@SourceIP", SqlDbType.NVarChar, 50).Value = bookingsObj.SourceIP;
                         cmd.Parameters.Add("@Status", SqlDbType.Int).Value = bookingsObj.Status;

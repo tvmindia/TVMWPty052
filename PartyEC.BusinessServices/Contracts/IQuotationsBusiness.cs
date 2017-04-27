@@ -15,6 +15,7 @@ namespace PartyEC.BusinessServices.Contracts
         Task<bool> QuotationEmail(Quotations quotationsObj);
         //App
         List<Quotations> GetCustomerQuotations(int CustomerID,bool Ishistory);
+        OperationsStatus InsertQuotations(Quotations quotationsObj);
 
     }
 }
