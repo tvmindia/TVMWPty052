@@ -2189,8 +2189,10 @@ namespace PartyEC.RepositoryServices.Services
             return productList;
         }
 
-        public Product GetProductDetailsForApp(Product productObj,DateTime currentDateTime)
+        public Product GetProductDetailsForApp(int productID, DateTime currentDateTime,int customerID)
         {
+            Product productObj=new Product();
+            productObj.ID = productID;
             try
             {
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
@@ -2204,6 +2206,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = productObj.ID;
                         cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = currentDateTime.Date;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID;
                         cmd.CommandText = "[GetProductDetailsForApp]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -2229,6 +2232,7 @@ namespace PartyEC.RepositoryServices.Services
                                     productObj.StockAvailable = (sdr["InStock"].ToString() != "" ? (sdr["InStock"].ToString()=="0"?false:true) : productObj.StockAvailable);
                                     productObj.ProductDetailObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? decimal.Parse(sdr["DiscountAmount"].ToString()) : productObj.ProductDetailObj.DiscountAmount);
                                     productObj.AttributeSetID = (sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : productObj.AttributeSetID);
+                                    productObj.IsFav= (sdr["IsFav"].ToString() != "" ? (sdr["IsFav"].ToString() == "0" ? false : true) : productObj.IsFav);
                                 }
                             }
                         }

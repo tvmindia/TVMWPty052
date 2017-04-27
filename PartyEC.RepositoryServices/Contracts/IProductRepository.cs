@@ -40,7 +40,7 @@ namespace PartyEC.RepositoryServices.Contracts
         List<Product> GetTopProductsOfCategory(Categories categoryObj);
         List<Product> GetProductsOfCategory(Categories categoryObj);
         List<Product> GetProductsByFiltering(FilterCriteria filterCritiria);
-        Product GetProductDetailsForApp(Product productObj, DateTime currentDateTime);
+        Product GetProductDetailsForApp(int productID, DateTime currentDateTime, int customerID);
         Product GetProductSticker(int productID);
         List<ProductImages> GetProductImagesforApp(int ProductID);
         OperationsStatus UpdateWishlist(Wishlist CartWishObj);
