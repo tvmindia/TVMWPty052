@@ -49,6 +49,22 @@ namespace PartyEC.UI.API
         }
 
         [HttpPost]
+        public object GetEventRequestStatus(EventRequests eventObj)
+        {
+            try
+            {
+
+                EventRequestsViewModel EventList = Mapper.Map<EventRequests,EventRequestsViewModel>(_eventRequestBusiness.GetEventRequest(eventObj.CustomerID));
+                
+                return JsonConvert.SerializeObject(new { Result = true, Records = EventList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
         public object GetEventTypesAndRelatedCategories()
         {
             try
@@ -62,5 +78,7 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
+
     }
 }

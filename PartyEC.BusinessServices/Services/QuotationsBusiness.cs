@@ -166,7 +166,8 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-                return sendsuccess;
+                throw ex;
+                //return sendsuccess;
             }
             return sendsuccess;
         }

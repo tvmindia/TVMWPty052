@@ -140,7 +140,7 @@ namespace PartyEC.RepositoryServices.Services
             return Requestslist;
         }
 
-        public EventRequests GetEventRequest(int EventRequestsID, OperationsStatus Status)
+        public EventRequests GetEventRequest(int EventRequestsID)
         {
             EventRequests myEventRequests = null;
             try

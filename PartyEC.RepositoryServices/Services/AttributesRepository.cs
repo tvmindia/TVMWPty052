@@ -708,7 +708,7 @@ namespace PartyEC.RepositoryServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatusObj;
         }

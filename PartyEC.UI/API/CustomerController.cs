@@ -186,7 +186,7 @@ namespace PartyEC.UI.API
 
 
         [HttpPost]
-        public object InsertCustomerAddress(Customer addressObj)
+        public object InsertUpdateCustomerAddress(Customer addressObj)
         {
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
             try
@@ -219,6 +219,23 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
+
+        [HttpPost]
+        public object DeleteCustomerAddress(CustomerAddress addressObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {            
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.DeleteAddress(addressObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
 
         [HttpPost]
         public object RegisterUser (Customer customerObj)

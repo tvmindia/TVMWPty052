@@ -69,6 +69,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             //sort by descending date
             return filteredList==null?null:filteredList.OrderByDescending(fl=>fl.logDetailsObj.CreatedDate).ToList();
@@ -110,7 +111,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatus;
         }
@@ -212,7 +213,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatus;
         }
@@ -360,7 +361,7 @@ namespace PartyEC.BusinessServices.Services
              }
             catch (Exception ex)
             {
-                return sendsuccess;
+                throw ex;
             }
             return sendsuccess;
         }

@@ -352,7 +352,7 @@
                                                             <strong>Grand Total:</strong>
                                                         </td>
                                                         <td width="62" align="right" valign="bottom" style="color:#339933;font-size:13px;line-height:16px;padding:5px 5px 3px 5px">
-                                                            <strong id="strGrandTotal">0.00QAR</strong>
+                                                            <strong class="strGrandTotal">0.00QAR</strong>
                                                         </td>
                                                     </tr>
                                                 </tbody>
@@ -395,6 +395,24 @@
                                     </tr>
                                 </thead>
                             </table>
+                        <table id="tblGrandTotal" width="100%" border="0" align="right" cellpadding="0" cellspacing="0">
+                            <tbody>
+                                <tr>
+                                    <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px;border-bottom:solid 1px #999999"></td>
+                                    <td width="62" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px;border-bottom:solid 1px #999999"></td>
+                                </tr>
+                                <tr>
+                                    <td align="right" valign="bottom" style="color:#404041;font-size:13px;line-height:16px;padding:5px 0px 3px 0px">
+                                        <strong>Grand Total:</strong>
+                                    </td>
+                                    <td width="100" align="right" valign="bottom" style="color:#339933;font-size:13px;line-height:16px;padding:5px 5px 3px 5px">
+                                        <strong class="strGrandTotal">4910.00QAR</strong>
+                                    </td>
+                                </tr>
+                            </tbody>
+
+
+                        </table>
                     </div>
                 </div>
             </div>
@@ -590,7 +608,6 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
-                        <h4 id="h4Total" style="color:#339933;font-weight: 900; position: absolute;left: 35%;"></h4>                        @*buttonpatch*@
                         <div style="padding:1%">
                             @{
                                 PartyEC.UI.Models.ToolboxViewModel ToolBoxControlforModel = new PartyEC.UI.Models.ToolboxViewModel();
