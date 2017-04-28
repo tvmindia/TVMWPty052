@@ -109,6 +109,9 @@ namespace PartyEC.RepositoryServices.Services
                                         _ShoppingcartObj.CurrencyCode = (sdr["CurrencyCode"].ToString() != "" ? sdr["CurrencyCode"].ToString() : _ShoppingcartObj.CurrencyCode);
                                         _ShoppingcartObj.Price = (sdr["Price"].ToString() != "" ? Decimal.Parse(sdr["Price"].ToString()) : _ShoppingcartObj.Price);
                                         _ShoppingcartObj.ItemStatus = (sdr["ItemStatus"].ToString() != "" ? sdr["ItemStatus"].ToString() : _ShoppingcartObj.ItemStatus);
+                                       
+                                        _ShoppingcartObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _ShoppingcartObj.ImageURL);
+                                        _ShoppingcartObj.ShippingCharge = (sdr["ShippingCharge"].ToString() != "" ? Decimal.Parse(sdr["ShippingCharge"].ToString()) : _ShoppingcartObj.ShippingCharge); 
                                         _ShoppingcartObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _ShoppingcartObj.CreatedDate);    
                                     }
                                     Cartlist.Add(_ShoppingcartObj);

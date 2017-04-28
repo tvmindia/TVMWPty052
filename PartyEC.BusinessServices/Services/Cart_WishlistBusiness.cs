@@ -43,15 +43,16 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 cartlist = _cartWishlistRepository.GetCustomerShoppingCart(customerID);
-
+              if (cartlist!=null)
                 for (int i = 0; i < cartlist.Count; i++)
                 {
-                   cartlist[i].AttributeValues = GetAttributeValueFromXML(cartlist[i].ProductSpecXML);
+                    if (cartlist[i].ProductSpecXML != null)
+                        cartlist[i].AttributeValues = GetAttributeValueFromXML(cartlist[i].ProductSpecXML);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return cartlist;
         }         
@@ -62,14 +63,16 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 wishlist = _cartWishlistRepository.GetCustomerWishlist(customerID);
-                for (int i = 0; i < wishlist.Count; i++)
-                {
-                    wishlist[i].AttributeValues = GetAttributeValueFromXML(wishlist[i].ProductSpecXML);
-                }
+                if (wishlist != null)
+                    for (int i = 0; i < wishlist.Count; i++)
+                        {
+                             if (wishlist[i].ProductSpecXML != null)
+                                wishlist[i].AttributeValues = GetAttributeValueFromXML(wishlist[i].ProductSpecXML);
+                        }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return wishlist;
         }
@@ -78,10 +81,6 @@ namespace PartyEC.BusinessServices.Services
         {
             List<AttributeValues> myAttributeValueList = null;
             List<Attributes> attributelist = null;
-          
-              
-
-         
             try
             {
                 attributelist = _attributesRepository.GetAllAttributes();//Selecting Attributes List
@@ -114,7 +113,6 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return myAttributeValueList;
@@ -129,9 +127,9 @@ namespace PartyEC.BusinessServices.Services
                 OSatObj = _cartWishlistRepository.AddProductToCart(cartObj);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return OSatObj;
         }

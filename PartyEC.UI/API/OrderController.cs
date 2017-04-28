@@ -92,6 +92,20 @@ namespace PartyEC.UI.API
             }
         }
 
+        [HttpPost]
+        public object GetCustomerCart(ShoppingCart cartObj)
+        {
+            try
+            {
+                List<ShoppingCartViewModel> Locations = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cart_WishlistBusiness.GetCustomerShoppingCart(cartObj.CustomerID));
+                if (Locations.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = Locations });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
 
         [HttpPost]
         public object GetLocationDetails()
