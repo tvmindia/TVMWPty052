@@ -11,7 +11,7 @@ namespace PartyEC.RepositoryServices.Contracts
     {
         List<Customer> GetAllCustomerCartWishlistSummary();
         
-        List<ShoppingCart> GetCustomerShoppingCart(int customerID);
+        List<ShoppingCart> GetCustomerShoppingCart(int customerID,int locationID);
 
         List<Wishlist> GetCustomerWishlist(int customerID);
 

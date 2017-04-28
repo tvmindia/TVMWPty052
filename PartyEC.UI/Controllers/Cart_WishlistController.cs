@@ -55,9 +55,11 @@ namespace PartyEC.UI.Controllers
         [HttpGet]
         public string GetCustomerShoppingCart(string ID)
         {
+
             try
             {
-                List<ShoppingCartViewModel> eventsLogList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cartWishlistBusiness.GetCustomerShoppingCart(Int32.Parse(ID)));
+                int locationID =0;
+                List<ShoppingCartViewModel> eventsLogList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cartWishlistBusiness.GetCustomerShoppingCart(Int32.Parse(ID), locationID));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = eventsLogList });
             }
             catch (Exception ex)

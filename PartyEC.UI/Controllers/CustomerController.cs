@@ -156,8 +156,9 @@ namespace PartyEC.UI.Controllers
                 List<ShoppingCartViewModel> cartList = null;
                 if (!string.IsNullOrEmpty(customerID))
                 {
+                    int locationID = 0;
                     OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                    cartList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cart_WishlistBusiness.GetCustomerShoppingCart(int.Parse(customerID)));
+                    cartList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cart_WishlistBusiness.GetCustomerShoppingCart(int.Parse(customerID), locationID));
                 }
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = cartList });
             }
