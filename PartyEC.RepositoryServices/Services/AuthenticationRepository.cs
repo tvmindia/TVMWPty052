@@ -252,8 +252,12 @@ namespace PartyEC.RepositoryServices.Services
                                     
                                 };
                                 break;
+                            case 2:
+                                // not Successfull                                
+                                operationsStatusObj.StatusMessage = constObj.Duplicate;
+                                break;
 
-                            }
+                        }
                        }
                   }
             }
