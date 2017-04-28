@@ -95,7 +95,6 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
                 throw ex;
             }
             return myAttributeValueList;
@@ -109,8 +108,9 @@ namespace PartyEC.BusinessServices.Services
             {
                 OperationsStatusObj = _QuotationsRepository.UpdateQuotations(quotationsObj);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                throw ex;
             }
             return OperationsStatusObj;
         }
@@ -180,9 +180,9 @@ namespace PartyEC.BusinessServices.Services
                 OSatObj = _QuotationsRepository.InsertQuotations(quotationsObj);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return OSatObj;
         }
