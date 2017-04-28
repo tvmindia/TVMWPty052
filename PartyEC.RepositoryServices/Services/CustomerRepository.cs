@@ -557,6 +557,66 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
+        public OperationsStatus UpdateCustomer(Customer customer)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateCustomer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@ID", SqlDbType.NVarChar, 250).Value = customer.ID;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = customer.Name;
+                       // cmd.Parameters.Add("@Email", SqlDbType.NVarChar, -1).Value = customer.Email;
+                        cmd.Parameters.Add("@Gender", SqlDbType.NVarChar, 1).Value = customer.Gender;
+                        cmd.Parameters.Add("@Mobile", SqlDbType.NVarChar, 50).Value = customer.Mobile;
+                        cmd.Parameters.Add("@Language", SqlDbType.NVarChar, 10).Value = customer.Language;
+                        cmd.Parameters.Add("@ProfileImageID", SqlDbType.UniqueIdentifier).Value = customer.ProfileImageID;
+
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = customer.logDetailsObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = customer.logDetailsObj.UpdatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                operationsStatusObj.StatusMessage = ex.Message;
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
+
 
         #endregion Methods
 

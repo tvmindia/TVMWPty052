@@ -135,6 +135,20 @@ namespace PartyEC.BusinessServices.Services
             return operationStatus;
         }
 
+        public OperationsStatus UpdateCustomer(Customer customer)
+        {
+            OperationsStatus operationStatus = null;
+            try
+            {
+                operationStatus = _customerRepository.UpdateCustomer(customer);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationStatus;
+        }
+
         #endregion Methods
     }
 }
