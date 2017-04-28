@@ -255,6 +255,7 @@ namespace PartyEC.RepositoryServices.Services
                             case 2:
                                 // not Successfull                                
                                 operationsStatusObj.StatusMessage = constObj.Duplicate;
+
                                 break;
 
                         }
