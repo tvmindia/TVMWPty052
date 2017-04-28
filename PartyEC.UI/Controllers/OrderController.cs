@@ -260,7 +260,8 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Event = "gobackDetails()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.deletebtn.Visible = true;
-                    ToolboxViewModelObj.deletebtn.Disable = true;
+                    ToolboxViewModelObj.deletebtn.Event = "DeleteDemoOrderData()";
+                    ToolboxViewModelObj.deletebtn.Title = "Delete";
                     ToolboxViewModelObj.addbtn.Visible = true;
                     ToolboxViewModelObj.addbtn.Event = "AddNewRevision()";
                     ToolboxViewModelObj.addbtn.Title = "Add";

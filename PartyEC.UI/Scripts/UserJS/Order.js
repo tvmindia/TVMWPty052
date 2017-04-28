@@ -77,8 +77,9 @@ $(document).ready(function () {
         dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
         order: [],
         searching: true,
-        paging: true,
+        paging: false,
         data: null,
+        bInfo: false,
         columns: [
           {"data":null},
           { "data": "OrderDetailID" },
@@ -195,14 +196,14 @@ $(document).ready(function () {
              },
              order: [[1, 'asc']]
          });
-    $('#tblProductList tbody').on('click', 'tr', function () {  
-        var tabledata = DataTables.tblProductList.rows('.selected').data();
-        var Total = 0;
-        for (i = 0; i < tabledata.length; i++) {
-            Total=Total + tabledata[i].ActualPrice
-        }
-        $('#h4Total').text("Total Excluding Shipping Charges: " + Total+" QAR");
-        });
+    //$('#tblProductList tbody').on('click', 'tr', function () {  
+    //    var tabledata = DataTables.tblProductList.rows('.selected').data();
+    //    var Total = 0;
+    //    for (i = 0; i < tabledata.length; i++) {
+    //        Total=Total + tabledata[i].ActualPrice
+    //    }
+    //    $('#h4Total').text("Total Excluding Shipping Charges: " + Total+" QAR");
+    //});
     ChangeButtonPatchView("Order", "btnPatchOrders", "List");
 });
 //Table Data Bind for Order Header
@@ -350,18 +351,30 @@ function CancelIssue()
     var r = confirm("Are You Sure ?, This will cancel your Current Order..");
     if (r == true)
     {
+        debugger;
+        var GrandTotal = 0;
         $('#tabCreateRevision').click();
         DataTables.orderModificationtable.clear().rows.add(GetAllOrdersList($('#hdnOrderHID').val())).draw(false);
+        var ordertabledata = DataTables.orderModificationtable.rows().data();
+        for (var i = 0; i < ordertabledata.length; i++)
+        {
+            GrandTotal = GrandTotal + ordertabledata[i].SubTotal;
+        }
         ChangeButtonPatchView("Order", "btnPatchOrders", "Revise");
+        $('#tblGrandTotal .strGrandTotal').text(GrandTotal + " QAR");
     }
     
 }
 function AddReviseOrder()
 {
     debugger;
-
+    var GrandTotal = 0;
     var tabledata = DataTables.tblProductList.rows('.selected').data();
     var ordertabledata = DataTables.orderModificationtable.rows().data();
+    for (var i = 0; i < ordertabledata.length; i++)
+    {
+        GrandTotal=GrandTotal + ordertabledata[i].SubTotal;
+    }
     var OrderID = $("#ID").val();
     var OrderDetailList = [];
     for (i = 0; i < tabledata.length; i++)
@@ -378,18 +391,62 @@ function AddReviseOrder()
         Order.Price = tabledata[i].ActualPrice;
         Order.ProductSpecXML = tabledata[i].ProductName;
         ordertabledata.push(Order);
+        GrandTotal = GrandTotal + Order.SubTotal;
     }
+    $('#tblGrandTotal .strGrandTotal').text(GrandTotal+" QAR");
     DataTables.orderModificationtable.clear().rows.add(ordertabledata).draw(false);
+}
+function DeleteDemoOrderData()
+{
+    debugger;
+    var GrandTotal = 0;
+    var newDataTable=null;
+    var tabledata = DataTables.orderModificationtable.rows('.selected').data();
+    var ordertabledata = DataTables.orderModificationtable.rows().data();
+    for (var i = 0; i < ordertabledata.length; i++) {
+        GrandTotal = GrandTotal + ordertabledata[i].SubTotal;
+    }
+    if(tabledata.length==0)
+    {
+        notyAlert('information', "Please select items to delete");
+    }
+    else
+    {
+        for (var j = 0; j < ordertabledata.length; j++)
+        {
+            for (var i = 0; i < tabledata.length; i++) {
+                if (tabledata[i].ProductSpecXML === ordertabledata[j].ProductSpecXML) {
+                    ordertabledata.splice(j, 1);
+                    GrandTotal = GrandTotal - tabledata[i].SubTotal;
+                }
+            }
+        }
+        $('#tblGrandTotal .strGrandTotal').text(GrandTotal + " QAR");
+        DataTables.orderModificationtable.clear().rows.add(ordertabledata).draw(false);
+    }
 }
 function InsertNewOrder()
 {
     debugger;
     var newdata = [];
-    var newOrderData = DataTables.orderModificationtable.rows().data();
+    var r = confirm("Are You Sure ?, This will cancel your Current Order..");
+    if (r == true) {
+        var newOrderData = DataTables.orderModificationtable.rows().data();
+        var OrderDetailList = [];
+        for(var i=0;i<newOrderData.length;i++)
+        {
+            var OrderDetailViewModel = new Object();
+            OrderDetailViewModel.ItemID = i;
+            OrderDetailViewModel.ProductID = newOrderData[i].ProductID;
+        }
+
+    }
+    
 }
 function Calculatesum(this_obj)
 {
     debugger;
+    var GrandTotal = 0;
     var Qty = this_obj.value;
     var rowData = DataTables.orderModificationtable.row($(this_obj).parents('tr')).data();
     var SubTotal = ((rowData.Total - rowData.DiscountAmt) * Qty);
@@ -401,7 +458,9 @@ function Calculatesum(this_obj)
             rowsData[i].SubTotal = SubTotal;
             rowsData[i].Qty = Qty;
         }
+        GrandTotal = GrandTotal + rowsData[i].SubTotal;
     }
+    $('#tblGrandTotal .strGrandTotal').text(GrandTotal);
     DataTables.orderModificationtable.clear().rows.add(rowsData).draw(false);
 }
 function AddNewRevision()
@@ -515,7 +574,7 @@ function BindOrderSummery(Result)
     $('#tdTaxTotal').text(OrderSummeryList.TaxAmtOrderSummery+ Result.CurrencyCode)
     $('#tdDeliveryCosts').text(OrderSummeryList.ShippingCostOrderSummery+ Result.CurrencyCode)
     $('#tdOrderDiscount').text(OrderSummeryList.DiscountAmtOrderSummery+ Result.CurrencyCode)
-    $('#strGrandTotal').text(OrderSummeryList.GrandTotalOrderSummery+ Result.CurrencyCode)
+    $('.strGrandTotal').text(OrderSummeryList.GrandTotalOrderSummery+ Result.CurrencyCode)
 }
 function CheckinBillingChanges(data)
 {
