@@ -21,6 +21,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string ItemStatus { get; set; }
         public string CreatedDate { get; set; }
 
+        public int LocationID { get; set; }
         public decimal ShippingCharge { get; set; }
         public string ImageURL { get; set; }
         

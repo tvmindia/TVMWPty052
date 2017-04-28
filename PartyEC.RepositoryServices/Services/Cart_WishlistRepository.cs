@@ -74,7 +74,7 @@ namespace PartyEC.RepositoryServices.Services
             return Requestslist;
         }
 
-        public List<ShoppingCart> GetCustomerShoppingCart(int customerID)
+        public List<ShoppingCart> GetCustomerShoppingCart(int customerID,int locationID)
         {
             List<ShoppingCart> Cartlist = null;
             try
@@ -88,7 +88,8 @@ namespace PartyEC.RepositoryServices.Services
                             con.Open();
                         }
                         cmd.Connection = con;
-                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID; 
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID;
+                        cmd.Parameters.Add("@locationID", SqlDbType.Int).Value = locationID;
                         cmd.CommandText = "[GetCustomerShoppingCart]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -109,7 +110,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _ShoppingcartObj.CurrencyCode = (sdr["CurrencyCode"].ToString() != "" ? sdr["CurrencyCode"].ToString() : _ShoppingcartObj.CurrencyCode);
                                         _ShoppingcartObj.Price = (sdr["Price"].ToString() != "" ? Decimal.Parse(sdr["Price"].ToString()) : _ShoppingcartObj.Price);
                                         _ShoppingcartObj.ItemStatus = (sdr["ItemStatus"].ToString() != "" ? sdr["ItemStatus"].ToString() : _ShoppingcartObj.ItemStatus);
-                                       
+
                                         _ShoppingcartObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _ShoppingcartObj.ImageURL);
                                         _ShoppingcartObj.ShippingCharge = (sdr["ShippingCharge"].ToString() != "" ? Decimal.Parse(sdr["ShippingCharge"].ToString()) : _ShoppingcartObj.ShippingCharge); 
                                         _ShoppingcartObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _ShoppingcartObj.CreatedDate);    
