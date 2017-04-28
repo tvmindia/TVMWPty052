@@ -271,54 +271,42 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter statusCode = null;
-              
-                // bool IsinsertOrUpdate = false;
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
-
                     if (con.State == ConnectionState.Closed)
                     {
                         con.Open();
                     }
-
-
                     using (SqlCommand cmd = new SqlCommand())
                     {
                         cmd.Connection = con;
-                       
                         cmd.CommandText = "[UpdateUser]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = user.ID;
-                        cmd.Parameters.Add("@UserRoleLinkID", SqlDbType.Int).Value = user.UserRoleLinkID;
+                        cmd.Parameters.Add("@RoleList", SqlDbType.NVarChar, -1).Value = user.RoleList;
                         cmd.Parameters.Add("@UserName", SqlDbType.NVarChar, 250).Value = user.UserName;
-                        cmd.Parameters.Add("@RoleID", SqlDbType.Int).Value = user.RoleID;
-                        cmd.Parameters.Add("@LoginName", SqlDbType.NVarChar, 250).Value = user.LoginName;
                         cmd.Parameters.Add("@Password", SqlDbType.NVarChar, 250).Value = user.Password;
                         cmd.Parameters.Add("@ProfileImageID", SqlDbType.UniqueIdentifier).Value = user.ProfileImageId;
                         cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = user.logDetails.UpdatedBy;
                         cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = user.logDetails.UpdatedDate;
-
                         statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
-                        
-                       
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (Int16.Parse(statusCode.Value.ToString()))
                         {
                             case 0:
                                 // not Successfull                                
-                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
                                 break;
                             case 1:
-                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
                                 operationsStatusObj.ReturnValues = new
                                 {
                                     UserID = user.ID,
-                                    UserRoleLinkID = user.UserRoleLinkID
+                                    
                                 };
                                 break;
-
                         }
                     }
                 }
@@ -330,7 +318,7 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-        public OperationsStatus DeleteUser(int UserID, int LinkID)
+        public OperationsStatus DeleteUser(int UserID)
         {
             OperationsStatus operationsStatusObj = null;
             try
@@ -348,7 +336,6 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandText = "[DeleteUser]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@UserID", SqlDbType.Int).Value = UserID;
-                        cmd.Parameters.Add("@UserRoleLinkID", SqlDbType.Int).Value = LinkID;
                         statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();

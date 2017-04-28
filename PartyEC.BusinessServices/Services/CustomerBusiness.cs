@@ -58,11 +58,10 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return operationStatus;
         }
-
 
         public OperationsStatus InsertUpdateCustomerAddress(Customer customer)
         {
@@ -73,12 +72,11 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return operationStatus;
         }
 
-       
         public List<CustomerAddress> GetAllCustomerAddresses(int CustomerID)
         {
             List<CustomerAddress> AddressLists = null;
@@ -89,7 +87,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return AddressLists;
         }
@@ -104,10 +102,11 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return Address;
         }
+
         public OperationsStatus DeleteAddress(CustomerAddress customerAddress)
         {
             OperationsStatus operationsStatusObj = null;
@@ -117,10 +116,39 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatusObj;
         }
+
+        public OperationsStatus InsertCustomer(Customer customer)
+        {
+            OperationsStatus operationStatus = null;
+            try
+            {
+                operationStatus = _customerRepository.InsertCustomer(customer);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationStatus;
+        }
+
+        public OperationsStatus UpdateCustomer(Customer customer)
+        {
+            OperationsStatus operationStatus = null;
+            try
+            {
+                operationStatus = _customerRepository.UpdateCustomer(customer);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationStatus;
+        }
+
         #endregion Methods
     }
 }

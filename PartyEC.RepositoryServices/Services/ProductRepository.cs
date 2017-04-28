@@ -1293,7 +1293,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.SupplierName);
                                         _productObj.ManufacturerName = (sdr["ManufacturerName"].ToString() != "" ? sdr["ManufacturerName"].ToString() : _productObj.ManufacturerName);
                                         _productObj.StickerURL = (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : _productObj.StickerURL);
-
+                                        _productObj.ImageURL= (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _productObj.ImageURL);
                                     }
                                     productList.Add(_productObj);
                                 }
@@ -2189,8 +2189,10 @@ namespace PartyEC.RepositoryServices.Services
             return productList;
         }
 
-        public Product GetProductDetailsForApp(Product productObj,DateTime currentDateTime)
+        public Product GetProductDetailsForApp(int productID, DateTime currentDateTime,int customerID)
         {
+            Product productObj=new Product();
+            productObj.ID = productID;
             try
             {
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
@@ -2204,6 +2206,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = productObj.ID;
                         cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = currentDateTime.Date;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID;
                         cmd.CommandText = "[GetProductDetailsForApp]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -2229,6 +2232,14 @@ namespace PartyEC.RepositoryServices.Services
                                     productObj.StockAvailable = (sdr["InStock"].ToString() != "" ? (sdr["InStock"].ToString()=="0"?false:true) : productObj.StockAvailable);
                                     productObj.ProductDetailObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? decimal.Parse(sdr["DiscountAmount"].ToString()) : productObj.ProductDetailObj.DiscountAmount);
                                     productObj.AttributeSetID = (sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : productObj.AttributeSetID);
+                                    productObj.IsFav= (sdr["IsFav"].ToString() != "" ? (sdr["IsFav"].ToString() == "0" ? false : true) : productObj.IsFav);
+
+                                    productObj.ProductOtherAttributesXML = (sdr["OtherAttributeXML"].ToString() != "" ? sdr["OtherAttributeXML"].ToString() : productObj.ProductOtherAttributesXML);
+                                    if (!string.IsNullOrEmpty(productObj.ProductOtherAttributesXML))
+                                    {
+                                        productObj.ProductOtherAttributes = _attributesRepository.GetAttributeFromXML(productObj.ProductOtherAttributesXML, productObj.AttributeSetID, "Product", false);
+                                        productObj.ProductOtherAttributes = productObj.ProductOtherAttributes.FindAll(n => n.Isconfigurable == false);
+                                    }
                                 }
                             }
                         }

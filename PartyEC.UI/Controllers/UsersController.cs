@@ -107,6 +107,36 @@ namespace PartyEC.UI.Controllers
 
 
 
+        #region UserInsertUpdate
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public string DeleteUser(UserViewModel user)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            if (user.ID>0)
+            {
+                try
+                {
+                    
+                  OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_authenticationBusiness.DeleteUser(user.ID));
+                    
+                }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+                
+            }
+            else
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "ID's are missing!" });
+            }
+            return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+
+        }
+        #endregion UserInsertUpdate
+
+
         #region ChangeButtonStyle
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)

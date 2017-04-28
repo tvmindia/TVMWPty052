@@ -16,13 +16,15 @@ namespace PartyEC.RepositoryServices.Services
 
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
+        private IAttributesRepository _attributesRepository;
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
         /// <param name="databaseFactory"></param>
-        public QuotationsRepository(IDatabaseFactory databaseFactory)
+        public QuotationsRepository(IDatabaseFactory databaseFactory,IAttributesRepository attributesRepository)
         {
             _databaseFactory = databaseFactory;
+            _attributesRepository = attributesRepository;
         }
         #endregion DataBaseFactory
 
@@ -180,7 +182,6 @@ namespace PartyEC.RepositoryServices.Services
                                     myQuotations.Status = (sdr["Status"].ToString() != "" ? sdr["Status"].ToString() : myQuotations.Status);
                                     myQuotations.StatusText = (sdr["StatusText"].ToString() != "" ? sdr["StatusText"].ToString() : myQuotations.StatusText);
                                     myQuotations.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : myQuotations.ProductName);
-                                    
                                     myQuotations.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : myQuotations.ProductID);
                                     myQuotations.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : myQuotations.CustomerID); 
                                   
@@ -213,6 +214,62 @@ namespace PartyEC.RepositoryServices.Services
                 throw ex;
             }
             return myQuotations;
+        }
+
+        public OperationsStatus InsertQuotations(Quotations quotationsObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertQuotations]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                       
+                        cmd.Parameters.Add("@QuotationDate", SqlDbType.SmallDateTime).Value = quotationsObj.logDetails.CreatedDate;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = quotationsObj.ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = quotationsObj.CustomerID;
+                        cmd.Parameters.Add("@RequiredDate", SqlDbType.SmallDateTime).Value = quotationsObj.RequiredDate;
+                        cmd.Parameters.Add("@SourceIP", SqlDbType.NVarChar, 50).Value = quotationsObj.SourceIP;
+                                    
+                        cmd.Parameters.Add("@Message", SqlDbType.NVarChar, -1).Value = quotationsObj.Message;
+                        cmd.Parameters.Add("@ProductSpecXML", SqlDbType.Xml).Value = _attributesRepository.GetAttributeXML(quotationsObj.AttributeValues);
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = quotationsObj.logDetails.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = quotationsObj.logDetails.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
         }
 
         public OperationsStatus UpdateQuotations(Quotations quotationsObj)

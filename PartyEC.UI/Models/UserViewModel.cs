@@ -25,12 +25,12 @@ namespace PartyEC.UI.Models
         [Display(Name = "Login Name")]
         [StringLength(250)]
         public string LoginName { get; set; }
-        [Required(ErrorMessage = "Password is required.")]
+        //[Required(ErrorMessage = "Password is required.")]
         [StringLength(250)]
         public string Password { get; set; }
         [Display(Name = "Confirm Password")]
         [StringLength(250)]
-        [Required(ErrorMessage = "Confirmation Password is required.")]
+        //[Required(ErrorMessage = "Confirmation Password is required.")]
         [System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
         public string ConfirmPassword { get; set; }
         public int UserRoleLinkID { get; set; }
@@ -38,4 +38,22 @@ namespace PartyEC.UI.Models
         public LogDetailsViewModel logDetails { get; set; }
         public RoleViewModel RoleObj { get; set; }
     }
+    public class LoginViewModel
+    {
+        [Required(ErrorMessage = "Please enter login name")]
+        //[Display(Name = "Login Name")]
+        [StringLength(250)]
+        public string LoginName { get; set; }
+
+        [Required(ErrorMessage = "Password is required.")]
+        //[Display(Name = "Password")]
+        [StringLength(250)]
+        public string Password { get; set; }
+      
+        ////[Required(ErrorMessage = "Confirmation Password is required.")]
+        //[System.ComponentModel.DataAnnotations.Compare("Password", ErrorMessage = "Password and Confirmation Password must match.")]
+        //public string ConfirmPassword { get; set; }
+
+    }
+
 }

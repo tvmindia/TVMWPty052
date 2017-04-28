@@ -47,7 +47,7 @@ $(document).ready(function () {
        });
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 
     try {
@@ -62,7 +62,7 @@ $(document).ready(function () {
     }
     catch (e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 
 });
@@ -83,27 +83,44 @@ function Edit(curobj)
 {
     try
     {
+       
+        ClearForm();
         $('#tabUserDetails a').trigger('click');
-     
         var rowData = DataTables.userTable.row($(curobj).parents('tr')).data();
         if ((rowData != null) && (rowData.ID != null)) {
             var thisuser = GetUserDetails(rowData.ID);
             if ((thisuser)&&(thisuser.length>0)) {
                 var _user = thisuser[0];
-
+                for (index = 0; index < thisuser.length; ++index) {
+                    {
+                        if (thisuser[index].RoleObj.RoleName == 'Manager') {
+                            $("#RoleCheckbox2").prop('checked', true);
+                        }
+                      
+                        if (thisuser[index].RoleObj.RoleName == 'Admin') {
+                            $("#RoleCheckbox1").prop('checked', true);
+                        }
+                        
+                    }
+                }
+               
                 $("#UserName").val(_user.UserName);
                 $("#RoleID").val(_user.RoleObj.ID);
                 $("#LoginName").val(_user.LoginName);
-                $("#Password").val('*******');
-                $("#ConfirmPassword").val('*******');
+                $("#LoginName").attr({ "readonly": "readonly" });
+                $("#userForm").attr("data-ajax-begin", "return true");
+                //$("#Password").val('*******');
+                //$("#ConfirmPassword").val('*******');
                 $("#ID").val(_user.ID);
-                $("#UserRoleLinkID").val(_user.UserRoleLinkID);
+                $("#userID").val(_user.ID);
+             
                 }
         }
+        ChangeButtonPatchView("Users", "UserToolBox", "Edit"); //ControllerName,id of the container div,Name of the action
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -118,37 +135,98 @@ function AddUser()
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
-function SaveUser()
+function SaveUser() {
+    try {
+    
+        $("#btnuserSubmit").click();
+
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
+function ValidatePassword()
+{
+  var pas=  $("#Password").val();
+  var cpas = $("#ConfirmPassword").val();
+  if((pas)&&(cpas))
+  {
+      return true;
+  }
+  notyAlert('error', 'Password Required');
+  return false;
+}
+
+function DeleteUser()
 {
     try
     {
-        $("#btnuserSubmit").click();
+        $("#btndeleteuserSubmit").click();
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
 function usersaveSuccess(data, status, xhr) {
-    var JsonResult = JSON.parse(data)
-    switch (JsonResult.Result) {
-        case "OK":
-            notyAlert('success', JsonResult.Record.StatusMessage);
-       
-       
-            break;
-        case "ERROR":
-            notyAlert('error', JsonResult.Record.StatusMessage);
-            break;
-        default:
-            break;
+    try
+    {
+        var JsonResult = JSON.parse(data)
+        switch (JsonResult.Result) {
+            case "OK":
+                notyAlert('success', JsonResult.Record.StatusMessage);
+                RefreshUserTable();
+                goback();
+                break;
+            case "ERROR":
+                notyAlert('error', JsonResult.Record.StatusMessage);
+                break;
+            case "VALIDATION":
+                notyAlert('error', JsonResult.Message);
+            default:
+                break;
+        }
     }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+   
 
+}
+function userDeleteFailure(data, status, xhr)
+{
+    notyAlert('error', status);
+}
+ 
+function userDeleteSuccess(data, status, xhr)
+{
+    try
+    {
+        var JsonResult = JSON.parse(data)
+        switch (JsonResult.Result) {
+            case "OK":
+                notyAlert('success', JsonResult.Record.StatusMessage);
+                RefreshUserTable();
+                goback();
+                break;
+            case "ERROR":
+                notyAlert('error', JsonResult.Record.StatusMessage);
+                break;
+            default:
+                break;
+        }
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
 }
 
 
@@ -169,10 +247,21 @@ function ClearForm()
         $('#userForm')[0].reset();
         $("#ID").val(0);
         $("#UserRoleLinkID").val(0);
+        $("#LoginName").removeAttr("readonly");
+        $("#userForm").attr("data-ajax-begin", "return ValidatePassword()");
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
+    }
+}
+
+function RefreshUserTable() {
+    try {
+        DataTables.userTable.clear().rows.add(GetAllSystemUsers()).draw(false);
+    }
+    catch (e) {
+        notyAlert('error', e.message);
     }
 }
 
@@ -194,7 +283,7 @@ function GetAllSystemUsers() {
         }
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 

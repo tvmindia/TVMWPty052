@@ -15,6 +15,6 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertUser(User user);
         OperationsStatus UpdateUser(User user);
         OperationsStatus InsertUpdateUser(User user);
-        OperationsStatus DeleteUser(int UserID, int LinkID);
+        OperationsStatus DeleteUser(int UserID);
     }
 }

@@ -49,12 +49,12 @@ namespace PartyEC.BusinessServices.Services
 
         }
 
-        public EventRequests GetEventRequest(int EventRequestsID, OperationsStatus Status)
+        public EventRequests GetEventRequest(int EventRequestsID)
         {
             EventRequests EventRequestsObj = null;
             try
             {
-                EventRequestsObj = _eventRequestsRepositry.GetEventRequest(EventRequestsID, Status);
+                EventRequestsObj = _eventRequestsRepositry.GetEventRequest(EventRequestsID);
 
             }
             catch (Exception ex)

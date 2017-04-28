@@ -46,7 +46,10 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 QuotationsObj = _QuotationsRepository.GetQuotations(QuotationsID);
-                QuotationsObj.AttributeValues = GetAttributeValueFromXML(QuotationsObj.ProductSpecXML);
+                if (QuotationsObj.ProductSpecXML != null)
+                {
+                    QuotationsObj.AttributeValues = GetAttributeValueFromXML(QuotationsObj.ProductSpecXML);
+                }               
             }
             catch (Exception ex)
             {
@@ -163,9 +166,25 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-                return sendsuccess;
+                throw ex;
+                //return sendsuccess;
             }
             return sendsuccess;
+        }
+
+        public OperationsStatus InsertQuotations(Quotations quotationsObj)
+        {
+            OperationsStatus OSatObj = null;
+            try
+            {
+                OSatObj = _QuotationsRepository.InsertQuotations(quotationsObj);
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return OSatObj;
         }
     }
 }

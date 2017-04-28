@@ -73,7 +73,7 @@ namespace PartyEC.UI.Controllers
             try
             {
                 OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                EventRequestsViewModel EventRequest = Mapper.Map<EventRequests, EventRequestsViewModel>(_eventRequestsBusiness.GetEventRequest(Int32.Parse(ID), Mapper.Map<OperationsStatusViewModel, OperationsStatus>(operationsStatus)));
+                EventRequestsViewModel EventRequest = Mapper.Map<EventRequests, EventRequestsViewModel>(_eventRequestsBusiness.GetEventRequest(Int32.Parse(ID)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = EventRequest });
             }
             catch (Exception ex)

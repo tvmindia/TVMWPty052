@@ -11,7 +11,7 @@ namespace PartyEC.RepositoryServices.Contracts
     {
         OperationsStatus InsertEventRequests(EventRequests eventObj);
         List<EventRequests> GetAllEventRequests();
-        EventRequests GetEventRequest(int EventRequestsID, OperationsStatus Status);
+        EventRequests GetEventRequest(int EventRequestsID);
         List<EventRequests> GetEventsLog(int EventRequestsID);
 
         OperationsStatus UpdateEventRequests(EventRequests eventObj);
