@@ -231,7 +231,7 @@ namespace PartyEC.UI.Controllers
             }
             catch(Exception ex)
             {
-                
+                throw ex;
             }
 
             return View("", attributesList);

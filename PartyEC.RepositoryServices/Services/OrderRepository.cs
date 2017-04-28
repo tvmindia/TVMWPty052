@@ -395,7 +395,7 @@ namespace PartyEC.RepositoryServices.Services
             catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
 
             return operationsStatusObj;
@@ -454,8 +454,7 @@ namespace PartyEC.RepositoryServices.Services
             }
             catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
             return operationsStatusObj;

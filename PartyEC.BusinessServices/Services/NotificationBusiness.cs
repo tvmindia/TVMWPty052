@@ -69,6 +69,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             //sort by descending date
             return filteredList==null?null:filteredList.OrderByDescending(fl=>fl.logDetailsObj.CreatedDate).ToList();
