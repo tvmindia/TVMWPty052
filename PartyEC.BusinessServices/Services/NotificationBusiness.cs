@@ -111,7 +111,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatus;
         }
@@ -213,7 +213,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatus;
         }
@@ -361,7 +361,7 @@ namespace PartyEC.BusinessServices.Services
              }
             catch (Exception ex)
             {
-                return sendsuccess;
+                throw ex;
             }
             return sendsuccess;
         }

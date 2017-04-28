@@ -58,7 +58,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return operationStatus;
         }
@@ -87,7 +87,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return AddressLists;
         }
@@ -102,7 +102,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return Address;
         }
@@ -116,7 +116,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatusObj;
         }
