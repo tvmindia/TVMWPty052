@@ -164,6 +164,21 @@ namespace PartyEC.BusinessServices.Services
             return CustomerStatus;
         }
 
+        public OperationsStatus SetDefaultAddress(int CustomerID, int AddressID)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                operationsStatusObj = _customerRepository.SetDefaultAddress(CustomerID,AddressID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+
+        }
+
         #endregion Methods
     }
 }

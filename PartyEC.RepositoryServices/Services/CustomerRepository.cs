@@ -677,6 +677,58 @@ namespace PartyEC.RepositoryServices.Services
             return mycustomer;
         }
 
+        public OperationsStatus SetDefaultAddress(int CustomerID, int AddressID)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[SetDefaultAddress]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.NVarChar, 250).Value = CustomerID;
+                        cmd.Parameters.Add("@AddressID", SqlDbType.NVarChar, 250).Value = AddressID;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                operationsStatusObj.StatusMessage = ex.Message;
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
+        }
+
 
         #endregion Methods
 

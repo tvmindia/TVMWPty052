@@ -234,6 +234,21 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        public object SetDefaultAddress(CustomerAddress addressObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.SetDefaultAddress(addressObj.CustomerID,addressObj.ID));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
         #endregion Address
 
         #region User

@@ -17,6 +17,7 @@ namespace PartyEC.BusinessServices.Contracts
         Customer GetCustomerVerification(string Email);
         CustomerAddress GetAddressByAddress(int AddressID);
         OperationsStatus DeleteAddress(CustomerAddress customerAddress);
+        OperationsStatus SetDefaultAddress(int CustomerID,int AddressID);
         OperationsStatus InsertCustomer(Customer customer);
         OperationsStatus UpdateCustomer(Customer customer);
     }
