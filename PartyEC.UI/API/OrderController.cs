@@ -160,5 +160,23 @@ namespace PartyEC.UI.API
         }
 
 
+        [HttpPost]
+        public object UpdateOrderPaymentStatus(Order OrderObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                OrderObj.commonObj = new LogDetails();
+                OrderObj.commonObj.UpdatedBy = "AppUser";
+                OrderObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_OrderBusiness.UpdateOrderPaymentStatus(OrderObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        } 
     }
 }
