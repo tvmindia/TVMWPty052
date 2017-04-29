@@ -21,6 +21,12 @@ namespace PartyEC.BusinessServices.Services
 
             return _orderRepository.GetAllOrderHeader();
         }
+        public List<Order> GetOrderHeader()
+        {
+            return _orderRepository.GetAllOrderHeader().GroupBy(r => r.OrderNo)
+                    .Select(g => g.OrderByDescending(i => i.ID).First())
+                    .ToList();
+        }
         public List<Order> GetAllOrdersList(string ID)
         {
             return _orderRepository.GetAllOrdersList(ID);
@@ -71,6 +77,40 @@ namespace PartyEC.BusinessServices.Services
         public List<Order> GetCustomerOrders(int CustomerID,bool Ishistory)
         {
             return _orderRepository.GetCustomerOrders(CustomerID, Ishistory);
+        }
+        public OperationsStatus InsertReviseOrder(OrderDetail orderDetailsObj)
+        {
+            OperationsStatus operationStatusObj = null;
+            Order orderObj = null;
+            List<Order> OrderList = _orderRepository.GetAllOrderHeader().Where(t=>t.ParentOrderID==orderDetailsObj.OrderID).ToList();
+            orderObj = _orderRepository.GetOrderDetails(orderDetailsObj.OrderID.ToString());
+            orderObj.commonObj = orderDetailsObj.commonObj;
+            orderObj.RevNo = OrderList.Count;
+            orderObj.ParentOrderID = orderDetailsObj.OrderID;
+            orderObj.StatusCode = 1;
+            operationStatusObj= InsertOrderHeader(orderObj);
+            if(operationStatusObj.StatusCode==1)
+            {
+                if(orderDetailsObj.OrderDetailsList!=null)
+                {
+                    foreach(var i in orderDetailsObj.OrderDetailsList)
+                    {
+
+                        i.OrderID = int.Parse(operationStatusObj.ReturnValues.ToString());
+                        i.commonObj= orderDetailsObj.commonObj;
+                        InsertOrderDetail(i);
+                    }
+                }
+            }
+            return operationStatusObj;
+        }
+        public OperationsStatus InsertOrderHeader(Order orderObj)
+        {
+            return _orderRepository.InsertOrderHeader(orderObj);
+        }
+        public OperationsStatus InsertOrderDetail(OrderDetail orderDetailObj)
+        {
+            return _orderRepository.InsertOrderDetail(orderDetailObj);
         }
     }
 }

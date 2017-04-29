@@ -37,6 +37,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>ParentOrderID</th>
                                 <th>Order No</th>
                                 <th>Order Date</th>
                                 <th>Customer Name</th>
@@ -243,6 +244,7 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                
                                                 <th>Poduct</th>
                                                 <th>Item Status</th>
                                                 <th>Qty</th>
@@ -498,6 +500,8 @@
                                     <div class="col-md-offset-5 col-md-5">
                                         @Html.HiddenFor(model => model.CustomerID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
                                         @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnOrderHID" })
+                                        @Html.HiddenFor(model => model.ParentOrderID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
+
                                         <input type="submit" value="Save" class="btn btn-default btn-right" />
                                     </div>
                                 </div>

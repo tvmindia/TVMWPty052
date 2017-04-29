@@ -57,11 +57,11 @@ namespace PartyEC.UI.Controllers
             return View(order);
         }
         [HttpGet]
-        public string GetAllOrderHeader()
+        public string GetOrderHeader()
         {
             try
             {
-                List<OrderViewModel> OrderHeaderList = Mapper.Map<List<Order>, List<OrderViewModel>>(_orderBusiness.GetAllOrderHeader());
+                List<OrderViewModel> OrderHeaderList = Mapper.Map<List<Order>, List<OrderViewModel>>(_orderBusiness.GetOrderHeader());
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = OrderHeaderList });
             }
             catch (Exception ex)
@@ -181,9 +181,30 @@ namespace PartyEC.UI.Controllers
                 }
         }
         [HttpPost]
-        public string InsertNewOrderRevision(OrderDetailViewModel OrderDetailsViewModelObj)
+        public string InsertReviseOrder(OrderDetailViewModel OrderDetailViewModelObj)
         {
-            return "";
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+
+                OrderDetailViewModelObj.commonObj = new LogDetailsViewModel();
+                OrderDetailViewModelObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                OrderDetailViewModelObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.InsertReviseOrder(Mapper.Map<OrderDetailViewModel, OrderDetail>(OrderDetailViewModelObj)));
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+            if (OperationsStatusViewModelObj.StatusCode == 1)
+            {
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+            }
+            else
+            {
+                return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+            }
         }
         [ValidateAntiForgeryToken]
         public string UpdateBillingDetails(OrderViewModel orderViewModelObj)

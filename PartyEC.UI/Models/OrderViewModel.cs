@@ -202,7 +202,7 @@ namespace PartyEC.UI.Models
         public float DiscountAmt { get; set; }
         public float Total { get; set; }
         public float SubTotal { get; set; }
-        public List<OrderViewModel> OrderDetails { get; set; }
+        public List<OrderDetailViewModel> OrderDetailsList { get; set; }
         public LogDetailsViewModel commonObj { get; set; }
     }
 }

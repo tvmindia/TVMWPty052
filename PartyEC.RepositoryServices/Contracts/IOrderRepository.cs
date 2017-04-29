@@ -16,7 +16,8 @@ namespace PartyEC.RepositoryServices.Contracts
         Order GetOrderSummery(int ID);
         OperationsStatus UpdateBillingDetails(Order orderObj);
         OperationsStatus UpdateShipingDetails(Order orderObj);
-        //For App
+        OperationsStatus InsertOrderHeader(Order orderObj);
+        OperationsStatus InsertOrderDetail(OrderDetail orderDetailObj); 
         List<Order> GetCustomerOrders(int CustomerID,bool Ishistory);
 
     }

@@ -13,6 +13,8 @@ namespace PartyEC.DataAccessObject.DTO
         public string OrderRev { get; set; }
         //
         public string OrderDate { get; set; }
+        public DateTime OrderDateTime { get; set; }
+        public int StatusCode { get; set; }
         public string OrderStatus { get; set; }
         public int ParentOrderID { get; set; }
         public string SourceIP { get; set; }
@@ -24,6 +26,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string CustomerURL { get; set; }
         public string ProfileImageID { get; set; }
         //
+        public int shippingLocationID { get; set; }
         public string ShippingLocationName { get; set; }
         public string PaymentType { get; set; }
         public string CurrencyCode { get; set; }
@@ -32,6 +35,7 @@ namespace PartyEC.DataAccessObject.DTO
         public float TotalShippingAmt { get; set; }
         public float TotalTaxAmt { get; set; }
         public float TotalDiscountAmt { get; set; }
+        public int PayStatusCode { get; set; }
         public string PaymentStatus { get; set; }
         public string OrderRemarks { get; set; }
         public string BillPrefix { get; set; }
@@ -96,6 +100,7 @@ namespace PartyEC.DataAccessObject.DTO
         public float DiscountAmt { get; set; }
         public float Total { get; set; }
         public float SubTotal { get; set; }
+        public List<OrderDetail> OrderDetailsList { get; set; }
         public LogDetails commonObj { get; set; }
     }
 }

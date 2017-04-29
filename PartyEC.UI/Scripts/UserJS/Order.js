@@ -6,10 +6,11 @@ $(document).ready(function () {
         order: [],
         searching: true,
         paging: true,
-        data: GetAllOrderHeader(),
+        data: GetOrderHeader(),
         columns: [
           { "data": "ID" },
-          { "data": "OrderNo"},
+          { "data": "ParentOrderID" },
+          { "data": null },
           { "data": "OrderDate" },
           { "data": "CustomerName" },
           { "data": "ContactNo" },
@@ -19,9 +20,16 @@ $(document).ready(function () {
         ],
         columnDefs: [
          {
-             "targets": [0],
-             "visible": true,
-             "searchable": true
+             "targets": [0,1],
+             "visible": false,
+             "searchable": false
+         },
+         {
+             'targets': 2,
+             'render': function (data, type, full, meta) {
+                 var Order = data.OrderNo+" / "+data.OrderRev;
+                 return Order;
+             }
          }
         ]
     });
@@ -159,7 +167,7 @@ $(document).ready(function () {
              data: null,
              columns: [
                { "data": null, "defaultContent": '' },
-               { "data": "ID" },
+               { "data": "ProductID" },
                { "data": "ProductName" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
@@ -207,12 +215,12 @@ $(document).ready(function () {
     ChangeButtonPatchView("Order", "btnPatchOrders", "List");
 });
 //Table Data Bind for Order Header
-function GetAllOrderHeader()
+function GetOrderHeader()
 {
     try {
         var data = "";
         var ds = {};
-        ds = GetDataFromServer("Order/GetAllOrderHeader/", data);
+        ds = GetDataFromServer("Order/GetOrderHeader/", data);
         if (ds != '') {ds = JSON.parse(ds);}
         if (ds.Result == "OK") {return ds.Records;}
         if (ds.Result == "ERROR") {alert(ds.Message);}
@@ -333,6 +341,7 @@ function Edit(this_obj)
     if ((rowData != null) && (rowData.ID != null)) {
         debugger;
         $("#ID").val(rowData.ID);
+        $("#ParentOrderID").val(rowData.ParentOrderID);
         var Result = GetOrderDetails(rowData.ID);
         BindGeneralSection(Result);
         BindAccountSection(Result);
@@ -390,6 +399,7 @@ function AddReviseOrder()
         Order.ItemStatus = "Pending";
         Order.Price = tabledata[i].ActualPrice;
         Order.ProductSpecXML = tabledata[i].ProductName;
+        Order.ProductID = tabledata[i].ProductID;
         ordertabledata.push(Order);
         GrandTotal = GrandTotal + Order.SubTotal;
     }
@@ -435,10 +445,43 @@ function InsertNewOrder()
         var OrderDetailList = [];
         for(var i=0;i<newOrderData.length;i++)
         {
-            var OrderDetailViewModel = new Object();
-            OrderDetailViewModel.ItemID = i;
-            OrderDetailViewModel.ProductID = newOrderData[i].ProductID;
+            var OrderDetailViewModelObj = new Object();
+            OrderDetailViewModelObj.ItemID = i+1;
+            OrderDetailViewModelObj.ProductID = newOrderData[i].ProductID;
+            OrderDetailViewModelObj.ProductSpecXML = newOrderData[i].ProductSpecXML.split('||')[1];
+            OrderDetailViewModelObj.ItemStatus = 1;
+            OrderDetailViewModelObj.Qty = newOrderData[i].Qty;
+            OrderDetailViewModelObj.Price = newOrderData[i].Price;
+            OrderDetailViewModelObj.ShippingAmt = newOrderData[i].ShippingAmt;
+            OrderDetailViewModelObj.TaxAmt = newOrderData[i].TaxAmt;
+            OrderDetailViewModelObj.DiscountAmt = newOrderData[i].DiscountAmt;
+            OrderDetailList.push(OrderDetailViewModelObj);
         }
+        var OrderDetailViewModel = new Object();
+        if ($("#ParentOrderID").val() != "0")
+        {
+            OrderDetailViewModel.OrderID = $("#ParentOrderID").val();
+        }
+        else {
+            OrderDetailViewModel.OrderID = $("#hdnOrderHID").val();
+        }
+        OrderDetailViewModel.OrderDetailsList = OrderDetailList;
+        var data = "{'OrderDetailViewModelObj':" + JSON.stringify(OrderDetailViewModel) + "}";
+        PostDataToServer('Order/InsertReviseOrder/', data, function (JsonResult) {
+            if (JsonResult != '') {
+                switch (JsonResult.Result) {
+                    case "OK":
+                        notyAlert('success', JsonResult.Record.StatusMessage);
+                        goback();
+                        break;
+                    case "ERROR":
+                        notyAlert('error', JsonResult.Record.StatusMessage);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
 
     }
     
@@ -475,6 +518,7 @@ function gobackDetails()
 function goback()
 {
     $('#tabOrderList').trigger('click');
+    DataTables.orderHeadertable.clear().rows.add(GetOrderHeader()).draw(false);
     ChangeButtonPatchView("Order", "btnPatchOrders", "List");
 }
 function gobackDetails()
