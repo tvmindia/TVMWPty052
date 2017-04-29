@@ -149,6 +149,21 @@ namespace PartyEC.BusinessServices.Services
             return operationStatus;
         }
 
+        public Customer GetCustomerVerification(string Email)
+        {
+            Customer CustomerStatus = null;
+            try
+            {
+                CustomerStatus = _customerRepository.GetCustomerVerification(Email);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return CustomerStatus;
+        }
+
         #endregion Methods
     }
 }

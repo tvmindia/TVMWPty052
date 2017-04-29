@@ -184,7 +184,7 @@ namespace PartyEC.UI.API
 
         #endregion Bookings
 
-
+        #region Address
         [HttpPost]
         public object InsertUpdateCustomerAddress(Customer addressObj)
         {
@@ -220,7 +220,6 @@ namespace PartyEC.UI.API
             }
         }
 
-
         [HttpPost]
         public object DeleteCustomerAddress(CustomerAddress addressObj)
         {
@@ -235,8 +234,9 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+        #endregion Address
 
-
+        #region User
         [HttpPost]
         public object RegisterUser (Customer customerObj)
         {
@@ -274,5 +274,32 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+        #endregion User
+
+        [HttpPost]
+        public object GetCustomerVerificationandOTP(Customer customerObj)
+        {
+            try
+            {
+                bool flag = true;
+                int OTP;
+
+                CustomerViewModel CustomerList = Mapper.Map<Customer,CustomerViewModel>(_customerBusiness.GetCustomerVerification(customerObj.Email));
+                if (CustomerList == null)
+                {
+                      flag = false;
+                } 
+                Random rnd = new Random();                  // Random number creation for OTP
+                OTP= rnd.Next(2000, 9000);
+                //send otp to mail.
+                return JsonConvert.SerializeObject(new { Result = true, Records = new { Customer = CustomerList, IsUser = flag, CustomerOTP = OTP } });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+
     }
 }
