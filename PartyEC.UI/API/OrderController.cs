@@ -122,5 +122,43 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        public object InsertOrder(Order OrderObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                OrderObj.commonObj = new LogDetails();
+                OrderObj.commonObj.CreatedBy = "AppUser";
+                OrderObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_OrderBusiness.InsertOrder(OrderObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        // (Dummy True always till payment gateway is ready)
+        [HttpPost]
+        public object GetPaymentStatus()
+        {
+            try
+            {
+                Random rnd = new Random();                  // Random number creation  
+                string ReferenceNo= "_"+ rnd.Next(100000000, 900000000).ToString();
+                bool TranscationStatus= true;
+                return JsonConvert.SerializeObject(new { Result = true, Records = new { Reference = ReferenceNo, Status = TranscationStatus } });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+
     }
 }
