@@ -5,16 +5,20 @@ using System.Linq;
 using System.Web;
 using PartyEC.DataAccessObject.DTO;
 using PartyEC.RepositoryServices.Contracts;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace PartyEC.BusinessServices.Services
 {
     public class CustomerBusiness : ICustomerBusiness
     {
         private ICustomerRepository _customerRepository;
+        private IMailBusiness _mailBusiness;
 
-        public CustomerBusiness(ICustomerRepository customerRepository)
+        public CustomerBusiness(ICustomerRepository customerRepository,IMailBusiness mailBusiness)
         {
             _customerRepository = customerRepository;
+            _mailBusiness = mailBusiness;
         }
 
 
@@ -179,6 +183,33 @@ namespace PartyEC.BusinessServices.Services
 
         }
 
+        public async Task<bool> SendCustomerOTP(int OTP,string Email)
+        {
+                
+            bool sendsuccess = false;
+            try
+            { 
+                    Mail _mail = new Mail();
+                    using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/SendOtp.html")))
+                    {
+                        _mail.Body = reader.ReadToEnd();
+                    }
+                    _mail.Body = _mail.Body.Replace("{Otp}", OTP.ToString()); 
+                    _mail.IsBodyHtml = true;
+                    _mail.Subject = "OTP";
+                    _mail.To = Email;
+                    sendsuccess = await _mailBusiness.MailSendAsync(_mail);
+                    //quotationsObj.EventsLogViewObj.CustomerNotifiedYN = Mailstatus;
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                //return sendsuccess;
+            }
+            return sendsuccess;
+        }
+   
         #endregion Methods
     }
 }

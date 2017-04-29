@@ -9,6 +9,7 @@ using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
 using AutoMapper;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace PartyEC.UI.API
 {
@@ -292,11 +293,12 @@ namespace PartyEC.UI.API
         #endregion User
 
         [HttpPost]
-        public object GetCustomerVerificationandOTP(Customer customerObj)
+        public async Task<object> GetCustomerVerificationandOTP(Customer customerObj)
         {
             try
             {
                 bool flag = true;
+               
                 int OTP;
 
                 CustomerViewModel CustomerList = Mapper.Map<Customer,CustomerViewModel>(_customerBusiness.GetCustomerVerification(customerObj.Email));
@@ -306,7 +308,8 @@ namespace PartyEC.UI.API
                 } 
                 Random rnd = new Random();                  // Random number creation for OTP
                 OTP= rnd.Next(2000, 9000);
-                //send otp to mail.
+                //sending otp to mail.
+                await _customerBusiness.SendCustomerOTP(OTP, customerObj.Email);
                 return JsonConvert.SerializeObject(new { Result = true, Records = new { Customer = CustomerList, IsUser = flag, CustomerOTP = OTP } });
             }
             catch (Exception ex)
