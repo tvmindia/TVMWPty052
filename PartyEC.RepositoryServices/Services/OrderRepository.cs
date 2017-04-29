@@ -156,6 +156,7 @@ namespace PartyEC.RepositoryServices.Services
                                     orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
                                     orderObj.OrderNo = sdr["OrderNo"].ToString();
                                     orderObj.OrderRev = sdr["OrderRev"].ToString();
+                                    orderObj.RevisionIDs = sdr["RevisionIDs"].ToString();
                                     orderObj.shippingLocationID= sdr["shippingLocationID"].ToString() != null ? int.Parse(sdr["shippingLocationID"].ToString()) : orderObj.shippingLocationID;
                                     orderObj.ShippingLocationName = sdr["ShippingLocationName"].ToString();
                                     orderObj.SourceIP = sdr["SourceIP"].ToString();

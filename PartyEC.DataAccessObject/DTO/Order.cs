@@ -6,7 +6,7 @@ namespace PartyEC.DataAccessObject.DTO
     public class Order
     {
         public int ID { get; set; }
-
+        public string RevisionIDs { get; set; }
         public string OrderNo { get; set; }
         public int RevNo { get; set; }
         //

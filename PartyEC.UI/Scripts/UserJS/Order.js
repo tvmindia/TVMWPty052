@@ -27,8 +27,16 @@ $(document).ready(function () {
          {
              'targets': 2,
              'render': function (data, type, full, meta) {
-                 var Order = data.OrderNo+" / "+data.OrderRev;
-                 return Order;
+                 if (data.OrderRev != "")
+                 {
+                     var Order = data.OrderNo + " / " + data.OrderRev;
+                     return Order;
+                 }
+                 else
+                 {
+                     var Order = data.OrderNo;
+                     return Order;
+                 }
              }
          }
         ]
@@ -203,6 +211,51 @@ $(document).ready(function () {
                  selector: 'tr'
              },
              order: [[1, 'asc']]
+         });
+    DataTables.tblProductListRevised = $('#tblProductListRevised').DataTable(
+         {
+             dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+             order: [],
+             searching: true,
+             paging: false,
+             data: null,
+             columns: [
+               { "data": "OrderDetailID" },
+               { "data": "ProductSpecXML" },
+               { "data": "ItemStatus" },
+               { "data": "Qty" },
+               { "data": "Price" },
+               { "data": "Total" },
+               { "data": "ShippingAmt" },
+               { "data": "TaxAmt" },
+               { "data": "DiscountAmt" },
+               { "data": "SubTotal" }
+             ],
+             columnDefs: [
+              {
+                  "targets": [0],
+                  "visible": true,
+                  "searchable": true
+              },
+              {//hiding hidden column 
+                  "targets": [1],
+                  "visible": true,
+                  "searchable": true,
+                  "render": function (data, type, full, meta) {
+                      debugger;
+                      var Name = "<b>" + data.split("||")[0] + "</b>";
+                      var Spec = (data.split("||")[1]).split("><");
+                      for (var i = 0; i < Spec.length - 1; i++) {
+                          if (i > 0) {
+                              var html = Spec[i].replace(">", " : ");
+                              Name = Name + "</br>" + (html.split("</")[0]);
+                          }
+
+                      }
+                      return Name;
+                  }
+              }
+             ]
          });
     //$('#tblProductList tbody').on('click', 'tr', function () {  
     //    var tabledata = DataTables.tblProductList.rows('.selected').data();
@@ -528,10 +581,35 @@ function gobackDetails()
 }
 function BindGeneralSection(Result)
 {
+    debugger;
     $("#lblOrderNo").text(Result.OrderNo);
     $("#lblOrderDate").text(Result.OrderDate);
     $("#lblOrderStatus").text(Result.OrderStatus);
     $("#lblSourceIP").text(Result.SourceIP);
+    $("#lblRevNo").text(Result.OrderRev);
+    if (Result.RevisionIDs != "")
+    {
+        $('#lblRevisionIDs').show();
+        $("#RevisionLinkBind").empty();
+        var IDs = Result.RevisionIDs.split(',');
+        for (var i = 0; i < IDs.length; i++)
+        {
+            $("#RevisionLinkBind").append('<a class="col-md-6" onclick="ShowRevision(' + IDs[i] + ')">Revision ' + (i + 1) + ' </a>');
+        }
+        
+    }
+    else
+    {
+        $('#lblRevisionIDs').hide();
+        $("#RevisionLinkBind").empty();
+    }
+    
+}
+function ShowRevision(id)
+{
+    debugger;
+    $('#ModelRevisionDetails').modal('show');
+    DataTables.tblProductListRevised.clear().rows.add(GetAllOrdersList(id)).draw(false);
 }
 function BindAccountSection(Result)
 {
