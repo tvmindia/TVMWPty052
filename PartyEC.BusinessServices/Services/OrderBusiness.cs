@@ -112,5 +112,31 @@ namespace PartyEC.BusinessServices.Services
         {
             return _orderRepository.InsertOrderDetail(orderDetailObj);
         }
+
+        public OperationsStatus InsertOrder(Order orderObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                operationsStatusObj = InsertOrderHeader(orderObj);
+                if (operationsStatusObj.StatusCode == 1)
+                {
+                    if (orderObj.OrderDetailsList != null)
+                    {
+                        foreach (var i in orderObj.OrderDetailsList)
+                        {
+                            i.OrderID = int.Parse(operationsStatusObj.ReturnValues.ToString());
+                            i.commonObj = orderObj.commonObj;
+                            operationsStatusObj=InsertOrderDetail(i);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
     }
 }

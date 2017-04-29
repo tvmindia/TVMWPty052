@@ -57,6 +57,8 @@ namespace PartyEC.DataAccessObject.DTO
         public string ShipStateProvince { get; set; }
         public string ShipContactNo { get; set; }
         public LogDetails commonObj { get; set; }
+        public List<OrderDetail> OrderDetailsList { get; set; }
+
         //Order Details
         public int OrderDetailID { get; set; }
         public int OrderID { get; set; }
