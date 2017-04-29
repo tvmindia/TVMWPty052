@@ -15,6 +15,7 @@ namespace PartyEC.UI.Models
         public string OrderNo { get; set; }   
         public int RevNo { get; set; }
         //
+        public string RevisionIDs { get; set; }
         public string OrderRev { get; set; }
         //
         [Display(Name = "Date :")]
