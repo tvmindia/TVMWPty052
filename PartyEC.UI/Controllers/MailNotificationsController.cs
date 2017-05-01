@@ -26,7 +26,7 @@ namespace PartyEC.UI.Controllers
         
         // GET: MailNotifications
    
-        [AuthorizeRoles(RoleContants.SuperAdminRole)]
+        //[AuthorizeRoles(RoleContants.SuperAdminRole)]
         public ActionResult Index()
         {
 
