@@ -139,5 +139,19 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationsStatusObj;
         }
+
+        public OperationsStatus UpdateOrderPaymentStatus(Order orderObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                operationsStatusObj = _orderRepository.UpdateOrderPaymentStatus(orderObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
     }
 }

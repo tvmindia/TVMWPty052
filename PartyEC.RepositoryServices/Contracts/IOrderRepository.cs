@@ -20,5 +20,7 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertOrderDetail(OrderDetail orderDetailObj); 
         List<Order> GetCustomerOrders(int CustomerID,bool Ishistory);
 
+        OperationsStatus UpdateOrderPaymentStatus(Order orderObj);
+
     }
 }

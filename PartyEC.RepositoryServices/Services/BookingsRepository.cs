@@ -110,30 +110,31 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[InsertBookings]";
                         cmd.CommandType = CommandType.StoredProcedure;                     
-                        cmd.Parameters.Add("@BookingNo", SqlDbType.NVarChar, 20).Value = bookingsObj.BookingNo;
-                        cmd.Parameters.Add("@BookingDate", SqlDbType.SmallDateTime).Value = bookingsObj.BookingDate;
+                      
                         cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = bookingsObj.ProductID;
                         cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = bookingsObj.CustomerID;
-
                         cmd.Parameters.Add("@RequiredDate", SqlDbType.SmallDateTime).Value = bookingsObj.RequiredDate;
                         cmd.Parameters.Add("@SourceIP", SqlDbType.NVarChar, 50).Value = bookingsObj.SourceIP;
                         cmd.Parameters.Add("@Status", SqlDbType.Int).Value = bookingsObj.Status;
-
                         cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = bookingsObj.Qty;
                         cmd.Parameters.Add("@Price", SqlDbType.Decimal).Value = bookingsObj.Price;
                         cmd.Parameters.Add("@AdditionalCharges", SqlDbType.Decimal).Value = bookingsObj.AdditionalCharges;
                         cmd.Parameters.Add("@TaxAmt", SqlDbType.Decimal).Value = bookingsObj.TaxAmt;
                         cmd.Parameters.Add("@DiscountAmt", SqlDbType.Decimal).Value = bookingsObj.DiscountAmt;
                         cmd.Parameters.Add("@Message", SqlDbType.NVarChar, -1).Value = bookingsObj.Message;
-                        cmd.Parameters.Add("@BillPrefix", SqlDbType.NVarChar, 100).Value = bookingsObj.BillPrefix;
-                        cmd.Parameters.Add("@BillFirstName", SqlDbType.NVarChar, 100).Value = bookingsObj.BillFirstName;
-                        cmd.Parameters.Add("@BillMidName", SqlDbType.NVarChar, 100).Value = bookingsObj.BillMidName;
-                        cmd.Parameters.Add("@BillLastName", SqlDbType.NVarChar, 100).Value = bookingsObj.BillLastName;
-                        cmd.Parameters.Add("@BillAddress", SqlDbType.NVarChar, 100).Value = bookingsObj.BillAddress;
-                        cmd.Parameters.Add("@BillCity", SqlDbType.NVarChar, 100).Value = bookingsObj.BillCity;
-                        cmd.Parameters.Add("@BillCountryCode", SqlDbType.NVarChar, 3).Value = bookingsObj.BillCountryCode;
-                        cmd.Parameters.Add("@BillStateProvince", SqlDbType.NVarChar, 100).Value = bookingsObj.BillStateProvince;
-                        cmd.Parameters.Add("@BillContactNo", SqlDbType.NVarChar, 20).Value = bookingsObj.BillContactNo;
+
+                        cmd.Parameters.Add("@CustomerAddressID", SqlDbType.Int).Value = bookingsObj.CustomerAddress.ID;
+                        cmd.Parameters.Add("@BillLocation", SqlDbType.Int).Value = bookingsObj.CustomerAddress.Location;
+                        cmd.Parameters.Add("@BillPrefix", SqlDbType.NVarChar, 100).Value = bookingsObj.CustomerAddress.Prefix;
+                        cmd.Parameters.Add("@BillFirstName", SqlDbType.NVarChar, 100).Value = bookingsObj.CustomerAddress.FirstName;
+                        cmd.Parameters.Add("@BillMidName", SqlDbType.NVarChar, 100).Value = bookingsObj.CustomerAddress.MidName;
+                        cmd.Parameters.Add("@BillLastName", SqlDbType.NVarChar, 100).Value = bookingsObj.CustomerAddress.LastName;
+                        cmd.Parameters.Add("@BillAddress", SqlDbType.NVarChar, 100).Value = bookingsObj.CustomerAddress.Address;
+                        cmd.Parameters.Add("@BillCity", SqlDbType.NVarChar, 100).Value = bookingsObj.CustomerAddress.City;
+                        cmd.Parameters.Add("@BillCountryCode", SqlDbType.NVarChar, 3).Value = bookingsObj.CustomerAddress.CountryCode;
+                        cmd.Parameters.Add("@BillStateProvince", SqlDbType.NVarChar, 100).Value = bookingsObj.CustomerAddress.StateProvince;
+                        cmd.Parameters.Add("@BillContactNo", SqlDbType.NVarChar, 20).Value = bookingsObj.CustomerAddress.ContactNo;
+
                         cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = bookingsObj.logDetails.CreatedBy;
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = bookingsObj.logDetails.CreatedDate;
                         statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);

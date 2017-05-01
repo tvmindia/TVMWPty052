@@ -21,5 +21,6 @@ namespace PartyEC.BusinessServices.Contracts
         //For App
         List<Order> GetCustomerOrders(int CustomerID,bool Ishistory);
         OperationsStatus InsertOrder(Order orderObj);
+        OperationsStatus UpdateOrderPaymentStatus(Order orderObj);
     }
 }

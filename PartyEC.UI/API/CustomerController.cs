@@ -9,6 +9,7 @@ using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
 using AutoMapper;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace PartyEC.UI.API
 {
@@ -19,17 +20,19 @@ namespace PartyEC.UI.API
 
         ICustomerBusiness _customerBusiness;
         ICommonBusiness _commonBusiness;
+        IMasterBusiness _masterBusiness;
         IEventBusiness _eventBusiness;
         ICart_WishlistBusiness _cartwishlistBusiness;
         IOrderBusiness _orderBusiness;
         IQuotationsBusiness _quotationBusiness;
         IBookingsBusiness _bookingsBusiness;
 
-        public CustomerController(ICustomerBusiness customerBusiness,ICommonBusiness commonBusiness, IEventBusiness eventBusiness,ICart_WishlistBusiness cartwishlistBusiness, IOrderBusiness orderBusiness, IQuotationsBusiness quotationBusiness, IBookingsBusiness bookingsBusiness)
+        public CustomerController(ICustomerBusiness customerBusiness,IMasterBusiness masterBusiness,ICommonBusiness commonBusiness, IEventBusiness eventBusiness,ICart_WishlistBusiness cartwishlistBusiness, IOrderBusiness orderBusiness, IQuotationsBusiness quotationBusiness, IBookingsBusiness bookingsBusiness)
         {
             _customerBusiness = customerBusiness;
             _commonBusiness = commonBusiness;
             _eventBusiness = eventBusiness;
+            _masterBusiness = masterBusiness;
             _cartwishlistBusiness = cartwishlistBusiness;
              _orderBusiness=orderBusiness;
             _quotationBusiness = quotationBusiness;
@@ -292,11 +295,12 @@ namespace PartyEC.UI.API
         #endregion User
 
         [HttpPost]
-        public object GetCustomerVerificationandOTP(Customer customerObj)
+        public async Task<object> GetCustomerVerificationandOTP(CustomerViewModel customerObj)
         {
             try
             {
                 bool flag = true;
+               
                 int OTP;
 
                 CustomerViewModel CustomerList = Mapper.Map<Customer,CustomerViewModel>(_customerBusiness.GetCustomerVerification(customerObj.Email));
@@ -306,7 +310,8 @@ namespace PartyEC.UI.API
                 } 
                 Random rnd = new Random();                  // Random number creation for OTP
                 OTP= rnd.Next(2000, 9000);
-                //send otp to mail.
+                //sending otp to mail.
+                await _customerBusiness.SendCustomerOTP(OTP, customerObj.Email);
                 return JsonConvert.SerializeObject(new { Result = true, Records = new { Customer = CustomerList, IsUser = flag, CustomerOTP = OTP } });
             }
             catch (Exception ex)
@@ -315,6 +320,49 @@ namespace PartyEC.UI.API
             }
         }
 
+        [HttpPost]
+        public object GetShippingLocations()
+        {
+            try
+            {
+                List<ShippingLocationViewModel> CartList = Mapper.Map<List<ShippingLocations>, List<ShippingLocationViewModel>>(_masterBusiness.GetAllShippingLocation());
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
 
+        [HttpPost]
+        public object GetCountries()
+        {
+            try
+            {
+                List<CountryViewModel> CartList = Mapper.Map<List<Country>, List<CountryViewModel>>(_masterBusiness.GetAllCountries());
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<object> SendContactUsEmail( ContactUs MailObj)
+        {
+            bool  MailStatus = false;
+            try
+            {
+                MailStatus = await _customerBusiness.SendContactUsEmail(MailObj);
+                return JsonConvert.SerializeObject(new { Result = true, Records = MailStatus });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
     }
 }
