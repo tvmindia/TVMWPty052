@@ -336,6 +336,21 @@ namespace PartyEC.UI.API
         }
 
         [HttpPost]
+        public object GetCountries()
+        {
+            try
+            {
+                List<CountryViewModel> CartList = Mapper.Map<List<Country>, List<CountryViewModel>>(_masterBusiness.GetAllCountries());
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
         public async Task<object> SendContactUsEmail( ContactUs MailObj)
         {
             bool  MailStatus = false;
