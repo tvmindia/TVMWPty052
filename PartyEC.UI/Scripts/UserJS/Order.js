@@ -366,6 +366,7 @@ function GetProductsListtoAdd()
         notyAlert('error', e.message);
     }
 }
+
 //function InsertNewOrderRevision(tabledata, OrderID)
 //{
 //    try {
@@ -434,9 +435,29 @@ function CancelIssue()
 }
 function CancelOrder()
 {
+    debugger;
     var r = confirm("Are You Sure ?, This will cancel your Current Order..");
     if (r == true) {
-
+        var ID = $('#hdnOrderHID').val();
+        var OrderViewModel = new Object();
+        OrderViewModel.ID = ID;
+        var data = "{'orderObj':" + JSON.stringify(OrderViewModel) + "}";
+        PostDataToServer('Order/CancelOrder/', data, function (JsonResult) {
+            if (JsonResult != '') {
+                switch (JsonResult.Result) {
+                    case "OK":
+                        notyAlert('success', JsonResult.Record.StatusMessage);
+                        goback();
+                        break;
+                    case "ERROR":
+                        notyAlert('error', JsonResult.Record.StatusMessage);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+        
     }
 }
 function AddReviseOrder()

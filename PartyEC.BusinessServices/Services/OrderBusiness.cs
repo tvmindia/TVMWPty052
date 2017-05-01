@@ -73,7 +73,10 @@ namespace PartyEC.BusinessServices.Services
         {
             return _orderRepository.UpdateShipingDetails(orderObj);
         }
-
+        public OperationsStatus  CancelOrder(int ID)
+        {
+            return _orderRepository.CancelOrder(ID);
+        }
         public List<Order> GetCustomerOrders(int CustomerID,bool Ishistory)
         {
             return _orderRepository.GetCustomerOrders(CustomerID, Ishistory);

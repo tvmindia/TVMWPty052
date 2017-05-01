@@ -145,7 +145,21 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
-        
+        [HttpPost]
+        public string CancelOrder(OrderViewModel orderObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+               
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.CancelOrder(orderObj.ID));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
         [HttpPost]
         public string UpdateEventsLog(OrderViewModel orderObj)
         {

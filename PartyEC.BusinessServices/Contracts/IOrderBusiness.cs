@@ -13,6 +13,7 @@ namespace PartyEC.BusinessServices.Contracts
         Order GetSalesStatistics(int CustomerID, DateTime CurrentDate);
         List<Order> GetOrderSummary(int CustomerID);
         Order GetOrderDetails(string ID);
+        OperationsStatus CancelOrder(int ID);
         OperationsStatus UpdateBillingDetails(Order orderObj);
         OperationsStatus UpdateShipingDetails(Order orderObj);
         OperationsStatus InsertReviseOrder(OrderDetail orderDetailObj);
