@@ -31,7 +31,14 @@ namespace PartyEC.DataAccessObject.DTO
         public string BillStateProvince { get; set; }
         public string BillContactNo { get; set; }
 
+        public CustomerAddress CustomerAddress { get; set; } 
+
+        //Customer Details
+        public Customer customerObj { get; set; }
+        //Log Details
         public LogDetails logDetails { get; set; }
+        //Comments
+        public EventsLog EventsLogObj { get; set; }
 
     }
 }

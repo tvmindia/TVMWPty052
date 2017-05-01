@@ -20,6 +20,7 @@ namespace PartyEC.BusinessServices.Contracts
         
         List<OrderStatusMaster> GetAllOrderStatus();
         List<QuotationStatusMaster> GetAllQuotationStatus();
+        List<BookingStatusMaster> GetAllBookingStatus();
         List<OtherImages> GetAllStickers();
 
         //Supplier

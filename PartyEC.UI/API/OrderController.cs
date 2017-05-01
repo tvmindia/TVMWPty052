@@ -92,6 +92,20 @@ namespace PartyEC.UI.API
             }
         }
 
+        [HttpPost]
+        public object GetCustomerCart(ShoppingCart cartObj)
+        {
+            try
+            {
+                List<ShoppingCartViewModel> Locations = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cart_WishlistBusiness.GetCustomerShoppingCart(cartObj.CustomerID,cartObj.LocationID));
+                if (Locations.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = Locations });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
 
         [HttpPost]
         public object GetLocationDetails()
@@ -108,5 +122,61 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        public object InsertOrder(Order OrderObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                OrderObj.commonObj = new LogDetails();
+                OrderObj.commonObj.CreatedBy = "AppUser";
+                OrderObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_OrderBusiness.InsertOrder(OrderObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        // (Dummy True always till payment gateway is ready)
+        [HttpPost]
+        public object GetPaymentStatus()
+        {
+            try
+            {
+                Random rnd = new Random();                  // Random number creation  
+                string ReferenceNo= "_"+ rnd.Next(100000000, 900000000).ToString();
+                bool TranscationStatus= true;
+                return JsonConvert.SerializeObject(new { Result = true, Records = new { Reference = ReferenceNo, Status = TranscationStatus } });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+
+        [HttpPost]
+        public object UpdateOrderPaymentStatus(Order OrderObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                OrderObj.commonObj = new LogDetails();
+                OrderObj.commonObj.UpdatedBy = "AppUser";
+                OrderObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_OrderBusiness.UpdateOrderPaymentStatus(OrderObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        } 
     }
 }

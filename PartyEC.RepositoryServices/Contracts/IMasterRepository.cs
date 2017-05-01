@@ -22,6 +22,7 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus DeleteOtherImage(string imageID,string type);
         List<OrderStatusMaster> GetAllOrderStatus();
         List<QuotationStatusMaster> GetAllQuotationStatus();
+        List<BookingStatusMaster> GetAllBookingStatus();
         List<OtherImages> GetAllStickers();
 
         //Supplier

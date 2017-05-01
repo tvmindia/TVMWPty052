@@ -14,8 +14,10 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus CustomerEnableORDisable(Customer customer);
         OperationsStatus InsertUpdateCustomerAddress(Customer customer);
         List<CustomerAddress> GetAllCustomerAddresses(int CustomerID);
+        Customer GetCustomerVerification(string Email);
         CustomerAddress GetAddressByAddress(int AddressID);
         OperationsStatus DeleteAddress(CustomerAddress customerAddress);
+        OperationsStatus SetDefaultAddress(int CustomerID, int AddressID);
         OperationsStatus InsertCustomer(Customer customer);
         OperationsStatus UpdateCustomer(Customer customer);
 

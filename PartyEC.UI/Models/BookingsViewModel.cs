@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 
 namespace PartyEC.UI.Models
 {
@@ -20,6 +21,8 @@ namespace PartyEC.UI.Models
         public decimal AdditionalCharges { get; set; }
         public decimal TaxAmt { get; set; }
         public decimal DiscountAmt { get; set; }
+        public decimal GrandTotal { get; set; }
+        public decimal SubTotal { get; set; }
         public string Message { get; set; }
         public string BillPrefix { get; set; }
         public string BillFirstName { get; set; }
@@ -30,6 +33,16 @@ namespace PartyEC.UI.Models
         public string BillCountryCode { get; set; }
         public string BillStateProvince { get; set; }
         public string BillContactNo { get; set; }
+        //Customer Details
+        public CustomerViewModel customerObj { get; set; }
+        //Log Details
+        public LogDetailsViewModel commonObj { get; set; }
+        //Comments
+        public EventsLogViewModel EventsLogViewObj { get; set; }
+        //Mailing Comments
+        public MailViewModel mailViewModelObj { get; set; }
+
+        public List<SelectListItem> BookingsstatusList { get; set; }
     }
     public class BookingsAppViewModel
     {
@@ -56,6 +69,12 @@ namespace PartyEC.UI.Models
         public string BillCountryCode { get; set; }
         public string BillStateProvince { get; set; }
         public string BillContactNo { get; set; }
+
+        //Customer Details
+        public CustomerViewModel customerObj { get; set; }
+        //Comments
+        public EventsLogViewModel EventsLogViewObj { get; set; }
+
     }
 
 }

@@ -5,16 +5,20 @@ using System.Linq;
 using System.Web;
 using PartyEC.DataAccessObject.DTO;
 using PartyEC.RepositoryServices.Contracts;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace PartyEC.BusinessServices.Services
 {
     public class CustomerBusiness : ICustomerBusiness
     {
         private ICustomerRepository _customerRepository;
+        private IMailBusiness _mailBusiness;
 
-        public CustomerBusiness(ICustomerRepository customerRepository)
+        public CustomerBusiness(ICustomerRepository customerRepository,IMailBusiness mailBusiness)
         {
             _customerRepository = customerRepository;
+            _mailBusiness = mailBusiness;
         }
 
 
@@ -148,6 +152,95 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationStatus;
         }
+
+        public Customer GetCustomerVerification(string Email)
+        {
+            Customer CustomerStatus = null;
+            try
+            {
+                CustomerStatus = _customerRepository.GetCustomerVerification(Email);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return CustomerStatus;
+        }
+
+        public OperationsStatus SetDefaultAddress(int CustomerID, int AddressID)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                operationsStatusObj = _customerRepository.SetDefaultAddress(CustomerID,AddressID);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+
+        }
+
+        public async Task<bool> SendCustomerOTP(int OTP,string Email)
+        {
+                
+            bool sendsuccess = false;
+            try
+            { 
+                    Mail _mail = new Mail();
+                    using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/SendOtp.html")))
+                    {
+                        _mail.Body = reader.ReadToEnd();
+                    }
+                    _mail.Body = _mail.Body.Replace("{Otp}", OTP.ToString()); 
+                    _mail.IsBodyHtml = true;
+                    _mail.Subject = "OTP";
+                    _mail.To = Email;
+                    sendsuccess = await _mailBusiness.MailSendAsync(_mail);
+                    //quotationsObj.EventsLogViewObj.CustomerNotifiedYN = Mailstatus;
+                
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                //return sendsuccess;
+            }
+            return sendsuccess;
+        }
+
+        public async Task<bool> SendContactUsEmail(ContactUs MailObj)
+        {
+            bool sendsuccess = false;
+            try
+            {
+                Mail _mail = new Mail();
+                using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/ContactUs.html")))
+                {
+                    _mail.Body = reader.ReadToEnd();
+                }
+                _mail.Body = _mail.Body.Replace("{Name}", MailObj.Name);
+                _mail.Body = _mail.Body.Replace("{Email}", MailObj.Email);
+                _mail.Body = _mail.Body.Replace("{Phone}", MailObj.Phone);
+                _mail.Body = _mail.Body.Replace("{Comments}", MailObj.Comments);
+                _mail.IsBodyHtml = true;
+                _mail.Subject = "Contact US Requests";
+                string EmailToAddress = System.Web.Configuration.WebConfigurationManager.AppSettings["EmailFromAddress"];
+                _mail.To = EmailToAddress;
+                sendsuccess = await _mailBusiness.MailSendAsync(_mail);
+                //quotationsObj.EventsLogViewObj.CustomerNotifiedYN = Mailstatus;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                //return sendsuccess;
+            }
+            return sendsuccess;
+        }
+
+
 
         #endregion Methods
     }

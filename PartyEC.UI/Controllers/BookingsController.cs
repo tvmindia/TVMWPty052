@@ -1,4 +1,6 @@
-﻿using PartyEC.BusinessServices.Contracts;
+﻿using AutoMapper;
+using PartyEC.BusinessServices.Contracts;
+using PartyEC.DataAccessObject.DTO;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -28,6 +30,22 @@ namespace PartyEC.UI.Controllers
         // GET: Bookings
         public ActionResult Index()
         {
+            //BookingsViewModel status_obj = new BookingsViewModel();
+            //List<SelectListItem> selectListItem = new List<SelectListItem>();
+
+            //List<BookingStatusViewModel> orderstatusListVM = Mapper.Map<List<BookingStatusMaster>, List<BookingStatusViewModel>>(_masterBusiness.GetAllBookingStatus());
+            //foreach (BookingStatusViewModel ovm in orderstatusListVM)
+            //{
+            //    selectListItem.Add(new SelectListItem
+            //    {
+            //        Text = ovm.Description,
+            //        Value = ovm.Code.ToString(),
+            //        Selected = false
+            //    });
+            //}
+            //status_obj.BookingsstatusList = selectListItem;
+            //return View(status_obj);
+
             return View("../UnderConstruction/UnderConstruction");
         }
         #endregion Index

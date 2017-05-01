@@ -224,6 +224,53 @@ namespace PartyEC.RepositoryServices.Services
 
         }
 
+        public List<BookingStatusMaster> GetAllBookingStatus()
+        {
+            List<BookingStatusMaster> statusList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetMasterBookingStatus]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                statusList = new List<BookingStatusMaster>();
+                                while (sdr.Read())
+                                {
+                                    BookingStatusMaster _orderstatus = new BookingStatusMaster();
+                                    {
+                                        _orderstatus.Code = (sdr["Code"].ToString() != "" ? int.Parse(sdr["Code"].ToString()) : _orderstatus.Code);
+                                        _orderstatus.Description = (sdr["Description"].ToString() != "" ? sdr["Description"].ToString() : _orderstatus.Description);
+
+                                    }
+                                    statusList.Add(_orderstatus);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return statusList;
+
+
+        }
+
         public List<QuotationStatusMaster> GetAllQuotationStatus()
         {
             List<QuotationStatusMaster> QuotationStatusList = null;

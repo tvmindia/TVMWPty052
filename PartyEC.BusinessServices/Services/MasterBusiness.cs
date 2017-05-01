@@ -49,6 +49,20 @@ namespace PartyEC.BusinessServices.Services
             }
             return orderStatuslist;
         }
+        public List<BookingStatusMaster> GetAllBookingStatus()
+        {
+            List<BookingStatusMaster> Statuslist = null;
+            try
+            {
+                Statuslist = _masterRepository.GetAllBookingStatus();
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return Statuslist;
+        }
 
         public List<QuotationStatusMaster> GetAllQuotationStatus()
         {

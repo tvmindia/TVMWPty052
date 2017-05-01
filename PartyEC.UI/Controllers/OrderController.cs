@@ -57,11 +57,11 @@ namespace PartyEC.UI.Controllers
             return View(order);
         }
         [HttpGet]
-        public string GetAllOrderHeader()
+        public string GetOrderHeader()
         {
             try
             {
-                List<OrderViewModel> OrderHeaderList = Mapper.Map<List<Order>, List<OrderViewModel>>(_orderBusiness.GetAllOrderHeader());
+                List<OrderViewModel> OrderHeaderList = Mapper.Map<List<Order>, List<OrderViewModel>>(_orderBusiness.GetOrderHeader());
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = OrderHeaderList });
             }
             catch (Exception ex)
@@ -75,7 +75,7 @@ namespace PartyEC.UI.Controllers
         {
             try
             {
-                List<OrderViewModel> OrderHeaderList = Mapper.Map<List<Order>, List<OrderViewModel>>(_orderBusiness.GetAllOrdersList(ID));
+                List<OrderDetailViewModel> OrderHeaderList = Mapper.Map<List<OrderDetail>, List<OrderDetailViewModel>>(_orderBusiness.GetAllOrdersList(ID));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = OrderHeaderList });
             }
             catch (Exception ex)
@@ -145,7 +145,21 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
-        
+        [HttpPost]
+        public string CancelOrder(OrderViewModel orderObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+               
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.CancelOrder(orderObj.ID));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
         [HttpPost]
         public string UpdateEventsLog(OrderViewModel orderObj)
         {
@@ -181,9 +195,30 @@ namespace PartyEC.UI.Controllers
                 }
         }
         [HttpPost]
-        public string InsertNewOrderRevision(OrderDetailViewModel OrderDetailsViewModelObj)
+        public string InsertReviseOrder(OrderDetailViewModel OrderDetailViewModelObj)
         {
-            return "";
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+
+                OrderDetailViewModelObj.commonObj = new LogDetailsViewModel();
+                OrderDetailViewModelObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                OrderDetailViewModelObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.InsertReviseOrder(Mapper.Map<OrderDetailViewModel, OrderDetail>(OrderDetailViewModelObj)));
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+            if (OperationsStatusViewModelObj.StatusCode == 1)
+            {
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+            }
+            else
+            {
+                return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+            }
         }
         [ValidateAntiForgeryToken]
         public string UpdateBillingDetails(OrderViewModel orderViewModelObj)
@@ -248,6 +283,8 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.editbtn.Title = "Revise";
                     ToolboxViewModelObj.editbtn.Event = "CancelIssue()";
                     ToolboxViewModelObj.cancelbtn.Visible = true;
+                    ToolboxViewModelObj.cancelbtn.Title = "Cancel";
+                    ToolboxViewModelObj.cancelbtn.Event = "CancelOrder()";
                     ToolboxViewModelObj.sendbtn.Visible = true;
                     ToolboxViewModelObj.invoicebtn.Visible = true;
                     ToolboxViewModelObj.shipbtn.Visible = true;

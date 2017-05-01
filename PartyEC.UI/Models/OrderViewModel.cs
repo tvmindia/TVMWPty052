@@ -15,6 +15,7 @@ namespace PartyEC.UI.Models
         public string OrderNo { get; set; }   
         public int RevNo { get; set; }
         //
+        public string RevisionIDs { get; set; }
         public string OrderRev { get; set; }
         //
         [Display(Name = "Date :")]
@@ -193,6 +194,7 @@ namespace PartyEC.UI.Models
         public int OrderID { get; set; }
         public int ItemID { get; set; }
         public int ProductID { get; set; }
+        public int ProductQty { get; set; }
         public string ProductSpecXML { get; set; }
         public string ItemStatus { get; set; }
         public int Qty { get; set; }
@@ -200,9 +202,10 @@ namespace PartyEC.UI.Models
         public float ShippingAmt { get; set; }
         public float TaxAmt { get; set; }
         public float DiscountAmt { get; set; }
+        public float TotalDiscountAmt { get; set; }
         public float Total { get; set; }
         public float SubTotal { get; set; }
-        public List<OrderViewModel> OrderDetails { get; set; }
+        public List<OrderDetailViewModel> OrderDetailsList { get; set; }
         public LogDetailsViewModel commonObj { get; set; }
     }
 }

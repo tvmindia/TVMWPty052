@@ -366,6 +366,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _customerAddresObj.LastName = (sdr["LastName"].ToString() != "" ? sdr["LastName"].ToString() : _customerAddresObj.LastName);
                                         _customerAddresObj.Address = (sdr["Address"].ToString() != "" ? sdr["Address"].ToString() : _customerAddresObj.Address);
                                         _customerAddresObj.Location = (sdr["Location"].ToString() != "" ? sdr["Location"].ToString() : _customerAddresObj.Location);
+                                        _customerAddresObj.LocationID = (sdr["LocationID"].ToString() != "" ? int.Parse(sdr["LocationID"].ToString()) : _customerAddresObj.LocationID);
                                         _customerAddresObj.City = (sdr["City"].ToString() != "" ? sdr["City"].ToString() : _customerAddresObj.City);
                                         _customerAddresObj.country = new Country();
                                         _customerAddresObj.country.Code = (sdr["CountryCode"].ToString() != "" ? sdr["CountryCode"].ToString() : _customerAddresObj.country.Code);
@@ -615,6 +616,118 @@ namespace PartyEC.RepositoryServices.Services
             }
 
             return operationsStatusObj;
+        }
+
+        public Customer GetCustomerVerification(string Email)
+        {
+            Customer mycustomer = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@Email", SqlDbType.NVarChar,-1).Value = Email;
+                        cmd.CommandText = "[GetCustomerVerification]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                if (sdr.Read())
+                                {
+                                    mycustomer = new Customer();
+                                    mycustomer.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : mycustomer.ID);
+                                    mycustomer.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : mycustomer.Name);
+                                    mycustomer.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : mycustomer.Email);
+                                    mycustomer.Mobile = (sdr["Mobile"].ToString() != "" ? sdr["Mobile"].ToString() : mycustomer.Mobile);
+                                    mycustomer.Language = (sdr["Language"].ToString() != "" ? sdr["Language"].ToString() : mycustomer.Language);
+                                    mycustomer.Gender = (sdr["Gender"].ToString() != "" ? sdr["Gender"].ToString() : mycustomer.Gender);
+                                    mycustomer.ProfileImageID = (sdr["ProfileImageID"].ToString() != "" ? Guid.Parse(sdr["ProfileImageID"].ToString()) : mycustomer.ProfileImageID);
+                                    mycustomer.OrdersCount = (sdr["OrdersCount"].ToString() != "" ? int.Parse(sdr["OrdersCount"].ToString()) : mycustomer.OrdersCount);
+                                    mycustomer.BookingsCount = (sdr["BookingsCount"].ToString() != "" ? int.Parse(sdr["BookingsCount"].ToString()) : mycustomer.BookingsCount);
+                                    mycustomer.QuotationsCount = (sdr["QuotationsCount"].ToString() != "" ? int.Parse(sdr["QuotationsCount"].ToString()) : mycustomer.QuotationsCount);
+                                    mycustomer.OrdersCountHistory = (sdr["OrdersCountHistory"].ToString() != "" ? int.Parse(sdr["OrdersCountHistory"].ToString()) : mycustomer.OrdersCountHistory);
+                                    mycustomer.BookingsCountHistory = (sdr["BookingsCountHistory"].ToString() != "" ? int.Parse(sdr["BookingsCountHistory"].ToString()) : mycustomer.BookingsCountHistory);
+                                    mycustomer.QuotationsCountHistory = (sdr["QuotationsCountHistory"].ToString() != "" ? int.Parse(sdr["QuotationsCountHistory"].ToString()) : mycustomer.QuotationsCountHistory);
+                                    mycustomer.IsActive = bool.Parse(sdr["ActiveYN"].ToString());
+                                    mycustomer.customerAddress = new CustomerAddress();
+                                    mycustomer.customerAddress.Address = (sdr["Address"].ToString() != "" ? sdr["Address"].ToString() : mycustomer.customerAddress.Address);
+                                    mycustomer.customerAddress.City = (sdr["City"].ToString() != "" ? sdr["City"].ToString() : mycustomer.customerAddress.City);
+                                    mycustomer.customerAddress.StateProvince = (sdr["StateProvince"].ToString() != "" ? sdr["StateProvince"].ToString() : mycustomer.customerAddress.StateProvince);
+                                    mycustomer.customerAddress.country = new Country();
+                                    mycustomer.customerAddress.country.Name = (sdr["CountryName"].ToString() != "" ? sdr["CountryName"].ToString() : mycustomer.customerAddress.country.Name);
+                                    mycustomer.logDetailsObj = new LogDetails();
+                                    mycustomer.logDetailsObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : mycustomer.logDetailsObj.CreatedDate);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return mycustomer;
+        }
+
+        public OperationsStatus SetDefaultAddress(int CustomerID, int AddressID)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[SetDefaultAddress]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.NVarChar, 250).Value = CustomerID;
+                        cmd.Parameters.Add("@AddressID", SqlDbType.NVarChar, 250).Value = AddressID;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                operationsStatusObj.StatusMessage = ex.Message;
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
         }
 
 

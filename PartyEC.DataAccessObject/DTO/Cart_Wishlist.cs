@@ -20,6 +20,11 @@ namespace PartyEC.DataAccessObject.DTO
         public decimal Price { get; set; }
         public string ItemStatus { get; set; }
         public string CreatedDate { get; set; }
+
+        public int LocationID { get; set; }
+        public decimal ShippingCharge { get; set; }
+        public string ImageURL { get; set; }
+        
         public LogDetails logDetails { get; set; }
         public List<AttributeValues> AttributeValues { get; set; }
         

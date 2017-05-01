@@ -9,15 +9,19 @@ namespace PartyEC.RepositoryServices.Contracts
     public interface IOrderRepository
     {
         List<Order> GetAllOrderHeader();
-        List<Order> GetAllOrdersList(string ID);
+        List<OrderDetail> GetAllOrdersList(string ID);
         Order GetSalesStatistics(int CustomerID,DateTime CurrentDate);
         List<Order> GetOrderSummary(int CustomerID);
         Order GetOrderDetails(string ID);
         Order GetOrderSummery(int ID);
+        OperationsStatus CancelOrder(int ID);
         OperationsStatus UpdateBillingDetails(Order orderObj);
         OperationsStatus UpdateShipingDetails(Order orderObj);
-        //For App
+        OperationsStatus InsertOrderHeader(Order orderObj);
+        OperationsStatus InsertOrderDetail(OrderDetail orderDetailObj); 
         List<Order> GetCustomerOrders(int CustomerID,bool Ishistory);
+
+        OperationsStatus UpdateOrderPaymentStatus(Order orderObj);
 
     }
 }

@@ -6,10 +6,11 @@ $(document).ready(function () {
         order: [],
         searching: true,
         paging: true,
-        data: GetAllOrderHeader(),
+        data: GetOrderHeader(),
         columns: [
           { "data": "ID" },
-          { "data": "OrderNo"},
+          { "data": "ParentOrderID" },
+          { "data": null },
           { "data": "OrderDate" },
           { "data": "CustomerName" },
           { "data": "ContactNo" },
@@ -19,9 +20,24 @@ $(document).ready(function () {
         ],
         columnDefs: [
          {
-             "targets": [0],
-             "visible": true,
-             "searchable": true
+             "targets": [0,1],
+             "visible": false,
+             "searchable": false
+         },
+         {
+             'targets': 2,
+             'render': function (data, type, full, meta) {
+                 if (data.OrderRev != "")
+                 {
+                     var Order = data.OrderNo + " / " + data.OrderRev;
+                     return Order;
+                 }
+                 else
+                 {
+                     var Order = data.OrderNo;
+                     return Order;
+                 }
+             }
          }
         ]
     });
@@ -42,6 +58,7 @@ $(document).ready(function () {
           { "data": "ShippingAmt" },
           { "data": "TaxAmt" },
           { "data": "DiscountAmt" },
+          { "data": "TotalDiscountAmt" },
           { "data": "SubTotal" }
         ],
         columnDefs: [
@@ -91,6 +108,7 @@ $(document).ready(function () {
           { "data": "ShippingAmt" },
           { "data": "TaxAmt" },
           { "data": "DiscountAmt" },
+          { "data": "TotalDiscountAmt" },
           { "data": "SubTotal" }
         ],
         columnDefs: [
@@ -159,7 +177,7 @@ $(document).ready(function () {
              data: null,
              columns: [
                { "data": null, "defaultContent": '' },
-               { "data": "ID" },
+               { "data": "ProductID" },
                { "data": "ProductName" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
@@ -196,6 +214,52 @@ $(document).ready(function () {
              },
              order: [[1, 'asc']]
          });
+    DataTables.tblProductListRevised = $('#tblProductListRevised').DataTable(
+         {
+             dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+             order: [],
+             searching: true,
+             paging: false,
+             data: null,
+             columns: [
+               { "data": "OrderDetailID" },
+               { "data": "ProductSpecXML" },
+               { "data": "ItemStatus" },
+               { "data": "Qty" },
+               { "data": "Price" },
+               { "data": "Total" },
+               { "data": "ShippingAmt" },
+               { "data": "TaxAmt" },
+               { "data": "DiscountAmt" },
+               { "data": "SubTotal" }
+             ],
+             columnDefs: [
+              {
+                  "targets": [0],
+                  "visible": true,
+                  "searchable": true
+              },
+              {//hiding hidden column 
+                  "targets": [1],
+                  "visible": true,
+                  "searchable": true,
+                  "render": function (data, type, full, meta) {
+                      debugger;
+                      var Name = "<b>" + data.split("||")[0] + "</b>";
+                      var Spec = (data.split("||")[1]).split("><");
+                      for (var i = 0; i < Spec.length - 1; i++) {
+                          if (i > 0) {
+                              var html = Spec[i].replace(">", " : ");
+                              Name = Name + "</br>" + (html.split("</")[0]);
+                          }
+
+                      }
+                      return Name;
+                  }
+              },
+                 
+             ]
+         });
     //$('#tblProductList tbody').on('click', 'tr', function () {  
     //    var tabledata = DataTables.tblProductList.rows('.selected').data();
     //    var Total = 0;
@@ -207,12 +271,12 @@ $(document).ready(function () {
     ChangeButtonPatchView("Order", "btnPatchOrders", "List");
 });
 //Table Data Bind for Order Header
-function GetAllOrderHeader()
+function GetOrderHeader()
 {
     try {
         var data = "";
         var ds = {};
-        ds = GetDataFromServer("Order/GetAllOrderHeader/", data);
+        ds = GetDataFromServer("Order/GetOrderHeader/", data);
         if (ds != '') {ds = JSON.parse(ds);}
         if (ds.Result == "OK") {return ds.Records;}
         if (ds.Result == "ERROR") {alert(ds.Message);}
@@ -302,6 +366,7 @@ function GetProductsListtoAdd()
         notyAlert('error', e.message);
     }
 }
+
 //function InsertNewOrderRevision(tabledata, OrderID)
 //{
 //    try {
@@ -333,6 +398,7 @@ function Edit(this_obj)
     if ((rowData != null) && (rowData.ID != null)) {
         debugger;
         $("#ID").val(rowData.ID);
+        $("#ParentOrderID").val(rowData.ParentOrderID);
         var Result = GetOrderDetails(rowData.ID);
         BindGeneralSection(Result);
         BindAccountSection(Result);
@@ -343,6 +409,8 @@ function Edit(this_obj)
         BindTableOrderDetailList(Result.ID);
         BindOrderComments(Result);
         BindOrderSummery(Result);
+        BindNewRevisionGeneral(Result);
+        BindRevisionLinkGeneral(Result);
     }
 }
 function CancelIssue()
@@ -365,6 +433,33 @@ function CancelIssue()
     }
     
 }
+function CancelOrder()
+{
+    debugger;
+    var r = confirm("Are You Sure ?, This will cancel your Current Order..");
+    if (r == true) {
+        var ID = $('#hdnOrderHID').val();
+        var OrderViewModel = new Object();
+        OrderViewModel.ID = ID;
+        var data = "{'orderObj':" + JSON.stringify(OrderViewModel) + "}";
+        PostDataToServer('Order/CancelOrder/', data, function (JsonResult) {
+            if (JsonResult != '') {
+                switch (JsonResult.Result) {
+                    case "OK":
+                        notyAlert('success', JsonResult.Record.StatusMessage);
+                        goback();
+                        break;
+                    case "ERROR":
+                        notyAlert('error', JsonResult.Record.StatusMessage);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+        
+    }
+}
 function AddReviseOrder()
 {
     debugger;
@@ -386,10 +481,12 @@ function AddReviseOrder()
         Order.ShippingAmt = 0;
         Order.TaxAmt = 0;
         Order.DiscountAmt = tabledata[i].DiscountAmount;
+        Order.TotalDiscountAmt = tabledata[i].DiscountAmount;
         Order.SubTotal = tabledata[i].ActualPrice - tabledata[i].DiscountAmount;
         Order.ItemStatus = "Pending";
         Order.Price = tabledata[i].ActualPrice;
         Order.ProductSpecXML = tabledata[i].ProductName;
+        Order.ProductID = tabledata[i].ProductID;
         ordertabledata.push(Order);
         GrandTotal = GrandTotal + Order.SubTotal;
     }
@@ -435,10 +532,44 @@ function InsertNewOrder()
         var OrderDetailList = [];
         for(var i=0;i<newOrderData.length;i++)
         {
-            var OrderDetailViewModel = new Object();
-            OrderDetailViewModel.ItemID = i;
-            OrderDetailViewModel.ProductID = newOrderData[i].ProductID;
+            var OrderDetailViewModelObj = new Object();
+            OrderDetailViewModelObj.ItemID = newOrderData[i].ItemID;
+            OrderDetailViewModelObj.ProductID = newOrderData[i].ProductID;
+            OrderDetailViewModelObj.ProductSpecXML = newOrderData[i].ProductSpecXML.split('||')[1];
+            OrderDetailViewModelObj.ItemStatus = 1;
+            OrderDetailViewModelObj.Qty = newOrderData[i].Qty;
+            OrderDetailViewModelObj.Price = newOrderData[i].Price;
+            OrderDetailViewModelObj.ShippingAmt = newOrderData[i].ShippingAmt;
+            OrderDetailViewModelObj.TaxAmt = newOrderData[i].TaxAmt;
+            OrderDetailViewModelObj.DiscountAmt = newOrderData[i].DiscountAmt;
+            
+            OrderDetailList.push(OrderDetailViewModelObj);
         }
+        var OrderDetailViewModel = new Object();
+        if ($("#ParentOrderID").val() != "0")
+        {
+            OrderDetailViewModel.OrderID = $("#ParentOrderID").val();
+        }
+        else {
+            OrderDetailViewModel.OrderID = $("#hdnOrderHID").val();
+        }
+        OrderDetailViewModel.OrderDetailsList = OrderDetailList;
+        var data = "{'OrderDetailViewModelObj':" + JSON.stringify(OrderDetailViewModel) + "}";
+        PostDataToServer('Order/InsertReviseOrder/', data, function (JsonResult) {
+            if (JsonResult != '') {
+                switch (JsonResult.Result) {
+                    case "OK":
+                        notyAlert('success', JsonResult.Record.StatusMessage);
+                        goback();
+                        break;
+                    case "ERROR":
+                        notyAlert('error', JsonResult.Record.StatusMessage);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
 
     }
     
@@ -446,22 +577,33 @@ function InsertNewOrder()
 function Calculatesum(this_obj)
 {
     debugger;
+
     var GrandTotal = 0;
-    var Qty = this_obj.value;
+    var Qty = this_obj.value;    
     var rowData = DataTables.orderModificationtable.row($(this_obj).parents('tr')).data();
-    var SubTotal = ((rowData.Total - rowData.DiscountAmt) * Qty);
-    var rowsData= DataTables.orderModificationtable.rows().data();
-    for(i=0;i<rowsData.length;i++)
+    if (Qty > rowData.ProductQty)
     {
-        if(rowsData[i].ProductSpecXML==rowData.ProductSpecXML)
-        {
-            rowsData[i].SubTotal = SubTotal;
-            rowsData[i].Qty = Qty;
-        }
-        GrandTotal = GrandTotal + rowsData[i].SubTotal;
+        notyAlert('information', "We're sorry! Only " + rowData.ProductQty + " units");
+        $(this_obj).val('');
     }
-    $('#tblGrandTotal .strGrandTotal').text(GrandTotal);
-    DataTables.orderModificationtable.clear().rows.add(rowsData).draw(false);
+    else
+    {
+        var TotalDiscount = (rowData.DiscountAmt * Qty);
+        var SubTotal = ((rowData.Price * Qty) - TotalDiscount);
+        var rowsData = DataTables.orderModificationtable.rows().data();
+        for (i = 0; i < rowsData.length; i++) {
+            if (rowsData[i].ProductSpecXML == rowData.ProductSpecXML) {
+                rowsData[i].SubTotal = SubTotal + rowData.ShippingAmt;
+                rowsData[i].TotalDiscountAmt = TotalDiscount;
+                rowsData[i].Total = rowData.Price * Qty;
+                rowsData[i].Qty = Qty;
+            }
+            GrandTotal = GrandTotal + rowsData[i].SubTotal;
+        }
+        $('#tblGrandTotal .strGrandTotal').text(GrandTotal + " QAR");
+        DataTables.orderModificationtable.clear().rows.add(rowsData).draw(false);
+    }
+    
 }
 function AddNewRevision()
 {
@@ -475,6 +617,7 @@ function gobackDetails()
 function goback()
 {
     $('#tabOrderList').trigger('click');
+    DataTables.orderHeadertable.clear().rows.add(GetOrderHeader()).draw(false);
     ChangeButtonPatchView("Order", "btnPatchOrders", "List");
 }
 function gobackDetails()
@@ -484,10 +627,36 @@ function gobackDetails()
 }
 function BindGeneralSection(Result)
 {
+    debugger;
     $("#lblOrderNo").text(Result.OrderNo);
     $("#lblOrderDate").text(Result.OrderDate);
     $("#lblOrderStatus").text(Result.OrderStatus);
     $("#lblSourceIP").text(Result.SourceIP);
+    $("#lblRevNo").text(Result.OrderRev);
+    if (Result.RevisionIDs != "")
+    {
+        $('#lblRevisionIDs').show();
+        $("#RevisionLinkBind").empty();
+        var IDs = Result.RevisionIDs.split(',');
+        for (var i = 0; i < IDs.length; i++)
+        {
+            $("#RevisionLinkBind").append('<a class="col-md-6" onclick="ShowRevision(' + IDs[i] + ')">Revision ' + (i+1) + ' </a>');
+        }
+        
+    }
+    else
+    {
+        $('#lblRevisionIDs').hide();
+        $("#RevisionLinkBind").empty();
+    }
+    
+}
+function ShowRevision(id)
+{
+    debugger;
+    $('#ModelRevisionDetails').modal('show');
+    //$("#lblRevNo_RevLink").text(id);
+    DataTables.tblProductListRevised.clear().rows.add(GetAllOrdersList(id)).draw(false);
 }
 function BindAccountSection(Result)
 {
@@ -575,6 +744,24 @@ function BindOrderSummery(Result)
     $('#tdDeliveryCosts').text(OrderSummeryList.ShippingCostOrderSummery+ Result.CurrencyCode)
     $('#tdOrderDiscount').text(OrderSummeryList.DiscountAmtOrderSummery+ Result.CurrencyCode)
     $('.strGrandTotal').text(OrderSummeryList.GrandTotalOrderSummery+ Result.CurrencyCode)
+}
+function BindNewRevisionGeneral(Result)
+{
+    $("#lblOrderNo_NewRev").text(Result.OrderNo);
+    $("#lblOrderDate_NewRev").text(Result.OrderDate);
+    $("#lblOrderStatus_NewRev").text(Result.OrderStatus);
+    $("#lblSourceIP_NewRev").text(Result.SourceIP);
+    $("#lblRevNo_NewRev").text("--");
+    $("#lblCustomerName_NewRev").text(Result.CustomerName);
+    $("#lblContactNo_NewRev").text(Result.ContactNo);
+}
+function BindRevisionLinkGeneral(Result) {
+    $("#lblOrderNo_RevLink").text(Result.OrderNo);
+    $("#lblOrderDate_RevLink").text(Result.OrderDate);
+    $("#lblOrderStatus_RevLink").text("Cancelled");
+    $("#lblSourceIP_RevLink").text(Result.SourceIP);    
+    $("#lblCustomerName_RevLink").text(Result.CustomerName);
+    $("#lblContactNo_RevLink").text(Result.ContactNo);
 }
 function CheckinBillingChanges(data)
 {

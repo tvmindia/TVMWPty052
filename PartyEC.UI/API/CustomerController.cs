@@ -9,6 +9,7 @@ using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
 using AutoMapper;
 using Newtonsoft.Json;
+using System.Threading.Tasks;
 
 namespace PartyEC.UI.API
 {
@@ -19,17 +20,19 @@ namespace PartyEC.UI.API
 
         ICustomerBusiness _customerBusiness;
         ICommonBusiness _commonBusiness;
+        IMasterBusiness _masterBusiness;
         IEventBusiness _eventBusiness;
         ICart_WishlistBusiness _cartwishlistBusiness;
         IOrderBusiness _orderBusiness;
         IQuotationsBusiness _quotationBusiness;
         IBookingsBusiness _bookingsBusiness;
 
-        public CustomerController(ICustomerBusiness customerBusiness,ICommonBusiness commonBusiness, IEventBusiness eventBusiness,ICart_WishlistBusiness cartwishlistBusiness, IOrderBusiness orderBusiness, IQuotationsBusiness quotationBusiness, IBookingsBusiness bookingsBusiness)
+        public CustomerController(ICustomerBusiness customerBusiness,IMasterBusiness masterBusiness,ICommonBusiness commonBusiness, IEventBusiness eventBusiness,ICart_WishlistBusiness cartwishlistBusiness, IOrderBusiness orderBusiness, IQuotationsBusiness quotationBusiness, IBookingsBusiness bookingsBusiness)
         {
             _customerBusiness = customerBusiness;
             _commonBusiness = commonBusiness;
             _eventBusiness = eventBusiness;
+            _masterBusiness = masterBusiness;
             _cartwishlistBusiness = cartwishlistBusiness;
              _orderBusiness=orderBusiness;
             _quotationBusiness = quotationBusiness;
@@ -45,7 +48,7 @@ namespace PartyEC.UI.API
         {
             try
             {
-                List<Cart_WishlistAppViewModel> CartList = Mapper.Map<List<ShoppingCart>, List<Cart_WishlistAppViewModel>>(_cartwishlistBusiness.GetCustomerShoppingCart(CartWishObj.CustomerID));
+                List<Cart_WishlistAppViewModel> CartList = Mapper.Map<List<ShoppingCart>, List<Cart_WishlistAppViewModel>>(_cartwishlistBusiness.GetCustomerShoppingCart(CartWishObj.CustomerID,CartWishObj.LocationID));
                 if (CartList.Count == 0) throw new Exception(constants.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
             }
@@ -184,7 +187,7 @@ namespace PartyEC.UI.API
 
         #endregion Bookings
 
-
+        #region Address
         [HttpPost]
         public object InsertUpdateCustomerAddress(Customer addressObj)
         {
@@ -220,7 +223,6 @@ namespace PartyEC.UI.API
             }
         }
 
-
         [HttpPost]
         public object DeleteCustomerAddress(CustomerAddress addressObj)
         {
@@ -236,7 +238,23 @@ namespace PartyEC.UI.API
             }
         }
 
+        [HttpPost]
+        public object SetDefaultAddress(CustomerAddress addressObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.SetDefaultAddress(addressObj.CustomerID,addressObj.ID));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+        #endregion Address
 
+        #region User
         [HttpPost]
         public object RegisterUser (Customer customerObj)
         {
@@ -268,6 +286,78 @@ namespace PartyEC.UI.API
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.UpdateCustomer(customerObj));
                 return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+        #endregion User
+
+        [HttpPost]
+        public async Task<object> GetCustomerVerificationandOTP(CustomerViewModel customerObj)
+        {
+            try
+            {
+                bool flag = true;
+               
+                int OTP;
+
+                CustomerViewModel CustomerList = Mapper.Map<Customer,CustomerViewModel>(_customerBusiness.GetCustomerVerification(customerObj.Email));
+                if (CustomerList == null)
+                {
+                      flag = false;
+                } 
+                Random rnd = new Random();                  // Random number creation for OTP
+                OTP= rnd.Next(2000, 9000);
+                //sending otp to mail.
+                await _customerBusiness.SendCustomerOTP(OTP, customerObj.Email);
+                return JsonConvert.SerializeObject(new { Result = true, Records = new { Customer = CustomerList, IsUser = flag, CustomerOTP = OTP } });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public object GetShippingLocations()
+        {
+            try
+            {
+                List<ShippingLocationViewModel> CartList = Mapper.Map<List<ShippingLocations>, List<ShippingLocationViewModel>>(_masterBusiness.GetAllShippingLocation());
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public object GetCountries()
+        {
+            try
+            {
+                List<CountryViewModel> CartList = Mapper.Map<List<Country>, List<CountryViewModel>>(_masterBusiness.GetAllCountries());
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public async Task<object> SendContactUsEmail( ContactUs MailObj)
+        {
+            bool  MailStatus = false;
+            try
+            {
+                MailStatus = await _customerBusiness.SendContactUsEmail(MailObj);
+                return JsonConvert.SerializeObject(new { Result = true, Records = MailStatus });
             }
             catch (Exception ex)
             {

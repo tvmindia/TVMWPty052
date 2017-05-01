@@ -53,13 +53,13 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
                                         orderObj.OrderNo = sdr["OrderNo"].ToString();
                                         orderObj.OrderRev = sdr["OrderRev"].ToString();
-
+                                        orderObj.ParentOrderID= (sdr["ParentOrderID"].ToString() != "" ? int.Parse(sdr["ParentOrderID"].ToString()) : orderObj.ParentOrderID);
                                         orderObj.OrderDate =sdr["OrderDate"].ToString()!=""?DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") :orderObj.OrderDate;
                                         orderObj.CustomerName =sdr["CustomerName"].ToString();
                                         orderObj.ContactNo =sdr["ContactNo"].ToString();
                                         orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : 0);
                                         orderObj.OrderStatus = sdr["OrderStatus"].ToString();
-
+                                        orderObj.StatusCode = sdr["StatusCode"].ToString() != null ? int.Parse(sdr["StatusCode"].ToString()) : orderObj.StatusCode;
                                     }
                                     OrderHeaderList.Add(orderObj);
                                 }
@@ -76,9 +76,9 @@ namespace PartyEC.RepositoryServices.Services
 
             return OrderHeaderList;
         }
-        public List<Order> GetAllOrdersList(string ID)
+        public List<OrderDetail> GetAllOrdersList(string ID)
         {
-            List<Order> OrderHeaderList = null;
+            List<OrderDetail> OrderHeaderList = null;
             try
             {
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
@@ -97,22 +97,25 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             if ((sdr != null) && (sdr.HasRows))
                             {
-                                OrderHeaderList = new List<Order>();
+                                OrderHeaderList = new List<OrderDetail>();
                                 while (sdr.Read())
                                 {
-                                    Order orderObj = new Order();
+                                    OrderDetail orderObj = new OrderDetail();
                                     {
-                                        orderObj.OrderDetailID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
+                                        orderObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : orderObj.ProductID);
+                                        orderObj.OrderDetailID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.OrderDetailID);
                                         orderObj.ProductSpecXML = sdr["ProductName"].ToString() + "||" + sdr["ProductSpecXML"].ToString();
                                         orderObj.ItemStatus = sdr["ItemStatus"].ToString();
+                                        orderObj.ItemID= (sdr["ItemID"].ToString() != "" ? int.Parse(sdr["ItemID"].ToString()) : orderObj.ItemID);
                                         orderObj.Qty = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : 0);
                                         orderObj.Price = (sdr["Price"].ToString() != "" ? float.Parse(sdr["Price"].ToString()) : 0);
                                         orderObj.TaxAmt = (sdr["TaxAmt"].ToString() != "" ? float.Parse(sdr["TaxAmt"].ToString()) : 0);
                                         orderObj.ShippingAmt = (sdr["ShippingAmt"].ToString() != "" ? float.Parse(sdr["ShippingAmt"].ToString()) : 0);
                                         orderObj.DiscountAmt = (sdr["DiscountAmt"].ToString() != "" ? float.Parse(sdr["DiscountAmt"].ToString()) : 0);
+                                        orderObj.TotalDiscountAmt = (sdr["TotalDiscountAmt"].ToString() != "" ? float.Parse(sdr["TotalDiscountAmt"].ToString()) : 0);
                                         orderObj.Total = (sdr["Total"].ToString() != "" ? float.Parse(sdr["Total"].ToString()) : 0);
                                         orderObj.SubTotal = (sdr["SubTotal"].ToString() != "" ? float.Parse(sdr["SubTotal"].ToString()) : 0);
-
+                                        orderObj.ProductQty= (sdr["ProductQty"].ToString() != "" ? int.Parse(sdr["ProductQty"].ToString()) : orderObj.ProductQty);
                                     }
                                     OrderHeaderList.Add(orderObj);
                                 }
@@ -155,8 +158,11 @@ namespace PartyEC.RepositoryServices.Services
                                     orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
                                     orderObj.OrderNo = sdr["OrderNo"].ToString();
                                     orderObj.OrderRev = sdr["OrderRev"].ToString();
+                                    orderObj.RevisionIDs = sdr["RevisionIDs"].ToString();
+                                    orderObj.shippingLocationID= sdr["shippingLocationID"].ToString() != null ? int.Parse(sdr["shippingLocationID"].ToString()) : orderObj.shippingLocationID;
                                     orderObj.ShippingLocationName = sdr["ShippingLocationName"].ToString();
                                     orderObj.SourceIP = sdr["SourceIP"].ToString();
+                                    orderObj.OrderDateTime= sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()): orderObj.OrderDateTime;
                                     orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : "";
                                     orderObj.CustomerID = sdr["CustomerID"].ToString()!=null? int.Parse(sdr["CustomerID"].ToString()): orderObj.CustomerID;
                                     orderObj.CustomerName = sdr["CustomerName"].ToString();
@@ -183,10 +189,12 @@ namespace PartyEC.RepositoryServices.Services
                                     orderObj.ShipStateProvince = sdr["ShipStateProvince"].ToString();
                                     orderObj.TotalShippingAmt = sdr["TotalShippingAmt"].ToString()!=""?float.Parse(sdr["TotalShippingAmt"].ToString()):orderObj.TotalShippingAmt;
                                     orderObj.PaymentType = sdr["PaymentType"].ToString();
+                                    orderObj.PayStatusCode= sdr["PayStatusCode"].ToString() != null ? int.Parse(sdr["PayStatusCode"].ToString()) : orderObj.PayStatusCode;
                                     orderObj.PaymentStatus = sdr["PaymentStatus"].ToString();
                                     orderObj.CurrencyCode = sdr["CurrencyCode"].ToString();
                                     orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : orderObj.ID);
                                     orderObj.OrderStatus = sdr["OrderStatus"].ToString();
+                                    orderObj.StatusCode = sdr["StatusCode"].ToString() != null ? int.Parse(sdr["StatusCode"].ToString()) : orderObj.StatusCode;
                                 }
                                 }
                             }//if
@@ -459,7 +467,202 @@ namespace PartyEC.RepositoryServices.Services
 
             return operationsStatusObj;
         }
+        public OperationsStatus InsertOrderHeader(Order orderObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null,ID=null;
 
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertOrderHeader]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@OrderNo", SqlDbType.NVarChar,20).Value = orderObj.OrderNo;
+                        cmd.Parameters.Add("@RevNo", SqlDbType.Int).Value = orderObj.RevNo;
+                        cmd.Parameters.Add("@OrderDate", SqlDbType.DateTime).Value = orderObj.OrderDateTime;
+                        cmd.Parameters.Add("@OrderStatus", SqlDbType.Int).Value = orderObj.StatusCode;
+                        cmd.Parameters.Add("@ParentOrderID", SqlDbType.Int).Value = orderObj.ParentOrderID;
+                        cmd.Parameters.Add("@SourceIP",SqlDbType.NVarChar,50).Value = orderObj.SourceIP;
+                        cmd.Parameters.Add("@CustomerID",SqlDbType.Int).Value = orderObj.CustomerID;
+                        cmd.Parameters.Add("@shippingLocationID",SqlDbType.Int).Value = orderObj.shippingLocationID;
+                        cmd.Parameters.Add("@PaymentType", SqlDbType.NVarChar,3).Value = orderObj.PaymentType;
+                        cmd.Parameters.Add("@CurrencyCode", SqlDbType.NVarChar,3).Value = orderObj.CurrencyCode;
+                        cmd.Parameters.Add("@CurrencyRate", SqlDbType.Decimal).Value = orderObj.CurrencyRate;
+                        cmd.Parameters.Add("@TotalOrderAmt", SqlDbType.Decimal).Value = orderObj.TotalOrderAmt;
+                        cmd.Parameters.Add("@TotalShippingAmt", SqlDbType.Decimal).Value = orderObj.TotalShippingAmt;
+                        cmd.Parameters.Add("@TotalDiscountAmt", SqlDbType.Decimal).Value = orderObj.TotalDiscountAmt;
+                        cmd.Parameters.Add("@PaymentStatus", SqlDbType.Int).Value = orderObj.PayStatusCode;
+                        cmd.Parameters.Add("@OrderRemarks", SqlDbType.NVarChar,-1).Value = orderObj.OrderRemarks;
+                        cmd.Parameters.Add("@BillPrefix", SqlDbType.NVarChar,4).Value = orderObj.BillPrefix;
+                        cmd.Parameters.Add("@BillFirstName", SqlDbType.NVarChar, 100).Value = orderObj.BillFirstName;
+                        cmd.Parameters.Add("@BillMidName", SqlDbType.NVarChar, 100).Value = orderObj.BillMidName;
+                        cmd.Parameters.Add("@BillLastName", SqlDbType.NVarChar, 100).Value = orderObj.BillLastName;
+                        cmd.Parameters.Add("@BillAddress", SqlDbType.NVarChar, -1).Value = orderObj.BillAddress;
+                        cmd.Parameters.Add("@BillCity", SqlDbType.NVarChar, 100).Value = orderObj.BillCity;
+                        cmd.Parameters.Add("@BillContactNo", SqlDbType.NVarChar, 20).Value = orderObj.BillContactNo;
+                        cmd.Parameters.Add("@BillCountryCode", SqlDbType.NVarChar, 3).Value = orderObj.BillCountryCode;
+                        cmd.Parameters.Add("@BillStateProvince", SqlDbType.NVarChar, 100).Value = orderObj.BillStateProvince;
+                        cmd.Parameters.Add("@ShipPrefix",SqlDbType.NVarChar,4).Value = orderObj.ShipPrefix;
+                        cmd.Parameters.Add("@ShipFirstName", SqlDbType.NVarChar, 100).Value = orderObj.ShipFirstName;
+                        cmd.Parameters.Add("@ShipMidName", SqlDbType.NVarChar, 100).Value = orderObj.ShipMidName;
+                        cmd.Parameters.Add("@ShipLastName", SqlDbType.NVarChar, 100).Value = orderObj.ShipLastName;
+                        cmd.Parameters.Add("@ShipAddress", SqlDbType.NVarChar, -1).Value = orderObj.ShipAddress;
+                        cmd.Parameters.Add("@ShipCity", SqlDbType.NVarChar, 100).Value = orderObj.ShipCity;
+                        cmd.Parameters.Add("@ShipContactNo", SqlDbType.NVarChar, 20).Value = orderObj.ShipContactNo;
+                        cmd.Parameters.Add("@ShipCountryCode", SqlDbType.NVarChar, 3).Value = orderObj.ShipCountryCode;
+                        cmd.Parameters.Add("@ShipStateProvince", SqlDbType.NVarChar, 100).Value = orderObj.ShipStateProvince;
+                        cmd.Parameters.Add("@CreatedBy",SqlDbType.NVarChar,250).Value = orderObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate",SqlDbType.DateTime).Value = orderObj.commonObj.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        ID = cmd.Parameters.Add("@ID", SqlDbType.Int);
+                        statusCode.Direction = ParameterDirection.Output;
+                        ID.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.ReturnValues = ID.Value;
+                                break;
+                            default:
+                                break;
+                        }
+
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
+        public OperationsStatus CancelOrder(int ID)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateOrderStatus]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ID;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Updation Not Successfull!";
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Order Cancelled Successfully !";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
+        public OperationsStatus InsertOrderDetail(OrderDetail orderDetailsObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null, ID = null;
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertOrderDetail]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@OrderID", SqlDbType.Int).Value = orderDetailsObj.OrderID;
+                        cmd.Parameters.Add("@ItemID", SqlDbType.Int).Value = orderDetailsObj.ItemID;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = orderDetailsObj.ProductID;
+                        cmd.Parameters.Add("@ProductSpecXML", SqlDbType.Xml).Value = orderDetailsObj.ProductSpecXML;
+                        cmd.Parameters.Add("@ItemStatus", SqlDbType.Int).Value = orderDetailsObj.ItemStatus;
+                        cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = orderDetailsObj.Qty;
+                        cmd.Parameters.Add("@Price", SqlDbType.Float).Value = orderDetailsObj.Price;
+                        cmd.Parameters.Add("@ShippingAmt", SqlDbType.Float).Value = orderDetailsObj.ShippingAmt;
+                        cmd.Parameters.Add("@TaxAmt", SqlDbType.Float).Value = orderDetailsObj.TaxAmt;
+                        cmd.Parameters.Add("@DiscountAmt", SqlDbType.Float).Value = orderDetailsObj.DiscountAmt;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = orderDetailsObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = orderDetailsObj.commonObj.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
         public List<Order> GetCustomerOrders(int CustomerID,bool Ishistory)
         {
 
@@ -545,6 +748,56 @@ namespace PartyEC.RepositoryServices.Services
 
             return OrderHeaderList;
 
+        }
+
+        public OperationsStatus UpdateOrderPaymentStatus(Order orderObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateOrderPaymentStatus]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = orderObj.ID;
+                        cmd.Parameters.Add("@PaymentStatus", SqlDbType.Int).Value = orderObj.PaymentStatus;
+
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                throw ex;
+            }
+
+            return operationsStatusObj;
         }
     }
 }
