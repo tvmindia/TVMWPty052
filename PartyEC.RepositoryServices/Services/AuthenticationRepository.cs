@@ -96,14 +96,20 @@ namespace PartyEC.RepositoryServices.Services
                                     User _userObj = new User();
                                     {
                                         _userObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _userObj.ID);
-                                        _userObj.UserRoleLinkID = (sdr["UserRoleLinkID"].ToString() != "" ? int.Parse(sdr["UserRoleLinkID"].ToString()) : _userObj.UserRoleLinkID);
+                                         _userObj.RoleList = (sdr["RoleList"].ToString() != "" ? sdr["RoleList"].ToString() : _userObj.RoleList);
                                         _userObj.UserName = (sdr["UserName"].ToString() != "" ? sdr["UserName"].ToString() : _userObj.UserName);
+                                        _userObj.LoginName= (sdr["LoginName"].ToString() != "" ? sdr["LoginName"].ToString() : _userObj.LoginName);
+                                        _userObj.Password = (sdr["Password"].ToString() != "" ? sdr["Password"].ToString() : _userObj.Password);
                                         _userObj.ProfileImageId= (sdr["ProfileImageID"].ToString() != "" ? Guid.Parse(sdr["ProfileImageID"].ToString()) : _userObj.ProfileImageId);
-                                        _userObj.RoleObj = new Role()
+                                        if (!string.IsNullOrEmpty(_userObj.RoleList))
                                         {
-                                            ID = (sdr["RoleID"].ToString() != "" ? int.Parse(sdr["RoleID"].ToString()) : 0),
-                                            RoleName= (sdr["RoleName"].ToString() != "" ? sdr["RoleName"].ToString() : null)
-                                        };
+                                            _userObj.Roles = _userObj.RoleList.Split(',').Select(t => t.Trim()).ToArray(); 
+                                        }
+                                        //_userObj.RoleObj = new Role()
+                                        //{
+                                        //    ID = (sdr["RoleID"].ToString() != "" ? int.Parse(sdr["RoleID"].ToString()) : 0),
+                                        //    RoleName= (sdr["RoleName"].ToString() != "" ? sdr["RoleName"].ToString() : null)
+                                        //};
                                        // _userObj.logDetails = new LogDetails();
                                         //orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : orderObj.OrderDate;
                                        // _userObj.logDetails.CreatedDate = ((sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(DateTime.Parse(sdr["CreatedDate"].ToString()).ToString("dd-MMM-yyyy")) : _userObj.logDetails.CreatedDate));

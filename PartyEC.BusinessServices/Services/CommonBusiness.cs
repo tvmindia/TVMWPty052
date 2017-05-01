@@ -15,17 +15,47 @@ namespace PartyEC.BusinessServices.Services
     public class CommonBusiness : ICommonBusiness
     {
         private UA _uaObj;
+      
         public CommonBusiness()
         {
-            UA uaObj = null;//need to find proper implementation , time being commenting for api calls-- (UA)HttpContext.Current.Session["SessVal"];
-            if (uaObj == null)
+          
+            try
             {
-                uaObj = new UA();
-                uaObj.UserName = "Albert Thomson";
-                //need to find proper implementation , time being commenting for api calls--  HttpContext.Current.Session["SessVal"] = uaObj;
+                UA uaObj = null;
+                if (HttpContext.Current==null)
+                {
+                    //For Mobile
+                    uaObj = new UA();
+                    uaObj.UserName = "Tvm-Mobile";
+                    uaObj.DateTime = GetCurrentDateTime();
+                }
+                else
+                {
+                    if (HttpContext.Current.Session["TvmValid"]!=null)
+                    {
+                       
+                        uaObj = (UA)HttpContext.Current.Session["TvmValid"];
+                        uaObj.DateTime = GetCurrentDateTime();
+                    }
+                    //this code is temporary arrangement
+                    //must replace...!
+                    else
+                    {
+                        uaObj = new UA();
+                        uaObj.UserName = "Tvm-Mobile";
+                        uaObj.DateTime = GetCurrentDateTime();
+                    }
+                 }
+              
+                _uaObj = uaObj;
             }
-            _uaObj = uaObj;
-        }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+         }
+
+
         public UA GetUA()
         {
             return _uaObj;

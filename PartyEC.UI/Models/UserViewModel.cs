@@ -56,4 +56,12 @@ namespace PartyEC.UI.Models
 
     }
 
+    
+    public  static class RoleContants
+    {
+        public const string SuperAdminRole = "SA";
+        public const  string AdministratorRole = "Admin";
+        public  const string ManagerRole = "Manager";
+    }
+
 }

@@ -55,12 +55,39 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 userList = _authenticationRepository.GetAllUsers();
+                userList = userList == null ? null : userList.
+                Where(us => !us.Roles.Contains("SA"))
+                .Select(c => { c.Password = null; return c; }).ToList();
+                //userList.Select(c => { c.Password = null; return c; }).ToList();
             }
             catch (Exception ex)
             {
 
             }
             return userList;
+        }
+
+        public User CheckUserCredentials(User user)
+        {
+            User _user = null;
+            List<User> userList = null;
+
+            try
+            {
+                //  var found = (from c in c.Options.OfType<Option>()
+                //               where c.StoredValue == yourValue
+                //               select c.DisplayName).FirstOrDefault();
+                userList = _authenticationRepository.GetAllUsers();
+                userList = userList == null ? null : userList.Where(us => us.LoginName == user.LoginName && Decrypt(us.Password)==user.Password).ToList();
+
+                _user = userList == null ? null : userList[0];
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return _user;
+
         }
 
         public List<User> GetUserDetailByUser(int UserID)

@@ -6,7 +6,7 @@ function LoginSuccess(data, status, xhr)
         case "OK":
             if (JsonResult.Record != "false")
             {
-                window.location = appAddress + "/Dashboard";
+                window.location = appAddress + "/Dashboard/Index/";
             }
             else
             {

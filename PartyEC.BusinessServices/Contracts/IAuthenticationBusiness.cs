@@ -14,6 +14,8 @@ namespace PartyEC.BusinessServices.Contracts
         List<User> GetUserDetailByUser(int UserID);
         OperationsStatus InsertUpdateUser(User user);
         OperationsStatus DeleteUser(int UserID);
+        User CheckUserCredentials(User user);
+        
        
     }
 }

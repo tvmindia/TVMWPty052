@@ -14,6 +14,7 @@ namespace PartyEC.DataAccessObject.DTO
         public int UserRoleLinkID { get; set; }
         public int RoleID { get; set; }
         public string RoleList { get; set; }
+        public string[] Roles { get; set; }
         public Role RoleObj { get; set;}
         public LogDetails logDetails { get; set; }
     }

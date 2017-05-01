@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class MailNotificationsController : Controller
     {
         private INotificationBusiness _notificationBusiness;
@@ -21,9 +23,14 @@ namespace PartyEC.UI.Controllers
             _notificationBusiness = notificationBusiness;
             _commonBusiness = commonBusiness;
         }
+        
         // GET: MailNotifications
+   
+        [AuthorizeRoles(RoleContants.SuperAdminRole)]
         public ActionResult Index()
         {
+
+            //ViewBag.Role = "Admin";
             return View();
         }
 

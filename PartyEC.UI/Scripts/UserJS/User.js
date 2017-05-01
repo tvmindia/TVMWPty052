@@ -13,7 +13,7 @@ $(document).ready(function () {
            columns: [
                { "data": "ID" },
                { "data": "UserName", "defaultContent": "<i>-</i>" },
-               { "data": "RoleObj", "defaultContent": "<i>-</i>" },
+               { "data": "RoleList", "defaultContent": "<i>-</i>" },
               // { "data": "logDetails", "defaultContent": "<i>-</i>" },
               { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"><i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
             
@@ -21,16 +21,7 @@ $(document).ready(function () {
            ],
            columnDefs: [
              
-             {
-                 "render": function (data, type, row) {
-
-                     if (data) {
-                         return data.RoleName;
-                     }
-
-                 },
-                 "targets": 2
-             }
+         
              //},
              // {
              //     "render": function (data, type, row) {
