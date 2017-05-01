@@ -40,6 +40,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string LastName { get; set; }
         public string Address { get; set; }
         public string Location { get; set; }
+        public int LocationID { get; set; }
         public string City { get; set; }
         public string CountryCode { get; set; }
         public Country country { get; set; }
