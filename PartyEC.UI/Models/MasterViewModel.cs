@@ -77,6 +77,11 @@ namespace PartyEC.UI.Models
       
     }
 
+    public class BookingStatusViewModel
+    {
+        public int Code { get; set; }
+        public string Description { get; set; }
+    }
     public class QuotationStatusViewModel
     {
         public int Code { get; set; }
