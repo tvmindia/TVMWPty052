@@ -27,7 +27,7 @@ namespace PartyEC.BusinessServices.Services
                     .Select(g => g.OrderByDescending(i => i.ID).First())
                     .ToList();
         }
-        public List<Order> GetAllOrdersList(string ID)
+        public List<OrderDetail> GetAllOrdersList(string ID)
         {
             return _orderRepository.GetAllOrdersList(ID);
         }
@@ -85,9 +85,10 @@ namespace PartyEC.BusinessServices.Services
             List<Order> OrderList = _orderRepository.GetAllOrderHeader().Where(t=>t.ParentOrderID==orderDetailsObj.OrderID).ToList();
             orderObj = _orderRepository.GetOrderDetails(orderDetailsObj.OrderID.ToString());
             orderObj.commonObj = orderDetailsObj.commonObj;
-            orderObj.RevNo = OrderList.Count;
+            orderObj.RevNo = OrderList.Count+1;
             orderObj.ParentOrderID = orderDetailsObj.OrderID;
             orderObj.StatusCode = 1;
+            orderObj.PayStatusCode = 0;
             operationStatusObj= InsertOrderHeader(orderObj);
             if(operationStatusObj.StatusCode==1)
             {

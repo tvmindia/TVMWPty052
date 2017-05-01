@@ -75,7 +75,7 @@ namespace PartyEC.UI.Controllers
         {
             try
             {
-                List<OrderViewModel> OrderHeaderList = Mapper.Map<List<Order>, List<OrderViewModel>>(_orderBusiness.GetAllOrdersList(ID));
+                List<OrderDetailViewModel> OrderHeaderList = Mapper.Map<List<OrderDetail>, List<OrderDetailViewModel>>(_orderBusiness.GetAllOrdersList(ID));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = OrderHeaderList });
             }
             catch (Exception ex)
@@ -269,6 +269,8 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.editbtn.Title = "Revise";
                     ToolboxViewModelObj.editbtn.Event = "CancelIssue()";
                     ToolboxViewModelObj.cancelbtn.Visible = true;
+                    ToolboxViewModelObj.cancelbtn.Title = "Cancel";
+                    ToolboxViewModelObj.cancelbtn.Event = "CancelOrder()";
                     ToolboxViewModelObj.sendbtn.Visible = true;
                     ToolboxViewModelObj.invoicebtn.Visible = true;
                     ToolboxViewModelObj.shipbtn.Visible = true;

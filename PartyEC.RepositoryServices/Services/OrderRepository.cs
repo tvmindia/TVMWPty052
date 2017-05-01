@@ -76,9 +76,9 @@ namespace PartyEC.RepositoryServices.Services
 
             return OrderHeaderList;
         }
-        public List<Order> GetAllOrdersList(string ID)
+        public List<OrderDetail> GetAllOrdersList(string ID)
         {
-            List<Order> OrderHeaderList = null;
+            List<OrderDetail> OrderHeaderList = null;
             try
             {
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
@@ -97,23 +97,25 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             if ((sdr != null) && (sdr.HasRows))
                             {
-                                OrderHeaderList = new List<Order>();
+                                OrderHeaderList = new List<OrderDetail>();
                                 while (sdr.Read())
                                 {
-                                    Order orderObj = new Order();
+                                    OrderDetail orderObj = new OrderDetail();
                                     {
                                         orderObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : orderObj.ProductID);
-                                        orderObj.OrderDetailID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
+                                        orderObj.OrderDetailID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.OrderDetailID);
                                         orderObj.ProductSpecXML = sdr["ProductName"].ToString() + "||" + sdr["ProductSpecXML"].ToString();
                                         orderObj.ItemStatus = sdr["ItemStatus"].ToString();
+                                        orderObj.ItemID= (sdr["ItemID"].ToString() != "" ? int.Parse(sdr["ItemID"].ToString()) : orderObj.ItemID);
                                         orderObj.Qty = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : 0);
                                         orderObj.Price = (sdr["Price"].ToString() != "" ? float.Parse(sdr["Price"].ToString()) : 0);
                                         orderObj.TaxAmt = (sdr["TaxAmt"].ToString() != "" ? float.Parse(sdr["TaxAmt"].ToString()) : 0);
                                         orderObj.ShippingAmt = (sdr["ShippingAmt"].ToString() != "" ? float.Parse(sdr["ShippingAmt"].ToString()) : 0);
                                         orderObj.DiscountAmt = (sdr["DiscountAmt"].ToString() != "" ? float.Parse(sdr["DiscountAmt"].ToString()) : 0);
+                                        orderObj.TotalDiscountAmt = (sdr["TotalDiscountAmt"].ToString() != "" ? float.Parse(sdr["TotalDiscountAmt"].ToString()) : 0);
                                         orderObj.Total = (sdr["Total"].ToString() != "" ? float.Parse(sdr["Total"].ToString()) : 0);
                                         orderObj.SubTotal = (sdr["SubTotal"].ToString() != "" ? float.Parse(sdr["SubTotal"].ToString()) : 0);
-
+                                        orderObj.ProductQty= (sdr["ProductQty"].ToString() != "" ? int.Parse(sdr["ProductQty"].ToString()) : orderObj.ProductQty);
                                     }
                                     OrderHeaderList.Add(orderObj);
                                 }

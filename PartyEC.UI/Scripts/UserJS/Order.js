@@ -58,6 +58,7 @@ $(document).ready(function () {
           { "data": "ShippingAmt" },
           { "data": "TaxAmt" },
           { "data": "DiscountAmt" },
+          { "data": "TotalDiscountAmt" },
           { "data": "SubTotal" }
         ],
         columnDefs: [
@@ -107,6 +108,7 @@ $(document).ready(function () {
           { "data": "ShippingAmt" },
           { "data": "TaxAmt" },
           { "data": "DiscountAmt" },
+          { "data": "TotalDiscountAmt" },
           { "data": "SubTotal" }
         ],
         columnDefs: [
@@ -254,7 +256,8 @@ $(document).ready(function () {
                       }
                       return Name;
                   }
-              }
+              },
+                 
              ]
          });
     //$('#tblProductList tbody').on('click', 'tr', function () {  
@@ -405,6 +408,8 @@ function Edit(this_obj)
         BindTableOrderDetailList(Result.ID);
         BindOrderComments(Result);
         BindOrderSummery(Result);
+        BindNewRevisionGeneral(Result);
+        BindRevisionLinkGeneral(Result);
     }
 }
 function CancelIssue()
@@ -427,6 +432,13 @@ function CancelIssue()
     }
     
 }
+function CancelOrder()
+{
+    var r = confirm("Are You Sure ?, This will cancel your Current Order..");
+    if (r == true) {
+
+    }
+}
 function AddReviseOrder()
 {
     debugger;
@@ -448,6 +460,7 @@ function AddReviseOrder()
         Order.ShippingAmt = 0;
         Order.TaxAmt = 0;
         Order.DiscountAmt = tabledata[i].DiscountAmount;
+        Order.TotalDiscountAmt = tabledata[i].DiscountAmount;
         Order.SubTotal = tabledata[i].ActualPrice - tabledata[i].DiscountAmount;
         Order.ItemStatus = "Pending";
         Order.Price = tabledata[i].ActualPrice;
@@ -499,7 +512,7 @@ function InsertNewOrder()
         for(var i=0;i<newOrderData.length;i++)
         {
             var OrderDetailViewModelObj = new Object();
-            OrderDetailViewModelObj.ItemID = i+1;
+            OrderDetailViewModelObj.ItemID = newOrderData[i].ItemID;
             OrderDetailViewModelObj.ProductID = newOrderData[i].ProductID;
             OrderDetailViewModelObj.ProductSpecXML = newOrderData[i].ProductSpecXML.split('||')[1];
             OrderDetailViewModelObj.ItemStatus = 1;
@@ -508,6 +521,7 @@ function InsertNewOrder()
             OrderDetailViewModelObj.ShippingAmt = newOrderData[i].ShippingAmt;
             OrderDetailViewModelObj.TaxAmt = newOrderData[i].TaxAmt;
             OrderDetailViewModelObj.DiscountAmt = newOrderData[i].DiscountAmt;
+            
             OrderDetailList.push(OrderDetailViewModelObj);
         }
         var OrderDetailViewModel = new Object();
@@ -542,22 +556,33 @@ function InsertNewOrder()
 function Calculatesum(this_obj)
 {
     debugger;
+
     var GrandTotal = 0;
-    var Qty = this_obj.value;
+    var Qty = this_obj.value;    
     var rowData = DataTables.orderModificationtable.row($(this_obj).parents('tr')).data();
-    var SubTotal = ((rowData.Total - rowData.DiscountAmt) * Qty);
-    var rowsData= DataTables.orderModificationtable.rows().data();
-    for(i=0;i<rowsData.length;i++)
+    if (Qty > rowData.ProductQty)
     {
-        if(rowsData[i].ProductSpecXML==rowData.ProductSpecXML)
-        {
-            rowsData[i].SubTotal = SubTotal;
-            rowsData[i].Qty = Qty;
-        }
-        GrandTotal = GrandTotal + rowsData[i].SubTotal;
+        notyAlert('information', "We're sorry! Only " + rowData.ProductQty + " units");
+        $(this_obj).val('');
     }
-    $('#tblGrandTotal .strGrandTotal').text(GrandTotal);
-    DataTables.orderModificationtable.clear().rows.add(rowsData).draw(false);
+    else
+    {
+        var TotalDiscount = (rowData.DiscountAmt * Qty);
+        var SubTotal = ((rowData.Price * Qty) - TotalDiscount);
+        var rowsData = DataTables.orderModificationtable.rows().data();
+        for (i = 0; i < rowsData.length; i++) {
+            if (rowsData[i].ProductSpecXML == rowData.ProductSpecXML) {
+                rowsData[i].SubTotal = SubTotal + rowData.ShippingAmt;
+                rowsData[i].TotalDiscountAmt = TotalDiscount;
+                rowsData[i].Total = rowData.Price * Qty;
+                rowsData[i].Qty = Qty;
+            }
+            GrandTotal = GrandTotal + rowsData[i].SubTotal;
+        }
+        $('#tblGrandTotal .strGrandTotal').text(GrandTotal + " QAR");
+        DataTables.orderModificationtable.clear().rows.add(rowsData).draw(false);
+    }
+    
 }
 function AddNewRevision()
 {
@@ -594,7 +619,7 @@ function BindGeneralSection(Result)
         var IDs = Result.RevisionIDs.split(',');
         for (var i = 0; i < IDs.length; i++)
         {
-            $("#RevisionLinkBind").append('<a class="col-md-6" onclick="ShowRevision(' + IDs[i] + ')">Revision ' + (i + 1) + ' </a>');
+            $("#RevisionLinkBind").append('<a class="col-md-6" onclick="ShowRevision(' + IDs[i] + ')">Revision ' + (i+1) + ' </a>');
         }
         
     }
@@ -609,6 +634,7 @@ function ShowRevision(id)
 {
     debugger;
     $('#ModelRevisionDetails').modal('show');
+    //$("#lblRevNo_RevLink").text(id);
     DataTables.tblProductListRevised.clear().rows.add(GetAllOrdersList(id)).draw(false);
 }
 function BindAccountSection(Result)
@@ -697,6 +723,24 @@ function BindOrderSummery(Result)
     $('#tdDeliveryCosts').text(OrderSummeryList.ShippingCostOrderSummery+ Result.CurrencyCode)
     $('#tdOrderDiscount').text(OrderSummeryList.DiscountAmtOrderSummery+ Result.CurrencyCode)
     $('.strGrandTotal').text(OrderSummeryList.GrandTotalOrderSummery+ Result.CurrencyCode)
+}
+function BindNewRevisionGeneral(Result)
+{
+    $("#lblOrderNo_NewRev").text(Result.OrderNo);
+    $("#lblOrderDate_NewRev").text(Result.OrderDate);
+    $("#lblOrderStatus_NewRev").text(Result.OrderStatus);
+    $("#lblSourceIP_NewRev").text(Result.SourceIP);
+    $("#lblRevNo_NewRev").text("--");
+    $("#lblCustomerName_NewRev").text(Result.CustomerName);
+    $("#lblContactNo_NewRev").text(Result.ContactNo);
+}
+function BindRevisionLinkGeneral(Result) {
+    $("#lblOrderNo_RevLink").text(Result.OrderNo);
+    $("#lblOrderDate_RevLink").text(Result.OrderDate);
+    $("#lblOrderStatus_RevLink").text("Cancelled");
+    $("#lblSourceIP_RevLink").text(Result.SourceIP);    
+    $("#lblCustomerName_RevLink").text(Result.CustomerName);
+    $("#lblContactNo_RevLink").text(Result.ContactNo);
 }
 function CheckinBillingChanges(data)
 {

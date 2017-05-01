@@ -1102,7 +1102,7 @@ namespace PartyEC.RepositoryServices.Services
                                 myProductDetail.ProductID = sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : myProductDetail.ProductID;
                                 myProductDetail.ID = sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myProductDetail.ID;
                                 //myProductDetail.AttributeSetID = sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : myProductDetail.AttributeSetID;
-                                //myProductDetail.Qty = sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : myProductDetail.Qty; //sdr["Qty"].ToString();
+                                myProductDetail.Qty = sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : myProductDetail.Qty; //sdr["Qty"].ToString();
                                 //myProductDetail.OutOfStockAlertQty = sdr["OutOfStockAlertQty"].ToString() != "" ? int.Parse(sdr["OutOfStockAlertQty"].ToString()) : myProductDetail.OutOfStockAlertQty;
                                 myProductDetail.PriceDifference = sdr["PriceDiffAmt"].ToString() != "" ? decimal.Parse(sdr["PriceDiffAmt"].ToString()) : myProductDetail.PriceDifference;
                                 //myProductDetail.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : myProductDetail.Enabled);
@@ -1111,7 +1111,6 @@ namespace PartyEC.RepositoryServices.Services
                                 myProductDetail.DiscountAmount = sdr["DiscountAmout"].ToString() != "" ? decimal.Parse(sdr["DiscountAmout"].ToString()) : myProductDetail.DiscountAmount;
                                 //myProductDetail.DiscountStartDate = (sdr["DiscountStDate"].ToString() != "" ? (Convert.ToDateTime(sdr["DiscountStDate"].ToString())) : myProductDetail.DiscountStartDate);
                                 myProductDetail.DiscountEndDate = (sdr["DiscountEnDate"].ToString() != "" ? (Convert.ToDateTime(sdr["DiscountEnDate"].ToString())) : myProductDetail.DiscountEndDate);
-
                                 myProductDetail.ProductName = (sdr["Name"].ToString() != "" ? (sdr["Name"].ToString() + "||" + sdr["AttributeXML"].ToString()) : myProductDetail.ProductName);
                                 myProductDetail.BaseSellingPrice = sdr["BaseSellingPrice"].ToString() != "" ? decimal.Parse(sdr["BaseSellingPrice"].ToString()) : myProductDetail.BaseSellingPrice;
                                 myProductDetail.ActualPrice = (sdr["ActualPrice"].ToString() != "" ? decimal.Parse(sdr["ActualPrice"].ToString()) : myProductDetail.ActualPrice);

@@ -253,7 +253,7 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>                                                
-                                                <th>Poduct</th>
+                                                <th>Product</th>
                                                 <th>Item Status</th>
                                                 <th>Qty</th>
                                                 <th>Price</th>
@@ -261,6 +261,7 @@
                                                 <th>Shipping Charges</th>
                                                 <th>Tax Amount</th>
                                                 <th>Discount</th>
+                                                <th>Total Discount</th>
                                                 <th>Total</th>
                                             </tr>
                                         </thead>
@@ -386,8 +387,55 @@
 
                 <div class="tab-pane fade" id="taborderEditDetails">
                     <div class="col-md-12">
-                        <h3>Create Revision</h3>
+                        <h4 style="max-width:50%;padding:1%"><span class="fa fa-bfa fa-shopping-cart" style="font-size: 16px;color:#f46f25;"></span><span> </span><span class="Spantitle">Create New Revision</span></h4>
                         <hr />
+                        <div class="col-md-12">
+                            <div class="infoBox panel panel-default" style="min-height:250px">
+                                <div class="infoBoxHeader panel-heading">General</div>
+                                <div class="panel-body">
+                                    @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblOrderNo_NewRev" class="h5 label-display">-</label>
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblOrderDate_NewRev" class="h5 label-display">-</label>
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblOrderStatus_NewRev" class="h5 label-display">-</label>
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblSourceIP_NewRev" class="h5 label-display">-</label>
+                                    </div>
+                                    @Html.LabelFor(model => model.RevNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblRevNo_NewRev" class="h5 label-display">New Revision</label>
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblCustomerName_NewRev" class="h5 label-display">-</label>
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    @Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblContactNo_NewRev" class="h5 label-display">-</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                             <table id="tblOrderModification" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>
@@ -401,6 +449,7 @@
                                         <th>Shipping Charges</th>
                                         <th>Tax Amount</th>
                                         <th>Discount</th>
+                                        <th>Total Discount</th>
                                         <th>Total</th>
                                     </tr>
                                 </thead>
@@ -620,6 +669,7 @@
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
+
                         <div style="padding:1%">
                             @{
                                 PartyEC.UI.Models.ToolboxViewModel ToolBoxControlforModel = new PartyEC.UI.Models.ToolboxViewModel();
@@ -658,12 +708,56 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title">Revision Detail</h4>
             </div>
             <div class="modal-body">
                 <div class="row">
                     <div class="col-md-12">
                         @*table*@
+                        <h4 style="max-width:50%;padding:1%"><span class="fa fa-bfa fa-shopping-cart" style="font-size: 16px;color:#f46f25;"></span><span> </span><span class="Spantitle">Old Revision(Cancelled)</span></h4>
+                        <hr />
+                        <div class="col-md-12">
+                            <div class="infoBox panel panel-default" style="min-height:250px">
+                                <div class="infoBoxHeader panel-heading">General</div>
+                                <div class="panel-body">
+                                    @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblOrderNo_RevLink" class="h5 label-display">-</label>
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblOrderDate_RevLink" class="h5 label-display">-</label>
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblOrderStatus_RevLink" class="h5 label-display">-</label>
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblSourceIP_RevLink" class="h5 label-display">-</label>
+                                    </div>
+                                    
+                                    <div class="col-md-12"></div>
+                                    @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblCustomerName_RevLink" class="h5 label-display">-</label>
+                                    </div>
+                                    <div class="col-md-12"></div>
+                                    @Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                    <div class="col-md-8">
+                                        @*style="font-weight:bold"*@
+                                        <label id="lblContactNo_RevLink" class="h5 label-display">-</label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                         <table id="tblProductListRevised" class="table table-striped table-bordered table-hover" cellspacing="0">
                             <thead>
                                 <tr>

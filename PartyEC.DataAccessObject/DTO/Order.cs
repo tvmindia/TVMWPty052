@@ -71,6 +71,7 @@ namespace PartyEC.DataAccessObject.DTO
         public float ShippingAmt { get; set; }
         public float TaxAmt { get; set; }
         public float DiscountAmt { get; set; }
+        
         public float Total { get; set; }
         public float SubTotal { get; set; }
         //Sales Statistics
@@ -93,6 +94,7 @@ namespace PartyEC.DataAccessObject.DTO
         public int OrderID { get; set; }
         public int ItemID { get; set; }
         public int ProductID { get; set; }
+        public int ProductQty { get; set; }
         public string ProductSpecXML { get; set; }
         public string ItemStatus { get; set; }
         public int Qty { get; set; }
@@ -100,6 +102,7 @@ namespace PartyEC.DataAccessObject.DTO
         public float ShippingAmt { get; set; }
         public float TaxAmt { get; set; }
         public float DiscountAmt { get; set; }
+        public float TotalDiscountAmt { get; set; }
         public float Total { get; set; }
         public float SubTotal { get; set; }
         public List<OrderDetail> OrderDetailsList { get; set; }
