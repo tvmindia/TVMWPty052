@@ -20,17 +20,19 @@ namespace PartyEC.UI.API
 
         ICustomerBusiness _customerBusiness;
         ICommonBusiness _commonBusiness;
+        IMasterBusiness _masterBusiness;
         IEventBusiness _eventBusiness;
         ICart_WishlistBusiness _cartwishlistBusiness;
         IOrderBusiness _orderBusiness;
         IQuotationsBusiness _quotationBusiness;
         IBookingsBusiness _bookingsBusiness;
 
-        public CustomerController(ICustomerBusiness customerBusiness,ICommonBusiness commonBusiness, IEventBusiness eventBusiness,ICart_WishlistBusiness cartwishlistBusiness, IOrderBusiness orderBusiness, IQuotationsBusiness quotationBusiness, IBookingsBusiness bookingsBusiness)
+        public CustomerController(ICustomerBusiness customerBusiness,IMasterBusiness masterBusiness,ICommonBusiness commonBusiness, IEventBusiness eventBusiness,ICart_WishlistBusiness cartwishlistBusiness, IOrderBusiness orderBusiness, IQuotationsBusiness quotationBusiness, IBookingsBusiness bookingsBusiness)
         {
             _customerBusiness = customerBusiness;
             _commonBusiness = commonBusiness;
             _eventBusiness = eventBusiness;
+            _masterBusiness = masterBusiness;
             _cartwishlistBusiness = cartwishlistBusiness;
              _orderBusiness=orderBusiness;
             _quotationBusiness = quotationBusiness;
@@ -318,6 +320,20 @@ namespace PartyEC.UI.API
             }
         }
 
+        [HttpPost]
+        public object GetShippingLocations()
+        {
+            try
+            {
+                List<ShippingLocationViewModel> CartList = Mapper.Map<List<ShippingLocations>, List<ShippingLocationViewModel>>(_masterBusiness.GetAllShippingLocation());
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
 
     }
 }
