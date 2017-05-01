@@ -295,7 +295,7 @@ namespace PartyEC.UI.API
         #endregion User
 
         [HttpPost]
-        public async Task<object> GetCustomerVerificationandOTP(Customer customerObj)
+        public async Task<object> GetCustomerVerificationandOTP(CustomerViewModel customerObj)
         {
             try
             {
@@ -335,5 +335,19 @@ namespace PartyEC.UI.API
             }
         }
 
+        [HttpPost]
+        public async Task<object> SendContactUsEmail( ContactUs MailObj)
+        {
+            bool  MailStatus = false;
+            try
+            {
+                MailStatus = await _customerBusiness.SendContactUsEmail(MailObj);
+                return JsonConvert.SerializeObject(new { Result = true, Records = MailStatus });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
     }
 }

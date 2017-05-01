@@ -209,7 +209,39 @@ namespace PartyEC.BusinessServices.Services
             }
             return sendsuccess;
         }
-   
+
+        public async Task<bool> SendContactUsEmail(ContactUs MailObj)
+        {
+            bool sendsuccess = false;
+            try
+            {
+                Mail _mail = new Mail();
+                using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/ContactUs.html")))
+                {
+                    _mail.Body = reader.ReadToEnd();
+                }
+                _mail.Body = _mail.Body.Replace("{Name}", MailObj.Name);
+                _mail.Body = _mail.Body.Replace("{Email}", MailObj.Email);
+                _mail.Body = _mail.Body.Replace("{Phone}", MailObj.Phone);
+                _mail.Body = _mail.Body.Replace("{Comments}", MailObj.Comments);
+                _mail.IsBodyHtml = true;
+                _mail.Subject = "Contact US Requests";
+                string EmailToAddress = System.Web.Configuration.WebConfigurationManager.AppSettings["EmailFromAddress"];
+                _mail.To = EmailToAddress;
+                sendsuccess = await _mailBusiness.MailSendAsync(_mail);
+                //quotationsObj.EventsLogViewObj.CustomerNotifiedYN = Mailstatus;
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                //return sendsuccess;
+            }
+            return sendsuccess;
+        }
+
+
+
         #endregion Methods
     }
 }

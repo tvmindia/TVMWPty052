@@ -21,5 +21,6 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertCustomer(Customer customer);
         OperationsStatus UpdateCustomer(Customer customer);
         Task<bool> SendCustomerOTP(int OTP,string Email);
+        Task<bool> SendContactUsEmail(ContactUs MailObj);
     }
 }
