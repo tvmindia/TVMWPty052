@@ -92,6 +92,7 @@
     <Compile Include="Contracts\IDynamicUIBusiness.cs" />
     <Compile Include="Contracts\IEventBusiness.cs" />
     <Compile Include="Contracts\IEventRequestBusiness.cs" />
+    <Compile Include="Contracts\IInvoiceBusiness.cs" />
     <Compile Include="Contracts\IMailBusiness.cs" />
     <Compile Include="Contracts\IMasterBusiness.cs" />
     <Compile Include="Contracts\INotificationBusiness.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Services\DynamicUIBusiness.cs" />
     <Compile Include="Services\EventBusiness.cs" />
     <Compile Include="Services\EventRequestBusiness.cs" />
+    <Compile Include="Services\InvoiceBusiness.cs" />
     <Compile Include="Services\MailBusiness.cs" />
     <Compile Include="Services\MasterBusiness.cs" />
     <Compile Include="Services\NotificationBusiness.cs" />

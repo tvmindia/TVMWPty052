@@ -65,6 +65,9 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<UserViewModel, User>().ReverseMap();
                 config.CreateMap<LoginViewModel, User>().ReverseMap();
                 config.CreateMap<OrderDetailViewModel, OrderDetail>().ReverseMap();
+                config.CreateMap<PaymentStatusViewModel, PaymentStatusMaster>().ReverseMap();
+                config.CreateMap<InvoiceViewModel, Invoice>().ReverseMap();
+                config.CreateMap<InvoiceDetailViewModel, InvoiceDetail>().ReverseMap();
             });
         }
 

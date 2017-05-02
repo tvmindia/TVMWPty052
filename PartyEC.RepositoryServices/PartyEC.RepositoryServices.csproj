@@ -91,6 +91,7 @@
     <Compile Include="Contracts\IDynamicUIRepository.cs" />
     <Compile Include="Contracts\IEventRepositry.cs" />
     <Compile Include="Contracts\IEventRequestsRepositry.cs" />
+    <Compile Include="Contracts\IInvoiceRepository.cs" />
     <Compile Include="Contracts\IMasterRepository.cs" />
     <Compile Include="Contracts\INotificationRepository.cs" />
     <Compile Include="Contracts\IOrderRepository.cs" />
@@ -108,6 +109,7 @@
     <Compile Include="Services\DynamicUIRepository.cs" />
     <Compile Include="Services\EventRepositry.cs" />
     <Compile Include="Services\EventRequestsRepositry.cs" />
+    <Compile Include="Services\InvoiceRepository.cs" />
     <Compile Include="Services\MasterRepository.cs" />
     <Compile Include="Services\NotificationRepository.cs" />
     <Compile Include="Services\OrderRepository.cs" />

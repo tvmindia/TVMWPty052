@@ -223,7 +223,52 @@ namespace PartyEC.RepositoryServices.Services
 
 
         }
+        public List<PaymentStatusMaster> GetAllPaymentStatus()
+        {
+            List<PaymentStatusMaster> paymentstatusList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetMasterPaymentStatus]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                paymentstatusList = new List<PaymentStatusMaster>();
+                                while (sdr.Read())
+                                {
+                                    PaymentStatusMaster _paymentstatus = new PaymentStatusMaster();
+                                    {
+                                        _paymentstatus.Code = (sdr["Code"].ToString() != "" ? int.Parse(sdr["Code"].ToString()) : _paymentstatus.Code);
+                                        _paymentstatus.Description = (sdr["Description"].ToString() != "" ? sdr["Description"].ToString() : _paymentstatus.Description);
 
+                                    }
+                                    paymentstatusList.Add(_paymentstatus);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return paymentstatusList;
+
+
+        }
         public List<BookingStatusMaster> GetAllBookingStatus()
         {
             List<BookingStatusMaster> statusList = null;

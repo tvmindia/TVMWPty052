@@ -35,6 +35,21 @@ namespace PartyEC.BusinessServices.Services
             return countrylist;
         }
 
+        public List<PaymentStatusMaster> GetAllPaymentStatus()
+        {
+            List<PaymentStatusMaster> paymentStatuslist = null;
+            try
+            {
+                paymentStatuslist = _masterRepository.GetAllPaymentStatus();
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return paymentStatuslist;
+        }
+
         public List<OrderStatusMaster> GetAllOrderStatus()
         {
             List<OrderStatusMaster> orderStatuslist = null;

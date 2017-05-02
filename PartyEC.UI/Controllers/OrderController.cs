@@ -39,6 +39,7 @@ namespace PartyEC.UI.Controllers
             {
                 order = new OrderViewModel();
                 List<SelectListItem> selectListItem = new List<SelectListItem>();
+                List<SelectListItem> selectListPaymentStatus = new List<SelectListItem>();
                 //Country Drop down bind
                 List<CountryViewModel> CounrtyList = Mapper.Map<List<Country>, List<CountryViewModel>>(_masterBusiness.GetAllCountries());
                 foreach (CountryViewModel ccl in CounrtyList)
@@ -51,6 +52,17 @@ namespace PartyEC.UI.Controllers
                     });
                 }
                 order.Countries = selectListItem;
+                List<PaymentStatusViewModel> paymentstatusListVM = Mapper.Map<List<PaymentStatusMaster>, List<PaymentStatusViewModel>>(_masterBusiness.GetAllPaymentStatus());
+                foreach (PaymentStatusViewModel pvm in paymentstatusListVM)
+                {
+                    selectListPaymentStatus.Add(new SelectListItem
+                    {
+                        Text = pvm.Description,
+                        Value = pvm.Code.ToString(),
+                        Selected = false
+                    });
+                }
+                order.PaymentStatusList = selectListPaymentStatus;
             }
             catch(Exception ex)
             {
@@ -279,6 +291,25 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string UpdateOrderPaymentStatus(Order OrderObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                OrderObj.commonObj = new LogDetails();
+                OrderObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                OrderObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.UpdateOrderPaymentStatus(OrderObj));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
         #region ChangeButtonStyle
         [HttpGet]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
@@ -293,7 +324,7 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Title = "Save";
-                    ToolboxViewModelObj.savebtn.Event = "";
+                    ToolboxViewModelObj.savebtn.Event = "SubmitInvoice()";
                     break;
                 case "Cancelled":
                     ToolboxViewModelObj.backbtn.Visible = true;

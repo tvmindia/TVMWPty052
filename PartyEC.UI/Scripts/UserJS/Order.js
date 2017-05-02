@@ -1,4 +1,5 @@
 ﻿var DataTables = {};
+var this_ObjOrder = null;
 $(document).ready(function () {
     DataTables.orderHeadertable = $('#tblOrderList').DataTable(
     {
@@ -439,6 +440,7 @@ function GetProductsListtoAdd()
 function Edit(this_obj)
 {
     debugger;
+    this_ObjOrder = this_obj;
     $('#tabOrderDetails').trigger('click');
     ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
     var rowData = DataTables.orderHeadertable.row($(this_obj).parents('tr')).data();
@@ -892,9 +894,10 @@ function BindAccountSectionInvoiceRegion(Result) {
     $("#hdnAccountCustomerNameInvoiceRegion").val(Result.CustomerName);
 }
 function BindPaymentInformationInvoiceRegion(Result) {
+    debugger;
     $('#lblPaymentTypeInvoiceRegion').text(Result.PaymentType)
     $('#lblCurrencyCodeInvoiceRegion').text(Result.CurrencyCode)
-    $('#lblPaymentStatusInvoiceRegion').text(Result.PaymentStatus)
+    $('#PaymentStatusList').val(Result.PayStatusCode)
 }
 function BindShippingHandlingSectionInvoiceRegion(Result) {
     $('#lblShippingLocationInvoiceRegion').text(Result.ShippingLocationName)
@@ -917,4 +920,53 @@ function TabActionInvoiceRegion()
 {
     BindTableOrderDetailListInvoiceRegion($('#hdnOrderHID').val());
     ChangeButtonPatchView("Order", "btnPatchOrders", "InvoiceRegion");
+}
+function PaymentStatusOnChange(this_Obj)
+{
+    debugger;
+    var ID = $('#hdnOrderHID').val();
+    var Order = new Object();
+    Order.ID = ID;
+    Order.PayStatusCode = $("#PaymentStatusList").val();
+    var data = "{'OrderObj':" + JSON.stringify(Order) + "}";
+    PostDataToServer('Order/UpdateOrderPaymentStatus/', data, function (JsonResult) {
+        if (JsonResult != '') {
+            switch (JsonResult.Result) {
+                case "OK":
+                    notyAlert('success', JsonResult.Records.StatusMessage);
+                    goback();
+                    break;
+                case "ERROR":
+                    notyAlert('error', JsonResult.Records.StatusMessage);
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
+}
+function SubmitInvoice()
+{
+   
+    var ID = $('#hdnOrderHID').val();
+    var Result = GetOrderDetails(ID);
+    var Order = new Object();
+    Order.ID = ID;
+    Order.PayStatusCode = $("#PaymentStatusList").val();
+    var data = "{'OrderObj':" + JSON.stringify(Order) + "}";
+    PostDataToServer('Order/UpdateOrderPaymentStatus/', data, function (JsonResult) {
+        if (JsonResult != '') {
+            switch (JsonResult.Result) {
+                case "OK":
+                    notyAlert('success', JsonResult.Records.StatusMessage);
+                    goback();
+                    break;
+                case "ERROR":
+                    notyAlert('error', JsonResult.Records.StatusMessage);
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
 }

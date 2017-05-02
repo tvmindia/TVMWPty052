@@ -769,7 +769,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandText = "[UpdateOrderPaymentStatus]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = orderObj.ID;
-                        cmd.Parameters.Add("@PaymentStatus", SqlDbType.Int).Value = orderObj.PaymentStatus;
+                        cmd.Parameters.Add("@PaymentStatus", SqlDbType.Int).Value = orderObj.PayStatusCode;
 
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
