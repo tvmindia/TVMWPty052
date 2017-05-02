@@ -43,7 +43,7 @@ namespace PartyEC.UI.Models
         //Customer Details
         public CustomerViewModel customerObj { get; set; }
         //Log Details
-        public LogDetailsViewModel commonObj { get; set; }
+        public LogDetailsViewModel logDetails { get; set; }
         //Comments
         public EventsLogViewModel EventsLogViewObj { get; set; }
         //Mailing Comments

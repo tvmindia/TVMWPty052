@@ -13,5 +13,6 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertBookings(Bookings bookingsObj);
         List<Bookings> GetAllBookings();
         Bookings GetBookings(int BookingID);
+        OperationsStatus UpdateBookings(Bookings bookingsObj);
     }
 }

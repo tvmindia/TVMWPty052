@@ -76,5 +76,20 @@ namespace PartyEC.BusinessServices.Services
             }
             return bookingObj;
         }
+
+        public OperationsStatus UpdateBookings(Bookings bookingsObj)
+        {
+            OperationsStatus OSatObj = null;
+            try
+            {
+                OSatObj = _bookingsRepository.UpdateBookings(bookingsObj);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OSatObj;
+        }
     }
 }
