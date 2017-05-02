@@ -50,7 +50,7 @@ namespace PartyEC.UI.Controllers
                 });
             }
             status_obj.BookingsstatusList = selectListItem;
-            ViewBag.UserName = _commonBusiness.GetUA().UserName;
+            
             return View(status_obj); 
         }
         #endregion Index
