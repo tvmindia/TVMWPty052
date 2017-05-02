@@ -1,29 +1,15 @@
-﻿using Newtonsoft.Json;
-using PartyEC.UI.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.Contracts;
-using System.Linq;
-using System.Security.Principal;
-using System.Threading;
-using System.Web;
+﻿using System.Linq;
 using System.Web.Mvc;
 using System.Web.Mvc.Filters;
 using System.Web.Security;
 
 namespace PartyEC.UI.CustomAttributes
 {
- 
+
     public class CustomAuthenticationFilter : FilterAttribute, IAuthenticationFilter
     {
-        public CustomAuthenticationFilter()
-        {
-
-        }
-        //string superAdminRole = "Manager"; // can be taken from resource file or config file
-        //string adminRole = "Admin"; // can be taken from resource file or config file
-
-        public void OnAuthentication(AuthenticationContext context)
+     
+       public void OnAuthentication(AuthenticationContext context)
         {
             ////
             var authCookie = context.HttpContext.Request.Cookies[FormsAuthentication.FormsCookieName];

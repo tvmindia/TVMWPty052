@@ -555,6 +555,7 @@
     <Compile Include="Controllers\SupplierLocationsController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="CustomAttributes\CustomAuthenticationFilter.cs" />
+    <Compile Include="CustomAttributes\CustomAuthenticationFilterForMobile.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
