@@ -29,13 +29,14 @@ namespace PartyEC.UI.Controllers
 
         #endregion Constructor_Injection
         // GET: DashBoard
-      
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             return View();
         }
         #region GetWeeklySalesSummeryForChart
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetWeeklySalesDetails()
         {
             try
@@ -51,6 +52,7 @@ namespace PartyEC.UI.Controllers
         #endregion  GetWeeklySalesSummeryForChart
         #region GetRootCategorySalesSummeryForChart
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetRootCategoryWiseSalesDetail()
         {
             try
@@ -65,6 +67,7 @@ namespace PartyEC.UI.Controllers
         }
         #endregion  GetRootCategorySalesSummeryForChart
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetTop10Products()
         {
             try

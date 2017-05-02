@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class DynamicUIController : Controller
     {
         private IDynamicUIBusiness _dynamicUIBusiness;
@@ -19,9 +21,10 @@ namespace PartyEC.UI.Controllers
             _dynamicUIBusiness = dynamicUIBusiness;
         }
 
-    
+
 
         // GET: DynamicUI
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult _MenuNavBar()
         {
             List<Menu> menulist = _dynamicUIBusiness.GetAllMenues();
@@ -30,6 +33,7 @@ namespace PartyEC.UI.Controllers
             return View(dUIObj);
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetTreeListForAttributeSet(string ID)
         {
             try
@@ -50,6 +54,7 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetTreeListAttributes(string ID)
         {
             try
@@ -63,6 +68,7 @@ namespace PartyEC.UI.Controllers
             }
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetTreeListCategories()
         {
             try
