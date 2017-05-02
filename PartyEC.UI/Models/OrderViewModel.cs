@@ -12,10 +12,12 @@ namespace PartyEC.UI.Models
 
         public int ID{ get; set; }
         [Display(Name = "Order No :")]
-        public string OrderNo { get; set; }   
+        public string OrderNo { get; set; }
+        [Display(Name = "Revision No :")]
         public int RevNo { get; set; }
         //
         public string RevisionIDs { get; set; }
+        
         public string OrderRev { get; set; }
         //
         [Display(Name = "Date :")]
@@ -27,14 +29,15 @@ namespace PartyEC.UI.Models
         public string CustomerName { get; set; }
         [Display(Name = "Mobile :")]
         public string ContactNo { get; set; }
-        [Display(Name = "Email")]
+        [Display(Name = "Email :")]
         public string CustomerEmail { get; set; }
         public string CustomerURL { get; set; }
         public string ProfileImageID { get; set; }
         public List<SelectListItem> Countries { get; set; }
         //
         public int ParentOrderID { get; set; }
-	 public string SourceIP { get; set; }
+        [Display(Name = "Source IP :")]
+        public string SourceIP { get; set; }
 	 public int CustomerID { get; set; }
 	 public string ShippingLocationName { get; set; }
 	 public string PaymentType { get; set; }

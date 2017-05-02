@@ -89,6 +89,52 @@ $(document).ready(function () {
          }
         ]
     });
+    DataTables.orderDetailstableInvoiceRegion = $('#tblOrderDetailsInvoiceRegion').DataTable(
+    {
+        dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+        order: [],
+        searching: true,
+        paging: true,
+        data: null,
+        columns: [
+          { "data": "OrderDetailID" },
+          { "data": "ProductSpecXML" },
+          { "data": "ItemStatus" },
+          { "data": "Qty" },
+          { "data": "Price" },
+          { "data": "Total" },
+          { "data": "ShippingAmt" },
+          { "data": "TaxAmt" },
+          { "data": "DiscountAmt" },
+          { "data": "TotalDiscountAmt" },
+          { "data": "SubTotal" }
+        ],
+        columnDefs: [
+         {
+             "targets": [0],
+             "visible": true,
+             "searchable": true
+         },
+         {//hiding hidden column 
+             "targets": [1],
+             "visible": true,
+             "searchable": true,
+             "render": function (data, type, full, meta) {
+                 debugger;
+                 var Name = "<b>" + data.split("||")[0] + "</b>";
+                 var Spec = (data.split("||")[1]).split("><");
+                 for (var i = 0; i < Spec.length - 1; i++) {
+                     if (i > 0) {
+                         var html = Spec[i].replace(">", " : ");
+                         Name = Name + "</br>" + (html.split("</")[0]);
+                     }
+
+                 }
+                 return Name;
+             }
+         }
+        ]
+    });
     DataTables.orderModificationtable = $('#tblOrderModification').DataTable(
     {
         dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
@@ -168,6 +214,7 @@ $(document).ready(function () {
             selector: 'tr'
         }
     });
+
     DataTables.tblProductList = $('#tblProductList').DataTable(
          {
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
@@ -396,6 +443,10 @@ function Edit(this_obj)
     ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
     var rowData = DataTables.orderHeadertable.row($(this_obj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
+        if (rowData.OrderStatus == "Cancelled")
+        {
+            ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
+        }
         debugger;
         $("#ID").val(rowData.ID);
         $("#ParentOrderID").val(rowData.ParentOrderID);
@@ -411,6 +462,14 @@ function Edit(this_obj)
         BindOrderSummery(Result);
         BindNewRevisionGeneral(Result);
         BindRevisionLinkGeneral(Result);
+
+        //******************************** INVOICE AREA
+
+        BindGeneralSectionInvoiceRegion(Result);
+        BindAccountSectionInvoiceRegion(Result);
+        BindPaymentInformationInvoiceRegion(Result);
+        BindShippingHandlingSectionInvoiceRegion(Result);
+        BindOrderSummeryInvoiceRegion(Result);
     }
 }
 function CancelIssue()
@@ -446,11 +505,11 @@ function CancelOrder()
             if (JsonResult != '') {
                 switch (JsonResult.Result) {
                     case "OK":
-                        notyAlert('success', JsonResult.Record.StatusMessage);
+                        notyAlert('success', JsonResult.Records.StatusMessage);
                         goback();
                         break;
                     case "ERROR":
-                        notyAlert('error', JsonResult.Record.StatusMessage);
+                        notyAlert('error', JsonResult.Records.StatusMessage);
                         break;
                     default:
                         break;
@@ -810,3 +869,52 @@ function CheckinCommentInsert(data) {
     }
 }
 
+//###########################################################################################################################################################################################################//
+//#############################################******************************* INVOICE SECTION **********************************************###############################################################//
+
+
+function BindGeneralSectionInvoiceRegion(Result) {
+    debugger;
+    $("#lblOrderNoInvoiceRegion").text(Result.OrderNo);
+    $("#lblOrderDateInvoiceRegion").text(Result.OrderDate);
+    $("#lblOrderStatusInvoiceRegion").text(Result.OrderStatus);
+    $("#lblSourceIPInvoiceRegion").text(Result.SourceIP);
+    $("#lblRevNoInvoiceRegion").text(Result.OrderRev);
+
+}
+
+function BindAccountSectionInvoiceRegion(Result) {
+    $('#imgPreviewCustomerInvoiceRegion').attr('src', Result.CustomerURL);
+    $("#lblCustomerNameInvoiceRegion").text(Result.CustomerName);
+    $("#lblContactNoInvoiceRegion").text(Result.ContactNo);
+    $("#lblCustomerEmailInvoiceRegion").text(Result.CustomerEmail);
+    $("#hdnAccountEmailIDInvoiceRegion").val(Result.CustomerEmail);
+    $("#hdnAccountCustomerNameInvoiceRegion").val(Result.CustomerName);
+}
+function BindPaymentInformationInvoiceRegion(Result) {
+    $('#lblPaymentTypeInvoiceRegion').text(Result.PaymentType)
+    $('#lblCurrencyCodeInvoiceRegion').text(Result.CurrencyCode)
+    $('#lblPaymentStatusInvoiceRegion').text(Result.PaymentStatus)
+}
+function BindShippingHandlingSectionInvoiceRegion(Result) {
+    $('#lblShippingLocationInvoiceRegion').text(Result.ShippingLocationName)
+    $('#lblShippingAmtInvoiceRegion').text(Result.TotalShippingAmt)
+}
+function BindTableOrderDetailListInvoiceRegion(ID) {
+    DataTables.orderDetailstableInvoiceRegion.clear().rows.add(GetAllOrdersList(ID)).draw(false);
+}
+
+function BindOrderSummeryInvoiceRegion(Result) {
+    debugger;
+    var OrderSummeryList = GetOrderSummery(Result.ID);
+    $('#tdSubTotalInvoiceRegion').text(OrderSummeryList.SubTotalOrderSummery + Result.CurrencyCode)
+    $('#tdTaxTotalInvoiceRegion').text(OrderSummeryList.TaxAmtOrderSummery + Result.CurrencyCode)
+    $('#tdDeliveryCostsInvoiceRegion').text(OrderSummeryList.ShippingCostOrderSummery + Result.CurrencyCode)
+    $('#tdOrderDiscountInvoiceRegion').text(OrderSummeryList.DiscountAmtOrderSummery + Result.CurrencyCode)
+    $('.strGrandTotalInvoiceRegion').text(OrderSummeryList.GrandTotalOrderSummery + Result.CurrencyCode)
+}
+function TabActionInvoiceRegion()
+{
+    BindTableOrderDetailListInvoiceRegion($('#hdnOrderHID').val());
+    ChangeButtonPatchView("Order", "btnPatchOrders", "InvoiceRegion");
+}

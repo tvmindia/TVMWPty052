@@ -71,311 +71,573 @@
                             @*<div class="col-md-12 Sidebar_Party" style="min-height:1644px;"></div>*@
                             <ul class="nav nav-tabs nav-stacked Sidebar_Party" style="min-height:1684px;">
                                 <li class="liHead"><a disabled>&nbsp;&nbsp;</a></li>
-                                <li class="active"><a href="#general" data-toggle="tab" id="tabGeneral">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General <span class="label label-danger">E</span></a></li>
-                                <li><a href="#" data-toggle="tab" id="tabImages">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invoice</a></li>
-                                <li><a href="#" data-toggle="tab" id="tabImages">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shiping</a></li>
+                                <li class="active"><a href="#OrderRegion" data-toggle="tab" id="tabOrderRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General <span class="label label-danger">E</span></a></li>
+                                <li onclick="TabActionInvoiceRegion()"><a href="#InvoiceRegion" data-toggle="tab" id="tabInvoiceRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invoice</a></li>
+                                <li><a href="#ShippingRegion" data-toggle="tab" id="tabShippingRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shiping</a></li>
                             </ul>
                         </div>
                         <div class="col-md-9">
-                            <div class="col-md-12">
-                                <h4 style="max-width:50%;padding:1%"><span class="fa fa-bfa fa-shopping-cart" style="font-size: 16px;color:#f46f25;"></span><span> </span><span id="titleSpanPro" class="Spantitle">Order Details</span></h4>
-                                <hr />
-                                <div class="col-md-6">
-                                    <div class="infoBox panel panel-default" style="min-height:300px">
-                                        <div class="infoBoxHeader panel-heading">General</div>
-                                        <div class="panel-body">
-                                            @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })
-                                            <div class="col-md-8">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblOrderNo" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })
-                                            <div class="col-md-8">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblOrderDate" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })
-                                            <div class="col-md-8">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblOrderStatus" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
-                                            <div class="col-md-8">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblSourceIP" class="h5 label-display">-</label>
-                                            </div>
-                                            @Html.LabelFor(model => model.RevNo, htmlAttributes: new { @class = "h5 col-md-4" })
-                                            <div class="col-md-8">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblRevNo" class="h5 label-display">-</label>
-                                            </div>
-                                            @Html.LabelFor(model => model.RevisionIDs, htmlAttributes: new { @class = "h5 col-md-4",id="lblRevisionIDs" })
-                                            <div class="col-md-8" id="RevisionLinkBind">
-
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="infoBox panel panel-default" style="min-height:300px">
-                                        <div class="infoBoxHeader panel-heading">Account Information</div>
-                                        <div class="panel-body">
-                                            <div class="col-md-12">
-                                                <img src="~/Content/images/Person1.png" id="imgPreviewCustomer" />
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })
-                                            <div class="col-md-8">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblCustomerName" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            @Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })
-                                            <div class="col-md-8">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblContactNo" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            @Html.LabelFor(model => model.CustomerEmail, htmlAttributes: new { @class = "h5 col-md-4" })
-                                            <div class="col-md-8">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblCustomerEmail" class="h5 label-display">-</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="infoBox panel-default" style="min-height:250px">
-                                        <div class="infoBoxHeader panel-heading">Billing Address</div>
-                                        <div class="panel-body">
-                                            <div class="col-md-12">
-                                                <a id="btnmodelrelproduct" style="position:relative;left:89%" class="btn btn-info" data-toggle="modal" data-target="#ModelBillingDetails">Edit</a>
-                                            </div>
-
-                                            <label class="h5 col-md-6" for="lblName">Name :</label>
-                                            <div class="col-md-6">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblName" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            <label class="h5 col-md-6" for="lblAddress">Address :</label>
-                                            <div class="col-md-6">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblAddress" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            <label class="h5 col-md-6" for="lblContact">Contact No :</label>
-                                            <div class="col-md-6">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblContact" class="h5 label-display">-</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="infoBox panel panel-default" style="min-height:250px">
-                                        <div class="infoBoxHeader panel-heading">Shipping Address</div>
-                                        <div class="panel-body">
-                                            <div class="col-md-12">
-                                                <a id="btnmodelrelproduct" style="position:relative;left:89%" class="btn btn-info" data-toggle="modal" data-target="#ModelShipingDetails">Edit</a>
-                                            </div>
-
-                                            <label class="h5 col-md-6" for="lblShipDisName">Name :</label>
-                                            <div class="col-md-6">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblShipDisName" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            <label class="h5 col-md-6" for="lblShipDisAddress">Address :</label>
-                                            <div class="col-md-6">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblShipDisAddress" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            <div class="col-md-12"></div>
-                                            <label class="h5 col-md-6" for="lblShipDisContact">Contact No :</label>
-                                            <div class="col-md-6">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblShipDisContact" class="h5 label-display">-</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="infoBox panel panel-default" style="min-height:150px">
-                                        <div class="infoBoxHeader panel-heading">Payment Information</div>
-                                        <div class="panel-body">
-                                            <label class="h5 col-md-6" for="lblPaymentType">Payment Mode:</label>
-                                            <div class="col-md-6">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblPaymentType" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            <label class="h5 col-md-6" for="lblCurrencyCode">Currency :</label>
-                                            <div class="col-md-6">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblCurrencyCode" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            <label class="h5 col-md-6" for="lblPaymentStatus">Payment Status :</label>
-                                            <div class="col-md-6">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblPaymentStatus" class="h5 label-display">-</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="infoBox panel panel-default" style="min-height:150px">
-                                        <div class="infoBoxHeader panel-heading">Shipping & Handling information</div>
-                                        <div class="panel-body">
-                                            <label class="h5 col-md-6" for="lblShippingLocation">Shipping Location:</label>
-                                            <div class="col-md-6">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblShippingLocation" class="h5 label-display">-</label>
-                                            </div>
-                                            <div class="col-md-12"></div>
-                                            <label class="h5 col-md-6" for="lblShippingAmt">Shipping Charges :</label>
-                                            <div class="col-md-6">
-                                                @*style="font-weight:bold"*@
-                                                <label id="lblShippingAmt" class="h5 label-display">-</label>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-12">
-                                    <h3>Order Items</h3>
+                            <div class="tab-content OrderTabContent">
+                                <div id="OrderRegion" class="tab-pane fade in active col-md-12">
+                                    <h4 style="max-width:50%;padding:1%"><span class="fa fa-bfa fa-shopping-cart" style="font-size: 16px;color:#f46f25;"></span><span> </span><span id="titleSpanPro" class="Spantitle">Order Details</span></h4>
                                     <hr />
-                                    <table id="tblOrderDetailList" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
-                                        <thead>
-                                            <tr>
-                                                <th>ID</th>                                                
-                                                <th>Product</th>
-                                                <th>Item Status</th>
-                                                <th>Qty</th>
-                                                <th>Price</th>
-                                                <th>Sub Total</th>
-                                                <th>Shipping Charges</th>
-                                                <th>Tax Amount</th>
-                                                <th>Discount</th>
-                                                <th>Total Discount</th>
-                                                <th>Total</th>
-                                            </tr>
-                                        </thead>
-                                    </table>
-                                </div>
-                                <div class="col-md-6">
-                                    @using (Ajax.BeginForm("UpdateEventsLog", "Order", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "CheckinCommentInsert" }, new { @class = "form-horizontal", role = "form", id = "formComments" }))
-                                    {
-                                        @Html.AntiForgeryToken()
-                                        <div class="infoBox panel panel-default" style="min-height:250px">
-                                            <div class="infoBoxHeader panel-heading">Order Comments</div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:300px">
+                                            <div class="infoBoxHeader panel-heading">General</div>
                                             <div class="panel-body">
-                                                <div class="form-group col-md-12">
-                                                    @Html.LabelFor(model => model.EventsLogViewObj.Comment, htmlAttributes: new { @class = "control-label col-md-6" })
-                                                    <div class="col-md-12">
-                                                        @Html.TextAreaFor(model => model.EventsLogViewObj.Comment, new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(model => model.EventsLogViewObj.Comment, "", new { @class = "text-danger" })
-                                                    </div>
+                                                @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblOrderNo" class="h5 label-display">-</label>
                                                 </div>
                                                 <div class="col-md-12"></div>
-                                                <div class="">
-                                                    @Html.LabelFor(model => model.EventsLogViewObj.CustomerNotifiedYN, htmlAttributes: new { @class = "control-label col-md-4" })
-                                                    <div class="col-lg-2">
-                                                        <div class="checkbox">
-                                                            <div>
-                                                                @Html.EditorFor(model => model.EventsLogViewObj.CustomerNotifiedYN)
-                                                                @Html.ValidationMessageFor(model => model.EventsLogViewObj.CustomerNotifiedYN, "", new { @class = "text-danger" })
-                                                            </div>
+                                                @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblOrderDate" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblOrderStatus" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblSourceIP" class="h5 label-display">-</label>
+                                                </div>
+                                                @Html.LabelFor(model => model.RevNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblRevNo" class="h5 label-display">-</label>
+                                                </div>
+                                                @Html.LabelFor(model => model.RevisionIDs, htmlAttributes: new { @class = "h5 col-md-4",id="lblRevisionIDs" })
+                                                <div class="col-md-8" id="RevisionLinkBind">
 
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:300px">
+                                            <div class="infoBoxHeader panel-heading">Account Information</div>
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    <img src="~/Content/images/Person1.png" id="imgPreviewCustomer" />
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblCustomerName" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblContactNo" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.CustomerEmail, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblCustomerEmail" class="h5 label-display">-</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel-default" style="min-height:250px">
+                                            <div class="infoBoxHeader panel-heading">Billing Address</div>
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    <a id="btnmodelrelproduct" style="position:relative;left:89%" class="btn btn-info" data-toggle="modal" data-target="#ModelBillingDetails">Edit</a>
+                                                </div>
+
+                                                <label class="h5 col-md-6" for="lblName">Name :</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblName" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <label class="h5 col-md-6" for="lblAddress">Address :</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblAddress" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <label class="h5 col-md-6" for="lblContact">Contact No :</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblContact" class="h5 label-display">-</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:250px">
+                                            <div class="infoBoxHeader panel-heading">Shipping Address</div>
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    <a id="btnmodelrelproduct" style="position:relative;left:89%" class="btn btn-info" data-toggle="modal" data-target="#ModelShipingDetails">Edit</a>
+                                                </div>
+
+                                                <label class="h5 col-md-6" for="lblShipDisName">Name :</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblShipDisName" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <label class="h5 col-md-6" for="lblShipDisAddress">Address :</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblShipDisAddress" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <div class="col-md-12"></div>
+                                                <label class="h5 col-md-6" for="lblShipDisContact">Contact No :</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblShipDisContact" class="h5 label-display">-</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:150px">
+                                            <div class="infoBoxHeader panel-heading">Payment Information</div>
+                                            <div class="panel-body">
+                                                <label class="h5 col-md-6" for="lblPaymentType">Payment Mode:</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblPaymentType" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <label class="h5 col-md-6" for="lblCurrencyCode">Currency :</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblCurrencyCode" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <label class="h5 col-md-6" for="lblPaymentStatus">Payment Status :</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblPaymentStatus" class="h5 label-display">-</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:150px">
+                                            <div class="infoBoxHeader panel-heading">Shipping & Handling information</div>
+                                            <div class="panel-body">
+                                                <label class="h5 col-md-6" for="lblShippingLocation">Shipping Location:</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblShippingLocation" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <label class="h5 col-md-6" for="lblShippingAmt">Shipping Charges :</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblShippingAmt" class="h5 label-display">-</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <h3>Order Items</h3>
+                                        <hr />
+                                        <table id="tblOrderDetailList" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Product</th>
+                                                    <th>Item Status</th>
+                                                    <th>Qty</th>
+                                                    <th>Price</th>
+                                                    <th>Sub Total</th>
+                                                    <th>Shipping Charges</th>
+                                                    <th>Tax Amount</th>
+                                                    <th>Discount</th>
+                                                    <th>Total Discount</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6">
+                                        @using (Ajax.BeginForm("UpdateEventsLog", "Order", new AjaxOptions { HttpMethod = "POST", Confirm = "", OnFailure = "NetworkFailure", AllowCache = false, OnComplete = "CheckinCommentInsert" }, new { @class = "form-horizontal", role = "form", id = "formComments" }))
+                                    {
+                                    @Html.AntiForgeryToken()
+                                    <div class="infoBox panel panel-default" style="min-height:250px">
+                                        <div class="infoBoxHeader panel-heading">Order Comments</div>
+                                        <div class="panel-body">
+                                            <div class="form-group col-md-12">
+                                                @Html.LabelFor(model => model.EventsLogViewObj.Comment, htmlAttributes: new { @class = "control-label col-md-6" })
+                                                <div class="col-md-12">
+                                                    @Html.TextAreaFor(model => model.EventsLogViewObj.Comment, new { @class = "form-control" })
+                                                    @Html.ValidationMessageFor(model => model.EventsLogViewObj.Comment, "", new { @class = "text-danger" })
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            <div class="">
+                                                @Html.LabelFor(model => model.EventsLogViewObj.CustomerNotifiedYN, htmlAttributes: new { @class = "control-label col-md-4" })
+                                                <div class="col-lg-2">
+                                                    <div class="checkbox">
+                                                        <div>
+                                                            @Html.EditorFor(model => model.EventsLogViewObj.CustomerNotifiedYN)
+                                                            @Html.ValidationMessageFor(model => model.EventsLogViewObj.CustomerNotifiedYN, "", new { @class = "text-danger" })
                                                         </div>
 
                                                     </div>
-                                                </div>
 
-                                                <div class="">
-                                                    <div class="col-md-6">
-                                                        @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Order" })
-                                                        @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0",id="hdnEventsLogParentID" })
-                                                        @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountEmailID" })
-                                                        @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountCustomerName" })
-                                                        <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
-                                                    </div>
                                                 </div>
-                                                <div class="col-md-12"></div>
-                                                <div class="form-group col-md-12">
-                                                    <hr />
-                                                    <label id="lblHistroy" class="control-label" style="font-size:14px;margin-left:1%">Earlier Comments</label>
+                                            </div>
 
-                                                    <div style="height: 150px;width: 107%;overflow: hidden;position: relative;">
-                                                        <div id="CommentsDisplay" style="max-height: 150px;min-height: 150px;overflow-x: hidden;position: absolute;top: 0px;bottom: 0px;left: 0px;right: -15px;white-space: pre;">
-                                                        </div>
+                                            <div class="">
+                                                <div class="col-md-6">
+                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentType, htmlAttributes: new { @class = "control-label col-md-4", Value = "Order" })
+                                                    @Html.HiddenFor(model => model.EventsLogViewObj.ParentID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0",id="hdnEventsLogParentID" })
+                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerEmail, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountEmailID" })
+                                                    @Html.HiddenFor(model => model.mailViewModelObj.CustomerName, htmlAttributes: new { @class = "control-label col-md-4", Value = "", id = "hdnAccountCustomerName" })
+                                                    <input type="submit" value="Submit Comment" class="btn btn-default btn-right" />
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            <div class="form-group col-md-12">
+                                                <hr />
+                                                <label id="lblHistroy" class="control-label" style="font-size:14px;margin-left:1%">Earlier Comments</label>
+
+                                                <div style="height: 150px;width: 107%;overflow: hidden;position: relative;">
+                                                    <div id="CommentsDisplay" style="max-height: 150px;min-height: 150px;overflow-x: hidden;position: absolute;top: 0px;bottom: 0px;left: 0px;right: -15px;white-space: pre;">
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+                                    </div>
                                                 }
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="infoBox panel panel-default" style="min-height:250px">
-                                        <div class="infoBoxHeader panel-heading">Order Summery</div>
-                                        <div class="panel-body">
-                                            <table width="100%" border="0" align="right" cellpadding="0" cellspacing="0">
-                                                <tbody>
-                                                    <tr>
-                                                        <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
-                                                            <strong>Sub-total</strong>
-                                                        </td>
-                                                        <td width="0" id="tdSubTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
-                                                            0.00QAR
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
-                                                            <strong>Tax:</strong>
-                                                        </td>
-                                                        <td width="0" id="tdTaxTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
-                                                            0.00QAR
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px">
-                                                            <strong>Delivery costs:</strong>
-                                                        </td>
-                                                        <td width="62" id="tdDeliveryCosts" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px">
-                                                            0.00QAR
-                                                        </td>
-                                                    </tr>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:250px">
+                                            <div class="infoBoxHeader panel-heading">Order Summery</div>
+                                            <div class="panel-body">
+                                                <table width="100%" border="0" align="right" cellpadding="0" cellspacing="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                                                                <strong>Sub-total</strong>
+                                                            </td>
+                                                            <td width="0" id="tdSubTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                                                                0.00QAR
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                                                                <strong>Tax:</strong>
+                                                            </td>
+                                                            <td width="0" id="tdTaxTotal" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                                                                0.00QAR
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px">
+                                                                <strong>Delivery costs:</strong>
+                                                            </td>
+                                                            <td width="62" id="tdDeliveryCosts" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px">
+                                                                0.00QAR
+                                                            </td>
+                                                        </tr>
 
-                                                    <tr>
-                                                        <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px;border-bottom:solid 1px #999999">
-                                                            <strong>Order discount:</strong>
-                                                        </td>
-                                                        <td width="62" id="tdOrderDiscount" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px;border-bottom:solid 1px #999999">
-                                                            0.00QAR
-                                                        </td>
-                                                    </tr>
-                                                    <tr>
-                                                        <td align="left" valign="bottom" style="color:#404041;font-size:13px;line-height:16px;padding:5px 0px 3px 0px">
-                                                            <strong>Grand Total:</strong>
-                                                        </td>
-                                                        <td width="62" align="right" valign="bottom" style="color:#339933;font-size:13px;line-height:16px;padding:5px 5px 3px 5px">
-                                                            <strong class="strGrandTotal">0.00QAR</strong>
-                                                        </td>
-                                                    </tr>
-                                                </tbody>
+                                                        <tr>
+                                                            <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px;border-bottom:solid 1px #999999">
+                                                                <strong>Order discount:</strong>
+                                                            </td>
+                                                            <td width="62" id="tdOrderDiscount" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px;border-bottom:solid 1px #999999">
+                                                                0.00QAR
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" valign="bottom" style="color:#404041;font-size:13px;line-height:16px;padding:5px 0px 3px 0px">
+                                                                <strong>Grand Total:</strong>
+                                                            </td>
+                                                            <td width="62" align="right" valign="bottom" style="color:#339933;font-size:13px;line-height:16px;padding:5px 5px 3px 5px">
+                                                                <strong class="strGrandTotal">0.00QAR</strong>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
 
 
-                                            </table>
+                                                </table>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                <div class="tab-pane fade col-md-12" id="InvoiceRegion">
+                                    <h4 style="max-width:50%;padding:1%"><span class="fa fa-bfa fa-shopping-cart" style="font-size: 16px;color:#f46f25;"></span><span> </span><span class="Spantitle">Invoice Order</span></h4>
+                                    <hr />
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:250px">
+                                            <div class="infoBoxHeader panel-heading">General</div>
+                                            <div class="panel-body">
+                                                @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblOrderNoInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblOrderDateInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblOrderStatusInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblSourceIPInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                                @Html.LabelFor(model => model.RevNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblRevNoInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:250px">
+                                            <div class="infoBoxHeader panel-heading">Account Information</div>
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    <img src="~/Content/images/Person1.png" id="imgPreviewCustomerInvoiceRegion" />
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblCustomerNameInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblContactNoInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.CustomerEmail, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblCustomerEmailInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:150px">
+                                            <div class="infoBoxHeader panel-heading">Payment Information</div>
+                                            <div class="panel-body">
+                                                <label class="h5 col-md-6" for="lblPaymentType">Payment Mode:</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblPaymentTypeInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <label class="h5 col-md-6" for="lblCurrencyCode">Currency :</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblCurrencyCodeInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <label class="h5 col-md-6" for="lblPaymentStatus">Payment Status :</label>
+                                                @*<div class="col-lg-6">
+                                                  
+                                                    @Html.DropDownListFor(model => model.PaymentStatus, null, "--Select Status--", new { @class = "form-control", @onchange = "attributeSetOnChange(this)" })
+                                                    @Html.HiddenFor(model => model.PaymentStatus, htmlAttributes: new { @class = "control-label col-lg-2", id = "AttributeSetIDhdf", Value = "" })
+                                                    @Html.ValidationMessageFor(model => model.PaymentStatus, "", new { @class = "text-danger" })
+                                                </div>*@
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:150px">
+                                            <div class="infoBoxHeader panel-heading">Shipping & Handling information</div>
+                                            <div class="panel-body">
+                                                <label class="h5 col-md-6" for="lblShippingLocation">Shipping Location:</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblShippingLocationInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                <label class="h5 col-md-6" for="lblShippingAmt">Shipping Charges :</label>
+                                                <div class="col-md-6">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblShippingAmtInvoiceRegion" class="h5 label-display">-</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <h3>Order Items</h3>
+                                        <hr />
+                                        <table id="tblOrderDetailsInvoiceRegion" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                            <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Product</th>
+                                                    <th>Item Status</th>
+                                                    <th>Qty</th>
+                                                    <th>Price</th>
+                                                    <th>Sub Total</th>
+                                                    <th>Shipping Charges</th>
+                                                    <th>Tax Amount</th>
+                                                    <th>Discount</th>
+                                                    <th>Total Discount</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                        </table>
+                                    </div>
+                                    <div class="col-md-6"></div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:250px">
+                                            <div class="infoBoxHeader panel-heading">Order Summery</div>
+                                            <div class="panel-body">
+                                                <table width="100%" border="0" align="right" cellpadding="0" cellspacing="0">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                                                                <strong>Sub-total</strong>
+                                                            </td>
+                                                            <td width="0" id="tdSubTotalInvoiceRegion" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                                                                0.00QAR
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                                                                <strong>Tax:</strong>
+                                                            </td>
+                                                            <td width="0" id="tdTaxTotalInvoiceRegion" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                                                                0.00QAR
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px">
+                                                                <strong>Delivery costs:</strong>
+                                                            </td>
+                                                            <td width="62" id="tdDeliveryCostsInvoiceRegion" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px">
+                                                                0.00QAR
+                                                            </td>
+                                                        </tr>
 
-                        </div>
+                                                        <tr>
+                                                            <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px;border-bottom:solid 1px #999999">
+                                                                <strong>Order discount:</strong>
+                                                            </td>
+                                                            <td width="62" id="tdOrderDiscountInvoiceRegion" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px;border-bottom:solid 1px #999999">
+                                                                0.00QAR
+                                                            </td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td align="left" valign="bottom" style="color:#404041;font-size:13px;line-height:16px;padding:5px 0px 3px 0px">
+                                                                <strong>Grand Total:</strong>
+                                                            </td>
+                                                            <td width="62" align="right" valign="bottom" style="color:#339933;font-size:13px;line-height:16px;padding:5px 5px 3px 5px">
+                                                                <strong class="strGrandTotal">0.00QAR</strong>
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+
+
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane fade col-md-12" id="ShippingRegion">
+                                    <h4 style="max-width:50%;padding:1%"><span class="fa fa-bfa fa-shopping-cart" style="font-size: 16px;color:#f46f25;"></span><span> </span><span class="Spantitle">Shipping Order</span></h4>
+                                    <hr />
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:300px">
+                                            <div class="infoBoxHeader panel-heading">General</div>
+                                            <div class="panel-body">
+                                                @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblOrderNo" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblOrderDate" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblOrderStatus" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblSourceIP" class="h5 label-display">-</label>
+                                                </div>
+                                                @Html.LabelFor(model => model.RevNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblRevNo" class="h5 label-display">-</label>
+                                                </div>
+                                                @Html.LabelFor(model => model.RevisionIDs, htmlAttributes: new { @class = "h5 col-md-4", id = "lblRevisionIDs" })
+                                                <div class="col-md-8" id="RevisionLinkBind">
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="infoBox panel panel-default" style="min-height:300px">
+                                            <div class="infoBoxHeader panel-heading">Account Information</div>
+                                            <div class="panel-body">
+                                                <div class="col-md-12">
+                                                    <img src="~/Content/images/Person1.png" id="imgPreviewCustomer" />
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblCustomerName" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblContactNo" class="h5 label-display">-</label>
+                                                </div>
+                                                <div class="col-md-12"></div>
+                                                @Html.LabelFor(model => model.CustomerEmail, htmlAttributes: new { @class = "h5 col-md-4" })
+                                                <div class="col-md-8">
+                                                    @*style="font-weight:bold"*@
+                                                    <label id="lblCustomerEmail" class="h5 label-display">-</label>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                </div>
+
+                            </div>
 
                         <div class="form-group">
                             <div class="col-md-offset-2 col-md-12">
@@ -389,7 +651,7 @@
                     <div class="col-md-12">
                         <h4 style="max-width:50%;padding:1%"><span class="fa fa-bfa fa-shopping-cart" style="font-size: 16px;color:#f46f25;"></span><span> </span><span class="Spantitle">Create New Revision</span></h4>
                         <hr />
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             <div class="infoBox panel panel-default" style="min-height:250px">
                                 <div class="infoBoxHeader panel-heading">General</div>
                                 <div class="panel-body">
@@ -436,6 +698,7 @@
                                 </div>
                             </div>
                         </div>
+                        <div class="col-md-12"></div>
                             <table id="tblOrderModification" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                 <thead>
                                     <tr>

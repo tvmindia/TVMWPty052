@@ -11,6 +11,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+
     public class OrderController : Controller
     {
         #region Constructor_Injection
@@ -272,6 +273,19 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
+                case "InvoiceRegion":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    ToolboxViewModelObj.savebtn.Event = "";
+                    break;
+                case "Cancelled":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    break;
                 case "List":
                     ToolboxViewModelObj.backbtn.Visible = false;
                     break;
