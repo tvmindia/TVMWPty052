@@ -32,59 +32,58 @@ $(document).ready(function () {
     catch (e) {
         notyAlert('error', e.message);
     }
-    //try {
-    //    DataTables.QuotationsItemTable = $('#tblBookingItemDetail').DataTable(
-    //        {
-    //            dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
-    //            order: [],
-    //            ordering: false,
-    //            searching: false,
-    //            paging: false,
-    //            info: false,
-    //            data: null,
-    //            columns: [
-    //                 { "data": "ProductID" },
-    //                { "data": "AttributeValues" },
-    //              { "data": "Qty" },
-    //              { "data": "Status" },
-    //              { "data": "Price" },
-    //              { "data": "SubTotal" },
-    //              { "data": "TaxAmt" },
-    //              { "data": "DiscountAmt" },
-    //              { "data": "Total" }
-    //            ],
-    //            columnDefs: [{
-    //                "targets": [0],
-    //                "visible": false,
-    //                "searchable": false,
-    //            }
-    //            //, {
-    //            //    "targets": [1],
-    //            //    "render": function (data, type, row) {
-    //            //        var returnstring = '';
-    //            //        if (data) {
-
-    //            //            var product = row.ProductName;
-    //            //            for (var ik = 0; ik < data.length; ik++) {
-    //            //                returnstring = returnstring + '<span><b>' + data[ik].Caption + '</b> : ' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
-    //            //            }
-    //            //        }
-    //            //        return product + '<br/>' + returnstring;
-    //            //    }
-    //            //}
-    //            ]
-    //        });
-    //}
-    //catch (e) {
-    //    notyAlert('error', e.message);
-    //}
+    try {
+        DataTables.BookingsItemTable = $('#tblBookingsItemDetail').DataTable(
+            {
+                dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+                order: [],
+                ordering: false,
+                searching: false,
+                paging: false,
+                info: false,
+                data: null,
+                columns: [
+                     { "data": "ProductID" },
+                    { "data": "AttributeValues" },
+                  { "data": "Qty" },
+                  { "data": "Status" },
+                  { "data": "Price" },
+                  { "data": "SubTotal" },
+                  { "data": "TaxAmt" },
+                  { "data": "DiscountAmt" },
+                  { "data": "Total" }
+                ],
+                columnDefs: [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false,
+                }
+                , {
+                    "targets": [1],
+                    "render": function (data, type, row)
+                    {
+                        debugger;
+                        var returnstring = '';
+                        var product = row.ProductName;
+                        if (data) {
+                            for (var ik = 0; ik < data.length; ik++) {
+                                returnstring = returnstring + '<span><b>' + data[ik].Caption + '</b> : ' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
+                            }
+                        }
+                        return product + '<br/>' + returnstring;
+                    }
+                }]
+            });
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
 });
 
 
 
 function GetAllBookings() {
-    try {
-        debugger;
+    try { 
         var data = {};
         var ds = {};
         ds = GetDataFromServer("Bookings/GetAllBookings/", data);
@@ -102,8 +101,6 @@ function GetAllBookings() {
         notyAlert('error', e.message);
     }
 }
-
-
 
 function GetBookingsByID(id) {
     try {
@@ -141,7 +138,6 @@ function Edit(currentObj) {
 
 //---------------------------------------Fill Quotations--------------------------------------------------//
 function fillBookings(ID) {
-    debugger;
     var thisBookings = GetBookingsByID(ID); //Binding Data  
     $("#ID").val(thisBookings.ID);
     $("#BookingId").val(thisBookings.ID);
@@ -171,7 +167,7 @@ function fillBookings(ID) {
     $("#lblSubTotal").text(thisBookings.SubTotal);
     $("#lblGrandTotal").text(thisBookings.GrandTotal);
     $("#lblAdditionalCharges").text(thisBookings.AdditionalCharges);
-
+    debugger;
     BindTablBookingsDetailList(thisBookings.ID);
     //region comments
 
@@ -195,6 +191,7 @@ function BindTablBookingsDetailList(ID) {
 
 function GetBookingsDetailsByID(id) {
     try {
+        debugger;
         var data = { "ID": id };
         var ds = {};
         ds = GetDataFromServer("Bookings/GetBookingsDetails/", data);
@@ -254,4 +251,35 @@ function BindComments()   // To Display Previous Comment history
         }
     }
 }
+
+//---------------------------------------Get Events Logs Details By ID-------------------------------------//
+function GetEventsLog(id) {
+    try {
+        var data = { "ID": id };
+        var ds = {};
+        ds = GetDataFromServer("Bookings/GetEventsLog/", data);
+        if (ds != '') {
+            ds = JSON.parse(ds);
+        }
+        if (ds.Result == "OK") {
+            return ds.Records;
+        }
+        if (ds.Result == "ERROR") {
+            alert(ds.Message);
+        }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+
+function goback() {
+    $('#tabBookingsList').trigger('click');
+}
+function tabListClick() {
+    ChangeButtonPatchView("Bookings", "btnPatchBookings", "List");
+    $('#tabBookingsDetails').addClass('disabled');
+    $('#tabBookingsDetails a').attr('data-toggle', '');
+}
+
 

@@ -31,23 +31,23 @@ namespace PartyEC.UI.Controllers
         // GET: Bookings
         public ActionResult Index()
         {
-            //BookingsViewModel status_obj = new BookingsViewModel();
-            //List<SelectListItem> selectListItem = new List<SelectListItem>();
+            BookingsViewModel status_obj = new BookingsViewModel();
+            List<SelectListItem> selectListItem = new List<SelectListItem>();
 
-            //List<BookingStatusViewModel> orderstatusListVM = Mapper.Map<List<BookingStatusMaster>, List<BookingStatusViewModel>>(_masterBusiness.GetAllBookingStatus());
-            //foreach (BookingStatusViewModel ovm in orderstatusListVM)
-            //{
-            //    selectListItem.Add(new SelectListItem
-            //    {
-            //        Text = ovm.Description,
-            //        Value = ovm.Code.ToString(),
-            //        Selected = false
-            //    });
-            //}
-            //status_obj.BookingsstatusList = selectListItem;
-            //return View(status_obj);
+            List<BookingStatusViewModel> orderstatusListVM = Mapper.Map<List<BookingStatusMaster>, List<BookingStatusViewModel>>(_masterBusiness.GetAllBookingStatus());
+            foreach (BookingStatusViewModel ovm in orderstatusListVM)
+            {
+                selectListItem.Add(new SelectListItem
+                {
+                    Text = ovm.Description,
+                    Value = ovm.Code.ToString(),
+                    Selected = false
+                });
+            }
+            status_obj.BookingsstatusList = selectListItem;
+            return View(status_obj);
 
-            return View("../UnderConstruction/UnderConstruction");
+            //return View("../UnderConstruction/UnderConstruction");
         }
         #endregion Index
 
@@ -88,10 +88,48 @@ namespace PartyEC.UI.Controllers
 
         #endregion GetBookings
 
-        #region
+        #region GetBookingsDetails
+        /// <summary>
+        /// to display in table 
+        /// changing booking object to list
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public string GetBookingsDetails(string id)
+        {
+            try
+            {
+
+                List<BookingsViewModel> bookingdetailslist = null;
+                BookingsViewModel booking = Mapper.Map<Bookings, BookingsViewModel>(_bookingsBusiness.GetBookings(Int32.Parse(id)));
+                bookingdetailslist = new List<BookingsViewModel>();
+                bookingdetailslist.Add(booking);
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = bookingdetailslist });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        #endregion GetBookingsDetails
 
 
-        #endregion
+        #region GetEventsLog
+        [HttpGet]
+        public string GetEventsLog(string ID)
+        {
+            try
+            {
+                List<EventsLogViewModel> eventsLogList = Mapper.Map<List<EventsLog>, List<EventsLogViewModel>>(_masterBusiness.GetEventsLog(int.Parse(ID), "Bookings"));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = eventsLogList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        #endregion GetEventsLog 
 
         #region ChangeButtonStyle
         [HttpGet]
