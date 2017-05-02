@@ -24,7 +24,7 @@ namespace PartyEC.UI.Controllers
         [HttpGet]
         public ActionResult Index()
         {
-            Session.Remove("TvmValid");
+
             return View();
         }
 
@@ -65,6 +65,27 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "OK", Record = "false" });
         }
         #endregion UserInsertUpdate
+
+        #region Logout
+        [HttpGet]
+        [AllowAnonymous]
+        public ActionResult Logout()
+        {
+            try
+            {
+                FormsAuthentication.SignOut();
+                Session.Remove("TvmValid");
+
+
+            }
+            catch (Exception ex)
+            {
+                 
+            }
+            return View("Index");
+        }
+
+        #endregion Logout
 
         [HttpGet]
         public ActionResult NotAuthorized()
