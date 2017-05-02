@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class UsersController : Controller
     {
         private IAuthenticationBusiness _authenticationBusiness;
@@ -19,14 +21,14 @@ namespace PartyEC.UI.Controllers
             _commonBusiness = commonBusiness;
         }
         // GET: Users
+        [AuthorizeRoles(RoleContants.SuperAdminRole,RoleContants.AdministratorRole)]
         public ActionResult Index()
         {
-           
-           
            return View();
         }
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole)]
         public string GetAllUsersOfSystem()
         {
             try
@@ -42,6 +44,7 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole)]
         public string GetUserDetailsByUser(string ID)
         {
             List<UserViewModel> userList = null;
@@ -66,7 +69,9 @@ namespace PartyEC.UI.Controllers
 
         #region UserInsertUpdate
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole)]
         [ValidateAntiForgeryToken]
+
         public string UserInsertUpdate(UserViewModel user)
         {
             if (ModelState.IsValid)
@@ -109,6 +114,7 @@ namespace PartyEC.UI.Controllers
 
         #region UserInsertUpdate
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole)]
         [ValidateAntiForgeryToken]
         public string DeleteUser(UserViewModel user)
         {
@@ -139,6 +145,7 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

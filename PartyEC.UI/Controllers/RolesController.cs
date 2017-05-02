@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class RolesController : Controller
     {
         private IAuthenticationBusiness _authenticationBusiness;
@@ -19,12 +21,14 @@ namespace PartyEC.UI.Controllers
             _authenticationBusiness = authenticationBusiness;
         }
         // GET: Roles
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole)]
         public ActionResult Index()
         {
             return View();
         }
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole)]
         public string GetAllRolesOfSystem()
         {
             try

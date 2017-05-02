@@ -22,7 +22,7 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 UA uaObj = null;
-                if (HttpContext.Current==null)
+                if (HttpContext.Current.Session == null)
                 {
                     //For Mobile
                     uaObj = new UA();
@@ -31,23 +31,15 @@ namespace PartyEC.BusinessServices.Services
                 }
                 else
                 {
-                    if (HttpContext.Current.Session["TvmValid"]!=null)
-                    {
-                       
-                        uaObj = (UA)HttpContext.Current.Session["TvmValid"];
-                        uaObj.DateTime = GetCurrentDateTime();
-                    }
+                  if(HttpContext.Current.Session["TvmValid"] != null)
+                  {
+                            uaObj = (UA)HttpContext.Current.Session["TvmValid"];
+                            uaObj.DateTime = GetCurrentDateTime();
+                  }
+                }
                     //this code is temporary arrangement
                     //must replace...!
-                    else
-                    {
-                        uaObj = new UA();
-                        uaObj.UserName = "Tvm-Mobile";
-                        uaObj.DateTime = GetCurrentDateTime();
-                    }
-                 }
-              
-                _uaObj = uaObj;
+                 _uaObj = uaObj;
             }
             catch(Exception ex)
             {

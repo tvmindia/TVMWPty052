@@ -10,6 +10,7 @@ function LoginSuccess(data, status, xhr)
             }
             else
             {
+                $('.logfailed').remove();
                 $('.card').append('<span class="logfailed">Login Failed</span>');
 
             }
