@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
 using PartyEC.UI.Models;
@@ -51,12 +52,39 @@ namespace PartyEC.UI.Controllers
         #endregion Index
 
         #region GetAllBookings
+        [HttpGet]
+        public string GetAllBookings()
+        {
+            try
+            {
+                List<BookingsViewModel> BookingsList = Mapper.Map<List<Bookings>, List<BookingsViewModel>>(_bookingsBusiness.GetAllBookings());
 
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = BookingsList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
 
         #endregion GetAllBookings
 
         #region GetBookings
+        [HttpGet]
+        public string GetBookings(string id)
+        {
+            try
+            {
 
+                BookingsViewModel Booking = Mapper.Map<Bookings, BookingsViewModel>(_bookingsBusiness.GetBookings(Int32.Parse(id)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = Booking });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
 
         #endregion GetBookings
 
