@@ -156,7 +156,7 @@ namespace PartyEC.BusinessServices.Services
                     _mail.Body = _mail.Body.Replace("{discount}", quotationsObj.DiscountAmt.ToString());
                     _mail.Body = _mail.Body.Replace("{subTotal}", quotationsObj.SubTotal.ToString());
                     _mail.Body = _mail.Body.Replace("{grandTotal}", quotationsObj.GrandTotal.ToString());
-
+                    _mail.Body = _mail.Body.Replace("{Status}", quotationsObj.StatusText.ToString());
                     _mail.IsBodyHtml = true;
                     _mail.Subject = "Quotation No:" + quotationsObj.QuotationNo;
                     _mail.To = quotationsObj.customerObj.Email;
