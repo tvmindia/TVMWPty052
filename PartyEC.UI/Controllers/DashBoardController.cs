@@ -32,6 +32,7 @@ namespace PartyEC.UI.Controllers
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
+          
             return View();
         }
         #region GetWeeklySalesSummeryForChart

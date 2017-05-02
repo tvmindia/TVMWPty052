@@ -19,12 +19,14 @@ namespace PartyEC.UI.Controllers
         {
             _authenticationBusiness = authenticationBusiness;
             _commonBusiness = commonBusiness;
+           
         }
         // GET: Users
         [AuthorizeRoles(RoleContants.SuperAdminRole,RoleContants.AdministratorRole)]
         public ActionResult Index()
         {
-           return View();
+          
+            return View();
         }
 
         [HttpGet]

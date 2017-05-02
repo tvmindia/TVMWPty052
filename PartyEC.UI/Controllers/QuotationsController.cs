@@ -125,9 +125,9 @@ namespace PartyEC.UI.Controllers
                 OperationsStatusViewModel OperationsStatusViewModelObj = null;                
                 try
                 {
-                    quotationObj.commonObj = new LogDetailsViewModel();
-                    quotationObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
-                    quotationObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                    quotationObj.logDetails = new LogDetailsViewModel();
+                    quotationObj.logDetails.UpdatedBy = _commonBusiness.GetUA().UserName;
+                    quotationObj.logDetails.UpdatedDate = _commonBusiness.GetCurrentDateTime();
                     OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_quotationsBusiness.UpdateQuotations(Mapper.Map<QuotationsViewModel, Quotations>(quotationObj)));
                 }
                 catch (Exception ex)
@@ -222,9 +222,9 @@ namespace PartyEC.UI.Controllers
 
                 try
                 {
-                    quotationsObj.commonObj = new LogDetailsViewModel();
-                    quotationsObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
-                    quotationsObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    quotationsObj.logDetails = new LogDetailsViewModel();
+                    quotationsObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                    quotationsObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
                       sendsuccess = await _quotationsBusiness.QuotationEmail(Mapper.Map<QuotationsViewModel, Quotations>(quotationsObj));
                 }

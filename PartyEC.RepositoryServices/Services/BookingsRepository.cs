@@ -284,5 +284,60 @@ namespace PartyEC.RepositoryServices.Services
             }
             return mybookings;
         }
+
+        public OperationsStatus UpdateBookings(Bookings bookingsObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateBookings]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = bookingsObj.ID;
+                        cmd.Parameters.Add("@BookingStatus", SqlDbType.Int).Value = bookingsObj.Status;
+                        cmd.Parameters.Add("@Price", SqlDbType.Decimal).Value = bookingsObj.Price;
+                        cmd.Parameters.Add("@AdditionalCharges", SqlDbType.Decimal).Value = bookingsObj.AdditionalCharges;
+                        cmd.Parameters.Add("@TaxAmt", SqlDbType.Decimal).Value = bookingsObj.TaxAmt;
+                        cmd.Parameters.Add("@DiscountAmt", SqlDbType.Decimal).Value = bookingsObj.DiscountAmt;
+                        
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = bookingsObj.logDetails.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = bookingsObj.logDetails.UpdatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                operationsStatusObj.ReturnValues = bookingsObj.ID;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
     }
 }

@@ -282,4 +282,52 @@ function tabListClick() {
     $('#tabBookingsDetails a').attr('data-toggle', '');
 }
 
+function SendBookingsMail() {
+    debugger;
+    var BookingsViewModel = new Object();
+    BookingsViewModel.ID = $("#ID").val();
+    BookingsViewModel.BookingNo = $("#lblBookingNo").text();
+    BookingsViewModel.BookingDate = $("#lblBookingDate").text();
+    BookingsViewModel.RequiredDate = $("#lblRequiredDate").text();
+    BookingsViewModel.SourceIP = $("#lblSourceIP").text();
+    BookingsViewModel.StatusText = $("#lblBookingstatus").text();
+    BookingsViewModel.Message = $("#lblMessage").text();
+    BookingsViewModel.Price = $("#Price").val();
+    BookingsViewModel.AdditionalCharges = $("#AdditionalCharges").val();
+    BookingsViewModel.DiscountAmt = $("#DiscountAmt").val();
+    BookingsViewModel.TaxAmt = $("#TaxAmt").val();
+    BookingsViewModel.Status = $("#Status").val();
+    BookingsViewModel.SubTotal = $("#lblSubTotal").text();
+    BookingsViewModel.GrandTotal = $("#lblGrandTotal").text();
+
+    var CustomerViewModel = new Object();
+    CustomerViewModel.Email = $("#mailViewModelObj_CustomerEmail").val();
+    CustomerViewModel.Name = $("#lblCustomerName").text();
+    BookingsViewModel.customerObj = CustomerViewModel;
+
+    debugger;
+    var data = "{'bookingsObj':" + JSON.stringify(BookingsViewModel) + "}";
+    PostDataToServer('Bookings/SendBooking/', data, function (JsonResult) {
+        if (JsonResult != '') {
+            switch (JsonResult.Result) {
+                case "OK":
+                    notyAlert('success', JsonResult.Record.StatusMessage);
+                    break;
+                case "ERROR":
+                    notyAlert('error', JsonResult.Record.StatusMessage);
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
+
+
+
+
+
+}
+
+
+
 
