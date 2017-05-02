@@ -568,6 +568,7 @@
     <Compile Include="Models\EventRequestsViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\FileUploadViewModel.cs" />
+    <Compile Include="Models\InvoiceViewModel.cs" />
     <Compile Include="Models\MailNotificationViewModel.cs" />
     <Compile Include="Models\MailViewModel.cs" />
     <Compile Include="Models\MasterViewModel.cs" />

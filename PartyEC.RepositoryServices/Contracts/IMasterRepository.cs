@@ -20,6 +20,7 @@ namespace PartyEC.RepositoryServices.Contracts
 
         OperationsStatus InsertImage(OtherImages otherimgObj);
         OperationsStatus DeleteOtherImage(string imageID,string type);
+        List<PaymentStatusMaster> GetAllPaymentStatus();
         List<OrderStatusMaster> GetAllOrderStatus();
         List<QuotationStatusMaster> GetAllQuotationStatus();
         List<BookingStatusMaster> GetAllBookingStatus();

@@ -34,6 +34,7 @@ namespace PartyEC.UI.Models
         public string CustomerURL { get; set; }
         public string ProfileImageID { get; set; }
         public List<SelectListItem> Countries { get; set; }
+        public List<SelectListItem> PaymentStatusList { get; set; }
         //
         public int ParentOrderID { get; set; }
         [Display(Name = "Source IP :")]
@@ -47,7 +48,8 @@ namespace PartyEC.UI.Models
 	 public float TotalShippingAmt { get; set; }
 	 public float TotalTaxAmt { get; set; }
 	 public float TotalDiscountAmt { get; set; }
-	 public string PaymentStatus { get; set; }
+        public int PayStatusCode { get; set; }
+        public string PaymentStatus { get; set; }
      public string OrderRemarks { get; set; }
 	 public string BillPrefix { get; set; }
 	 public string BillFirstName { get; set; }
@@ -137,6 +139,7 @@ namespace PartyEC.UI.Models
         public float TotalShippingAmt { get; set; }
         public float TotalTaxAmt { get; set; }
         public float TotalDiscountAmt { get; set; }
+        public int PayStatusCode { get; set; }
         public string PaymentStatus { get; set; }
         public string OrderRemarks { get; set; }
         public string BillPrefix { get; set; }

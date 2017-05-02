@@ -17,7 +17,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertEventsLog(EventsLog eventsLogObj);
         List<EventsLog> GetEventsLog(int ID,string ParentType);
         List<Country> GetAllCountries();
-        
+        List<PaymentStatusMaster> GetAllPaymentStatus();
         List<OrderStatusMaster> GetAllOrderStatus();
         List<QuotationStatusMaster> GetAllQuotationStatus();
         List<BookingStatusMaster> GetAllBookingStatus();
