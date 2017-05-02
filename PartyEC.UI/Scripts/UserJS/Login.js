@@ -11,7 +11,7 @@ function LoginSuccess(data, status, xhr)
             else
             {
                 $('.logfailed').remove();
-                $('.card').append('<span class="logfailed">Login Failed</span>');
+                $('.card').append('<span class="text-danger logfailed">Login Failed</span>');
 
             }
          
