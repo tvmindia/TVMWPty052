@@ -8,9 +8,11 @@ using PartyEC.UI.Models;
 using PartyEC.DataAccessObject.DTO;
 using Newtonsoft.Json;
 using AutoMapper;
+using PartyEC.UI.CustomAttributes;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class CategoriesController : Controller
     {
 
@@ -28,11 +30,13 @@ namespace PartyEC.UI.Controllers
         }
         #endregion Constructor_Injection
         // GET: Category
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             return View();
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetCategoryDetailsByID(int ID)
         {
             try
@@ -46,6 +50,7 @@ namespace PartyEC.UI.Controllers
             }
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
@@ -127,6 +132,7 @@ namespace PartyEC.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string AddorRemoveLinks(CategoriesViewModel categoriesViewModelObj)
         {
             try
@@ -161,6 +167,7 @@ namespace PartyEC.UI.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string SaveOrUpdateCategory(CategoriesViewModel categoriesViewModelObj)
         {
             try
@@ -199,6 +206,7 @@ namespace PartyEC.UI.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteCategory(Categories categoryObj)
         {
                     try
@@ -220,6 +228,7 @@ namespace PartyEC.UI.Controllers
                         return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
                     }
         }
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Upload(CategoriesViewModel categoryObj)
         {
            OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
@@ -242,6 +251,7 @@ namespace PartyEC.UI.Controllers
             return Content(Url.Content(@"~\Content\OtherImages\" + FileNameCustom));
         }
 
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string UpdatePositionNo(CategoriesViewModel categoryViewObj)
         {
             try

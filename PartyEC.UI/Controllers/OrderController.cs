@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class OrderController : Controller
     {
         #region Constructor_Injection
@@ -29,6 +31,7 @@ namespace PartyEC.UI.Controllers
         }
         #endregion Constructor_Injection
         // GET: Order
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             OrderViewModel order = null;
@@ -57,6 +60,7 @@ namespace PartyEC.UI.Controllers
             return View(order);
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetOrderHeader()
         {
             try
@@ -71,6 +75,7 @@ namespace PartyEC.UI.Controllers
             // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllOrdersList(string ID)
         {
             try
@@ -85,6 +90,7 @@ namespace PartyEC.UI.Controllers
             // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetOrderDetails(string ID)
         {
             try
@@ -105,6 +111,7 @@ namespace PartyEC.UI.Controllers
         }
        
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetProductsListtoAdd()
         {
             try
@@ -120,6 +127,7 @@ namespace PartyEC.UI.Controllers
 
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetEventsLog(string ID)
         {
             try
@@ -133,6 +141,7 @@ namespace PartyEC.UI.Controllers
             }
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetOrderSummery(string ID)
         {
             try
@@ -146,6 +155,7 @@ namespace PartyEC.UI.Controllers
             }
         }
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string CancelOrder(OrderViewModel orderObj)
         {
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
@@ -161,6 +171,7 @@ namespace PartyEC.UI.Controllers
             }
         }
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string UpdateEventsLog(OrderViewModel orderObj)
         {
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
@@ -195,6 +206,7 @@ namespace PartyEC.UI.Controllers
                 }
         }
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string InsertReviseOrder(OrderDetailViewModel OrderDetailViewModelObj)
         {
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
@@ -221,6 +233,7 @@ namespace PartyEC.UI.Controllers
             }
         }
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string UpdateBillingDetails(OrderViewModel orderViewModelObj)
         {
             try
@@ -244,6 +257,7 @@ namespace PartyEC.UI.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string UpdateShipingDetails(OrderViewModel orderViewModelObj)
         {
             try
@@ -267,6 +281,7 @@ namespace PartyEC.UI.Controllers
         }
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

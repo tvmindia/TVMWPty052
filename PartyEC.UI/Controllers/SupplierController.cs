@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class SupplierController : Controller
     {
 
@@ -25,8 +27,9 @@ namespace PartyEC.UI.Controllers
             _masterBusiness = masterBusiness;
         }
         #endregion Constructor_Injection 
-        
+
         // GET: Supplier
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole,RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             return View();
@@ -34,6 +37,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllSuppliers
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllSuppliers()
         {
             try
@@ -53,6 +57,7 @@ namespace PartyEC.UI.Controllers
         #region GetSupplierByID
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetSupplier(string ID)
         {
             try
@@ -73,6 +78,7 @@ namespace PartyEC.UI.Controllers
         #region InsertUpdateSuppliers
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string InsertUpdateSuppliers(SupplierViewModel supplierObj)
         {
             if (ModelState.IsValid)
@@ -124,6 +130,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteSupplier(SupplierViewModel  supplierObj)
         {
             if (!ModelState.IsValid)
@@ -156,6 +163,7 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

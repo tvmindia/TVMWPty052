@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class ProductsController : Controller
     {
 
@@ -18,6 +20,7 @@ namespace PartyEC.UI.Controllers
         ICommonBusiness _commonBusiness;
         IMasterBusiness _masterBusiness;
         IAttributeSetBusiness _attributeSetBusiness;
+      
         public ProductsController(IProductBusiness productBusiness,IMasterBusiness masterBusiness,ICommonBusiness commonBusiness, IAttributeSetBusiness attributeSetBusiness)
         {
             _productBusiness = productBusiness;
@@ -28,6 +31,7 @@ namespace PartyEC.UI.Controllers
         }
 
         // GET: Products
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             //suv test
@@ -96,6 +100,7 @@ namespace PartyEC.UI.Controllers
             return View(product);
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllProducts(ProductViewModel productObj)
         {
             try
@@ -112,6 +117,7 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetRelatedProducts(string id)
         {
             try
@@ -131,6 +137,7 @@ namespace PartyEC.UI.Controllers
            
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllStickers()
         {
             try
@@ -148,6 +155,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetUNRelatedProducts(string id)
         {
             try
@@ -169,6 +177,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllProductswithCategory(string CategoryID)
         {
             try
@@ -184,6 +193,7 @@ namespace PartyEC.UI.Controllers
             // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAssignedPro(string CategoryID)
         {
             try
@@ -199,6 +209,7 @@ namespace PartyEC.UI.Controllers
             // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetUnAssignedPro(string CategoryID)
         {
             try
@@ -215,6 +226,7 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetProduct(string id)
         {
             try
@@ -229,6 +241,7 @@ namespace PartyEC.UI.Controllers
             }
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetRelatedImages(string id)
         {
             try
@@ -246,6 +259,7 @@ namespace PartyEC.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string ProductInsertUpdate(ProductViewModel productObj)
         {
             if (ModelState.IsValid)
@@ -296,6 +310,7 @@ namespace PartyEC.UI.Controllers
       }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string RelatedProductsInsert(ProductViewModel productObj)
         {
             if ((!ModelState.IsValid)&&(!string.IsNullOrEmpty(productObj.IDList)))
@@ -319,6 +334,7 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteProductOtherImages(ProductViewModel productViewObj)
         {
             if ((!ModelState.IsValid))
@@ -340,6 +356,7 @@ namespace PartyEC.UI.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteRelatedProducts(ProductViewModel productObj)
         {
             if ((!ModelState.IsValid) && (!string.IsNullOrEmpty(productObj.IDList)))
@@ -363,6 +380,7 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
         }
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string UpdateProductSticker(ProductViewModel productViewObj)
         {
             try
@@ -379,6 +397,7 @@ namespace PartyEC.UI.Controllers
 
         #region UpdateProductHeaderOtherAttributes
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string UpdateProductHeaderOtherAttributes(ProductViewModel productObj)
         {
             try
@@ -400,6 +419,7 @@ namespace PartyEC.UI.Controllers
 
         #region InsertProductDetails
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string InsertUpdateProductDetails(ProductViewModel productObj)
         {
             try
@@ -428,6 +448,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetProductDetailByProduct
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetProductDetailByProduct(string id)
         {
           try
@@ -454,6 +475,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetProductDetailsByProductDetailID
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetProductDetailsByProductDetailID(string productID,string productDetailID )
         {
             try
@@ -479,6 +501,7 @@ namespace PartyEC.UI.Controllers
 
         #region DeleteProductDetail
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteProductDetail(ProductDetailViewModel productDeails)
         {
             try
@@ -506,27 +529,14 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
                 case "Edit":
-                    //ToolboxViewModelObj.deletebtn.Visible = true;
-                    //ToolboxViewModelObj.deletebtn.Event = "Productdelete()";
-                    //ToolboxViewModelObj.deletebtn.Title = "Delete";
-
-                    //ToolboxViewModelObj.savebtn.Visible = true;
-                    //ToolboxViewModelObj.savebtn.Event = "ProductSave()";
-                    //ToolboxViewModelObj.savebtn.Title = "Save";
-
-                    //ToolboxViewModelObj.resetbtn.Visible = true;
-                    //ToolboxViewModelObj.resetbtn.Event = "btnreset()";
-                    //ToolboxViewModelObj.resetbtn.Title = "Reset";
-
-                    //ToolboxViewModelObj.backbtn.Visible = true;
-                    //ToolboxViewModelObj.backbtn.Event = "goback()";
-                    //ToolboxViewModelObj.backbtn.Title = "Back";
+                   
 
                     break;
                 case "Delete":
@@ -567,19 +577,7 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.addbtn.Visible = true;
                     ToolboxViewModelObj.addbtn.Event = "btnAddNewProduct();";
                     ToolboxViewModelObj.addbtn.Title = "Add";
-                    // ToolboxViewModelObj.deletebtn.Visible = true;
-                    // ToolboxViewModelObj.deletebtn.Disable = true;
-                    //ToolboxViewModelObj.savebtn.Visible = true;
-                    //ToolboxViewModelObj.savebtn.Event = "clicksave()";
-                    //ToolboxViewModelObj.savebtn.Title = "Save";
-
-                    // ToolboxViewModelObj.resetbtn.Visible = true;
-                    //  ToolboxViewModelObj.resetbtn.Event = "btnreset()";
-                    // ToolboxViewModelObj.resetbtn.Title = "Reset";
-
-                    //ToolboxViewModelObj.backbtn.Visible = true;
-                    //ToolboxViewModelObj.backbtn.Event = "goback()";
-                    //ToolboxViewModelObj.backbtn.Title = "Back";
+                   
                     break;
                 case "Save":
                     ToolboxViewModelObj.savebtn.Visible = true;
@@ -605,9 +603,7 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Title = "Save";
                     ToolboxViewModelObj.savebtn.Event = "AssociatedProductSave()";
-                    //ToolboxViewModelObj.deletebtn.Visible = true;
-                    //ToolboxViewModelObj.deletebtn.Title = "Delete";
-                    //ToolboxViewModelObj.deletebtn.Event = "AssociatedProductDelete()";
+                   
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.backbtn.Event = "goback()";
@@ -629,9 +625,9 @@ namespace PartyEC.UI.Controllers
             return PartialView("_ToolboxView", ToolboxViewModelObj);
         }
 
-        
-        #endregion ChangeButtonStyle
 
+        #endregion ChangeButtonStyle
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult UploadProductImage(ProductViewModel ProductViewObj)
         {
             OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
@@ -654,6 +650,7 @@ namespace PartyEC.UI.Controllers
             }
             return Content(Url.Content(@"~\Content\ProductImages\" + FileNameCustom));
         }
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult UploadOtherImages(ProductViewModel ProductViewObj)
         {
             OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
@@ -693,6 +690,7 @@ namespace PartyEC.UI.Controllers
 
         //------------------------------------------------------//
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetProductReviews(string id)
         {
             try
@@ -713,6 +711,7 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetRatingSummary(string id, string attributesetId)
         {
             try
@@ -735,6 +734,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAttributeValuesByProduct
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAttributeValuesByProduct(string id)
         {
             try

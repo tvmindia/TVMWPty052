@@ -8,9 +8,11 @@ using PartyEC.DataAccessObject.DTO;
 using PartyEC.UI.Models;
 using AutoMapper;
 using Newtonsoft.Json;
+using PartyEC.UI.CustomAttributes;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class EventRequestsController : Controller
     {
         #region Constructor_Injection
@@ -29,6 +31,7 @@ namespace PartyEC.UI.Controllers
         }
         #endregion Constructor_Injection
         // GET: EventRequests
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             EventRequestsViewModel ordrsat_obj = new EventRequestsViewModel();
@@ -51,6 +54,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllEventRequests
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllEventRequests(EventRequestsViewModel eventObj)
         {
             try
@@ -68,6 +72,7 @@ namespace PartyEC.UI.Controllers
         #region GetEventRequestsByID
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetEventRequest(string ID)
         {
             try
@@ -88,6 +93,7 @@ namespace PartyEC.UI.Controllers
         #region GetEventsLogByID
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetEventsLog(string ID)
         {
             try
@@ -108,6 +114,7 @@ namespace PartyEC.UI.Controllers
         #region UpdateEventRequest
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string UpdateEventRequests(EventRequestsViewModel EventObj)
         {
             if (!ModelState.IsValid)
@@ -143,6 +150,7 @@ namespace PartyEC.UI.Controllers
         #region UpdateEventsLog
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string UpdateEventsLog(EventRequestsViewModel EventObj)
         {
             if (ModelState.IsValid)
@@ -177,6 +185,7 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

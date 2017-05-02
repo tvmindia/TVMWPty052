@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class AttributeSetController : Controller
     {
         IAttributeSetBusiness _attributeSetBusiness;
@@ -23,11 +25,13 @@ namespace PartyEC.UI.Controllers
             _commonBusiness = commonBusiness;
         }
         // GET: AttributeSet
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             return View();
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllAttributeSet()
         {
             try
@@ -43,6 +47,7 @@ namespace PartyEC.UI.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string PostTreeOrder(AttributeSetViewModel attributeSetViewModelObj)
         {
             try
@@ -52,7 +57,6 @@ namespace PartyEC.UI.Controllers
                 //Checking ID empty or not
                 if (attributeSetViewModelObj.ID ==0)
                 {
-                    
                     attributeSetViewModelObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                     attributeSetViewModelObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
                     OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_attributeSetBusiness.InsertAttributeSet((Mapper.Map<AttributeSetViewModel, AttributeSet>(attributeSetViewModelObj))));
@@ -101,6 +105,7 @@ namespace PartyEC.UI.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteAttributeSet(AttributeSetViewModel attributeSetObj)
         {
             if (!ModelState.IsValid)
@@ -122,6 +127,7 @@ namespace PartyEC.UI.Controllers
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Select Attribute Set" });
         }
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

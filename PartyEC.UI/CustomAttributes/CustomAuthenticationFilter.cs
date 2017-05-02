@@ -30,7 +30,8 @@ namespace PartyEC.UI.CustomAttributes
             if (authCookie == null)
             {
                 // Unauthorized
-                context.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary() { { "controller", "Account" }, { "action", "Login" } });
+                context.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary() { { "controller", "Account" }, { "action", "Index" } });
+
                 return;
             }
 

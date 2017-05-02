@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class ManufacturersController : Controller
     {
         #region Constructor_Injection 
@@ -26,6 +28,7 @@ namespace PartyEC.UI.Controllers
         #endregion Constructor_Injection 
 
         // GET: Manufacturers
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             ManufacturerViewModel Country_obj = new ManufacturerViewModel();
@@ -48,6 +51,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllManufacturers
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllManufacturers()
         {
             try
@@ -67,6 +71,7 @@ namespace PartyEC.UI.Controllers
         #region GetManufacturerByID
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetManufacturers(string ID)
         {
             try
@@ -87,6 +92,7 @@ namespace PartyEC.UI.Controllers
         #region InsertUpdateManufacturer
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string InsertUpdateManufacturer(ManufacturerViewModel manufacturerObj)
         {
             if (ModelState.IsValid)
@@ -138,6 +144,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteManufacturer( ManufacturerViewModel ManufacturerObj)
         {
             if (!ModelState.IsValid)
@@ -170,6 +177,7 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

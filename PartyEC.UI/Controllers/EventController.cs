@@ -8,11 +8,14 @@ using PartyEC.DataAccessObject.DTO;
 using AutoMapper;
 using Newtonsoft.Json;
 using PartyEC.UI.Models;
+using PartyEC.UI.CustomAttributes;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class EventController : Controller
     {
+       
         #region Constructor_Injection
 
         IEventBusiness _eventBusiness;
@@ -32,6 +35,7 @@ namespace PartyEC.UI.Controllers
 
         #region Index
         // GET: Event
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             EventViewModel catobj = new EventViewModel();
@@ -42,6 +46,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllEvents
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllEvents(EventViewModel eventObj)
         {
             try
@@ -59,6 +64,7 @@ namespace PartyEC.UI.Controllers
         #region GetEventByID
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetEvent(string ID)
         {
             try
@@ -79,6 +85,7 @@ namespace PartyEC.UI.Controllers
         #region InsertUpdateEvent
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string InsertUpdateEvent(EventViewModel EventObj)
         {
             if (ModelState.IsValid)
@@ -131,6 +138,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteEvent([Bind(Exclude = "Name,RelatedCategories")] AttributesViewModel attributesObj)
         {
             if (!ModelState.IsValid)
@@ -163,6 +171,7 @@ namespace PartyEC.UI.Controllers
         #region DeleteOtherImage
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteOtherImage(EventViewModel EventObj)
         {
             if (!ModelState.IsValid)
@@ -191,6 +200,7 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
@@ -241,6 +251,7 @@ namespace PartyEC.UI.Controllers
         }
         #endregion ChangeButtonStyle
 
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Upload(EventViewModel eventViewObj)
         {
             OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
