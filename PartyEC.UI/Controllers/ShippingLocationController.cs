@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class ShippingLocationController : Controller
     {
         #region Constructor_Injection 
@@ -25,6 +27,7 @@ namespace PartyEC.UI.Controllers
         }
         #endregion Constructor_Injection 
         // GET: Location
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             return View();
@@ -33,6 +36,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllShippingLocation()
         {
             try
@@ -50,6 +54,7 @@ namespace PartyEC.UI.Controllers
         #region GetShippingLocationByID
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetShippingLocation(string ID)
         {
             try
@@ -71,6 +76,7 @@ namespace PartyEC.UI.Controllers
         #region InsertUpdateShippingLocation
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string InsertUpdateShippingLocation(ShippingLocationViewModel Shipping_locObj)
         {
             if (ModelState.IsValid)
@@ -123,6 +129,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteShippingLocation([Bind(Exclude = "Name")] ShippingLocationViewModel Shipping_locObj)
         {
             if (!ModelState.IsValid)
@@ -155,6 +162,7 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

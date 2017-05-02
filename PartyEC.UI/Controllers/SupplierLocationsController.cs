@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class SupplierLocationsController : Controller
     {
         #region Constructor_Injection 
@@ -25,6 +27,7 @@ namespace PartyEC.UI.Controllers
         }
         #endregion Constructor_Injection 
         // GET: Sup_Delivery
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             SupplierLocationsViewModel ordrsat_obj = new SupplierLocationsViewModel();
@@ -63,6 +66,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllSupplierLocations
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllSupplierLocations()
         {
             try
@@ -82,6 +86,7 @@ namespace PartyEC.UI.Controllers
         #region GetSupplierLocationsByID
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetSupplierLocations(string ID)
         {
             try
@@ -103,6 +108,7 @@ namespace PartyEC.UI.Controllers
         #region InsertUpdateSupplierLocations
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string InsertUpdateSupplierLocations(SupplierLocationsViewModel supplierLocObj)
         {
             if (ModelState.IsValid)
@@ -155,6 +161,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteSupplierLocations(SupplierLocationsViewModel supplierLocObj)
         {
             if (ModelState.IsValid)
@@ -187,6 +194,7 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

@@ -9,7 +9,8 @@ namespace PartyEC.DataAccessObject.DTO
     {
         public int ID { get; set; }
         public string BookingNo { get; set; }
-        public int ProductID { get; set; } 
+        public int ProductID { get; set; }
+        public string ProductName { get; set; }
         public int CustomerID { get; set; }
         public string RequiredDate { get; set; }
         public string BookingDate { get; set; }
@@ -30,6 +31,13 @@ namespace PartyEC.DataAccessObject.DTO
         public string BillCountryCode { get; set; }
         public string BillStateProvince { get; set; }
         public string BillContactNo { get; set; }
+
+        public decimal Total { get; set; }
+        public decimal GrandTotal { get; set; }
+        public decimal SubTotal { get; set; }
+        public string StatusText { get; set; }
+        public string ImageUrl { get; set; }
+        public string ProductSpecXML { get; set; }
 
         public CustomerAddress CustomerAddress { get; set; } 
 

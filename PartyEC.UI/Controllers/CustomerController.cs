@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class CustomerController : Controller
     {
         #region Constructor_Injection 
@@ -31,6 +33,7 @@ namespace PartyEC.UI.Controllers
         }
         #endregion Constructor_Injection 
         // GET: Customer
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             CustomerViewModel customer = null;
@@ -66,6 +69,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllCustomers
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllCustomers()
         {
             try
@@ -81,7 +85,7 @@ namespace PartyEC.UI.Controllers
         #endregion  GetAllCustomers
 
         #region GetCustomerById
-
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [HttpGet]
         public string GetCustomer(string ID)
         {
@@ -101,6 +105,7 @@ namespace PartyEC.UI.Controllers
         #endregion GetCustomerById
 
         #region GetOrderSummaryForCustomer
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [HttpGet]
         public string GetSalesStatistics(string customerID)
         {
@@ -124,6 +129,7 @@ namespace PartyEC.UI.Controllers
 
 
         #region OrderSummary
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [HttpGet]
         public string GetOrderSummary(string customerID)
         {
@@ -148,6 +154,7 @@ namespace PartyEC.UI.Controllers
 
 
         #region GetCustomerCartDetails
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [HttpGet]
         public string GetCustomerCartDetails(string customerID)
         {
@@ -170,6 +177,7 @@ namespace PartyEC.UI.Controllers
         #endregion GetCustomerCartDetails
 
         #region GetCustomerWishList
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [HttpGet]
         public string GetCustomerWishList(string customerID)
         {
@@ -191,7 +199,7 @@ namespace PartyEC.UI.Controllers
         #endregion GetCustomerWishList
 
         #region ActiateorDeactivateCustomer
-   
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [HttpPost]
         public string ActiateorDeactivateCustomer(CustomerViewModel customer)
         {
@@ -214,6 +222,7 @@ namespace PartyEC.UI.Controllers
 
         #region CustomerAddressInsertUpdate
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [ValidateAntiForgeryToken]
         public string CustomerAddressInsertUpdate(CustomerViewModel customer)
         {
@@ -267,6 +276,7 @@ namespace PartyEC.UI.Controllers
         #endregion CustomerAddressInsertUpdate
 
         #region GetAllAddressByCustomer
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [HttpGet]
         public string GetAllAddressByCustomer(string customerID)
         {
@@ -309,6 +319,7 @@ namespace PartyEC.UI.Controllers
         #endregion GetAddressByAddress
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteCustomerAddress(CustomerAddressViewModel customerAddress)
         {
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
@@ -330,6 +341,7 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

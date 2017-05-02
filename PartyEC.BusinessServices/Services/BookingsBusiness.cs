@@ -11,9 +11,7 @@ namespace PartyEC.BusinessServices.Services
     public class BookingsBusiness: IBookingsBusiness
     {
         #region ConstructorInjection
-
         private IBookingsRepository _bookingsRepository;
-
         public BookingsBusiness(IBookingsRepository bookingsRepository)
         {
             _bookingsRepository = bookingsRepository;
@@ -28,9 +26,9 @@ namespace PartyEC.BusinessServices.Services
                 Bookingslist = _bookingsRepository.GetCustomerBookings(customerID, Ishistory);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return Bookingslist;
         }
@@ -43,11 +41,40 @@ namespace PartyEC.BusinessServices.Services
                 OSatObj = _bookingsRepository.InsertBookings(bookingsObj);
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
+                throw ex;
             }
             return OSatObj;
+        }
+
+        public List<Bookings> GetAllBookings()
+        {
+            List<Bookings> Bookingslist = null;
+            try
+            {
+                Bookingslist = _bookingsRepository.GetAllBookings();
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Bookingslist;
+        }
+
+        public Bookings GetBookings(int BookingID)
+        {
+            Bookings bookingObj = null;
+            try
+            {
+                bookingObj = _bookingsRepository.GetBookings(BookingID);
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return bookingObj;
         }
     }
 }

@@ -21,7 +21,7 @@ namespace PartyEC.RepositoryServices.Services
         public BookingsRepository(IDatabaseFactory databaseFactory)
         {
             _databaseFactory = databaseFactory;
-        } 
+        }
         #endregion DataBaseFactory
 
         public List<Bookings> GetCustomerBookings(int customerID,bool Ishistory)
@@ -163,6 +163,126 @@ namespace PartyEC.RepositoryServices.Services
             }
 
             return operationsStatusObj;
+        }
+
+        public List<Bookings> GetAllBookings()
+        {
+            List<Bookings> BookingsList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetAllBookings]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                BookingsList = new List<Bookings>();
+                                while (sdr.Read())
+                                {
+                                    Bookings bookingsObj = new Bookings();
+                                    {
+                                        bookingsObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : bookingsObj.ID);
+                                        bookingsObj.BookingNo = sdr["BookingNo"].ToString();
+                                        bookingsObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : bookingsObj.ProductID);
+                                        bookingsObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : bookingsObj.CustomerID);
+                                        bookingsObj.RequiredDate = (sdr["RequiredDate"].ToString() != "" ? DateTime.Parse(sdr["RequiredDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : bookingsObj.RequiredDate);
+                                        bookingsObj.BookingDate = (sdr["BookingDate"].ToString() != "" ? DateTime.Parse(sdr["BookingDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : bookingsObj.BookingDate);
+                                        bookingsObj.Status = (sdr["Status"].ToString() != "" ? int.Parse(sdr["Status"].ToString()) : bookingsObj.Status);
+                                        bookingsObj.customerObj = new Customer();
+                                        bookingsObj.customerObj.Name = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : bookingsObj.customerObj.Name);
+                                        bookingsObj.customerObj.Mobile = (sdr["ContactNo"].ToString() != "" ? sdr["ContactNo"].ToString() : bookingsObj.customerObj.Mobile);
+
+                                    }
+                                    BookingsList.Add(bookingsObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return BookingsList;
+
+        }
+
+        public Bookings GetBookings(int BookingID)
+        {
+            Bookings mybookings = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = BookingID;
+                        cmd.CommandText = "[GetBookings]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                if (sdr.Read())
+                                {
+                                    mybookings = new Bookings();
+                                    mybookings.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : mybookings.ID);
+                                    mybookings.BookingNo = (sdr["BookingNo"].ToString() != "" ? sdr["BookingNo"].ToString() : mybookings.BookingNo);
+                                    mybookings.BookingDate = (sdr["BookingDate"].ToString() != "" ? DateTime.Parse(sdr["BookingDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : mybookings.BookingDate);
+                                    mybookings.RequiredDate = (sdr["RequiredDate"].ToString() != "" ? DateTime.Parse(sdr["RequiredDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : mybookings.RequiredDate);
+                                    mybookings.SourceIP = (sdr["SourceIP"].ToString() != "" ? sdr["SourceIP"].ToString() : mybookings.SourceIP);
+                                    mybookings.Status = (sdr["Status"].ToString() != "" ? int.Parse(sdr["Status"].ToString()) : mybookings.Status);
+                                    mybookings.StatusText = (sdr["StatusText"].ToString() != "" ? sdr["StatusText"].ToString() : mybookings.StatusText);
+                                    mybookings.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : mybookings.ProductName);
+                                    mybookings.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : mybookings.ProductID);
+                                    mybookings.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : mybookings.CustomerID);
+
+                                    mybookings.Qty = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : mybookings.Qty);
+                                    mybookings.Price = (sdr["Price"].ToString() != "" ? decimal.Parse(sdr["Price"].ToString()) : mybookings.Price);
+                                    mybookings.AdditionalCharges = (sdr["AdditionalCharges"].ToString() != "" ? decimal.Parse(sdr["AdditionalCharges"].ToString()) : mybookings.AdditionalCharges);
+                                    mybookings.DiscountAmt = (sdr["DiscountAmt"].ToString() != "" ? decimal.Parse(sdr["DiscountAmt"].ToString()) : mybookings.DiscountAmt);
+                                    mybookings.TaxAmt = (sdr["TaxAmt"].ToString() != "" ? decimal.Parse(sdr["TaxAmt"].ToString()) : mybookings.TaxAmt);
+                                    mybookings.SubTotal = (sdr["SubTotal"].ToString() != "" ? decimal.Parse(sdr["SubTotal"].ToString()) : mybookings.SubTotal);
+                                    mybookings.Total = (sdr["Total"].ToString() != "" ? decimal.Parse(sdr["Total"].ToString()) : mybookings.Total);
+                                    mybookings.GrandTotal = (sdr["GrandTotal"].ToString() != "" ? decimal.Parse(sdr["GrandTotal"].ToString()) : mybookings.GrandTotal);
+                                    mybookings.ProductSpecXML = (sdr["ProductSpecXML"].ToString() != "" ? sdr["ProductSpecXML"].ToString() : mybookings.ProductSpecXML);
+
+                                    mybookings.customerObj = new Customer();
+                                    mybookings.customerObj.Name = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : mybookings.customerObj.Name);
+                                    mybookings.customerObj.Mobile = (sdr["CustomerMobile"].ToString() != "" ? sdr["CustomerMobile"].ToString() : mybookings.customerObj.Mobile);
+                                    mybookings.customerObj.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : mybookings.customerObj.Email);
+                                    mybookings.ImageUrl = (sdr["ImageUrl"].ToString() != "" ? sdr["ImageUrl"].ToString() : mybookings.ImageUrl);
+
+                                    mybookings.Message = (sdr["Message"].ToString() != "" ? sdr["Message"].ToString() : mybookings.Message);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return mybookings;
         }
     }
 }

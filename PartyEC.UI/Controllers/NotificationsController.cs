@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class NotificationsController : Controller
     {
         private INotificationBusiness _notificationBusiness;
@@ -21,6 +23,7 @@ namespace PartyEC.UI.Controllers
             _commonBusiness = commonBusiness;
         }
         // GET: Notifications
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             return View();
@@ -28,6 +31,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllNotifications
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllNotifications(string fromdate=null,string todate=null)
         {
             try
@@ -46,6 +50,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetNotification
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetNotification(string ID)
         {
             try
@@ -67,6 +72,7 @@ namespace PartyEC.UI.Controllers
 
         #region InserUpdateNotification
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [ValidateAntiForgeryToken]
         public string NotificationPush(NotifiationViewModel notification)
         {
@@ -113,6 +119,7 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

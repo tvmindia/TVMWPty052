@@ -23,10 +23,10 @@ namespace PartyEC.UI.Controllers
             _notificationBusiness = notificationBusiness;
             _commonBusiness = commonBusiness;
         }
-        
+
         // GET: MailNotifications
-   
-        //[AuthorizeRoles(RoleContants.SuperAdminRole)]
+
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
 
@@ -36,6 +36,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllMailNotifications
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllMailNotifications(string fromdate = null, string todate = null)
         {
             try
@@ -54,6 +55,7 @@ namespace PartyEC.UI.Controllers
         #endregion  GetAllNotifications
 
         #region MailNotificationPush
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<string> MailNotificationPush(MailNotificationViewModel notification)

@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class AttributesController : Controller
     {
         #region Constructor_Injection
@@ -20,11 +22,12 @@ namespace PartyEC.UI.Controllers
         {
             _attributeBusiness = attributeBusiness;
             _commonBusiness = commonBusiness;
-        } 
+        }
         #endregion Constructor_Injection
 
         // GET: Attributes
         #region Index
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             AttributesViewModel attributesViewModelObj = new AttributesViewModel();
@@ -34,6 +37,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllAttributes
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllAttributes(AttributesViewModel attributesObj)
         {
             try
@@ -52,6 +56,7 @@ namespace PartyEC.UI.Controllers
         #region GetAttributesByID
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAttributes(string ID)
         {
             try
@@ -72,6 +77,7 @@ namespace PartyEC.UI.Controllers
         #region InsertUpdateAttributes
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string InsertUpdateAttributes(AttributesViewModel attributesObj)
         {
             if (ModelState.IsValid)
@@ -123,6 +129,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string DeleteAttributes([Bind(Exclude = "Name,Caption,AttributeType,CSValues,EntityType,ConfigurableYN,FilterYN,MandatoryYN,ComparableYN")] AttributesViewModel attributesObj)
         {
             if (!ModelState.IsValid)
@@ -155,6 +162,7 @@ namespace PartyEC.UI.Controllers
         
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
@@ -208,6 +216,7 @@ namespace PartyEC.UI.Controllers
 
         #region OtherAttributeTemplate
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult EditTemplateForAttributes(string setID,string Isconfigurable)
         {
             List<AttributesViewModel> attributesList = null;
@@ -240,6 +249,7 @@ namespace PartyEC.UI.Controllers
 
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public void SendMessage(Int64 id)
         {
             try

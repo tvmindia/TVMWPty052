@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class Cart_WishlistController : Controller
     {
         #region Constructor_Injection
@@ -28,6 +30,7 @@ namespace PartyEC.UI.Controllers
 
 
         // GET: Cart_Wishlist
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             return View();
@@ -36,6 +39,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllCustomerCartWishlistSummary
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllCustomerCartWishlistSummary(CustomerViewModel eventObj)
         {
             try
@@ -53,6 +57,7 @@ namespace PartyEC.UI.Controllers
         #region GetCustomerShoppingCart
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetCustomerShoppingCart(string ID)
         {
 
@@ -72,6 +77,7 @@ namespace PartyEC.UI.Controllers
         #region GetCustomerWishlist
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetCustomerWishlist(string ID)
         {
             try
@@ -88,6 +94,7 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

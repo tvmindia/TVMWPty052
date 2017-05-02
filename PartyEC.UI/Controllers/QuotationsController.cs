@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -13,6 +14,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class QuotationsController : Controller
     {
         #region Constructor_Injection
@@ -29,6 +31,7 @@ namespace PartyEC.UI.Controllers
         }
         #endregion Constructor_Injection
         // GET: Quatations
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             QuotationsViewModel Quotationsat_obj = new QuotationsViewModel();
@@ -50,6 +53,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetAllQuotations
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllQuotations()
         {
             try
@@ -68,6 +72,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetQuotations
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetQuotations(string id)
         {
             try
@@ -90,6 +95,7 @@ namespace PartyEC.UI.Controllers
         /// <param name="id"></param>
         /// <returns></returns>
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetQuotationsDetails(string id)
         {
             try
@@ -111,6 +117,7 @@ namespace PartyEC.UI.Controllers
         #region  UpdateQuotations
 
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string UpdateQuotations(QuotationsViewModel quotationObj)
         {
             if (ModelState.IsValid)
@@ -149,6 +156,7 @@ namespace PartyEC.UI.Controllers
         /// <param name="quotationObj"></param>
         /// <returns></returns>
         [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string InsertEventsLog(QuotationsViewModel quotationObj)
         {
             if (ModelState.IsValid)
@@ -203,7 +211,8 @@ namespace PartyEC.UI.Controllers
 
         #region SendQuotation
 
-        [HttpPost] 
+        [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public async Task<string> SendQuotation(QuotationsViewModel quotationsObj)
         {
             if (ModelState.IsValid)
@@ -242,6 +251,7 @@ namespace PartyEC.UI.Controllers
 
         #region GetEventsLog
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetEventsLog(string ID)
         {
             try
@@ -258,6 +268,7 @@ namespace PartyEC.UI.Controllers
 
         #region ChangeButtonStyle
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();

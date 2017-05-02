@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class DashBoardController : Controller
     {
         #region Constructor_Injection
@@ -27,6 +29,7 @@ namespace PartyEC.UI.Controllers
 
         #endregion Constructor_Injection
         // GET: DashBoard
+      
         public ActionResult Index()
         {
             return View();

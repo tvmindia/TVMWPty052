@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -11,6 +12,7 @@ using System.Web.Mvc;
 
 namespace PartyEC.UI.Controllers
 {
+    [CustomAuthenticationFilter]
     public class ReviewsController : Controller
     {
         #region Constructor_Injection 
@@ -26,6 +28,7 @@ namespace PartyEC.UI.Controllers
         #endregion Constructor_Injection 
 
         // GET: Reviews
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public ActionResult Index()
         {
             
@@ -36,6 +39,7 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllReviews(string Condition, string FromDate, string ToDate)
         {
             try
@@ -52,6 +56,7 @@ namespace PartyEC.UI.Controllers
         }
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetProductRatingByCustomer(string productid, string customerid,string AttributesetID)
         {
             try
@@ -74,6 +79,7 @@ namespace PartyEC.UI.Controllers
         #region GetReviewByID
 
         [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetReview(string ID)
         {
             try
@@ -91,10 +97,10 @@ namespace PartyEC.UI.Controllers
 
         #endregion GetReviewByID
 
-   
+
 
         #region UpdateReview
-
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [HttpPost]
         public string UpdateReview(ProductReviewViewModel reviewObj)
         {
@@ -128,6 +134,7 @@ namespace PartyEC.UI.Controllers
 
 
         #region ChangeButtonStyle
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [HttpGet]
         public ActionResult ChangeButtonStyle(string ActionType)
         {
