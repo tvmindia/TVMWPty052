@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
 
@@ -231,6 +232,47 @@ namespace PartyEC.UI.Controllers
         }
         #endregion GetEventsLog 
 
+        #region SendBooking
+
+        [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public async Task<string> SendBooking(BookingsViewModel bookingsObj)
+        {
+            if (ModelState.IsValid)
+            {
+                bool sendsuccess;
+
+
+                try
+                {
+                    bookingsObj.logDetails = new LogDetailsViewModel();
+                    bookingsObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                    bookingsObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                    sendsuccess = await _bookingsBusiness.BookingsEmail(Mapper.Map<BookingsViewModel, Bookings>(bookingsObj));
+                }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                }
+
+                if (sendsuccess)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Message = "Quotation Send Sucessfully" });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Message = "Quotation Sending Failed" });
+                }
+            }
+            return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
+        }
+
+
+        #endregion SendBooking
+
+
+
         #region ChangeButtonStyle
         [HttpGet]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
@@ -255,7 +297,7 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.sendbtn.Visible = true;
-                   // ToolboxViewModelObj.sendbtn.Event = "SendMail()";
+                    ToolboxViewModelObj.sendbtn.Event = "SendBookingsMail()";
                     ToolboxViewModelObj.sendbtn.Title = "Send";
                     break;
 

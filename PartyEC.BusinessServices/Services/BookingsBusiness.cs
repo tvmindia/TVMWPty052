@@ -5,6 +5,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using PartyEC.DataAccessObject.DTO;
+using System.Threading.Tasks;
+using System.IO;
 
 namespace PartyEC.BusinessServices.Services
 {
@@ -12,9 +14,12 @@ namespace PartyEC.BusinessServices.Services
     {
         #region ConstructorInjection
         private IBookingsRepository _bookingsRepository;
-        public BookingsBusiness(IBookingsRepository bookingsRepository)
+        private IMailBusiness _mailBusiness;
+
+        public BookingsBusiness(IBookingsRepository bookingsRepository,IMailBusiness mailBusiness)
         {
             _bookingsRepository = bookingsRepository;
+            _mailBusiness = mailBusiness;
         }
         #endregion ConstructorInjection 
 
@@ -91,5 +96,47 @@ namespace PartyEC.BusinessServices.Services
             }
             return OSatObj;
         }
+
+        public async Task<bool> BookingsEmail(Bookings bookingsObj)
+        {
+            bool sendsuccess = false;
+            try
+            {
+                if (bookingsObj.customerObj.Email != "")
+                {
+                    Mail _mail = new Mail();
+                    using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/Bookings.html")))
+                    {
+                        _mail.Body = reader.ReadToEnd();
+                    }
+                    _mail.Body = _mail.Body.Replace("{CustomerName}", bookingsObj.customerObj.Name);
+                    _mail.Body = _mail.Body.Replace("{BookingDate}", bookingsObj.BookingDate);
+                    _mail.Body = _mail.Body.Replace("{ProductName}", bookingsObj.ProductName);
+                    _mail.Body = _mail.Body.Replace("{BookingNo}", bookingsObj.BookingNo);
+                    _mail.Body = _mail.Body.Replace("{RequiredDate}", bookingsObj.RequiredDate);
+                    _mail.Body = _mail.Body.Replace("{Qty}", bookingsObj.Qty.ToString());
+                    _mail.Body = _mail.Body.Replace("{Price}", bookingsObj.Price.ToString());
+                    _mail.Body = _mail.Body.Replace("{tax}", bookingsObj.TaxAmt.ToString());
+                    _mail.Body = _mail.Body.Replace("{additionalCharges}", bookingsObj.AdditionalCharges.ToString());
+                    _mail.Body = _mail.Body.Replace("{discount}", bookingsObj.DiscountAmt.ToString());
+                    _mail.Body = _mail.Body.Replace("{subTotal}", bookingsObj.SubTotal.ToString());
+                    _mail.Body = _mail.Body.Replace("{grandTotal}", bookingsObj.GrandTotal.ToString());
+
+                    _mail.IsBodyHtml = true;
+                    _mail.Subject = "Quotation No:" + bookingsObj.BookingNo;
+                    _mail.To = bookingsObj.customerObj.Email;
+                    sendsuccess = await _mailBusiness.MailSendAsync(_mail);
+                   
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                
+            }
+            return sendsuccess;
+        }
+
+
     }
 }
