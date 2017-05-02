@@ -298,7 +298,7 @@ function SendBookingsMail() {
     BookingsViewModel.TaxAmt = $("#TaxAmt").val();
     BookingsViewModel.Status = $("#Status").val();
     BookingsViewModel.SubTotal = $("#lblSubTotal").text();
-    BookingsViewModel.Total = $("#lblGrandTotal").text();
+    BookingsViewModel.GrandTotal = $("#lblGrandTotal").text();
 
     var CustomerViewModel = new Object();
     CustomerViewModel.Email = $("#mailViewModelObj_CustomerEmail").val();

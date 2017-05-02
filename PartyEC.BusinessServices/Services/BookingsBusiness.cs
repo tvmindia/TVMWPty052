@@ -105,7 +105,7 @@ namespace PartyEC.BusinessServices.Services
                 if (bookingsObj.customerObj.Email != "")
                 {
                     Mail _mail = new Mail();
-                    using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/Bookings.html")))
+                    using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/Booking.html")))
                     {
                         _mail.Body = reader.ReadToEnd();
                     }
@@ -121,9 +121,9 @@ namespace PartyEC.BusinessServices.Services
                     _mail.Body = _mail.Body.Replace("{discount}", bookingsObj.DiscountAmt.ToString());
                     _mail.Body = _mail.Body.Replace("{subTotal}", bookingsObj.SubTotal.ToString());
                     _mail.Body = _mail.Body.Replace("{grandTotal}", bookingsObj.GrandTotal.ToString());
-
+                    _mail.Body = _mail.Body.Replace("{Status}", bookingsObj.StatusText.ToString());
                     _mail.IsBodyHtml = true;
-                    _mail.Subject = "Quotation No:" + bookingsObj.BookingNo;
+                    _mail.Subject = "Booking No:" + bookingsObj.BookingNo;
                     _mail.To = bookingsObj.customerObj.Email;
                     sendsuccess = await _mailBusiness.MailSendAsync(_mail);
                    

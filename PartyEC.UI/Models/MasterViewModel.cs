@@ -93,6 +93,11 @@ namespace PartyEC.UI.Models
         public int Code { get; set; }
         public string Description { get; set; }
     }
+    public class PaymentStatusViewModel
+    {
+        public int Code { get; set; }
+        public string Description { get; set; }
+    }
     public class EventsLogViewModel
     {
         public int ID { get; set; }

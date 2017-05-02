@@ -459,12 +459,11 @@
                                                 </div>
                                                 <div class="col-md-12"></div>
                                                 <label class="h5 col-md-6" for="lblPaymentStatus">Payment Status :</label>
-                                                @*<div class="col-lg-6">
+                                                <div class="col-lg-6">
                                                   
-                                                    @Html.DropDownListFor(model => model.PaymentStatus, null, "--Select Status--", new { @class = "form-control", @onchange = "attributeSetOnChange(this)" })
-                                                    @Html.HiddenFor(model => model.PaymentStatus, htmlAttributes: new { @class = "control-label col-lg-2", id = "AttributeSetIDhdf", Value = "" })
-                                                    @Html.ValidationMessageFor(model => model.PaymentStatus, "", new { @class = "text-danger" })
-                                                </div>*@
+                                                    @Html.DropDownListFor(model => model.PaymentStatusList, null, "--Select Status--", new { @class = "form-control", @onchange = "PaymentStatusOnChange(this)" })
+                                                   
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
