@@ -12,6 +12,8 @@ namespace PartyEC.BusinessServices.Contracts
         List<Bookings> GetCustomerBookings(int customerID,bool Ishistory);
         OperationsStatus InsertBookings(Bookings bookingsObj);
         List<Bookings> GetAllBookings();
+        Task<bool> BookingsEmail(Bookings bookingsObj);
         Bookings GetBookings(int BookingID);
+        OperationsStatus UpdateBookings(Bookings bookingsObj);
     }
 }
