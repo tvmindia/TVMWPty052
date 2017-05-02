@@ -296,7 +296,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@DiscountAmt", SqlDbType.Decimal).Value = quotationsObj.DiscountAmt;
                         cmd.Parameters.Add("@TaxAmt", SqlDbType.Decimal).Value = quotationsObj.TaxAmt;
                         cmd.Parameters.Add("@QuotationStatus", SqlDbType.VarChar, 50).Value = quotationsObj.Status;
-
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = quotationsObj.logDetails.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = quotationsObj.logDetails.UpdatedDate;
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
