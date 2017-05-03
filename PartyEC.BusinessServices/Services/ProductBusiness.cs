@@ -122,12 +122,28 @@ namespace PartyEC.BusinessServices.Services
             }
             return productlist;
         }
-
+        /// <summary>
+        /// new product insertion
+        /// for product type simple there will be product details
+        /// for product type configurable ther will be no product details
+        /// </summary>
+        /// <param name="productObj"></param>
+        /// <returns>OperationsStatus</returns>
         public OperationsStatus InsertProduct(Product productObj)
         {
-            
-              return _productRepository.InsertProduct(productObj);
-            
+            OperationsStatus operationsStatus = null;
+            try
+            {
+
+                operationsStatus= _productRepository.InsertProduct(productObj);
+            }
+            catch(Exception ex)
+            {
+
+            }
+            return operationsStatus;
+
+
         }
 
         public OperationsStatus UpdateProduct(Product productObj)

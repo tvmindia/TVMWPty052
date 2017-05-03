@@ -260,6 +260,8 @@ $(document).ready(function () {
     });
     $("#tabproductDetails").click(function () {
         $("#titleSpanPro").text('New Product');
+        $("#spandetailType").text('__');
+        $("#spandetailSet").text('__');
         $("#AttributeSetID").removeAttr('disabled');
         $("#ProductType").removeAttr('disabled');
         $('#tabsettings').trigger('click');
@@ -288,7 +290,8 @@ function btnAddNewProduct() {
     $('#tabproductDetails a').trigger('click');
    
     $("#titleSpanPro").text('New Product');
-   // $("#productDetails h4").text('New Product');
+    $("#spandetailType").text('__');
+    $("#spandetailSet").text('__');
     $("#AttributeSetID").removeAttr('disabled');
     $("#ProductType").removeAttr('disabled');
     $('#tabsettings').trigger('click');
@@ -819,9 +822,9 @@ function productSaveSuccess(data, status, xhr)
             notyAlert('success', JsonResult.Record.StatusMessage);
             $(".productID").val(JsonResult.Record.ReturnValues.productid);
             RefreshProducts();
-            // $("#titleSpanPro").text($("#Name").val() + '-(Type:' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((JsonResult.Record.ReturnValues.attributesetname != null) && (JsonResult.Record.ReturnValues.attributesetname!="")?JsonResult.Record.ReturnValues.attributesetname:'N/A') + ')');
             $("#titleSpanPro").text($("#Name").val());
-            $("#spandetail").text('(Type:' + ($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((JsonResult.Record.ReturnValues.attributesetname != null) && (JsonResult.Record.ReturnValues.attributesetname != "") ? JsonResult.Record.ReturnValues.attributesetname : 'N/A') + ')');
+            $("#spandetailType").text(($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable'));
+            $("#spandetailSet").text(((JsonResult.Record.ReturnValues.attributesetname != null) && (JsonResult.Record.ReturnValues.attributesetname != "") ? JsonResult.Record.ReturnValues.attributesetname : 'N/A') + '');
             RefreshUNRelatedProducts(JsonResult.Record.ReturnValues.productid);
             EnableSectionAdditional();
             break;
