@@ -158,6 +158,7 @@ function fillQuotations(ID) {
     $("#DiscountAmt").val(thisQuotations.DiscountAmt);
     $("#TaxAmt").val(thisQuotations.TaxAmt);
     $("#Status").val(thisQuotations.Status);
+    $("#Qty").val(thisQuotations.Qty);
 
     $("#lblTaxAmt").text(thisQuotations.TaxAmt);
     $("#lblDiscountAmt").text(thisQuotations.DiscountAmt);
@@ -294,7 +295,8 @@ function SendMail() {
     QuotationsViewModel.TaxAmt = $("#TaxAmt").val();
     QuotationsViewModel.Status = $("#Status").val();
     QuotationsViewModel.SubTotal = $("#lblSubTotal").text();
-    QuotationsViewModel.Total = $("#lblGrandTotal").text();
+    QuotationsViewModel.GrandTotal = $("#lblGrandTotal").text();
+    QuotationsViewModel.Qty = $("#Qty").val();
 
     var CustomerViewModel = new Object();
     CustomerViewModel.Email = $("#mailViewModelObj_CustomerEmail").val();

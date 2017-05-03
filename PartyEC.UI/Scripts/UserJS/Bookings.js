@@ -161,13 +161,13 @@ function fillBookings(ID) {
     $("#DiscountAmt").val(thisBookings.DiscountAmt);
     $("#TaxAmt").val(thisBookings.TaxAmt);
     $("#Status").val(thisBookings.Status);
+    $("#Qty").val(thisBookings.Qty);
 
     $("#lblTaxAmt").text(thisBookings.TaxAmt);
     $("#lblDiscountAmt").text(thisBookings.DiscountAmt);
     $("#lblSubTotal").text(thisBookings.SubTotal);
     $("#lblGrandTotal").text(thisBookings.GrandTotal);
-    $("#lblAdditionalCharges").text(thisBookings.AdditionalCharges);
-    debugger;
+    $("#lblAdditionalCharges").text(thisBookings.AdditionalCharges); 
     BindTablBookingsDetailList(thisBookings.ID);
     //region comments
 
@@ -293,6 +293,7 @@ function SendBookingsMail() {
     BookingsViewModel.StatusText = $("#lblBookingstatus").text();
     BookingsViewModel.Message = $("#lblMessage").text();
     BookingsViewModel.Price = $("#Price").val();
+    BookingsViewModel.Qty = $("#Qty").val();
     BookingsViewModel.AdditionalCharges = $("#AdditionalCharges").val();
     BookingsViewModel.DiscountAmt = $("#DiscountAmt").val();
     BookingsViewModel.TaxAmt = $("#TaxAmt").val();
