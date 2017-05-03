@@ -163,6 +163,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _wishlistObj.DaysinWL = (sdr["DaysinWL"].ToString() != "" ? sdr["DaysinWL"].ToString() : _wishlistObj.DaysinWL);
                                         _wishlistObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _wishlistObj.CreatedDate);
                                         _wishlistObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _wishlistObj.ImageURL);
+                                        _wishlistObj.Price = (sdr["CostPrice"].ToString() != "" ? Decimal.Parse(sdr["CostPrice"].ToString()) : _wishlistObj.Price);
                                     }
                                     Requestslist.Add(_wishlistObj);
                                 }
