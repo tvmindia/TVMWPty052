@@ -9,9 +9,11 @@ using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
 using AutoMapper;
 using Newtonsoft.Json;
+using PartyEC.UI.CustomAttributes;
 
 namespace PartyEC.UI.API
 {
+    [CustomAuthenticationFilterForMobile]
     public class EventController : ApiController
     {
         #region Constructor_Injection

@@ -6,9 +6,11 @@ using PartyEC.BusinessServices.Contracts;
 using Newtonsoft.Json;
 using AutoMapper;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 
 namespace PartyEC.UI.API
 {
+    [CustomAuthenticationFilterForMobile]
     public class CategoryController : ApiController
     {
 

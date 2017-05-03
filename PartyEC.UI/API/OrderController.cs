@@ -2,6 +2,7 @@
 using Newtonsoft.Json;
 using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.UI.CustomAttributes;
 using PartyEC.UI.Models;
 using System;
 using System.Collections.Generic;
@@ -12,6 +13,8 @@ using System.Web.Http;
 
 namespace PartyEC.UI.API
 {
+
+    [CustomAuthenticationFilterForMobile]
     public class OrderController : ApiController
     {
         Const constants = new Const();
@@ -108,6 +111,7 @@ namespace PartyEC.UI.API
         }
 
         [HttpPost]
+       
         public object GetLocationDetails()
         {
             try

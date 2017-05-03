@@ -10,9 +10,11 @@ using PartyEC.DataAccessObject.DTO;
 using AutoMapper;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
+using PartyEC.UI.CustomAttributes;
 
 namespace PartyEC.UI.API
 {
+    [CustomAuthenticationFilterForMobile]
     public class CustomerController : ApiController
     {
 

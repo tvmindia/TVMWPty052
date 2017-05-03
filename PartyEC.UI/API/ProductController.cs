@@ -7,9 +7,11 @@ using AutoMapper;
 using System.Web.Http;
 using Newtonsoft.Json;
 using PartyEC.UI.Models;
+using PartyEC.UI.CustomAttributes;
 
 namespace PartyEC.UI.API
 {
+    [CustomAuthenticationFilterForMobile]
     public class ProductController : ApiController
     {
         #region Constructor_Injection
