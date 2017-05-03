@@ -78,7 +78,7 @@ namespace PartyEC.BusinessServices.Services
                 //               where c.StoredValue == yourValue
                 //               select c.DisplayName).FirstOrDefault();
                 userList = _authenticationRepository.GetAllUsers();
-                userList = userList == null ? null : userList.Where(us => us.LoginName == user.LoginName && Decrypt(us.Password)==user.Password).ToList();
+                userList = userList == null ? null : userList.Where(us => us.LoginName == user.LoginName.ToLower() && Decrypt(us.Password)==user.Password).ToList();
 
                 _user = userList == null ? null : userList[0];
             }
@@ -110,21 +110,23 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 //Encryption
-                if (!string.IsNullOrEmpty(user.Password))
+                if ((!string.IsNullOrEmpty(user.LoginName))&&(!string.IsNullOrEmpty(user.Password)))
                 {
                     user.Password = Encrypt(user.Password);
-                }
+                    //case sensitive login logic-making it lower case
+                    user.LoginName = user.LoginName.ToLower();
                 switch (user.ID)
-                {
+                   {
                     case 0:
                        
-                     operationsStatus = _authenticationRepository.InsertUser(user);
+                        operationsStatus = _authenticationRepository.InsertUser(user);
                     break;
                     default:
-                    operationsStatus = _authenticationRepository.UpdateUser(user);
+                        
+                        operationsStatus = _authenticationRepository.UpdateUser(user);
                     break;
+                   }
                 }
-               
 
             }
             catch (Exception ex)
