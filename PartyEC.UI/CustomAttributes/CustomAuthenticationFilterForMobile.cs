@@ -27,7 +27,8 @@ namespace PartyEC.UI.CustomAttributes
         bool Active = true;
         //Default constructor
         public CustomAuthenticationFilterForMobile()
-        { }
+        {
+        }
 
         /// <summary>
         /// Overriden constructor to allow explicit disabling of this
