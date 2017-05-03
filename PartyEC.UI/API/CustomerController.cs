@@ -68,7 +68,7 @@ namespace PartyEC.UI.API
         {
             try
             {
-                List<Cart_WishlistAppViewModel> CartList = Mapper.Map<List<Wishlist>, List<Cart_WishlistAppViewModel>>(_cartwishlistBusiness.GetCustomerWishlist(WishlistObj.ID));
+                List<Cart_WishlistAppViewModel> CartList = Mapper.Map<List<Wishlist>, List<Cart_WishlistAppViewModel>>(_cartwishlistBusiness.GetCustomerWishlist(WishlistObj.CustomerID));
                 if (CartList.Count == 0) throw new Exception(constants.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
             }
