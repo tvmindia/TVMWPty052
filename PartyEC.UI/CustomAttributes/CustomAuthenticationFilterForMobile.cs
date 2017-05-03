@@ -82,18 +82,8 @@ namespace PartyEC.UI.CustomAttributes
         /// <returns></returns>
         protected virtual bool OnAuthorizeUser(string userkey, HttpActionContext actionContext)
         {
-            //Remove Below if block when key start to come from phone
-            //%%%%%%%%%%%%%%%%%%%%%ALBERT THOMSON%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            if (userkey!="")
-            {
+            if ((tvmkeyformobile != userkey))
                 return false;
-            }
-            //%%%%%%%%%%%%%%%%%%%%%ALBERT THOMSON%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            //Uncomment Below if block when key start to come from phone
-            //%%%%%%%%%%%%%%%%%%%%%ALBERT THOMSON%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            //if ((tvmkeyformobile!= userkey))
-            //    return false;
-            //%%%%%%%%%%%%%%%%%%%%%ALBERT THOMSON%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             return true;
         }
 
