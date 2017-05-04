@@ -12,7 +12,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string ShipmentNo { get; set; }
         public DateTime ShipmentDate { get; set; }
         public string ShipmentDateString { get; set; }
-        public DateTime DeliveredDate { get; set; }
+        public string DeliveredDate { get; set; }
         public string DeliveredBy { get; set; }
         public LogDetails log { get; set; }
         public List<ShipmentDetail> DetailsList { get; set; }
@@ -24,5 +24,6 @@ namespace PartyEC.DataAccessObject.DTO
         public int OrderItemID { get; set; }
         public  int ShippedQty { get; set; }
         public LogDetails log { get; set; }
+        public OrderDetail OrderDetailObj { get; set; }
     }
 }

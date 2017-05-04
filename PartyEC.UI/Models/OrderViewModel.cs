@@ -60,6 +60,7 @@ namespace PartyEC.UI.Models
 	 public string BillCountryCode { get; set; }
 	 public string BillStateProvince { get; set; }
 	 public string BillContactNo { get; set; }
+        public int ShippedQty { get; set; }
 	 public string ShipPrefix { get; set; }
 	 public string ShipFirstName { get; set; }
 	 public string ShipMidName { get; set; }
@@ -108,7 +109,7 @@ namespace PartyEC.UI.Models
 
         //Mailing Comments
         public MailViewModel mailViewModelObj { get; set; }
-
+        public ShipmentViewModel shipmentViewModelObj { get; set; }
     }
 
     //app view model orders
@@ -192,7 +193,7 @@ namespace PartyEC.UI.Models
 
         //Mailing Comments
         public MailViewModel mailViewModelObj { get; set; }
-
+        
     }
     public class OrderDetailViewModel
     {
@@ -213,5 +214,7 @@ namespace PartyEC.UI.Models
         public float SubTotal { get; set; }
         public List<OrderDetailViewModel> OrderDetailsList { get; set; }
         public LogDetailsViewModel commonObj { get; set; }
+        public int ShippedQty { get; set; }
+        public int QtyShipped { get; set; }
     }
 }

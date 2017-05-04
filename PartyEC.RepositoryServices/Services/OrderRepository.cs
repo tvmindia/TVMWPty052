@@ -59,7 +59,7 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.ContactNo =sdr["ContactNo"].ToString();
                                         orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : 0);
                                         orderObj.OrderStatus = sdr["OrderStatus"].ToString();
-                                        orderObj.StatusCode = sdr["StatusCode"].ToString() != null ? int.Parse(sdr["StatusCode"].ToString()) : orderObj.StatusCode;
+                                        orderObj.StatusCode = sdr["StatusCode"].ToString() != "" ? int.Parse(sdr["StatusCode"].ToString()) : orderObj.StatusCode;
                                     }
                                     OrderHeaderList.Add(orderObj);
                                 }
@@ -116,6 +116,8 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.Total = (sdr["Total"].ToString() != "" ? float.Parse(sdr["Total"].ToString()) : 0);
                                         orderObj.SubTotal = (sdr["SubTotal"].ToString() != "" ? float.Parse(sdr["SubTotal"].ToString()) : 0);
                                         orderObj.ProductQty= (sdr["ProductQty"].ToString() != "" ? int.Parse(sdr["ProductQty"].ToString()) : orderObj.ProductQty);
+                                        orderObj.ShippedQty = 0;
+                                        orderObj.QtyShipped= (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : 0);
                                     }
                                     OrderHeaderList.Add(orderObj);
                                 }
@@ -159,12 +161,12 @@ namespace PartyEC.RepositoryServices.Services
                                     orderObj.OrderNo = sdr["OrderNo"].ToString();
                                     orderObj.OrderRev = sdr["OrderRev"].ToString();
                                     orderObj.RevisionIDs = sdr["RevisionIDs"].ToString();
-                                    orderObj.shippingLocationID= sdr["shippingLocationID"].ToString() != null ? int.Parse(sdr["shippingLocationID"].ToString()) : orderObj.shippingLocationID;
+                                    orderObj.shippingLocationID= sdr["shippingLocationID"].ToString() != "" ? int.Parse(sdr["shippingLocationID"].ToString()) : orderObj.shippingLocationID;
                                     orderObj.ShippingLocationName = sdr["ShippingLocationName"].ToString();
                                     orderObj.SourceIP = sdr["SourceIP"].ToString();
                                     orderObj.OrderDateTime= sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()): orderObj.OrderDateTime;
                                     orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : "";
-                                    orderObj.CustomerID = sdr["CustomerID"].ToString()!=null? int.Parse(sdr["CustomerID"].ToString()): orderObj.CustomerID;
+                                    orderObj.CustomerID = sdr["CustomerID"].ToString()!=""? int.Parse(sdr["CustomerID"].ToString()): orderObj.CustomerID;
                                     orderObj.CustomerName = sdr["CustomerName"].ToString();
                                     orderObj.ContactNo = sdr["ContactNo"].ToString();
                                     orderObj.CustomerEmail = sdr["CustomerEmail"].ToString();
@@ -189,12 +191,12 @@ namespace PartyEC.RepositoryServices.Services
                                     orderObj.ShipStateProvince = sdr["ShipStateProvince"].ToString();
                                     orderObj.TotalShippingAmt = sdr["TotalShippingAmt"].ToString()!=""?float.Parse(sdr["TotalShippingAmt"].ToString()):orderObj.TotalShippingAmt;
                                     orderObj.PaymentType = sdr["PaymentType"].ToString();
-                                    orderObj.PayStatusCode= sdr["PayStatusCode"].ToString() != null ? int.Parse(sdr["PayStatusCode"].ToString()) : orderObj.PayStatusCode;
+                                    orderObj.PayStatusCode= sdr["PayStatusCode"].ToString() != "" ? int.Parse(sdr["PayStatusCode"].ToString()) : orderObj.PayStatusCode;
                                     orderObj.PaymentStatus = sdr["PaymentStatus"].ToString();
                                     orderObj.CurrencyCode = sdr["CurrencyCode"].ToString();
                                     orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : orderObj.ID);
                                     orderObj.OrderStatus = sdr["OrderStatus"].ToString();
-                                    orderObj.StatusCode = sdr["StatusCode"].ToString() != null ? int.Parse(sdr["StatusCode"].ToString()) : orderObj.StatusCode;
+                                    orderObj.StatusCode = sdr["StatusCode"].ToString() != "" ? int.Parse(sdr["StatusCode"].ToString()) : orderObj.StatusCode;
                                 }
                                 }
                             }//if
@@ -705,7 +707,7 @@ namespace PartyEC.RepositoryServices.Services
                                        
                                         orderObj.SourceIP = sdr["SourceIP"].ToString();
                                         orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : "";
-                                        orderObj.CustomerID = sdr["CustomerID"].ToString() != null ? int.Parse(sdr["CustomerID"].ToString()) : orderObj.CustomerID;
+                                        orderObj.CustomerID = sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : orderObj.CustomerID;
                                       
                                      
                                         orderObj.BillFirstName = sdr["BillFirstName"].ToString();

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
 
@@ -12,7 +13,9 @@ namespace PartyEC.UI.Models
         public string ShipmentNo { get; set; }
         public DateTime ShipmentDate { get; set; }
         public string ShipmentDateString { get; set; }
-        public DateTime DeliveredDate { get; set; }
+        [Display(Name = "Delivered Date :")]
+        public string DeliveredDate { get; set; }
+        [Display(Name = "Delivered By :")]
         public string DeliveredBy { get; set; }
         public LogDetailsViewModel log { get; set; }
         public List<ShipmentDetailViewModel> DetailsList { get; set; }
@@ -24,5 +27,6 @@ namespace PartyEC.UI.Models
         public int OrderItemID { get; set; }
         public int ShippedQty { get; set; }
         public LogDetailsViewModel log { get; set; }
+        public OrderDetailViewModel OrderDetailViewModelObj { get; set; }
     }
 }

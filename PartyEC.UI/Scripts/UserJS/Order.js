@@ -199,11 +199,11 @@ $(document).ready(function () {
                          'targets': 4,
                          'render': function (data, type, full, meta) {
                              debugger;
-                             if (data.Qty == 0) {
+                             if (data == 0) {
                                  var txtbox = '--'
                              }
                              else {
-                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + (data) + '" onkeyup="Calculatesum(this)"></input> '
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="number" min="0" max="' + (data) + '" value="' + (data) + '" onkeyup="Calculatesum(this)"></input> '
                              }
 
                              return txtbox
@@ -308,6 +308,70 @@ $(document).ready(function () {
                  
              ]
          });
+
+    DataTables.orderDetailstableShipmentRegion = $('#tblOrderForShipmentRegion').DataTable(
+    {
+        dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+        order: [],
+        searching: true,
+        paging: true,
+        data: null,
+        columns: [
+          { "data": null ,"defaultContent": ''},
+          { "data": "OrderDetailID" },
+          { "data": "ProductSpecXML" },
+          { "data": "Qty" },
+          { "data": "ShippedQty" },
+          { "data": "QtyShipped" }
+        ],
+        columnDefs: [
+            {
+                orderable: false,
+                className: 'select-checkbox',
+                targets: 0
+            },
+                     {//hiding hidden column 
+                         "targets": [2],
+                         "visible": true,
+                         "searchable": false,
+                         "render": function (data, type, full, meta) {
+                             debugger;
+                             if (data != "" && data != null) {
+                                 var Name = "<b>" + data.split("||")[0] + "</b>";
+                                 var Spec = (data.split("||")[1]).split("><");
+                                 for (var i = 0; i < Spec.length - 1; i++) {
+                                     if (i > 0) {
+                                         var html = Spec[i].replace(">", " : ");
+                                         Name = Name + "</br>" + (html.split("</")[0]);
+                                     }
+
+                                 }
+                             }
+                             return Name;
+                         }
+                     },
+                     {
+                         'targets': 4,
+                         'render': function (data, type, full, meta) {
+                             debugger;
+                             if (data)
+                             {
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="number" min="0" max="' + (data) + '" value="' + (data) + '" onkeyup="ChangeQtyShipment(this)"></input>'
+                             }
+                             else
+                             {
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" min="0" value="' + 0 + '" onkeyup="ChangeQtyShipment(this)"></input> '
+                             }                         
+
+                             return txtbox
+                         }
+                     }
+        ],
+        select: {
+            style: 'multi',
+            selector: 'tr'
+        }
+    });
     //$('#tblProductList tbody').on('click', 'tr', function () {  
     //    var tabledata = DataTables.tblProductList.rows('.selected').data();
     //    var Total = 0;
@@ -475,8 +539,8 @@ function Edit(this_obj)
 
         //****************************** SHIPPING AREA
         
-        BindGeneralSectionShippingRegion(Result);
-        BindAccountSectionShippingRegion(Result);
+        BindGeneralSectionShipmentRegion(Result);
+        BindAccountSectionShipmentRegion(Result);
     }
 }
 function CancelIssue()
@@ -1000,7 +1064,7 @@ function SubmitInvoice()
 //##################################################################################################################################################################################################################
 //##############************************************************************************** SHIPPING AREA ******************************************
 
-function BindGeneralSectionInvoiceRegion(Result) {
+function BindGeneralSectionShipmentRegion(Result) {
     debugger;
     $("#lblOrderNoShippingRegion").text(Result.OrderNo);
     $("#lblOrderDateShippingRegion").text(Result.OrderDate);
@@ -1009,11 +1073,56 @@ function BindGeneralSectionInvoiceRegion(Result) {
     $("#lblRevNoShippingRegion").text(Result.OrderRev);
 
 }
-function BindAccountSectionInvoiceRegion(Result) {
+function BindAccountSectionShipmentRegion(Result) {
     $('#imgPreviewCustomerShippingRegion').attr('src', Result.CustomerURL);
     $("#lblCustomerNameShippingRegion").text(Result.CustomerName);
     $("#lblContactNoShippingRegion").text(Result.ContactNo);
     $("#lblCustomerEmailShippingRegion").text(Result.CustomerEmail);
     $("#hdnAccountEmailIDShippingRegion").val(Result.CustomerEmail);
     $("#hdnAccountCustomerNameShippingRegion").val(Result.CustomerName);
+}
+function TabActionShipmentRegion()
+{
+    debugger;
+    ChangeButtonPatchView("Order", "btnPatchOrders", "ShipmentRegion");
+}
+function TabActionAddShipmentRegion()
+{
+    BindTableOrderDetailListShipmentRegion($('#hdnOrderHID').val());
+    ChangeButtonPatchView("Order", "btnPatchOrders", "AddShipmentRegion");
+}
+function BindTableOrderDetailListShipmentRegion(ID) {
+    DataTables.orderDetailstableShipmentRegion.clear().rows.add(GetAllOrdersList(ID)).draw(false);
+}
+function ChangeQtyShipment(this_Obj)
+{
+    debugger;
+    var Qty = this_Obj.value;
+    var rowData = DataTables.orderDetailstableShipmentRegion.row($(this_Obj).parents('tr')).data();
+    if (Qty > rowData.Qty) {
+        notyAlert('information', "We're sorry! Only " + rowData.Qty + " units");
+        $(this_obj).val('');
+    }
+    else {
+        var rowsData = DataTables.orderDetailstableShipmentRegion.rows().data();
+        for (i = 0; i < rowsData.length; i++) {
+            if (rowsData[i].ProductSpecXML == rowData.ProductSpecXML) {
+                if (Qty == 0)
+                {
+                    rowsData[i].QtyShipped = rowData.Qty;
+                }
+                else
+                {
+                    rowsData[i].QtyShipped = rowsData[i].QtyShipped - Qty;
+                }               
+                rowsData[i].ShippedQty = Qty;
+            }
+        }
+        //$('#tblGrandTotal .strGrandTotal').text(GrandTotal + " QAR");
+        DataTables.orderDetailstableShipmentRegion.clear().rows.add(rowsData).draw(false);
+    }
+}
+function AddShipment()
+{
+    $("#tabAddShippingRegion").click();
 }

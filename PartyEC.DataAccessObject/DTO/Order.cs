@@ -26,6 +26,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string CustomerURL { get; set; }
         public string ProfileImageID { get; set; }
         //
+       
         public int shippingLocationID { get; set; }
         public string ShippingLocationName { get; set; }
         public string PaymentType { get; set; }
@@ -107,5 +108,7 @@ namespace PartyEC.DataAccessObject.DTO
         public float SubTotal { get; set; }
         public List<OrderDetail> OrderDetailsList { get; set; }
         public LogDetails commonObj { get; set; }
+        public int ShippedQty { get; set; }
+        public int QtyShipped { get; set; }
     }
 }
