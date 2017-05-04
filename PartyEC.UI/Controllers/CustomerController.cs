@@ -187,7 +187,7 @@ namespace PartyEC.UI.Controllers
                 if (!string.IsNullOrEmpty(customerID))
                 {
                     OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                    wishList = Mapper.Map<List<Wishlist>, List<WishlistViewModel>>(_cart_WishlistBusiness.GetCustomerWishlist(int.Parse(customerID)));
+                    wishList = Mapper.Map<List<Wishlist>, List<WishlistViewModel>>(_cart_WishlistBusiness.GetCustomerWishlist(int.Parse(customerID),null));
                 }
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = wishList });
             }

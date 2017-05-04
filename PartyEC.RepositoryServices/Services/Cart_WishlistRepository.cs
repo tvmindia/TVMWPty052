@@ -129,7 +129,7 @@ namespace PartyEC.RepositoryServices.Services
             return Cartlist;
         }
         
-        public List<Wishlist> GetCustomerWishlist(int customerID)
+        public List<Wishlist> GetCustomerWishlist(int customerID,string CurrentDate)
         {
             List<Wishlist> Requestslist = null;
             try
@@ -144,6 +144,8 @@ namespace PartyEC.RepositoryServices.Services
                         }
                         cmd.Connection = con;
                         cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID;
+                        if (CurrentDate!="" && CurrentDate!=null) 
+                        cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = DateTime.Parse(CurrentDate);
                         cmd.CommandText = "[GetCustomerWishlist]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -163,7 +165,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _wishlistObj.DaysinWL = (sdr["DaysinWL"].ToString() != "" ? sdr["DaysinWL"].ToString() : _wishlistObj.DaysinWL);
                                         _wishlistObj.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _wishlistObj.CreatedDate);
                                         _wishlistObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _wishlistObj.ImageURL);
-                                        _wishlistObj.Price = (sdr["CostPrice"].ToString() != "" ? Decimal.Parse(sdr["CostPrice"].ToString()) : _wishlistObj.Price);
+                                        _wishlistObj.Price = (sdr["TotalPrice"].ToString() != "" ? Decimal.Parse(sdr["TotalPrice"].ToString()) : _wishlistObj.Price);
                                     }
                                     Requestslist.Add(_wishlistObj);
                                 }

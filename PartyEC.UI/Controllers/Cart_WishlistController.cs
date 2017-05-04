@@ -82,7 +82,7 @@ namespace PartyEC.UI.Controllers
         {
             try
             {
-                List<WishlistViewModel> eventsLogList = Mapper.Map<List<Wishlist>, List<WishlistViewModel>>(_cartWishlistBusiness.GetCustomerWishlist(Int32.Parse(ID)));
+                List<WishlistViewModel> eventsLogList = Mapper.Map<List<Wishlist>, List<WishlistViewModel>>(_cartWishlistBusiness.GetCustomerWishlist(Int32.Parse(ID),null));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = eventsLogList });
             }
             catch (Exception ex)

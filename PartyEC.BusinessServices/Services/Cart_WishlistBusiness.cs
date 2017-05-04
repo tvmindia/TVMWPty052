@@ -57,12 +57,12 @@ namespace PartyEC.BusinessServices.Services
             return cartlist;
         }         
 
-        public List<Wishlist> GetCustomerWishlist(int customerID)
+        public List<Wishlist> GetCustomerWishlist(int customerID, string CurrentDate)
         {
             List<Wishlist> wishlist = null;
             try
             {
-                wishlist = _cartWishlistRepository.GetCustomerWishlist(customerID);
+                wishlist = _cartWishlistRepository.GetCustomerWishlist(customerID,CurrentDate);
                 if (wishlist != null)
                     for (int i = 0; i < wishlist.Count; i++)
                         {
