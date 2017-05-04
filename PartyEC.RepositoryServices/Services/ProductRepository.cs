@@ -334,19 +334,23 @@ namespace PartyEC.RepositoryServices.Services
                 operationsStatusObjH = InsertProductHeader(productObj);
                 if (operationsStatusObjH.StatusCode == 1)
                 {
-                      operationsStatusObjD = InsertUpdateProductDetails(productObj);
-                    if (operationsStatusObjD.StatusCode == 0)
+                    if((productObj.ProductDetails!=null)&&(productObj.ProductDetails.Count>0))
                     {
-                        operationsStatusObjH.StatusCode = 0;
-                        operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
-                        //transaction.Rollback();
+                        operationsStatusObjD = InsertUpdateProductDetails(productObj);
+                        if (operationsStatusObjD.StatusCode == 0)
+                        {
+                            operationsStatusObjH.StatusCode = 0;
+                            operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
+                            //transaction.Rollback();
+                        }
+                        else if (operationsStatusObjD.StatusCode == 1)
+                        {
+                            operationsStatusObjH.StatusCode = 1;
+                            //  operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
+                            //    transaction.Commit();
+                        }
                     }
-                    else if (operationsStatusObjD.StatusCode == 1)
-                    {
-                        operationsStatusObjH.StatusCode = 1;
-                      //  operationsStatusObjH.StatusMessage += operationsStatusObjD.StatusMessage;
-                    //    transaction.Commit();
-                    }
+                    
                 }
             }
             catch (Exception e)

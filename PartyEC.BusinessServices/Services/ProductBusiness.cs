@@ -134,16 +134,26 @@ namespace PartyEC.BusinessServices.Services
             OperationsStatus operationsStatus = null;
             try
             {
-
-                operationsStatus= _productRepository.InsertProduct(productObj);
+                switch(productObj.ProductType)
+                {
+                    case 'S':
+                        productObj.ProductDetails = productObj.ProductDetails == null ? null : productObj.ProductDetails.
+                        Select(prodDet => { prodDet.DefaultOption = true; return prodDet; }).ToList();
+                        operationsStatus = _productRepository.InsertProduct(productObj);
+                        break;
+                    case 'C':
+                        //product detail not need to insert for configurable product
+                        productObj.ProductDetails.Clear();
+                        operationsStatus = _productRepository.InsertProduct(productObj);
+                        break;
+                }
+              
             }
             catch(Exception ex)
             {
 
             }
             return operationsStatus;
-
-
         }
 
         public OperationsStatus UpdateProduct(Product productObj)
@@ -250,8 +260,8 @@ namespace PartyEC.BusinessServices.Services
             List<ProductDetail> productDetailslist = null;
             try
             {
-               
-                productDetailslist = _productRepository.GetProductDetail(ProductID).OrderByDescending(prod => prod.logDetails.CreatedDate).ToList();
+                productDetailslist = _productRepository.GetProductDetail(ProductID);
+                productDetailslist = productDetailslist==null?null: productDetailslist.OrderByDescending(prod => prod.logDetails.CreatedDate).ToList();
 
             }
             catch (Exception ex)

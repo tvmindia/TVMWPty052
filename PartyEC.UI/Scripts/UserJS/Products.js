@@ -1189,6 +1189,7 @@ function OtherAttributeSave()
 function RenderContentsForAssocProdAttributes()
 { 
     try {
+        $('#detailkeywordsDiv .Htags').remove();
         $("#AssociatedStockAvailabe").val("");
         var proid = $('.productID').val();
         var atsetID = $("#AttributeSetID").val();
@@ -1656,7 +1657,7 @@ function clearAssociatedProductform() {
     $('#associatedStaticfields').find('.check-box').prop('checked', false);
    
     $("#AssociatedStockAvailabe").val("");
-    
+    $('#detailkeywordsDiv .Htags').remove();
     //associatedStaticfields
  
 }
