@@ -48,5 +48,7 @@ namespace PartyEC.DataAccessObject.DTO
         //Comments
         public EventsLog EventsLogObj { get; set; }
 
+        public List<AttributeValues> AttributeValues { get; set; }
+
     }
 }

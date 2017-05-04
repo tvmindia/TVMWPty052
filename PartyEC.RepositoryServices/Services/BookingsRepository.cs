@@ -14,13 +14,15 @@ namespace PartyEC.RepositoryServices.Services
         Const constObj = new Const();
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
+        private IAttributesRepository _attributesRepository;
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
         /// <param name="databaseFactory"></param>
-        public BookingsRepository(IDatabaseFactory databaseFactory)
+        public BookingsRepository(IDatabaseFactory databaseFactory, IAttributesRepository attributesRepository)
         {
             _databaseFactory = databaseFactory;
+            _attributesRepository = attributesRepository;
         }
         #endregion DataBaseFactory
 
@@ -121,6 +123,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@TaxAmt", SqlDbType.Decimal).Value = bookingsObj.TaxAmt;
                         cmd.Parameters.Add("@DiscountAmt", SqlDbType.Decimal).Value = bookingsObj.DiscountAmt;
                         cmd.Parameters.Add("@Message", SqlDbType.NVarChar, -1).Value = bookingsObj.Message;
+                        cmd.Parameters.Add("@ProductSpecXML", SqlDbType.Xml).Value = _attributesRepository.GetAttributeXML(bookingsObj.AttributeValues);
 
                         cmd.Parameters.Add("@CustomerAddressID", SqlDbType.Int).Value = bookingsObj.CustomerAddress.ID;
                         cmd.Parameters.Add("@BillLocation", SqlDbType.Int).Value = bookingsObj.CustomerAddress.Location;
