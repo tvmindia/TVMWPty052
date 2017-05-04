@@ -130,9 +130,9 @@ $(document).ready(function () {
     {
         notyAlert('error', e.message);
     }
-    //$("#tabcustomerView a").click(function () {
-    //    $("#tabCustomerView").trigger('click');
-    //});
+    $("#tabcustomerView").click(function () {
+        $("#tabCustomerView").trigger('click');
+    });
 });
 
 //----------------------------------- customer list tab active click---------------------------------//
