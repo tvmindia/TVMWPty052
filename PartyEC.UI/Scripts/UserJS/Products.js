@@ -2,52 +2,61 @@
 var tm;
 $(document).ready(function () {
    
+    try
+    {
+        $("#HeaderTagsPicker").on({
+            focusout: function () {
+                var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
+                if (txt) {
+                    var h = $("<span/>", { text: txt }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' });
+                    $('#keywordsDiv').append(h);
+                    this.value = "";
+                }
+                // setTimeout(function () { document.getElementById('HeaderTagsPicker').focus() }, 10);
+            },
+            keypress: function (ev) {
+                if (ev.keyCode == 13) {
+                    if (/(188|13)/.test(ev.which)) $(this).focusout();
+                    var callbacks = $.Callbacks();
+                    callbacks.disable();
+                    return false;
+                }
+            }
 
-    $("#HeaderTagsPicker").on({
-        focusout: function () {
-            var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
-            if (txt)
-            {
-                var h = $("<span/>", { text: txt }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' });
-                $('#keywordsDiv').append(h);
-                this.value = "";
+        });
+        $("#detailTagsPicker").on({
+            focusout: function () {
+                var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
+                if (txt) {
+                    var h = $("<span/>", { text: txt }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' });
+                    $('#detailkeywordsDiv').append(h);
+                    this.value = "";
+                    // $("#lblDetailTags").trigger('click');
+                }
+
+
+            },
+            keypress: function (ev) {
+
+                if (ev.keyCode == 13) {
+                    if (/(188|13)/.test(ev.which)) $(this).focusout();
+                    var callbacks = $.Callbacks();
+                    callbacks.disable();
+                    //   tm = setTimeout(function () { settagfocus() }, 10);
+                    return false;
+                }
             }
-           // setTimeout(function () { document.getElementById('HeaderTagsPicker').focus() }, 10);
-        },
-        keypress: function (ev) {
-            if (ev.keyCode == 13) {
-                if (/(188|13)/.test(ev.which)) $(this).focusout();
-                var callbacks = $.Callbacks();
-                callbacks.disable();
-                return false;
-            }
-        }
+
+        });
+        //Rating Popover
+        $('[data-toggle="Ratingpopover"]').popover();
+    }
+    catch(e)
+    {
+        notyAlert('errror', e.message);
+    }
         
-    });
-    $("#detailTagsPicker").on({
-        focusout: function () {
-            var txt = this.value.replace(/[^a-z0-9\+\-\.\#]/ig, '');
-            if (txt) {
-                var h = $("<span/>", { text: txt }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' });
-                $('#detailkeywordsDiv').append(h);
-                this.value = "";
-               // $("#lblDetailTags").trigger('click');
-            }
-           
-           
-        },
-        keypress: function (ev) {
-
-            if (ev.keyCode == 13) {
-                if (/(188|13)/.test(ev.which)) $(this).focusout();
-                var callbacks = $.Callbacks();
-                callbacks.disable();
-             //   tm = setTimeout(function () { settagfocus() }, 10);
-                return false;
-            }
-        }
-
-    });
+   
  
    try {
        
@@ -103,8 +112,7 @@ $(document).ready(function () {
     {
         notyAlert('errror', e.message);
     }
-    //Rating Popover
-   $('[data-toggle="Ratingpopover"]').popover();
+  
     try {
 
         DataTables.RelatedproductsTable = $('#tblRelatedproducts').DataTable(
@@ -194,9 +202,6 @@ $(document).ready(function () {
              order: [[1, 'asc']]
          });
 
-        //$('#tblUNRelatedproducts').on('change', 'input[type="checkbox"]', function () {
-        //    $(this).closest('tr').toggleClass('selected');
-        //});
         $('#tblUNRelatedproducts tbody').on('click', 'tr', function () {
 
             $(this).closest('tr').toggleClass('selected');
@@ -246,29 +251,35 @@ $(document).ready(function () {
             
          });
 
-     
     }
     catch (e) {
         notyAlert('error', e.message);
     }
     //Validation for associatedproducts
    
-    
-    ChangeButtonPatchView("Products", "ProductToolBox", "Add"); //ControllerName,id of the container div,Name of the action
-    $("#tabproductList").click(function () {
+    try
+    {
         ChangeButtonPatchView("Products", "ProductToolBox", "Add"); //ControllerName,id of the container div,Name of the action
-    });
-    $("#tabproductDetails").click(function () {
-        $("#titleSpanPro").text('New Product');
-        $("#spandetailType").text('__');
-        $("#spandetailSet").text('__');
-        $("#AttributeSetID").removeAttr('disabled');
-        $("#ProductType").removeAttr('disabled');
-        $('#tabsettings').trigger('click');
-        clearform();
-        ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
-        DisEnableSectionAdditional();
-    });
+        $("#tabproductList").click(function () {
+            ChangeButtonPatchView("Products", "ProductToolBox", "Add"); //ControllerName,id of the container div,Name of the action
+        });
+        $("#tabproductDetails").click(function () {
+            $("#titleSpanPro").text('New Product');
+            $("#spandetailType").text('__');
+            $("#spandetailSet").text('__');
+            $("#AttributeSetID").removeAttr('disabled');
+            $("#ProductType").removeAttr('disabled');
+            $('#tabsettings').trigger('click');
+            clearform();
+            ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
+            DisEnableSectionAdditional();
+        });
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+   
     
 });
 
@@ -280,166 +291,170 @@ function removeme(current)
 }
 
 function btnAddNewProduct() {
-    //$('#tabproductDetails').removeClass('disabled');
-    //$('#tabproductDetails a').attr('data-toggle', 'tab');
+    try
+    {
+        $('#tabproductDetails a').trigger('click');
+
+        $("#titleSpanPro").text('New Product');
+        $("#spandetailType").text('__');
+        $("#spandetailSet").text('__');
+        $("#AttributeSetID").removeAttr('disabled');
+        $("#ProductType").removeAttr('disabled');
+        $('#tabsettings').trigger('click');
+        clearform();
+        ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
+        DisEnableSectionAdditional();
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
    
-    //$('#tabproductList').addClass('disabled');
-    //$('#tabproductList a').attr('data-toggle', '');
-   // $('#tabproductDetails a').attr({ 'data-toggle': 'tab', 'href': '#productDetails' });
-   // $('#tabproductList a').removeAttr('data-toggle href');
-    $('#tabproductDetails a').trigger('click');
-   
-    $("#titleSpanPro").text('New Product');
-    $("#spandetailType").text('__');
-    $("#spandetailSet").text('__');
-    $("#AttributeSetID").removeAttr('disabled');
-    $("#ProductType").removeAttr('disabled');
-    $('#tabsettings').trigger('click');
-    clearform();
-    ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
-    DisEnableSectionAdditional();
 }
 function goback() {
+    try
+    {
+        $('#tabproductList a').trigger('click');
+        // tabproductList
+        clearform();
+        ChangeButtonPatchView("Products", "ProductToolBox", "Add"); //ControllerName,id of the container div,Name of the action
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+
    
-   // $('#tabproductList a').attr({ 'data-toggle': 'tab', 'href': '#productList' });
-    //Remove attributes from current tab
-    
-  //  $('#tabproductDetails a').removeAttr('data-toggle href');
-    $('#tabproductList a').trigger('click');
-    // tabproductList
-    clearform();
-    ChangeButtonPatchView("Products", "ProductToolBox", "Add"); //ControllerName,id of the container div,Name of the action
+   
 }
 
 function RenderContentForImages()
 {
-    // HideProductDetalsToolBox();
-    ChangeButtonPatchView("Products", "ProductToolBox", "Back");
-    BindImages();
-    BindStickers();
+    try
+    {
+        // HideProductDetalsToolBox();
+        ChangeButtonPatchView("Products", "ProductToolBox", "Back");
+        BindImages();
+        BindStickers();
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+  
 }
 function Edit(currentObj)
 {
-    //Tab Change
-    //ChangeButtonPatchView("Products", "btnPatchProductDetails", "Edit"); //ControllerName,id of the container div,Name of the action
-   // $('#tabproductDetails a').attr({ 'data-toggle': 'tab', 'href': '#productDetails' });
-   // $('#tabproductList a').removeAttr('data-toggle href');
-    $('#tabproductDetails a').trigger('click');
-    //$('#tabproductDetails').removeClass('disabled');
-   // $('#tabproductDetails a').attr('data-toggle', 'tab');
-    //$('#tabproductDetails a').trigger('click');
-
-    //Make General tab active
-    $('#tabsettings').trigger('click');
-    //$("#LHSNavbarProductDetails li").removeClass('active');
-   // $("#LHSNavbarProductDetails li.active").removeClass('active');
-   // $("#LHSNavbarProductDetails li").first().addClass('active');
-  
-
-    var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
-    if ((rowData != null) && (rowData.ID != null))
+    try
     {
-        var thisproduct = GetProduct(rowData.ID);
-        if (thisproduct != null)
-        {
-            $("#titleSpanPro").text(thisproduct.Name);
-            $("#spandetailType").text((thisproduct.ProductType == "S" ? 'Simple' : 'Configurable'));
-            $("#spandetailSet").text(((thisproduct.AttributeSetName != null) && (thisproduct.AttributeSetName != "") ? thisproduct.AttributeSetName : 'N/A') + '');
-            //$("#titleSpanPro").text(thisproduct.Name + '-(Type:' + (thisproduct.ProductType == "S" ? 'Simple' : 'Configurable') + ',Attribute set:' + ((thisproduct.AttributeSetName != "") && (thisproduct.AttributeSetName != null)?thisproduct.AttributeSetName:'N/A') + ')');
-            //disables some drop downs
-            
-         //   ((thisproduct.ProductType == "C") && (thisproduct.ProductDetails.length > 1) ? $("#AttributeSetID").attr({ 'disabled': 'disabled' }) : $("#AttributeSetID").removeAttr('disabled'));
-            $("#AttributeSetID").attr({ 'disabled': 'disabled' });
-            $("#ProductType").attr({ 'disabled': 'disabled' });
-            $("#Name").val(thisproduct.Name);
-            $("#SKU").val(thisproduct.SKU);
-            if (thisproduct.Enabled == true)
-            { $("#Enabled").prop('checked', true); }
-            else { $("#Enabled").prop('checked', false); }
-            $("#Unit").val(thisproduct.Unit);
-            $("#URL").val(thisproduct.URL);
-            $("#ActionType").val(thisproduct.ActionType);
-            $("#SupplierID").val(thisproduct.SupplierID);
-            $("#ManufacturerID").val(thisproduct.ManufacturerID);
-            $("#ProductType").val(thisproduct.ProductType);
-            $("#ProductTypehdf").val(thisproduct.ProductType);
-            $("#AttributeSetID").val(thisproduct.AttributeSetID);
-            $("#AttributeSetIDhdf").val(thisproduct.AttributeSetID);
-            if (thisproduct.FreeDelivery == true)
-            { $("#FreeDelivery").prop('checked', true); }
-            else { $("#FreeDelivery").prop('checked', false); }
-            $("#CostPrice").val(thisproduct.CostPrice);
-            $("#BaseSellingPrice").val(thisproduct.BaseSellingPrice);
-            if (thisproduct.ShowPrice == true)
-            { $("#ShowPrice").prop('checked', true); }
-            else { $("#ShowPrice").prop('checked', false); }
-
-            $("#DiscountAmount").val((thisproduct.ProductDetails.length!=0?thisproduct.ProductDetails[0].DiscountAmount:0.00));
-            $("#DiscountStartDate").val((thisproduct.ProductDetails.length!=0?thisproduct.ProductDetails[0].DiscountStartDate:""));
-            $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0?thisproduct.ProductDetails[0].DiscountEndDate:""));
-            $("#ShortDescription").val(thisproduct.ShortDescription);
-            $("#LongDescription").val(thisproduct.LongDescription);
- 
-
-            if (thisproduct.StockAvailable == true)
-            {
-                $("#StockAvailable").val("true");
-            }
-            else {
-                $("#StockAvailable").val("false");
-            }
-
-         
-        
-
-          
-            $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
-            $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
-            //Tags
-            if (thisproduct.HeaderTags)
-            {
-                $('.Htags').remove();
-                var tagar = thisproduct.HeaderTags.split(",");
-                for (index = 0; index < tagar.length; ++index) {
-                    //Tag creation when binding
-                    $("#keywordsDiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' }));
-                   
+        $('#tabproductDetails a').trigger('click');
+        //Make Settings tab active
+        $('#tabsettings').trigger('click');
+        var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
+        if ((rowData != null) && (rowData.ID != null)) {
+            var thisproduct = GetProduct(rowData.ID);
+            if (thisproduct != null) {
+                $("#titleSpanPro").text(thisproduct.Name);
+                $("#spandetailType").text((thisproduct.ProductType == "S" ? 'Simple' : 'Configurable'));
+                $("#spandetailSet").text(((thisproduct.AttributeSetName != null) && (thisproduct.AttributeSetName != "") ? thisproduct.AttributeSetName : 'N/A') + '');
+                $("#AttributeSetID").attr({ 'disabled': 'disabled' });
+                $("#ProductType").attr({ 'disabled': 'disabled' });
+                $("#Name").val(thisproduct.Name);
+                $("#SKU").val(thisproduct.SKU);
+                if (thisproduct.Enabled == true)
+                { $("#Enabled").prop('checked', true); }
+                else { $("#Enabled").prop('checked', false); }
+                $("#Unit").val(thisproduct.Unit);
+                $("#URL").val(thisproduct.URL);
+                $("#ActionType").val(thisproduct.ActionType);
+                $("#SupplierID").val(thisproduct.SupplierID);
+                $("#ManufacturerID").val(thisproduct.ManufacturerID);
+                $("#ProductType").val(thisproduct.ProductType);
+                $("#ProductTypehdf").val(thisproduct.ProductType);
+                $("#AttributeSetID").val(thisproduct.AttributeSetID);
+                $("#AttributeSetIDhdf").val(thisproduct.AttributeSetID);
+                if (thisproduct.FreeDelivery == true)
+                { $("#FreeDelivery").prop('checked', true); }
+                else { $("#FreeDelivery").prop('checked', false); }
+                $("#CostPrice").val(thisproduct.CostPrice);
+                $("#BaseSellingPrice").val(thisproduct.BaseSellingPrice);
+                if (thisproduct.ShowPrice == true)
+                { $("#ShowPrice").prop('checked', true); }
+                else { $("#ShowPrice").prop('checked', false); }
+                $("#DiscountAmount").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountAmount : 0.00));
+                $("#DiscountStartDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountStartDate : ""));
+                $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountEndDate : ""));
+                $("#ShortDescription").val(thisproduct.ShortDescription);
+                $("#LongDescription").val(thisproduct.LongDescription);
+                if (thisproduct.StockAvailable == true) {
+                    $("#StockAvailable").val("true");
                 }
+                else {
+                    $("#StockAvailable").val("false");
+                }
+                $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
+                $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
+                //Tags
+                if (thisproduct.HeaderTags) {
+                    $('.Htags').remove();
+                    var tagar = thisproduct.HeaderTags.split(",");
+                    for (index = 0; index < tagar.length; ++index) {
+                        //Tag creation when binding
+                        $("#keywordsDiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' }));
+                    }
+                }
+                else {
+                    //Removes span tags
+                    $('.Htags').remove();
+                }
+                //ProductID
+                $(".productID").val(thisproduct.ID);
+                //ProductDetailID
+                $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
+                //RefreshRelatedProducts(thisproduct.ID);
+                RefreshUNRelatedProducts(thisproduct.ID);
+                EnableSectionAdditional();
             }
-            else
-            {
-                //Removes span tags
-                $('.Htags').remove();
-            }
-              //ProductID
-            $(".productID").val(thisproduct.ID);
-            //ProductDetailID
-            $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
-            //RefreshRelatedProducts(thisproduct.ID);
-            RefreshUNRelatedProducts(thisproduct.ID);
-            EnableSectionAdditional();
-        }
-       
-    }
 
-   
+        }
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
 }
-function EnableSectionAdditional(){
-    $('#additioanlLi').show(100);
-    $('#additioanlRelatedLi').show(200);
-    $('#additioanlImageLi').show(300);
-    $('#additioanlAttributesLi').show(400);
-    $('#additioanlProdAttributeLi').show(500);
-    $('#additioanlReviewsLi').show(600);
+function EnableSectionAdditional() {
+    try
+    {
+        $('#additioanlLi').show(100);
+        $('#additioanlRelatedLi').show(200);
+        $('#additioanlImageLi').show(300);
+        $('#additioanlAttributesLi').show(400);
+        $('#additioanlProdAttributeLi').show(500);
+        $('#additioanlReviewsLi').show(600);
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+  
 
 }
 function DisEnableSectionAdditional() {
-    $('#additioanlLi').hide(600);
-    $('#additioanlRelatedLi').hide(500);
-    $('#additioanlImageLi').hide(400);
-    $('#additioanlAttributesLi').hide(300);
-    $('#additioanlProdAttributeLi').hide(200);
-    $('#additioanlReviewsLi').hide(100);
+    try
+    {
+        $('#additioanlLi').hide(600);
+        $('#additioanlRelatedLi').hide(500);
+        $('#additioanlImageLi').hide(400);
+        $('#additioanlAttributesLi').hide(300);
+        $('#additioanlProdAttributeLi').hide(200);
+        $('#additioanlReviewsLi').hide(100);
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+   
 
 }
 function BindStickers()
@@ -479,7 +494,7 @@ function BindStickers()
     }
     catch(e)
     {
-
+        notyAlert('error', e.message);
     }
 }
 function BindImages() {
@@ -517,7 +532,7 @@ function BindImages() {
     }
     catch(e)
     {
-
+        notyAlert('error', e.message);
     }
    
 }
@@ -554,7 +569,7 @@ function DeleteOtherImage(id)
     }
     catch(e)
     {
-
+        notyAlert('error', e.message);
     }
    
     }
@@ -573,7 +588,7 @@ function SelectImagesForDelete(this_Obj)
     }
     catch(e)
     {
-
+        notyAlert('error', e.message);
     }
     
 }
@@ -596,40 +611,45 @@ function SelectForAddSticker(this_Obj)
         }
     }
     catch (e) {
-
+        notyAlert('error', e.message);
     }
 
 }
 function UpdateStickerForProduct()
 {
-    
-    var objectset = $('#ulStickerArea span.highlighted');
-    var ProductViewModel = new Object();
-    if (objectset.length != 0)
+    try
     {
-        ProductViewModel.StickerID = objectset[0].parentNode.id;
-    }
-    ProductViewModel.ID = $('#ID').val();
-    var data = "{'productViewObj':" + JSON.stringify(ProductViewModel) + "}";
-    PostDataToServer('Products/UpdateProductSticker/', data, function (JsonResult) {
-        if (JsonResult != '') {
-            
-            switch (JsonResult.Result) {
-                case "OK":
-                    notyAlert('success', JsonResult.Record.StatusMessage);
-                    ChangeButtonPatchView("Products", "buttonPatchStickerImages", "CancelSticker");
-                    BindStickers();
-                    break;
-                case "ERROR":
-                    notyAlert('error', JsonResult.Record.StatusMessage);
-                    break;
-                default:
-                    notyAlert('error', JsonResult.Message);
-                    break;
-            }
+        var objectset = $('#ulStickerArea span.highlighted');
+        var ProductViewModel = new Object();
+        if (objectset.length != 0) {
+            ProductViewModel.StickerID = objectset[0].parentNode.id;
         }
-    });
-}
+        ProductViewModel.ID = $('#ID').val();
+        var data = "{'productViewObj':" + JSON.stringify(ProductViewModel) + "}";
+        PostDataToServer('Products/UpdateProductSticker/', data, function (JsonResult) {
+            if (JsonResult != '') {
+
+                switch (JsonResult.Result) {
+                    case "OK":
+                        notyAlert('success', JsonResult.Record.StatusMessage);
+                        ChangeButtonPatchView("Products", "buttonPatchStickerImages", "CancelSticker");
+                        BindStickers();
+                        break;
+                    case "ERROR":
+                        notyAlert('error', JsonResult.Record.StatusMessage);
+                        break;
+                    default:
+                        notyAlert('error', JsonResult.Message);
+                        break;
+                }
+            }
+        });
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+ }
 function GetRelatedImages(id)
 {
     try {
@@ -649,7 +669,7 @@ function GetRelatedImages(id)
 
     }
     catch (e) {
-
+        notyAlert('error', e.message);
     }
 }
 function GetAllStickers()
@@ -671,7 +691,7 @@ function GetAllStickers()
 
     }
     catch (e) {
-
+        notyAlert('error', e.message);
     }
 }
 function GetProduct(id)
@@ -692,7 +712,7 @@ function GetProduct(id)
 
     }
     catch (e) {
-
+        notyAlert('error', e.message);
     }
 }
 
@@ -718,7 +738,7 @@ function GetAllProducts()
        
     }
     catch (e) {
-        
+        notyAlert('error', e.message);
     }
     
 }
@@ -791,95 +811,120 @@ function RefreshUNRelatedProducts(id) {
 
 function ConstructproductDetailObject()
 {
-    var tagval = [];
-    $('.Htags').each(function () {
-             
-        tagval.push(this.innerHTML);
-    });
-  
-    $("#HeaderTags").val(tagval);
-    
-    var ProductDetailViewModel = new Object();
-    ProductDetailViewModel.ID = ($('#productform :input[name="ProductDetailObj.ID"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="ProductDetailObj.ID"]').serializeArray()[0].value) :"");
-    ProductDetailViewModel.Qty = ($('#productform :input[name="Qty"]').serializeArray()[0].value!=""?$.parseJSON($('#productform :input[name="Qty"]').serializeArray()[0].value): "");
-    ProductDetailViewModel.OutOfStockAlertQty = ($('#productform :input[name="OutOfStockAlertQty"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="OutOfStockAlertQty"]').serializeArray()[0].value) : "");
-    ProductDetailViewModel.StockAvailable = ($('#productform :input[name="StockAvailable"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="StockAvailable"]').serializeArray()[0].value) : "");
-    ProductDetailViewModel.DiscountAmount =($('#productform :input[name="DiscountAmount"]').serializeArray()[0].value!=""?$.parseJSON($('#productform :input[name="DiscountAmount"]').serializeArray()[0].value):"");
-    ProductDetailViewModel.DiscountStartDate =$('#productform :input[name="DiscountStartDate"]').serializeArray()[0].value;
-    ProductDetailViewModel.DiscountEndDate = $('#productform :input[name="DiscountEndDate"]').serializeArray()[0].value;
-    ProductDetailViewModel.Enabled =($('#productform :input[name="Enabled"]').serializeArray()[0].value!=""?$.parseJSON($('#productform :input[name="Enabled"]').serializeArray()[0].value):"");
-    var ar = [];
-    ar.push(ProductDetailViewModel);
-    $("#productDetailhdf").val(JSON.stringify(ar));
-   
-}
+    try
+    {
+        var tagval = [];
+        $('.Htags').each(function () {
+
+            tagval.push(this.innerHTML);
+        });
+        $("#HeaderTags").val(tagval);
+        var ProductDetailViewModel = new Object();
+        ProductDetailViewModel.ID = ($('#productform :input[name="ProductDetailObj.ID"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="ProductDetailObj.ID"]').serializeArray()[0].value) : "");
+        ProductDetailViewModel.Qty = ($('#productform :input[name="Qty"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="Qty"]').serializeArray()[0].value) : "");
+        ProductDetailViewModel.OutOfStockAlertQty = ($('#productform :input[name="OutOfStockAlertQty"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="OutOfStockAlertQty"]').serializeArray()[0].value) : "");
+        ProductDetailViewModel.StockAvailable = ($('#productform :input[name="StockAvailable"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="StockAvailable"]').serializeArray()[0].value) : "");
+        ProductDetailViewModel.DiscountAmount = ($('#productform :input[name="DiscountAmount"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="DiscountAmount"]').serializeArray()[0].value) : "");
+        ProductDetailViewModel.DiscountStartDate = $('#productform :input[name="DiscountStartDate"]').serializeArray()[0].value;
+        ProductDetailViewModel.DiscountEndDate = $('#productform :input[name="DiscountEndDate"]').serializeArray()[0].value;
+        ProductDetailViewModel.Enabled = ($('#productform :input[name="Enabled"]').serializeArray()[0].value != "" ? $.parseJSON($('#productform :input[name="Enabled"]').serializeArray()[0].value) : "");
+        var ar = [];
+        ar.push(ProductDetailViewModel);
+        $("#productDetailhdf").val(JSON.stringify(ar));
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+ }
 
 function productSaveSuccess(data, status, xhr)
 {
-    var JsonResult=JSON.parse(data)
-    switch (JsonResult.Result) {
-        case "OK":
-            notyAlert('success', JsonResult.Record.StatusMessage);
-            $(".productID").val(JsonResult.Record.ReturnValues.productid);
-            RefreshProducts();
-            $("#titleSpanPro").text($("#Name").val());
-            $("#spandetailType").text(($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable'));
-            $("#spandetailSet").text(((JsonResult.Record.ReturnValues.attributesetname != null) && (JsonResult.Record.ReturnValues.attributesetname != "") ? JsonResult.Record.ReturnValues.attributesetname : 'N/A') + '');
-            RefreshUNRelatedProducts(JsonResult.Record.ReturnValues.productid);
-            EnableSectionAdditional();
-            break;
-        case "ERROR":
-            notyAlert('error', JsonResult.Record.StatusMessage);
-            break;
-        default:
-            notyAlert('error', JsonResult.Message);
-            break;
+    try
+    {
+        var JsonResult = JSON.parse(data)
+        switch (JsonResult.Result) {
+            case "OK":
+                notyAlert('success', JsonResult.Record.StatusMessage);
+                $(".productID").val(JsonResult.Record.ReturnValues.productid);
+                RefreshProducts();
+                $("#titleSpanPro").text($("#Name").val());
+                $("#spandetailType").text(($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable'));
+                $("#spandetailSet").text(((JsonResult.Record.ReturnValues.attributesetname != null) && (JsonResult.Record.ReturnValues.attributesetname != "") ? JsonResult.Record.ReturnValues.attributesetname : 'N/A') + '');
+                RefreshUNRelatedProducts(JsonResult.Record.ReturnValues.productid);
+                EnableSectionAdditional();
+                break;
+            case "ERROR":
+                notyAlert('error', JsonResult.Record.StatusMessage);
+                break;
+            default:
+                notyAlert('error', JsonResult.Message);
+                break;
+        }
     }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+   
 }
 function productSaveFailure()
 {
     notyAlert('error', 'Network Failure!');
 }
-function onbeginProductSave()
-{
-}
+
 
 function ProductSave()
 {
-    $('#btnProductSubmit').trigger('click');
-
-    //Bubble logic should be here
-
-    if($('.field-validation-error').length>0)
+    try
     {
-        notyAlert('error', 'Need to fill all mandatory fields to save the product info!');
+        $('#btnProductSubmit').trigger('click');
+
+        //Bubble logic should be here
+
+        if ($('.field-validation-error').length > 0) {
+            notyAlert('error', 'Need to fill all mandatory fields to save the product info!');
+        }
+        //$('.field-validation-error').each(function () {
+
+        //    var ab = $(this);
+
+        //}); 
     }
-    //$('.field-validation-error').each(function () {
-
-    //    var ab = $(this);
-
-    //}); 
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+  
 
 }
 
 function clearform()
 {
-    //Clear form
-   
-    //Clear Hidden form fields
-    //$("#productform input:hidden").val('').trigger('change');
-    var validator = $("#productform").validate();
-    $('#productform').find('.field-validation-error span').each(function () {
-        validator.settings.success($(this));
-    });
-    $('#productform')[0].reset();
-    $(".productID").val(0);
-    $("#productdetailsID").val(0);
-    $("#productDetailhdf").val('');
-    $("#ProductTypehdf").val('');
-    $("#AttributeSetIDhdf").val('');
-    //tags removal
-    $('.Htags').remove();
+    try
+    {
+        //Clear form
+
+        //Clear Hidden form fields
+        //$("#productform input:hidden").val('').trigger('change');
+        var validator = $("#productform").validate();
+        $('#productform').find('.field-validation-error span').each(function () {
+            validator.settings.success($(this));
+        });
+        $('#productform')[0].reset();
+        $(".productID").val(0);
+        $("#productdetailsID").val(0);
+        $("#productDetailhdf").val('');
+        $("#ProductTypehdf").val('');
+        $("#AttributeSetIDhdf").val('');
+        //tags removal
+        $('.Htags').remove();
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+    
 }
 
 function RelatedProductsModel()
@@ -917,22 +962,29 @@ function CallbtnDeleteRelatedProductSubmit()
 
 function RelatedproductSaveSuccess(data, status, xhr)
 {
-    var JsonResult = JSON.parse(data)
-    switch (JsonResult.Result)
+    try
     {
-        case "OK":
-            notyAlert('success', JsonResult.Record.StatusMessage);
-            var id= $(".productID").val();
-            RefreshRelatedProducts(id);
-            RefreshUNRelatedProducts(id);
-            RelatedProductsModel();
-            break;
-        case "ERROR":
-            notyAlert('error', JsonResult.Record.StatusMessage);
-            break;
-        default:
-            break;
+        var JsonResult = JSON.parse(data)
+        switch (JsonResult.Result) {
+            case "OK":
+                notyAlert('success', JsonResult.Record.StatusMessage);
+                var id = $(".productID").val();
+                RefreshRelatedProducts(id);
+                RefreshUNRelatedProducts(id);
+                RelatedProductsModel();
+                break;
+            case "ERROR":
+                notyAlert('error', JsonResult.Record.StatusMessage);
+                break;
+            default:
+                break;
+        }
     }
+    catch(e)
+    {
+        notyAlert('error', e.Message);
+    }
+  
 
 }
 
@@ -982,20 +1034,28 @@ function ValidateTableSelection()
 
 function RelatedproductDeleteSuccess(data, status, xhr)
 {
-    var JsonResult = JSON.parse(data)
-    switch (JsonResult.Result) {
-        case "OK":
-            notyAlert('success', JsonResult.Record.StatusMessage);
-            var id = $(".productID").val();
-            RefreshRelatedProducts(id);
-            RefreshUNRelatedProducts(id);
-            break;
-        case "ERROR":
-            notyAlert('error', JsonResult.Record.StatusMessage);
-            break;
-        default:
-            break;
+    try
+    {
+        var JsonResult = JSON.parse(data)
+        switch (JsonResult.Result) {
+            case "OK":
+                notyAlert('success', JsonResult.Record.StatusMessage);
+                var id = $(".productID").val();
+                RefreshRelatedProducts(id);
+                RefreshUNRelatedProducts(id);
+                break;
+            case "ERROR":
+                notyAlert('error', JsonResult.Record.StatusMessage);
+                break;
+            default:
+                break;
+        }
     }
+    catch(e)
+    {
+        notyAlert('error', e.Message);
+    }
+  
 }
 
 function RenderContentForRelatedProducts()
@@ -1130,12 +1190,20 @@ function RenderContentsForAttributes()
 }
 function RenderPartialTemplateForAttributes(atsetID, Isconfig)
 {
-    var data = { setID: atsetID, Isconfigurable: Isconfig };
-    var ds = {};
-    ds = GetDataFromServer("Attributes/EditTemplateForAttributes/", data);
-    if (ds != '') {
-        return ds;
+    try
+    {
+        var data = { setID: atsetID, Isconfigurable: Isconfig };
+        var ds = {};
+        ds = GetDataFromServer("Attributes/EditTemplateForAttributes/", data);
+        if (ds != '') {
+            return ds;
+        }
     }
+    catch(e)
+    {
+        notyAlert('error', e.Message);
+    }
+    
 }
 
 function OtherAttributeSave()
@@ -1189,6 +1257,7 @@ function OtherAttributeSave()
 function RenderContentsForAssocProdAttributes()
 { 
     try {
+        $("#detailDefaultOption").removeAttr('disabled');
         $('#detailkeywordsDiv .Htags').remove();
         $("#AssociatedStockAvailabe").val("");
         var proid = $('.productID').val();
@@ -1281,6 +1350,7 @@ function RenderContentForPrice()
         }
     }
     catch (e) {
+        notyAlert('error', e.Message);
     }
 }
 
@@ -1312,6 +1382,7 @@ function RenderContentForInventory()
         }
     }
     catch (e) {
+        notyAlert('error', e.Message);
     }
 }
 
@@ -1326,7 +1397,7 @@ function ProductTypeOnChange(curobj)
     }
     catch(e)
     {
-
+        notyAlert('error', e.Message);
     }
   
 }
@@ -1338,28 +1409,34 @@ function attributeSetOnChange(curobj)
     }
     catch(e)
     {
-
+        notyAlert('error', e.Message);
     }
 }
 
 
 function ValidateAssociatedProducts()
 {
-    $("#errorQty").hide();
-    $("#errorAlertQty").hide();
-    var flagval = false;
-    if($("#detailQty").val()=="")
+    try
     {
-        $("#errorQty").show();
-        flagval = true;
-    }
+        $("#errorQty").hide();
+        $("#errorAlertQty").hide();
+        var flagval = false;
+        if ($("#detailQty").val() == "") {
+            $("#errorQty").show();
+            flagval = true;
+        }
 
-    if($("#detailOutOfStockAlertQty").val()=="")
-    {
-        $("#errorAlertQty").show();
-        flagval = true;
+        if ($("#detailOutOfStockAlertQty").val() == "") {
+            $("#errorAlertQty").show();
+            flagval = true;
+        }
+        return flagval;
     }
-    return flagval;
+    catch(e)
+    {
+        notyAlert('error', e.Message);
+    }
+   
 }
 
 function AssociatedProductSave()
@@ -1484,143 +1561,121 @@ function GetProductDetailsByProductId(id)
 
 function AssociatedProductDelete(this_Obj)
 {
-    
-    var rowData = DataTables.AssociatedProductsTable.row($(this_Obj).parents('tr')).data();
-    if (!rowData.DefaultOption)
+    try
     {
-        //rowData.ProductID, rowData.ID
-        var prodetid = rowData.ProductID;//$("#productDetailID").val();
-        var prodid = rowData.ID//$('.productID').val();
-        if ((prodetid) && (prodid)) {
-            if (confirm("Are you Sure!") == true) {
-                var ProductDetailViewModel = new Object();
-                ProductDetailViewModel.ID = prodid;
-                ProductDetailViewModel.ProductID = prodetid;
-                var data = "{'productDeails':" + JSON.stringify(ProductDetailViewModel) + "}";
-                PostDataToServer('Products/DeleteProductDetail/', data, function (JsonResult) {
-                    if (JsonResult != '') {
-                        switch (JsonResult.Result) {
-                            case "OK":
+        var rowData = DataTables.AssociatedProductsTable.row($(this_Obj).parents('tr')).data();
+        if (!rowData.DefaultOption) {
+            //rowData.ProductID, rowData.ID
+            var prodetid = rowData.ProductID;//$("#productDetailID").val();
+            var prodid = rowData.ID//$('.productID').val();
+            if ((prodetid) && (prodid)) {
+                if (confirm("Are you Sure!") == true) {
+                    var ProductDetailViewModel = new Object();
+                    ProductDetailViewModel.ID = prodid;
+                    ProductDetailViewModel.ProductID = prodetid;
+                    var data = "{'productDeails':" + JSON.stringify(ProductDetailViewModel) + "}";
+                    PostDataToServer('Products/DeleteProductDetail/', data, function (JsonResult) {
+                        if (JsonResult != '') {
+                            switch (JsonResult.Result) {
+                                case "OK":
 
-                                notyAlert('success', JsonResult.Record.StatusMessage);
-                                RefreshAssociatedProducts(prodetid);
-                                clearAssociatedProductform();
-                                break;
-                            case "ERROR":
-                                notyAlert('error', JsonResult.Record.StatusMessage);
-                                break;
-                            default:
-                                break;
+                                    notyAlert('success', JsonResult.Record.StatusMessage);
+                                    RefreshAssociatedProducts(prodetid);
+                                    clearAssociatedProductform();
+                                    break;
+                                case "ERROR":
+                                    notyAlert('error', JsonResult.Record.StatusMessage);
+                                    break;
+                                default:
+                                    break;
+                            }
                         }
-                    }
-                })
-            }
+                    })
+                }
 
+
+            }
+            else {
+                notyAlert('error', 'Please Select a product');
+            }
 
         }
         else {
-            notyAlert('error', 'Please Select a product');
+            notyAlert('error', 'Default Option cant be deleted');
         }
-
     }
-    else {
-        notyAlert('error', 'Default Option cant be deleted');
+    catch(e)
+    {
+        notyAlert('error', e.message);
     }
-    
-    
-}
+ }
 function EditAssocProduct(currentObj) {
-   
+    try
+    {
+        var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
+        if ((rowData != null) && (rowData.ID != null)) {
+            var thisproduct = GetProductDetailsByProductDetailID(rowData.ProductID, rowData.ID);
 
-    //$(currentObj).closest('tr').removeClass('selected');
-    //if ($('#tblAssociatedProducts').hasClass('selected')) {
-    //    $('#tblAssociatedProducts').removeClass('selected');
-    //}
-    //$(currentObj).closest('tr').toggleClass('selected');
-    var rowData = DataTables.AssociatedProductsTable.row($(currentObj).parents('tr')).data();
-    if ((rowData != null) && (rowData.ID != null)) {
-        var thisproduct = GetProductDetailsByProductDetailID(rowData.ProductID,rowData.ID );
-   
-        if (thisproduct) {
-            $("#productDetailID").val(thisproduct.ID);
-            $("#detailQty").val(thisproduct.Qty);
-            $("#detailOutOfStockAlertQty").val(thisproduct.OutOfStockAlertQty);
-            
-            if (thisproduct.StockAvailable == true)
-            {
-                $("#AssociatedStockAvailabe").val("true");
-            }
-            else {
-                $("#AssociatedStockAvailabe").val("false");
-            }
-            $("#detailDiscountAmount").val(thisproduct.DiscountAmount);
-            $("#detailPriceDifference").val(thisproduct.PriceDifference);
-            $("#detailDiscountStartDate").val(ConvertJsonToDate(thisproduct.DiscountStartDate));
-            $("#detailDiscountEndDate").val(ConvertJsonToDate(thisproduct.DiscountEndDate));
-            if (thisproduct.Enabled == true)
-            { $("#detailEnable").prop('checked', true); }
-            else { $("#detailEnable").prop('checked', false); }
-            if (thisproduct.DefaultOption == true)
-            { $("#detailDefaultOption").prop('checked', true); }
-            else { $("#detailDefaultOption").prop('checked', false); }
-            $("#detailDetailTags").val(thisproduct.DetailTags);
+            if (thisproduct) {
+                $("#productDetailID").val(thisproduct.ID);
+                $("#detailQty").val(thisproduct.Qty);
+                $("#detailOutOfStockAlertQty").val(thisproduct.OutOfStockAlertQty);
 
-            if (thisproduct.DetailTags) {
-                $('.Htags').remove();
-                var tagar = thisproduct.DetailTags.split(",");
-                for (index = 0; index < tagar.length; ++index) {
-                    //Tag creation when binding
-                    $("#detailkeywordsDiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' }));
-
+                if (thisproduct.StockAvailable == true) {
+                    $("#AssociatedStockAvailabe").val("true");
                 }
-            }
-            else {
-                //Removes span tags
-                $('.Htags').remove();
-            }
-
-            if(thisproduct.ProductAttributes)
-            {
-                for (var jk = 0; jk < thisproduct.ProductAttributes.length; jk++)
+                else {
+                    $("#AssociatedStockAvailabe").val("false");
+                }
+                $("#detailDiscountAmount").val(thisproduct.DiscountAmount);
+                $("#detailPriceDifference").val(thisproduct.PriceDifference);
+                $("#detailDiscountStartDate").val(ConvertJsonToDate(thisproduct.DiscountStartDate));
+                $("#detailDiscountEndDate").val(ConvertJsonToDate(thisproduct.DiscountEndDate));
+                if (thisproduct.Enabled == true)
+                { $("#detailEnable").prop('checked', true); }
+                else { $("#detailEnable").prop('checked', false); }
+                
+                if (thisproduct.DefaultOption == true)
                 {
-                    $("#" + thisproduct.ProductAttributes[jk].Name).val(thisproduct.ProductAttributes[jk].Value);
+                    $("#detailDefaultOption").prop('checked', true);
+                    $("#detailDefaultOption").attr({ 'disabled': 'disabled' });
                 }
-               
+                else {
+                    $("#detailDefaultOption").prop('checked', false);
+                    $("#detailDefaultOption").removeAttr('disabled');
+                }
+                $("#detailDetailTags").val(thisproduct.DetailTags);
+
+                if (thisproduct.DetailTags) {
+                    $('.Htags').remove();
+                    var tagar = thisproduct.DetailTags.split(",");
+                    for (index = 0; index < tagar.length; ++index) {
+                        //Tag creation when binding
+                        $("#detailkeywordsDiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' }));
+
+                    }
+                }
+                else {
+                    //Removes span tags
+                    $('.Htags').remove();
+                }
+
+                if (thisproduct.ProductAttributes) {
+                    for (var jk = 0; jk < thisproduct.ProductAttributes.length; jk++) {
+                        $("#" + thisproduct.ProductAttributes[jk].Name).val(thisproduct.ProductAttributes[jk].Value);
+                    }
+
+                }
             }
-          
-
-            //$("#DiscountAmount").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountAmount : 0.00));
-            //$("#DiscountStartDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountStartDate : ""));
-            //$("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountEndDate : ""));
-            //$("#ShortDescription").val(thisproduct.ShortDescription);
-            //$("#LongDescription").val(thisproduct.LongDescription);
-            //if (thisproduct.StockAvailable == true)
-            //{ $("#StockAvailable").prop('checked', true); }
-            //else { $("#StockAvailable").prop('checked', false); }
-
-            //$("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
-            //$("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
-            ////Tags
-            //if (thisproduct.HeaderTags != null) {
-            //    $('.Htags').remove();
-            //    var tagar = thisproduct.HeaderTags.split(",");
-            //    for (index = 0; index < tagar.length; ++index) {
-            //        //Tag creation when binding
-            //        $("#headertagsdiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'Htags', 'onclick': 'removeme(this)' }));
-            //    }
-            //}
-            //else {
-            //    //Removes span tags
-            //    $('.Htags').remove();
-            //}
-
-
-            ////ProductID
-            //$(".productID").val(thisproduct.ID);
-            ////ProductDetailID
-            //$("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
         }
     }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+
+  
+   
 }
 
 function GetProductDetailsByProductDetailID(id,detailid)
@@ -1646,19 +1701,27 @@ function GetProductDetailsByProductDetailID(id,detailid)
 }
 
 function clearAssociatedProductform() {
+    try
+    {
+        //Clear form
+        //drop down clear
+        $('#dynamicAssociatedProductContents').find('select,input').val(-1);
+        //normal text box clear
+        $('#dynamicAssociatedProductContents').find('input').val('');
+        $("#productDetailID").val(0);
+        $('#associatedStaticfields').find('input').val('');
+        $('#associatedStaticfields').find('.check-box').prop('checked', false);
 
-    //Clear form
-    //drop down clear
-    $('#dynamicAssociatedProductContents').find('select,input').val(-1);
-    //normal text box clear
-    $('#dynamicAssociatedProductContents').find('input').val('');
-    $("#productDetailID").val(0);
-    $('#associatedStaticfields').find('input').val('');
-    $('#associatedStaticfields').find('.check-box').prop('checked', false);
-   
-    $("#AssociatedStockAvailabe").val("");
-    $('#detailkeywordsDiv .Htags').remove();
-    //associatedStaticfields
+        $("#AssociatedStockAvailabe").val("");
+        $('#detailkeywordsDiv .Htags').remove();
+        $("#detailDefaultOption").removeAttr('disabled');
+        //associatedStaticfields
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+    
  
 }
 
@@ -1666,129 +1729,133 @@ function clearAssociatedProductform() {
 
 function BindProductReviews()   // To Display Previous Comment history
 {
-    
-    ChangeButtonPatchView("Products", "ProductToolBox", "Back");
-    
-    var id = $(".productID").val();// assigning id for binding reviews.
-    var attributesetId = $("#AttributeSetID").val();
-
-    if (attributesetId)
+    try
     {
-        //Rating
-        var thisRatingSummary = GetRatingSummary(id, attributesetId);
-        $("#RatingDisplay").empty();
-        if (thisRatingSummary.length > 0) {
-            var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
-            var ratinglists = ""
-            var TotalRating = parseFloat(0);
-            var AvgRating;
+        ChangeButtonPatchView("Products", "ProductToolBox", "Back");
+
+        var id = $(".productID").val();// assigning id for binding reviews.
+        var attributesetId = $("#AttributeSetID").val();
+
+        if (attributesetId) {
+            //Rating
+            var thisRatingSummary = GetRatingSummary(id, attributesetId);
+            $("#RatingDisplay").empty();
+            if (thisRatingSummary.length > 0) {
+                var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
+                var ratinglists = ""
+                var TotalRating = parseFloat(0);
+                var AvgRating;
 
 
-            for (var i = 0; i < attributecount; i++) {
-                var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value);
+                for (var i = 0; i < attributecount; i++) {
+                    var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value);
 
-                TotalRating = TotalRating + ratingstar; //Total Rating of each attribute is saved here
-                ratingstar = Math.round(ratingstar); //count of Rating to display as star
-                var ratebtnstring = '';
+                    TotalRating = TotalRating + ratingstar; //Total Rating of each attribute is saved here
+                    ratingstar = Math.round(ratingstar); //count of Rating to display as star
+                    var ratebtnstring = '';
+                    for (var count = 0; count < 5; count++) {
+                        if (count < ratingstar) {
+                            ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                        }
+                        else {
+                            ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                        }
+                    }
+                    ratinglists = ratinglists + '<div class="col-xs-4 text-right">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
+                                                '<div class="col-xs-8"><div  class="rating-block">' + ratebtnstring + '</div></div>';
+                }
+                AvgRating = Math.round(TotalRating / attributecount); //total rating by attribute count
+                var Avgratebtnstring = '';
+
                 for (var count = 0; count < 5; count++) {
-                    if (count < ratingstar) {
-                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                    if (count < AvgRating) {
+                        Avgratebtnstring = Avgratebtnstring + '<span class="glyphicon glyphicon-star"></span>'
                     }
                     else {
-                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-sm" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                        Avgratebtnstring = Avgratebtnstring + '<span class="glyphicon glyphicon-star-empty"></span>'
                     }
                 }
-                ratinglists = ratinglists + '<div class="col-xs-4 text-right">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
-                                            '<div class="col-xs-8"><div  class="rating-block">' + ratebtnstring + '</div></div>';
-            }
-            AvgRating = Math.round(TotalRating / attributecount); //total rating by attribute count
-            var Avgratebtnstring = '';
 
-            for (var count = 0; count < 5; count++) {
-                if (count < AvgRating) {
-                    Avgratebtnstring = Avgratebtnstring + '<span class="glyphicon glyphicon-star"></span>'
-                }
-                else {
-                    Avgratebtnstring = Avgratebtnstring + '<span class="glyphicon glyphicon-star-empty"></span>'
-                }
-            }
-
-            var ratingdiv = $('<div class="row">' +
-                                                  '<div class="col-xs-12 col-md-6 text-center"><h1 class="rating-num">' + AvgRating + '</h1>' +
-                                                      '<div class="rating">' + Avgratebtnstring + '</div>' +
-                                                      '<div>' +
-                                                      '<span class="glyphicon glyphicon-user"></span>' + thisRatingSummary[0].RatingCount + ' total' +
+                var ratingdiv = $('<div class="row">' +
+                                                      '<div class="col-xs-12 col-md-6 text-center"><h1 class="rating-num">' + AvgRating + '</h1>' +
+                                                          '<div class="rating">' + Avgratebtnstring + '</div>' +
+                                                          '<div>' +
+                                                          '<span class="glyphicon glyphicon-user"></span>' + thisRatingSummary[0].RatingCount + ' total' +
+                                                          '</div>' +
                                                       '</div>' +
-                                                  '</div>' +
-                                                  '<div class="col-xs-12 col-md-6">' +
-                                                      '<div id ="RatingAttributes" class="row rating-desc">' + ratinglists +
-                                                      '</div></div></div>'); 
-            $("#RatingDisplay").append(ratingdiv);
-
-        }
-        else
-        {
-            
-            var ratingdiv = $(' <div class="row"><div class="col-xs-12 col-md-6 text-center"><h1 class="rating-num">0.0</h1><div class="rating">'+
-                              '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>'+
-                              '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>' +
-                              '<span class="glyphicon glyphicon-star-empty"></span>' +
-                             '</div><div><span class="glyphicon glyphicon-user"></span>0 total</div></div></div>');
-            $("#RatingDisplay").append(ratingdiv);
-        }
-        //Reviews
-        var thisReviewList = GetProductReviews(id);
-        $("#ReviewsDisplay").empty();
-        if (thisReviewList.length>0) {
-            
-            for (var i = 0; i < thisReviewList.length; i++) {
-                var resultdate =thisReviewList[i].ReviewCreatedDate;
-                var imageurl;
-                if (thisReviewList[i].ImageUrl)
-                    imageurl = thisReviewList[i].ImageUrl
-                else
-                    imageurl = 'Content/images/NoImage60x60.png';
-
-                var cnt = $('<div class="review-block"><div class="row">' +
-                            '<div class="col-sm-3">' +
-                            '<img src="' + imageurl + '" class="img-rounded">' +
-                            '<div class="review-block-name"><a href="#">' + thisReviewList[i].CustomerName + '</a></div>' +
-                            '<div class="review-block-date">' + resultdate + '<br />' + thisReviewList[i].DaysCount + ' days ago</div>' +
-                            '</div>' +
-                            '<div class="col-sm-9">' +
-                            '<div id="ReviewBlockRate' + [i] + '" class="review-block-rate"></div>' +
-                            '<div id=ReviewDesc' + i + 'class="review-block-description">' + thisReviewList[i].Review + '</div>' +
-                            '</div><hr/></div>');
-                $("#ReviewsDisplay").append(cnt);
-
-                //--------------------------------------------Rating Star dispalying region-----------------------------------------------//
-                var rating = thisReviewList[i].AvgRating;
-                var splitresult = rating.split(".");
-
-                rating = Math.round(rating);
-                var ratebtns = '';
-                for (var count = 0; count < 5; count++) {
-                    if (count < rating) {
-                        ratebtns = ratebtns + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">' +
-                                              '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
-                    }
-                    else {
-                        ratebtns = ratebtns + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
-                                              '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
-                    }
-                }
-                ratebtns = $(ratebtns);
-                $("#ReviewBlockRate" + [i]).append(ratebtns);
-                //----------------------------------------------------------------------------------------------------------------------//
+                                                      '<div class="col-xs-12 col-md-6">' +
+                                                          '<div id ="RatingAttributes" class="row rating-desc">' + ratinglists +
+                                                          '</div></div></div>');
+                $("#RatingDisplay").append(ratingdiv);
 
             }
+            else {
+
+                var ratingdiv = $(' <div class="row"><div class="col-xs-12 col-md-6 text-center"><h1 class="rating-num">0.0</h1><div class="rating">' +
+                                  '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>' +
+                                  '<span class="glyphicon glyphicon-star-empty"></span><span class="glyphicon glyphicon-star-empty"></span>' +
+                                  '<span class="glyphicon glyphicon-star-empty"></span>' +
+                                 '</div><div><span class="glyphicon glyphicon-user"></span>0 total</div></div></div>');
+                $("#RatingDisplay").append(ratingdiv);
+            }
+            //Reviews
+            var thisReviewList = GetProductReviews(id);
+            $("#ReviewsDisplay").empty();
+            if (thisReviewList.length > 0) {
+
+                for (var i = 0; i < thisReviewList.length; i++) {
+                    var resultdate = thisReviewList[i].ReviewCreatedDate;
+                    var imageurl;
+                    if (thisReviewList[i].ImageUrl)
+                        imageurl = thisReviewList[i].ImageUrl
+                    else
+                        imageurl = 'Content/images/NoImage60x60.png';
+
+                    var cnt = $('<div class="review-block"><div class="row">' +
+                                '<div class="col-sm-3">' +
+                                '<img src="' + imageurl + '" class="img-rounded">' +
+                                '<div class="review-block-name"><a href="#">' + thisReviewList[i].CustomerName + '</a></div>' +
+                                '<div class="review-block-date">' + resultdate + '<br />' + thisReviewList[i].DaysCount + ' days ago</div>' +
+                                '</div>' +
+                                '<div class="col-sm-9">' +
+                                '<div id="ReviewBlockRate' + [i] + '" class="review-block-rate"></div>' +
+                                '<div id=ReviewDesc' + i + 'class="review-block-description">' + thisReviewList[i].Review + '</div>' +
+                                '</div><hr/></div>');
+                    $("#ReviewsDisplay").append(cnt);
+
+                    //--------------------------------------------Rating Star dispalying region-----------------------------------------------//
+                    var rating = thisReviewList[i].AvgRating;
+                    var splitresult = rating.split(".");
+
+                    rating = Math.round(rating);
+                    var ratebtns = '';
+                    for (var count = 0; count < 5; count++) {
+                        if (count < rating) {
+                            ratebtns = ratebtns + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align">' +
+                                                  '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                        }
+                        else {
+                            ratebtns = ratebtns + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align">' +
+                                                  '<span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                        }
+                    }
+                    ratebtns = $(ratebtns);
+                    $("#ReviewBlockRate" + [i]).append(ratebtns);
+                    //----------------------------------------------------------------------------------------------------------------------//
+
+                }
+            }
+            else {
+                var cnt = $('<div class="row"><div id="ReviewsDisplay" class="col-sm-7"><h2>No Reviews Yet</h2></div></div>');
+                $("#ReviewsDisplay").append(cnt);
+            }
         }
-        else
-        {
-            var cnt = $('<div class="row"><div id="ReviewsDisplay" class="col-sm-7"><h2>No Reviews Yet</h2></div></div>');
-            $("#ReviewsDisplay").append(cnt);
-        }
-}
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+  
    
 }
 
@@ -1838,49 +1905,49 @@ function GetProductReviews(id) {
 }
 
 function ModelProductsRating(currentObj) {
-    //popsup the model
-   
-    var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
-    if ((rowData != null) && (rowData.ID != null) && (rowData.AttributeSetID != null))
+    try
     {
-        $("#titleProductRating").text(rowData.Name);
-        var thisRatingSummary = GetRatingSummary(rowData.ID, rowData.AttributeSetID);
-        if (thisRatingSummary.length > 0)
-        {
-            
-        
-            $("#RatingPopupDisplay").empty();
-            var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
-            var ratinglists = ""  
+        //popsup the model
+        var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
+        if ((rowData != null) && (rowData.ID != null) && (rowData.AttributeSetID != null)) {
+            $("#titleProductRating").text(rowData.Name);
+            var thisRatingSummary = GetRatingSummary(rowData.ID, rowData.AttributeSetID);
+            if (thisRatingSummary.length > 0) {
+                $("#RatingPopupDisplay").empty();
+                var attributecount = thisRatingSummary[0].ProductRatingAttributes.length
+                var ratinglists = ""
 
-            for (var i = 0; i < attributecount; i++)
-            {
-                var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value); 
-                ratingstar = Math.round(ratingstar); //count of Rating to display as star
-                var ratebtnstring = '';
-                for (var count = 0; count < 5; count++)
-                {
-                    if (count < ratingstar) {
-                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
-                    }
-                    else {
-                        ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
-                    }
+                for (var i = 0; i < attributecount; i++) {
+                    var ratingstar = parseFloat(thisRatingSummary[0].ProductRatingAttributes[i].Value);
+                    ratingstar = Math.round(ratingstar); //count of Rating to display as star
+                    var ratebtnstring = '';
+                    for (var count = 0; count < 5; count++) {
+                        if (count < ratingstar) {
+                            ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-warning btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                        }
+                        else {
+                            ratebtnstring = ratebtnstring + '<button type="button" class="btn btn-default btn-xs" aria-label="Left Align"><span class="glyphicon glyphicon-star" aria-hidden="true"></span></button>'
+                        }
+                    }//for
+                    ratinglists = ratinglists + '<div class="col-xs-5 ">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
+                                                '<div class="col-xs-7 "><div  class="rating-block">' + ratebtnstring + '</div></div>';
                 }//for
-                ratinglists = ratinglists + '<div class="col-xs-5 ">' + thisRatingSummary[0].ProductRatingAttributes[i].Caption + '</div>' +
-                                            '<div class="col-xs-7 "><div  class="rating-block">' + ratebtnstring + '</div></div>';
-            }//for
-            $("#RatingPopupDisplay").append(ratinglists);
+                $("#RatingPopupDisplay").append(ratinglists);
+            }//if
+            else {
+                $("#RatingPopupDisplay").empty();
+                var ratinglists = '<div class="col-xs-12 text-center"><h3>No Ratings Yet.. </h3></div>'
+                $("#RatingPopupDisplay").append(ratinglists);
+            }
         }//if
-        else
-        {
-            $("#RatingPopupDisplay").empty();
-            var ratinglists = '<div class="col-xs-12 text-center"><h3>No Ratings Yet.. </h3></div>'
-            $("#RatingPopupDisplay").append(ratinglists);
-        }
-    }//if
 
-    $('#btnmodelproductrating').trigger('click');
+        $('#btnmodelproductrating').trigger('click');
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+   
 }
 
 

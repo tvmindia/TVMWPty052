@@ -34,7 +34,7 @@ $(document).ready(function () {
          });
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 
     try
@@ -66,7 +66,7 @@ $(document).ready(function () {
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 
 
@@ -99,7 +99,7 @@ $(document).ready(function () {
        });
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 
     try
@@ -128,10 +128,11 @@ $(document).ready(function () {
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
-
-
+    //$("#tabcustomerView a").click(function () {
+    //    $("#tabCustomerView").trigger('click');
+    //});
 });
 
 //----------------------------------- customer list tab active click---------------------------------//
@@ -160,7 +161,7 @@ function GetAllCustomers()
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -214,7 +215,7 @@ function EditCustomer(currentObj)
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -240,7 +241,7 @@ function GetCustomerDetail(custid) {
         }
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 
 }
@@ -267,7 +268,7 @@ function GetSalesStatistics(custid)
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -293,7 +294,7 @@ function GetCustomerOrders(custid)
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 function RefreshCustomerOrders(custid)
@@ -305,7 +306,7 @@ function RefreshCustomerOrders(custid)
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -327,7 +328,7 @@ function GetCustomerWishList(custid) {
         }
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -337,7 +338,7 @@ function RefreshCustomerWishList(custid) {
         DataTables.wishListTable.clear().rows.add(GetCustomerWishList(custid)).draw(false);
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -359,7 +360,7 @@ function GetCustomerCartList(custid) {
         }
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -369,7 +370,7 @@ function RefreshCustomerCartList(custid) {
         DataTables.cartTable.clear().rows.add(GetCustomerCartList(custid)).draw(false);
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -379,7 +380,7 @@ function RefreshCustomer() {
         DataTables.customerTable.clear().rows.add(GetAllCustomers()).draw(false);
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -426,7 +427,7 @@ function ActivateORDeactivate()
     }
     catch (e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -444,7 +445,7 @@ function AddressSave()
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -492,7 +493,7 @@ function GetAllAddress(custid)
         }
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -520,7 +521,7 @@ function BindAddress(custid)
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -542,7 +543,7 @@ function GetAddressDetailsByAddress(adid) {
         }
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -576,7 +577,7 @@ function FillAddressForm(adid)
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
     
 }
@@ -585,33 +586,40 @@ function AddressViewClick()
 {
     try
     {
-        ChangeButtonPatchView("Customer", "customerToolBox", "Add"); //ControllerName,id of the container div,Name of the action
+     var custid=$("#ID").val();
+     if ((custid) && (custid > 0))
+     {
+         ChangeButtonPatchView("Customer", "customerToolBox", "Add"); //ControllerName,id of the container div,Name of the action
+     }
+        
         ClearAddressForm();
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
 function CustomerViewClick() {
     try {
-        var isact = $("#IsActive").val();
-        if (isact)
-        {
-            switch (isact) {
-                case "true":
-                    ChangeButtonPatchView("Customer", "customerToolBox", "Deactivate"); //ControllerName,id of the container div,Name of the action
-                    break;
-                case "false":
-                    ChangeButtonPatchView("Customer", "customerToolBox", "Activate"); //ControllerName,id of the container div,Name of the action
-                    break;
+        var custid=$("#ID").val();
+        if ((custid) && (custid > 0)) {
+            var isact = $("#IsActive").val();
+            if (isact) {
+                switch (isact) {
+                    case "true":
+                        ChangeButtonPatchView("Customer", "customerToolBox", "Deactivate"); //ControllerName,id of the container div,Name of the action
+                        break;
+                    case "false":
+                        ChangeButtonPatchView("Customer", "customerToolBox", "Activate"); //ControllerName,id of the container div,Name of the action
+                        break;
+                }
             }
         }
-       
+        
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -629,7 +637,7 @@ function ClearAddressForm()
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
    
 }
@@ -672,6 +680,6 @@ function DeleteCustomerAddress()
     }
     catch(e)
     {
-        notyAlert('errror', e.message);
+        notyAlert('logDetails', e.message);
     }
 }

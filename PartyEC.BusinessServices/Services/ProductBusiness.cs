@@ -151,14 +151,35 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatus;
         }
 
         public OperationsStatus UpdateProduct(Product productObj)
         {
-            return _productRepository.UpdateProduct(productObj);
+            OperationsStatus operationsStatus = null;
+            try
+            {
+                switch(productObj.ProductType)
+                {
+                    case 'S':
+                        productObj.ProductDetails = productObj.ProductDetails == null ? null : productObj.ProductDetails.
+                        Select(prodDet => { prodDet.DefaultOption = true; return prodDet; }).ToList();
+                        operationsStatus = _productRepository.UpdateProduct(productObj);
+                        break;
+                    case 'C':
+                        productObj.ProductDetails.Clear();
+                        operationsStatus = _productRepository.UpdateProduct(productObj);
+                        break;
+                }
+                
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatus;
         }
 
         public OperationsStatus UpdateProductSticker(Product productObj)
