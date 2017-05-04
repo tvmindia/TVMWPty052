@@ -445,7 +445,7 @@ function Edit(this_obj)
     ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
     var rowData = DataTables.orderHeadertable.row($(this_obj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
-        if (rowData.OrderStatus == "Cancelled")
+        if (rowData.OrderStatus == "Cancelled" || rowData.OrderStatus == "Invoiced")
         {
             ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
         }
@@ -472,6 +472,11 @@ function Edit(this_obj)
         BindPaymentInformationInvoiceRegion(Result);
         BindShippingHandlingSectionInvoiceRegion(Result);
         BindOrderSummeryInvoiceRegion(Result);
+
+        //****************************** SHIPPING AREA
+        
+        BindGeneralSectionShippingRegion(Result);
+        BindAccountSectionShippingRegion(Result);
     }
 }
 function CancelIssue()
@@ -884,7 +889,6 @@ function BindGeneralSectionInvoiceRegion(Result) {
     $("#lblRevNoInvoiceRegion").text(Result.OrderRev);
 
 }
-
 function BindAccountSectionInvoiceRegion(Result) {
     $('#imgPreviewCustomerInvoiceRegion').attr('src', Result.CustomerURL);
     $("#lblCustomerNameInvoiceRegion").text(Result.CustomerName);
@@ -906,7 +910,6 @@ function BindShippingHandlingSectionInvoiceRegion(Result) {
 function BindTableOrderDetailListInvoiceRegion(ID) {
     DataTables.orderDetailstableInvoiceRegion.clear().rows.add(GetAllOrdersList(ID)).draw(false);
 }
-
 function BindOrderSummeryInvoiceRegion(Result) {
     debugger;
     var OrderSummeryList = GetOrderSummery(Result.ID);
@@ -918,8 +921,17 @@ function BindOrderSummeryInvoiceRegion(Result) {
 }
 function TabActionInvoiceRegion()
 {
+    debugger;
     BindTableOrderDetailListInvoiceRegion($('#hdnOrderHID').val());
-    ChangeButtonPatchView("Order", "btnPatchOrders", "InvoiceRegion");
+    if ($("#lblOrderStatusInvoiceRegion").text() == "Invoiced")
+    {
+        ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
+    }
+    else
+    {
+        ChangeButtonPatchView("Order", "btnPatchOrders", "InvoiceRegion");
+    }
+    
 }
 function PaymentStatusOnChange(this_Obj)
 {
@@ -947,19 +959,33 @@ function PaymentStatusOnChange(this_Obj)
 }
 function SubmitInvoice()
 {
-   
+    debugger;
     var ID = $('#hdnOrderHID').val();
-    var Result = GetOrderDetails(ID);
-    var Order = new Object();
-    Order.ID = ID;
-    Order.PayStatusCode = $("#PaymentStatusList").val();
-    var data = "{'OrderObj':" + JSON.stringify(Order) + "}";
-    PostDataToServer('Order/UpdateOrderPaymentStatus/', data, function (JsonResult) {
+    var DetailList = [];
+    var TableDetail = DataTables.orderDetailstableInvoiceRegion.rows().data();
+    var InvoiceViewModel = new Object();
+    InvoiceViewModel.ID = null;
+    InvoiceViewModel.InvoiceNo = null;
+    InvoiceViewModel.ParentID = ID;
+    InvoiceViewModel.ParentType = "Order";
+    InvoiceViewModel.InvoiceDate = null;
+    InvoiceViewModel.PaymentStatus = $("#PaymentStatusList").val();
+    for (var i = 0; i < TableDetail.length; i++)
+    {
+        var InvoiceDetailViewModel = new Object();
+        InvoiceDetailViewModel.ID = null;
+        InvoiceDetailViewModel.InvoiceID = ID;
+        InvoiceDetailViewModel.OrderItemID = TableDetail[i].ItemID;
+        InvoiceDetailViewModel.InvoiceAmt = ((((TableDetail[i].Price + TableDetail[i].ShippingAmt + TableDetail[i].TaxAmt) - (TableDetail[i].DiscountAmt))) * TableDetail[i].Qty);
+        DetailList.push(InvoiceDetailViewModel);
+    }
+    InvoiceViewModel.DetailList = DetailList;
+    var data = "{'InvoiceViewObj':" + JSON.stringify(InvoiceViewModel) + "}";
+    PostDataToServer('Order/InsertInvoice/', data, function (JsonResult) {
         if (JsonResult != '') {
             switch (JsonResult.Result) {
                 case "OK":
                     notyAlert('success', JsonResult.Records.StatusMessage);
-                    goback();
                     break;
                 case "ERROR":
                     notyAlert('error', JsonResult.Records.StatusMessage);
@@ -969,4 +995,25 @@ function SubmitInvoice()
             }
         }
     })
+}
+
+//##################################################################################################################################################################################################################
+//##############************************************************************************** SHIPPING AREA ******************************************
+
+function BindGeneralSectionInvoiceRegion(Result) {
+    debugger;
+    $("#lblOrderNoShippingRegion").text(Result.OrderNo);
+    $("#lblOrderDateShippingRegion").text(Result.OrderDate);
+    $("#lblOrderStatusShippingRegion").text(Result.OrderStatus);
+    $("#lblSourceIPShippingRegion").text(Result.SourceIP);
+    $("#lblRevNoShippingRegion").text(Result.OrderRev);
+
+}
+function BindAccountSectionInvoiceRegion(Result) {
+    $('#imgPreviewCustomerShippingRegion').attr('src', Result.CustomerURL);
+    $("#lblCustomerNameShippingRegion").text(Result.CustomerName);
+    $("#lblContactNoShippingRegion").text(Result.ContactNo);
+    $("#lblCustomerEmailShippingRegion").text(Result.CustomerEmail);
+    $("#hdnAccountEmailIDShippingRegion").val(Result.CustomerEmail);
+    $("#hdnAccountCustomerNameShippingRegion").val(Result.CustomerName);
 }
