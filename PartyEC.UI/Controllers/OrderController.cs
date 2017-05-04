@@ -21,13 +21,15 @@ namespace PartyEC.UI.Controllers
         IMasterBusiness _masterBusiness;
         IMailBusiness _mailBusiness;
         IProductBusiness _productBusiness;
-        public OrderController(IProductBusiness productBusiness, IOrderBusiness orderBusiness, ICommonBusiness commonBusiness,IMasterBusiness masterBusiness,IMailBusiness mailBusiness)
+        IInvoiceBusiness _invoiceBusiness;
+        public OrderController(IProductBusiness productBusiness, IOrderBusiness orderBusiness, ICommonBusiness commonBusiness,IMasterBusiness masterBusiness,IMailBusiness mailBusiness, IInvoiceBusiness invoiceBusiness)
         {
             _orderBusiness = orderBusiness;
             _commonBusiness = commonBusiness;
             _masterBusiness = masterBusiness;
             _mailBusiness = mailBusiness;
             _productBusiness = productBusiness;
+            _invoiceBusiness = invoiceBusiness;
         }
         #endregion Constructor_Injection
         // GET: Order
@@ -243,6 +245,34 @@ namespace PartyEC.UI.Controllers
             {
                 return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
             }
+        }
+        [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string InsertInvoice(InvoiceViewModel InvoiceViewObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+
+                InvoiceViewObj.LogDetails = new LogDetailsViewModel();
+                InvoiceViewObj.LogDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                InvoiceViewObj.LogDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_invoiceBusiness.InsertInvoice(Mapper.Map<InvoiceViewModel, Invoice>(InvoiceViewObj)));
+                
+            if (OperationsStatusViewModelObj.StatusCode == 1)
+            {
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+            }
+            else
+            {
+                return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+            }
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
         }
         [ValidateAntiForgeryToken]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]

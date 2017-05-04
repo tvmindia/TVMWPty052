@@ -581,6 +581,7 @@
     <Compile Include="Models\ProductViewModel.cs" />
     <Compile Include="Models\QuotationsViewModel.cs" />
     <Compile Include="Models\RoleViewModel.cs" />
+    <Compile Include="Models\ShipmentViewModel.cs" />
     <Compile Include="Models\ToolboxViewModel.cs" />
     <Compile Include="Models\TreeViewModel.cs" />
     <Compile Include="Models\UserViewModel.cs" />

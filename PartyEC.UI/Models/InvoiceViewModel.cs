@@ -14,7 +14,8 @@ namespace PartyEC.UI.Models
         public string InvoiceDate { get; set; }
         public DateTime InvoiceDateTime { get; set; }
         public int PaymentStatus { get; set; }
-        public LoginViewModel log { get; set; }
+        public LogDetailsViewModel LogDetails { get; set; }
+        public List<InvoiceDetailViewModel> DetailList { get; set; }
     }
     public class InvoiceDetailViewModel
     {
@@ -22,6 +23,6 @@ namespace PartyEC.UI.Models
         public int InvoiceID { get; set; }
         public int OrderItemID { get; set; }
         public float InvoiceAmt { get; set; }
-        public LoginViewModel log { get; set; }
+        public LogDetailsViewModel LogDetails { get; set; }
     }
 }

@@ -14,7 +14,8 @@ namespace PartyEC.DataAccessObject.DTO
         public string InvoiceDate { get; set; }
         public DateTime InvoiceDateTime { get; set; }
         public int PaymentStatus { get; set; }
-        public LogDetails log { get; set; }
+        public LogDetails LogDetails { get; set; }
+        public List<InvoiceDetail> DetailList { get; set; }
     }
     public class InvoiceDetail
     {
@@ -22,6 +23,6 @@ namespace PartyEC.DataAccessObject.DTO
         public int InvoiceID { get; set; }
         public int OrderItemID { get; set; }
         public float InvoiceAmt { get; set; }
-        public LogDetails log { get; set; }
+        public LogDetails LogDetails { get; set; }
     }
 }
