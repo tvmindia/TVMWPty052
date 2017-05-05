@@ -14,5 +14,6 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertShipment(Shipment shipmentObj);
         OperationsStatus InsertShipmentHeader(Shipment shipmentObj);
         OperationsStatus InsertShipmentDetail(ShipmentDetail shipmentDetailObj);
+        OperationsStatus UpdateDeliveryStatus(Shipment shipmentObj);
     }
 }

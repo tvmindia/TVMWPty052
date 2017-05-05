@@ -332,6 +332,34 @@ namespace PartyEC.UI.Controllers
             }
 
         }
+        [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string UpdateDeliveryStatus(ShipmentViewModel shipmentViewModelObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+
+                shipmentViewModelObj.log = new LogDetailsViewModel();
+                shipmentViewModelObj.log.UpdatedBy = _commonBusiness.GetUA().UserName;
+                shipmentViewModelObj.log.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_shipmentBusiness.UpdateDeliveryStatus(Mapper.Map<ShipmentViewModel, Shipment>(shipmentViewModelObj)));
+
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
         [ValidateAntiForgeryToken]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string UpdateBillingDetails(OrderViewModel orderViewModelObj)
