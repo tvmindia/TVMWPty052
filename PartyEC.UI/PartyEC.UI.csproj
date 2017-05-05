@@ -495,6 +495,7 @@
     <Content Include="Scripts\UserJS\Dashboard.js" />
     <Content Include="Scripts\UserJS\Event.js" />
     <Content Include="Scripts\UserJS\EventRequests.js" />
+    <Content Include="Scripts\UserJS\Invoice.js" />
     <Content Include="Scripts\UserJS\Login.js" />
     <Content Include="Scripts\UserJS\MailNotifications.js" />
     <Content Include="Scripts\UserJS\Manufacturers.js" />
@@ -505,6 +506,7 @@
     <Content Include="Scripts\UserJS\Quotations.js" />
     <Content Include="Scripts\UserJS\Review.js" />
     <Content Include="Scripts\UserJS\Role.js" />
+    <Content Include="Scripts\UserJS\Shipment.js" />
     <Content Include="Scripts\UserJS\ShippingLocation.js" />
     <Content Include="Scripts\UserJS\SupplierLocations.js" />
     <Content Include="Scripts\UserJS\Suppliers.js" />
@@ -619,6 +621,7 @@
     <Content Include="Views\Roles\Index.cshtml" />
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\NotAuthorized.cshtml" />
+    <Content Include="Views\Invoice\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
