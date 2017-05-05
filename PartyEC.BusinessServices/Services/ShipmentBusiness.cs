@@ -33,5 +33,31 @@ namespace PartyEC.BusinessServices.Services
         {
             return _shipmentRepository.GetAllShipmentDetail(ID);
         }
+        public OperationsStatus InsertShipment(Shipment shipmentObj)
+        {
+            OperationsStatus operationstatusObj = new OperationsStatus();
+            operationstatusObj = InsertShipmentHeader(shipmentObj);
+            if(operationstatusObj.StatusCode==1)
+            {
+                if(shipmentObj.DetailsList.Count!=0)
+                {
+                    foreach(var i in shipmentObj.DetailsList)
+                    {
+                        i.ShipmentID = int.Parse(operationstatusObj.ReturnValues.ToString());
+                        i.log = shipmentObj.log;                                               
+                        InsertShipmentDetail(i);
+                    }
+                }
+            }
+            return operationstatusObj;
+        }
+        public OperationsStatus InsertShipmentHeader(Shipment shipmentObj)
+        {
+            return _shipmentRepository.InsertShipmentHeader(shipmentObj);
+        }
+        public OperationsStatus InsertShipmentDetail(ShipmentDetail shipmentDetailObj)
+        {
+            return _shipmentRepository.InsertShipmentDetail(shipmentDetailObj);
+        }
     }
 }
