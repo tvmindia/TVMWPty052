@@ -48,7 +48,8 @@ namespace PartyEC.UI.Models
         public EventsLogViewModel EventsLogViewObj { get; set; }
         //Mailing Comments
         public MailViewModel mailViewModelObj { get; set; }
-
+        public List<AttributeValuesViewModel> AttributeValues { get; set; }
+     
         public List<SelectListItem> BookingsstatusList { get; set; }
     }
     public class BookingsAppViewModel

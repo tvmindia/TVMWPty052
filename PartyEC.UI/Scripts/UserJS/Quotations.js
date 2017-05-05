@@ -61,7 +61,7 @@ $(document).ready(function () {
                  "render": function (data, type, row) {
                      var returnstring = '';
                      if (data) {
-                      
+                         debugger;
                          var product = row.ProductName;
                          for (var ik = 0; ik < data.length; ik++) {
                              returnstring = returnstring + '<span><b>' +data[ik].Caption + '</b> : ' +(data[ik].Value != "" && data[ik].Value != null ? data[ik].Value: ' - ') + '</span><br/>';

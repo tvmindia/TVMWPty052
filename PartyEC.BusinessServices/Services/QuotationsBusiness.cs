@@ -16,7 +16,7 @@ namespace PartyEC.BusinessServices.Services
 
         private IQuotationsRepository _QuotationsRepository;
         private IAttributesRepository _attributesRepository;
-        private IMailBusiness _mailBusiness;
+        private IMailBusiness _mailBusiness; 
 
         public QuotationsBusiness(IQuotationsRepository QuatationsRepository, IAttributesRepository attributesRepository, IMailBusiness mailBusiness)
         {
@@ -58,8 +58,8 @@ namespace PartyEC.BusinessServices.Services
             return QuotationsObj;
         }
 
-        //have to write as common function GetAttributeValueFromXML
-        private List<AttributeValues> GetAttributeValueFromXML(string XML)
+        // common function GetAttributeValueFromXML Called from booking business also
+        public List<AttributeValues> GetAttributeValueFromXML(string XML)
         {
             List<AttributeValues> myAttributeValueList = null;
             List<Attributes> attributelist = null;
