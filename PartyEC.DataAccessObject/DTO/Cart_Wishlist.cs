@@ -13,7 +13,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string ProductName { get; set; }
         public string CustomerName { get; set; }
         public string ProductSpecXML { get; set; }
-        public List<AttributeValues> ProductAttributes { get; set; }
+      //  public List<AttributeValues> ProductAttributes { get; set; }
         public int Qty { get; set; }
         public string CurrencyCode { get; set; }
         public decimal CurrencyRate { get; set; }
