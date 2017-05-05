@@ -22,7 +22,8 @@ namespace PartyEC.UI.Controllers
         IMailBusiness _mailBusiness;
         IProductBusiness _productBusiness;
         IInvoiceBusiness _invoiceBusiness;
-        public OrderController(IProductBusiness productBusiness, IOrderBusiness orderBusiness, ICommonBusiness commonBusiness,IMasterBusiness masterBusiness,IMailBusiness mailBusiness, IInvoiceBusiness invoiceBusiness)
+        IShipmentBusiness _shipmentBusiness;
+        public OrderController(IProductBusiness productBusiness, IOrderBusiness orderBusiness, ICommonBusiness commonBusiness,IMasterBusiness masterBusiness,IMailBusiness mailBusiness, IInvoiceBusiness invoiceBusiness,IShipmentBusiness shipmentBusiness)
         {
             _orderBusiness = orderBusiness;
             _commonBusiness = commonBusiness;
@@ -30,6 +31,7 @@ namespace PartyEC.UI.Controllers
             _mailBusiness = mailBusiness;
             _productBusiness = productBusiness;
             _invoiceBusiness = invoiceBusiness;
+            _shipmentBusiness = shipmentBusiness;
         }
         #endregion Constructor_Injection
         // GET: Order
@@ -355,6 +357,22 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Title = "Save";
                     ToolboxViewModelObj.savebtn.Event = "SubmitInvoice()";
+                    break;
+                case "ShipmentRegion":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.addbtn.Visible = true;
+                    ToolboxViewModelObj.addbtn.Title = "Add";
+                    ToolboxViewModelObj.addbtn.Event = "AddShipment()";
+                    break;
+                case "AddShipmentRegion":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    ToolboxViewModelObj.savebtn.Event = "SaveShippingDetails()";
                     break;
                 case "Cancelled":
                     ToolboxViewModelObj.backbtn.Visible = true;

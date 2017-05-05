@@ -68,6 +68,8 @@ namespace PartyEC.UI.App_Start
                 config.CreateMap<PaymentStatusViewModel, PaymentStatusMaster>().ReverseMap();
                 config.CreateMap<InvoiceViewModel, Invoice>().ReverseMap();
                 config.CreateMap<InvoiceDetailViewModel, InvoiceDetail>().ReverseMap();
+                config.CreateMap<ShipmentViewModel, Shipment>().ReverseMap();
+                config.CreateMap<ShipmentDetailViewModel, ShipmentDetail>().ReverseMap();
             });
         }
 
