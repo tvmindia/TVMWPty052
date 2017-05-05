@@ -59,7 +59,7 @@ $(document).ready(function () {
          });
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 
 
@@ -126,7 +126,7 @@ $(document).ready(function () {
         });
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 
     ChangeButtonPatchView("Notifications", "NotificationToolBox", "Add"); //ControllerName,id of the container div,Name of the action
@@ -159,7 +159,7 @@ function GetAllMailNotifications() {
         }
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -195,7 +195,7 @@ function GetAllCustomers() {
         }
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
@@ -248,7 +248,7 @@ function ClearForm() {
         DataTables.customerinNotificaton.rows().deselect();
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 
 }
@@ -355,7 +355,7 @@ function ConstructMultiCustomersList() {
         }
     }
     catch (e) {
-        notyAlert('errror', e.message);
+        notyAlert('error', e.message);
     }
 }
 
