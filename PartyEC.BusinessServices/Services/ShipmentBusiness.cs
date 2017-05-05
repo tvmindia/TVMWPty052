@@ -59,5 +59,9 @@ namespace PartyEC.BusinessServices.Services
         {
             return _shipmentRepository.InsertShipmentDetail(shipmentDetailObj);
         }
+        public OperationsStatus UpdateDeliveryStatus(Shipment shipmentObj)
+        {
+            return _shipmentRepository.UpdateDeliveryStatus(shipmentObj);
+        }
     }
 }

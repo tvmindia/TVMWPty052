@@ -77,6 +77,7 @@ namespace PartyEC.UI.Models
         public string BillCountryCode { get; set; }
         public string BillStateProvince { get; set; }
         public string BillContactNo { get; set; }
+        public string ProductName { get; set; }
 
         //Customer Details
         public CustomerViewModel customerObj { get; set; }

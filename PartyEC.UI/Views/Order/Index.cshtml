@@ -732,12 +732,11 @@
                                     <table id="tblOrderShippedinShipmentRegion" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th></th>
                                                 <th>ID</th>
-                                                <th>Poduct</th>
-                                                <th style="width:100%;">Ordered Qty</th>
-                                                <th width="40px">Shipped Qty</th>
-                                                <th style="width:100%;">Qty To Ship</th>
+                                                <th>Shipment ID</th>
+                                                <th>Product</th>
+                                                <th>Ordered Qty</th>
+                                                <th>Shipped Qty</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -765,7 +764,8 @@
                                                 <div class="col-md-5">
                                                 </div>
                                                 <div class="col-md-7">
-                                                    <input type="submit" id="BtnSave" value="Save Changes" class="btn btn-info btn-right" style="float:right;">
+                                                    <input type="hidden" id="hdnShipmentID" />
+                                                    <input type="submit" onclick="UpdateDeliveryStatus()" value="Save Changes" class="btn btn-info btn-right" style="float:right;">
                                                 </div>
                                             </div>
                                         </div>

@@ -27,6 +27,6 @@ namespace PartyEC.UI.Models
         public int OrderItemID { get; set; }
         public int ShippedQty { get; set; }
         public LogDetailsViewModel log { get; set; }
-        public OrderDetailViewModel OrderDetailViewModelObj { get; set; }
+        public OrderDetailViewModel OrderDetailObj { get; set; }
     }
 }

@@ -103,7 +103,8 @@ namespace PartyEC.RepositoryServices.Services
                                         _shipmentDetailObj.ShipmentID = (sdr["ShipmentID"].ToString() != "" ? int.Parse(sdr["ShipmentID"].ToString()) : _shipmentDetailObj.ShipmentID);
                                         _shipmentDetailObj.OrderItemID = (sdr["OrderItemID"].ToString() != "" ? int.Parse(sdr["OrderItemID"].ToString()) : _shipmentDetailObj.ShipmentID);
                                         _shipmentDetailObj.ShippedQty = (sdr["ShippedQty"].ToString() != "" ? int.Parse(sdr["ShippedQty"].ToString()) : _shipmentDetailObj.ShippedQty);
-                                        _shipmentDetailObj.OrderDetailObj.ProductSpecXML = sdr["ProductSpecXML"].ToString();
+                                        _shipmentDetailObj.OrderDetailObj = new OrderDetail();
+                                        _shipmentDetailObj.OrderDetailObj.ProductSpecXML = sdr["Name"].ToString()+"||"+sdr["ProductSpecXML"].ToString();
                                         _shipmentDetailObj.OrderDetailObj.Qty= (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : _shipmentDetailObj.OrderDetailObj.Qty);
                                     }
                                     ShipmentDetailList.Add(_shipmentDetailObj);
@@ -221,6 +222,62 @@ namespace PartyEC.RepositoryServices.Services
                             default:
                                 break;
                         }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
+        
+        public OperationsStatus UpdateDeliveryStatus(Shipment shipmentObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateDeliveryStatus]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = shipmentObj.ID;
+                        cmd.Parameters.Add("@DeliveredDate", SqlDbType.NVarChar, 250).Value = shipmentObj.DeliveredDate;
+                        cmd.Parameters.Add("@DeliveredBy", SqlDbType.NVarChar, 250).Value = shipmentObj.DeliveredBy;
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = shipmentObj.log.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = shipmentObj.log.UpdatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Updation Not Successfull!";
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Updation Successfull!";
+                                break;
+                            default:
+                                break;
+                        }
+
+
+
                     }
                 }
             }
