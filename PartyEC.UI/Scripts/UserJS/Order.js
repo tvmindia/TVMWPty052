@@ -215,7 +215,6 @@ $(document).ready(function () {
             selector: 'tr'
         }
     });
-
     DataTables.tblProductList = $('#tblProductList').DataTable(
          {
              dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
@@ -372,6 +371,27 @@ $(document).ready(function () {
             selector: 'tr'
         }
     });
+    DataTables.orderShippedShipmentRegion = $('#tblShippedItems').DataTable(
+   {
+       dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+       order: [],
+       searching: true,
+       paging: true,
+       data: null,
+       columns: [
+         { "data": "OrderID" },
+         { "data": "ShipmentNo" },
+         { "data": "ShipmentDateString" },
+         { "data": "DeliveredDate" },
+         { "data": "DeliveredBy" },
+         { "data": null, "orderable": false, "defaultContent": '<a onclick="ShowShipment(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
+       ],
+       columnDefs: [
+       ],
+       select: {
+           selector: 'tr'
+       }
+   });
     //$('#tblProductList tbody').on('click', 'tr', function () {  
     //    var tabledata = DataTables.tblProductList.rows('.selected').data();
     //    var Total = 0;
@@ -473,6 +493,20 @@ function GetProductsListtoAdd()
         if (ds.Result == "ERROR") {
             notyAlert('error', ds.Message);
         }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+function GetShipmentHeader(ID) {
+    debugger;
+    try {
+        data = { "ID": ID };
+        var ds = {};
+        ds = GetDataFromServer("Order/GetShipmentHeader/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -1085,6 +1119,15 @@ function TabActionShipmentRegion()
 {
     debugger;
     ChangeButtonPatchView("Order", "btnPatchOrders", "ShipmentRegion");
+    var RowData = GetShipmentHeader($('#hdnOrderHID').val());
+    //if (RowData.length > 0)
+    //{
+        DataTables.orderShippedShipmentRegion.clear().rows.add(RowData).draw(false);
+    //}
+    //else
+    //{
+    //    $("#tabAddShippingRegion").click();
+    //}
 }
 function TabActionAddShipmentRegion()
 {
@@ -1125,4 +1168,46 @@ function ChangeQtyShipment(this_Obj)
 function AddShipment()
 {
     $("#tabAddShippingRegion").click();
+}
+function ShowShipment(this_Obj)
+{
+    debugger;
+    $('#tabOldShippingRegion').click();
+}
+function TabActionOldShipmentRegion()
+{
+    
+}
+function SaveShippingDetails()
+{
+    debugger;
+    var DetailsList = [];
+    var tabledata = DataTables.orderDetailstableShipmentRegion.rows('.selected').data();
+    var ShipmentViewModel = new Object();
+    ShipmentViewModel.OrderID = $('#hdnOrderHID').val();
+    for(var i=0;i<tabledata.length;i++)
+    {
+        var ShipmentDetailViewModel = new Object();
+        ShipmentDetailViewModel.ShipmentID = null;
+        ShipmentDetailViewModel.OrderItemID = tabledata[i].ItemID;
+        ShipmentDetailViewModel.ShippedQty = tabledata[i].ShippedQty;
+        DetailsList.push(ShipmentDetailViewModel);
+    }
+    ShipmentViewModel.DetailsList = DetailsList;
+    var data = "{'shipmentViewModelObj':" + JSON.stringify(ShipmentViewModel) + "}";
+    PostDataToServer('Order/InsertShipment/', data, function (JsonResult) {
+        if (JsonResult != '') {
+            switch (JsonResult.Result) {
+                case "OK":
+                    notyAlert('success', JsonResult.Record.StatusMessage);
+                    goback();
+                    break;
+                case "ERROR":
+                    notyAlert('error', JsonResult.Record.StatusMessage);
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
 }
