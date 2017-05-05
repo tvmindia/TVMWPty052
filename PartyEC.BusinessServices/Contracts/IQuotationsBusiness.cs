@@ -16,6 +16,7 @@ namespace PartyEC.BusinessServices.Contracts
         //App
         List<Quotations> GetCustomerQuotations(int CustomerID,bool Ishistory);
         OperationsStatus InsertQuotations(Quotations quotationsObj);
+        List<AttributeValues> GetAttributeValueFromXML(string XML);
 
     }
 }

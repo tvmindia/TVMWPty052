@@ -126,7 +126,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@ProductSpecXML", SqlDbType.Xml).Value = _attributesRepository.GetAttributeXML(bookingsObj.AttributeValues);
 
                         cmd.Parameters.Add("@CustomerAddressID", SqlDbType.Int).Value = bookingsObj.CustomerAddress.ID;
-                        cmd.Parameters.Add("@BillLocation", SqlDbType.Int).Value = bookingsObj.CustomerAddress.Location;
+                        cmd.Parameters.Add("@BillLocation", SqlDbType.Int).Value = bookingsObj.CustomerAddress.LocationID;
                         cmd.Parameters.Add("@BillPrefix", SqlDbType.NVarChar, 100).Value = bookingsObj.CustomerAddress.Prefix;
                         cmd.Parameters.Add("@BillFirstName", SqlDbType.NVarChar, 100).Value = bookingsObj.CustomerAddress.FirstName;
                         cmd.Parameters.Add("@BillMidName", SqlDbType.NVarChar, 100).Value = bookingsObj.CustomerAddress.MidName;

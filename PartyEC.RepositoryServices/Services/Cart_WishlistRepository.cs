@@ -200,8 +200,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = cartObj.ProductID;
                         cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = cartObj.CustomerID;
-                        cmd.Parameters.Add("@ProductSpecXML", SqlDbType.Xml).Value =_attributesRepository.GetAttributeXML(cartObj.ProductAttributes);
-                        cmd.Parameters.Add("@ItemStatus", SqlDbType.Int).Value = cartObj.ItemStatus;
+                        cmd.Parameters.Add("@ProductSpecXML", SqlDbType.Xml).Value =_attributesRepository.GetAttributeXML(cartObj.AttributeValues);
                         cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = cartObj.Qty;
                         cmd.Parameters.Add("@CurrencyCode", SqlDbType.NVarChar, 3).Value = cartObj.CurrencyCode;
                         cmd.Parameters.Add("@CurrencyRate", SqlDbType.Decimal).Value = cartObj.CurrencyRate;
