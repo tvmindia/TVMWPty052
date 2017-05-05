@@ -106,6 +106,20 @@ namespace PartyEC.UI.Controllers
         }
         [HttpGet]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string GetAllShipmentDetail(string ID)
+        {
+            try
+            {
+                List<ShipmentDetailViewModel> ShipmentDetailList = Mapper.Map<List<ShipmentDetail>, List<ShipmentDetailViewModel>>(_shipmentBusiness.GetAllShipmentDetail(int.Parse(ID)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = ShipmentDetailList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetAllOrdersList(string ID)
         {
             try

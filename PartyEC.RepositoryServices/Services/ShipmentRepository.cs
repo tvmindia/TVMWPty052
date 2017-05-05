@@ -103,7 +103,8 @@ namespace PartyEC.RepositoryServices.Services
                                         _shipmentDetailObj.ShipmentID = (sdr["ShipmentID"].ToString() != "" ? int.Parse(sdr["ShipmentID"].ToString()) : _shipmentDetailObj.ShipmentID);
                                         _shipmentDetailObj.OrderItemID = (sdr["OrderItemID"].ToString() != "" ? int.Parse(sdr["OrderItemID"].ToString()) : _shipmentDetailObj.ShipmentID);
                                         _shipmentDetailObj.ShippedQty = (sdr["ShippedQty"].ToString() != "" ? int.Parse(sdr["ShippedQty"].ToString()) : _shipmentDetailObj.ShippedQty);
-                                        _shipmentDetailObj.OrderDetailObj.ProductSpecXML = sdr["ProductSpecXML"].ToString();
+                                        _shipmentDetailObj.OrderDetailObj = new OrderDetail();
+                                        _shipmentDetailObj.OrderDetailObj.ProductSpecXML = sdr["Name"].ToString()+"||"+sdr["ProductSpecXML"].ToString();
                                         _shipmentDetailObj.OrderDetailObj.Qty= (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : _shipmentDetailObj.OrderDetailObj.Qty);
                                     }
                                     ShipmentDetailList.Add(_shipmentDetailObj);

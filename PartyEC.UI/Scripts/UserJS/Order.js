@@ -392,6 +392,57 @@ $(document).ready(function () {
            selector: 'tr'
        }
    });
+    DataTables.OrderOldShipmentShipmentRegion = $('#tblOrderShippedinShipmentRegion').DataTable(
+    {
+        dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+        order: [],
+        searching: true,
+        paging: true,
+        data: null,
+        columns: [
+          { "data": "ID" },
+          { "data": "ShipmentID" },
+          { "data": "OrderDetailObj" },
+          { "data": "OrderDetailObj" },
+          { "data": "ShippedQty" }
+        ],
+        columnDefs: [
+                     {//hiding hidden column 
+
+                         "targets": [2],
+                         "visible": true,
+                         "searchable": false,
+                         "render": function (data, type, full, meta) {
+                             debugger;
+                             data1 = data.ProductSpecXML;
+                             if (data1 != "" && data1 != null) {
+                                 var Name = "<b>" + data1.split("||")[0] + "</b>";
+                                 var Spec = (data1.split("||")[1]).split("><");
+                                 for (var i = 0; i < Spec.length - 1; i++) {
+                                     if (i > 0) {
+                                         var html = Spec[i].replace(">", " : ");
+                                         Name = Name + "</br>" + (html.split("</")[0]);
+                                     }
+
+                                 }
+                             }
+                             return Name;
+                         }
+                     },
+                     {//hiding hidden column 
+
+                         "targets": [3],
+                         "visible": true,
+                         "searchable": false,
+                         "render": function (data, type, full, meta) {                             
+                             return data.Qty;
+                         }
+                     }
+        ],
+        select: {
+            selector: 'tr'
+        }
+    });
     //$('#tblProductList tbody').on('click', 'tr', function () {  
     //    var tabledata = DataTables.tblProductList.rows('.selected').data();
     //    var Total = 0;
@@ -504,6 +555,20 @@ function GetShipmentHeader(ID) {
         data = { "ID": ID };
         var ds = {};
         ds = GetDataFromServer("Order/GetShipmentHeader/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+function GetShipmentDetails(ID) {
+    debugger;
+    try {
+        data = { "ID": ID };
+        var ds = {};
+        ds = GetDataFromServer("Order/GetAllShipmentDetail/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
         if (ds.Result == "ERROR") { alert(ds.Message); }
@@ -1172,6 +1237,8 @@ function AddShipment()
 function ShowShipment(this_Obj)
 {
     debugger;
+    var rowData = DataTables.orderShippedShipmentRegion.row($(this_Obj).parents('tr')).data();
+    DataTables.OrderOldShipmentShipmentRegion.clear().rows.add(GetShipmentDetails(rowData.ID)).draw(false);
     $('#tabOldShippingRegion').click();
 }
 function TabActionOldShipmentRegion()
