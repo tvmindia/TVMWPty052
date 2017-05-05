@@ -62,6 +62,8 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/User").Include("~/Scripts/UserJS/User.js"));
             bundles.Add(new ScriptBundle("~/bundles/Login").Include("~/Scripts/UserJS/Login.js"));
             bundles.Add(new ScriptBundle("~/bundles/Bookings").Include("~/Scripts/UserJS/Bookings.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Invoice").Include("~/Scripts/UserJS/Invoice.js"));
+            bundles.Add(new ScriptBundle("~/bundles/Shipment").Include("~/Scripts/UserJS/Shipment.js"));
         }
     }
 }

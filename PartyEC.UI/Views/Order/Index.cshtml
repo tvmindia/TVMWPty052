@@ -74,8 +74,8 @@
                                 <li class="active"><a href="#OrderRegion" data-toggle="tab" id="tabOrderRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General <span class="label label-danger">E</span></a></li>
                                 <li onclick="TabActionInvoiceRegion()"><a href="#InvoiceRegion" data-toggle="tab" id="tabInvoiceRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invoice</a></li>
                                 <li onclick="TabActionShipmentRegion()"><a href="#ShippingRegion" data-toggle="tab" id="tabShippingRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shipping</a></li>
-                                <li onclick="TabActionAddShipmentRegion()" style="display:none;"><a href="#AddShippingRegion" data-toggle="tab" id="tabAddShippingRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shipping</a></li>
-                                <li onclick="TabActionOldShipmentRegion()" style="display:none;"><a href="#OldShippingRegion" data-toggle="tab" id="tabOldShippingRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shipping</a></li>
+                                <li onclick="TabActionAddShipmentRegion()" style="display:none;"><a href="#AddShippingRegion" data-toggle="tab" id="tabAddShippingRegion"></a></li>
+                                <li onclick="TabActionOldShipmentRegion()" style="display:none;"><a href="#OldShippingRegion" data-toggle="tab" id="tabOldShippingRegion"></a></li>
                             </ul>
                         </div>
                         <div class="col-md-9">
@@ -572,12 +572,12 @@
                                     <table id="tblShippedItems" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th></th>
-                                                <th>ID</th>
-                                                <th>Poduct</th>
-                                                <th>Ordered Qty</th>
-                                                <th>Shipped Qty</th>
-                                                <th>Qty To Ship</th>
+                                                <th>OrderID</th>
+                                                <th>Shipment No</th>
+                                                <th>Shipment Date</th>
+                                                <th>Delivered Date</th>
+                                                <th>Delivered By</th>
+                                                <th>Action</th>
                                             </tr>
                                         </thead>
                                     </table>
@@ -732,12 +732,11 @@
                                     <table id="tblOrderShippedinShipmentRegion" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
                                         <thead>
                                             <tr>
-                                                <th></th>
                                                 <th>ID</th>
-                                                <th>Poduct</th>
-                                                <th style="width:100%;">Ordered Qty</th>
-                                                <th width="40px">Shipped Qty</th>
-                                                <th style="width:100%;">Qty To Ship</th>
+                                                <th>Shipment ID</th>
+                                                <th>Product</th>
+                                                <th>Ordered Qty</th>
+                                                <th>Shipped Qty</th>
                                             </tr>
                                         </thead>
                                     </table>

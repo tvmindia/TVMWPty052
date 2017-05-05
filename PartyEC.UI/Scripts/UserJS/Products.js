@@ -127,14 +127,33 @@ $(document).ready(function () {
                { "data": "ID" },
                { "data": "Name" },
                { "data": "ProductType", "defaultContent": "<i>-</i>" },
-               { "data": "EnableYN", "defaultContent": "<i>-</i>" },
+               { "data": "Enabled", "defaultContent": "<i>-</i>" },
                { "data": "SupplierID", "defaultContent": "<i>-</i>" },
                { "data": "SKU", "defaultContent": "<i>-</i>" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
-               { "data": "Qty", "defaultContent": "<i>-</i>" },
-               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" }
+               { "data": "TotalQty", "defaultContent": "<i>-</i>" },
+               { "data": "StockAvailable", "defaultContent": "<i>-</i>" }
              ],
-             columnDefs: [{
+             columnDefs: [
+                  {
+                      "render": function (data, type, row) {
+                          return (data == "C" ? "Configurable" : "Simple");
+                      },
+                      "targets": 3
+                  },
+                   {
+                       "render": function (data, type, row) {
+                           return (data == true ? "Yes" : "No");
+                       },
+                       "targets": 4
+                   },
+                     {
+                         "render": function (data, type, row) {
+                             return (data == true ? "In Stock" : "Out Of Stock");
+                         },
+                         "targets": 9
+                     },
+                 {
                  orderable: false,
                  className: 'select-checkbox',
                  targets: 0
@@ -170,15 +189,33 @@ $(document).ready(function () {
                { "data": "ID" },
                { "data": "Name" },
                { "data": "ProductType", "defaultContent": "<i>-</i>" },
-               { "data": "EnableYN", "defaultContent": "<i>-</i>" },
+               { "data": "Enabled", "defaultContent": "<i>-</i>" },
                { "data": "SupplierID", "defaultContent": "<i>-</i>" },
                { "data": "SKU", "defaultContent": "<i>-</i>" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
-               { "data": "Qty", "defaultContent": "<i>-</i>" },
-               { "data": "StockAvailableYN", "defaultContent": "<i>-</i>" }
+               { "data": "TotalQty", "defaultContent": "<i>-</i>" },
+               { "data": "StockAvailable", "defaultContent": "<i>-</i>" }
              
              ],
              columnDefs: [
+                   {
+                       "render": function (data, type, row) {
+                           return (data == "C" ? "Configurable" : "Simple");
+                       },
+                       "targets": 3
+                   },
+                    {
+                        "render": function (data, type, row) {
+                            return (data == true ? "Yes" : "No");
+                        },
+                        "targets": 4
+                    },
+                     {
+                         "render": function (data, type, row) {
+                             return (data == true ? "In Stock" : "Out Of Stock");
+                         },
+                         "targets": 9
+                     },
               //{//hiding hidden column 
               //    "targets": [0],
               //    "visible": true,

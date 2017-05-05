@@ -78,7 +78,7 @@ namespace PartyEC.BusinessServices.Services
                 //               where c.StoredValue == yourValue
                 //               select c.DisplayName).FirstOrDefault();
                 userList = _authenticationRepository.GetAllUsers();
-                userList = userList == null ? null : userList.Where(us => us.LoginName == user.LoginName.ToLower() && Decrypt(us.Password)==user.Password).ToList();
+                userList = userList == null ? null : userList.Where(us => us.LoginName.ToLower() == user.LoginName.ToLower() && Decrypt(us.Password)==user.Password).ToList();
 
                 _user = userList == null ? null : userList[0];
             }
