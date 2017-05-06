@@ -1,4 +1,4 @@
-﻿
+﻿@model PartyEC.UI.Models.OrderViewModel
 @{
     ViewBag.Title = "Invoices";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
@@ -69,30 +69,31 @@
                                     <div class="infoBox panel panel-default" style="min-height:250px">
                                         <div class="infoBoxHeader panel-heading">General</div>
                                         <div class="panel-body">
-                                            @*@Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })
+                                           
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblOrderNoInvoiceRegion" class="h5 label-display">-</label>
                                             </div>
                                             <div class="col-md-12"></div>
-                                            @*@Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblOrderDateInvoiceRegion" class="h5 label-display">-</label>
                                             </div>
                                             <div class="col-md-12"></div>
-                                            @*@Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblOrderStatusInvoiceRegion" class="h5 label-display">-</label>
                                             </div>
                                             <div class="col-md-12"></div>
-                                            @*@Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblSourceIPInvoiceRegion" class="h5 label-display">-</label>
                                             </div>
-                                            @*@Html.LabelFor(model => model.RevNo, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            @Html.LabelFor(model => model.RevNo, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblRevNoInvoiceRegion" class="h5 label-display">-</label>
@@ -109,19 +110,19 @@
                                                 <img src="~/Content/images/Person1.png" id="imgPreviewCustomerInvoiceRegion" />
                                             </div>
                                             <div class="col-md-12"></div>
-                                            @*@Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblCustomerNameInvoiceRegion" class="h5 label-display">-</label>
                                             </div>
                                             <div class="col-md-12"></div>
-                                            @*@Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            @Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblContactNoInvoiceRegion" class="h5 label-display">-</label>
                                             </div>
                                             <div class="col-md-12"></div>
-                                            @*@Html.LabelFor(model => model.CustomerEmail, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            @Html.LabelFor(model => model.CustomerEmail, htmlAttributes: new { @class = "h5 col-md-4" })
                                             <div class="col-md-8">
                                                 @*style="font-weight:bold"*@
                                                 <label id="lblCustomerEmailInvoiceRegion" class="h5 label-display">-</label>
@@ -149,7 +150,7 @@
                                             <div class="col-lg-6">
 
                                                 @*@Html.DropDownListFor(model => model.PaymentStatusList, null, "--Select Status--", new { @class = "form-control", @onchange = "PaymentStatusOnChange(this)" })*@
-
+                                                <label id="PaymentStatusList" class="h5 label-display">-</label>
                                             </div>
                                         </div>
                                     </div>

@@ -30,7 +30,8 @@ namespace PartyEC.UI.Controllers
         // GET: Invoices
         public ActionResult Index()
         {
-            return View();
+            OrderViewModel order = new OrderViewModel();
+            return View(order);
         }
 
         [HttpGet]
