@@ -622,6 +622,7 @@
     <Content Include="Views\Account\Index.cshtml" />
     <Content Include="Views\Account\NotAuthorized.cshtml" />
     <Content Include="Views\Invoice\Index.cshtml" />
+    <Content Include="Views\Shipments\Index.cshtml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -635,7 +636,6 @@
     <Folder Include="Views\Invoices\" />
     <Folder Include="Views\Location\" />
     <Folder Include="Views\Reports\" />
-    <Folder Include="Views\Shipments\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\PartyEC.BusinessServices\PartyEC.BusinessServices.csproj">

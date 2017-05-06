@@ -19,18 +19,31 @@ namespace PartyEC.UI.Controllers
 
         IInvoiceBusiness _invoiceBusiness;
         ICommonBusiness _commonBusiness;
-        
+        IMasterBusiness _masterBusiness;
 
-        public InvoiceController(IInvoiceBusiness invoiceBusiness, ICommonBusiness commonBusiness)
+        public InvoiceController(IInvoiceBusiness invoiceBusiness, ICommonBusiness commonBusiness, IMasterBusiness masterBusiness)
         {
             _commonBusiness = commonBusiness;
            _invoiceBusiness = invoiceBusiness;
+            _masterBusiness = masterBusiness;
         }
         #endregion Constructor_Injection
         // GET: Invoices
         public ActionResult Index()
         {
             OrderViewModel order = new OrderViewModel();
+            List<SelectListItem> selectListPaymentStatus = new List<SelectListItem>();
+            List<PaymentStatusViewModel> paymentstatusListVM = Mapper.Map<List<PaymentStatusMaster>, List<PaymentStatusViewModel>>(_masterBusiness.GetAllPaymentStatus());
+            foreach (PaymentStatusViewModel pvm in paymentstatusListVM)
+            {
+                selectListPaymentStatus.Add(new SelectListItem
+                {
+                    Text = pvm.Description,
+                    Value = pvm.Code.ToString(),
+                    Selected = false
+                });
+            }
+            order.PaymentStatusList = selectListPaymentStatus;
             return View(order);
         }
 

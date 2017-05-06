@@ -7,7 +7,7 @@
 
 @section styles {
     @Styles.Render("~/Content/DataTables/css/datatable")
-    @Styles.Render("~/Content/DataTables/css/datatableSelect")
+    
 }
 
 
@@ -149,10 +149,15 @@
                                             <label class="h5 col-md-6" for="lblPaymentStatus">Payment Status :</label>
                                             <div class="col-lg-6">
 
-                                                @*@Html.DropDownListFor(model => model.PaymentStatusList, null, "--Select Status--", new { @class = "form-control", @onchange = "PaymentStatusOnChange(this)" })*@
-                                                <label id="PaymentStatusList" class="h5 label-display">-</label>
+                                                @Html.DropDownListFor(model => model.PaymentStatusList, null, "--Select Status--", new { @class = "form-control" })
+                                                <br />
+                                                @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnOrderHID" })
+                                                <input type="submit" onclick="PaymentStatusUpdate()" value="Save Changes" class="btn btn-info btn-right" style="float:right;">
                                             </div>
-                                        </div>
+                                            <div class="col-lg-6">
+                                                
+                                                </div>
+                                            </div>
                                     </div>
                                 </div>
                                 <div class="col-md-6">
@@ -276,7 +281,6 @@
 
         @section Scripts {
             @Scripts.Render("~/bundles/datatable")
-            @Scripts.Render("~/bundles/datatableSelect")
             @Scripts.Render("~/bundles/Invoice")
         }
 

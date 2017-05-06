@@ -131,9 +131,11 @@ function EditInvoice(curobj)
         if (rowData)
         {
             $('#tabInvoiceDetails a').trigger('click');
+            $("#hdnOrderHID").val(rowData.ParentID);
             var Result = GetOrderDetails(rowData.ParentID);
             if(Result)
             {
+                
                 BindGeneralSectionInvoiceRegion(Result);
                 BindAccountSectionInvoiceRegion(Result);
                 BindPaymentInformationInvoiceRegion(Result);
@@ -168,6 +170,17 @@ function GetAllOrdersList(ID) {
         notyAlert('error', e.message);
     }
 }
+function BindInvoiceTable()
+{
+    try
+    {
+        DataTables.invoiceTable.clear().rows.add(GetAllInvoices()).draw(false);
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+}
 function BindGeneralSectionInvoiceRegion(Result) {
  
     $("#lblOrderNoInvoiceRegion").text(Result.OrderNo);
@@ -188,18 +201,8 @@ function BindPaymentInformationInvoiceRegion(Result) {
    
     $('#lblPaymentTypeInvoiceRegion').text(Result.PaymentType);
     $('#lblCurrencyCodeInvoiceRegion').text(Result.CurrencyCode);
-    switch(Result.PayStatusCode)
-    {
-        case 0: $('#PaymentStatusList').text('In process');
-            break;
-        case 1: $('#PaymentStatusList').text('Success');
-            break;
-        case 2: $('#PaymentStatusList').text('Failes');
-            break;
-        default:
-            $('#PaymentStatusList').text('_');
-            break;
-    }
+    $('#PaymentStatusList').val(Result.PayStatusCode);
+   
   
 }
 function BindShippingHandlingSectionInvoiceRegion(Result) {
@@ -258,7 +261,7 @@ function InvoiceDetailTabClick()
     try
     {
         ChangeButtonPatchView("Invoice", "InvoiceToolBox", "Detail");
-       
+        $("#PaymentStatusList").val('');
     }
     catch(e)
     {
@@ -275,4 +278,43 @@ function goback()
 function InvoiceListTabClick()
 {
     $('#InvoiceToolBox').html('');
+}
+
+function PaymentStatusUpdate()
+{
+    try
+    {
+        var ID = $('#hdnOrderHID').val();
+        if ((ID) && (ID > 0))
+        {
+            var Order = new Object();
+            Order.ID = ID;
+            Order.PayStatusCode = $("#PaymentStatusList").val();
+            var data = "{'OrderObj':" + JSON.stringify(Order) + "}";
+            PostDataToServer('Order/UpdateOrderPaymentStatus/', data, function (JsonResult) {
+                if (JsonResult != '') {
+                    switch (JsonResult.Result) {
+                        case "OK":
+                            notyAlert('success', JsonResult.Records.StatusMessage);
+                            BindInvoiceTable();
+                            goback();
+                            break;
+                        case "ERROR":
+                            notyAlert('error', JsonResult.Records.StatusMessage);
+                            break;
+                        default:
+                            break;
+                    }
+                }
+            })
+        }
+        
+       
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+   
+
 }
