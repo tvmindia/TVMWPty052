@@ -76,7 +76,8 @@ namespace PartyEC.RepositoryServices.Services
                                         bookingsObj.BillCountryCode = sdr["BillCountryCode"].ToString();
                                         bookingsObj.BillStateProvince = sdr["BillStateProvince"].ToString();
                                         bookingsObj.BillContactNo = sdr["BillContactNo"].ToString();
-                                        bookingsObj.ProductName = sdr["ProductName"].ToString(); 
+                                        bookingsObj.ProductName = sdr["ProductName"].ToString();
+                                        bookingsObj.ImageUrl = (sdr["ImageUrl"].ToString() != "" ? sdr["ImageUrl"].ToString() : bookingsObj.ImageUrl);
 
                                     }
                                     BookingsList.Add(bookingsObj);
