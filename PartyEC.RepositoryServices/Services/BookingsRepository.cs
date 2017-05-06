@@ -61,6 +61,7 @@ namespace PartyEC.RepositoryServices.Services
                                         bookingsObj.BookingDate = (sdr["BookingDate"].ToString() != "" ? DateTime.Parse(sdr["BookingDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : bookingsObj.BookingDate);
                                         bookingsObj.SourceIP = sdr["SourceIP"].ToString();
                                         bookingsObj.Status = (sdr["Status"].ToString() != "" ? int.Parse(sdr["Status"].ToString()) : bookingsObj.Status);
+                                        bookingsObj.StatusText = (sdr["StatusText"].ToString() != "" ? sdr["StatusText"].ToString() : bookingsObj.StatusText);
                                         bookingsObj.Qty = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : bookingsObj.Qty);
                                         bookingsObj.Price = (sdr["Price"].ToString() != "" ? decimal.Parse(sdr["Price"].ToString()) : bookingsObj.Price);
                                         bookingsObj.AdditionalCharges = (sdr["AdditionalCharges"].ToString() != "" ? decimal.Parse(sdr["AdditionalCharges"].ToString()) : bookingsObj.AdditionalCharges);
