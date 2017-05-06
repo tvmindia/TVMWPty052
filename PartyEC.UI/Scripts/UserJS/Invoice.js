@@ -21,7 +21,24 @@ $(document).ready(function () {
 
              ],
              columnDefs: [
-                
+                  {
+                      "render": function (data, type, row) {
+                          var res = null;
+                          switch (data) {
+                              case 0: res='In process';
+                                  break;
+                              case 1: res='Success';
+                                  break;
+                              case 2: res='Failes';
+                                  break;
+                              default:
+                                  res = '_';
+                                  break;
+                          }
+                          return res;
+                      },
+                      "targets": 5
+                  }
                     
              ]
 
@@ -234,4 +251,28 @@ function GetOrderSummery(ID) {
     catch (e) {
         notyAlert('error', e.message);
     }
+}
+
+function InvoiceDetailTabClick()
+{
+    try
+    {
+        ChangeButtonPatchView("Invoice", "InvoiceToolBox", "Detail");
+       
+    }
+    catch(e)
+    {
+        notyAlert('error', e.message);
+    }
+}
+
+function goback()
+{
+    $('#tabInvoiceList a').trigger('click');
+    $('#InvoiceToolBox').html('');
+}
+
+function InvoiceListTabClick()
+{
+    $('#InvoiceToolBox').html('');
 }
