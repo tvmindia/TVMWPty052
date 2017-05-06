@@ -45,7 +45,7 @@ $(document).ready(function () {
                      { "data": "ProductID" },
                     { "data": "AttributeValues" },
                   { "data": "Qty" },      
-                  { "data": "Status" },
+                  { "data": "StatusText" },
                   { "data": "Price" },
                   { "data": "SubTotal" },
                   { "data": "TaxAmt" },

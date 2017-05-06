@@ -18,7 +18,7 @@ $(document).ready(function () {
                { "data": "customerObj.Name", "defaultContent": "<i>-</i>" },
                { "data": "customerObj.Mobile", "defaultContent": "<i>-</i>" },
                { "data": "RequiredDate" },
-               { "data": "Status", "defaultContent": "<i>-</i>" },
+               { "data": "StatusText", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
              ],
              columnDefs: [{//hiding hidden column 
@@ -45,8 +45,8 @@ $(document).ready(function () {
                 columns: [
                      { "data": "ProductID" },
                     { "data": "AttributeValues" },
-                  { "data": "Qty" },
-                  { "data": "Status" },
+                  { "data": "StatusText" },
+                     { "data": "Qty" },
                   { "data": "Price" },
                   { "data": "SubTotal" },
                   { "data": "TaxAmt" },

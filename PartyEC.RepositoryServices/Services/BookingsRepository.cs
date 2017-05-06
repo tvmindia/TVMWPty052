@@ -199,7 +199,7 @@ namespace PartyEC.RepositoryServices.Services
                                         bookingsObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : bookingsObj.CustomerID);
                                         bookingsObj.RequiredDate = (sdr["RequiredDate"].ToString() != "" ? DateTime.Parse(sdr["RequiredDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : bookingsObj.RequiredDate);
                                         bookingsObj.BookingDate = (sdr["BookingDate"].ToString() != "" ? DateTime.Parse(sdr["BookingDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : bookingsObj.BookingDate);
-                                        bookingsObj.Status = (sdr["Status"].ToString() != "" ? int.Parse(sdr["Status"].ToString()) : bookingsObj.Status);
+                                        bookingsObj.StatusText = (sdr["StatusText"].ToString() != "" ? sdr["StatusText"].ToString() : bookingsObj.StatusText);
                                         bookingsObj.customerObj = new Customer();
                                         bookingsObj.customerObj.Name = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : bookingsObj.customerObj.Name);
                                         bookingsObj.customerObj.Mobile = (sdr["ContactNo"].ToString() != "" ? sdr["ContactNo"].ToString() : bookingsObj.customerObj.Mobile);
