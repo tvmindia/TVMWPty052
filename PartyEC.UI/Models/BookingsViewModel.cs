@@ -78,6 +78,8 @@ namespace PartyEC.UI.Models
         public string BillStateProvince { get; set; }
         public string BillContactNo { get; set; }
         public string ProductName { get; set; }
+        public string ImageUrl { get; set; }
+        public string StatusText { get; set; }
 
         //Customer Details
         public CustomerViewModel customerObj { get; set; }
