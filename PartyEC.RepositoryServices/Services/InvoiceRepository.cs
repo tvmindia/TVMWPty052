@@ -135,6 +135,56 @@ namespace PartyEC.RepositoryServices.Services
 
             return operationsStatusObj;
         }
+
+
+        public List<Invoice> GetAllInvoices()
+        {
+            List<Invoice> invoiceList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetAllInvoices]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                invoiceList = new List<Invoice>();
+                                while (sdr.Read())
+                                {
+                                    Invoice _invoice = new Invoice();
+                                    {
+                                        _invoice.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _invoice.ID);
+                                        _invoice.InvoiceNo = (sdr["InvoiceNo"].ToString() != "" ? sdr["InvoiceNo"].ToString() : _invoice.InvoiceNo);
+                                        _invoice.ParentID= (sdr["ParentID"].ToString() != "" ? int.Parse(sdr["ParentID"].ToString()) : _invoice.ParentID);
+                                        _invoice.ParentType= (sdr["ParentType"].ToString() != "" ? sdr["ParentType"].ToString() : _invoice.ParentType);
+                                        _invoice.InvoiceDate= (sdr["InvoiceDate"].ToString() != "" ? sdr["InvoiceDate"].ToString() : _invoice.InvoiceDate);
+                                        _invoice.PaymentStatus= (sdr["PaymentStatus"].ToString() != "" ? int.Parse(sdr["PaymentStatus"].ToString()) : _invoice.PaymentStatus);
+                                        _invoice.LogDetails = new LogDetails();
+                                        _invoice.LogDetails.CreatedDate = ((sdr["CreatedDate"].ToString() != "" ? DateTime.Parse(sdr["CreatedDate"].ToString()) : _invoice.LogDetails.CreatedDate));
+                                        
+                                    }
+                                    invoiceList.Add(_invoice);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return invoiceList;
+        }
     }
 
 }

@@ -4,23 +4,280 @@
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
+
 @section styles {
     @Styles.Render("~/Content/DataTables/css/datatable")
     @Styles.Render("~/Content/DataTables/css/datatableSelect")
-  }
-
-
-
-
-
-
-
-
-@section Scripts {
-    @Scripts.Render("~/bundles/datatable")
-    @Scripts.Render("~/bundles/datatableSelect")
-    @Scripts.Render("~/bundles/Invoice")
 }
+
+
+
+<div class="container-fluid">
+    <div class="panel with-nav-tabs panel-primary">
+        <div class="panel-heading">
+            <ul class="nav nav-tabs">
+                <li id="tabInvoiceList" class="active"><a href="#InvoiceList" data-toggle="tab"><i class="fa fa-list">&nbsp;</i> Invoices List</a></li>
+                <li id="tabInvoiceDetails"><a href="#InvoiceDetail" data-toggle="tab"><i class="fa fa-file-o">&nbsp;</i> Invoice Detail</a></li>
+                @*ButtonPatch*@
+                <div id="InvoiceToolBox">
+
+                </div>
+
+            </ul>
+        </div>
+
+        <div class="panel-body" style="min-height:580px;padding:0;">
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="InvoiceList" style="padding:1%;">
+                    <div class="container-fluid">
+                        <div class="row">
+                            @*table*@
+                            <table id="tblInvoices" class="table table-striped table-bordered table-hover" width="100%">
+                                <thead>
+                                    <tr>
+                                        <th>InvoiceID</th>
+                                        <th>No</th>
+                                        <th>Parent ID</th>
+                                        <th>Parent Type</th>
+                                        <th>Date</th>
+                                        <th>Status</th>
+                                        <th>Actions</th>
+
+                                    </tr>
+                                </thead>
+                            </table>
+                            @*table*@
+                        </div>
+                    </div>
+                   
+                 </div>
+
+                <div class="tab-pane fade" id="InvoiceDetail" style="padding:1%;">
+                    <div class="col-md-12" style="padding:0;">
+                        <div class="col-md-2" style="padding:0;">
+                            <ul class="nav nav-tabs nav-stacked Sidebar_Party" style="min-height:580px;" id="LHSNavbarInvoice">
+                                <li class="liHead"><a disabled>&nbsp;</a></li>
+                                <li onclick="" class="active"><a data-toggle="tab" id="tabNotifi">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invoice info</a></li>
+
+                            </ul>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="col-md-12">
+                                <h4 style="max-width:50%;padding:1%"><span class="fa fa-bfa fa-shopping-cart" style="font-size: 16px;color:#f46f25;"></span><span> </span><span class="Spantitle">Invoice Order</span></h4>
+                                <hr />
+                                <div class="col-md-6">
+                                    <div class="infoBox panel panel-default" style="min-height:250px">
+                                        <div class="infoBoxHeader panel-heading">General</div>
+                                        <div class="panel-body">
+                                            @*@Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblOrderNoInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            @*@Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblOrderDateInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            @*@Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblOrderStatusInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            @*@Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblSourceIPInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+                                            @*@Html.LabelFor(model => model.RevNo, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblRevNoInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="infoBox panel panel-default" style="min-height:250px">
+                                        <div class="infoBoxHeader panel-heading">Account Information</div>
+                                        <div class="panel-body">
+                                            <div class="col-md-12">
+                                                <img src="~/Content/images/Person1.png" id="imgPreviewCustomerInvoiceRegion" />
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            @*@Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblCustomerNameInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            @*@Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblContactNoInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            @*@Html.LabelFor(model => model.CustomerEmail, htmlAttributes: new { @class = "h5 col-md-4" })*@
+                                            <div class="col-md-8">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblCustomerEmailInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="infoBox panel panel-default" style="min-height:150px">
+                                        <div class="infoBoxHeader panel-heading">Payment Information</div>
+                                        <div class="panel-body">
+                                            <label class="h5 col-md-6" for="lblPaymentType">Payment Mode:</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblPaymentTypeInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            <label class="h5 col-md-6" for="lblCurrencyCode">Currency :</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblCurrencyCodeInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            <label class="h5 col-md-6" for="lblPaymentStatus">Payment Status :</label>
+                                            <div class="col-lg-6">
+
+                                                @*@Html.DropDownListFor(model => model.PaymentStatusList, null, "--Select Status--", new { @class = "form-control", @onchange = "PaymentStatusOnChange(this)" })*@
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="infoBox panel panel-default" style="min-height:150px">
+                                        <div class="infoBoxHeader panel-heading">Shipping & Handling information</div>
+                                        <div class="panel-body">
+                                            <label class="h5 col-md-6" for="lblShippingLocation">Shipping Location:</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblShippingLocationInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+                                            <div class="col-md-12"></div>
+                                            <label class="h5 col-md-6" for="lblShippingAmt">Shipping Charges :</label>
+                                            <div class="col-md-6">
+                                                @*style="font-weight:bold"*@
+                                                <label id="lblShippingAmtInvoiceRegion" class="h5 label-display">-</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <h3>Order Items</h3>
+                                    <hr />
+                                    <table id="tblOrderDetailsInvoiceRegion" class="table table-striped table-bordered table-hover" cellspacing="0" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th>ID</th>
+                                                <th>Product</th>
+                                                <th>Item Status</th>
+                                                <th>Qty</th>
+                                                <th>Price</th>
+                                                <th>Sub Total</th>
+                                                <th>Shipping Charges</th>
+                                                <th>Tax Amount</th>
+                                                <th>Discount</th>
+                                                <th>Total Discount</th>
+                                                <th>Total</th>
+                                            </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                                <div class="col-md-6"></div>
+                                <div class="col-md-6">
+                                    <div class="infoBox panel panel-default" style="min-height:250px">
+                                        <div class="infoBoxHeader panel-heading">Order Summery</div>
+                                        <div class="panel-body">
+                                            <table width="100%" border="0" align="right" cellpadding="0" cellspacing="0">
+                                                <tbody>
+                                                    <tr>
+                                                        <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                                                            <strong>Sub-total</strong>
+                                                        </td>
+                                                        <td width="0" id="tdSubTotalInvoiceRegion" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                                                            0.00QAR
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td width="0" align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 0px 3px 0px">
+                                                            <strong>Tax:</strong>
+                                                        </td>
+                                                        <td width="0" id="tdTaxTotalInvoiceRegion" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:15px 5px 3px 5px">
+                                                            0.00QAR
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px">
+                                                            <strong>Delivery costs:</strong>
+                                                        </td>
+                                                        <td width="62" id="tdDeliveryCostsInvoiceRegion" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px">
+                                                            0.00QAR
+                                                        </td>
+                                                    </tr>
+
+                                                    <tr>
+                                                        <td align="left" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 0px 3px 0px;border-bottom:solid 1px #999999">
+                                                            <strong>Order discount:</strong>
+                                                        </td>
+                                                        <td width="62" id="tdOrderDiscountInvoiceRegion" align="right" valign="top" style="color:#404041;font-size:12px;line-height:16px;padding:5px 5px 3px 5px;border-bottom:solid 1px #999999">
+                                                            0.00QAR
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td align="left" valign="bottom" style="color:#404041;font-size:13px;line-height:16px;padding:5px 0px 3px 0px">
+                                                            <strong>Grand Total:</strong>
+                                                        </td>
+                                                        <td width="62" align="right" valign="bottom" style="color:#339933;font-size:13px;line-height:16px;padding:5px 5px 3px 5px">
+                                                            <strong class="strGrandTotal">0.00QAR</strong>
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+
+
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                    
+                    </div>
+
+                </div>
+            </div>
+
+
+
+
+            </div>
+        </div>
+
+
+
+
+      
+
+
+
+
+
+
+        @section Scripts {
+            @Scripts.Render("~/bundles/datatable")
+            @Scripts.Render("~/bundles/datatableSelect")
+            @Scripts.Render("~/bundles/Invoice")
+        }
 
 
 

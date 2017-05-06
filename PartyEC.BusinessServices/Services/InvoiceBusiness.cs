@@ -41,5 +41,20 @@ namespace PartyEC.BusinessServices.Services
         {
             return _invoiceRepository.InsertInvoiceDetail(invoiceDetailObj);
         }
+
+        public List<Invoice> GetAllInvoices()
+        {
+            List<Invoice> invoicelist = null;
+            try
+            {
+                invoicelist = _invoiceRepository.GetAllInvoices();
+               
+            }
+            catch(Exception ex)
+            {
+                throw ex;
+            }
+            return invoicelist;
+        }
     }
 }

@@ -1239,6 +1239,7 @@ function ShowShipment(this_Obj)
     debugger;
     var rowData = DataTables.orderShippedShipmentRegion.row($(this_Obj).parents('tr')).data();
     DataTables.OrderOldShipmentShipmentRegion.clear().rows.add(GetShipmentDetails(rowData.ID)).draw(false);
+    $('#hdnShipmentID').val(rowData.ID);
     $('#tabOldShippingRegion').click();
 }
 function TabActionOldShipmentRegion()
@@ -1263,6 +1264,30 @@ function SaveShippingDetails()
     ShipmentViewModel.DetailsList = DetailsList;
     var data = "{'shipmentViewModelObj':" + JSON.stringify(ShipmentViewModel) + "}";
     PostDataToServer('Order/InsertShipment/', data, function (JsonResult) {
+        if (JsonResult != '') {
+            switch (JsonResult.Result) {
+                case "OK":
+                    notyAlert('success', JsonResult.Record.StatusMessage);
+                    goback();
+                    break;
+                case "ERROR":
+                    notyAlert('error', JsonResult.Record.StatusMessage);
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
+}
+function UpdateDeliveryStatus()
+{
+    var ShipmentViewModel = new Object();
+    ShipmentViewModel.OrderID = $('#hdnOrderHID').val();
+    ShipmentViewModel.ID = $('#hdnShipmentID').val();
+    ShipmentViewModel.DeliveredDate = $('#txtDeliveredDateShippingRegion').val();
+    ShipmentViewModel.DeliveredBy = $('#txtDeliveredByShippingRegion').val();
+    var data = "{'shipmentViewModelObj':" + JSON.stringify(ShipmentViewModel) + "}";
+    PostDataToServer('Order/UpdateDeliveryStatus/', data, function (JsonResult) {
         if (JsonResult != '') {
             switch (JsonResult.Result) {
                 case "OK":

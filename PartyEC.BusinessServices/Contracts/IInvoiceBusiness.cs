@@ -11,5 +11,6 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertInvoice(Invoice invoiceObj);
         OperationsStatus InsertInvoiceHeader(Invoice invoiceObj);
         OperationsStatus InsertInvoiceDetail(InvoiceDetail invoiceDetailObj);
+        List<Invoice> GetAllInvoices();
     }
 }

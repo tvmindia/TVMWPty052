@@ -12,5 +12,6 @@ namespace PartyEC.RepositoryServices.Contracts
         List<ShipmentDetail> GetAllShipmentDetail(int ID);
         OperationsStatus InsertShipmentHeader(Shipment shipmentObj);
         OperationsStatus InsertShipmentDetail(ShipmentDetail shipmentDetailObj);
+        OperationsStatus UpdateDeliveryStatus(Shipment shipmentObj);
     }
 }
