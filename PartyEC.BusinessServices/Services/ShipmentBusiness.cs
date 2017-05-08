@@ -25,7 +25,7 @@ namespace PartyEC.BusinessServices.Services
             List<Shipment> ShipList= _shipmentRepository.GetAllShipmentHeader();
             if (ShipList != null)
             {
-                ShipList.Select(t => t.OrderID == ID).ToList();
+                ShipList=ShipList.Where(t => t.OrderID == ID).ToList();
             }
             return ShipList;
         }

@@ -529,10 +529,10 @@ function GetOrderDetails(ID) {
 
     }
 }
-function GetProductsListtoAdd()
+function GetProductsListtoAdd(ID)
 {
     try {
-        var data = "";
+        data = { "ID": ID };
         var ds = {};
         ds = GetDataFromServer("Order/GetProductsListtoAdd/", data);
         if (ds != '') {
@@ -569,6 +569,20 @@ function GetShipmentDetails(ID) {
         data = { "ID": ID };
         var ds = {};
         ds = GetDataFromServer("Order/GetAllShipmentDetail/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+function GetOrderExcludesShip(ID) {
+    debugger;
+    try {
+        data = { "ID": ID };
+        var ds = {};
+        ds = GetDataFromServer("Order/GetOrderExcludesShip/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
         if (ds.Result == "ERROR") { alert(ds.Message); }
@@ -707,11 +721,12 @@ function AddReviseOrder()
         Order.OrderDetailID = null;
         Order.Qty = 1;
         Order.Total = tabledata[i].ActualPrice;
-        Order.ShippingAmt = 0;
+        Order.ShippingAmt = tabledata[i].ShippingCharge;
         Order.TaxAmt = 0;
+        Order.ItemID = tabledata[i].ID;
         Order.DiscountAmt = tabledata[i].DiscountAmount;
         Order.TotalDiscountAmt = tabledata[i].DiscountAmount;
-        Order.SubTotal = tabledata[i].ActualPrice - tabledata[i].DiscountAmount;
+        Order.SubTotal = ((tabledata[i].ActualPrice + tabledata[i].ShippingCharge) - tabledata[i].DiscountAmount);
         Order.ItemStatus = "Pending";
         Order.Price = tabledata[i].ActualPrice;
         Order.ProductSpecXML = tabledata[i].ProductName;
@@ -836,8 +851,9 @@ function Calculatesum(this_obj)
 }
 function AddNewRevision()
 {
+    var ID = $('#hdnLocationID').val();
     $('#ModelCreateNewOrder').modal('show');
-    DataTables.tblProductList.clear().rows.add(GetProductsListtoAdd()).draw(false);
+    DataTables.tblProductList.clear().rows.add(GetProductsListtoAdd(ID)).draw(false);
 }
 function gobackDetails()
 {
@@ -942,8 +958,10 @@ function BindPaymentInformation(Result) {
 }
 function BindShippingHandlingSection(Result)
 {
+    debugger;
     $('#lblShippingLocation').text(Result.ShippingLocationName)
     $('#lblShippingAmt').text(Result.TotalShippingAmt)
+    $('#hdnLocationID').val(Result.shippingLocationID)
 }
 function BindTableOrderDetailList(ID)
 {
@@ -1200,7 +1218,7 @@ function TabActionAddShipmentRegion()
     ChangeButtonPatchView("Order", "btnPatchOrders", "AddShipmentRegion");
 }
 function BindTableOrderDetailListShipmentRegion(ID) {
-    DataTables.orderDetailstableShipmentRegion.clear().rows.add(GetAllOrdersList(ID)).draw(false);
+    DataTables.orderDetailstableShipmentRegion.clear().rows.add(GetOrderExcludesShip(ID)).draw(false);
 }
 function ChangeQtyShipment(this_Obj)
 {

@@ -1079,7 +1079,7 @@ namespace PartyEC.RepositoryServices.Services
 
             return myProductDetails;
         }
-        public List<ProductDetail> GetAllProductDetail()
+        public List<ProductDetail> GetAllProductDetail(int LocationID)
         {
             List<ProductDetail> myProductDetails = null;
             try
@@ -1093,6 +1093,7 @@ namespace PartyEC.RepositoryServices.Services
                     _cmd = new SqlCommand();
                     _cmd.Connection = _con;
                     _cmd.CommandText = "[GetAllProductDetail]";
+                    _cmd.Parameters.Add("@LocationID", SqlDbType.Int).Value =LocationID;
                     _cmd.CommandType = CommandType.StoredProcedure;
 
                     using (SqlDataReader sdr = _cmd.ExecuteReader())
@@ -1105,7 +1106,7 @@ namespace PartyEC.RepositoryServices.Services
                                 ProductDetail myProductDetail = new ProductDetail();
                                 myProductDetail.ProductID = sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : myProductDetail.ProductID;
                                 myProductDetail.ID = sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myProductDetail.ID;
-                                //myProductDetail.AttributeSetID = sdr["AttributeSetID"].ToString() != "" ? int.Parse(sdr["AttributeSetID"].ToString()) : myProductDetail.AttributeSetID;
+                                myProductDetail.ShippingCharge = sdr["ShippingCharge"].ToString() != "" ? float.Parse(sdr["ShippingCharge"].ToString()) : myProductDetail.ShippingCharge;
                                 myProductDetail.Qty = sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : myProductDetail.Qty; //sdr["Qty"].ToString();
                                 //myProductDetail.OutOfStockAlertQty = sdr["OutOfStockAlertQty"].ToString() != "" ? int.Parse(sdr["OutOfStockAlertQty"].ToString()) : myProductDetail.OutOfStockAlertQty;
                                 myProductDetail.PriceDifference = sdr["PriceDiffAmt"].ToString() != "" ? decimal.Parse(sdr["PriceDiffAmt"].ToString()) : myProductDetail.PriceDifference;

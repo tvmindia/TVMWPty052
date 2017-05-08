@@ -18,7 +18,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus UpdateShipingDetails(Order orderObj);
         OperationsStatus InsertReviseOrder(OrderDetail orderDetailObj);
         Order GetOrderSummery(int ID);
-
+        List<OrderDetail> GetOrderExcludesShip(int ID);
         //For App
         List<Order> GetCustomerOrders(int CustomerID,bool Ishistory);
         OperationsStatus InsertOrder(Order orderObj);

@@ -40,7 +40,8 @@ namespace PartyEC.UI.Models
         [Display(Name = "Source IP :")]
         public string SourceIP { get; set; }
 	 public int CustomerID { get; set; }
-	 public string ShippingLocationName { get; set; }
+        public int shippingLocationID { get; set; }
+        public string ShippingLocationName { get; set; }
 	 public string PaymentType { get; set; }
 	 public string CurrencyCode { get; set; }
 	 public float CurrencyRate { get; set; }

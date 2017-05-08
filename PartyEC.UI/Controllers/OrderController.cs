@@ -156,11 +156,11 @@ namespace PartyEC.UI.Controllers
        
         [HttpGet]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
-        public string GetProductsListtoAdd()
+        public string GetProductsListtoAdd(string ID)
         {
             try
             {
-                    List<ProductDetailViewModel> productList = Mapper.Map<List<ProductDetail>, List<ProductDetailViewModel>>(_productBusiness.GetAllProductDetail());
+                    List<ProductDetailViewModel> productList = Mapper.Map<List<ProductDetail>, List<ProductDetailViewModel>>(_productBusiness.GetAllProductDetail(int.Parse(ID)));
 
                     return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
             }
@@ -192,6 +192,20 @@ namespace PartyEC.UI.Controllers
             {
                 OrderViewModel OrderViewModelObj = Mapper.Map<Order, OrderViewModel>(_orderBusiness.GetOrderSummery(int.Parse(ID)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = OrderViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string GetOrderExcludesShip(string ID)
+        {
+            try
+            {
+                List<OrderDetailViewModel> orderDetailList = Mapper.Map<List<OrderDetail>, List<OrderDetailViewModel>>(_orderBusiness.GetOrderExcludesShip(int.Parse(ID)));
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = orderDetailList });
             }
             catch (Exception ex)
             {

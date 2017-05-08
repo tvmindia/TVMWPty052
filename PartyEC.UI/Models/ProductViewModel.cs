@@ -184,8 +184,8 @@ namespace PartyEC.UI.Models
         public int ID { get; set; }
         public int ProductID { get; set; }
 
-      
 
+        public float ShippingCharge { get; set; }
         public int? Qty { get; set; }
         public int? OutOfStockAlertQty { get; set; }
         public decimal? PriceDifference { get; set; }

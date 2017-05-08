@@ -134,6 +134,66 @@ namespace PartyEC.RepositoryServices.Services
 
             return OrderHeaderList;
         }
+
+        public List<OrderDetail> GetOrderExcludesShip(int ID)
+        {
+            List<OrderDetail> OrderHeaderList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetOrderExcludesShip]";
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ID;
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                OrderHeaderList = new List<OrderDetail>();
+                                while (sdr.Read())
+                                {
+                                    OrderDetail orderObj = new OrderDetail();
+                                    {
+                                        orderObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : orderObj.ProductID);
+                                        orderObj.OrderDetailID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.OrderDetailID);
+                                        orderObj.ProductSpecXML = sdr["ProductName"].ToString() + "||" + sdr["ProductSpecXML"].ToString();
+                                        orderObj.ItemStatus = sdr["ItemStatus"].ToString();
+                                        orderObj.ItemID = (sdr["ItemID"].ToString() != "" ? int.Parse(sdr["ItemID"].ToString()) : orderObj.ItemID);
+                                        orderObj.Qty = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : 0);
+                                        orderObj.Price = (sdr["Price"].ToString() != "" ? float.Parse(sdr["Price"].ToString()) : 0);
+                                        orderObj.TaxAmt = (sdr["TaxAmt"].ToString() != "" ? float.Parse(sdr["TaxAmt"].ToString()) : 0);
+                                        orderObj.ShippingAmt = (sdr["ShippingAmt"].ToString() != "" ? float.Parse(sdr["ShippingAmt"].ToString()) : 0);
+                                        orderObj.DiscountAmt = (sdr["DiscountAmt"].ToString() != "" ? float.Parse(sdr["DiscountAmt"].ToString()) : 0);
+                                        orderObj.TotalDiscountAmt = (sdr["TotalDiscountAmt"].ToString() != "" ? float.Parse(sdr["TotalDiscountAmt"].ToString()) : 0);
+                                        orderObj.Total = (sdr["Total"].ToString() != "" ? float.Parse(sdr["Total"].ToString()) : 0);
+                                        orderObj.SubTotal = (sdr["SubTotal"].ToString() != "" ? float.Parse(sdr["SubTotal"].ToString()) : 0);
+                                        //orderObj.ProductQty = (sdr["ProductQty"].ToString() != "" ? int.Parse(sdr["ProductQty"].ToString()) : orderObj.ProductQty);
+                                        orderObj.ShippedQty = 0;
+                                        orderObj.QtyShipped = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : 0);
+                                    }
+                                    OrderHeaderList.Add(orderObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return OrderHeaderList;
+        }
+
         public Order GetOrderDetails(string ID)
         {
             Order orderObj = new Order();

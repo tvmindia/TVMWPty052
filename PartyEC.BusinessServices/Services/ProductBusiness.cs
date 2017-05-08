@@ -291,13 +291,13 @@ namespace PartyEC.BusinessServices.Services
             }
             return productDetailslist;
         }
-        public List<ProductDetail> GetAllProductDetail()
+        public List<ProductDetail> GetAllProductDetail(int LocationID)
         {
             List<ProductDetail> productDetailslist = null;
             try
             {
 
-                productDetailslist = _productRepository.GetAllProductDetail();
+                productDetailslist = _productRepository.GetAllProductDetail(LocationID);
 
             }
             catch (Exception ex)

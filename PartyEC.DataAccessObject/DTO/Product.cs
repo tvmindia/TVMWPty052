@@ -64,6 +64,7 @@ namespace PartyEC.DataAccessObject.DTO
         public int? OutOfStockAlertQty { get; set; }
         public decimal? PriceDifference { get; set; }        
         public string DetailTags { get; set; }
+        public float ShippingCharge { get; set; }
         public Boolean Enabled { get; set; }
         public Boolean StockAvailable { get; set; }
         public Boolean DefaultOption { get; set; }

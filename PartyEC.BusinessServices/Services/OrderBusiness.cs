@@ -81,6 +81,10 @@ namespace PartyEC.BusinessServices.Services
         {
             return _orderRepository.GetCustomerOrders(CustomerID, Ishistory);
         }
+        public List<OrderDetail> GetOrderExcludesShip(int ID)
+        {
+            return _orderRepository.GetOrderExcludesShip(ID);
+        }
         public OperationsStatus InsertReviseOrder(OrderDetail orderDetailsObj)
         {
             OperationsStatus operationStatusObj = null;
