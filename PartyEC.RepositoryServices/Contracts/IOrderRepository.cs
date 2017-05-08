@@ -19,7 +19,7 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus UpdateShipingDetails(Order orderObj);
         OperationsStatus InsertOrderHeader(Order orderObj);
         OperationsStatus InsertOrderDetail(OrderDetail orderDetailObj); 
-        List<Order> GetCustomerOrders(int CustomerID,bool Ishistory);
+       // List<Order> GetCustomerOrders(int CustomerID,bool Ishistory);
         List<OrderDetail> GetOrderExcludesShip(int ID);
         OperationsStatus UpdateOrderPaymentStatus(Order orderObj);
 

@@ -79,7 +79,17 @@ namespace PartyEC.BusinessServices.Services
         }
         public List<Order> GetCustomerOrders(int CustomerID,bool Ishistory)
         {
-            return _orderRepository.GetCustomerOrders(CustomerID, Ishistory);
+            //return _orderRepository.GetCustomerOrders(CustomerID, Ishistory);
+            if (Ishistory)
+            {
+                return GetOrderHeader().Where(t => t.CustomerID == CustomerID && t.StatusCode ==3).ToList();
+            }
+           
+            else
+            {
+                return GetOrderHeader().Where(t => t.CustomerID == CustomerID && t.StatusCode !=3).ToList();
+
+            }
         }
         public List<OrderDetail> GetOrderExcludesShip(int ID)
         {

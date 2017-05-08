@@ -52,6 +52,7 @@ namespace PartyEC.RepositoryServices.Services
                                     {
                                         orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
                                         orderObj.OrderNo = sdr["OrderNo"].ToString();
+                                        orderObj.CustomerID= (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : orderObj.ID);
                                         orderObj.OrderRev = sdr["OrderRev"].ToString();
                                         orderObj.ParentOrderID= (sdr["ParentOrderID"].ToString() != "" ? int.Parse(sdr["ParentOrderID"].ToString()) : orderObj.ParentOrderID);
                                         orderObj.OrderDate =sdr["OrderDate"].ToString()!=""?DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") :orderObj.OrderDate;
@@ -725,84 +726,84 @@ namespace PartyEC.RepositoryServices.Services
 
             return operationsStatusObj;
         }
-        public List<Order> GetCustomerOrders(int CustomerID,bool Ishistory)
-        {
+        //public List<Order> GetCustomerOrders(int CustomerID,bool Ishistory)
+        //{
 
-            List<Order> OrderHeaderList = null;
-            try
-            {
-                using (SqlConnection con = _databaseFactory.GetDBConnection())
-                {
-                    using (SqlCommand cmd = new SqlCommand())
-                    {
-                        if (con.State == ConnectionState.Closed)
-                        {
-                            con.Open();
-                        }
-                        cmd.Connection = con;
-                        cmd.CommandText = "[GetCustomerOrders]";
-                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CustomerID;
-                        cmd.Parameters.Add("@Ishistory", SqlDbType.Bit).Value = Ishistory;
-                        cmd.CommandType = CommandType.StoredProcedure;
-                        using (SqlDataReader sdr = cmd.ExecuteReader())
-                        {
-                            if ((sdr != null) && (sdr.HasRows))
-                            {
-                                OrderHeaderList = new List<Order>();
-                                while (sdr.Read())
-                                {
-                                    Order orderObj = new Order();
-                                    {
-                                        orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
-                                        orderObj.OrderNo = sdr["OrderNo"].ToString();
-                                        orderObj.OrderRev = sdr["OrderRev"].ToString();
-                                        orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : orderObj.OrderDate;
-                                        orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : 0);
-                                        orderObj.OrderStatus = sdr["OrderStatus"].ToString();
-                                        orderObj.SourceIP = sdr["SourceIP"].ToString();
-                                        orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : "";
-                                        orderObj.CustomerID = sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : orderObj.CustomerID;
-                                        orderObj.BillFirstName = sdr["BillFirstName"].ToString();
-                                        orderObj.BillLastName = sdr["BillLastName"].ToString();
-                                        orderObj.BillMidName = sdr["BillMidName"].ToString();
-                                        orderObj.BillAddress = sdr["BillAddress"].ToString();
-                                        orderObj.BillCity = sdr["BillCity"].ToString();
-                                        orderObj.BillContactNo = sdr["BillContactNo"].ToString();
-                                        orderObj.BillCountryCode = sdr["BillCountryCode"].ToString();
-                                        orderObj.BillStateProvince = sdr["BillStateProvince"].ToString();
-                                        orderObj.BillPrefix = sdr["BillPrefix"].ToString();
-                                        orderObj.ShipAddress = sdr["ShipAddress"].ToString();
-                                        orderObj.ShipCity = sdr["ShipCity"].ToString();
-                                        orderObj.ShipContactNo = sdr["ShipContactNo"].ToString();
-                                        orderObj.ShipCountryCode = sdr["ShipCountryCode"].ToString();
-                                        orderObj.ShipFirstName = sdr["ShipFirstName"].ToString();
-                                        orderObj.ShipLastName = sdr["ShipLastName"].ToString();
-                                        orderObj.ShipMidName = sdr["ShipMidName"].ToString();
-                                        orderObj.ShipStateProvince = sdr["ShipStateProvince"].ToString();
-                                        orderObj.TotalShippingAmt = sdr["TotalShippingAmt"].ToString() != "" ? float.Parse(sdr["TotalShippingAmt"].ToString()) : orderObj.TotalShippingAmt;
-                                        orderObj.PaymentType = sdr["PaymentType"].ToString();
-                                        orderObj.PaymentStatus = sdr["PaymentStatus"].ToString();
-                                        orderObj.CurrencyCode = sdr["CurrencyCode"].ToString();
-                                        orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : orderObj.ID);
-                                        orderObj.OrderStatusText = sdr["OrderStatusText"].ToString();
+        //    List<Order> OrderHeaderList = null;
+        //    try
+        //    {
+        //        using (SqlConnection con = _databaseFactory.GetDBConnection())
+        //        {
+        //            using (SqlCommand cmd = new SqlCommand())
+        //            {
+        //                if (con.State == ConnectionState.Closed)
+        //                {
+        //                    con.Open();
+        //                }
+        //                cmd.Connection = con;
+        //                cmd.CommandText = "[GetCustomerOrders]";
+        //                cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CustomerID;
+        //                cmd.Parameters.Add("@Ishistory", SqlDbType.Bit).Value = Ishistory;
+        //                cmd.CommandType = CommandType.StoredProcedure;
+        //                using (SqlDataReader sdr = cmd.ExecuteReader())
+        //                {
+        //                    if ((sdr != null) && (sdr.HasRows))
+        //                    {
+        //                        OrderHeaderList = new List<Order>();
+        //                        while (sdr.Read())
+        //                        {
+        //                            Order orderObj = new Order();
+        //                            {
+        //                                orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
+        //                                orderObj.OrderNo = sdr["OrderNo"].ToString();
+        //                                orderObj.OrderRev = sdr["OrderRev"].ToString();
+        //                                orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : orderObj.OrderDate;
+        //                                orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : 0);
+        //                                orderObj.OrderStatus = sdr["OrderStatus"].ToString();
+        //                                orderObj.SourceIP = sdr["SourceIP"].ToString();
+        //                                orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : "";
+        //                                orderObj.CustomerID = sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : orderObj.CustomerID;
+        //                                orderObj.BillFirstName = sdr["BillFirstName"].ToString();
+        //                                orderObj.BillLastName = sdr["BillLastName"].ToString();
+        //                                orderObj.BillMidName = sdr["BillMidName"].ToString();
+        //                                orderObj.BillAddress = sdr["BillAddress"].ToString();
+        //                                orderObj.BillCity = sdr["BillCity"].ToString();
+        //                                orderObj.BillContactNo = sdr["BillContactNo"].ToString();
+        //                                orderObj.BillCountryCode = sdr["BillCountryCode"].ToString();
+        //                                orderObj.BillStateProvince = sdr["BillStateProvince"].ToString();
+        //                                orderObj.BillPrefix = sdr["BillPrefix"].ToString();
+        //                                orderObj.ShipAddress = sdr["ShipAddress"].ToString();
+        //                                orderObj.ShipCity = sdr["ShipCity"].ToString();
+        //                                orderObj.ShipContactNo = sdr["ShipContactNo"].ToString();
+        //                                orderObj.ShipCountryCode = sdr["ShipCountryCode"].ToString();
+        //                                orderObj.ShipFirstName = sdr["ShipFirstName"].ToString();
+        //                                orderObj.ShipLastName = sdr["ShipLastName"].ToString();
+        //                                orderObj.ShipMidName = sdr["ShipMidName"].ToString();
+        //                                orderObj.ShipStateProvince = sdr["ShipStateProvince"].ToString();
+        //                                orderObj.TotalShippingAmt = sdr["TotalShippingAmt"].ToString() != "" ? float.Parse(sdr["TotalShippingAmt"].ToString()) : orderObj.TotalShippingAmt;
+        //                                orderObj.PaymentType = sdr["PaymentType"].ToString();
+        //                                orderObj.PaymentStatus = sdr["PaymentStatus"].ToString();
+        //                                orderObj.CurrencyCode = sdr["CurrencyCode"].ToString();
+        //                                orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : orderObj.ID);
+        //                                orderObj.OrderStatusText = sdr["OrderStatusText"].ToString();
 
-                                    }
-                                    OrderHeaderList.Add(orderObj);
-                                }
-                            }//if
-                        }
-                    }
-                }
-            }
+        //                            }
+        //                            OrderHeaderList.Add(orderObj);
+        //                        }
+        //                    }//if
+        //                }
+        //            }
+        //        }
+        //    }
 
-            catch (Exception ex)
-            {
-                throw ex;
-            }
+        //    catch (Exception ex)
+        //    {
+        //        throw ex;
+        //    }
 
-            return OrderHeaderList;
+        //    return OrderHeaderList;
 
-        }
+        //}
 
         public OperationsStatus UpdateOrderPaymentStatus(Order orderObj)
         {
