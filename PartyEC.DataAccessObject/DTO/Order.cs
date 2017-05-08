@@ -16,6 +16,7 @@ namespace PartyEC.DataAccessObject.DTO
         public DateTime OrderDateTime { get; set; }
         public int StatusCode { get; set; }
         public string OrderStatus { get; set; }
+        public string OrderStatusText { get; set; }
         public int ParentOrderID { get; set; }
         public string SourceIP { get; set; }
         public int CustomerID { get; set; }

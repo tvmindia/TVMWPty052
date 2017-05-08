@@ -123,6 +123,7 @@ namespace PartyEC.UI.Models
         public string OrderRev { get; set; } 
         public string OrderDate { get; set; }
         public string OrderStatus { get; set; }
+        public string OrderStatusText { get; set; }
         public string CustomerName { get; set; }
         public string ContactNo { get; set; }
         public string CustomerEmail { get; set; }

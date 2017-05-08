@@ -756,20 +756,12 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.ID);
                                         orderObj.OrderNo = sdr["OrderNo"].ToString();
                                         orderObj.OrderRev = sdr["OrderRev"].ToString();
-
                                         orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : orderObj.OrderDate;
-                                       
-                                        
                                         orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : 0);
                                         orderObj.OrderStatus = sdr["OrderStatus"].ToString();
-
- 
-                                       
                                         orderObj.SourceIP = sdr["SourceIP"].ToString();
                                         orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : "";
                                         orderObj.CustomerID = sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : orderObj.CustomerID;
-                                      
-                                     
                                         orderObj.BillFirstName = sdr["BillFirstName"].ToString();
                                         orderObj.BillLastName = sdr["BillLastName"].ToString();
                                         orderObj.BillMidName = sdr["BillMidName"].ToString();
@@ -792,7 +784,7 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.PaymentStatus = sdr["PaymentStatus"].ToString();
                                         orderObj.CurrencyCode = sdr["CurrencyCode"].ToString();
                                         orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : orderObj.ID);
-                                        orderObj.OrderStatus = sdr["OrderStatus"].ToString();
+                                        orderObj.OrderStatusText = sdr["OrderStatusText"].ToString();
 
                                     }
                                     OrderHeaderList.Add(orderObj);
