@@ -116,7 +116,7 @@ namespace PartyEC.BusinessServices.Services
         }
         public List<OrderDetail> GetOrderExcludesShip(int ID)
         {
-            return _orderRepository.GetOrderExcludesShip(ID);
+            return _orderRepository.GetOrderExcludesShip(ID).Where(t=>t.QtyShipped!=0).ToList();
         }
         public OperationsStatus InsertReviseOrder(OrderDetail orderDetailsObj)
         {

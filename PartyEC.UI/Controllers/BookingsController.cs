@@ -22,12 +22,14 @@ namespace PartyEC.UI.Controllers
         ICommonBusiness _commonBusiness;
         IMasterBusiness _masterBusiness;
         IMailBusiness _mailBusiness;
-        public BookingsController(IBookingsBusiness bookingsBusiness, ICommonBusiness commonBusiness, IMasterBusiness masterBusiness, IMailBusiness mailBusiness)
+        IInvoiceBusiness _invoiceBusiness;
+        public BookingsController(IBookingsBusiness bookingsBusiness, ICommonBusiness commonBusiness, IMasterBusiness masterBusiness, IMailBusiness mailBusiness,IInvoiceBusiness invoiceBusiness)
         {
             _bookingsBusiness = bookingsBusiness;
             _commonBusiness = commonBusiness;
             _masterBusiness = masterBusiness;
             _mailBusiness = mailBusiness;
+            _invoiceBusiness = invoiceBusiness;
         }
         #endregion Constructor_Injection
 
@@ -271,7 +273,34 @@ namespace PartyEC.UI.Controllers
 
         #endregion SendBooking
 
+        [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string InsertInvoice(InvoiceViewModel InvoiceViewObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
 
+                InvoiceViewObj.LogDetails = new LogDetailsViewModel();
+                InvoiceViewObj.LogDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                InvoiceViewObj.LogDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_invoiceBusiness.InsertInvoice(Mapper.Map<InvoiceViewModel, Invoice>(InvoiceViewObj)));
+
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
 
         #region ChangeButtonStyle
         [HttpGet]
@@ -281,6 +310,14 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
+                case "Invoice":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.savebtn.Visible = true;
+                    ToolboxViewModelObj.savebtn.Event = "SubmitInvoice()";
+                    ToolboxViewModelObj.savebtn.Title = "Save";
+                    break;
                 case "List":
                     ToolboxViewModelObj.backbtn.Visible = false;
                     ToolboxViewModelObj.sendbtn.Visible = false;

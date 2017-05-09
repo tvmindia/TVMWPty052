@@ -71,7 +71,7 @@
                             @*<div class="col-md-12 Sidebar_Party" style="min-height:1644px;"></div>*@
                             <ul class="nav nav-tabs nav-stacked Sidebar_Party" style="min-height:1684px;">
                                 <li class="liHead"><a disabled>&nbsp;&nbsp;</a></li>
-                                <li class="active"><a href="#OrderRegion" data-toggle="tab" id="tabOrderRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General <span class="label label-danger">E</span></a></li>
+                                <li class="active" onclick="TabActionOrderRegion()"><a href="#OrderRegion" data-toggle="tab" id="tabOrderRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;General <span class="label label-danger">E</span></a></li>
                                 <li onclick="TabActionInvoiceRegion()"><a href="#InvoiceRegion" data-toggle="tab" id="tabInvoiceRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Invoice</a></li>
                                 <li onclick="TabActionShipmentRegion()"><a href="#ShippingRegion" data-toggle="tab" id="tabShippingRegion">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Shipping</a></li>
                                 <li onclick="TabActionAddShipmentRegion()" style="display:none;"><a href="#AddShippingRegion" data-toggle="tab" id="tabAddShippingRegion"></a></li>
@@ -674,30 +674,30 @@
                                                 @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
-                                                    <label id="lblOrderNoShippingRegion" class="h5 label-display">-</label>
+                                                    <label id="lblOrderNoShippingRegionOld" class="h5 label-display">-</label>
                                                 </div>
                                                 <div class="col-md-12"></div>
                                                 @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
-                                                    <label id="lblOrderDateShippingRegion" class="h5 label-display">-</label>
+                                                    <label id="lblOrderDateShippingRegionOld" class="h5 label-display">-</label>
                                                 </div>
                                                 <div class="col-md-12"></div>
                                                 @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
-                                                    <label id="lblOrderStatusShippingRegion" class="h5 label-display">-</label>
+                                                    <label id="lblOrderStatusShippingRegionOld" class="h5 label-display">-</label>
                                                 </div>
                                                 <div class="col-md-12"></div>
                                                 @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
-                                                    <label id="lblSourceIPShippingRegion" class="h5 label-display">-</label>
+                                                    <label id="lblSourceIPShippingRegionOld" class="h5 label-display">-</label>
                                                 </div>
                                                 @Html.LabelFor(model => model.RevNo, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
-                                                    <label id="lblRevNoShippingRegion" class="h5 label-display">-</label>
+                                                    <label id="lblRevNoShippingRegionOld" class="h5 label-display">-</label>
                                                 </div>
                                             </div>
                                         </div>
@@ -707,25 +707,25 @@
                                             <div class="infoBoxHeader panel-heading">Account Information</div>
                                             <div class="panel-body">
                                                 <div class="col-md-12">
-                                                    <img src="~/Content/images/Person1.png" id="imgPreviewCustomerShippingRegion" />
+                                                    <img src="~/Content/images/Person1.png" id="imgPreviewCustomerShippingRegionOld" />
                                                 </div>
                                                 <div class="col-md-12"></div>
                                                 @Html.LabelFor(model => model.CustomerName, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
-                                                    <label id="lblCustomerNameShippingRegion" class="h5 label-display">-</label>
+                                                    <label id="lblCustomerNameShippingRegionOld" class="h5 label-display">-</label>
                                                 </div>
                                                 <div class="col-md-12"></div>
                                                 @Html.LabelFor(model => model.ContactNo, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
-                                                    <label id="lblContactNoShippingRegion" class="h5 label-display">-</label>
+                                                    <label id="lblContactNoShippingRegionOld" class="h5 label-display">-</label>
                                                 </div>
                                                 <div class="col-md-12"></div>
                                                 @Html.LabelFor(model => model.CustomerEmail, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
-                                                    <label id="lblCustomerEmailShippingRegion" class="h5 label-display">-</label>
+                                                    <label id="lblCustomerEmailShippingRegionOld" class="h5 label-display">-</label>
                                                 </div>
                                             </div>
                                         </div>

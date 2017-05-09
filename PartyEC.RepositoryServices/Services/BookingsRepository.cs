@@ -258,7 +258,7 @@ namespace PartyEC.RepositoryServices.Services
                                     mybookings.ProductName = (sdr["ProductName"].ToString() != "" ? sdr["ProductName"].ToString() : mybookings.ProductName);
                                     mybookings.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : mybookings.ProductID);
                                     mybookings.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : mybookings.CustomerID);
-
+                                    mybookings.ItemID= (sdr["ItemID"].ToString() != "" ? int.Parse(sdr["ItemID"].ToString()) : mybookings.ItemID);
                                     mybookings.Qty = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : mybookings.Qty);
                                     mybookings.Price = (sdr["Price"].ToString() != "" ? decimal.Parse(sdr["Price"].ToString()) : mybookings.Price);
                                     mybookings.AdditionalCharges = (sdr["AdditionalCharges"].ToString() != "" ? decimal.Parse(sdr["AdditionalCharges"].ToString()) : mybookings.AdditionalCharges);

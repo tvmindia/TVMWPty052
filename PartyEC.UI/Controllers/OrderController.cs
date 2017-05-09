@@ -450,7 +450,7 @@ namespace PartyEC.UI.Controllers
             {
                 case "InvoiceRegion":
                     ToolboxViewModelObj.backbtn.Visible = true;
-                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Event = "goBack()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Title = "Save";
@@ -466,11 +466,16 @@ namespace PartyEC.UI.Controllers
                     break;
                 case "AddShipmentRegion":
                     ToolboxViewModelObj.backbtn.Visible = true;
-                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Event = "goBackShipping()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Title = "Save";
                     ToolboxViewModelObj.savebtn.Event = "SaveShippingDetails()";
+                    break;
+                case "OldShipmentDetail":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goBackShipping()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
                     break;
                 case "Cancelled":
                     ToolboxViewModelObj.backbtn.Visible = true;

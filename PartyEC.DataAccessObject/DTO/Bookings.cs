@@ -31,7 +31,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string BillCountryCode { get; set; }
         public string BillStateProvince { get; set; }
         public string BillContactNo { get; set; }
-
+        public int ItemID { get; set; }
         public decimal Total { get; set; }
         public decimal GrandTotal { get; set; }
         public decimal SubTotal { get; set; }

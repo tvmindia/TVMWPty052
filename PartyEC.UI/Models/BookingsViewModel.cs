@@ -34,7 +34,7 @@ namespace PartyEC.UI.Models
         public string BillCountryCode { get; set; }
         public string BillStateProvince { get; set; }
         public string BillContactNo { get; set; }
-
+        public int ItemID { get; set; }
         public decimal Total { get; set; } 
         public string StatusText { get; set; }
         public string ImageUrl { get; set; }

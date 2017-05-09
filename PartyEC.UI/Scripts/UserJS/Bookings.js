@@ -78,6 +78,51 @@ $(document).ready(function () {
     catch (e) {
         notyAlert('error', e.message);
     }
+    try {
+        DataTables.BookingsItemTableInvoiceRegion = $('#tblBookingDetailsInvoiceRegion').DataTable(
+            {
+                dom: '<"pull-left"f>rt<"bottom"ip><"clear">',
+                order: [],
+                ordering: false,
+                searching: false,
+                paging: false,
+                info: false,
+                data: null,
+                columns: [
+                     { "data": "ProductID" },
+                    { "data": "AttributeValues" },
+                  { "data": "StatusText" },
+                     { "data": "Qty" },
+                  { "data": "Price" },
+                  { "data": "SubTotal" },
+                  { "data": "TaxAmt" },
+                  { "data": "DiscountAmt" },
+                  { "data": "Total" }
+                ],
+                columnDefs: [{
+                    "targets": [0],
+                    "visible": false,
+                    "searchable": false,
+                }
+                , {
+                    "targets": [1],
+                    "render": function (data, type, row) {
+                        debugger;
+                        var returnstring = '';
+                        var product = row.ProductName;
+                        if (data) {
+                            for (var ik = 0; ik < data.length; ik++) {
+                                returnstring = returnstring + '<span><b>' + data[ik].Caption + '</b> : ' + (data[ik].Value != "" && data[ik].Value != null ? data[ik].Value : ' - ') + '</span><br/>';
+                            }
+                        }
+                        return product + '<br/>' + returnstring;
+                    }
+                }]
+            });
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
 });
 
 
@@ -138,7 +183,9 @@ function Edit(currentObj) {
 
 //---------------------------------------Fill Quotations--------------------------------------------------//
 function fillBookings(ID) {
-    var thisBookings = GetBookingsByID(ID); //Binding Data  
+    var thisBookings = GetBookingsByID(ID);
+
+    //Binding Data  
     $("#ID").val(thisBookings.ID);
     $("#BookingId").val(thisBookings.ID);
     $("#EventsLogViewObj_ParentID").val(thisBookings.ID);
@@ -181,14 +228,45 @@ function fillBookings(ID) {
     else {
         ChangeButtonPatchView("Bookings", "btnPatchBookings", "Send");
     }
+    $("#lblInvoiceTaxAmt").text(thisBookings.TaxAmt);
+    $("#lblInvoiceDiscountAmt").text(thisBookings.DiscountAmt);
+    $("#lblInvoiceSubTotal").text(thisBookings.SubTotal);
+    $("#lblInvoiceGrandTotal").text(thisBookings.GrandTotal);
+    $("#lblInvoiceAdditionalCharges").text(thisBookings.AdditionalCharges);
+    BindGeneralSectionInvoiceRegion(thisBookings);
+    BindAccountSectionInvoiceRegion(thisBookings);
+
 }
 
 
 
 function BindTablBookingsDetailList(ID) {
     DataTables.BookingsItemTable.clear().rows.add(GetBookingsDetailsByID(ID)).draw(false);
+    
+    
 }
+function TabActionInvoiceRegion()
+{
+    ChangeButtonPatchView("Bookings", "btnPatchBookings", "Invoice");
+    DataTables.BookingsItemTableInvoiceRegion.clear().rows.add(GetBookingsDetailsByID($("#ID").val())).draw(false);
+}
+function BindGeneralSectionInvoiceRegion(Result) {
+    debugger;
+    $("#lblBookingNoInvoiceRegion").text(Result.BookingNo);
+    $("#lblBookingDateInvoiceRegion").text(Result.BookingDate);
+    $("#lblRequiredDateInvoiceRegion").text(Result.RequiredDate);
+    $("#lblSourceIPInvoiceRegion").text(Result.SourceIP);
+    $("#lblStatusInvoiceRegion").text(Result.StatusText);
 
+}
+function BindAccountSectionInvoiceRegion(Result) {
+    $('#imgPreviewCustomerInvoiceRegion').attr('src', Result.ImageUrl);
+    $("#lblCustomerNameInvoiceRegion").text(Result.customerObj.Name);
+    $("#lblContactNoInvoiceRegion").text(Result.customerObj.Mobile);
+    $("#lblCustomerEmailInvoiceRegion").text(Result.customerObj.Email);
+    //$("#hdnAccountEmailIDInvoiceRegion").val(Result.CustomerEmail);
+    //$("#hdnAccountCustomerNameInvoiceRegion").val(Result.CustomerName);
+}
 function GetBookingsDetailsByID(id) {
     try {
         debugger;
@@ -328,6 +406,44 @@ function SendBookingsMail() {
 
 
 }
+function SubmitInvoice() {
+    debugger;
+    var ID = $('#ID').val();
+    var DetailList = [];
+    var TableDetail = DataTables.BookingsItemTableInvoiceRegion.rows().data();
+    var InvoiceViewModel = new Object();
+    InvoiceViewModel.ID = null;
+    InvoiceViewModel.InvoiceNo = null;
+    InvoiceViewModel.ParentID = ID;
+    InvoiceViewModel.ParentType = "Booking";
+    InvoiceViewModel.InvoiceDate = null;
+    InvoiceViewModel.PaymentStatus = $("#lblStatusInvoiceRegion").text();
+    for (var i = 0; i < TableDetail.length; i++) {
+        var InvoiceDetailViewModel = new Object();
+        InvoiceDetailViewModel.ID = null;
+        InvoiceDetailViewModel.InvoiceID = ID;
+        InvoiceDetailViewModel.OrderItemID = TableDetail[i].ItemID;
+        InvoiceDetailViewModel.InvoiceAmt = TableDetail[i].GrandTotal;
+        DetailList.push(InvoiceDetailViewModel);
+    }
+    InvoiceViewModel.DetailList = DetailList;
+    var data = "{'InvoiceViewObj':" + JSON.stringify(InvoiceViewModel) + "}";
+    PostDataToServer('Bookings/InsertInvoice/', data, function (JsonResult) {
+        if (JsonResult != '') {
+            switch (JsonResult.Result) {
+                case "OK":
+                    notyAlert('success', JsonResult.Records.StatusMessage);
+                    break;
+                case "ERROR":
+                    notyAlert('error', JsonResult.Records.StatusMessage);
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
+}
+
 
 
 
