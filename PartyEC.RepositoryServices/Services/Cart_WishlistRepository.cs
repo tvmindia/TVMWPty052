@@ -101,6 +101,7 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     ShoppingCart _ShoppingcartObj = new ShoppingCart();
                                     {
+                                        _ShoppingcartObj.ID = (sdr["CartId"].ToString() != "" ? int.Parse(sdr["CartId"].ToString()) : _ShoppingcartObj.ID);
                                         _ShoppingcartObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _ShoppingcartObj.ProductID);
                                         _ShoppingcartObj.ProductName = (sdr["ProductName"].ToString() != "" ?  sdr["ProductName"].ToString() : _ShoppingcartObj.ProductName);
                                         _ShoppingcartObj.CustomerID = (sdr["CustomerID"].ToString() != "" ? int.Parse(sdr["CustomerID"].ToString()) : _ShoppingcartObj.CustomerID);
@@ -233,6 +234,53 @@ namespace PartyEC.RepositoryServices.Services
             }
 
             return operationsStatusObj;
+        }
+
+        public OperationsStatus RemoveProductFromCart(ShoppingCart cartObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[DeleteProductFromCart]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = cartObj.ID;
+                        statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.DeleteFailure;
+                                break;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.DeleteSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+
         }
     }
 }

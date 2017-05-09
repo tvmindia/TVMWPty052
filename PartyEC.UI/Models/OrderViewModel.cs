@@ -129,6 +129,8 @@ namespace PartyEC.UI.Models
         public string CustomerURL { get; set; }
         public string ProfileImageID { get; set; }
         public List<SelectListItem> Countries { get; set; }
+
+ 
         //
         public int ParentOrderID { get; set; }
         public string SourceIP { get; set; }
@@ -162,7 +164,10 @@ namespace PartyEC.UI.Models
         public string ShipCountryCode { get; set; }
         public string ShipStateProvince { get; set; }
         public string ShipContactNo { get; set; }
-        
+
+
+        public string ProductName { get; set; }
+        public string ImageUrl { get; set; }
         //Order Details
         public int OrderDetailID { get; set; }
         public int OrderID { get; set; }

@@ -95,6 +95,8 @@ namespace PartyEC.DataAccessObject.DTO
         public int OrderID { get; set; }
         public int ItemID { get; set; }
         public int ProductID { get; set; }
+        public string ProductName { get; set; }
+        public string ImageUrl { get; set; }
         public int ProductQty { get; set; }
         public string ProductSpecXML { get; set; }
         public string ItemStatus { get; set; }
