@@ -106,6 +106,8 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : orderObj.ProductID);
                                         orderObj.OrderDetailID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : orderObj.OrderDetailID);
                                         orderObj.ProductSpecXML = sdr["ProductName"].ToString() + "||" + sdr["ProductSpecXML"].ToString();
+                                        orderObj.ProductName = sdr["ProductName"].ToString();
+                                        orderObj.ImageUrl = (sdr["ImageUrl"].ToString() != "" ? sdr["ImageUrl"].ToString() : orderObj.ImageUrl);
                                         orderObj.ItemStatus = sdr["ItemStatus"].ToString();
                                         orderObj.ItemID= (sdr["ItemID"].ToString() != "" ? int.Parse(sdr["ItemID"].ToString()) : orderObj.ItemID);
                                         orderObj.Qty = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : 0);
