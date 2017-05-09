@@ -443,6 +443,9 @@ $(document).ready(function () {
             selector: 'tr'
         }
     });
+    $('#tabOrderList').click(function (e) {
+        ChangeButtonPatchView("Order", "btnPatchOrders", "List");
+    });
     //$('#tblProductList tbody').on('click', 'tr', function () {  
     //    var tabledata = DataTables.tblProductList.rows('.selected').data();
     //    var Total = 0;
@@ -622,7 +625,7 @@ function Edit(this_obj)
     ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
     var rowData = DataTables.orderHeadertable.row($(this_obj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
-        if (rowData.OrderStatus == "Cancelled" || rowData.OrderStatus == "Invoiced")
+        if (rowData.OrderStatus == "Cancelled" || rowData.OrderStatus == "Invoiced" || rowData.OrderStatus == "Delivered")
         {
             ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
         }
@@ -654,7 +657,10 @@ function Edit(this_obj)
         
         BindGeneralSectionShipmentRegion(Result);
         BindAccountSectionShipmentRegion(Result);
+        BindGeneralSectionShipmentRegionOld(Result);
+        BindAccountSectionShipmentRegionOld(Result);
     }
+    $('#tabOrderRegion').click();
 }
 function CancelIssue()
 {
@@ -800,11 +806,14 @@ function InsertNewOrder()
         OrderDetailViewModel.OrderDetailsList = OrderDetailList;
         var data = "{'OrderDetailViewModelObj':" + JSON.stringify(OrderDetailViewModel) + "}";
         PostDataToServer('Order/InsertReviseOrder/', data, function (JsonResult) {
+            debugger;
             if (JsonResult != '') {
                 switch (JsonResult.Result) {
                     case "OK":
                         notyAlert('success', JsonResult.Record.StatusMessage);
-                        goback();
+                        var this_Obj = this_ObjOrder;
+                        Edit(this_Obj);
+                        //goback();
                         break;
                     case "ERROR":
                         notyAlert('error', JsonResult.Record.StatusMessage);
@@ -885,7 +894,7 @@ function BindGeneralSection(Result)
         var IDs = Result.RevisionIDs.split(',');
         for (var i = 0; i < IDs.length; i++)
         {
-            $("#RevisionLinkBind").append('<a class="col-md-6" onclick="ShowRevision(' + IDs[i] + ')">Revision ' + (i+1) + ' </a>');
+            $("#RevisionLinkBind").append('<a class="col-md-6" onclick="ShowRevision(' + IDs[i] + ')">Revision ' + (i) + ' </a>');
         }
         
     }
@@ -1259,10 +1268,29 @@ function ShowShipment(this_Obj)
     DataTables.OrderOldShipmentShipmentRegion.clear().rows.add(GetShipmentDetails(rowData.ID)).draw(false);
     $('#hdnShipmentID').val(rowData.ID);
     $('#tabOldShippingRegion').click();
+    $('#txtDeliveredByShippingRegion').val(rowData.DeliveredBy);
+    $('#txtDeliveredDateShippingRegion').val(rowData.DeliveredDate);
 }
 function TabActionOldShipmentRegion()
 {
-    
+    ChangeButtonPatchView("Order", "btnPatchOrders", "OldShipmentDetail");
+}
+function BindGeneralSectionShipmentRegionOld(Result) {
+    debugger;
+    $("#lblOrderNoShippingRegionOld").text(Result.OrderNo);
+    $("#lblOrderDateShippingRegionOld").text(Result.OrderDate);
+    $("#lblOrderStatusShippingRegionOld").text(Result.OrderStatus);
+    $("#lblSourceIPShippingRegionOld").text(Result.SourceIP);
+    $("#lblRevNoShippingRegionOld").text(Result.OrderRev);
+
+}
+function BindAccountSectionShipmentRegionOld(Result) {
+    $('#imgPreviewCustomerShippingRegionOld').attr('src', Result.CustomerURL);
+    $("#lblCustomerNameShippingRegionOld").text(Result.CustomerName);
+    $("#lblContactNoShippingRegionOld").text(Result.ContactNo);
+    $("#lblCustomerEmailShippingRegionOld").text(Result.CustomerEmail);
+    $("#hdnAccountEmailIDShippingRegionOld").val(Result.CustomerEmail);
+    $("#hdnAccountCustomerNameShippingRegionOld").val(Result.CustomerName);
 }
 function SaveShippingDetails()
 {
@@ -1286,7 +1314,7 @@ function SaveShippingDetails()
             switch (JsonResult.Result) {
                 case "OK":
                     notyAlert('success', JsonResult.Record.StatusMessage);
-                    goback();
+                    goBackShipping();
                     break;
                 case "ERROR":
                     notyAlert('error', JsonResult.Record.StatusMessage);
@@ -1299,6 +1327,7 @@ function SaveShippingDetails()
 }
 function UpdateDeliveryStatus()
 {
+    debugger;
     var ShipmentViewModel = new Object();
     ShipmentViewModel.OrderID = $('#hdnOrderHID').val();
     ShipmentViewModel.ID = $('#hdnShipmentID').val();
@@ -1320,4 +1349,12 @@ function UpdateDeliveryStatus()
             }
         }
     })
+}
+function goBackShipping()
+{
+    $('#tabShippingRegion').click();
+}
+function TabActionOrderRegion()
+{
+    ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
 }
