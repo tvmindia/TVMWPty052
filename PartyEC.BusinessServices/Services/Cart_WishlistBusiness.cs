@@ -133,5 +133,20 @@ namespace PartyEC.BusinessServices.Services
             }
             return OSatObj;
         }
+
+        public OperationsStatus RemoveProductFromCart(ShoppingCart cartObj)
+        {
+            OperationsStatus OSatObj = null;
+            try
+            {
+                OSatObj = _cartWishlistRepository.RemoveProductFromCart(cartObj);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OSatObj;
+        }
     }
 }
