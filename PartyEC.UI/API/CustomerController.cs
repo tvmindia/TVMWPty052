@@ -99,6 +99,22 @@ namespace PartyEC.UI.API
         }
 
         [HttpPost]
+        public object GetCustomerOrderDetails(OrderDetail OrderObj)
+        {
+            try
+            {
+                string OrderId = OrderObj.OrderID.ToString();
+                List<OrderAppViewModel> CartList = Mapper.Map<List<OrderDetail>, List<OrderAppViewModel>>(_orderBusiness.GetAllOrdersList(OrderId));
+                if (CartList.Count == 0) throw new Exception(constants.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
         public object GetCustomerOrdersHistory(Order OrderObj)
         {
             try
