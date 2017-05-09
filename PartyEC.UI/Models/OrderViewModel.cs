@@ -199,7 +199,8 @@ namespace PartyEC.UI.Models
 
         //Mailing Comments
         public MailViewModel mailViewModelObj { get; set; }
-        
+
+        public List<AttributeValuesViewModel> AttributeValues { get; set; }
     }
     public class OrderDetailViewModel
     {

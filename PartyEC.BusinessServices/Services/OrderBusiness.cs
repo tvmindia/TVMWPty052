@@ -11,10 +11,12 @@ namespace PartyEC.BusinessServices.Services
     public class OrderBusiness:IOrderBusiness
     {
         private IOrderRepository _orderRepository;
+        private IQuotationsBusiness _quotationBusiness;
 
-        public OrderBusiness(IOrderRepository orderRepository)
+        public OrderBusiness(IOrderRepository orderRepository, IQuotationsBusiness quotationBusiness)
         {
             _orderRepository = orderRepository;
+            _quotationBusiness = quotationBusiness;
         }
         public List<Order> GetAllOrderHeader()
         {
@@ -29,7 +31,28 @@ namespace PartyEC.BusinessServices.Services
         }
         public List<OrderDetail> GetAllOrdersList(string ID)
         {
-            return _orderRepository.GetAllOrdersList(ID);
+          //  return _orderRepository.GetAllOrdersList(ID);
+            List<OrderDetail> Bookingslist = null;
+            try
+            {
+                Bookingslist = _orderRepository.GetAllOrdersList(ID);
+
+                for(int i=0;i<Bookingslist.Count;i++)
+                {
+                    if (Bookingslist[i].ProductSpecXML1 != null)
+                    { 
+                        Bookingslist[i].AttributeValues = _quotationBusiness.GetAttributeValueFromXML(Bookingslist[i].ProductSpecXML1);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Bookingslist;
+
+
+          
         }
         public Order GetSalesStatistics(int CustomerID, DateTime CurrentDate)
         {

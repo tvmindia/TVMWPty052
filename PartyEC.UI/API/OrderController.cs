@@ -101,10 +101,6 @@ namespace PartyEC.UI.API
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
             try
             {
-                //cartObj.logDetails = new LogDetails();
-                //cartObj.logDetails.CreatedBy = "AppUser";
-                //cartObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
-
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_cart_WishlistBusiness.RemoveProductFromCart(cartObj));
                 return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
             }

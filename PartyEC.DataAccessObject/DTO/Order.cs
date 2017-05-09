@@ -99,6 +99,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string ImageUrl { get; set; }
         public int ProductQty { get; set; }
         public string ProductSpecXML { get; set; }
+        public string ProductSpecXML1 { get; set; }
         public string ItemStatus { get; set; }
         public int Qty { get; set; }
         public float Price { get; set; }
@@ -112,5 +113,6 @@ namespace PartyEC.DataAccessObject.DTO
         public LogDetails commonObj { get; set; }
         public int ShippedQty { get; set; }
         public int QtyShipped { get; set; }
+        public List<AttributeValues> AttributeValues { get; set; }
     }
 }
