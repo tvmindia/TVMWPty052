@@ -62,7 +62,6 @@ $(document).ready(function () {
                     "targets": [1],
                     "render": function (data, type, row)
                     {
-                        debugger;
                         var returnstring = '';
                         var product = row.ProductName;
                         if (data) {
@@ -107,7 +106,6 @@ $(document).ready(function () {
                 , {
                     "targets": [1],
                     "render": function (data, type, row) {
-                        debugger;
                         var returnstring = '';
                         var product = row.ProductName;
                         if (data) {
@@ -200,9 +198,8 @@ function fillBookings(ID) {
     $("#lblContactNo").text(thisBookings.customerObj.Mobile);
     $("#lblCustomerEmail").text(thisBookings.customerObj.Email);
     $("#imgPreviewCustomer").attr("src", thisBookings.ImageUrl);
-
     $("#lblMessage").text(thisBookings.Message);
-
+    $("#ProductName").val(thisBookings.ProductName);
     $("#Price").val(thisBookings.Price);
     $("#AdditionalCharges").val(thisBookings.AdditionalCharges);
     $("#DiscountAmt").val(thisBookings.DiscountAmt);
@@ -235,15 +232,10 @@ function fillBookings(ID) {
     $("#lblInvoiceAdditionalCharges").text(thisBookings.AdditionalCharges);
     BindGeneralSectionInvoiceRegion(thisBookings);
     BindAccountSectionInvoiceRegion(thisBookings);
-
 }
-
-
 
 function BindTablBookingsDetailList(ID) {
     DataTables.BookingsItemTable.clear().rows.add(GetBookingsDetailsByID(ID)).draw(false);
-    
-    
 }
 function TabActionInvoiceRegion()
 {
@@ -251,7 +243,7 @@ function TabActionInvoiceRegion()
     DataTables.BookingsItemTableInvoiceRegion.clear().rows.add(GetBookingsDetailsByID($("#ID").val())).draw(false);
 }
 function BindGeneralSectionInvoiceRegion(Result) {
-    debugger;
+  
     $("#lblBookingNoInvoiceRegion").text(Result.BookingNo);
     $("#lblBookingDateInvoiceRegion").text(Result.BookingDate);
     $("#lblRequiredDateInvoiceRegion").text(Result.RequiredDate);
@@ -269,7 +261,7 @@ function BindAccountSectionInvoiceRegion(Result) {
 }
 function GetBookingsDetailsByID(id) {
     try {
-        debugger;
+    
         var data = { "ID": id };
         var ds = {};
         ds = GetDataFromServer("Bookings/GetBookingsDetails/", data);
@@ -289,12 +281,10 @@ function GetBookingsDetailsByID(id) {
 }
 
 function BindBookingsTable() {
-    debugger;
     DataTables.BookingsTable.clear().rows.add(GetAllBookings()).draw(false);
 }
 
 function SaveSuccess(data, status, xhr) {
-    debugger;
     BindBookingsTable();
     var i = JSON.parse(data)
     switch (i.Result) {
@@ -361,11 +351,11 @@ function tabListClick() {
 }
 
 function SendBookingsMail() {
-    debugger;
     var BookingsViewModel = new Object();
     BookingsViewModel.ID = $("#ID").val();
     BookingsViewModel.BookingNo = $("#lblBookingNo").text();
     BookingsViewModel.BookingDate = $("#lblBookingDate").text();
+    BookingsViewModel.ProductName = $("#ProductName").val();
     BookingsViewModel.RequiredDate = $("#lblRequiredDate").text();
     BookingsViewModel.SourceIP = $("#lblSourceIP").text();
     BookingsViewModel.StatusText = $("#lblBookingstatus").text();
@@ -384,30 +374,23 @@ function SendBookingsMail() {
     CustomerViewModel.Name = $("#lblCustomerName").text();
     BookingsViewModel.customerObj = CustomerViewModel;
 
-    debugger;
     var data = "{'bookingsObj':" + JSON.stringify(BookingsViewModel) + "}";
     PostDataToServer('Bookings/SendBooking/', data, function (JsonResult) {
         if (JsonResult != '') {
             switch (JsonResult.Result) {
                 case "OK":
-                    notyAlert('success', JsonResult.Record.StatusMessage);
+                    notyAlert('success', JsonResult.Message);
                     break;
                 case "ERROR":
-                    notyAlert('error', JsonResult.Record.StatusMessage);
+                    notyAlert('error', JsonResult.Message);
                     break;
                 default:
                     break;
             }
         }
     })
-
-
-
-
-
 }
 function SubmitInvoice() {
-    debugger;
     var ID = $('#ID').val();
     var DetailList = [];
     var TableDetail = DataTables.BookingsItemTableInvoiceRegion.rows().data();

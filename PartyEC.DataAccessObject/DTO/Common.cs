@@ -74,6 +74,14 @@ namespace PartyEC.DataAccessObject.DTO
         {
             get { return "No items"; }
         }
+        public string EmailSuccess
+        {
+            get { return "Email Send Sucessfully"; }
+        }
+        public string EmailFail
+        {
+            get { return "Email Sending Failed"; }
+        }
         #endregion Messages
 
         #region Strings

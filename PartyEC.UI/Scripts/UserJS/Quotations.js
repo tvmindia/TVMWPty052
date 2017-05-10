@@ -61,7 +61,6 @@ $(document).ready(function () {
                  "render": function (data, type, row) {
                      var returnstring = '';
                      if (data) {
-                         debugger;
                          var product = row.ProductName;
                          for (var ik = 0; ik < data.length; ik++) {
                              returnstring = returnstring + '<span><b>' +data[ik].Caption + '</b> : ' +(data[ik].Value != "" && data[ik].Value != null ? data[ik].Value: ' - ') + '</span><br/>';
@@ -145,14 +144,14 @@ function fillQuotations(ID) {
     $("#lblRequiredDate").text(thisQuotations.RequiredDate);
     $("#lblSourceIP").text(thisQuotations.SourceIP); 
     $("#lblQuotationstatus").text(thisQuotations.StatusText);
-
+  
     $("#lblCustomerName").text(thisQuotations.customerObj.Name);
     $("#lblContactNo").text(thisQuotations.customerObj.Mobile);
     $("#lblCustomerEmail").text(thisQuotations.customerObj.Email);
     $("#imgPreviewCustomer").attr("src", thisQuotations.ImageUrl);
 
     $("#lblMessage").text(thisQuotations.Message);
-
+    $("#ProductName").val(thisQuotations.ProductName);
     $("#Price").val(thisQuotations.Price);
     $("#AdditionalCharges").val(thisQuotations.AdditionalCharges);
     $("#DiscountAmt").val(thisQuotations.DiscountAmt);
@@ -280,7 +279,6 @@ function tabListClick()
  
 
 function SendMail() {
-    debugger;
     var QuotationsViewModel  = new Object();
     QuotationsViewModel.ID = $("#ID").val();
     QuotationsViewModel.QuotationNo = $("#lblQuotationsNo").text();
@@ -289,6 +287,7 @@ function SendMail() {
     QuotationsViewModel.SourceIP = $("#lblSourceIP").text();
     QuotationsViewModel.StatusText = $("#lblQuotationstatus").text();
     QuotationsViewModel.Message = $("#lblMessage").text();
+    QuotationsViewModel.ProductName = $("#ProductName").val();
     QuotationsViewModel.Price = $("#Price").val();
     QuotationsViewModel.AdditionalCharges = $("#AdditionalCharges").val();
     QuotationsViewModel.DiscountAmt = $("#DiscountAmt").val();
@@ -303,16 +302,16 @@ function SendMail() {
     CustomerViewModel.Name = $("#lblCustomerName").text();
     QuotationsViewModel.customerObj = CustomerViewModel;
     
-    debugger; 
+     
     var data = "{'quotationsObj':" + JSON.stringify(QuotationsViewModel) + "}";
     PostDataToServer('Quotations/SendQuotation/', data, function (JsonResult) {
         if (JsonResult != '') {
             switch (JsonResult.Result) {
                 case "OK":
-                    notyAlert('success', JsonResult.Record.StatusMessage);
+                    notyAlert('success', JsonResult.Message);
                     break;
                 case "ERROR":
-                    notyAlert('error', JsonResult.Record.StatusMessage);
+                    notyAlert('error', JsonResult.Message);
                     break;
                 default:
                     break;

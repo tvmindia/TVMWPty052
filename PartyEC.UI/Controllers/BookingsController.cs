@@ -17,6 +17,8 @@ namespace PartyEC.UI.Controllers
     [CustomAuthenticationFilter]
     public class BookingsController : Controller
     {
+        Const constObj = new Const();
+        
         #region Constructor_Injection
         IBookingsBusiness _bookingsBusiness;
         ICommonBusiness _commonBusiness;
@@ -260,11 +262,11 @@ namespace PartyEC.UI.Controllers
 
                 if (sendsuccess)
                 {
-                    return JsonConvert.SerializeObject(new { Result = "OK", Message = "Quotation Send Sucessfully" });
+                    return JsonConvert.SerializeObject(new { Result = "OK", Message = constObj.EmailSuccess });
                 }
                 else
                 {
-                    return JsonConvert.SerializeObject(new { Result = "Error", Message = "Quotation Sending Failed" });
+                    return JsonConvert.SerializeObject(new { Result = "Error", Message = constObj.EmailFail });
                 }
             }
             return JsonConvert.SerializeObject(new { Result = "ERROR", Message = "Please Check the values" });
