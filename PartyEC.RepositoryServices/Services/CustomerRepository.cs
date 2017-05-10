@@ -238,15 +238,15 @@ namespace PartyEC.RepositoryServices.Services
                                 cmd.Parameters.Add("@City", SqlDbType.NVarChar, -1).Value = customer.customerAddress.City;
                                 if (customer.customerAddress.Location !=null)
                                 {
-                                    cmd.Parameters.Add("@Location", SqlDbType.Int).Value = int.Parse(customer.customerAddress.Location);
+                                    cmd.Parameters.Add("@Location", SqlDbType.Int).Value = customer.customerAddress.LocationID;
                                 }
                                 cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = customer.customerAddress.CountryCode;
                                 cmd.Parameters.Add("@StateProvince", SqlDbType.NVarChar, 100).Value = customer.customerAddress.StateProvince;
                                 cmd.Parameters.Add("@ContactNo", SqlDbType.NVarChar, 20).Value = customer.customerAddress.ContactNo;
                                 cmd.Parameters.Add("@BillDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.BillDefaultYN;
                                 cmd.Parameters.Add("@ShipDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.ShipDefaultYN;
-                                cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = customer.customerAddress.logDetailsObj.CreatedBy;
-                                cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime, 250).Value = customer.customerAddress.logDetailsObj.CreatedDate;
+                                cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = customer.logDetailsObj.CreatedBy;
+                                cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime, 250).Value = customer.logDetailsObj.CreatedDate;
                                 statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                                 addressID = cmd.Parameters.Add("@ID", SqlDbType.Int);
                                 addressID.Direction= ParameterDirection.Output;
@@ -283,15 +283,15 @@ namespace PartyEC.RepositoryServices.Services
                                 cmd.Parameters.Add("@City", SqlDbType.NVarChar, -1).Value = customer.customerAddress.City;
                                 if (customer.customerAddress.Location != null)
                                 {
-                                    cmd.Parameters.Add("@Location", SqlDbType.Int).Value = int.Parse(customer.customerAddress.Location);
+                                    cmd.Parameters.Add("@Location", SqlDbType.Int).Value = customer.customerAddress.LocationID;
                                 }
                                 cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = customer.customerAddress.CountryCode;
                                 cmd.Parameters.Add("@StateProvince", SqlDbType.NVarChar, 100).Value = customer.customerAddress.StateProvince;
                                 cmd.Parameters.Add("@ContactNo", SqlDbType.NVarChar, 20).Value = customer.customerAddress.ContactNo;
                                 cmd.Parameters.Add("@BillDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.BillDefaultYN;
                                 cmd.Parameters.Add("@ShipDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.ShipDefaultYN;
-                                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = customer.customerAddress.logDetailsObj.UpdatedBy;
-                                cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = customer.customerAddress.logDetailsObj.UpdatedDate;
+                                cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = customer.logDetailsObj.UpdatedBy;
+                                cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = customer.logDetailsObj.UpdatedDate;
                                 statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                                 statusCode.Direction = ParameterDirection.Output;
                                
