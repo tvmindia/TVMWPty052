@@ -88,6 +88,9 @@ namespace PartyEC.DataAccessObject.DTO
         public string ShippingCostOrderSummery { get; set; }
         public string DiscountAmtOrderSummery { get; set; }
         public string GrandTotalOrderSummery { get; set; }
+
+        public CustomerAddress CustomerBillAddress { get; set; }
+        public CustomerAddress CustomerShippingAddress { get; set; }
     }
     public class OrderDetail
     {
