@@ -1,5 +1,6 @@
 ﻿using PartyEC.BusinessServices.Contracts;
 using PartyEC.DataAccessObject.DTO;
+using PartyEC.RepositoryServices.Contracts;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -20,7 +21,12 @@ namespace PartyEC.BusinessServices.Services
         string smtpPassword = System.Web.Configuration.WebConfigurationManager.AppSettings["SMTP-Password"];
         string port = System.Web.Configuration.WebConfigurationManager.AppSettings["Port"];
 
+        private IOrderRepository _orderRepository;
 
+        public MailBusiness(IOrderRepository orderRepository)
+        {
+            _orderRepository = orderRepository;
+        }
         public bool Send(Mail mailObj)
         {
             string body = string.Empty;
@@ -88,7 +94,37 @@ namespace PartyEC.BusinessServices.Services
         }
 
 
-
+        public string GetMailTemplate(int ID)
+        {
+            string body = string.Empty;
+            string Detail = string.Empty;
+            float Amount = 0;
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/OrderSucess.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            Order OrderObj = _orderRepository.GetOrderDetails(ID.ToString());
+            List <OrderDetail> OrderList = _orderRepository.GetAllOrdersList(ID.ToString());
+            body = body.Replace("{@CustomerName}", OrderObj.CustomerName);
+            body = body.Replace("{@OrdeNo}", OrderObj.OrderNo.ToString());
+            body = body.Replace("{@Address}", OrderObj.ShipAddress);
+            body = body.Replace("{@Place}", OrderObj.ShipCity);
+            body = body.Replace("{@State}", "");
+            body = body.Replace("{@PinCode}", "");
+            body = body.Replace("{@Mobile}", OrderObj.ContactNo);
+            foreach(var i in OrderList)
+            {
+                Amount = Amount+i.SubTotal;
+                Detail = Detail+ @"<tr><td width='120' valign='top' align='left'>
+                        <a style='color:#027cd8;text-decoration:none;outline:none;color:#ffffff;font-size:13px;display:block;width:100px' href='' target='_blank' > <img border='0' src='' alt='' style='border:none;width:100%' class='CToWUd'> </a>
+                        </td><td width='8'></td><td valign='top' align='left'>
+                        <p style='margin-bottom:13px'><a style='font-family:'Roboto',sans-serif;font-size:14px;font-weight:normal;font-style:normal;font-stretch:normal;line-height:1.25;color:#2175ff;text-decoration:none' href='' target='_blank' >
+                        "+i.ProductSpecXML+ "</a><sup></sup> <br>  </p> <p style='font-family:'Roboto',sans-serif;font-size:12px;font-weight:normal;font-style:normal;line-height:1.5;font-stretch:normal;color:#878787;margin:0px 0px'>Seller: TCB</p> <p style='font-family:'Roboto-Medium',sans-serif;font-style:normal;line-height:1.5;font-stretch:normal;color:#212121;margin:5px 0px'><span style='padding-right:10px'>"+i.SubTotal+"</span> <span style='font-family:'Roboto-Medium',sans-serif;font-size:12px;font-weight:normal;font-style:normal;line-height:1.5;font-stretch:normal;color:#878787;margin:0px 0px;border:1px solid #dfdfdf;display:inline;border-radius:3px;padding:3px 10px'>Qty:"+i.Qty+"</span> </p></td></tr>";
+            }
+            body= body.Replace("{@Content}", Detail);
+            body= body.Replace("{@Amount}", Amount.ToString());
+            return body;
+        }
 
         #region MailSendAsync
         /// <summary>

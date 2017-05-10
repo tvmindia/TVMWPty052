@@ -145,7 +145,7 @@ $(document).ready(function () {
         data: null,
         bInfo: false,
         columns: [
-          {"data":null},
+          { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="DeleteDemoOrderData(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>' },
           { "data": "OrderDetailID" },
           { "data": "ProductSpecXML" },
           { "data": "ItemStatus" },
@@ -181,19 +181,7 @@ $(document).ready(function () {
              }
          },
          {
-             'targets': 0,
-             'render': function (data, type, full, meta) {
-                 var checkbox = $("<input/>", {
-                     "type": "checkbox"
-                 });
-                 if (data.CategoryID) {
-                     checkbox.attr("checked", "checked");
-                     checkbox.addClass("checkbox_checked");
-                 } else {
-                     checkbox.addClass("checkbox_unchecked");
-                 }
-                 return checkbox.prop("outerHTML")
-             }
+             'targets': 0
          },
                      {
                          'targets': 4,
@@ -203,17 +191,13 @@ $(document).ready(function () {
                                  var txtbox = '--'
                              }
                              else {
-                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="number" min="0" max="' + (data) + '" value="' + (data) + '" onkeyup="Calculatesum(this)"></input> '
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" min="0" max="' + (data) + '" value="' + (data) + '" onfocusout="Calculatesum(this)"></input> '
                              }
 
                              return txtbox
                          }
                      }
-        ],
-        select: {
-            style: 'multi',
-            selector: 'tr'
-        }
+        ]
     });
     DataTables.tblProductList = $('#tblProductList').DataTable(
          {
@@ -594,7 +578,20 @@ function GetOrderExcludesShip(ID) {
         notyAlert('error', e.message);
     }
 }
-
+function GetMailTemplateData(ID) {
+    debugger;
+    try {
+        data = {"ID":ID};
+        var ds = {};
+        ds = GetDataFromServer("Order/GetMailTemplate/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
 //function InsertNewOrderRevision(tabledata, OrderID)
 //{
 //    try {
@@ -628,38 +625,44 @@ function Edit(this_obj)
         if (rowData.OrderStatus == "Cancelled" || rowData.OrderStatus == "Invoiced" || rowData.OrderStatus == "Delivered")
         {
             ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
+
         }
         debugger;
-        $("#ID").val(rowData.ID);
-        $("#ParentOrderID").val(rowData.ParentOrderID);
-        var Result = GetOrderDetails(rowData.ID);
-        BindGeneralSection(Result);
-        BindAccountSection(Result);
-        BindBillDetails(Result);
-        BindShippingDetails(Result);
-        BindPaymentInformation(Result);
-        BindShippingHandlingSection(Result);
-        BindTableOrderDetailList(Result.ID);
-        BindOrderComments(Result);
-        BindOrderSummery(Result);
-        BindNewRevisionGeneral(Result);
-        BindRevisionLinkGeneral(Result);
-
-        //******************************** INVOICE AREA
-
-        BindGeneralSectionInvoiceRegion(Result);
-        BindAccountSectionInvoiceRegion(Result);
-        BindPaymentInformationInvoiceRegion(Result);
-        BindShippingHandlingSectionInvoiceRegion(Result);
-        BindOrderSummeryInvoiceRegion(Result);
-
-        //****************************** SHIPPING AREA
-        
-        BindGeneralSectionShipmentRegion(Result);
-        BindAccountSectionShipmentRegion(Result);
-        BindGeneralSectionShipmentRegionOld(Result);
-        BindAccountSectionShipmentRegionOld(Result);
+        BindAllDetails(rowData.ID, rowData.ParentOrderID)
     }
+    $('#tabOrderRegion').click();
+}
+function BindAllDetails(ID, ParentOrderID)
+{
+    $("#ID").val(ID);
+    $("#ParentOrderID").val(ParentOrderID);
+    var Result = GetOrderDetails(ID);
+    BindGeneralSection(Result);
+    BindAccountSection(Result);
+    BindBillDetails(Result);
+    BindShippingDetails(Result);
+    BindPaymentInformation(Result);
+    BindShippingHandlingSection(Result);
+    BindTableOrderDetailList(Result.ID);
+    BindOrderComments(Result);
+    BindOrderSummery(Result);
+    BindNewRevisionGeneral(Result);
+    BindRevisionLinkGeneral(Result);
+
+    //******************************** INVOICE AREA
+
+    BindGeneralSectionInvoiceRegion(Result);
+    BindAccountSectionInvoiceRegion(Result);
+    BindPaymentInformationInvoiceRegion(Result);
+    BindShippingHandlingSectionInvoiceRegion(Result);
+    BindOrderSummeryInvoiceRegion(Result);
+
+    //****************************** SHIPPING AREA
+
+    BindGeneralSectionShipmentRegion(Result);
+    BindAccountSectionShipmentRegion(Result);
+    BindGeneralSectionShipmentRegionOld(Result);
+    BindAccountSectionShipmentRegionOld(Result);
     $('#tabOrderRegion').click();
 }
 function CancelIssue()
@@ -743,12 +746,13 @@ function AddReviseOrder()
     $('#tblGrandTotal .strGrandTotal').text(GrandTotal+" QAR");
     DataTables.orderModificationtable.clear().rows.add(ordertabledata).draw(false);
 }
-function DeleteDemoOrderData()
+
+function DeleteDemoOrderData(this_Obj)
 {
     debugger;
     var GrandTotal = 0;
     var newDataTable=null;
-    var tabledata = DataTables.orderModificationtable.rows('.selected').data();
+    var tabledata = DataTables.orderModificationtable.row($(this_Obj).parents('tr')).data();;
     var ordertabledata = DataTables.orderModificationtable.rows().data();
     for (var i = 0; i < ordertabledata.length; i++) {
         GrandTotal = GrandTotal + ordertabledata[i].SubTotal;
@@ -761,12 +765,12 @@ function DeleteDemoOrderData()
     {
         for (var j = 0; j < ordertabledata.length; j++)
         {
-            for (var i = 0; i < tabledata.length; i++) {
-                if (tabledata[i].ProductSpecXML === ordertabledata[j].ProductSpecXML) {
+            //for (var i = 0; i < tabledata.length; i++) {
+                if (tabledata.ProductSpecXML === ordertabledata[j].ProductSpecXML) {
                     ordertabledata.splice(j, 1);
-                    GrandTotal = GrandTotal - tabledata[i].SubTotal;
+                    GrandTotal = GrandTotal - tabledata.SubTotal;
                 }
-            }
+           // }
         }
         $('#tblGrandTotal .strGrandTotal').text(GrandTotal + " QAR");
         DataTables.orderModificationtable.clear().rows.add(ordertabledata).draw(false);
@@ -782,18 +786,26 @@ function InsertNewOrder()
         var OrderDetailList = [];
         for(var i=0;i<newOrderData.length;i++)
         {
-            var OrderDetailViewModelObj = new Object();
-            OrderDetailViewModelObj.ItemID = newOrderData[i].ItemID;
-            OrderDetailViewModelObj.ProductID = newOrderData[i].ProductID;
-            OrderDetailViewModelObj.ProductSpecXML = newOrderData[i].ProductSpecXML.split('||')[1];
-            OrderDetailViewModelObj.ItemStatus = 1;
-            OrderDetailViewModelObj.Qty = newOrderData[i].Qty;
-            OrderDetailViewModelObj.Price = newOrderData[i].Price;
-            OrderDetailViewModelObj.ShippingAmt = newOrderData[i].ShippingAmt;
-            OrderDetailViewModelObj.TaxAmt = newOrderData[i].TaxAmt;
-            OrderDetailViewModelObj.DiscountAmt = newOrderData[i].DiscountAmt;
+            if ((parseInt(newOrderData[i].Qty)) > newOrderData[i].ProductQty)
+            {
+                notyAlert('information', "We're sorry! Only " + newOrderData.ProductQty + " units for " + ProductSpecXML.split('||')[0]);
+                return false;
+            }
+            else {
+                var OrderDetailViewModelObj = new Object();
+                OrderDetailViewModelObj.ItemID = newOrderData[i].ItemID;
+                OrderDetailViewModelObj.ProductID = newOrderData[i].ProductID;
+                OrderDetailViewModelObj.ProductSpecXML = newOrderData[i].ProductSpecXML.split('||')[1];
+                OrderDetailViewModelObj.ItemStatus = 1;
+                OrderDetailViewModelObj.Qty = newOrderData[i].Qty;
+                OrderDetailViewModelObj.Price = newOrderData[i].Price;
+                OrderDetailViewModelObj.ShippingAmt = newOrderData[i].ShippingAmt;
+                OrderDetailViewModelObj.TaxAmt = newOrderData[i].TaxAmt;
+                OrderDetailViewModelObj.DiscountAmt = newOrderData[i].DiscountAmt;
+
+                OrderDetailList.push(OrderDetailViewModelObj);
+            }
             
-            OrderDetailList.push(OrderDetailViewModelObj);
         }
         var OrderDetailViewModel = new Object();
         if ($("#ParentOrderID").val() != "0")
@@ -810,9 +822,9 @@ function InsertNewOrder()
             if (JsonResult != '') {
                 switch (JsonResult.Result) {
                     case "OK":
-                        notyAlert('success', JsonResult.Record.StatusMessage);
-                        var this_Obj = this_ObjOrder;
-                        Edit(this_Obj);
+                        notyAlert('success', JsonResult.Record.StatusMessage);                        
+                        BindAllDetails(JsonResult.Record.ReturnValues, OrderDetailViewModel.OrderID)
+                        
                         //goback();
                         break;
                     case "ERROR":
@@ -829,8 +841,6 @@ function InsertNewOrder()
 }
 function Calculatesum(this_obj)
 {
-    debugger;
-
     var GrandTotal = 0;
     var Qty = this_obj.value;    
     var rowData = DataTables.orderModificationtable.row($(this_obj).parents('tr')).data();
@@ -838,6 +848,7 @@ function Calculatesum(this_obj)
     {
         notyAlert('information', "We're sorry! Only " + rowData.ProductQty + " units");
         $(this_obj).val('');
+        $(this_obj).focus();
     }
     else
     {
@@ -1357,4 +1368,14 @@ function goBackShipping()
 function TabActionOrderRegion()
 {
     ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
+}
+
+function ShowTemplatePreview()
+{
+    debugger;
+    var ID = $('#hdnOrderHID').val();
+    var Result = GetMailTemplateData(ID)
+    $('#ModelTemplatePreview').modal('show');
+    $('#PreviewTemplateArea').empty();
+    $('#PreviewTemplateArea').append(Result);
 }

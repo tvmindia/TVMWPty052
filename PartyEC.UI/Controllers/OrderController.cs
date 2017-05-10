@@ -212,6 +212,22 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
+        [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string GetMailTemplate(string ID)
+        {
+            try
+            {
+                 string TemplateBody = _mailBusiness.GetMailTemplate(int.Parse(ID));
+
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = TemplateBody });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
         [HttpPost]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string CancelOrder(OrderViewModel orderObj)
@@ -496,6 +512,8 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.cancelbtn.Title = "Cancel";
                     ToolboxViewModelObj.cancelbtn.Event = "CancelOrder()";
                     ToolboxViewModelObj.sendbtn.Visible = true;
+                    ToolboxViewModelObj.sendbtn.Event = "ShowTemplatePreview()";
+                    ToolboxViewModelObj.sendbtn.Title = "Mail";
                     ToolboxViewModelObj.invoicebtn.Visible = true;
                     ToolboxViewModelObj.shipbtn.Visible = true;
                     break;
@@ -506,9 +524,9 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "gobackDetails()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
-                    ToolboxViewModelObj.deletebtn.Visible = true;
-                    ToolboxViewModelObj.deletebtn.Event = "DeleteDemoOrderData()";
-                    ToolboxViewModelObj.deletebtn.Title = "Delete";
+                    //ToolboxViewModelObj.deletebtn.Visible = true;
+                    //ToolboxViewModelObj.deletebtn.Event = "DeleteDemoOrderData()";
+                    //ToolboxViewModelObj.deletebtn.Title = "Delete";
                     ToolboxViewModelObj.addbtn.Visible = true;
                     ToolboxViewModelObj.addbtn.Event = "AddNewRevision()";
                     ToolboxViewModelObj.addbtn.Title = "Add";
