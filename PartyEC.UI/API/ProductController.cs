@@ -154,7 +154,7 @@ namespace PartyEC.UI.API
             try
             {
                 wishlistObj.logDetails = new LogDetails();
-                wishlistObj.logDetails.CreatedBy = "AppUser";
+                wishlistObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
                 wishlistObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus,OperationsStatusViewModel>(_productBusiness.UpdateWishlist(wishlistObj));

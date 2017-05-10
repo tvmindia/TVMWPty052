@@ -213,9 +213,9 @@ namespace PartyEC.UI.API
             try
             {
                 addressObj.logDetailsObj = new LogDetails();
-                addressObj.logDetailsObj.CreatedBy = "AppUser";
+                addressObj.logDetailsObj.CreatedBy = _commonBusiness.GetUA().UserName;
                 addressObj.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
-                addressObj.logDetailsObj.UpdatedBy = "AppUser";
+                addressObj.logDetailsObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                 addressObj.logDetailsObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.InsertUpdateCustomerAddress(addressObj));
@@ -282,7 +282,7 @@ namespace PartyEC.UI.API
             try
             {
                 customerObj.logDetailsObj = new LogDetails();
-                customerObj.logDetailsObj.CreatedBy = "AppUser";
+                customerObj.logDetailsObj.CreatedBy = _commonBusiness.GetUA().UserName;
                 customerObj.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.InsertCustomer(customerObj));
@@ -301,7 +301,7 @@ namespace PartyEC.UI.API
             try
             {
                 customerObj.logDetailsObj = new LogDetails();
-                customerObj.logDetailsObj.UpdatedBy = "AppUser";
+                customerObj.logDetailsObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                 customerObj.logDetailsObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.UpdateCustomer(customerObj));

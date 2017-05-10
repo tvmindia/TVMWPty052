@@ -45,7 +45,7 @@ namespace PartyEC.UI.API
             try
             {
                 BookingsObj.logDetails = new LogDetails();
-                BookingsObj.logDetails.CreatedBy = "AppUser";
+                BookingsObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
                 BookingsObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_bookingBusiness.InsertBookings(BookingsObj));
@@ -64,7 +64,7 @@ namespace PartyEC.UI.API
             try
             {
                 QuotationsObj.logDetails = new LogDetails();
-                QuotationsObj.logDetails.CreatedBy = "AppUser";
+                QuotationsObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
                 QuotationsObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_quotationsBusiness.InsertQuotations(QuotationsObj));
@@ -83,7 +83,7 @@ namespace PartyEC.UI.API
             try
             {
                 cartObj.logDetails = new LogDetails();
-                cartObj.logDetails.CreatedBy = "AppUser";
+                cartObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
                 cartObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_cart_WishlistBusiness.AddProductToCart(cartObj));
@@ -150,7 +150,7 @@ namespace PartyEC.UI.API
             try
             {
                 OrderObj.commonObj = new LogDetails();
-                OrderObj.commonObj.CreatedBy = "AppUser";
+                OrderObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                 OrderObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_OrderBusiness.InsertOrder(OrderObj));
@@ -187,7 +187,7 @@ namespace PartyEC.UI.API
             try
             {
                 OrderObj.commonObj = new LogDetails();
-                OrderObj.commonObj.UpdatedBy = "AppUser";
+                OrderObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                 OrderObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_OrderBusiness.UpdateOrderPaymentStatus(OrderObj));
