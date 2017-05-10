@@ -215,6 +215,8 @@ namespace PartyEC.UI.API
                 addressObj.logDetailsObj = new LogDetails();
                 addressObj.logDetailsObj.CreatedBy = "AppUser";
                 addressObj.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                addressObj.logDetailsObj.UpdatedBy = "AppUser";
+                addressObj.logDetailsObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.InsertUpdateCustomerAddress(addressObj));
                 return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
