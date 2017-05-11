@@ -16,13 +16,15 @@ namespace PartyEC.BusinessServices.Services
 
         private IQuotationsRepository _QuotationsRepository;
         private IAttributesRepository _attributesRepository;
-        private IMailBusiness _mailBusiness; 
+        private IMailBusiness _mailBusiness;
+        private ICommonBusiness _commonBusiness;
 
-        public QuotationsBusiness(IQuotationsRepository QuatationsRepository, IAttributesRepository attributesRepository, IMailBusiness mailBusiness)
+        public QuotationsBusiness(IQuotationsRepository QuatationsRepository, IAttributesRepository attributesRepository, IMailBusiness mailBusiness,ICommonBusiness commonBusiness)
         {
             _QuotationsRepository = QuatationsRepository;
             _attributesRepository = attributesRepository;
             _mailBusiness = mailBusiness;
+            _commonBusiness = commonBusiness;
         }
 
         public List<Quotations> GetAllQuotations()
@@ -48,7 +50,7 @@ namespace PartyEC.BusinessServices.Services
                 QuotationsObj = _QuotationsRepository.GetQuotations(QuotationsID);
                 if (QuotationsObj.ProductSpecXML != null)
                 {
-                    QuotationsObj.AttributeValues = GetAttributeValueFromXML(QuotationsObj.ProductSpecXML);
+                    QuotationsObj.AttributeValues = _commonBusiness.GetAttributeValueFromXML(QuotationsObj.ProductSpecXML);
                 }               
             }
             catch (Exception ex)
@@ -58,48 +60,7 @@ namespace PartyEC.BusinessServices.Services
             return QuotationsObj;
         }
 
-        // common function GetAttributeValueFromXML Called from booking business also
-        public List<AttributeValues> GetAttributeValueFromXML(string XML)
-        {
-            List<AttributeValues> myAttributeValueList = null;
-            List<Attributes> attributelist = null;
-            try
-            {
-                attributelist = _attributesRepository.GetAllAttributes();//Selecting Attributes List
-
-                myAttributeValueList = new List<AttributeValues>();
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(XML);
-
-                XmlNodeList dataNodes = xmlDoc.SelectNodes("//options");
-                foreach (XmlNode node in dataNodes)
-                {
-                    foreach (XmlNode childNode in node.ChildNodes)
-                    {
-                        AttributeValues myAttributeValues = new AttributeValues();
-                        //checking the attribute list for Caption by Comparing XML Node
-                        List<Attributes> Matchingattribute = attributelist.Where(attr => attr.Name == childNode.Name).ToList();
-                        if (Matchingattribute.Count > 0)
-                        {//if Matching attribute found its captions will be taken for display
-                            myAttributeValues.Caption = Matchingattribute[0].Caption;
-                            myAttributeValues.Value = childNode.InnerXml;
-                        }
-                        else
-                        {//if Matching attribute not found Childnode Name will be taken for display
-                            myAttributeValues.Caption = childNode.Name;
-                            myAttributeValues.Value = childNode.InnerXml;
-                        }
-                        myAttributeValueList.Add(myAttributeValues);
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                throw ex;
-            }
-            return myAttributeValueList;
-
-        }
+       
 
         public OperationsStatus UpdateQuotations(Quotations quotationsObj)
         {

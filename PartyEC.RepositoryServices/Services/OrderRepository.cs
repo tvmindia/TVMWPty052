@@ -122,6 +122,7 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.ProductQty= (sdr["ProductQty"].ToString() != "" ? int.Parse(sdr["ProductQty"].ToString()) : orderObj.ProductQty);
                                         orderObj.ShippedQty = 0;
                                         orderObj.QtyShipped= (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : 0);
+                                        orderObj.SupplierName = sdr["SupplierName"].ToString();
                                     }
                                     OrderHeaderList.Add(orderObj);
                                 }

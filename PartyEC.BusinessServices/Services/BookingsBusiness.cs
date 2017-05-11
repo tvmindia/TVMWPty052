@@ -16,12 +16,14 @@ namespace PartyEC.BusinessServices.Services
         private IBookingsRepository _bookingsRepository;
         private IMailBusiness _mailBusiness;
         private IQuotationsBusiness _quotationBusiness;
+        private ICommonBusiness _commonBusiness;
 
-        public BookingsBusiness(IBookingsRepository bookingsRepository,IMailBusiness mailBusiness,IQuotationsBusiness quotationBusiness)
+        public BookingsBusiness(IBookingsRepository bookingsRepository,IMailBusiness mailBusiness,IQuotationsBusiness quotationBusiness,ICommonBusiness commonBusiness)
         {
             _bookingsRepository = bookingsRepository;
             _mailBusiness = mailBusiness;
             _quotationBusiness = quotationBusiness;
+            _commonBusiness = commonBusiness;
         }
         #endregion ConstructorInjection 
 
@@ -78,7 +80,7 @@ namespace PartyEC.BusinessServices.Services
                 bookingObj = _bookingsRepository.GetBookings(BookingID);
                 if (bookingObj.ProductSpecXML != null)
                 {
-                    bookingObj.AttributeValues = _quotationBusiness.GetAttributeValueFromXML(bookingObj.ProductSpecXML);
+                    bookingObj.AttributeValues = _commonBusiness.GetAttributeValueFromXML(bookingObj.ProductSpecXML);
                 }
             }
             catch(Exception ex)

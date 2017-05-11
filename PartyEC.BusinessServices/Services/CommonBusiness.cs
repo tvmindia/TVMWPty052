@@ -9,16 +9,18 @@ using System.Web.UI.WebControls;
 using System.IO;
 using System.Collections.Specialized;
 using System.Text;
+using System.Xml;
+using PartyEC.RepositoryServices.Contracts;
 
 namespace PartyEC.BusinessServices.Services
 {
     public class CommonBusiness : ICommonBusiness
     {
         private UA _uaObj;
-      
-        public CommonBusiness()
+        private IAttributesRepository _attributesRepository;
+        public CommonBusiness(IAttributesRepository attributesRepository)
         {
-          
+            _attributesRepository = attributesRepository;
             try
             {
                 UA uaObj = null;
@@ -186,7 +188,48 @@ namespace PartyEC.BusinessServices.Services
         }
         #endregion
 
+        // common function GetAttributeValueFromXML Called from booking business also
+        public List<AttributeValues> GetAttributeValueFromXML(string XML)
+        {
+            List<AttributeValues> myAttributeValueList = null;
+            List<Attributes> attributelist = null;
+            try
+            {
+                attributelist = _attributesRepository.GetAllAttributes();//Selecting Attributes List
 
+                myAttributeValueList = new List<AttributeValues>();
+                XmlDocument xmlDoc = new XmlDocument();
+                xmlDoc.LoadXml(XML);
+
+                XmlNodeList dataNodes = xmlDoc.SelectNodes("//options");
+                foreach (XmlNode node in dataNodes)
+                {
+                    foreach (XmlNode childNode in node.ChildNodes)
+                    {
+                        AttributeValues myAttributeValues = new AttributeValues();
+                        //checking the attribute list for Caption by Comparing XML Node
+                        List<Attributes> Matchingattribute = attributelist.Where(attr => attr.Name == childNode.Name).ToList();
+                        if (Matchingattribute.Count > 0)
+                        {//if Matching attribute found its captions will be taken for display
+                            myAttributeValues.Caption = Matchingattribute[0].Caption;
+                            myAttributeValues.Value = childNode.InnerXml;
+                        }
+                        else
+                        {//if Matching attribute not found Childnode Name will be taken for display
+                            myAttributeValues.Caption = childNode.Name;
+                            myAttributeValues.Value = childNode.InnerXml;
+                        }
+                        myAttributeValueList.Add(myAttributeValues);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return myAttributeValueList;
+
+        }
 
 
 

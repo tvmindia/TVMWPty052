@@ -12,11 +12,12 @@ namespace PartyEC.BusinessServices.Services
     {
         private IOrderRepository _orderRepository;
         private IQuotationsBusiness _quotationBusiness;
-
-        public OrderBusiness(IOrderRepository orderRepository, IQuotationsBusiness quotationBusiness)
+        private ICommonBusiness _commonBusiness;
+        public OrderBusiness(IOrderRepository orderRepository, IQuotationsBusiness quotationBusiness,ICommonBusiness commonBusiness)
         {
             _orderRepository = orderRepository;
             _quotationBusiness = quotationBusiness;
+            _commonBusiness = commonBusiness;
         }
         public List<Order> GetAllOrderHeader()
         {
@@ -41,7 +42,7 @@ namespace PartyEC.BusinessServices.Services
                 {
                     if (Bookingslist[i].ProductSpecXML1 != null)
                     { 
-                        Bookingslist[i].AttributeValues = _quotationBusiness.GetAttributeValueFromXML(Bookingslist[i].ProductSpecXML1);
+                        Bookingslist[i].AttributeValues = _commonBusiness.GetAttributeValueFromXML(Bookingslist[i].ProductSpecXML1);
                     }
                 }
             }

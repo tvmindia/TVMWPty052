@@ -223,5 +223,6 @@ namespace PartyEC.UI.Models
         public LogDetailsViewModel commonObj { get; set; }
         public int ShippedQty { get; set; }
         public int QtyShipped { get; set; }
+        public string SupplierName { get; set; }
     }
 }

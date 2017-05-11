@@ -22,10 +22,11 @@ namespace PartyEC.BusinessServices.Services
         string port = System.Web.Configuration.WebConfigurationManager.AppSettings["Port"];
 
         private IOrderRepository _orderRepository;
-
-        public MailBusiness(IOrderRepository orderRepository)
+        private ICommonBusiness _commonBusiness;
+        public MailBusiness(IOrderRepository orderRepository,ICommonBusiness commonBusiness)
         {
             _orderRepository = orderRepository;
+            _commonBusiness = commonBusiness;
         }
         public bool Send(Mail mailObj)
         {
@@ -114,12 +115,10 @@ namespace PartyEC.BusinessServices.Services
             body = body.Replace("{@Mobile}", OrderObj.ContactNo);
             foreach(var i in OrderList)
             {
+                //_commonBusiness.GetAttributeValueFromXML(i.ProductSpecXML1);
                 Amount = Amount+i.SubTotal;
                 Detail = Detail+ @"<tr><td width='120' valign='top' align='left'>
-                        <a style='color:#027cd8;text-decoration:none;outline:none;color:#ffffff;font-size:13px;display:block;width:100px' href='' target='_blank' > <img border='0' src='' alt='' style='border:none;width:100%' class='CToWUd'> </a>
-                        </td><td width='8'></td><td valign='top' align='left'>
-                        <p style='margin-bottom:13px'><a style='font-family:'Roboto',sans-serif;font-size:14px;font-weight:normal;font-style:normal;font-stretch:normal;line-height:1.25;color:#2175ff;text-decoration:none' href='' target='_blank' >
-                        "+i.ProductSpecXML+ "</a><sup></sup> <br>  </p> <p style='font-family:'Roboto',sans-serif;font-size:12px;font-weight:normal;font-style:normal;line-height:1.5;font-stretch:normal;color:#878787;margin:0px 0px'>Seller: TCB</p> <p style='font-family:'Roboto-Medium',sans-serif;font-style:normal;line-height:1.5;font-stretch:normal;color:#212121;margin:5px 0px'><span style='padding-right:10px'>"+i.SubTotal+"</span> <span style='font-family:'Roboto-Medium',sans-serif;font-size:12px;font-weight:normal;font-style:normal;line-height:1.5;font-stretch:normal;color:#878787;margin:0px 0px;border:1px solid #dfdfdf;display:inline;border-radius:3px;padding:3px 10px'>Qty:"+i.Qty+"</span> </p></td></tr>";
+                        <a style='color:#027cd8;text-decoration:none;outline:none;color:#ffffff;font-size:13px;display:block;width:100px' href='' target='_blank' > <img border='0' src='"+i.ImageUrl +"' alt='' style='border:none;width:100%' class='CToWUd'> </a></td><td width='8'></td><td valign='top' align='left'><p style='margin-bottom:13px'><a style='font-family:'Roboto',sans-serif;font-size:14px;font-weight:normal;font-style:normal;font-stretch:normal;line-height:1.25;color:#2175ff;text-decoration:none' href='' target='_blank' >"+i.ProductName + "</a><sup></sup> <br>  </p> <p style='font-family:'Roboto',sans-serif;font-size:12px;font-weight:normal;font-style:normal;line-height:1.5;font-stretch:normal;color:#878787;margin:0px 0px'>Seller: "+i.SupplierName+"</p> <p style='font-family:'Roboto-Medium',sans-serif;font-style:normal;line-height:1.5;font-stretch:normal;color:#212121;margin:5px 0px'><span style='padding-right:10px'>"+i.SubTotal+"</span> <span style='font-family:'Roboto-Medium',sans-serif;font-size:12px;font-weight:normal;font-style:normal;line-height:1.5;font-stretch:normal;color:#878787;margin:0px 0px;border:1px solid #dfdfdf;display:inline;border-radius:3px;padding:3px 10px'>Qty:"+i.Qty+"</span> </p></td></tr>";
             }
             body= body.Replace("{@Content}", Detail);
             body= body.Replace("{@Amount}", Amount.ToString());
