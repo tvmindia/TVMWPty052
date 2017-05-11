@@ -52,7 +52,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@Budget", SqlDbType.Decimal).Value = eventObj.Budget;
                         cmd.Parameters.Add("@LookingFor", SqlDbType.NVarChar, -1).Value = eventObj.LookingFor;
                         cmd.Parameters.Add("@RequirementSpec", SqlDbType.NVarChar, -1).Value = eventObj.RequirementSpec;
-                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = eventObj.CustomerID;
+                        if(eventObj.CustomerID!=0)cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = eventObj.CustomerID;
                         cmd.Parameters.Add("@ContactName", SqlDbType.NVarChar, 250).Value = eventObj.ContactName;
                         cmd.Parameters.Add("@Email", SqlDbType.NVarChar, -1).Value = eventObj.Email;
                         cmd.Parameters.Add("@Phone", SqlDbType.NVarChar, 50).Value = eventObj.Phone;
