@@ -12,7 +12,7 @@ namespace PartyEC.BusinessServices.Contracts
 
         List<Customer> GetAllCustomerCartWishlistSummary();
 
-        List<ShoppingCart> GetCustomerShoppingCart(int customerID ,int locationID);
+        List<ShoppingCart> GetCustomerShoppingCart(ShoppingCart cartObj);
 
         List<Wishlist> GetCustomerWishlist(int customerID, string CurrentDate);
 

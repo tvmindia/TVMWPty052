@@ -156,17 +156,18 @@ namespace PartyEC.UI.Controllers
         #region GetCustomerCartDetails
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         [HttpGet]
-        public string GetCustomerCartDetails(string customerID)
+        public string GetCustomerCartDetails(ShoppingCart cartObj)
         {
             try
             {
                 List<ShoppingCartViewModel> cartList = null;
-                if (!string.IsNullOrEmpty(customerID))
-                {
-                    int locationID = 0;
-                    OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                    cartList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cart_WishlistBusiness.GetCustomerShoppingCart(int.Parse(customerID), locationID));
-                }
+
+                cartObj.logDetails = new LogDetails();
+                cartObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                cartObj.LocationID = 0;
+                OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
+                cartList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cart_WishlistBusiness.GetCustomerShoppingCart(cartObj));
+               
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = cartList });
             }
             catch (Exception ex)

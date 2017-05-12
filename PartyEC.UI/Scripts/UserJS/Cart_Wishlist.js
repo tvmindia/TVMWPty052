@@ -124,6 +124,8 @@ function GetAllCustomerCartWishlistSummary() {
 }
 //---------------------------------Edit Click-----------------------------------------//
 function View(currentObj) {
+    debugger;
+
     ChangeButtonPatchView("Cart_Wishlist", "btnPatchtab2", "Edit"); //ControllerName,id of the container div,Name of the action
     $('#tabshoppingCartWishlist').removeClass('disabled');
     $('#tabshoppingCartWishlist a').attr('data-toggle', 'tab');
@@ -152,7 +154,8 @@ function View(currentObj) {
 //------------------------------GetCustomerShoppingCart--------------------------------------------//
 function GetCustomerShoppingCart(id,name) {
     try {
-        var data = { "ID": id };
+        debugger;
+        var data = { "CustomerID": id };
         var ds = {};
         ds = GetDataFromServer("Cart_Wishlist/GetCustomerShoppingCart/", data);
         if (ds != '') {

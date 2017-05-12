@@ -11,13 +11,17 @@ namespace PartyEC.DataAccessObject.DTO
         public int CustomerID { get; set; }
         public int ProductID { get; set; }
         public string ProductName { get; set; }
+        public int ItemID { get; set; }
         public string CustomerName { get; set; }
         public string ProductSpecXML { get; set; }
-      //  public List<AttributeValues> ProductAttributes { get; set; }
+        //  public List<AttributeValues> ProductAttributes { get; set; }
         public int Qty { get; set; }
         public string CurrencyCode { get; set; }
         public decimal CurrencyRate { get; set; }
         public decimal Price { get; set; }
+        public decimal CurrentPrice { get; set; }
+        public decimal Discount { get; set; }
+        public bool FreeDeliveryYN { get; set; }
         public string ItemStatus { get; set; }
         public string CreatedDate { get; set; }
 

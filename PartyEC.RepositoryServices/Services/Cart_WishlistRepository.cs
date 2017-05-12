@@ -74,7 +74,7 @@ namespace PartyEC.RepositoryServices.Services
             return Requestslist;
         }
 
-        public List<ShoppingCart> GetCustomerShoppingCart(int customerID,int locationID)
+        public List<ShoppingCart> GetCustomerShoppingCart(ShoppingCart cartObj)
         {
             List<ShoppingCart> Cartlist = null;
             try
@@ -88,8 +88,10 @@ namespace PartyEC.RepositoryServices.Services
                             con.Open();
                         }
                         cmd.Connection = con;
-                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID;
-                        cmd.Parameters.Add("@locationID", SqlDbType.Int).Value = locationID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = cartObj.CustomerID;
+                        cmd.Parameters.Add("@locationID", SqlDbType.Int).Value = cartObj.LocationID;
+                        cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = cartObj.logDetails.CreatedDate; 
+
                         cmd.CommandText = "[GetCustomerShoppingCart]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -110,6 +112,9 @@ namespace PartyEC.RepositoryServices.Services
                                         _ShoppingcartObj.Qty = (sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : _ShoppingcartObj.Qty);
                                         _ShoppingcartObj.CurrencyCode = (sdr["CurrencyCode"].ToString() != "" ? sdr["CurrencyCode"].ToString() : _ShoppingcartObj.CurrencyCode);
                                         _ShoppingcartObj.Price = (sdr["Price"].ToString() != "" ? Decimal.Parse(sdr["Price"].ToString()) : _ShoppingcartObj.Price);
+                                        _ShoppingcartObj.CurrentPrice = (sdr["CurrentPrice"].ToString() != "" ? Decimal.Parse(sdr["CurrentPrice"].ToString()) : _ShoppingcartObj.CurrentPrice);
+                                        _ShoppingcartObj.Discount = (sdr["DiscountAmout"].ToString() != "" ? Decimal.Parse(sdr["DiscountAmout"].ToString()) : _ShoppingcartObj.Discount);
+                                        _ShoppingcartObj.FreeDeliveryYN = (sdr["FreeDeliveryYN"].ToString() != "" ? Boolean.Parse(sdr["FreeDeliveryYN"].ToString()) : _ShoppingcartObj.FreeDeliveryYN);
                                         _ShoppingcartObj.ItemStatus = (sdr["ItemStatus"].ToString() != "" ? sdr["ItemStatus"].ToString() : _ShoppingcartObj.ItemStatus);
 
                                         _ShoppingcartObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _ShoppingcartObj.ImageURL);

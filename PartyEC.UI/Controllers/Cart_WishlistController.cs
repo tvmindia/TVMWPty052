@@ -58,13 +58,15 @@ namespace PartyEC.UI.Controllers
 
         [HttpGet]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
-        public string GetCustomerShoppingCart(string ID)
+        public string GetCustomerShoppingCart(ShoppingCart cartObj)
         {
 
             try
             {
-                int locationID =0;
-                List<ShoppingCartViewModel> eventsLogList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cartWishlistBusiness.GetCustomerShoppingCart(Int32.Parse(ID), locationID));
+                cartObj.logDetails = new LogDetails();
+                cartObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                cartObj.LocationID =0;
+                List<ShoppingCartViewModel> eventsLogList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cartWishlistBusiness.GetCustomerShoppingCart(cartObj));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = eventsLogList });
             }
             catch (Exception ex)

@@ -50,7 +50,9 @@ namespace PartyEC.UI.API
         {
             try
             {
-                List<ShoppingCartViewModel> CartList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cartwishlistBusiness.GetCustomerShoppingCart(CartWishObj.CustomerID,CartWishObj.LocationID));
+                CartWishObj.logDetails = new LogDetails();
+                CartWishObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();//passing Current Date
+                List<ShoppingCartViewModel> CartList = Mapper.Map<List<ShoppingCart>, List<ShoppingCartViewModel>>(_cartwishlistBusiness.GetCustomerShoppingCart(CartWishObj));
                 if (CartList.Count == 0) throw new Exception(constants.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = CartList });
             }

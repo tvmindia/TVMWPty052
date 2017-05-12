@@ -37,12 +37,12 @@ namespace PartyEC.BusinessServices.Services
             return Customerlist;
         }
 
-        public List<ShoppingCart> GetCustomerShoppingCart(int customerID,int locationID)
+        public List<ShoppingCart> GetCustomerShoppingCart(ShoppingCart cartObj)
         {
             List<ShoppingCart> cartlist = null;
             try
             {
-                cartlist = _cartWishlistRepository.GetCustomerShoppingCart(customerID, locationID);
+                cartlist = _cartWishlistRepository.GetCustomerShoppingCart(cartObj);
               if (cartlist!=null)
                 for (int i = 0; i < cartlist.Count; i++)
                 {
