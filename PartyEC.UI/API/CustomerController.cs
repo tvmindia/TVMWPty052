@@ -333,7 +333,7 @@ namespace PartyEC.UI.API
                 Random rnd = new Random();                  // Random number creation for OTP
                 OTP= rnd.Next(2000, 9000);
                 //sending otp to mail.
-                await _customerBusiness.SendCustomerOTP(OTP, customerObj.Email);
+             //   await _customerBusiness.SendCustomerOTP(OTP, customerObj.Email);
                 return JsonConvert.SerializeObject(new { Result = true, Records = new { Customer = CustomerList, IsUser = flag, CustomerOTP = OTP } });
             }
             catch (Exception ex)

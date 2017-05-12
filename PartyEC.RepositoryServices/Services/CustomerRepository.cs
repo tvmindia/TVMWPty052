@@ -505,6 +505,7 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter statusCode = null;
+                SqlParameter ID = null;
 
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
@@ -529,6 +530,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = customer.logDetailsObj.CreatedDate;
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
+                        ID = cmd.Parameters.Add("@ID", SqlDbType.SmallInt);
+                        ID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (statusCode.Value.ToString())
@@ -542,6 +545,7 @@ namespace PartyEC.RepositoryServices.Services
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = constObj.InsertSuccess;
+                                operationsStatusObj.ReturnValues = ID.Value.ToString();
                                 break;
                             default:
                                 break;
@@ -552,7 +556,7 @@ namespace PartyEC.RepositoryServices.Services
             catch (Exception ex)
             {
                 operationsStatusObj.StatusMessage = ex.Message;
-                throw ex;
+               
             }
 
             return operationsStatusObj;

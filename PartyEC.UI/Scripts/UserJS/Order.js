@@ -29,7 +29,7 @@ $(document).ready(function () {
          {
              'targets': 2,
              'render': function (data, type, full, meta) {
-                 if (data.OrderRev != "")
+                 if (data.OrderRev != 0 && data.OrderRev != "")
                  {
                      var Order = data.OrderNo + " / " + data.OrderRev;
                      return Order;
@@ -196,10 +196,10 @@ $(document).ready(function () {
                          'render': function (data, type, full, meta) {
                              debugger;
                              if (data == 0) {
-                                 var txtbox = '--'
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="1" onfocusout="Calculatesum(this)"></input> '
                              }
                              else {
-                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" min="0" max="' + (data) + '" value="' + (data) + '" onfocusout="Calculatesum(this)"></input> '
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + (data) + '" onfocusout="Calculatesum(this)"></input> '
                              }
 
                              return txtbox
@@ -348,11 +348,11 @@ $(document).ready(function () {
                              debugger;
                              if (data)
                              {
-                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="number" min="0" max="' + (data) + '" value="' + (data) + '" onkeyup="ChangeQtyShipment(this)"></input>'
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + (data) + '" onkeyup="ChangeQtyShipment(this)"></input>'
                              }
                              else
                              {
-                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" min="0" value="' + 0 + '" onkeyup="ChangeQtyShipment(this)"></input> '
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + 1 + '" onkeyup="ChangeQtyShipment(this)"></input> '
                              }                         
 
                              return txtbox
@@ -768,7 +768,7 @@ function DeleteDemoOrderData(this_Obj)
     }
     if(tabledata.length==0)
     {
-        notyAlert('information', "Please select items to delete");
+        notyAlert('warning', "Please select items to delete");
     }
     else
     {
@@ -797,7 +797,7 @@ function InsertNewOrder()
         {
             if ((parseInt(newOrderData[i].Qty)) > newOrderData[i].ProductQty)
             {
-                notyAlert('information', "We're sorry! Only " + newOrderData.ProductQty + " units for " + ProductSpecXML.split('||')[0]);
+                notyAlert('warning', "We're sorry! Only " + newOrderData.ProductQty + " units for " + ProductSpecXML.split('||')[0]);
                 return false;
             }
             else {
@@ -855,8 +855,8 @@ function Calculatesum(this_obj)
     var rowData = DataTables.orderModificationtable.row($(this_obj).parents('tr')).data();
     if (Qty > rowData.ProductQty)
     {
-        notyAlert('information', "We're sorry! Only " + rowData.ProductQty + " units");
-        $(this_obj).val('');
+        notyAlert('warning', "We're sorry! Only " + rowData.ProductQty + " units");
+        $(this_obj).val(1);
         $(this_obj).focus();
     }
     else
@@ -1255,8 +1255,8 @@ function ChangeQtyShipment(this_Obj)
     var Qty = this_Obj.value;
     var rowData = DataTables.orderDetailstableShipmentRegion.row($(this_Obj).parents('tr')).data();
     if (Qty > rowData.Qty) {
-        notyAlert('information', "We're sorry! Only " + rowData.Qty + " units");
-        $(this_obj).val('');
+        notyAlert('warning', "We're sorry! Only " + rowData.Qty + " units");
+        $(this_obj).val(1);
     }
     else {
         var rowsData = DataTables.orderDetailstableShipmentRegion.rows().data();
