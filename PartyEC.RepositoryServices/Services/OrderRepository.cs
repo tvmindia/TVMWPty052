@@ -662,27 +662,24 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@TotalDiscountAmt", SqlDbType.Decimal).Value = orderObj.TotalDiscountAmt;
                         cmd.Parameters.Add("@PaymentStatus", SqlDbType.Int).Value = orderObj.PayStatusCode;
                         cmd.Parameters.Add("@OrderRemarks", SqlDbType.NVarChar, -1).Value = orderObj.OrderRemarks;
-
-                        cmd.Parameters.Add("@BillPrefix", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.Prefix;
-                        cmd.Parameters.Add("@BillFirstName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.FirstName;
-                        cmd.Parameters.Add("@BillMidName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.MidName;
-                        cmd.Parameters.Add("@BillLastName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.LastName;
-                        cmd.Parameters.Add("@BillAddress", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.Address;
-                        cmd.Parameters.Add("@BillCity", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.City;
-                        cmd.Parameters.Add("@BillCountryCode", SqlDbType.NVarChar, 3).Value = orderObj.CustomerBillAddress.CountryCode;
-                        cmd.Parameters.Add("@BillStateProvince", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.StateProvince;
-                        cmd.Parameters.Add("@BillContactNo", SqlDbType.NVarChar, 20).Value = orderObj.CustomerBillAddress.ContactNo;
-
-                        cmd.Parameters.Add("@ShipPrefix", SqlDbType.NVarChar, 4).Value = orderObj.CustomerShippingAddress.Prefix;
-                        cmd.Parameters.Add("@ShipFirstName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerShippingAddress.FirstName;
-                        cmd.Parameters.Add("@ShipMidName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerShippingAddress.MidName;
-                        cmd.Parameters.Add("@ShipLastName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerShippingAddress.LastName;
-                        cmd.Parameters.Add("@ShipAddress", SqlDbType.NVarChar, -1).Value = orderObj.CustomerShippingAddress.Address;
-                        cmd.Parameters.Add("@ShipCity", SqlDbType.NVarChar, 100).Value = orderObj.CustomerShippingAddress.City;
-                        cmd.Parameters.Add("@ShipContactNo", SqlDbType.NVarChar, 20).Value = orderObj.CustomerShippingAddress.ContactNo;
-                        cmd.Parameters.Add("@ShipCountryCode", SqlDbType.NVarChar, 3).Value = orderObj.CustomerShippingAddress.CountryCode;
-                        cmd.Parameters.Add("@ShipStateProvince", SqlDbType.NVarChar, 100).Value = orderObj.CustomerShippingAddress.StateProvince;
-
+                        cmd.Parameters.Add("@BillPrefix", SqlDbType.NVarChar, 4).Value = orderObj.BillPrefix;
+                        cmd.Parameters.Add("@BillFirstName", SqlDbType.NVarChar, 100).Value = orderObj.BillFirstName;
+                        cmd.Parameters.Add("@BillMidName", SqlDbType.NVarChar, 100).Value = orderObj.BillMidName;
+                        cmd.Parameters.Add("@BillLastName", SqlDbType.NVarChar, 100).Value = orderObj.BillLastName;
+                        cmd.Parameters.Add("@BillAddress", SqlDbType.NVarChar, -1).Value = orderObj.BillAddress;
+                        cmd.Parameters.Add("@BillCity", SqlDbType.NVarChar, 100).Value = orderObj.BillCity;
+                        cmd.Parameters.Add("@BillContactNo", SqlDbType.NVarChar, 20).Value = orderObj.BillContactNo;
+                        cmd.Parameters.Add("@BillCountryCode", SqlDbType.NVarChar, 3).Value = orderObj.BillCountryCode;
+                        cmd.Parameters.Add("@BillStateProvince", SqlDbType.NVarChar, 100).Value = orderObj.BillStateProvince;
+                        cmd.Parameters.Add("@ShipPrefix", SqlDbType.NVarChar, 4).Value = orderObj.ShipPrefix;
+                        cmd.Parameters.Add("@ShipFirstName", SqlDbType.NVarChar, 100).Value = orderObj.ShipFirstName;
+                        cmd.Parameters.Add("@ShipMidName", SqlDbType.NVarChar, 100).Value = orderObj.ShipMidName;
+                        cmd.Parameters.Add("@ShipLastName", SqlDbType.NVarChar, 100).Value = orderObj.ShipLastName;
+                        cmd.Parameters.Add("@ShipAddress", SqlDbType.NVarChar, -1).Value = orderObj.ShipAddress;
+                        cmd.Parameters.Add("@ShipCity", SqlDbType.NVarChar, 100).Value = orderObj.ShipCity;
+                        cmd.Parameters.Add("@ShipContactNo", SqlDbType.NVarChar, 20).Value = orderObj.ShipContactNo;
+                        cmd.Parameters.Add("@ShipCountryCode", SqlDbType.NVarChar, 3).Value = orderObj.ShipCountryCode;
+                        cmd.Parameters.Add("@ShipStateProvince", SqlDbType.NVarChar, 100).Value = orderObj.ShipStateProvince;
                         cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = orderObj.commonObj.CreatedBy;
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = orderObj.commonObj.CreatedDate;
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);

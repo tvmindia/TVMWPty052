@@ -514,8 +514,6 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.sendbtn.Visible = true;
                     ToolboxViewModelObj.sendbtn.Event = "ShowTemplatePreview()";
                     ToolboxViewModelObj.sendbtn.Title = "Mail";
-                    ToolboxViewModelObj.invoicebtn.Visible = true;
-                    ToolboxViewModelObj.shipbtn.Visible = true;
                     break;
                 case "Revise":
                     ToolboxViewModelObj.savebtn.Visible = true;
