@@ -11,6 +11,12 @@ namespace PartyEC.UI.CustomAttributes
      
        public void OnAuthentication(AuthenticationContext context)
         {
+            //SessionCheck
+            if((context.HttpContext.Session==null)||(context.HttpContext.Session["TvmValid"]==null))
+            {
+                context.Result = new RedirectToRouteResult(new System.Web.Routing.RouteValueDictionary() { { "controller", "Account" }, { "action", "Index" } });
+                return;
+            }
             ////
             var authCookie = context.HttpContext.Request.Cookies[FormsAuthentication.FormsCookieName];
             if (authCookie == null)
