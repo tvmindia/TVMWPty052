@@ -15,8 +15,10 @@ namespace PartyEC.UI.Controllers
     public class AccountController : Controller
     {
         private IAuthenticationBusiness _authenticationBusiness;
-        public AccountController(IAuthenticationBusiness authenticationBusiness)
+        private ICommonBusiness _commonBusiness;
+        public AccountController(IAuthenticationBusiness authenticationBusiness, ICommonBusiness commonBusiness)
         {
+            _commonBusiness = commonBusiness;
             _authenticationBusiness = authenticationBusiness;
         }
         // GET: Account
@@ -92,5 +94,23 @@ namespace PartyEC.UI.Controllers
         {
             return View();
         }
+
+        [HttpGet]
+        public string AreyouAlive()
+        {
+            string result="";
+            try
+            {
+                result = _commonBusiness.GetUA() == null ? "dead" : "alive";
+               
+            }
+            catch(Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+           
+            return JsonConvert.SerializeObject(new { Result = "OK", Record = result }); 
+        }
+
     }
 }
