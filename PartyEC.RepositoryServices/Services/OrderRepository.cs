@@ -534,7 +534,7 @@ namespace PartyEC.RepositoryServices.Services
 
             return operationsStatusObj;
         }
-        public OperationsStatus InsertOrderHeader(Order orderObj)
+        public OperationsStatus InsertOrderHeaderForApp(Order orderObj)
         {
             OperationsStatus operationsStatusObj = null;
             try
@@ -591,6 +591,98 @@ namespace PartyEC.RepositoryServices.Services
 
                         cmd.Parameters.Add("@CreatedBy",SqlDbType.NVarChar,250).Value = orderObj.commonObj.CreatedBy;
                         cmd.Parameters.Add("@CreatedDate",SqlDbType.DateTime).Value = orderObj.commonObj.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        ID = cmd.Parameters.Add("@ID", SqlDbType.Int);
+                        statusCode.Direction = ParameterDirection.Output;
+                        ID.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.ReturnValues = ID.Value;
+                                break;
+                            default:
+                                break;
+                        }
+
+
+
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
+        public OperationsStatus InsertOrderHeader(Order orderObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null, ID = null;
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertOrderHeader]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@OrderNo", SqlDbType.NVarChar, 20).Value = orderObj.OrderNo;
+                        cmd.Parameters.Add("@RevNo", SqlDbType.Int).Value = orderObj.RevNo;
+                        cmd.Parameters.Add("@OrderDate", SqlDbType.DateTime).Value = orderObj.OrderDateTime;
+                        cmd.Parameters.Add("@OrderStatus", SqlDbType.Int).Value = orderObj.StatusCode;
+                        cmd.Parameters.Add("@ParentOrderID", SqlDbType.Int).Value = orderObj.ParentOrderID;
+                        cmd.Parameters.Add("@SourceIP", SqlDbType.NVarChar, 50).Value = orderObj.SourceIP;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = orderObj.CustomerID;
+                        cmd.Parameters.Add("@shippingLocationID", SqlDbType.Int).Value = orderObj.shippingLocationID;
+                        cmd.Parameters.Add("@PaymentType", SqlDbType.NVarChar, 3).Value = orderObj.PaymentType;
+                        cmd.Parameters.Add("@CurrencyCode", SqlDbType.NVarChar, 3).Value = orderObj.CurrencyCode;
+                        cmd.Parameters.Add("@CurrencyRate", SqlDbType.Decimal).Value = orderObj.CurrencyRate;
+                        cmd.Parameters.Add("@TotalOrderAmt", SqlDbType.Decimal).Value = orderObj.TotalOrderAmt;
+                        cmd.Parameters.Add("@TotalShippingAmt", SqlDbType.Decimal).Value = orderObj.TotalShippingAmt;
+                        cmd.Parameters.Add("@TotalDiscountAmt", SqlDbType.Decimal).Value = orderObj.TotalDiscountAmt;
+                        cmd.Parameters.Add("@PaymentStatus", SqlDbType.Int).Value = orderObj.PayStatusCode;
+                        cmd.Parameters.Add("@OrderRemarks", SqlDbType.NVarChar, -1).Value = orderObj.OrderRemarks;
+
+                        cmd.Parameters.Add("@BillPrefix", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.Prefix;
+                        cmd.Parameters.Add("@BillFirstName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.FirstName;
+                        cmd.Parameters.Add("@BillMidName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.MidName;
+                        cmd.Parameters.Add("@BillLastName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.LastName;
+                        cmd.Parameters.Add("@BillAddress", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.Address;
+                        cmd.Parameters.Add("@BillCity", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.City;
+                        cmd.Parameters.Add("@BillCountryCode", SqlDbType.NVarChar, 3).Value = orderObj.CustomerBillAddress.CountryCode;
+                        cmd.Parameters.Add("@BillStateProvince", SqlDbType.NVarChar, 100).Value = orderObj.CustomerBillAddress.StateProvince;
+                        cmd.Parameters.Add("@BillContactNo", SqlDbType.NVarChar, 20).Value = orderObj.CustomerBillAddress.ContactNo;
+
+                        cmd.Parameters.Add("@ShipPrefix", SqlDbType.NVarChar, 4).Value = orderObj.CustomerShippingAddress.Prefix;
+                        cmd.Parameters.Add("@ShipFirstName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerShippingAddress.FirstName;
+                        cmd.Parameters.Add("@ShipMidName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerShippingAddress.MidName;
+                        cmd.Parameters.Add("@ShipLastName", SqlDbType.NVarChar, 100).Value = orderObj.CustomerShippingAddress.LastName;
+                        cmd.Parameters.Add("@ShipAddress", SqlDbType.NVarChar, -1).Value = orderObj.CustomerShippingAddress.Address;
+                        cmd.Parameters.Add("@ShipCity", SqlDbType.NVarChar, 100).Value = orderObj.CustomerShippingAddress.City;
+                        cmd.Parameters.Add("@ShipContactNo", SqlDbType.NVarChar, 20).Value = orderObj.CustomerShippingAddress.ContactNo;
+                        cmd.Parameters.Add("@ShipCountryCode", SqlDbType.NVarChar, 3).Value = orderObj.CustomerShippingAddress.CountryCode;
+                        cmd.Parameters.Add("@ShipStateProvince", SqlDbType.NVarChar, 100).Value = orderObj.CustomerShippingAddress.StateProvince;
+
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = orderObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.DateTime).Value = orderObj.commonObj.CreatedDate;
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         ID = cmd.Parameters.Add("@ID", SqlDbType.Int);
                         statusCode.Direction = ParameterDirection.Output;

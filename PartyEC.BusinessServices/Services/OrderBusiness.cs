@@ -146,6 +146,10 @@ namespace PartyEC.BusinessServices.Services
             }
             return operationStatusObj;
         }
+        public OperationsStatus InsertOrderHeaderForApp(Order orderObj)
+        {
+            return _orderRepository.InsertOrderHeaderForApp(orderObj);
+        }
         public OperationsStatus InsertOrderHeader(Order orderObj)
         {
             return _orderRepository.InsertOrderHeader(orderObj);
@@ -155,6 +159,31 @@ namespace PartyEC.BusinessServices.Services
             return _orderRepository.InsertOrderDetail(orderDetailObj);
         }
 
+        public OperationsStatus InsertOrderForApp(Order orderObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                operationsStatusObj = InsertOrderHeaderForApp(orderObj);
+                if (operationsStatusObj.StatusCode == 1)
+                {
+                    if (orderObj.OrderDetailsList != null)
+                    {
+                        foreach (var i in orderObj.OrderDetailsList)
+                        {
+                            i.OrderID = int.Parse(operationsStatusObj.ReturnValues.ToString());
+                            i.commonObj = orderObj.commonObj;
+                            operationsStatusObj=InsertOrderDetail(i);
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
         public OperationsStatus InsertOrder(Order orderObj)
         {
             OperationsStatus operationsStatusObj = null;
@@ -169,7 +198,7 @@ namespace PartyEC.BusinessServices.Services
                         {
                             i.OrderID = int.Parse(operationsStatusObj.ReturnValues.ToString());
                             i.commonObj = orderObj.commonObj;
-                            operationsStatusObj=InsertOrderDetail(i);
+                            operationsStatusObj = InsertOrderDetail(i);
                         }
                     }
                 }

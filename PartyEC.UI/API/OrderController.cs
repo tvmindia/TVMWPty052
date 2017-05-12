@@ -153,7 +153,7 @@ namespace PartyEC.UI.API
                 OrderObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                 OrderObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
-                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_OrderBusiness.InsertOrder(OrderObj));
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_OrderBusiness.InsertOrderForApp(OrderObj));
                 return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
             }
             catch (Exception ex)
