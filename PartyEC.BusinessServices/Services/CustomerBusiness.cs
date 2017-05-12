@@ -131,6 +131,13 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 operationStatus = _customerRepository.InsertCustomer(customer);
+                if (operationStatus.StatusCode == 1)
+                {
+                    customer.ID = int.Parse(operationStatus.ReturnValues.ToString());
+                    customer.customerAddress.ShipDefaultYN = true;
+                    customer.customerAddress.BillDefaultYN = true;
+                    _customerRepository.InsertUpdateCustomerAddress(customer);
+                }
             }
             catch (Exception ex)
             {
