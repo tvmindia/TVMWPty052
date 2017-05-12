@@ -15,7 +15,8 @@ $(document).ready(function () {
           { "data": "OrderDate" },
           { "data": "CustomerName" },
           { "data": "ContactNo" },
-          { "data": "TotalOrderAmt" },
+          { "data": null },
+          {"data":"TotalShippingAmt"},
           { "data": "OrderStatus" },
           { "data": null, "orderable": false, "defaultContent": '<a onclick="Edit(this)"<i class="glyphicon glyphicon-share-alt" aria-hidden="true"></i></a>' }
         ],
@@ -39,6 +40,13 @@ $(document).ready(function () {
                      return Order;
                  }
              }
+         },
+         {
+             'targets': 6,
+             'render': function (data, type, full, meta) {
+                 debugger;
+                 return (data.TotalOrderAmt - data.TotalDiscountAmt);
+                 }
          }
         ]
     });
@@ -212,8 +220,9 @@ $(document).ready(function () {
                { "data": "ProductName" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
-               { "data": "DiscountAmount", "defaultContent": "<i>-</i>" },
-               { "data": "ActualPrice", "defaultContent": "<i>-</i>" }
+               { "data": "ActualPrice", "defaultContent": "<i>-</i>" },
+               { "data": "ShippingCharge", "defaultContent": "<i>-</i>" },
+               { "data": "DiscountAmount", "defaultContent": "<i>-</i>" }
              ],
              columnDefs: [
               {

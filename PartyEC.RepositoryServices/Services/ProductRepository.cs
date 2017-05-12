@@ -1079,7 +1079,7 @@ namespace PartyEC.RepositoryServices.Services
 
             return myProductDetails;
         }
-        public List<ProductDetail> GetAllProductDetail(int LocationID)
+        public List<ProductDetail> GetAllProductDetail(int LocationID,DateTime currentDateTime)
         {
             List<ProductDetail> myProductDetails = null;
             try
@@ -1094,6 +1094,7 @@ namespace PartyEC.RepositoryServices.Services
                     _cmd.Connection = _con;
                     _cmd.CommandText = "[GetAllProductDetail]";
                     _cmd.Parameters.Add("@LocationID", SqlDbType.Int).Value =LocationID;
+                    _cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = currentDateTime.Date;
                     _cmd.CommandType = CommandType.StoredProcedure;
 
                     using (SqlDataReader sdr = _cmd.ExecuteReader())
@@ -1108,56 +1109,15 @@ namespace PartyEC.RepositoryServices.Services
                                 myProductDetail.ID = sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myProductDetail.ID;
                                 myProductDetail.ShippingCharge = sdr["ShippingCharge"].ToString() != "" ? float.Parse(sdr["ShippingCharge"].ToString()) : myProductDetail.ShippingCharge;
                                 myProductDetail.Qty = sdr["Qty"].ToString() != "" ? int.Parse(sdr["Qty"].ToString()) : myProductDetail.Qty; //sdr["Qty"].ToString();
-                                //myProductDetail.OutOfStockAlertQty = sdr["OutOfStockAlertQty"].ToString() != "" ? int.Parse(sdr["OutOfStockAlertQty"].ToString()) : myProductDetail.OutOfStockAlertQty;
                                 myProductDetail.PriceDifference = sdr["PriceDiffAmt"].ToString() != "" ? decimal.Parse(sdr["PriceDiffAmt"].ToString()) : myProductDetail.PriceDifference;
-                                //myProductDetail.Enabled = (sdr["EnableYN"].ToString() != "" ? bool.Parse(sdr["EnableYN"].ToString()) : myProductDetail.Enabled);
-                                //myProductDetail.DetailTags = (sdr["DetailTag"].ToString() != "" ? sdr["DetailTag"].ToString() : myProductDetail.DetailTags);
-                                //myProductDetail.StockAvailable = (sdr["StockAvailableYN"].ToString() != "" ? bool.Parse(sdr["StockAvailableYN"].ToString()) : myProductDetail.StockAvailable);
-                                myProductDetail.DiscountAmount = sdr["DiscountAmout"].ToString() != "" ? decimal.Parse(sdr["DiscountAmout"].ToString()) : myProductDetail.DiscountAmount;
-                                //myProductDetail.DiscountStartDate = (sdr["DiscountStDate"].ToString() != "" ? (Convert.ToDateTime(sdr["DiscountStDate"].ToString())) : myProductDetail.DiscountStartDate);
+                                myProductDetail.DiscountAmount = sdr["DiscountAmount"].ToString() != "" ? decimal.Parse(sdr["DiscountAmount"].ToString()) : myProductDetail.DiscountAmount;
                                 myProductDetail.DiscountEndDate = (sdr["DiscountEnDate"].ToString() != "" ? (Convert.ToDateTime(sdr["DiscountEnDate"].ToString())) : myProductDetail.DiscountEndDate);
                                 myProductDetail.ProductName = (sdr["Name"].ToString() != "" ? (sdr["Name"].ToString() + "||" + sdr["AttributeXML"].ToString()) : myProductDetail.ProductName);
                                 myProductDetail.BaseSellingPrice = sdr["BaseSellingPrice"].ToString() != "" ? decimal.Parse(sdr["BaseSellingPrice"].ToString()) : myProductDetail.BaseSellingPrice;
                                 myProductDetail.ActualPrice = (sdr["ActualPrice"].ToString() != "" ? decimal.Parse(sdr["ActualPrice"].ToString()) : myProductDetail.ActualPrice);
-                                //myProductDetail.DefaultOption = (sdr["DefaultOptionYN"].ToString() != "" ? bool.Parse(sdr["DefaultOptionYN"].ToString()) : myProductDetail.DefaultOption);
-                                //myProductDetail.logDetails = new LogDetails();
-                                //myProductDetail.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
-                                //myProductDetail.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (DateTime.Parse(sdr["CreatedDate"].ToString())) : myProductDetail.logDetails.CreatedDate);
-                                //myProductDetail.logDetails.UpdatedBy = sdr["UpdatedBy"].ToString();
-                                //myProductDetail.logDetails.UpdatedDate = (sdr["UpdatedDate"].ToString() != "" ? (Convert.ToDateTime(sdr["UpdatedDate"].ToString())) : myProductDetail.logDetails.UpdatedDate);
-
-                                //    if (myAttributeStructure == null)
-                                //    {
-                                //        myAttributeStructure = _attributesRepository.GetAttributeContainer(myProductDetail.AttributeSetID, "Product", true);
-                                //    }
-
-                                //    myProductDetail.ProductAttributes = new List<AttributeValues>();
-                                //    foreach (AttributeValues att in myAttributeStructure)
-                                //    {
-
-                                //        AttributeValues myAttribute = new AttributeValues(att);//copy the values
-                                //        try
-                                //        {
-                                //            //Checks column exists in reader
-                                //            for (int i = 0; i < sdr.FieldCount; i++)
-                                //            {
-                                //                if (sdr.GetName(i).Equals(att.Caption.ToString(), StringComparison.InvariantCultureIgnoreCase))
-                                //                {
-                                //                    myAttribute.Value = sdr[att.Caption].ToString();
-                                //                    break;
-                                //                }
-                                //            }
-                                //        }
-                                //        catch (Exception ex)
-                                //        {
-                                //        }
-                                //        myProductDetail.ProductAttributes.Add(myAttribute);
-
-                                //    }
+                                
                                    myProductDetails.Add(myProductDetail);
-                                //    myProductDetail.ProductDetailImages = GetProductImages(myProductDetail.ProductID, myProductDetail.ID);
-
-                                //}
+                                
                             }
                         }
                     }

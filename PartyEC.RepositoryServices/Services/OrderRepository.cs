@@ -59,6 +59,8 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.CustomerName =sdr["CustomerName"].ToString();
                                         orderObj.ContactNo =sdr["ContactNo"].ToString();
                                         orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : 0);
+                                        orderObj.TotalDiscountAmt=(sdr["TotalDiscountAmt"].ToString()!=""?float.Parse(sdr["TotalDiscountAmt"].ToString()):0);
+                                        orderObj.TotalShippingAmt = sdr["TotalShippingAmt"].ToString() != "" ? float.Parse(sdr["TotalShippingAmt"].ToString()) : 0;
                                         orderObj.OrderStatus = sdr["OrderStatus"].ToString();
                                         orderObj.StatusCode = sdr["StatusCode"].ToString() != "" ? int.Parse(sdr["StatusCode"].ToString()) : orderObj.StatusCode;
                                     }

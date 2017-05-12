@@ -33,16 +33,16 @@ namespace PartyEC.BusinessServices.Services
         public List<OrderDetail> GetAllOrdersList(string ID)
         {
           //  return _orderRepository.GetAllOrdersList(ID);
-            List<OrderDetail> Bookingslist = null;
+            List<OrderDetail> OrderList = null;
             try
             {
-                Bookingslist = _orderRepository.GetAllOrdersList(ID);
+                OrderList = _orderRepository.GetAllOrdersList(ID);
 
-                for(int i=0;i<Bookingslist.Count;i++)
+                for(int i=0;i<OrderList.Count;i++)
                 {
-                    if (Bookingslist[i].ProductSpecXML1 != null)
+                    if (OrderList[i].ProductSpecXML1 != null && OrderList[i].ProductSpecXML1!="")
                     { 
-                        Bookingslist[i].AttributeValues = _commonBusiness.GetAttributeValueFromXML(Bookingslist[i].ProductSpecXML1);
+                        OrderList[i].AttributeValues = _commonBusiness.GetAttributeValueFromXML(OrderList[i].ProductSpecXML1);
                     }
                 }
             }
@@ -50,7 +50,7 @@ namespace PartyEC.BusinessServices.Services
             {
                 throw ex;
             }
-            return Bookingslist;
+            return OrderList;
 
 
           
