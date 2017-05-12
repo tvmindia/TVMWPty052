@@ -12,11 +12,12 @@ namespace PartyEC.BusinessServices.Services
     {
         private IProductRepository _productRepository;
         private IMasterRepository _masterRepository;
-
-        public ProductBusiness(IProductRepository productRepository,IMasterRepository masterRepository)
+        private ICommonBusiness _commonBusiness;
+        public ProductBusiness(IProductRepository productRepository,IMasterRepository masterRepository,ICommonBusiness commonBusiness)
         {
             _productRepository = productRepository;
             _masterRepository = masterRepository;
+            _commonBusiness = commonBusiness;
         }
 
         public List<Product> GetAllProducts(Product productObj)
@@ -297,7 +298,7 @@ namespace PartyEC.BusinessServices.Services
             try
             {
 
-                productDetailslist = _productRepository.GetAllProductDetail(LocationID);
+                productDetailslist = _productRepository.GetAllProductDetail(LocationID, _commonBusiness.GetCurrentDateTime());
 
             }
             catch (Exception ex)

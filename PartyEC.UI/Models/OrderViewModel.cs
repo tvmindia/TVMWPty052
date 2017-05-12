@@ -53,24 +53,41 @@ namespace PartyEC.UI.Models
         public string PaymentStatus { get; set; }
      public string OrderRemarks { get; set; }
 	 public string BillPrefix { get; set; }
-	 public string BillFirstName { get; set; }
-	 public string BillMidName { get; set; }
-	 public string BillLastName { get; set; }
-	 public string BillAddress { get; set; }
-	 public string BillCity { get; set; }
-	 public string BillCountryCode { get; set; }
-	 public string BillStateProvince { get; set; }
-	 public string BillContactNo { get; set; }
+        [Display(Name = "First Name :")]
+        public string BillFirstName { get; set; }
+        [Display(Name = "Mid Name :")]
+        public string BillMidName { get; set; }
+        [Display(Name = "Last Name :")]
+        public string BillLastName { get; set; }
+        [Display(Name = "Address :")]
+        public string BillAddress { get; set; }
+        [Display(Name = "City :")]
+        public string BillCity { get; set; }
+        [Display(Name = "Country Code :")]
+        public string BillCountryCode { get; set; }
+        [Display(Name = "State/Province :")]
+        public string BillStateProvince { get; set; }
+        [Display(Name = "Contact No :")]
+        public string BillContactNo { get; set; }
+
         public int ShippedQty { get; set; }
-	 public string ShipPrefix { get; set; }
-	 public string ShipFirstName { get; set; }
-	 public string ShipMidName { get; set; }
-	 public string ShipLastName { get; set; }
-	 public string ShipAddress { get; set; }
-	 public string ShipCity { get; set; }
-	 public string ShipCountryCode { get; set; }
-	 public string ShipStateProvince { get; set; }
-	 public string ShipContactNo { get; set; }
+	    public string ShipPrefix { get; set; }
+        [Display(Name = "First Name :")]
+        public string ShipFirstName { get; set; }
+        [Display(Name = "Mid Name :")]
+        public string ShipMidName { get; set; }
+        [Display(Name = "Last Name :")]
+        public string ShipLastName { get; set; }
+        [Display(Name = "Address :")]
+        public string ShipAddress { get; set; }
+        [Display(Name = "City :")]
+        public string ShipCity { get; set; }
+        [Display(Name = "Country Code :")]
+        public string ShipCountryCode { get; set; }
+        [Display(Name = "State/Province :")]
+        public string ShipStateProvince { get; set; }
+        [Display(Name = "Contact No :")]
+        public string ShipContactNo { get; set; }
      public LogDetailsViewModel commonObj { get; set; }
 
 

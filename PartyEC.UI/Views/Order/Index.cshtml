@@ -43,6 +43,7 @@
                                 <th>Customer Name</th>
                                 <th>Contact No</th>
                                 <th>Grand Total</th>
+                                <th>Shipping Charges</th>
                                 <th>Order Status</th>
                                 <th>Action</th>
                             </tr>
@@ -90,7 +91,7 @@
                                                 @Html.LabelFor(model => model.OrderNo, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
-                                                    <label id="lblOrderNo" class="h5 label-display">-</label>
+                                                    <label id="lblOrderNo" class="h5 label-display" style="font-weight:bold">-</label>
                                                 </div>
                                                 <div class="col-md-12"></div>
                                                 @Html.LabelFor(model => model.OrderDate, htmlAttributes: new { @class = "h5 col-md-4" })
@@ -102,7 +103,7 @@
                                                 @Html.LabelFor(model => model.OrderStatus, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
-                                                    <label id="lblOrderStatus" class="h5 label-display">-</label>
+                                                    <label id="lblOrderStatus" class="h5 label-display" style="font-weight:bold">-</label>
                                                 </div>
                                                 <div class="col-md-12"></div>
                                                 @Html.LabelFor(model => model.SourceIP, htmlAttributes: new { @class = "h5 col-md-4" })
@@ -113,7 +114,7 @@
                                                 @Html.LabelFor(model => model.RevNo, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
-                                                    <label id="lblRevNo" class="h5 label-display">-</label>
+                                                    <label id="lblRevNo" class="h5 label-display" style="font-weight:bold">-</label>
                                                 </div>
                                                 @Html.LabelFor(model => model.RevisionIDs, htmlAttributes: new { @class = "h5 col-md-4",id="lblRevisionIDs" })
                                                 <div class="col-md-8" id="RevisionLinkBind">
@@ -1091,8 +1092,10 @@
                                     <th>Name</th>
                                     <th>BaseSellingPrice</th>
                                     <th>PriceDiffAmt</th>
-                                    <th>DiscountAmout</th>
                                     <th>ActualPrice</th>
+                                    <th>Shipping Charges</th>
+                                    <th>DiscountAmout</th>
+                                    
 
                                 </tr>
                             </thead>
