@@ -82,6 +82,14 @@ namespace PartyEC.DataAccessObject.DTO
         {
             get { return "Email Sending Failed"; }
         }
+
+        public string PriceChangedText
+        {
+            get { return "Price Changed After you added in Cart "; }
+        }
+
+
+
         #endregion Messages
 
         #region Strings
@@ -89,6 +97,10 @@ namespace PartyEC.DataAccessObject.DTO
         {
             get { return "App User"; }
         }
+
+
+
+
         #endregion
     }
 

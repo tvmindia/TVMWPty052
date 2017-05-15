@@ -11,6 +11,7 @@ namespace PartyEC.BusinessServices.Services
 {
     public class Cart_WishlistBusiness: ICart_WishlistBusiness
     {
+        Const constants = new Const();
         private ICart_WishlistRepository _cartWishlistRepository;
         private ICommonBusiness _commonBusiness;
         private IAttributesRepository _attributesRepository;
@@ -47,7 +48,18 @@ namespace PartyEC.BusinessServices.Services
                 for (int i = 0; i < cartlist.Count; i++)
                 {
                     if (cartlist[i].ProductSpecXML != null)
-                        cartlist[i].AttributeValues = GetAttributeValueFromXML(cartlist[i].ProductSpecXML);
+                        {
+                            cartlist[i].AttributeValues = GetAttributeValueFromXML(cartlist[i].ProductSpecXML);
+                        }
+                    if (cartlist[i].FreeDeliveryYN == true)
+                        {
+                            cartlist[i].ShippingCharge = 0;
+                        }
+                    if (cartlist[i].Price!=cartlist[i].CurrentPrice)
+                        {
+                            cartlist[i].IsPriceChanged = true;
+                            cartlist[i].PriceChangedText = constants.PriceChangedText;
+                        }
                 }
             }
             catch (Exception ex)

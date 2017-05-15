@@ -115,6 +115,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _ShoppingcartObj.CurrentPrice = (sdr["CurrentPrice"].ToString() != "" ? Decimal.Parse(sdr["CurrentPrice"].ToString()) : _ShoppingcartObj.CurrentPrice);
                                         _ShoppingcartObj.Discount = (sdr["DiscountAmout"].ToString() != "" ? Decimal.Parse(sdr["DiscountAmout"].ToString()) : _ShoppingcartObj.Discount);
                                         _ShoppingcartObj.FreeDeliveryYN = (sdr["FreeDeliveryYN"].ToString() != "" ? Boolean.Parse(sdr["FreeDeliveryYN"].ToString()) : _ShoppingcartObj.FreeDeliveryYN);
+                                        _ShoppingcartObj.StockAvailableYN = (sdr["StockAvailableYN"].ToString() != "" ? Boolean.Parse(sdr["StockAvailableYN"].ToString()) : _ShoppingcartObj.StockAvailableYN);
                                         _ShoppingcartObj.ItemStatus = (sdr["ItemStatus"].ToString() != "" ? sdr["ItemStatus"].ToString() : _ShoppingcartObj.ItemStatus);
 
                                         _ShoppingcartObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _ShoppingcartObj.ImageURL);
