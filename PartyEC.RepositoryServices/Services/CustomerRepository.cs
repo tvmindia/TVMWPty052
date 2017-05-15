@@ -236,7 +236,7 @@ namespace PartyEC.RepositoryServices.Services
                                 cmd.Parameters.Add("@LastName", SqlDbType.NVarChar, 100).Value = customer.customerAddress.LastName;
                                 cmd.Parameters.Add("@Address", SqlDbType.NVarChar, -1).Value = customer.customerAddress.Address;
                                 cmd.Parameters.Add("@City", SqlDbType.NVarChar, -1).Value = customer.customerAddress.City;
-                                if (customer.customerAddress.Location !=null)
+                                if (customer.customerAddress.LocationID !=0)
                                 {
                                     cmd.Parameters.Add("@Location", SqlDbType.Int).Value = customer.customerAddress.LocationID;
                                 }
@@ -281,7 +281,7 @@ namespace PartyEC.RepositoryServices.Services
                                 cmd.Parameters.Add("@LastName", SqlDbType.NVarChar, 100).Value = customer.customerAddress.LastName;
                                 cmd.Parameters.Add("@Address", SqlDbType.NVarChar, -1).Value = customer.customerAddress.Address;
                                 cmd.Parameters.Add("@City", SqlDbType.NVarChar, -1).Value = customer.customerAddress.City;
-                                if (customer.customerAddress.Location != null)
+                                if (customer.customerAddress.LocationID != 0)
                                 {
                                     cmd.Parameters.Add("@Location", SqlDbType.Int).Value = customer.customerAddress.LocationID;
                                 }
