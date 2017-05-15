@@ -20,8 +20,11 @@ namespace PartyEC.DataAccessObject.DTO
         public decimal CurrencyRate { get; set; }
         public decimal Price { get; set; }
         public decimal CurrentPrice { get; set; }
+        public bool IsPriceChanged { get; set; }
+        public string PriceChangedText { get; set; }
         public decimal Discount { get; set; }
         public bool FreeDeliveryYN { get; set; }
+        public bool StockAvailableYN { get; set; }
         public string ItemStatus { get; set; }
         public string CreatedDate { get; set; }
 
