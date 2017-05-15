@@ -85,7 +85,7 @@ namespace PartyEC.DataAccessObject.DTO
 
         public string PriceChangedText
         {
-            get { return "Price Changed After you added in Cart "; }
+            get { return "Price has been Changed From QR "; }
         }
 
 

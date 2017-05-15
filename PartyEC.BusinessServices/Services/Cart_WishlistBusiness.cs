@@ -58,7 +58,7 @@ namespace PartyEC.BusinessServices.Services
                     if (cartlist[i].Price!=cartlist[i].CurrentPrice)
                         {
                             cartlist[i].IsPriceChanged = true;
-                            cartlist[i].PriceChangedText = constants.PriceChangedText;
+                            cartlist[i].PriceChangedText = constants.PriceChangedText+ cartlist[i].Price;
                         }
                 }
             }
