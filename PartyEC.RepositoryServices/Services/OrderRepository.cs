@@ -182,7 +182,7 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.Total = (sdr["Total"].ToString() != "" ? float.Parse(sdr["Total"].ToString()) : 0);
                                         orderObj.SubTotal = (sdr["SubTotal"].ToString() != "" ? float.Parse(sdr["SubTotal"].ToString()) : 0);
                                         //orderObj.ProductQty = (sdr["ProductQty"].ToString() != "" ? int.Parse(sdr["ProductQty"].ToString()) : orderObj.ProductQty);
-                                        orderObj.ShippedQty = 0;
+                                        orderObj.ShippedQty = (sdr["ShippedQty"].ToString() != "" ? int.Parse(sdr["ShippedQty"].ToString()) : orderObj.ShippedQty);
                                         orderObj.QtyShipped = (sdr["QtyShipped"].ToString() != "" ? int.Parse(sdr["QtyShipped"].ToString()) : 0);
                                     }
                                     OrderHeaderList.Add(orderObj);

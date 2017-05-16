@@ -1,6 +1,7 @@
 var appAddress = window.location.protocol + "//" + window.location.host + "/";   //Retrieving browser Url 
 //Server pinging for UA alive
 (function Checker() {
+    debugger;
     var flag = false;
     $.ajax({
         url: appAddress + 'Account/AreyouAlive/',
@@ -46,7 +47,7 @@ var appAddress = window.location.protocol + "//" + window.location.host + "/";  
 
 
 $(document).ready(function () {
-   
+    debugger;
     $('input.datepicker').datepicker({
         format: "dd-M-yyyy",//dd-M-yyyy",
         maxViewMode: 0,
@@ -244,10 +245,14 @@ function ConvertDateFormats(thisdate)
 }
 //only number validation
 function isNumber(e) {
-    var unicode = e.charCode ? e.charCode : e.keyCode
-    if (unicode != 8) { //if the key isn't the backspace key (which we should allow)
-        if (unicode < 48 || unicode > 57) //if not a number
-            return false //disable key press
+    debugger;
+    var unicode = e.charCode ? e.charCode : e.keyCode;
+   // if (unicode != 8) { //if the key isn't the backspace key (which we should allow)
+    if (unicode < 48 || unicode > 57) //if not a number
+    {
+        return false //disable key press
     }
+            
+  //  }
 }
 

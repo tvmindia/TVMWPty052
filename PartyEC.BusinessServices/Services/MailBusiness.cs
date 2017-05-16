@@ -37,17 +37,26 @@ namespace PartyEC.BusinessServices.Services
 
             mail.From = new MailAddress(EmailFromAddress, "Admin_@_PartyEC");
             mail.To.Add(mailObj.CustomerEmail);
-            mail.Subject = "Shipping Tracking";
-            mail.IsBodyHtml = true;
             
-            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/OrderComment.html")))
+            mail.IsBodyHtml = true;
+            if(mailObj.TemplateString!="")
             {
-                body = reader.ReadToEnd();
+                mail.Body = mailObj.TemplateString;
+                mail.Subject = mailObj.MailSubject;
             }
-            body = body.Replace("{CustomerName}", mailObj.CustomerName);
-            body = body.Replace("{OrderNo}", mailObj.OrderNo.ToString());
-            body = body.Replace("{OrderComment}",mailObj.OrderComment);
-            mail.Body = body;
+            else
+            {
+                using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/OrderComment.html")))
+                {
+                    body = reader.ReadToEnd();
+                }
+                body = body.Replace("{CustomerName}", mailObj.CustomerName);
+                body = body.Replace("{OrderNo}", mailObj.OrderNo.ToString());
+                body = body.Replace("{OrderComment}", mailObj.OrderComment);
+                mail.Body = body;
+                mail.Subject = "Shipping Tracking";
+            }
+            
 
             try
             {
@@ -124,7 +133,35 @@ namespace PartyEC.BusinessServices.Services
             body= body.Replace("{@Amount}", Amount.ToString());
             return body;
         }
-
+        public string GetInvoiceTemplate(int ID)
+        {
+            string body = string.Empty;
+            string Detail = string.Empty;
+            float Amount = 0;
+            using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/InvoiceOrder.html")))
+            {
+                body = reader.ReadToEnd();
+            }
+            Order OrderObj = _orderRepository.GetOrderDetails(ID.ToString());
+            List<OrderDetail> OrderList = _orderRepository.GetAllOrdersList(ID.ToString());
+            body = body.Replace("{@CustomerName}", OrderObj.CustomerName);
+            body = body.Replace("{@OrdeNo}", OrderObj.OrderNo.ToString());
+            body = body.Replace("{@Address}", OrderObj.BillAddress);
+            body = body.Replace("{@Place}", OrderObj.BillCity);
+            body = body.Replace("{@State}", "");
+            body = body.Replace("{@PinCode}", "");
+            body = body.Replace("{@Mobile}", OrderObj.ContactNo);
+            foreach (var i in OrderList)
+            {
+                //_commonBusiness.GetAttributeValueFromXML(i.ProductSpecXML1);
+                Amount = Amount + i.SubTotal;
+                Detail = Detail + @"<tr><td width='120' valign='top' align='left'>
+                        <a style='color:#027cd8;text-decoration:none;outline:none;color:#ffffff;font-size:13px;display:block;width:100px' href='' target='_blank' > <img border='0' src='" + i.ImageUrl + "' alt='' style='border:none;width:100%' class='CToWUd'> </a></td><td width='8'></td><td valign='top' align='left'><p style='margin-bottom:13px'><a style='font-family:'Roboto',sans-serif;font-size:14px;font-weight:normal;font-style:normal;font-stretch:normal;line-height:1.25;color:#2175ff;text-decoration:none' href='' target='_blank' >" + i.ProductName + "</a><sup></sup> <br>  </p> <p style='font-family:'Roboto',sans-serif;font-size:12px;font-weight:normal;font-style:normal;line-height:1.5;font-stretch:normal;color:#878787;margin:0px 0px'>Seller: " + i.SupplierName + "</p> <p style='font-family:'Roboto-Medium',sans-serif;font-style:normal;line-height:1.5;font-stretch:normal;color:#212121;margin:5px 0px'><span style='padding-right:10px'>" + i.SubTotal + "</span> <span style='font-family:'Roboto-Medium',sans-serif;font-size:12px;font-weight:normal;font-style:normal;line-height:1.5;font-stretch:normal;color:#878787;margin:0px 0px;border:1px solid #dfdfdf;display:inline;border-radius:3px;padding:3px 10px'>Qty:" + i.Qty + "</span> </p></td></tr>";
+            }
+            body = body.Replace("{@Content}", Detail);
+            body = body.Replace("{@Amount}", Amount.ToString());
+            return body;
+        }
         #region MailSendAsync
         /// <summary>
         /// send mail asynchronously one address at a time

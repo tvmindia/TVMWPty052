@@ -43,9 +43,13 @@ namespace PartyEC.BusinessServices.Services
                 {
                     foreach(var i in shipmentObj.DetailsList)
                     {
-                        i.ShipmentID = int.Parse(operationstatusObj.ReturnValues.ToString());
-                        i.log = shipmentObj.log;                                               
-                        InsertShipmentDetail(i);
+                        if(i.ShippedQty!=0)
+                        {
+                            i.ShipmentID = int.Parse(operationstatusObj.ReturnValues.ToString());
+                            i.log = shipmentObj.log;
+                            InsertShipmentDetail(i);
+                        }
+                       
                     }
                 }
             }

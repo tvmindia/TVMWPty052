@@ -199,7 +199,7 @@ $(document).ready(function () {
                                  var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="1" onfocusout="Calculatesum(this)"></input> '
                              }
                              else {
-                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + (data) + '" onfocusout="Calculatesum(this)"></input> '
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + (data) + '" onkeypress="return isNumber(event)" onfocusout="Calculatesum(this)" ></input> '
                              }
 
                              return txtbox
@@ -216,7 +216,7 @@ $(document).ready(function () {
              data: null,
              columns: [
                { "data": null, "defaultContent": '' },
-               { "data": "ProductID" },
+               { "data": "ID" },
                { "data": "ProductName" },
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
@@ -309,7 +309,6 @@ $(document).ready(function () {
         paging: true,
         data: null,
         columns: [
-          { "data": null ,"defaultContent": ''},
           { "data": "OrderDetailID" },
           { "data": "ProductSpecXML" },
           { "data": "Qty" },
@@ -317,13 +316,8 @@ $(document).ready(function () {
           { "data": "QtyShipped" }
         ],
         columnDefs: [
-            {
-                orderable: false,
-                className: 'select-checkbox',
-                targets: 0
-            },
                      {//hiding hidden column 
-                         "targets": [2],
+                         "targets": [1],
                          "visible": true,
                          "searchable": false,
                          "render": function (data, type, full, meta) {
@@ -348,21 +342,17 @@ $(document).ready(function () {
                              debugger;
                              if (data)
                              {
-                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + (data) + '" onkeyup="ChangeQtyShipment(this)"></input>'
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + (data) + '" onkeypress="return isNumber(event);" onkeyup="ChangeQtyShipment(this)"></input>'
                              }
                              else
                              {
-                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + 1 + '" onkeyup="ChangeQtyShipment(this)"></input> '
+                                 var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + 0 + '" onkeypress="return isNumber(event);" onkeyup="ChangeQtyShipment(this)"></input> '
                              }                         
 
                              return txtbox
                          }
                      }
-        ],
-        select: {
-            style: 'multi',
-            selector: 'tr'
-        }
+        ]
     });
     DataTables.orderShippedShipmentRegion = $('#tblShippedItems').DataTable(
    {
@@ -593,6 +583,20 @@ function GetMailTemplateData(ID) {
         data = {"ID":ID};
         var ds = {};
         ds = GetDataFromServer("Order/GetMailTemplate/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
+    }
+    catch (e) {
+        notyAlert('error', e.message);
+    }
+}
+function GetInvoiceTemplateData(ID) {
+    debugger;
+    try {
+        data = { "ID": ID };
+        var ds = {};
+        ds = GetDataFromServer("Order/GetInvoiceTemplate/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
         if (ds.Result == "ERROR") { alert(ds.Message); }
@@ -1141,7 +1145,7 @@ function TabActionInvoiceRegion()
     {
         ChangeButtonPatchView("Order", "btnPatchOrders", "InvoiceRegion");
     }
-    
+    ChangeButtonPatchView("Order", "divTemplateSend", "InvoiceTemplate");
 }
 function PaymentStatusOnChange(this_Obj)
 {
@@ -1262,15 +1266,8 @@ function ChangeQtyShipment(this_Obj)
         var rowsData = DataTables.orderDetailstableShipmentRegion.rows().data();
         for (i = 0; i < rowsData.length; i++) {
             if (rowsData[i].ProductSpecXML == rowData.ProductSpecXML) {
-                if (Qty == 0)
-                {
-                    rowsData[i].QtyShipped = rowData.Qty;
-                }
-                else
-                {
-                    rowsData[i].QtyShipped = rowsData[i].QtyShipped - Qty;
-                }               
-                rowsData[i].ShippedQty = Qty;
+                        
+                rowsData[i].QtyShipped =Qty;
             }
         }
         //$('#tblGrandTotal .strGrandTotal').text(GrandTotal + " QAR");
@@ -1316,7 +1313,7 @@ function SaveShippingDetails()
 {
     debugger;
     var DetailsList = [];
-    var tabledata = DataTables.orderDetailstableShipmentRegion.rows('.selected').data();
+    var tabledata = DataTables.orderDetailstableShipmentRegion.rows().data();
     var ShipmentViewModel = new Object();
     ShipmentViewModel.OrderID = $('#hdnOrderHID').val();
     for(var i=0;i<tabledata.length;i++)
@@ -1324,7 +1321,7 @@ function SaveShippingDetails()
         var ShipmentDetailViewModel = new Object();
         ShipmentDetailViewModel.ShipmentID = null;
         ShipmentDetailViewModel.OrderItemID = tabledata[i].ItemID;
-        ShipmentDetailViewModel.ShippedQty = tabledata[i].ShippedQty;
+        ShipmentDetailViewModel.ShippedQty = tabledata[i].QtyShipped;
         DetailsList.push(ShipmentDetailViewModel);
     }
     ShipmentViewModel.DetailsList = DetailsList;
@@ -1377,6 +1374,7 @@ function goBackShipping()
 function TabActionOrderRegion()
 {
     ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
+    ChangeButtonPatchView("Order", "divTemplateSend", "OrderTemplate");
 }
 
 function ShowTemplatePreview()
@@ -1387,4 +1385,61 @@ function ShowTemplatePreview()
     $('#ModelTemplatePreview').modal('show');
     $('#PreviewTemplateArea').empty();
     $('#PreviewTemplateArea').append(Result);
+}
+function SendOrderConfirmation()
+{
+    debugger;
+    var TemplateBody = $('#PreviewTemplateArea').html();
+    var MailViewModel = new Object();
+    MailViewModel.CustomerEmail = $("#hdnAccountEmailID").val();
+    MailViewModel.TemplateString = TemplateBody;
+    MailViewModel.MailSubject="Order Successfully palced "
+    var data = "{'mailObj':" + JSON.stringify(MailViewModel) + "}";
+    PostDataToServer('Order/SendMail/', data, function (JsonResult) {
+        if (JsonResult != '') {
+            switch (JsonResult.Result) {
+                case "OK":
+                    notyAlert('success', JsonResult.Records.StatusMessage);
+                    //goBackShipping();
+                    break;
+                case "ERROR":
+                    notyAlert('error', JsonResult.Records.StatusMessage);
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
+}
+function ShowTemplatePreviewInvoice() {
+    debugger;
+    var ID = $('#hdnOrderHID').val();
+    var Result = GetInvoiceTemplateData(ID)
+    $('#ModelTemplatePreview').modal('show');
+    $('#PreviewTemplateArea').empty();
+    $('#PreviewTemplateArea').append(Result);
+}
+function SendInvoice() {
+    debugger;
+    var TemplateBody = $('#PreviewTemplateArea').html();
+    var MailViewModel = new Object();
+    MailViewModel.CustomerEmail = $("#hdnAccountEmailID").val();
+    MailViewModel.TemplateString = TemplateBody;
+    MailViewModel.MailSubject = "Invoice";
+    var data = "{'mailObj':" + JSON.stringify(MailViewModel) + "}";
+    PostDataToServer('Order/SendMail/', data, function (JsonResult) {
+        if (JsonResult != '') {
+            switch (JsonResult.Result) {
+                case "OK":
+                    notyAlert('success', JsonResult.Records.StatusMessage);
+                    //goBackShipping();
+                    break;
+                case "ERROR":
+                    notyAlert('error', JsonResult.Records.StatusMessage);
+                    break;
+                default:
+                    break;
+            }
+        }
+    })
 }

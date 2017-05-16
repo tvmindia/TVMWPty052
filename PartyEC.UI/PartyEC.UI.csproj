@@ -384,6 +384,7 @@
     <None Include="Scripts\jquery-3.1.1.intellisense.js" />
     <Content Include="PartyEcTemplates\Booking.html" />
     <Content Include="PartyEcTemplates\ContactUs.html" />
+    <Content Include="PartyEcTemplates\InvoiceOrder.html" />
     <Content Include="PartyEcTemplates\Notifications.html" />
     <Content Include="PartyEcTemplates\OrderComment.html" />
     <Content Include="PartyEcTemplates\OrderSucess.html" />
