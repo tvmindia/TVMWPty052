@@ -105,13 +105,13 @@ namespace PartyEC.DataAccessObject.DTO
         public string ProductSpecXML1 { get; set; }
         public string ItemStatus { get; set; }
         public int Qty { get; set; }
-        public float Price { get; set; }
-        public float ShippingAmt { get; set; }
-        public float TaxAmt { get; set; }
-        public float DiscountAmt { get; set; }
-        public float TotalDiscountAmt { get; set; }
-        public float Total { get; set; }
-        public float SubTotal { get; set; }
+        public decimal Price { get; set; }
+        public decimal ShippingAmt { get; set; }
+        public decimal TaxAmt { get; set; }
+        public decimal DiscountAmt { get; set; }
+        public decimal TotalDiscountAmt { get; set; }
+        public decimal Total { get; set; }
+        public decimal SubTotal { get; set; }
         public List<OrderDetail> OrderDetailsList { get; set; }
         public LogDetails commonObj { get; set; }
         public int ShippedQty { get; set; }

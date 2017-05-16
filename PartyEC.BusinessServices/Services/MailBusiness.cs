@@ -108,7 +108,7 @@ namespace PartyEC.BusinessServices.Services
         {
             string body = string.Empty;
             string Detail = string.Empty;
-            float Amount = 0;
+            decimal Amount = 0;
             using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/OrderSucess.html")))
             {
                 body = reader.ReadToEnd();
@@ -137,7 +137,7 @@ namespace PartyEC.BusinessServices.Services
         {
             string body = string.Empty;
             string Detail = string.Empty;
-            float Amount = 0;
+            decimal Amount = 0;
             using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/InvoiceOrder.html")))
             {
                 body = reader.ReadToEnd();

@@ -186,9 +186,9 @@ namespace PartyEC.BusinessServices.Services
                     orderDetailObj.ProductSpecXML = i.ProductSpecXML;//check if the value passed is correct
                     orderDetailObj.ItemStatus = "1";
                     orderDetailObj.Qty = i.Qty;
-                   // orderDetailObj.Price = i.CurrentPrice;
-                  //  orderDetailObj.TaxAmt = i.ShippingCharge;
-                   // orderDetailObj.DiscountAmt = i.ShippingCharge; 
+                    orderDetailObj.Price = i.CurrentPrice;
+                    orderDetailObj.TaxAmt = orderDetailObj.TaxAmt;
+                    orderDetailObj.DiscountAmt = i.Discount; 
 
                     OrderDetaillist.Add(orderDetailObj);
                     
