@@ -70,12 +70,12 @@ namespace PartyEC.BusinessServices.Services
             }
             return orderObj;
         }
-        public Order GetOrderSummery(int ID)
+        public Order GetOrderSummary(int ID)
         {
             Order orderObj = null;
             try
             {
-                orderObj = _orderRepository.GetOrderSummery(ID);
+                orderObj = _orderRepository.GetOrderSummary(ID);
             }
             catch (Exception ex)
             {
@@ -83,9 +83,9 @@ namespace PartyEC.BusinessServices.Services
             }
             return orderObj;
         }
-        public List<Order> GetOrderSummary(int CustomerID)
+        public List<Order> GetOrderSummaryList(int CustomerID)
         {
-            return _orderRepository.GetOrderSummary(CustomerID);
+            return _orderRepository.GetOrderSummaryList(CustomerID);
         }
         public Order GetOrderDetails(string ID)
         {

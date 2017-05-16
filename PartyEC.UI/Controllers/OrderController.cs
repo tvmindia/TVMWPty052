@@ -186,11 +186,11 @@ namespace PartyEC.UI.Controllers
         }
         [HttpGet]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
-        public string GetOrderSummery(string ID)
+        public string GetOrderSummary(string ID)
         {
             try
             {
-                OrderViewModel OrderViewModelObj = Mapper.Map<Order, OrderViewModel>(_orderBusiness.GetOrderSummery(int.Parse(ID)));
+                OrderViewModel OrderViewModelObj = Mapper.Map<Order, OrderViewModel>(_orderBusiness.GetOrderSummary(int.Parse(ID)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = OrderViewModelObj });
             }
             catch (Exception ex)
@@ -228,6 +228,22 @@ namespace PartyEC.UI.Controllers
             }
 
         }
+        [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string GetInvoiceTemplate(string ID)
+        {
+            try
+            {
+                string TemplateBody = _mailBusiness.GetInvoiceTemplate(int.Parse(ID));
+
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = TemplateBody });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
         [HttpPost]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string CancelOrder(OrderViewModel orderObj)
@@ -238,6 +254,35 @@ namespace PartyEC.UI.Controllers
                
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.CancelOrder(orderObj.ID));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string SendMail(MailViewModel mailObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            
+            try
+            {
+
+                bool status = _mailBusiness.Send(Mapper.Map<MailViewModel, Mail>(mailObj));
+                if(status)
+                {
+                    OperationsStatusViewModelObj.StatusCode = 1;
+                    OperationsStatusViewModelObj.StatusMessage = "Order Confirmation send sucessfully";
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    OperationsStatusViewModelObj.StatusCode = 0;
+                    OperationsStatusViewModelObj.StatusMessage = "Mail Not send";
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Records = OperationsStatusViewModelObj });
+                }
+                
             }
             catch (Exception ex)
             {
@@ -464,6 +509,16 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
+                case "InvoiceTemplate":
+                    ToolboxViewModelObj.sendbtn.Visible = true;
+                    ToolboxViewModelObj.sendbtn.Event = "SendInvoice()";
+                    ToolboxViewModelObj.sendbtn.Title = "Send Invoice";
+                    break;
+                case "OrderTemplate":
+                    ToolboxViewModelObj.sendbtn.Visible = true;
+                    ToolboxViewModelObj.sendbtn.Event = "SendOrderConfirmation()";
+                    ToolboxViewModelObj.sendbtn.Title = "Send Order";
+                    break;
                 case "InvoiceRegion":
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goBack()";
@@ -471,6 +526,9 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.savebtn.Visible = true;
                     ToolboxViewModelObj.savebtn.Title = "Save";
                     ToolboxViewModelObj.savebtn.Event = "SubmitInvoice()";
+                    ToolboxViewModelObj.sendbtn.Visible = true;
+                    ToolboxViewModelObj.sendbtn.Event = "ShowTemplatePreviewInvoice()";
+                    ToolboxViewModelObj.sendbtn.Title = "Mail";
                     break;
                 case "ShipmentRegion":
                     ToolboxViewModelObj.backbtn.Visible = true;

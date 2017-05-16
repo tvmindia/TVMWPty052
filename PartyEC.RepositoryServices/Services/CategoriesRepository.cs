@@ -375,6 +375,10 @@ namespace PartyEC.RepositoryServices.Services
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
                                     break;
+                            case "3":
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage = ConstObj.SystemCategory;
+                                break;
                                 default:
                                     break;
                             }

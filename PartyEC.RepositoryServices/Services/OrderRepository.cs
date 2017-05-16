@@ -182,7 +182,7 @@ namespace PartyEC.RepositoryServices.Services
                                         orderObj.Total = (sdr["Total"].ToString() != "" ? float.Parse(sdr["Total"].ToString()) : 0);
                                         orderObj.SubTotal = (sdr["SubTotal"].ToString() != "" ? float.Parse(sdr["SubTotal"].ToString()) : 0);
                                         //orderObj.ProductQty = (sdr["ProductQty"].ToString() != "" ? int.Parse(sdr["ProductQty"].ToString()) : orderObj.ProductQty);
-                                        orderObj.ShippedQty = 0;
+                                        orderObj.ShippedQty = (sdr["ShippedQty"].ToString() != "" ? int.Parse(sdr["ShippedQty"].ToString()) : orderObj.ShippedQty);
                                         orderObj.QtyShipped = (sdr["QtyShipped"].ToString() != "" ? int.Parse(sdr["QtyShipped"].ToString()) : 0);
                                     }
                                     OrderHeaderList.Add(orderObj);
@@ -320,7 +320,7 @@ namespace PartyEC.RepositoryServices.Services
             return orderObj;
         }
 
-        public Order GetOrderSummery(int ID)
+        public Order GetOrderSummary(int ID)
         {
             Order orderObj = null;
             try
@@ -334,7 +334,7 @@ namespace PartyEC.RepositoryServices.Services
                             con.Open();
                         }
                         cmd.Connection = con;
-                        cmd.CommandText = "[GetOrderSummeryFigure]";
+                        cmd.CommandText = "[GetOrderSummaryFigure]";
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ID;
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -345,11 +345,11 @@ namespace PartyEC.RepositoryServices.Services
                                 {
                                     orderObj = new Order();
                                     {
-                                        orderObj.SubTotalOrderSummery = sdr["SubTotalOrderSummery"].ToString();
-                                        orderObj.DiscountAmtOrderSummery = sdr["DiscountAmtOrderSummery"].ToString();
-                                        orderObj.TaxAmtOrderSummery = sdr["TaxAmtOrderSummery"].ToString();
-                                        orderObj.ShippingCostOrderSummery = sdr["ShippingCostOrderSummery"].ToString();
-                                        orderObj.GrandTotalOrderSummery = sdr["GrandTotalOrderSummery"].ToString();
+                                        orderObj.SubTotalOrderSummary = sdr["SubTotalOrderSummary"].ToString();
+                                        orderObj.DiscountAmtOrderSummary = sdr["DiscountAmtOrderSummary"].ToString();
+                                        orderObj.TaxAmtOrderSummary = sdr["TaxAmtOrderSummary"].ToString();
+                                        orderObj.ShippingCostOrderSummary = sdr["ShippingCostOrderSummary"].ToString();
+                                        orderObj.GrandTotalOrderSummary = sdr["GrandTotalOrderSummary"].ToString();
                                     }
                                 }
                             }
@@ -363,7 +363,7 @@ namespace PartyEC.RepositoryServices.Services
             }
             return orderObj;
         }
-        public List<Order> GetOrderSummary(int CustomerID)
+        public List<Order> GetOrderSummaryList(int CustomerID)
         {
             List<Order> OrderHeaderList = null;
             try

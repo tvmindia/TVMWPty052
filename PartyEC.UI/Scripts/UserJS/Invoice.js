@@ -141,7 +141,7 @@ function EditInvoice(curobj)
                 BindPaymentInformationInvoiceRegion(Result);
                 BindShippingHandlingSectionInvoiceRegion(Result);
                 BindTableOrderDetailListInvoiceRegion(rowData.ParentID);
-                BindOrderSummeryInvoiceRegion(Result);
+                BindOrderSummaryInvoiceRegion(Result);
             }
 
         }
@@ -210,14 +210,14 @@ function BindShippingHandlingSectionInvoiceRegion(Result) {
     $('#lblShippingAmtInvoiceRegion').text(Result.TotalShippingAmt)
 }
 
-function BindOrderSummeryInvoiceRegion(Result) {
+function BindOrderSummaryInvoiceRegion(Result) {
   
-    var OrderSummeryList = GetOrderSummery(Result.ID);
-    $('#tdSubTotalInvoiceRegion').text(OrderSummeryList.SubTotalOrderSummery + Result.CurrencyCode)
-    $('#tdTaxTotalInvoiceRegion').text(OrderSummeryList.TaxAmtOrderSummery + Result.CurrencyCode)
-    $('#tdDeliveryCostsInvoiceRegion').text(OrderSummeryList.ShippingCostOrderSummery + Result.CurrencyCode)
-    $('#tdOrderDiscountInvoiceRegion').text(OrderSummeryList.DiscountAmtOrderSummery + Result.CurrencyCode)
-    $('.strGrandTotal').text(OrderSummeryList.GrandTotalOrderSummery + Result.CurrencyCode)
+    var OrderSummaryList = GetOrderSummary(Result.ID);
+    $('#tdSubTotalInvoiceRegion').text(OrderSummaryList.SubTotalOrderSummary + Result.CurrencyCode)
+    $('#tdTaxTotalInvoiceRegion').text(OrderSummaryList.TaxAmtOrderSummary + Result.CurrencyCode)
+    $('#tdDeliveryCostsInvoiceRegion').text(OrderSummaryList.ShippingCostOrderSummary + Result.CurrencyCode)
+    $('#tdOrderDiscountInvoiceRegion').text(OrderSummaryList.DiscountAmtOrderSummary + Result.CurrencyCode)
+    $('.strGrandTotal').text(OrderSummaryList.GrandTotalOrderSummary + Result.CurrencyCode)
 }
 
 
@@ -242,11 +242,11 @@ function GetOrderDetails(ID) {
         notyAlert('error', e.message);
     }
 }
-function GetOrderSummery(ID) {
+function GetOrderSummary(ID) {
     try {
         data = { "ID": ID };
         var ds = {};
-        ds = GetDataFromServer("Order/GetOrderSummery/", data);
+        ds = GetDataFromServer("Order/GetOrderSummary/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
         if (ds.Result == "ERROR") { alert(ds.Message); }

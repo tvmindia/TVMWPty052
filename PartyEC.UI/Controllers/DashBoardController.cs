@@ -35,23 +35,23 @@ namespace PartyEC.UI.Controllers
           
             return View();
         }
-        #region GetWeeklySalesSummeryForChart
+        #region GetWeeklySalesSummaryForChart
         [HttpGet]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetWeeklySalesDetails()
         {
             try
             {
-                List<GraphViewModel> salesSummeryList = Mapper.Map<List<Graph>, List<GraphViewModel>>(_masterBusiness.GetWeeklySalesDetails());
-                return JsonConvert.SerializeObject(new { Result = "OK", Records = salesSummeryList });
+                List<GraphViewModel> salesSummaryList = Mapper.Map<List<Graph>, List<GraphViewModel>>(_masterBusiness.GetWeeklySalesDetails());
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = salesSummaryList });
             }
             catch (Exception ex)
             {
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
-        #endregion  GetWeeklySalesSummeryForChart
-        #region GetRootCategorySalesSummeryForChart
+        #endregion  GetWeeklySalesSummaryForChart
+        #region GetRootCategorySalesSummaryForChart
         [HttpGet]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetRootCategoryWiseSalesDetail()
@@ -66,7 +66,7 @@ namespace PartyEC.UI.Controllers
                 return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
         }
-        #endregion  GetRootCategorySalesSummeryForChart
+        #endregion  GetRootCategorySalesSummaryForChart
         [HttpGet]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string GetTop10Products()

@@ -22,7 +22,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string CustomerEmail { get; set; }
         public string OrderComment { get; set; }
         public int OrderNo { get; set; }
-
-
+        public string TemplateString { get; set; }
+        public string MailSubject { get; set; }
     }
 }
