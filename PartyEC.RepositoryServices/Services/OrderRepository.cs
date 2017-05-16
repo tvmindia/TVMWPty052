@@ -554,13 +554,15 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[InsertOrderHeader]";
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@OrderNo", SqlDbType.NVarChar,20).Value = orderObj.OrderNo;
+                       // cmd.Parameters.Add("@OrderNo", SqlDbType.NVarChar,20).Value = orderObj.OrderNo;
                         cmd.Parameters.Add("@RevNo", SqlDbType.Int).Value = orderObj.RevNo;
-                        cmd.Parameters.Add("@OrderDate", SqlDbType.DateTime).Value = orderObj.OrderDateTime;
+                        cmd.Parameters.Add("@OrderDate", SqlDbType.DateTime).Value = orderObj.commonObj.CreatedDate;
+                        if(orderObj.StatusCode!=0)
                         cmd.Parameters.Add("@OrderStatus", SqlDbType.Int).Value = orderObj.StatusCode;
                         cmd.Parameters.Add("@ParentOrderID", SqlDbType.Int).Value = orderObj.ParentOrderID;
                         cmd.Parameters.Add("@SourceIP",SqlDbType.NVarChar,50).Value = orderObj.SourceIP;
                         cmd.Parameters.Add("@CustomerID",SqlDbType.Int).Value = orderObj.CustomerID;
+                        if (orderObj.shippingLocationID!=0)
                         cmd.Parameters.Add("@shippingLocationID",SqlDbType.Int).Value = orderObj.shippingLocationID;
                         cmd.Parameters.Add("@PaymentType", SqlDbType.NVarChar,3).Value = orderObj.PaymentType;
                         cmd.Parameters.Add("@CurrencyCode", SqlDbType.NVarChar,3).Value = orderObj.CurrencyCode;

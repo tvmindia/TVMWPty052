@@ -13,11 +13,13 @@ namespace PartyEC.BusinessServices.Services
         private IOrderRepository _orderRepository;
         private IQuotationsBusiness _quotationBusiness;
         private ICommonBusiness _commonBusiness;
-        public OrderBusiness(IOrderRepository orderRepository, IQuotationsBusiness quotationBusiness,ICommonBusiness commonBusiness)
+        private ICart_WishlistBusiness _Cart_WishlistBusiness;
+        public OrderBusiness(IOrderRepository orderRepository, IQuotationsBusiness quotationBusiness,ICommonBusiness commonBusiness,ICart_WishlistBusiness Cart_WishlistBusiness)
         {
             _orderRepository = orderRepository;
             _quotationBusiness = quotationBusiness;
             _commonBusiness = commonBusiness;
+            _Cart_WishlistBusiness = Cart_WishlistBusiness;
         }
         public List<Order> GetAllOrderHeader()
         {
@@ -164,8 +166,36 @@ namespace PartyEC.BusinessServices.Services
             OperationsStatus operationsStatusObj = null;
             try
             {
-                operationsStatusObj = InsertOrderHeaderForApp(orderObj);
-                if (operationsStatusObj.StatusCode == 1)
+                ShoppingCart cartObj = new ShoppingCart();
+                cartObj.CustomerID = orderObj.CustomerID;
+                cartObj.LocationID = orderObj.shippingLocationID;
+                cartObj.logDetails = new LogDetails();
+                cartObj.logDetails.CreatedDate = orderObj.commonObj.CreatedDate;
+
+                List<OrderDetail> OrderDetaillist = new List<OrderDetail>() ;
+                List<ShoppingCart> cartlist = null;
+                cartlist = _Cart_WishlistBusiness.GetCustomerShoppingCart(cartObj);
+                
+
+                foreach (var i in cartlist)
+                {
+                    OrderDetail orderDetailObj = new OrderDetail();
+
+                    orderDetailObj.ItemID = i.ItemID;
+                    orderDetailObj.ProductID = i.ProductID;
+                    orderDetailObj.ProductSpecXML = i.ProductSpecXML;//check if the value passed is correct
+                    orderDetailObj.ItemStatus = "1";
+                    orderDetailObj.Qty = i.Qty;
+                   // orderDetailObj.Price = i.CurrentPrice;
+                  //  orderDetailObj.TaxAmt = i.ShippingCharge;
+                   // orderDetailObj.DiscountAmt = i.ShippingCharge; 
+
+                    OrderDetaillist.Add(orderDetailObj);
+                    
+                }
+                orderObj.OrderDetailsList = OrderDetaillist;
+               operationsStatusObj = InsertOrderHeaderForApp(orderObj);
+                    if (operationsStatusObj.StatusCode == 1)
                 {
                     if (orderObj.OrderDetailsList != null)
                     {
@@ -173,7 +203,7 @@ namespace PartyEC.BusinessServices.Services
                         {
                             i.OrderID = int.Parse(operationsStatusObj.ReturnValues.ToString());
                             i.commonObj = orderObj.commonObj;
-                            operationsStatusObj=InsertOrderDetail(i);
+                            InsertOrderDetail(i);
                         }
                     }
                 }
