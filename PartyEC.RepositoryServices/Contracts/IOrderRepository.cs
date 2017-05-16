@@ -11,9 +11,9 @@ namespace PartyEC.RepositoryServices.Contracts
         List<Order> GetAllOrderHeader();
         List<OrderDetail> GetAllOrdersList(string ID);
         Order GetSalesStatistics(int CustomerID,DateTime CurrentDate);
-        List<Order> GetOrderSummary(int CustomerID);
+        List<Order> GetOrderSummaryList(int CustomerID);
         Order GetOrderDetails(string ID);
-        Order GetOrderSummery(int ID);
+        Order GetOrderSummary(int ID);
         OperationsStatus CancelOrder(int ID);
         OperationsStatus UpdateBillingDetails(Order orderObj);
         OperationsStatus UpdateShipingDetails(Order orderObj);

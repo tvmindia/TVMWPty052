@@ -118,12 +118,12 @@ namespace PartyEC.UI.Models
         //Comments
         public EventsLogViewModel EventsLogViewObj { get; set; }
 
-        //OrderSummery
-        public string SubTotalOrderSummery { get; set; }
-        public string TaxAmtOrderSummery { get; set; }
-        public string ShippingCostOrderSummery { get; set; }
-        public string DiscountAmtOrderSummery { get; set; }
-        public string GrandTotalOrderSummery { get; set; }
+        //OrderSummary
+        public string SubTotalOrderSummary { get; set; }
+        public string TaxAmtOrderSummary { get; set; }
+        public string ShippingCostOrderSummary { get; set; }
+        public string DiscountAmtOrderSummary { get; set; }
+        public string GrandTotalOrderSummary { get; set; }
 
         //Mailing Comments
         public MailViewModel mailViewModelObj { get; set; }
@@ -207,12 +207,12 @@ namespace PartyEC.UI.Models
         //Comments
         public EventsLogViewModel EventsLogViewObj { get; set; }
 
-        //OrderSummery
-        public string SubTotalOrderSummery { get; set; }
-        public string TaxAmtOrderSummery { get; set; }
-        public string ShippingCostOrderSummery { get; set; }
-        public string DiscountAmtOrderSummery { get; set; }
-        public string GrandTotalOrderSummery { get; set; }
+        //OrderSummary
+        public string SubTotalOrderSummary { get; set; }
+        public string TaxAmtOrderSummary { get; set; }
+        public string ShippingCostOrderSummary { get; set; }
+        public string DiscountAmtOrderSummary { get; set; }
+        public string GrandTotalOrderSummary { get; set; }
 
         //Mailing Comments
         public MailViewModel mailViewModelObj { get; set; }

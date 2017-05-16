@@ -139,7 +139,7 @@ namespace PartyEC.UI.Controllers
                 if (!string.IsNullOrEmpty(customerID))
                 {
                     OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
-                    orderList = Mapper.Map<List<Order>, List<OrderViewModel>>(_orderBusiness.GetOrderSummary(int.Parse(customerID)));
+                    orderList = Mapper.Map<List<Order>, List<OrderViewModel>>(_orderBusiness.GetOrderSummaryList(int.Parse(customerID)));
                 }
                
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = orderList });

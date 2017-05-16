@@ -481,11 +481,11 @@ function GetAllOrderComments(ID) {
         notyAlert('error', e.message);
     }
 }
-function GetOrderSummery(ID) {
+function GetOrderSummary(ID) {
     try {
         data = { "ID": ID };
         var ds = {};
-        ds = GetDataFromServer("Order/GetOrderSummery/", data);
+        ds = GetDataFromServer("Order/GetOrderSummary/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
         if (ds.Result == "ERROR") { alert(ds.Message); }
@@ -658,7 +658,7 @@ function BindAllDetails(ID, ParentOrderID)
     BindShippingHandlingSection(Result);
     BindTableOrderDetailList(Result.ID);
     BindOrderComments(Result);
-    BindOrderSummery(Result);
+    BindOrderSummary(Result);
     BindNewRevisionGeneral(Result);
     BindRevisionLinkGeneral(Result);
 
@@ -668,7 +668,7 @@ function BindAllDetails(ID, ParentOrderID)
     BindAccountSectionInvoiceRegion(Result);
     BindPaymentInformationInvoiceRegion(Result);
     BindShippingHandlingSectionInvoiceRegion(Result);
-    BindOrderSummeryInvoiceRegion(Result);
+    BindOrderSummaryInvoiceRegion(Result);
 
     //****************************** SHIPPING AREA
 
@@ -1015,15 +1015,15 @@ function BindOrderComments(Result)
         }
     }
 }
-function BindOrderSummery(Result)
+function BindOrderSummary(Result)
 {
     debugger;
-    var OrderSummeryList=GetOrderSummery(Result.ID);
-    $('#tdSubTotal').text(OrderSummeryList.SubTotalOrderSummery+ Result.CurrencyCode)
-    $('#tdTaxTotal').text(OrderSummeryList.TaxAmtOrderSummery+ Result.CurrencyCode)
-    $('#tdDeliveryCosts').text(OrderSummeryList.ShippingCostOrderSummery+ Result.CurrencyCode)
-    $('#tdOrderDiscount').text(OrderSummeryList.DiscountAmtOrderSummery+ Result.CurrencyCode)
-    $('.strGrandTotal').text(OrderSummeryList.GrandTotalOrderSummery+ Result.CurrencyCode)
+    var OrderSummaryList=GetOrderSummary(Result.ID);
+    $('#tdSubTotal').text(OrderSummaryList.SubTotalOrderSummary+ Result.CurrencyCode)
+    $('#tdTaxTotal').text(OrderSummaryList.TaxAmtOrderSummary+ Result.CurrencyCode)
+    $('#tdDeliveryCosts').text(OrderSummaryList.ShippingCostOrderSummary+ Result.CurrencyCode)
+    $('#tdOrderDiscount').text(OrderSummaryList.DiscountAmtOrderSummary+ Result.CurrencyCode)
+    $('.strGrandTotal').text(OrderSummaryList.GrandTotalOrderSummary+ Result.CurrencyCode)
 }
 function BindNewRevisionGeneral(Result)
 {
@@ -1124,14 +1124,14 @@ function BindShippingHandlingSectionInvoiceRegion(Result) {
 function BindTableOrderDetailListInvoiceRegion(ID) {
     DataTables.orderDetailstableInvoiceRegion.clear().rows.add(GetAllOrdersList(ID)).draw(false);
 }
-function BindOrderSummeryInvoiceRegion(Result) {
+function BindOrderSummaryInvoiceRegion(Result) {
     debugger;
-    var OrderSummeryList = GetOrderSummery(Result.ID);
-    $('#tdSubTotalInvoiceRegion').text(OrderSummeryList.SubTotalOrderSummery + Result.CurrencyCode)
-    $('#tdTaxTotalInvoiceRegion').text(OrderSummeryList.TaxAmtOrderSummery + Result.CurrencyCode)
-    $('#tdDeliveryCostsInvoiceRegion').text(OrderSummeryList.ShippingCostOrderSummery + Result.CurrencyCode)
-    $('#tdOrderDiscountInvoiceRegion').text(OrderSummeryList.DiscountAmtOrderSummery + Result.CurrencyCode)
-    $('.strGrandTotalInvoiceRegion').text(OrderSummeryList.GrandTotalOrderSummery + Result.CurrencyCode)
+    var OrderSummaryList = GetOrderSummary(Result.ID);
+    $('#tdSubTotalInvoiceRegion').text(OrderSummaryList.SubTotalOrderSummary + Result.CurrencyCode)
+    $('#tdTaxTotalInvoiceRegion').text(OrderSummaryList.TaxAmtOrderSummary + Result.CurrencyCode)
+    $('#tdDeliveryCostsInvoiceRegion').text(OrderSummaryList.ShippingCostOrderSummary + Result.CurrencyCode)
+    $('#tdOrderDiscountInvoiceRegion').text(OrderSummaryList.DiscountAmtOrderSummary + Result.CurrencyCode)
+    $('.strGrandTotalInvoiceRegion').text(OrderSummaryList.GrandTotalOrderSummary + Result.CurrencyCode)
 }
 function TabActionInvoiceRegion()
 {

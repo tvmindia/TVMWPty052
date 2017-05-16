@@ -213,7 +213,7 @@ namespace PartyEC.UI.Controllers
                     {
                         OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
                         OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_categoryBusiness.DeleteCategory(categoryObj.ID));
-                        if(OperationsStatusViewModelObj.StatusCode==0)
+                        if((OperationsStatusViewModelObj.StatusCode==0) || (OperationsStatusViewModelObj.StatusCode == 3))
                         {
                             return JsonConvert.SerializeObject(new { Result = "ERROR", Records = OperationsStatusViewModelObj });
                         }

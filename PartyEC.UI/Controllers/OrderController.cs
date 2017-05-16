@@ -186,11 +186,11 @@ namespace PartyEC.UI.Controllers
         }
         [HttpGet]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
-        public string GetOrderSummery(string ID)
+        public string GetOrderSummary(string ID)
         {
             try
             {
-                OrderViewModel OrderViewModelObj = Mapper.Map<Order, OrderViewModel>(_orderBusiness.GetOrderSummery(int.Parse(ID)));
+                OrderViewModel OrderViewModelObj = Mapper.Map<Order, OrderViewModel>(_orderBusiness.GetOrderSummary(int.Parse(ID)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = OrderViewModelObj });
             }
             catch (Exception ex)

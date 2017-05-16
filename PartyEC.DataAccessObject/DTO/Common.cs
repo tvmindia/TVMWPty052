@@ -87,6 +87,10 @@ namespace PartyEC.DataAccessObject.DTO
         {
             get { return "Price has been Changed From QR "; }
         }
+        public string SystemCategory
+        {
+            get { return "Can't be deleted hence includes in system Category"; }
+        }
 
 
 

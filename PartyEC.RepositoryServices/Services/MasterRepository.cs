@@ -364,7 +364,7 @@ namespace PartyEC.RepositoryServices.Services
         }
         public List<Graph> GetWeeklySalesDetails()
         {
-            List<Graph> weeklySalesSummeryList = null;
+            List<Graph> weeklySalesSummaryList = null;
             try
             {
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
@@ -382,7 +382,7 @@ namespace PartyEC.RepositoryServices.Services
                         {
                             if ((sdr != null) && (sdr.HasRows))
                             {
-                                weeklySalesSummeryList = new List<Graph>();
+                                weeklySalesSummaryList = new List<Graph>();
                                 while (sdr.Read())
                                 {
                                     Graph _weeklysalesDetailObj = new Graph();
@@ -391,7 +391,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _weeklysalesDetailObj.Label = (sdr["Label"].ToString() != "" ? sdr["Label"].ToString() : _weeklysalesDetailObj.Label);
 
                                     }
-                                    weeklySalesSummeryList.Add(_weeklysalesDetailObj);
+                                    weeklySalesSummaryList.Add(_weeklysalesDetailObj);
                                 }
                             }//if
                         }
@@ -404,7 +404,7 @@ namespace PartyEC.RepositoryServices.Services
                 throw ex;
             }
 
-            return weeklySalesSummeryList;
+            return weeklySalesSummaryList;
 
 
         }
