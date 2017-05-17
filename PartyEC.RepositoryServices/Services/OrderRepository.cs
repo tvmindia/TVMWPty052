@@ -558,12 +558,13 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@RevNo", SqlDbType.Int).Value = orderObj.RevNo;
                         cmd.Parameters.Add("@OrderDate", SqlDbType.DateTime).Value = orderObj.commonObj.CreatedDate;
                         if(orderObj.StatusCode!=0)
-                        cmd.Parameters.Add("@OrderStatus", SqlDbType.Int).Value = orderObj.StatusCode;
-                        cmd.Parameters.Add("@ParentOrderID", SqlDbType.Int).Value = orderObj.ParentOrderID;
+                            cmd.Parameters.Add("@OrderStatus", SqlDbType.Int).Value = orderObj.StatusCode;
+                        if (orderObj.ParentOrderID != 0)
+                            cmd.Parameters.Add("@ParentOrderID", SqlDbType.Int).Value = orderObj.ParentOrderID;
                         cmd.Parameters.Add("@SourceIP",SqlDbType.NVarChar,50).Value = orderObj.SourceIP;
                         cmd.Parameters.Add("@CustomerID",SqlDbType.Int).Value = orderObj.CustomerID;
                         if (orderObj.shippingLocationID!=0)
-                        cmd.Parameters.Add("@shippingLocationID",SqlDbType.Int).Value = orderObj.shippingLocationID;
+                            cmd.Parameters.Add("@shippingLocationID",SqlDbType.Int).Value = orderObj.shippingLocationID;
                         cmd.Parameters.Add("@PaymentType", SqlDbType.NVarChar,3).Value = orderObj.PaymentType;
                         cmd.Parameters.Add("@CurrencyCode", SqlDbType.NVarChar,3).Value = orderObj.CurrencyCode;
                         cmd.Parameters.Add("@CurrencyRate", SqlDbType.Decimal).Value = orderObj.CurrencyRate;
