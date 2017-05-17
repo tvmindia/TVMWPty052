@@ -194,6 +194,8 @@ namespace PartyEC.BusinessServices.Services
                     
                 }
                 orderObj.OrderDetailsList = OrderDetaillist;
+                orderObj.OrderStatus = "1";
+                orderObj.CurrencyCode = "QAR";
                operationsStatusObj = InsertOrderHeaderForApp(orderObj);
                     if (operationsStatusObj.StatusCode == 1)
                 {
