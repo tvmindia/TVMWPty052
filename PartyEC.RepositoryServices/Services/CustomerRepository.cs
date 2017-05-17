@@ -243,8 +243,8 @@ namespace PartyEC.RepositoryServices.Services
                                 cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = customer.customerAddress.CountryCode;
                                 cmd.Parameters.Add("@StateProvince", SqlDbType.NVarChar, 100).Value = customer.customerAddress.StateProvince;
                                 cmd.Parameters.Add("@ContactNo", SqlDbType.NVarChar, 20).Value = customer.customerAddress.ContactNo;
-                                cmd.Parameters.Add("@BillDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.BillDefaultYN;
-                                cmd.Parameters.Add("@ShipDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.ShipDefaultYN;
+                                cmd.Parameters.Add("@BillDefaultYN", SqlDbType.Bit).Value = customer.customerAddress.BillDefaultYN;
+                                cmd.Parameters.Add("@ShipDefaultYN", SqlDbType.Bit).Value = customer.customerAddress.ShipDefaultYN;
                                 cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = customer.logDetailsObj.CreatedBy;
                                 cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime, 250).Value = customer.logDetailsObj.CreatedDate;
                                 statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
@@ -288,8 +288,6 @@ namespace PartyEC.RepositoryServices.Services
                                 cmd.Parameters.Add("@CountryCode", SqlDbType.NVarChar, 3).Value = customer.customerAddress.CountryCode;
                                 cmd.Parameters.Add("@StateProvince", SqlDbType.NVarChar, 100).Value = customer.customerAddress.StateProvince;
                                 cmd.Parameters.Add("@ContactNo", SqlDbType.NVarChar, 20).Value = customer.customerAddress.ContactNo;
-                                cmd.Parameters.Add("@BillDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.BillDefaultYN;
-                                cmd.Parameters.Add("@ShipDefaultYN", SqlDbType.Bit, 20).Value = customer.customerAddress.ShipDefaultYN;
                                 cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = customer.logDetailsObj.UpdatedBy;
                                 cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = customer.logDetailsObj.UpdatedDate;
                                 statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
