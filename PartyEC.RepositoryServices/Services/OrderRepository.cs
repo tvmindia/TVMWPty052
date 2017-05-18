@@ -602,8 +602,7 @@ namespace PartyEC.RepositoryServices.Services
                        // cmd.Parameters.Add("@OrderNo", SqlDbType.NVarChar,20).Value = orderObj.OrderNo;
                         cmd.Parameters.Add("@RevNo", SqlDbType.Int).Value = orderObj.RevNo;
                         cmd.Parameters.Add("@OrderDate", SqlDbType.DateTime).Value = orderObj.commonObj.CreatedDate;
-                        if(orderObj.StatusCode!=0)
-                            cmd.Parameters.Add("@OrderStatus", SqlDbType.Int).Value = orderObj.StatusCode;
+                        cmd.Parameters.Add("@OrderStatus", SqlDbType.Int).Value = orderObj.OrderStatus;
                         if (orderObj.ParentOrderID != 0)
                             cmd.Parameters.Add("@ParentOrderID", SqlDbType.Int).Value = orderObj.ParentOrderID;
                         cmd.Parameters.Add("@SourceIP",SqlDbType.NVarChar,50).Value = orderObj.SourceIP;
