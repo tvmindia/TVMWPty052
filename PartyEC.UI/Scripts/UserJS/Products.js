@@ -1400,16 +1400,20 @@ function RenderContentForInventory()
             case "C":
                 //Hide General detail entries
                 $(".productDetailGroup").hide();
-                $(".divMsgconfigurable").show();
-
-                $("#inventory .form-group").show();
+               // $(".divMsgconfigurable").show();
+                $("#inventoryStock").show();
+                //$("#inventory .form-group").show();
                 $(".divInventoryMessage").hide();
+                $("#inventoryQty").hide();
+                $("#inventoryAlertQty").hide();
                 break;
             case "S":
                 $(".productDetailGroup").show();
-                $(".divMsgconfigurable").hide();
+               // $(".divMsgconfigurable").hide();
                 $("#inventory .form-group").show();
                 $(".divInventoryMessage").hide();
+                $("#inventoryQty").show();
+                $("#inventoryAlertQty").show();
                 break;
             default:
                 $("#inventory .form-group").hide();

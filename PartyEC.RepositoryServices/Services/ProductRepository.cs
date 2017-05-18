@@ -483,14 +483,18 @@ namespace PartyEC.RepositoryServices.Services
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.Parameters.Add("@ID", SqlDbType.Int).Value = detail.ID;//for insert it will be 0;
                             cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = productObj.ID;
-                            cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = detail.Qty;
+                            cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = detail.Qty != null ? detail.Qty : 0;
                             cmd.Parameters.Add("@OutOfStockAlertQty", SqlDbType.Int).Value = detail.OutOfStockAlertQty;
-                            cmd.Parameters.Add("@PriceDiffAmt", SqlDbType.Decimal).Value = detail.PriceDifference;
+                            cmd.Parameters.Add("@PriceDiffAmt", SqlDbType.Decimal).Value = detail.PriceDifference!=null? detail.PriceDifference:0;
                             cmd.Parameters.Add("@AttributeXML", SqlDbType.Xml).Value = _attributesRepository.GetAttributeXML(detail.ProductAttributes);
                             cmd.Parameters.Add("@DetailTag", SqlDbType.NVarChar, -1).Value = detail.DetailTags;
                             cmd.Parameters.Add("@EnableYN", SqlDbType.Bit).Value = detail.Enabled;
+                            if(detail.Qty==0)
+                            {
+                                detail.StockAvailable = false;
+                            }
                             cmd.Parameters.Add("@StockAvailableYN", SqlDbType.Bit).Value = detail.StockAvailable;
-                            cmd.Parameters.Add("@DiscountAmout", SqlDbType.Decimal).Value = detail.DiscountAmount;
+                            cmd.Parameters.Add("@DiscountAmout", SqlDbType.Decimal).Value = detail.DiscountAmount != null ? detail.DiscountAmount : 0;
                             cmd.Parameters.Add("@DiscountStDate", SqlDbType.DateTime).Value = detail.DiscountStartDate;
                             cmd.Parameters.Add("@DiscountEnDate", SqlDbType.DateTime).Value = detail.DiscountEndDate;
                             cmd.Parameters.Add("@DefaultOptionYN", SqlDbType.Bit).Value = detail.DefaultOption;
