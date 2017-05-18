@@ -32,9 +32,18 @@ namespace PartyEC.BusinessServices.Services
         }
         public List<Order> GetOrderHeader()
         {
-            return _orderRepository.GetAllOrderHeader().GroupBy(r => r.OrderNo)
+            List<Order> OrderList = _orderRepository.GetAllOrderHeader();
+            if(OrderList!=null)
+            {
+                return OrderList.GroupBy(r => r.OrderNo)
                     .Select(g => g.OrderByDescending(i => i.ID).First())
                     .ToList();
+            }
+            else
+            {
+                return OrderList;
+            }
+            
         }
         public List<OrderDetail> GetAllOrdersList(string ID)
         {
