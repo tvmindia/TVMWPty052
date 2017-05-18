@@ -1393,6 +1393,7 @@ function SendOrderConfirmation()
     var MailViewModel = new Object();
     MailViewModel.CustomerEmail = $("#hdnAccountEmailID").val();
     MailViewModel.TemplateString = TemplateBody;
+    MailViewModel.OrderID = $('#hdnOrderHID').val();
     MailViewModel.MailSubject="Order Successfully palced "
     var data = "{'mailObj':" + JSON.stringify(MailViewModel) + "}";
     PostDataToServer('Order/SendMail/', data, function (JsonResult) {
@@ -1400,6 +1401,7 @@ function SendOrderConfirmation()
             switch (JsonResult.Result) {
                 case "OK":
                     notyAlert('success', JsonResult.Records.StatusMessage);
+                    Edit(this_ObjOrder);
                     //goBackShipping();
                     break;
                 case "ERROR":
@@ -1427,11 +1429,12 @@ function SendInvoice() {
     MailViewModel.TemplateString = TemplateBody;
     MailViewModel.MailSubject = "Invoice";
     var data = "{'mailObj':" + JSON.stringify(MailViewModel) + "}";
-    PostDataToServer('Order/SendMail/', data, function (JsonResult) {
+    PostDataToServer('Order/SendMailInvoice/', data, function (JsonResult) {
         if (JsonResult != '') {
             switch (JsonResult.Result) {
                 case "OK":
                     notyAlert('success', JsonResult.Records.StatusMessage);
+                    Edit(this_ObjOrder);
                     //goBackShipping();
                     break;
                 case "ERROR":

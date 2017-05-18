@@ -79,6 +79,51 @@ namespace PartyEC.RepositoryServices.Services
 
             return OrderHeaderList;
         }
+        public List<Order> GetLatestOrders()
+        {
+            List<Order> OrderHeaderList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetLatestOrders]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                OrderHeaderList = new List<Order>();
+                                while (sdr.Read())
+                                {
+                                    Order orderObj = new Order();
+                                    {
+                                        orderObj.OrderNo = sdr["OrderNo"].ToString();
+                                        orderObj.OrderDate = sdr["OrderDate"].ToString() != "" ? DateTime.Parse(sdr["OrderDate"].ToString()).ToString("dd-MMM-yyyy") : orderObj.OrderDate;
+                                        orderObj.CustomerName = sdr["Name"].ToString();
+                                        orderObj.TotalOrderAmt = (sdr["TotalOrderAmt"].ToString() != "" ? float.Parse(sdr["TotalOrderAmt"].ToString()) : 0);
+                                       }
+                                    OrderHeaderList.Add(orderObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return OrderHeaderList;
+        }
         public List<OrderDetail> GetAllOrdersList(string ID)
         {
             List<OrderDetail> OrderHeaderList = null;
@@ -719,7 +764,7 @@ namespace PartyEC.RepositoryServices.Services
 
             return operationsStatusObj;
         }
-        public OperationsStatus CancelOrder(int ID)
+        public OperationsStatus CancelOrder(Order orderObj)
         {
             OperationsStatus operationsStatusObj = null;
             try
@@ -737,7 +782,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[UpdateOrderStatus]";
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = ID;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = orderObj.ID;
+                        cmd.Parameters.Add("@OrderStatus", SqlDbType.Int).Value = orderObj.OrderStatus;
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();

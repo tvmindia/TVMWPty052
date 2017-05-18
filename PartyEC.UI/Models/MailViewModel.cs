@@ -11,6 +11,7 @@ namespace PartyEC.UI.Models
         public string CustomerEmail { get; set; }
         public string OrderComment { get; set; }
         public int OrderNo { get; set; }
+        public int OrderID { get; set; }
         public string TemplateString { get; set; }
         public string MailSubject { get; set; }
     }

@@ -5,6 +5,7 @@
         BindBarChart();
         BindPieChart();
         BindLatestProducts();
+        BindLatestOrders();
     }
     catch(e)
     {
@@ -46,6 +47,20 @@ function Gettop10LatestProducts()
         var ds = {};
         data = "";
         ds = GetDataFromServer("DashBoard/GetTop10Products/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
+    }
+    catch (e) {
+
+    }
+}
+function GetLatestOrders()
+{
+    try {
+        var ds = {};
+        data = "";
+        ds = GetDataFromServer("DashBoard/GetLatestOrders/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
         if (ds.Result == "ERROR") { alert(ds.Message); }
@@ -187,6 +202,37 @@ function BindLatestProducts()
     }
     catch(e)
     {
+
+    }
+}
+function BindLatestOrders() {
+    try {
+        debugger;
+        var LatestOrderList = GetLatestOrders()
+        if (LatestOrderList.length > 0) {
+            $('#ulLatestOrder').empty();
+        }
+        for (var i = 0; i < LatestOrderList.length; i++) {
+
+            var html = '<li class="list-group-item">'
+                        + '<div class="col-lg-12" style="padding:0px">'
+                            + '<div class="col-lg-3">'
+                                + '<img src="/Content/images/OrderDefault.png" style="width:60px;height:60px;object-fit:contain;" />'
+                            + '</div><div class="col-lg-9">'
+                                + '<div class="col-lg-12" style="min-height: 45px;max-height: 45px;">'
+                                    + '<span>' + LatestOrderList[i].OrderNo + ' by user ' + LatestOrderList[i].CustomerName + ' on ' + LatestOrderList[i].OrderDate + '</span>'
+                                + '</div><div class="col-lg-12"></div>'
+                                + '<div class="col-lg-12">'
+                                    + '<a href="/Order"><i class="fa fa-info-circle"></i></a>'
+                                    + '<a href="/Reviews"><i class="fa fa-star-half-o"></i></a>'
+                                + '</div>'
+                            + '</div>'
+                        + '</div>'
+                    + '</li>'
+            $('#ulLatestOrder').append(html);
+        }
+    }
+    catch (e) {
 
     }
 }

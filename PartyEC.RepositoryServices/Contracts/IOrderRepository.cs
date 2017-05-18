@@ -10,11 +10,12 @@ namespace PartyEC.RepositoryServices.Contracts
     {
         List<Order> GetAllOrderHeader();
         List<OrderDetail> GetAllOrdersList(string ID);
+        List<Order> GetLatestOrders();
         Order GetSalesStatistics(int CustomerID,DateTime CurrentDate);
         List<Order> GetOrderSummaryList(int CustomerID);
         Order GetOrderDetails(string ID);
         Order GetOrderSummary(int ID);
-        OperationsStatus CancelOrder(int ID);
+        OperationsStatus CancelOrder(Order orderObj);
         OperationsStatus UpdateBillingDetails(Order orderObj);
         OperationsStatus UpdateShipingDetails(Order orderObj);
         OperationsStatus InsertOrderHeaderForApp(Order orderObj);

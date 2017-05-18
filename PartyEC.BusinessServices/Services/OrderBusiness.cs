@@ -26,6 +26,10 @@ namespace PartyEC.BusinessServices.Services
 
             return _orderRepository.GetAllOrderHeader();
         }
+        public List<Order> GetLatestOrders()
+        {
+            return _orderRepository.GetLatestOrders();
+        }
         public List<Order> GetOrderHeader()
         {
             return _orderRepository.GetAllOrderHeader().GroupBy(r => r.OrderNo)
@@ -99,9 +103,9 @@ namespace PartyEC.BusinessServices.Services
         {
             return _orderRepository.UpdateShipingDetails(orderObj);
         }
-        public OperationsStatus  CancelOrder(int ID)
+        public OperationsStatus  CancelOrder(Order orderObj)
         {
-            return _orderRepository.CancelOrder(ID);
+            return _orderRepository.CancelOrder(orderObj);
         }
         public List<Order> GetCustomerOrders(int CustomerID,bool Ishistory)
         {

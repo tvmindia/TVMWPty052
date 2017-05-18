@@ -251,8 +251,8 @@ namespace PartyEC.UI.Controllers
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
             try
             {
-               
-                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.CancelOrder(orderObj.ID));
+                orderObj.OrderStatus = "4";
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.CancelOrder(Mapper.Map < OrderViewModel, Order > (orderObj)));
                 return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
             }
             catch (Exception ex)
@@ -264,14 +264,17 @@ namespace PartyEC.UI.Controllers
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string SendMail(MailViewModel mailObj)
         {
-            OperationsStatusViewModel OperationsStatusViewModelObj = null;
-            
+            OperationsStatusViewModel OperationsStatusViewModelObj = new OperationsStatusViewModel();
+            OrderViewModel orderObj = new OrderViewModel();
             try
             {
 
                 bool status = _mailBusiness.Send(Mapper.Map<MailViewModel, Mail>(mailObj));
                 if(status)
                 {
+                    orderObj.ID = mailObj.OrderID;
+                    orderObj.OrderStatus = "2";
+                    _orderBusiness.CancelOrder(Mapper.Map<OrderViewModel,Order>(orderObj));
                     OperationsStatusViewModelObj.StatusCode = 1;
                     OperationsStatusViewModelObj.StatusMessage = "Order Confirmation send sucessfully";
                     return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
@@ -283,6 +286,34 @@ namespace PartyEC.UI.Controllers
                     return JsonConvert.SerializeObject(new { Result = "ERROR", Records = OperationsStatusViewModelObj });
                 }
                 
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+        }
+        [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string SendMailInvoice(MailViewModel mailObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = new OperationsStatusViewModel();
+            try
+            {
+
+                bool status = _mailBusiness.Send(Mapper.Map<MailViewModel, Mail>(mailObj));
+                if (status)
+                {
+                    OperationsStatusViewModelObj.StatusCode = 1;
+                    OperationsStatusViewModelObj.StatusMessage = "Invoice send sucessfully";
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    OperationsStatusViewModelObj.StatusCode = 0;
+                    OperationsStatusViewModelObj.StatusMessage = "Mail Not send";
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Records = OperationsStatusViewModelObj });
+                }
+
             }
             catch (Exception ex)
             {

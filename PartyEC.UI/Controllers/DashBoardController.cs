@@ -83,5 +83,21 @@ namespace PartyEC.UI.Controllers
             }
 
         }
+        [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string GetLatestOrders()
+        {
+            try
+            {
+                List<OrderViewModel> OrderList = Mapper.Map<List<Order>, List<OrderViewModel>>(_orderBusiness.GetLatestOrders());
+
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = OrderList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
     }
 }
