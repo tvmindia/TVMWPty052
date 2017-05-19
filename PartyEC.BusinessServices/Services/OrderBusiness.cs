@@ -188,7 +188,14 @@ namespace PartyEC.BusinessServices.Services
                 List<OrderDetail> OrderDetaillist = new List<OrderDetail>() ;
                 List<ShoppingCart> cartlist = null;
                 cartlist = _Cart_WishlistBusiness.GetCustomerShoppingCart(cartObj);
-                
+                for (int i = 0; i < cartlist.Count; i++)
+                {
+                    if (cartlist[i].FreeDeliveryYN == true)
+                    {   
+                        cartlist[i].ShippingCharge = 0;
+                    }
+                }
+
 
                 foreach (var i in cartlist)
                 {
