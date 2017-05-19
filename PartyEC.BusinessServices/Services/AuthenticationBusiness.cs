@@ -29,7 +29,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatus;
         }
@@ -44,7 +44,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return roleList;
         }
@@ -62,7 +62,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return userList;
         }
@@ -99,7 +99,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch(Exception ex)
             {
-
+                throw ex;
             }
             return userLsit;
         }
@@ -131,7 +131,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
-
+                throw ex;
             }
             return operationsStatus;
         }
@@ -187,6 +187,7 @@ namespace PartyEC.BusinessServices.Services
             }
             catch (Exception ex)
             {
+                throw ex;
             }
             return plainText;
         }

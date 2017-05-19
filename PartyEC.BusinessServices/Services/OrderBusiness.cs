@@ -188,7 +188,14 @@ namespace PartyEC.BusinessServices.Services
                 List<OrderDetail> OrderDetaillist = new List<OrderDetail>() ;
                 List<ShoppingCart> cartlist = null;
                 cartlist = _Cart_WishlistBusiness.GetCustomerShoppingCart(cartObj);
-                
+                for (int i = 0; i < cartlist.Count; i++)
+                {
+                    if (cartlist[i].FreeDeliveryYN == true)
+                    {   
+                        cartlist[i].ShippingCharge = 0;
+                    }
+                }
+
 
                 foreach (var i in cartlist)
                 {
@@ -201,27 +208,38 @@ namespace PartyEC.BusinessServices.Services
                     orderDetailObj.Qty = i.Qty;
                     orderDetailObj.Price = i.CurrentPrice;
                     orderDetailObj.TaxAmt = orderDetailObj.TaxAmt;
-                    orderDetailObj.DiscountAmt = i.Discount; 
-
-                    OrderDetaillist.Add(orderDetailObj);
-                    
-                }
-                orderObj.OrderDetailsList = OrderDetaillist;
-                orderObj.OrderStatus = "1";
-                orderObj.CurrencyCode = "QAR";
-               operationsStatusObj = InsertOrderHeaderForApp(orderObj);
-                    if (operationsStatusObj.StatusCode == 1)
-                {
-                    if (orderObj.OrderDetailsList != null)
+                    orderDetailObj.DiscountAmt = i.Discount;
+                    orderDetailObj.CartId = i.ID;//For Cart Status Update
+                    if (i.StockAvailableYN == true)
                     {
-                        foreach (var i in orderObj.OrderDetailsList)
+                        OrderDetaillist.Add(orderDetailObj);
+                    }
+                    else
+                    {
+                        _Cart_WishlistBusiness.RemoveProductFromCart(i.ID);//Updating Shopping Cart Status as DisCard.
+                    }
+
+                }
+                if(OrderDetaillist.Count>0)
+                {
+                    orderObj.OrderDetailsList = OrderDetaillist;
+                    orderObj.OrderStatus = "1";
+                    orderObj.CurrencyCode = "QAR";
+                    operationsStatusObj = InsertOrderHeaderForApp(orderObj);
+                    if (operationsStatusObj.StatusCode == 1)
+                    {
+                        if (orderObj.OrderDetailsList != null)
                         {
-                            i.OrderID = int.Parse(operationsStatusObj.ReturnValues.ToString());
-                            i.commonObj = orderObj.commonObj;
-                            InsertOrderDetail(i);
+                            foreach (var i in orderObj.OrderDetailsList)
+                            {
+                                i.OrderID = int.Parse(operationsStatusObj.ReturnValues.ToString());
+                                i.commonObj = orderObj.commonObj;
+                                InsertOrderDetail(i);
+                                _Cart_WishlistBusiness.UpdateShoppingCartStatus(i.CartId);//Updating Shopping Cart Status as Purchased.
+                            }
                         }
                     }
-                }
+                } 
             }
             catch (Exception ex)
             {

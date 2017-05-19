@@ -458,6 +458,7 @@ namespace PartyEC.RepositoryServices.Services
                                         categoriesObj.Name = sdr["Name"].ToString();
                                         categoriesObj.Description = (sdr["Description"].ToString() != "" ? sdr["Description"].ToString() : categoriesObj.Description);
                                         categoriesObj.ChildrenCount = (sdr["ChildrenCount"].ToString() != "" ? int.Parse(sdr["ChildrenCount"].ToString()) : categoriesObj.ChildrenCount);
+                                        categoriesObj.URL = sdr["URL"].ToString();
                                     }
                                     Categorylist.Add(categoriesObj);
                                 }

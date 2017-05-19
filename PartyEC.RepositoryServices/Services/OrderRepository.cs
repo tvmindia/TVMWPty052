@@ -14,7 +14,6 @@ namespace PartyEC.RepositoryServices.Services
         Const ConstObj = new Const();
         #region DataBaseFactory
         private IDatabaseFactory _databaseFactory;
-        private IAttributeToSetLinksRepository _attributeSetLinkRepository;
         /// <summary>
         /// Constructor Injection:-Getting IDatabaseFactory implemented object
         /// </summary>
@@ -818,7 +817,7 @@ namespace PartyEC.RepositoryServices.Services
             OperationsStatus operationsStatusObj = null;
             try
             {
-                SqlParameter statusCode = null, ID = null;
+                SqlParameter statusCode = null;
 
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {

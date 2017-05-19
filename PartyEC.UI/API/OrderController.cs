@@ -101,7 +101,7 @@ namespace PartyEC.UI.API
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
             try
             {
-                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_cart_WishlistBusiness.RemoveProductFromCart(cartObj));
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_cart_WishlistBusiness.RemoveProductFromCart(cartObj.ID));
                 return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
             }
             catch (Exception ex)

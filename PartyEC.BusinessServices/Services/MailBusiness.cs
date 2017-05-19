@@ -67,7 +67,7 @@ namespace PartyEC.BusinessServices.Services
                 mail.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
                 mailServer.Send(mail);
             }
-            catch (SmtpException e)
+            catch (SmtpException )
             {
                 //LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Error sending welcome email.", e);
                 return false;
@@ -95,7 +95,7 @@ namespace PartyEC.BusinessServices.Services
                 mail.BodyEncoding = System.Text.Encoding.GetEncoding("utf-8");
                 mailServer.Send(mail);
             }
-            catch (SmtpException e)
+            catch (SmtpException)
             {
                 //LogHelper.Error(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType, "Error sending welcome email.", e);
                 return false;
@@ -189,7 +189,7 @@ namespace PartyEC.BusinessServices.Services
                     }
                 }
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return false;
             }

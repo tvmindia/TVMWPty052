@@ -66,6 +66,7 @@ namespace PartyEC.UI.Models
         public string Name { get; set; }
         public int ChildrenCount { get; set; }
         public string Description { get; set; }
+        public string URL { get; set; }
     }
     public class FilterCatsOfCategoryAppViewModel
     {
