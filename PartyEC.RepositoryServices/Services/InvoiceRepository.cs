@@ -88,7 +88,7 @@ namespace PartyEC.RepositoryServices.Services
             OperationsStatus operationsStatusObj = null;
             try
             {
-                SqlParameter statusCode = null, ID = null;
+                SqlParameter statusCode = null;
 
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {

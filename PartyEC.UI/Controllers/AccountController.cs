@@ -61,6 +61,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
+                throw ex;
                 //  return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
             }
 
@@ -82,7 +83,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                 
+                throw ex;
             }
             return View("Index");
         }
