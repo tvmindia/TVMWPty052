@@ -146,12 +146,12 @@ namespace PartyEC.BusinessServices.Services
             return OSatObj;
         }
 
-        public OperationsStatus RemoveProductFromCart(ShoppingCart cartObj)
+        public OperationsStatus RemoveProductFromCart(int CartID)
         {
             OperationsStatus OSatObj = null;
             try
             {
-                OSatObj = _cartWishlistRepository.RemoveProductFromCart(cartObj);
+                OSatObj = _cartWishlistRepository.RemoveProductFromCart(CartID);
 
             }
             catch (Exception ex)

@@ -16,7 +16,7 @@ namespace PartyEC.RepositoryServices.Contracts
         List<Wishlist> GetCustomerWishlist(int customerID, string CurrentDate);
 
         OperationsStatus AddProductToCart(ShoppingCart cartObj);
-        OperationsStatus RemoveProductFromCart(ShoppingCart cartObj);
+        OperationsStatus RemoveProductFromCart(int CartID);
         OperationsStatus UpdateShoppingCartStatus(int CartID);
 
     }

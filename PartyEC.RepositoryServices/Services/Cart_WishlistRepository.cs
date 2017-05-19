@@ -244,7 +244,7 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-        public OperationsStatus RemoveProductFromCart(ShoppingCart cartObj)
+        public OperationsStatus RemoveProductFromCart(int CartID)
         {
             OperationsStatus operationsStatusObj = null;
             try
@@ -261,7 +261,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[DeleteProductFromCart]";
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = cartObj.ID;
+                        cmd.Parameters.Add("@ID", SqlDbType.Int).Value = CartID;
                         statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
