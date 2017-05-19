@@ -433,14 +433,14 @@
                                                 <div class="form-group" id="inventoryQty">
                                                     <label for="Qty" class="control-label col-lg-2 productDetailGroup">@Html.DisplayNameFor(model => model.Qty)<span class="required">*</span></label>
                                                     <div class="col-lg-4">
-                                                        @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
+                                                        @Html.EditorFor(model => model.Qty, new { htmlAttributes = new { @class = "form-control productDetailGroup",@Value = 0 } })
                                                         @Html.ValidationMessageFor(model => model.Qty, "", new { @class = "text-danger productDetailGroup" })
                                                     </div>
                                                 </div>
                                                 <div class="form-group" id="inventoryAlertQty">
                                                     <label for="OutOfStockAlertQty" class="control-label col-lg-2 productDetailGroup">@Html.DisplayNameFor(model => model.OutOfStockAlertQty)<span class="required">*</span></label>
                                                     <div class="col-lg-4">
-                                                        @Html.EditorFor(model => model.OutOfStockAlertQty, new { htmlAttributes = new { @class = "form-control productDetailGroup" } })
+                                                        @Html.EditorFor(model => model.OutOfStockAlertQty, new { htmlAttributes = new { @class = "form-control productDetailGroup", @Value = 0 } })
                                                         @Html.ValidationMessageFor(model => model.OutOfStockAlertQty, "", new { @class = "text-danger productDetailGroup" })
                                                     </div>
                                                 </div>
