@@ -208,7 +208,8 @@ namespace PartyEC.BusinessServices.Services
                     orderDetailObj.Qty = i.Qty;
                     orderDetailObj.Price = i.CurrentPrice;
                     orderDetailObj.TaxAmt = orderDetailObj.TaxAmt;
-                    orderDetailObj.DiscountAmt = i.Discount; 
+                    orderDetailObj.DiscountAmt = i.Discount;
+                    orderDetailObj.CartId = i.ID;//For Cart Status Update
 
                     OrderDetaillist.Add(orderDetailObj);
                     
@@ -226,8 +227,11 @@ namespace PartyEC.BusinessServices.Services
                             i.OrderID = int.Parse(operationsStatusObj.ReturnValues.ToString());
                             i.commonObj = orderObj.commonObj;
                             InsertOrderDetail(i);
+                            _Cart_WishlistBusiness.UpdateShoppingCartStatus(i.CartId);//Updating Shopping Cart Status.
                         }
                     }
+                    
+                    //_Cart_WishlistBusiness.UpdateShoppingCartStatus();
                 }
             }
             catch (Exception ex)

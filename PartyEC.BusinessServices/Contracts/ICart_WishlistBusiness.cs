@@ -18,6 +18,7 @@ namespace PartyEC.BusinessServices.Contracts
 
         OperationsStatus AddProductToCart(ShoppingCart cartObj);
         OperationsStatus RemoveProductFromCart(ShoppingCart cartObj);
+        OperationsStatus UpdateShoppingCartStatus(int CartID);
 
 
     }

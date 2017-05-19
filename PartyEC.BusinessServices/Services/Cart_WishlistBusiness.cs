@@ -160,5 +160,20 @@ namespace PartyEC.BusinessServices.Services
             }
             return OSatObj;
         }
+
+        public OperationsStatus UpdateShoppingCartStatus(int CartID)
+        {
+            OperationsStatus OSatObj = null;
+            try
+            {
+                OSatObj = _cartWishlistRepository.UpdateShoppingCartStatus(CartID);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OSatObj;
+        }
     }
 }

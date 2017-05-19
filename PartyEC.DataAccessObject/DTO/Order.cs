@@ -118,5 +118,6 @@ namespace PartyEC.DataAccessObject.DTO
         public int QtyShipped { get; set; }
         public List<AttributeValues> AttributeValues { get; set; }
         public string SupplierName { get; set; }
+        public int CartId { get; set; }
     }
 }
