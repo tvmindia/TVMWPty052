@@ -836,6 +836,10 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@ProductSpecXML", SqlDbType.Xml).Value = orderDetailsObj.ProductSpecXML;
                         cmd.Parameters.Add("@ItemStatus", SqlDbType.Int).Value = orderDetailsObj.ItemStatus;
                         cmd.Parameters.Add("@Qty", SqlDbType.Int).Value = orderDetailsObj.Qty;
+                        if (orderDetailsObj.ProductQty != 0)
+                        {
+                            cmd.Parameters.Add("@Product_Qty", SqlDbType.Int).Value = orderDetailsObj.ProductQty;
+                        }
                         cmd.Parameters.Add("@Price", SqlDbType.Float).Value = orderDetailsObj.Price;
                         cmd.Parameters.Add("@ShippingAmt", SqlDbType.Float).Value = orderDetailsObj.ShippingAmt;
                         cmd.Parameters.Add("@TaxAmt", SqlDbType.Float).Value = orderDetailsObj.TaxAmt;

@@ -727,37 +727,45 @@ function CancelOrder()
 }
 function AddReviseOrder()
 {
-    debugger;
-    var GrandTotal = 0;
-    var tabledata = DataTables.tblProductList.rows('.selected').data();
-    var ordertabledata = DataTables.orderModificationtable.rows().data();
-    for (var i = 0; i < ordertabledata.length; i++)
+    try
     {
-        GrandTotal=GrandTotal + ordertabledata[i].SubTotal;
+        debugger;
+        var GrandTotal = 0;
+        var tabledata = DataTables.tblProductList.rows('.selected').data();
+        var ordertabledata = DataTables.orderModificationtable.rows().data();
+        for (var i = 0; i < ordertabledata.length; i++) {
+            GrandTotal = GrandTotal + ordertabledata[i].SubTotal;
+        }
+        var OrderID = $("#ID").val();
+        var OrderDetailList = [];
+
+        for (i = 0; i < tabledata.length; i++) {
+            var Order = new Object();
+            Order.OrderDetailID = Math.floor((Math.random() * 10000) + 1);;
+            Order.Qty = 1;
+            Order.ProductQty = tabledata[i].Qty;
+            Order.Total = tabledata[i].ActualPrice;
+            Order.ShippingAmt = tabledata[i].ShippingCharge;
+            Order.TaxAmt = 0;
+            Order.ItemID = tabledata[i].ID;
+            Order.DiscountAmt = tabledata[i].DiscountAmount;
+            Order.TotalDiscountAmt = tabledata[i].DiscountAmount;
+            Order.SubTotal = ((tabledata[i].ActualPrice + tabledata[i].ShippingCharge) - tabledata[i].DiscountAmount);
+            Order.ItemStatus = "Pending";
+            Order.Price = tabledata[i].ActualPrice;
+            Order.ProductSpecXML = tabledata[i].ProductName;
+            Order.ProductID = tabledata[i].ProductID;
+            ordertabledata.push(Order);
+            GrandTotal = GrandTotal + Order.SubTotal;
+        }
+        $('#tblGrandTotal .strGrandTotal').text(GrandTotal + " QAR");
+        DataTables.orderModificationtable.clear().rows.add(ordertabledata).draw(false);
     }
-    var OrderID = $("#ID").val();
-    var OrderDetailList = [];
-    for (i = 0; i < tabledata.length; i++)
+    catch(e)
     {
-        var Order = new Object();
-        Order.OrderDetailID = null;
-        Order.Qty = 1;
-        Order.Total = tabledata[i].ActualPrice;
-        Order.ShippingAmt = tabledata[i].ShippingCharge;
-        Order.TaxAmt = 0;
-        Order.ItemID = tabledata[i].ID;
-        Order.DiscountAmt = tabledata[i].DiscountAmount;
-        Order.TotalDiscountAmt = tabledata[i].DiscountAmount;
-        Order.SubTotal = ((tabledata[i].ActualPrice + tabledata[i].ShippingCharge) - tabledata[i].DiscountAmount);
-        Order.ItemStatus = "Pending";
-        Order.Price = tabledata[i].ActualPrice;
-        Order.ProductSpecXML = tabledata[i].ProductName;
-        Order.ProductID = tabledata[i].ProductID;
-        ordertabledata.push(Order);
-        GrandTotal = GrandTotal + Order.SubTotal;
+
     }
-    $('#tblGrandTotal .strGrandTotal').text(GrandTotal+" QAR");
-    DataTables.orderModificationtable.clear().rows.add(ordertabledata).draw(false);
+    
 }
 
 function DeleteDemoOrderData(this_Obj)
@@ -812,6 +820,7 @@ function InsertNewOrder()
                 OrderDetailViewModelObj.ItemStatus = 1;
                 OrderDetailViewModelObj.Qty = newOrderData[i].Qty;
                 OrderDetailViewModelObj.Price = newOrderData[i].Price;
+                OrderDetailViewModelObj.ProductQty = newOrderData[i].ProductQty;
                 OrderDetailViewModelObj.ShippingAmt = newOrderData[i].ShippingAmt;
                 OrderDetailViewModelObj.TaxAmt = newOrderData[i].TaxAmt;
                 OrderDetailViewModelObj.DiscountAmt = newOrderData[i].DiscountAmt;
@@ -854,6 +863,7 @@ function InsertNewOrder()
 }
 function Calculatesum(this_obj)
 {
+    debugger;
     var GrandTotal = 0;
     var Qty = this_obj.value;    
     var rowData = DataTables.orderModificationtable.row($(this_obj).parents('tr')).data();
@@ -869,7 +879,8 @@ function Calculatesum(this_obj)
         var SubTotal = ((rowData.Price * Qty) - TotalDiscount);
         var rowsData = DataTables.orderModificationtable.rows().data();
         for (i = 0; i < rowsData.length; i++) {
-            if (rowsData[i].ProductSpecXML == rowData.ProductSpecXML) {
+            if ((rowsData[i].ProductSpecXML == rowData.ProductSpecXML) && (rowsData[i].ItemID == rowData.ItemID) && (rowsData[i].OrderDetailID == rowData.OrderDetailID) ) {  //ItemID OrderDetailID
+                rowsData[i].ProductQty = rowData.ProductQty;
                 rowsData[i].SubTotal = SubTotal + rowData.ShippingAmt;
                 rowsData[i].TotalDiscountAmt = TotalDiscount;
                 rowsData[i].Total = rowData.Price * Qty;
