@@ -234,7 +234,7 @@ namespace PartyEC.UI.Controllers
            OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
            
             var file = Request.Files["Filedata"];
-            var FileNameCustom = (categoryObj.Name).Replace("%", "_").Replace(" ", "") + "Cat.png";
+            var FileNameCustom = (categoryObj.Name).Replace("%", "_").Replace(" ", "").Replace("*", "").Replace("\\", " ") + "Cat.png";
             string savePath = Server.MapPath(@"~\Content\OtherImages\" + FileNameCustom);
             file.SaveAs(savePath);
             categoryObj.URL= "/Content/OtherImages/" + FileNameCustom;

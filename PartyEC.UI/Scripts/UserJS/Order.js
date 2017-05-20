@@ -846,7 +846,7 @@ function InsertNewOrder()
                     case "OK":
                         notyAlert('success', JsonResult.Record.StatusMessage);                        
                         BindAllDetails(JsonResult.Record.ReturnValues, OrderDetailViewModel.OrderID)
-                        
+                        $('#tabOrderDetails').click();
                         //goback();
                         break;
                     case "ERROR":
@@ -1148,7 +1148,13 @@ function TabActionInvoiceRegion()
 {
     debugger;
     BindTableOrderDetailListInvoiceRegion($('#hdnOrderHID').val());
-    if ($("#lblOrderStatusInvoiceRegion").text() == "Invoiced")
+
+    //if (rowData.OrderStatus == "Cancelled" || rowData.OrderStatus == "Invoiced" || rowData.OrderStatus == "Delivered") {
+    //    ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
+
+    //}
+    debugger;
+    if (($("#lblOrderStatusInvoiceRegion").text() == "Invoiced") || ($("#lblOrderStatusInvoiceRegion").text()=="Cancelled") || ($("#lblOrderStatusInvoiceRegion").text()=="Delivered"))
     {
         ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
     }

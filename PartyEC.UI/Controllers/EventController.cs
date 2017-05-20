@@ -257,7 +257,7 @@ namespace PartyEC.UI.Controllers
             OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
 
             var file = Request.Files["Filedata"];
-            var FileNameCustom = (eventViewObj.Name).Replace("%", "_").Replace(" ", "") + "Event.png";
+            var FileNameCustom = (eventViewObj.Name).Replace("%", "_").Replace(" ", "").Replace("*", "").Replace("\\", " ") + "Event.png";
             string savePath = Server.MapPath(@"~\Content\OtherImages\" + FileNameCustom);
             file.SaveAs(savePath);
             eventViewObj.URL = "/Content/OtherImages/" + FileNameCustom;
