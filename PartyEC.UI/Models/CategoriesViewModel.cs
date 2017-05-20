@@ -14,7 +14,7 @@ namespace PartyEC.UI.Models
         [Required(ErrorMessage = "Please Enter Category name")]
         [Display(Name = "Name")]
         [MaxLength(50)]
-        [RegularExpression("^([a-zA-Z9 .&'-]+)$", ErrorMessage = "Invalid Category Name")]
+        //[RegularExpression("^([a-zA-Z9 .&'-]+)$", ErrorMessage = "Invalid Category Name")]
         public string Name { get; set; }
 
         public bool System { get; set; }
@@ -23,6 +23,7 @@ namespace PartyEC.UI.Models
         public bool Filter { get; set; }
         [Display(Name = "Use for Navigation (Yes/No)")]
         public bool Navigation { get; set; }
+        [Required(ErrorMessage = "Please Enter Category Description")]
         [Display(Name = "Description")]
         [DataType(DataType.MultilineText)]
         public string Description { get; set; }
