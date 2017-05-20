@@ -96,6 +96,25 @@ namespace PartyEC.UI.API
         }
 
         [HttpPost]
+        public object UpdateShoppingCartQuantity(ShoppingCart cartObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                cartObj.logDetails = new LogDetails();
+                cartObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
+                cartObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_cart_WishlistBusiness.UpdateShoppingCartQuantity(cartObj.ID,cartObj.Qty));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
         public object RemoveProductFromCart(ShoppingCart cartObj)
         {
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
