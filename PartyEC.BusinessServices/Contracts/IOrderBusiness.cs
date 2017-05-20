@@ -25,5 +25,6 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertOrder(Order orderObj);
         OperationsStatus InsertOrderForApp(Order orderObj);
         OperationsStatus UpdateOrderPaymentStatus(Order orderObj);
+        OperationsStatus OrderInvoiceAndEmail(Order orderObj);
     }
 }

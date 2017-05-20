@@ -14,12 +14,16 @@ namespace PartyEC.BusinessServices.Services
         private IQuotationsBusiness _quotationBusiness;
         private ICommonBusiness _commonBusiness;
         private ICart_WishlistBusiness _Cart_WishlistBusiness;
-        public OrderBusiness(IOrderRepository orderRepository, IQuotationsBusiness quotationBusiness,ICommonBusiness commonBusiness,ICart_WishlistBusiness Cart_WishlistBusiness)
+        private IInvoiceBusiness _invoiceBusiness;
+        private IMailBusiness _mailBusiness;
+        public OrderBusiness(IOrderRepository orderRepository, IQuotationsBusiness quotationBusiness,ICommonBusiness commonBusiness,ICart_WishlistBusiness Cart_WishlistBusiness, IInvoiceBusiness invoiceBusiness, IMailBusiness mailBusiness)
         {
             _orderRepository = orderRepository;
             _quotationBusiness = quotationBusiness;
             _commonBusiness = commonBusiness;
             _Cart_WishlistBusiness = Cart_WishlistBusiness;
+            _invoiceBusiness = invoiceBusiness;
+            _mailBusiness = mailBusiness;
         }
         public List<Order> GetAllOrderHeader()
         {
@@ -279,6 +283,49 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 operationsStatusObj = _orderRepository.UpdateOrderPaymentStatus(orderObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
+
+        public OperationsStatus OrderInvoiceAndEmail(Order orderObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                string OrderID = orderObj.ID.ToString();
+                //get orderheader and details by ID.
+                orderObj = _orderRepository.GetOrderDetails(OrderID);
+                orderObj.commonObj = new LogDetails();
+                orderObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                orderObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                List<OrderDetail> OrderDetailsLists = new List<OrderDetail>();
+                OrderDetailsLists = _orderRepository.GetAllOrdersList(orderObj.ID.ToString());
+                orderObj.OrderDetailsList = OrderDetailsLists;
+
+                //then call insert invoice 
+                Invoice invoiceObj = new Invoice();
+                invoiceObj.ParentID = orderObj.ParentOrderID;
+                invoiceObj.PaymentStatus = orderObj.PayStatusCode;
+                invoiceObj.ParentType ="Order";
+                invoiceObj.LogDetails =orderObj.commonObj;
+                operationsStatusObj = _invoiceBusiness.InsertInvoice(invoiceObj);
+
+                if (operationsStatusObj.StatusCode==1) { 
+                // send invoice to email
+                string mailcontent =_mailBusiness.GetInvoiceTemplate(Int16.Parse(OrderID));
+                Mail mailObj = new Mail();
+                mailObj.CustomerEmail = orderObj.CustomerEmail;
+                mailObj.MailSubject = "Invocie";
+                mailObj.CustomerName = orderObj.CustomerName;
+                mailObj.TemplateString = mailcontent;
+                bool mailstatus =_mailBusiness.Send(mailObj);
+                    //not returning mail status
+                }
+
             }
             catch (Exception ex)
             {
