@@ -212,6 +212,10 @@ namespace PartyEC.UI.API
                 OrderObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_OrderBusiness.UpdateOrderPaymentStatus(OrderObj));
+
+                if(OperationsStatusViewModelObj.StatusCode==1 && OrderObj.PayStatusCode==1)
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_OrderBusiness.OrderInvoiceAndEmail(OrderObj));
+
                 return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
             }
             catch (Exception ex)
