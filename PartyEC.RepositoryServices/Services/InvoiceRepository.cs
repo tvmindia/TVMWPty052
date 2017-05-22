@@ -57,22 +57,17 @@ namespace PartyEC.RepositoryServices.Services
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
-                                // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
                                 break;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
                                 operationsStatusObj.ReturnValues = ID.Value;
                                 break;
                             default:
                                 break;
                         }
-
-
-
                     }
                 }
             }
@@ -80,9 +75,9 @@ namespace PartyEC.RepositoryServices.Services
             {
                 throw ex;
             }
-
             return operationsStatusObj;
         }
+
         public OperationsStatus InsertInvoiceDetail(InvoiceDetail invoiceDetailsObj)
         {
             OperationsStatus operationsStatusObj = null;
@@ -113,14 +108,12 @@ namespace PartyEC.RepositoryServices.Services
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
-                                // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
                                 break;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
                                 break;
                             default:
                                 break;

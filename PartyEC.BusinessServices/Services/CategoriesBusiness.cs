@@ -10,6 +10,7 @@ namespace PartyEC.BusinessServices.Services
 {
     public class CategoriesBusiness : ICategoriesBusiness
     {
+        Const constObj = new Const();
         #region ConstructorInjection
 
         private ICategoriesRepository _categoryRepository;
@@ -23,8 +24,6 @@ namespace PartyEC.BusinessServices.Services
 
         #endregion ConstructorInjection      
 
-
-       
         public List<Categories> GetAllCategory()
         {
             List<Categories> Categorylist = null;
@@ -142,7 +141,7 @@ namespace PartyEC.BusinessServices.Services
                 if(ExistOrNot)
                 {
                     operationsStatusObj = new OperationsStatus();
-                    operationsStatusObj.StatusMessage = "Can't Delete, Child Exist!";
+                    operationsStatusObj.StatusMessage = constObj.ChildExists;
                     operationsStatusObj.StatusCode = 0;
                 }
                 else

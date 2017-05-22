@@ -420,13 +420,13 @@ namespace PartyEC.RepositoryServices.Services
                             case "0":
                                 // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
                                 productObj.ID = 0;
                                 break;
                             case "1":
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
                                 productObj.ID= int.Parse(outparamID.Value.ToString());
                                 operationsStatusObj.ReturnValues = new {
                                     productid = productObj.ID,
@@ -592,12 +592,12 @@ namespace PartyEC.RepositoryServices.Services
                                 if (productObj.StickerID != Guid.Empty && productObj.StickerID != null)
                                 {
                                     operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                    operationsStatusObj.StatusMessage = "Sticker Updation Not Successfull!";
+                                    operationsStatusObj.StatusMessage = constObj.StickerUpdationFailure;
                                 }
                                 else
                                 {
                                     operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                    operationsStatusObj.StatusMessage = "Sticker Deletion Not Successfull!";
+                                    operationsStatusObj.StatusMessage = constObj.StickerDeletionFailure;
                                 }
                                     
                                 break;
@@ -606,12 +606,12 @@ namespace PartyEC.RepositoryServices.Services
                                 if (productObj.StickerID != Guid.Empty && productObj.StickerID != null)
                                 {
                                     operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                    operationsStatusObj.StatusMessage = "Sticker Updation Successfull!";
+                                    operationsStatusObj.StatusMessage = constObj.StickerUpdationSuccess;
                                 }
                                  else
                                 {
                                     operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                    operationsStatusObj.StatusMessage = "Sticker Deletion Successfull!";
+                                    operationsStatusObj.StatusMessage = constObj.StickerDeletionSuccess;
                                 }   
                                 break;
                             default:
@@ -728,13 +728,13 @@ namespace PartyEC.RepositoryServices.Services
                             case "0":
                                 // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "updation Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
                                 operationsStatusObj.ReturnValues = productObj.ID;
                                 break;
                             case "1":
                                 //update Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "updation Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
                                 operationsStatusObj.ReturnValues = new
                                 {
                                     productid = productObj.ID,
@@ -1202,10 +1202,9 @@ namespace PartyEC.RepositoryServices.Services
                 }
 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
             return myImagesList;
@@ -1298,8 +1297,6 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandText = "[GetUNRelatedProductsByProduct]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = productID;
-
-
                         using (SqlDataReader sdr = cmd.ExecuteReader())
                         {
                             if ((sdr != null) && (sdr.HasRows))
@@ -1342,16 +1339,13 @@ namespace PartyEC.RepositoryServices.Services
                     }
                 }
             }
-
             catch (Exception ex)
             {
                 throw ex;
             }
-
             return productList;
-
-
         }
+
         public OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList, List<ProductCategoryLink> DeleteList)
         {
             OperationsStatus operationsStatusObj = null;
@@ -1367,18 +1361,16 @@ namespace PartyEC.RepositoryServices.Services
                 }
                 operationsStatusObj = new OperationsStatus();
                 operationsStatusObj.StatusCode = Int16.Parse("1");
-                operationsStatusObj.StatusMessage = "Changes Reflected Successfully!";
+                operationsStatusObj.StatusMessage = constObj.ChangesRefelectedSuccess;
 
             }
             catch (Exception ex)
             {
-
                 operationsStatusObj.StatusMessage = ex.Message;
             }
-
             return operationsStatusObj;
-
         }
+
         private OperationsStatus InsertProductCategoryLink(ProductCategoryLink productCategoryLinkObj)
         {
             OperationsStatus operationsStatusObj = null;
@@ -1408,15 +1400,12 @@ namespace PartyEC.RepositoryServices.Services
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                // not Successfull
-
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
                                 break;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
                                 break;
                             default:
                                 break;
@@ -1458,15 +1447,12 @@ namespace PartyEC.RepositoryServices.Services
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                // Delete not Successfull
-
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Deletion Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.DeleteFailure;
                                 break;
                             case "1":
-                                //Delete Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Deletion Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.DeleteSuccess;
                                 break;
                             default:
                                 break;
@@ -1512,14 +1498,12 @@ namespace PartyEC.RepositoryServices.Services
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
-                                // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
                                 return operationsStatusObj;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
                                 return operationsStatusObj;
                             default:
                                 break;
@@ -1527,10 +1511,9 @@ namespace PartyEC.RepositoryServices.Services
                    }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
             return operationsStatusObj;
@@ -1577,10 +1560,9 @@ namespace PartyEC.RepositoryServices.Services
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
             return operationsStatusObj;
@@ -1627,10 +1609,9 @@ namespace PartyEC.RepositoryServices.Services
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
             return operationsStatusObj;
@@ -1885,12 +1866,12 @@ namespace PartyEC.RepositoryServices.Services
                             case "0":
                                 // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
                                 return operationsStatusObj;
                             case "1":
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
                                 return operationsStatusObj;
                             default:
                                 break;
@@ -1898,10 +1879,9 @@ namespace PartyEC.RepositoryServices.Services
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-
-                throw;
+                throw ex;
             }
 
             return operationsStatusObj;
