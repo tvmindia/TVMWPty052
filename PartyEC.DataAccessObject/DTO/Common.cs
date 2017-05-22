@@ -118,7 +118,23 @@ namespace PartyEC.DataAccessObject.DTO
         {
             get { return "Can't Delete, Child Exist!"; }
         }
-       
+        public string OrderconfirmSuccess {
+            get { return "Order Confirmation send sucessfully" ;}
+        }        
+        public string MailNotsend
+        {
+            get { return " Mail Not send"; }
+        }
+        public string InvoiceSendSuccess 
+            {
+                get { return "Invoice send sucessfully "; }
+            }
+        public string OrderInvalid
+        {
+            get { return " Order Invalid"; }
+        }
+
+
 
 
 

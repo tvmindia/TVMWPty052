@@ -27,7 +27,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertImage(OtherImages otherimgObj)
         {
-            OperationsStatus operrationstatusObj = null;
+            OperationsStatus operationstatusObj = null;
             try
             {
                 SqlParameter outparameter = null;
@@ -52,21 +52,18 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter.Direction = ParameterDirection.Output;
                         outparameterID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operrationstatusObj = new OperationsStatus();
+                        operationstatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                // not Successfull
-
-                                operrationstatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operrationstatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationstatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationstatusObj.StatusMessage = ConstObj.InsertFailure; 
 
                                 break;
                             case "1":
-                                //Insert Successfull
-                                operrationstatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operrationstatusObj.StatusMessage = "Insertion Successfull!";
-                                operrationstatusObj.ReturnValues = Guid.Parse(outparameterID.Value.ToString());
+                                operationstatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationstatusObj.StatusMessage = ConstObj.InsertSuccess;
+                                operationstatusObj.ReturnValues = Guid.Parse(outparameterID.Value.ToString());
                                 break;
                             default:
                                 break;
@@ -78,7 +75,7 @@ namespace PartyEC.RepositoryServices.Services
             {
                 throw ex;
             }
-            return operrationstatusObj;
+            return operationstatusObj;
         }
         public OperationsStatus InsertEventsLog(EventsLog eventLogObj)
         {

@@ -15,6 +15,7 @@ namespace PartyEC.UI.Controllers
     [CustomAuthenticationFilter]
     public class OrderController : Controller
     {
+        Const ConstObj = new Const();
         #region Constructor_Injection
         IOrderBusiness _orderBusiness;
         ICommonBusiness _commonBusiness;
@@ -276,13 +277,13 @@ namespace PartyEC.UI.Controllers
                     orderObj.OrderStatus = "2";
                     _orderBusiness.CancelOrder(Mapper.Map<OrderViewModel,Order>(orderObj));
                     OperationsStatusViewModelObj.StatusCode = 1;
-                    OperationsStatusViewModelObj.StatusMessage = "Order Confirmation send sucessfully";
+                    OperationsStatusViewModelObj.StatusMessage = ConstObj.OrderconfirmSuccess;
                     return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
                 }
                 else
                 {
                     OperationsStatusViewModelObj.StatusCode = 0;
-                    OperationsStatusViewModelObj.StatusMessage = "Mail Not send";
+                    OperationsStatusViewModelObj.StatusMessage = ConstObj.MailNotsend;
                     return JsonConvert.SerializeObject(new { Result = "ERROR", Records = OperationsStatusViewModelObj });
                 }
                 
@@ -304,13 +305,13 @@ namespace PartyEC.UI.Controllers
                 if (status)
                 {
                     OperationsStatusViewModelObj.StatusCode = 1;
-                    OperationsStatusViewModelObj.StatusMessage = "Invoice send sucessfully";
+                    OperationsStatusViewModelObj.StatusMessage = ConstObj.InvoiceSendSuccess;
                     return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
                 }
                 else
                 {
                     OperationsStatusViewModelObj.StatusCode = 0;
-                    OperationsStatusViewModelObj.StatusMessage = "Mail Not send";
+                    OperationsStatusViewModelObj.StatusMessage = ConstObj.MailNotsend;
                     return JsonConvert.SerializeObject(new { Result = "ERROR", Records = OperationsStatusViewModelObj });
                 }
 

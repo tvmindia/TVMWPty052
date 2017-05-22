@@ -10,6 +10,7 @@ namespace PartyEC.BusinessServices.Services
 {
     public class OrderBusiness:IOrderBusiness
     {
+        Const ConstObj = new Const();
         private IOrderRepository _orderRepository;
         private IQuotationsBusiness _quotationBusiness;
         private ICommonBusiness _commonBusiness;
@@ -172,7 +173,7 @@ namespace PartyEC.BusinessServices.Services
             else
             {
                 operationStatusObj.StatusCode = 0;
-                operationStatusObj.StatusMessage = "Order Invalid";
+                operationStatusObj.StatusMessage = ConstObj.OrderInvalid;
                 return operationStatusObj;
             }
             
