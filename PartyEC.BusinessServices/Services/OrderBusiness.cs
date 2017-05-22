@@ -320,7 +320,7 @@ namespace PartyEC.BusinessServices.Services
 
                 //then call insert invoice 
                 Invoice invoiceObj = new Invoice();
-                invoiceObj.ParentID = orderObj.ParentOrderID;
+                invoiceObj.ParentID = orderObj.OrderID;
                 invoiceObj.PaymentStatus = orderObj.PayStatusCode;
                 invoiceObj.ParentType ="Order";
                 invoiceObj.LogDetails =orderObj.commonObj;
