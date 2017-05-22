@@ -41,7 +41,10 @@ namespace PartyEC.BusinessServices.Services
         {
             return _invoiceRepository.InsertInvoiceDetail(invoiceDetailObj);
         }
-
+        public bool CheckInvoicedOrNot(int ID)
+        {
+            return _invoiceRepository.CheckInvoicedOrNot(ID);
+        }
         public List<Invoice> GetAllInvoices()
         {
             List<Invoice> invoicelist = null;

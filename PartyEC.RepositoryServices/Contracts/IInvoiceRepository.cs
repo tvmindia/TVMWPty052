@@ -11,6 +11,6 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertInvoiceHeader(Invoice invoiceObj);
         OperationsStatus InsertInvoiceDetail(InvoiceDetail invoiceDetailObj);
         List<Invoice> GetAllInvoices();
-
+        bool CheckInvoicedOrNot(int ID);
     }
 }

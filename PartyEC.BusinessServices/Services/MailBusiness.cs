@@ -39,7 +39,7 @@ namespace PartyEC.BusinessServices.Services
             mail.To.Add(mailObj.CustomerEmail);
             
             mail.IsBodyHtml = true;
-            if(mailObj.TemplateString!="")
+            if(mailObj.TemplateString!=""&& mailObj.TemplateString!=null)
             {
                 mail.Body = mailObj.TemplateString;
                 mail.Subject = mailObj.MailSubject;
