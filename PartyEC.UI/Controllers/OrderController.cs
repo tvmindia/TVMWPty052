@@ -410,6 +410,20 @@ namespace PartyEC.UI.Controllers
             }
 
         }
+        [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public bool CheckInvoicedOrNot(string ID)
+        {
+            try
+            {
+               return _invoiceBusiness.CheckInvoicedOrNot(int.Parse(ID));
+                
+           }
+            catch(Exception ex)
+            {
+                return false;
+            }
+        }
         [HttpPost]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string InsertShipment(ShipmentViewModel shipmentViewModelObj)
@@ -540,6 +554,14 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
+                case "Processed":
+                    ToolboxViewModelObj.backbtn.Visible = true;
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
+                    ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.cancelbtn.Visible = true;
+                    ToolboxViewModelObj.cancelbtn.Title = "Cancel";
+                    ToolboxViewModelObj.cancelbtn.Event = "CancelOrder()";
+                    break;
                 case "InvoiceTemplate":
                     ToolboxViewModelObj.sendbtn.Visible = true;
                     ToolboxViewModelObj.sendbtn.Event = "SendInvoice()";
@@ -554,9 +576,6 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goBack()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
-                    ToolboxViewModelObj.savebtn.Visible = true;
-                    ToolboxViewModelObj.savebtn.Title = "Save";
-                    ToolboxViewModelObj.savebtn.Event = "SubmitInvoice()";
                     ToolboxViewModelObj.sendbtn.Visible = true;
                     ToolboxViewModelObj.sendbtn.Event = "ShowTemplatePreviewInvoice()";
                     ToolboxViewModelObj.sendbtn.Title = "Mail";

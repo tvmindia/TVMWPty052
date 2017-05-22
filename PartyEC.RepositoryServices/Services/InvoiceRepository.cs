@@ -136,7 +136,48 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
+        public bool CheckInvoicedOrNot(int ID)
+        {
+            bool Flag = false;
+            try
+            {
+                SqlParameter statusCode = null;
 
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[CheckInvoicedOrNot]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@OrderID", SqlDbType.Int).Value =ID;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                Flag= false;
+                                break;
+                            case "1":
+                                Flag= true;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Flag;
+        }
         public List<Invoice> GetAllInvoices()
         {
             List<Invoice> invoiceList = null;

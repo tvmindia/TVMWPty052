@@ -56,14 +56,16 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 OrderList = _orderRepository.GetAllOrdersList(ID);
-
-                for(int i=0;i<OrderList.Count;i++)
+                if(OrderList!=null)
                 {
-                    if (OrderList[i].ProductSpecXML1 != null && OrderList[i].ProductSpecXML1!="")
-                    { 
-                        OrderList[i].AttributeValues = _commonBusiness.GetAttributeValueFromXML(OrderList[i].ProductSpecXML1);
+                    for (int i = 0; i < OrderList.Count; i++)
+                    {
+                        if (OrderList[i].ProductSpecXML1 != null && OrderList[i].ProductSpecXML1 != "")
+                        {
+                            OrderList[i].AttributeValues = _commonBusiness.GetAttributeValueFromXML(OrderList[i].ProductSpecXML1);
+                        }
                     }
-                }
+                }                
             }
             catch (Exception ex)
             {
@@ -140,31 +142,40 @@ namespace PartyEC.BusinessServices.Services
         }
         public OperationsStatus InsertReviseOrder(OrderDetail orderDetailsObj)
         {
-            OperationsStatus operationStatusObj = null;
+            OperationsStatus operationStatusObj = new OperationsStatus();
             Order orderObj = null;
-
-            List<Order> OrderList = _orderRepository.GetAllOrderHeader().Where(t=>t.ParentOrderID==orderDetailsObj.OrderID).ToList();
-            orderObj = _orderRepository.GetOrderDetails(orderDetailsObj.OrderID.ToString());
-            orderObj.commonObj = orderDetailsObj.commonObj;
-            orderObj.RevNo = OrderList.Count+1;
-            orderObj.ParentOrderID = orderDetailsObj.OrderID;
-            orderObj.StatusCode = 1;
-            orderObj.PayStatusCode = 0;
-            operationStatusObj= InsertOrderHeader(orderObj);
-            if(operationStatusObj.StatusCode==1)
+            if(orderDetailsObj.OrderDetailsList.Count>0)
             {
-                if(orderDetailsObj.OrderDetailsList!=null)
+                List<Order> OrderList = _orderRepository.GetAllOrderHeader().Where(t => t.ParentOrderID == orderDetailsObj.OrderID).ToList();
+                orderObj = _orderRepository.GetOrderDetails(orderDetailsObj.OrderID.ToString());
+                orderObj.commonObj = orderDetailsObj.commonObj;
+                orderObj.RevNo = OrderList.Count + 1;
+                orderObj.ParentOrderID = orderDetailsObj.OrderID;
+                orderObj.StatusCode = 1;
+                orderObj.PayStatusCode = 0;
+                operationStatusObj = InsertOrderHeader(orderObj);
+                if (operationStatusObj.StatusCode == 1)
                 {
-                    foreach(var i in orderDetailsObj.OrderDetailsList)
+                    if (orderDetailsObj.OrderDetailsList != null)
                     {
+                        foreach (var i in orderDetailsObj.OrderDetailsList)
+                        {
 
-                        i.OrderID = int.Parse(operationStatusObj.ReturnValues.ToString());
-                        i.commonObj= orderDetailsObj.commonObj;
-                        InsertOrderDetail(i);
+                            i.OrderID = int.Parse(operationStatusObj.ReturnValues.ToString());
+                            i.commonObj = orderDetailsObj.commonObj;
+                            InsertOrderDetail(i);
+                        }
                     }
                 }
+                return operationStatusObj;
             }
-            return operationStatusObj;
+            else
+            {
+                operationStatusObj.StatusCode = 0;
+                operationStatusObj.StatusMessage = "Order Invalid";
+                return operationStatusObj;
+            }
+            
         }
         public OperationsStatus InsertOrderHeaderForApp(Order orderObj)
         {
