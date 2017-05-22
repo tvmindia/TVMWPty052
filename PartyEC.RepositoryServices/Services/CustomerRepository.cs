@@ -180,14 +180,12 @@ namespace PartyEC.RepositoryServices.Services
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
-                                // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "updation Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
                                 break;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "updation Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
                                 operationsStatusObj.ReturnValues = OutFlag.Value;
                                 break;
                             default:

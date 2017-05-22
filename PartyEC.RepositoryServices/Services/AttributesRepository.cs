@@ -5,8 +5,6 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 using System.Globalization;
-using System.Linq;
-using System.Web;
 using System.Xml.Linq;
 
 namespace PartyEC.RepositoryServices.Services
@@ -104,7 +102,6 @@ namespace PartyEC.RepositoryServices.Services
                                 if (sdr.Read())
                                 {
                                     myAttribute = new Attributes();
-
                                     myAttribute.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myAttribute.ID);
                                     myAttribute.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : myAttribute.Name);
                                     myAttribute.Caption = (sdr["Caption"].ToString() != "" ? sdr["Caption"].ToString() : myAttribute.Caption);
@@ -115,7 +112,6 @@ namespace PartyEC.RepositoryServices.Services
                                     myAttribute.EntityType = (sdr["EntityType"].ToString() != "" ? sdr["EntityType"].ToString() : myAttribute.EntityType);
                                     myAttribute.MandatoryYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["MandatoryYN"].ToString()) : myAttribute.MandatoryYN);
                                     myAttribute.ComparableYN = (sdr["MandatoryYN"].ToString() != "" ? Boolean.Parse(sdr["ComparableYN"].ToString()) : myAttribute.ComparableYN);
-
                                 }
                             }//if
                         }
@@ -127,8 +123,6 @@ namespace PartyEC.RepositoryServices.Services
             {
                 throw ex;
             }
-
-
             return myAttribute;
         } 
 
@@ -572,19 +566,15 @@ namespace PartyEC.RepositoryServices.Services
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                // not Successfull
-
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
                                 break;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
                                 operationsStatusObj.ReturnValues = int.Parse(outparameterID.Value.ToString());
                                 break;
                             case "2":
-                                //Duplicate Entry
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.Duplicate;
                                 break;
@@ -624,7 +614,6 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 250).Value = attributeSetObj.Name;
                         cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = attributeSetObj.commonObj.UpdatedBy;
                         cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = attributeSetObj.commonObj.UpdatedDate;
-
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
@@ -632,18 +621,14 @@ namespace PartyEC.RepositoryServices.Services
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                // not Successfull
-
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateFailure;
                                 break;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
-                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
+                                operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
                                 break;
-                            case "2":
-                                //Duplicate Entry
+                            case "2": 
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.Duplicate;
                                 break;
@@ -689,13 +674,10 @@ namespace PartyEC.RepositoryServices.Services
                             switch (outparameter.Value.ToString())
                             {
                                 case "0":
-                                    // Delete not Successfull
-
                                     operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                     operationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
                                     break;
                                 case "1":
-                                    //Delete Successfull
                                     operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                     operationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
                                     break;
@@ -758,13 +740,10 @@ namespace PartyEC.RepositoryServices.Services
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                // not Successfull
-
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
                                 break;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
                                 operationsStatusObj.ReturnValues = attrSetLinkObj.AttributeSetID;
@@ -808,13 +787,10 @@ namespace PartyEC.RepositoryServices.Services
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
-                                // Delete not Successfull
-
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.DeleteFailure;
                                 break;
                             case "1":
-                                //Delete Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.DeleteSuccess;
                                 break;

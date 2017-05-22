@@ -154,14 +154,12 @@ namespace PartyEC.RepositoryServices.Services
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
-                                // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
                                 break;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
                                 operationsStatusObj.ReturnValues = ID.Value;
                                 break;
                             default:
@@ -210,14 +208,12 @@ namespace PartyEC.RepositoryServices.Services
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
-                                // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
                                 break;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Insertion Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.InsertSuccess;
                                 break;
                             default:
                                 break;
@@ -263,14 +259,12 @@ namespace PartyEC.RepositoryServices.Services
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
-                                // not Successfull                                
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Updation Not Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
                                 break;
                             case "1":
-                                //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = "Updation Successfull!";
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
                                 break;
                             default:
                                 break;

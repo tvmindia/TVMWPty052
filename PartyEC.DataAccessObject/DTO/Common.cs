@@ -91,6 +91,34 @@ namespace PartyEC.DataAccessObject.DTO
         {
             get { return "Can't be deleted hence includes in system Category"; }
         }
+        public string StickerUpdationFailure {
+        get { return "Sticker Updation Not Successfull!"; }
+        }
+        public string StickerDeletionFailure
+        {
+            get { return "Sticker Deletion Not Successfull!"; }
+        }
+        public string StickerUpdationSuccess
+        {
+            get { return "Sticker Updation Successfull!"; }
+        }
+        public string StickerDeletionSuccess
+        {
+            get { return "Sticker Deletion Successfull!"; }
+        }
+        public string ChangesRefelectedSuccess
+        {
+            get {return "Changes Reflected Successfully!"; }
+        }
+        public string CancelOrder
+        {
+            get { return "Order Cancelled Successfully !"; }
+        }
+        public string ChildExists
+        {
+            get { return "Can't Delete, Child Exist!"; }
+        }
+       
 
 
 
