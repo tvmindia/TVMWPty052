@@ -841,15 +841,13 @@ namespace PartyEC.RepositoryServices.Services
                         operationsStatusObj = new OperationsStatus();
                         switch (statusCode.Value.ToString())
                         {
-                            case "0":
-                                // not Successfull                                
+                            case "0":          
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = constObj.InsertFailure;
+                                operationsStatusObj.StatusMessage = ConstObj.InsertFailure;
                                 break;
-                            case "1":
-                                //Insert Successfull
+                            case "1": 
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
-                                operationsStatusObj.StatusMessage = constObj.Inserts;
+                                operationsStatusObj.StatusMessage = ConstObj.InsertSuccess;
                                 break;
                             default:
                                 break;
