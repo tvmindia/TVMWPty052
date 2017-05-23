@@ -11,7 +11,7 @@
        }
        else
        {
-        <a title=@Model.backbtn.Title class="thr_btn" onclick=@Model.backbtn.Event>
+        <a title="@Model.backbtn.Title" class="thr_btn" onclick=@Model.backbtn.Event>
             <img src="@Url.Content("~/Content/images/back.PNG")">
         </a>
        }
@@ -27,7 +27,7 @@
        }
        else
        {
-        <a title=@Model.addbtn.Title class="thr_btn" onclick=@Model.addbtn.Event>
+        <a title="@Model.addbtn.Title" class="thr_btn" onclick=@Model.addbtn.Event>
             <img src="@Url.Content("~/Content/images/add.PNG")">
         </a>
        }
@@ -59,7 +59,7 @@
         }
         else
         {
-            <a title=@Model.editbtn.Title class="thr_btn" onclick=@Model.editbtn.Event>
+            <a title="@Model.editbtn.Title" class="thr_btn" onclick=@Model.editbtn.Event>
                 <img src="@Url.Content("~/Content/images/edit.PNG")">
             </a>
         }
@@ -74,7 +74,7 @@
         }
         else
         {
-            <a title=@Model.savebtn.Title class="thr_btn" onclick=@Model.savebtn.Event>
+            <a title="@Model.savebtn.Title" class="thr_btn" onclick=@Model.savebtn.Event>
                 <img src="@Url.Content("~/Content/images/save.PNG")">
             </a>
         }
@@ -89,7 +89,7 @@
         }
         else
         {
-            <a title=@Model.resetbtn.Title class="thr_btn" onclick=@Model.resetbtn.Event>
+            <a title="@Model.resetbtn.Title" class="thr_btn" onclick=@Model.resetbtn.Event>
                 <img src="@Url.Content("~/Content/images/reset.PNG")">
             </a>
         }
@@ -104,7 +104,7 @@
         }
         else
         {
-        <a title=@Model.deletebtn.Title class="thr_btn" name="delete" onclick=@Model.deletebtn.Event>
+        <a title="@Model.deletebtn.Title" class="thr_btn" name="delete" onclick=@Model.deletebtn.Event>
             <img src="@Url.Content("~/Content/images/delete.PNG")">
         </a>
         }
@@ -119,7 +119,7 @@
         }
         else
         {
-            <a title=@Model.cancelbtn.Title class="thr_btn" onclick=@Model.cancelbtn.Event>
+            <a title="@Model.cancelbtn.Title" class="thr_btn" onclick=@Model.cancelbtn.Event>
                 <img src="@Url.Content("~/Content/images/closemodel.PNG")">
             </a>
         }
@@ -134,8 +134,23 @@
         }
         else
         {
-            <a title=@Model.sendbtn.Title class="thr_btn" onclick=@Model.sendbtn.Event>
+            <a title="@Model.sendbtn.Title" class="thr_btn" onclick=@Model.sendbtn.Event>
                 <img src="@Url.Content("~/Content/images/sentmail.PNG")">
+            </a>
+        }
+    }
+    @if (Model.previewbtn.Visible)
+    {
+        if (Model.previewbtn.Disable)
+        {
+            <a class="thr_disbtn">
+                <img src="@Url.Content("~/Content/images/reset.PNG")">
+            </a>
+        }
+        else
+        {
+            <a title="@Model.previewbtn.Title" class="thr_btn" onclick=@Model.previewbtn.Event>
+                <img src="@Url.Content("~/Content/images/preview.png")">
             </a>
         }
     }
@@ -143,13 +158,13 @@
     {
         if (Model.invoicebtn.Disable)
         {
-            <a class="thr_disbtn">
+            <a title="Invoice Already generated" class="thr_disbtn">
                 <img src="@Url.Content("~/Content/images/invoice.png")">
             </a>
         }
         else
         {
-            <a title=@Model.invoicebtn.Title class="thr_btn" onclick=@Model.invoicebtn.Event>
+            <a title="@Model.invoicebtn.Title" class="thr_btn" onclick=@Model.invoicebtn.Event>
                 <img src="@Url.Content("~/Content/images/invoice.png")">
             </a>
         }
@@ -164,7 +179,7 @@
         }
         else
         {
-            <a title=@Model.shipbtn.Title class="thr_btn" onclick=@Model.shipbtn.Event>
+            <a title="@Model.shipbtn.Title" class="thr_btn" onclick=@Model.shipbtn.Event>
                 <img src="@Url.Content("~/Content/images/ship.png")">
             </a>
         }
@@ -180,7 +195,7 @@
         }
         else
         {
-            <a title=@Model.actDeactbtn.Title class="thr_btn" onclick=@Model.actDeactbtn.Event>
+            <a title="@Model.actDeactbtn.Title" class="thr_btn" onclick=@Model.actDeactbtn.Event>
                 <img src="@Url.Content("~/Content/images/power-button.png")">
             </a>
         }
@@ -195,7 +210,7 @@
         }
         else
         {
-            <a  title=@Model.approve.Title class="thr_btn" onclick=@Model.approve.Event>
+            <a  title="@Model.approve.Title" class="thr_btn" onclick=@Model.approve.Event>
                 <img src="@Url.Content("~/Content/images/approve.PNG")">
             </a>
         }

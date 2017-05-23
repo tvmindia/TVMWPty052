@@ -312,6 +312,7 @@
     <Content Include="Content\images\browse-btn.png" />
     <Content Include="Content\images\closelt.png" />
     <Content Include="Content\images\closemodel.png" />
+    <Content Include="Content\images\preview.png" />
     <Content Include="Content\images\Loader.gif" />
     <Content Include="Content\images\OrderDefault.png" />
     <Content Include="Content\images\ProductDefault.png" />

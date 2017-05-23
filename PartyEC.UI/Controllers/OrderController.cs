@@ -554,13 +554,19 @@ namespace PartyEC.UI.Controllers
             ToolboxViewModel ToolboxViewModelObj = new ToolboxViewModel();
             switch (ActionType)
             {
-                case "Processed":
+                case "InProgress":
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
+                    ToolboxViewModelObj.editbtn.Visible = true;
+                    ToolboxViewModelObj.editbtn.Title = "Revise order";
+                    ToolboxViewModelObj.editbtn.Event = "CancelIssue()";
                     ToolboxViewModelObj.cancelbtn.Visible = true;
                     ToolboxViewModelObj.cancelbtn.Title = "Cancel";
                     ToolboxViewModelObj.cancelbtn.Event = "CancelOrder()";
+                    ToolboxViewModelObj.invoicebtn.Visible = true;
+                    ToolboxViewModelObj.invoicebtn.Title = "Generate invoice";
+                    ToolboxViewModelObj.invoicebtn.Event = "SubmitInvoice()";
                     break;
                 case "InvoiceTemplate":
                     ToolboxViewModelObj.sendbtn.Visible = true;
@@ -574,7 +580,7 @@ namespace PartyEC.UI.Controllers
                     break;
                 case "InvoiceRegion":
                     ToolboxViewModelObj.backbtn.Visible = true;
-                    ToolboxViewModelObj.backbtn.Event = "goBack()";
+                    ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.sendbtn.Visible = true;
                     ToolboxViewModelObj.sendbtn.Event = "ShowTemplatePreviewInvoice()";
@@ -614,14 +620,17 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.editbtn.Visible = true;
-                    ToolboxViewModelObj.editbtn.Title = "Revise";
+                    ToolboxViewModelObj.editbtn.Title = "Revise order";
                     ToolboxViewModelObj.editbtn.Event = "CancelIssue()";
                     ToolboxViewModelObj.cancelbtn.Visible = true;
-                    ToolboxViewModelObj.cancelbtn.Title = "Cancel";
+                    ToolboxViewModelObj.cancelbtn.Title = "Cancel order";
                     ToolboxViewModelObj.cancelbtn.Event = "CancelOrder()";
-                    ToolboxViewModelObj.sendbtn.Visible = true;
-                    ToolboxViewModelObj.sendbtn.Event = "ShowTemplatePreview()";
-                    ToolboxViewModelObj.sendbtn.Title = "Mail";
+                    ToolboxViewModelObj.previewbtn.Visible = true;
+                    ToolboxViewModelObj.previewbtn.Event = "ShowTemplatePreview()";
+                    ToolboxViewModelObj.previewbtn.Title = "Preview order confirmation email";
+                    ToolboxViewModelObj.invoicebtn.Visible = true;
+                    ToolboxViewModelObj.invoicebtn.Title = "Generate invoice";
+                    ToolboxViewModelObj.invoicebtn.Event = "SubmitInvoice()";
                     break;
                 case "Revise":
                     ToolboxViewModelObj.savebtn.Visible = true;

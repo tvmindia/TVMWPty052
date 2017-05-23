@@ -44,7 +44,6 @@ $(document).ready(function () {
          {
              'targets': 6,
              'render': function (data, type, full, meta) {
-                 debugger;
                  return (data.TotalOrderAmt - data.TotalDiscountAmt);
                  }
          }
@@ -129,7 +128,6 @@ $(document).ready(function () {
              "visible": true,
              "searchable": true,
              "render": function (data, type, full, meta) {
-                 debugger;
                  var Name = "<b>" + data.split("||")[0] + "</b>";
                  var Spec = (data.split("||")[1]).split("><");
                  for (var i = 0; i < Spec.length - 1; i++) {
@@ -172,7 +170,6 @@ $(document).ready(function () {
              "visible": true,
              "searchable": false,
              "render": function (data, type, full, meta) {
-                 debugger;
                  if (data != "" && data != null)
                   {
                  var Name = "<b>" + data.split("||")[0] + "</b>";
@@ -194,7 +191,6 @@ $(document).ready(function () {
                      {
                          'targets': 4,
                          'render': function (data, type, full, meta) {
-                             debugger;
                              if (data == 0) {
                                  var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="1" onfocusout="Calculatesum(this)"></input> '
                              }
@@ -235,7 +231,6 @@ $(document).ready(function () {
                  "visible": true,
                  "searchable": true,
                  "render": function (data, type, full, meta) {
-                     debugger;
                      var Name = "<b>" + data.split("||")[0] + "</b>";
                      var Spec = (data.split("||")[1]).split("><");
                      for (var i = 0; i < Spec.length - 1; i++) {
@@ -284,7 +279,6 @@ $(document).ready(function () {
                   "visible": true,
                   "searchable": true,
                   "render": function (data, type, full, meta) {
-                      debugger;
                       var Name = "<b>" + data.split("||")[0] + "</b>";
                       var Spec = (data.split("||")[1]).split("><");
                       for (var i = 0; i < Spec.length - 1; i++) {
@@ -321,7 +315,6 @@ $(document).ready(function () {
                          "visible": true,
                          "searchable": false,
                          "render": function (data, type, full, meta) {
-                             debugger;
                              if (data != "" && data != null) {
                                  var Name = "<b>" + data.split("||")[0] + "</b>";
                                  var Spec = (data.split("||")[1]).split("><");
@@ -339,7 +332,6 @@ $(document).ready(function () {
                      {
                          'targets': 4,
                          'render': function (data, type, full, meta) {
-                             debugger;
                              if (data)
                              {
                                  var txtbox = '<input class="form-control" style="width:100%;text-align: center;font-weight:900;" type="text" value="' + (data) + '" onkeypress="return isNumber(event);" onkeyup="ChangeQtyShipment(this)"></input>'
@@ -396,7 +388,6 @@ $(document).ready(function () {
                          "visible": true,
                          "searchable": false,
                          "render": function (data, type, full, meta) {
-                             debugger;
                              data1 = data.ProductSpecXML;
                              if (data1 != "" && data1 != null) {
                                  var Name = "<b>" + data1.split("||")[0] + "</b>";
@@ -428,6 +419,47 @@ $(document).ready(function () {
     });
     $('#tabOrderList').click(function (e) {
         ChangeButtonPatchView("Order", "btnPatchOrders", "List");
+        DataTables.orderHeadertable.clear().rows.add(GetOrderHeader()).draw(false);
+    });
+    //Diect click on the tab orde details
+    $('#tabOrderDetails').click(function (e) {
+        debugger;
+        if ($("#lblOrderStatus").text() == "-")
+        {
+            var rowData = DataTables.orderHeadertable.row(0).data();
+            if ((rowData != null) && (rowData.ID != null)) {
+                switch (rowData.OrderStatus) {
+                    case "Cancelled":
+                        ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
+                        $('#liInvoiceRegion').hide(100);
+                        $('#liShipmentRegion').hide(200);
+                        break;
+                    case "Invoiced":
+                        ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
+                        $('#liInvoiceRegion').show(100);
+                        $('#liShipmentRegion').show(200);
+                        break;
+                    case "Delivered":
+                        ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
+                        $('#liInvoiceRegion').show(100);
+                        $('#liShipmentRegion').show(200);
+                        break;
+                    case "In Progress":
+                        ChangeButtonPatchView("Order", "btnPatchOrders", "InProgress");
+                        $('#liInvoiceRegion').hide(100);
+                        $('#liShipmentRegion').hide(200);
+                        break;
+                    default:
+                        ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
+                        ChangeButtonPatchView("Order", "divTemplateSend", "OrderTemplate");
+                        $('#liInvoiceRegion').hide(100);
+                        $('#liShipmentRegion').hide(200);
+                        break;
+                }
+                BindAllDetails(rowData.ID, rowData.ParentOrderID)
+            }
+        }
+       
     });
     //$('#tblProductList tbody').on('click', 'tr', function () {  
     //    var tabledata = DataTables.tblProductList.rows('.selected').data();
@@ -632,22 +664,18 @@ function Edit(this_obj)
     debugger;
     this_ObjOrder = this_obj;
     $('#tabOrderDetails').trigger('click');
-    ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
+    //ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
     var rowData = DataTables.orderHeadertable.row($(this_obj).parents('tr')).data();
     if ((rowData != null) && (rowData.ID != null)) {
-        if (rowData.OrderStatus == "Cancelled" || rowData.OrderStatus == "Invoiced" || rowData.OrderStatus == "Delivered")
-        {
-            ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
-
-        }
-        debugger;
-        BindAllDetails(rowData.ID, rowData.ParentOrderID)
+       BindAllDetails(rowData.ID, rowData.ParentOrderID)
     }
-    $('#tabOrderRegion').click();
+    //$('#tabOrderRegion').click();
 }
 function BindAllDetails(ID, ParentOrderID)
 {
+    debugger;
     $("#ID").val(ID);
+    $("#hdnOrderHID").val(ID);
     $("#ParentOrderID").val(ParentOrderID);
     var Result = GetOrderDetails(ID);
     BindGeneralSection(Result);
@@ -799,7 +827,6 @@ function DeleteDemoOrderData(this_Obj)
 }
 function InsertNewOrder()
 {
-    debugger;
     var newdata = [];
     var r = confirm("Are You Sure ?, This will cancel your Current Order..");
     if (r == true) {
@@ -840,12 +867,11 @@ function InsertNewOrder()
         OrderDetailViewModel.OrderDetailsList = OrderDetailList;
         var data = "{'OrderDetailViewModelObj':" + JSON.stringify(OrderDetailViewModel) + "}";
         PostDataToServer('Order/InsertReviseOrder/', data, function (JsonResult) {
-            debugger;
             if (JsonResult != '') {
                 switch (JsonResult.Result) {
                     case "OK":
                         notyAlert('success', JsonResult.Record.StatusMessage);                        
-                        BindAllDetails(JsonResult.Record.ReturnValues, OrderDetailViewModel.OrderID)
+                        BindAllDetails(JsonResult.Record.ReturnValues, OrderDetailViewModel.OrderID);                        
                         $('#tabOrderDetails').click();
                         //goback();
                         break;
@@ -905,9 +931,11 @@ function gobackDetails()
 }
 function goback()
 {
-    $('#tabOrderList').trigger('click');
+    debugger;
+   
     DataTables.orderHeadertable.clear().rows.add(GetOrderHeader()).draw(false);
     ChangeButtonPatchView("Order", "btnPatchOrders", "List");
+    $('#tabOrderList').trigger('click');
 }
 function gobackDetails()
 {
@@ -1162,49 +1190,11 @@ function TabActionInvoiceRegion()
     var Invoiced = CheckInvoicedOrNot($('#hdnOrderHID').val());
     if (Invoiced=='True')
     {
+
         ChangeButtonPatchView("Order", "btnPatchOrders", "InvoiceRegion");
         ChangeButtonPatchView("Order", "divTemplateSend", "InvoiceTemplate");
     }
-    else
-    {
-        var ID = $('#hdnOrderHID').val();
-        var DetailList = [];
-        var TableDetail = DataTables.orderDetailstableInvoiceRegion.rows().data();
-        var InvoiceViewModel = new Object();
-        InvoiceViewModel.ID = null;
-        InvoiceViewModel.InvoiceNo = null;
-        InvoiceViewModel.ParentID = ID;
-        InvoiceViewModel.ParentType = "Order";
-        InvoiceViewModel.InvoiceDate = null;
-        InvoiceViewModel.PaymentStatus = $("#PaymentStatusList").val();
-        for (var i = 0; i < TableDetail.length; i++) {
-            var InvoiceDetailViewModel = new Object();
-            InvoiceDetailViewModel.ID = null;
-            InvoiceDetailViewModel.InvoiceID = ID;
-            InvoiceDetailViewModel.OrderItemID = TableDetail[i].ItemID;
-            InvoiceDetailViewModel.InvoiceAmt = ((((TableDetail[i].Price + TableDetail[i].ShippingAmt + TableDetail[i].TaxAmt) - (TableDetail[i].DiscountAmt))) * TableDetail[i].Qty);
-            DetailList.push(InvoiceDetailViewModel);
-        }
-        InvoiceViewModel.DetailList = DetailList;
-        var data = "{'InvoiceViewObj':" + JSON.stringify(InvoiceViewModel) + "}";
-        PostDataToServer('Order/InsertInvoice/', data, function (JsonResult) {
-            if (JsonResult != '') {
-                switch (JsonResult.Result) {
-                    case "OK":
-                        notyAlert('success', JsonResult.Record.StatusMessage);
-                        ChangeButtonPatchView("Order", "btnPatchOrders", "InvoiceRegion");
-                        ChangeButtonPatchView("Order", "divTemplateSend", "InvoiceTemplate");
-                        break;
-                    case "ERROR":
-                        notyAlert('error', JsonResult.Record.StatusMessage);
-                        break;
-                    default:
-                        break;
-                }
-            }
-        })
-    }  
-   
+    
 }
 function PaymentStatusOnChange(this_Obj)
 {
@@ -1230,45 +1220,57 @@ function PaymentStatusOnChange(this_Obj)
         }
     })
 }
-//function SubmitInvoice()
-//{
-//    debugger;
-//    var ID = $('#hdnOrderHID').val();
-//    var DetailList = [];
-//    var TableDetail = DataTables.orderDetailstableInvoiceRegion.rows().data();
-//    var InvoiceViewModel = new Object();
-//    InvoiceViewModel.ID = null;
-//    InvoiceViewModel.InvoiceNo = null;
-//    InvoiceViewModel.ParentID = ID;
-//    InvoiceViewModel.ParentType = "Order";
-//    InvoiceViewModel.InvoiceDate = null;
-//    InvoiceViewModel.PaymentStatus = $("#PaymentStatusList").val();
-//    for (var i = 0; i < TableDetail.length; i++)
-//    {
-//        var InvoiceDetailViewModel = new Object();
-//        InvoiceDetailViewModel.ID = null;
-//        InvoiceDetailViewModel.InvoiceID = ID;
-//        InvoiceDetailViewModel.OrderItemID = TableDetail[i].ItemID;
-//        InvoiceDetailViewModel.InvoiceAmt = ((((TableDetail[i].Price + TableDetail[i].ShippingAmt + TableDetail[i].TaxAmt) - (TableDetail[i].DiscountAmt))) * TableDetail[i].Qty);
-//        DetailList.push(InvoiceDetailViewModel);
-//    }
-//    InvoiceViewModel.DetailList = DetailList;
-//    var data = "{'InvoiceViewObj':" + JSON.stringify(InvoiceViewModel) + "}";
-//    PostDataToServer('Order/InsertInvoice/', data, function (JsonResult) {
-//        if (JsonResult != '') {
-//            switch (JsonResult.Result) {
-//                case "OK":
-//                    notyAlert('success', JsonResult.Records.StatusMessage);
-//                    break;
-//                case "ERROR":
-//                    notyAlert('error', JsonResult.Records.StatusMessage);
-//                    break;
-//                default:
-//                    break;
-//            }
-//        }
-//    })
-//}
+function SubmitInvoice()
+{
+    debugger;
+    if ($("#lblOrderStatusInvoiceRegion").text() == "Pending")
+    {
+        notyAlert('warning', 'Please confirm the order first');
+    }
+    else
+    {
+        BindTableOrderDetailListInvoiceRegion($('#hdnOrderHID').val());
+        debugger;
+        var ID = $('#hdnOrderHID').val();
+        var DetailList = [];
+        var TableDetail = DataTables.orderDetailstableInvoiceRegion.rows().data();
+        var InvoiceViewModel = new Object();
+        InvoiceViewModel.ID = null;
+        InvoiceViewModel.InvoiceNo = null;
+        InvoiceViewModel.ParentID = ID;
+        InvoiceViewModel.ParentType = "Order";
+        InvoiceViewModel.InvoiceDate = null;
+        InvoiceViewModel.PaymentStatus = $("#PaymentStatusList").val();
+        for (var i = 0; i < TableDetail.length; i++) {
+            var InvoiceDetailViewModel = new Object();
+            InvoiceDetailViewModel.ID = null;
+            InvoiceDetailViewModel.InvoiceID = ID;
+            InvoiceDetailViewModel.OrderItemID = TableDetail[i].ItemID;
+            InvoiceDetailViewModel.InvoiceAmt = ((((TableDetail[i].Price + TableDetail[i].ShippingAmt + TableDetail[i].TaxAmt) - (TableDetail[i].DiscountAmt))) * TableDetail[i].Qty);
+            DetailList.push(InvoiceDetailViewModel);
+        }
+        InvoiceViewModel.DetailList = DetailList;
+        var data = "{'InvoiceViewObj':" + JSON.stringify(InvoiceViewModel) + "}";
+        PostDataToServer('Order/InsertInvoice/', data, function (JsonResult) {
+            if (JsonResult != '') {
+                switch (JsonResult.Result) {
+                    case "OK":
+                        notyAlert('success', JsonResult.Record.StatusMessage);
+                        BindAllDetails($('#hdnOrderHID').val(), $("#ParentOrderID").val());
+                        $('#liInvoiceRegion').show(100);
+                        $('#liShipmentRegion').show(200);
+                        $('#tabInvoiceRegion').click();
+                        break;
+                    case "ERROR":
+                        notyAlert('error', JsonResult.Record.StatusMessage);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+    }    
+}
 
 //##################################################################################################################################################################################################################
 //##############************************************************************************** SHIPPING AREA ******************************************
@@ -1293,7 +1295,7 @@ function BindAccountSectionShipmentRegion(Result) {
 function TabActionShipmentRegion()
 {
     debugger;
-    if (($("#lblOrderStatusInvoiceRegion").text() == "Invoiced") || ($("#lblOrderStatusInvoiceRegion").text() == "Cancelled") || ($("#lblOrderStatusInvoiceRegion").text() == "Delivered")) {
+    if (($("#lblOrderStatusInvoiceRegion").text() == "Cancelled") || ($("#lblOrderStatusInvoiceRegion").text() == "Delivered")) {
         ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
     }
     else
@@ -1438,37 +1440,34 @@ function goBackShipping()
 }
 function TabActionOrderRegion()
 {
-    if (($("#lblOrderStatusInvoiceRegion").text() == "Delivered")) {
-        ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
-        $('#liInvoiceRegion').show(100);
-        $('#liShipmentRegion').show(200);
-    }
-    else if ($("#lblOrderStatusInvoiceRegion").text() == "Pending") {
-        ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
-        $('#liInvoiceRegion').hide(100);
-        $('#liShipmentRegion').hide(200);
-    }
-    else if ($("#lblOrderStatusInvoiceRegion").text() == "Cancelled") {
-        ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
-        $('#liInvoiceRegion').hide(100);
-        $('#liShipmentRegion').hide(200);
-    }
-    else if ($("#lblOrderStatusInvoiceRegion").text() == "Processed")
-    {
-        ChangeButtonPatchView("Order", "btnPatchOrders", "Processed");
-        $('#liInvoiceRegion').show(100);
-        $('#liShipmentRegion').show(200);
-    }
-    else if ($("#lblOrderStatusInvoiceRegion").text() == "Invoiced") {
-        $('#liInvoiceRegion').show(100);
-        $('#liShipmentRegion').show(200);
-    }
-    else
-    {
-        ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
-        ChangeButtonPatchView("Order", "divTemplateSend", "OrderTemplate");
-        $('#liInvoiceRegion').show(100);
-        $('#liShipmentRegion').show(200);
+    debugger;
+    switch ($("#lblOrderStatus").text()) {
+        case "Cancelled":
+            ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
+            $('#liInvoiceRegion').hide(100);
+            $('#liShipmentRegion').hide(200);
+            break;
+        case "Invoiced":
+            ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
+            $('#liInvoiceRegion').show(100);
+            $('#liShipmentRegion').show(200);
+            break;
+        case "Delivered":
+            ChangeButtonPatchView("Order", "btnPatchOrders", "Cancelled");
+            $('#liInvoiceRegion').show(100);
+            $('#liShipmentRegion').show(200);
+            break;
+        case "In Progress":
+            ChangeButtonPatchView("Order", "btnPatchOrders", "InProgress");
+            $('#liInvoiceRegion').hide(100);
+            $('#liShipmentRegion').hide(200);
+            break;
+        default:
+            ChangeButtonPatchView("Order", "btnPatchOrders", "Edit_List");
+            ChangeButtonPatchView("Order", "divTemplateSend", "OrderTemplate");
+            $('#liInvoiceRegion').hide(100);
+            $('#liShipmentRegion').hide(200);
+            break;
     }
     
 }
@@ -1497,8 +1496,7 @@ function SendOrderConfirmation()
             switch (JsonResult.Result) {
                 case "OK":
                     notyAlert('success', JsonResult.Records.StatusMessage);
-                    Edit(this_ObjOrder);
-                    //goBackShipping();
+                    BindAllDetails($('#hdnOrderHID').val(), $("#ParentOrderID").val());
                     break;
                 case "ERROR":
                     notyAlert('error', JsonResult.Records.StatusMessage);
@@ -1530,7 +1528,7 @@ function SendInvoice() {
             switch (JsonResult.Result) {
                 case "OK":
                     notyAlert('success', JsonResult.Records.StatusMessage);
-                    Edit(this_ObjOrder);
+                    BindAllDetails($('#hdnOrderHID').val(), $("#ParentOrderID").val());
                     //goBackShipping();
                     break;
                 case "ERROR":
