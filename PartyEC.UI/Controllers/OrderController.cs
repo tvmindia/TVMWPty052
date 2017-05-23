@@ -583,9 +583,9 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.backbtn.Title = "Back";
-                    ToolboxViewModelObj.sendbtn.Visible = true;
-                    ToolboxViewModelObj.sendbtn.Event = "ShowTemplatePreviewInvoice()";
-                    ToolboxViewModelObj.sendbtn.Title = "Mail";
+                    ToolboxViewModelObj.previewbtn.Visible = true;
+                    ToolboxViewModelObj.previewbtn.Event = "ShowTemplatePreviewInvoice()";
+                    ToolboxViewModelObj.previewbtn.Title = "Mail";
                     break;
                 case "ShipmentRegion":
                     ToolboxViewModelObj.backbtn.Visible = true;
