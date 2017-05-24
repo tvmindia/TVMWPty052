@@ -23,6 +23,7 @@ namespace PartyEC.RepositoryServices.Contracts
         List<PaymentStatusMaster> GetAllPaymentStatus();
         List<OrderStatusMaster> GetAllOrderStatus();
         List<QuotationStatusMaster> GetAllQuotationStatus();
+        List<EventStatusMaster> GetAllEventStatus();
         List<BookingStatusMaster> GetAllBookingStatus();
         List<OtherImages> GetAllStickers();
 

@@ -64,6 +64,11 @@ namespace PartyEC.DataAccessObject.DTO
         public int Code { get; set; }
         public string Description { get; set; }
     }
+    public class EventStatusMaster
+    {
+        public int Code { get; set; }
+        public string Description { get; set; }
+    }
     public class PaymentStatusMaster
     {
         public int Code { get; set; }

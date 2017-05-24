@@ -64,6 +64,20 @@ namespace PartyEC.BusinessServices.Services
             }
             return orderStatuslist;
         }
+        public List<EventStatusMaster> GetAllEventStatus()
+        {
+            List<EventStatusMaster> eventStatuslist = null;
+            try
+            {
+                eventStatuslist = _masterRepository.GetAllEventStatus();
+
+            }
+            catch (Exception)
+            {
+
+            }
+            return eventStatuslist;
+        }
         public List<BookingStatusMaster> GetAllBookingStatus()
         {
             List<BookingStatusMaster> Statuslist = null;
@@ -138,7 +152,8 @@ namespace PartyEC.BusinessServices.Services
             List<Graph> WeeklySalesDeatails = null;
             try
             {
-                WeeklySalesDeatails = _masterRepository.GetWeeklySalesDetails();
+                WeeklySalesDeatails = _masterRepository.GetWeeklySalesDetails().OrderBy(p => p.Label).ToList();
+                
             }
             catch(Exception ex)
             {

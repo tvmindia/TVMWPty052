@@ -37,13 +37,13 @@ namespace PartyEC.UI.Controllers
             EventRequestsViewModel ordrsat_obj = new EventRequestsViewModel();
             List<SelectListItem> selectListItem = new List<SelectListItem>();
 
-            List<OrderStatusViewModel> orderstatusListVM = Mapper.Map<List<OrderStatusMaster>, List<OrderStatusViewModel>>(_masterBusiness.GetAllOrderStatus());
-            foreach (OrderStatusViewModel ovm in orderstatusListVM)
+            List<EventStatusViewModel> eventstatusListVM = Mapper.Map<List<EventStatusMaster>, List<EventStatusViewModel>>(_masterBusiness.GetAllEventStatus());
+            foreach (EventStatusViewModel esvm in eventstatusListVM)
             {
                 selectListItem.Add(new SelectListItem
                 {
-                    Text = ovm.Description,
-                    Value = ovm.Code.ToString(),
+                    Text = esvm.Description,
+                    Value = esvm.Code.ToString(),
                     Selected = false
                 });
             }

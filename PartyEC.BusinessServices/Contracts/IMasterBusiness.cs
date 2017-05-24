@@ -19,6 +19,7 @@ namespace PartyEC.BusinessServices.Contracts
         List<Country> GetAllCountries();
         List<PaymentStatusMaster> GetAllPaymentStatus();
         List<OrderStatusMaster> GetAllOrderStatus();
+        List<EventStatusMaster> GetAllEventStatus();
         List<QuotationStatusMaster> GetAllQuotationStatus();
         List<BookingStatusMaster> GetAllBookingStatus();
         List<OtherImages> GetAllStickers();

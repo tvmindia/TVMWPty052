@@ -420,7 +420,7 @@ namespace PartyEC.UI.Controllers
                return _invoiceBusiness.CheckInvoicedOrNot(int.Parse(ID));
                 
            }
-            catch(Exception ex)
+            catch(Exception)
             {
                 return false;
             }

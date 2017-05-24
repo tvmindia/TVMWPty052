@@ -220,6 +220,52 @@ namespace PartyEC.RepositoryServices.Services
 
 
         }
+        public List<EventStatusMaster> GetAllEventStatus()
+        {
+            List<EventStatusMaster> eventstatusList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetMasterEventStatus]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                eventstatusList = new List<EventStatusMaster>();
+                                while (sdr.Read())
+                                {
+                                    EventStatusMaster _eventstatus = new EventStatusMaster();
+                                    {
+                                        _eventstatus.Code = (sdr["Code"].ToString() != "" ? int.Parse(sdr["Code"].ToString()) : _eventstatus.Code);
+                                        _eventstatus.Description = (sdr["Description"].ToString() != "" ? sdr["Description"].ToString() : _eventstatus.Description);
+
+                                    }
+                                    eventstatusList.Add(_eventstatus);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return eventstatusList;
+
+
+        }
         public List<PaymentStatusMaster> GetAllPaymentStatus()
         {
             List<PaymentStatusMaster> paymentstatusList = null;
