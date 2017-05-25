@@ -111,3 +111,14 @@
     margin-left: -40px;
     margin-top:20px;
 }
+ul.Sidebar_Party li a.error span.error {
+    background-image:url(../images/warning.png)!important;
+    background-repeat:no-repeat!important;
+    width: 18px;
+    height: 18px;
+}
+ul.Sidebar_Party span.error {
+    float: right;
+    background: 0;
+    padding: 0;
+}

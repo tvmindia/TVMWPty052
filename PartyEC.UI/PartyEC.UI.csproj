@@ -341,6 +341,7 @@
     <Content Include="Content\images\updateButton.png" />
     <Content Include="Content\images\uploadify-cancel.png" />
     <Content Include="Content\images\invoice1.png" />
+    <Content Include="Content\images\warning.png" />
     <Content Include="Content\jstree\default\32px.png" />
     <Content Include="Content\jstree\default\32px_line.png" />
     <Content Include="Content\jstree\default\32px_original.png" />

@@ -330,8 +330,9 @@ function removeme(current)
 function btnAddNewProduct() {
     try
     {
-        $('#tabproductDetails a').trigger('click');
 
+        $('#tabproductDetails a').trigger('click');
+        $('.Sidebar_Party li a').removeClass('error');
         $("#titleSpanPro").text('New Product');
         $("#spandetailType").text('__');
         $("#spandetailSet").text('__');
@@ -922,6 +923,7 @@ function ProductSave()
         if ($('.field-validation-error').length > 0) {
             notyAlert('error', 'Need to fill all mandatory fields to save the product info!');
         }
+        $('.Sidebar_Party li a').addClass('error');
         //$('.field-validation-error').each(function () {
 
         //    var ab = $(this);
