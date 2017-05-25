@@ -13,6 +13,7 @@ namespace PartyEC.RepositoryServices.Contracts
         List<Product> GetAllProductswithCategory(string CategoryID);
         List<Product> GetAssignedPro(string CategoryID);
         List<Product> GetUnAssignedPro(string CategoryID);
+        List<ProductDetail> GetAllReorderItems();
         OperationsStatus InsertProduct(Product productObj);
         OperationsStatus AddOrRemoveProductCategoryLink(List<ProductCategoryLink> AddList, List<ProductCategoryLink> DeleteList);
         Product GetProduct(int ProductID, OperationsStatus Status);

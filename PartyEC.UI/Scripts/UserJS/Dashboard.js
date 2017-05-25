@@ -6,6 +6,7 @@
         BindPieChart();
         BindLatestProducts();
         BindLatestOrders();
+        BindReorderProducts();
     }
     catch(e)
     {
@@ -61,6 +62,19 @@ function GetLatestOrders()
         var ds = {};
         data = "";
         ds = GetDataFromServer("DashBoard/GetLatestOrders/", data);
+        if (ds != '') { ds = JSON.parse(ds); }
+        if (ds.Result == "OK") { return ds.Records; }
+        if (ds.Result == "ERROR") { alert(ds.Message); }
+    }
+    catch (e) {
+
+    }
+}
+function GetAllReorderItems() {
+    try {
+        var ds = {};
+        data = "";
+        ds = GetDataFromServer("DashBoard/GetAllReorderItems/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
         if (ds.Result == "ERROR") { alert(ds.Message); }
@@ -230,6 +244,37 @@ function BindLatestOrders() {
                         + '</div>'
                     + '</li>'
             $('#ulLatestOrder').append(html);
+        }
+    }
+    catch (e) {
+
+    }
+}
+function BindReorderProducts() {
+    try {
+        debugger;
+        var ReorderList = GetAllReorderItems()
+        if (ReorderList.length > 0) {
+            $('#ulReorderItems').empty();
+        }
+        for (var i = 0; i < ReorderList.length; i++) {
+
+            var html = '<li class="list-group-item">'
+                        + '<div class="col-lg-12" style="padding:0px">'
+                            + '<div class="col-lg-3">'
+                                + '<img src="/Content/images/ReorderQty.png" style="width:60px;height:60px;object-fit:cover;" />'
+                            + '</div><div class="col-lg-9">'
+                                + '<div class="col-lg-12" style="min-height: 45px;max-height: 45px;">'
+                                    + '<span>' + ReorderList[i].ID + ": " + ReorderList[i].ProductName + 'has to be reorder</span>'
+                                + '</div><div class="col-lg-12"></div>'
+                                + '<div class="col-lg-12">'
+                                    + '<a href="/Order"><i class="fa fa-info-circle"></i></a>'
+                                    + '<a href="/Reviews"><i class="fa fa-star-half-o"></i></a>'
+                                + '</div>'
+                            + '</div>'
+                        + '</div>'
+                    + '</li>'
+            $('#ulReorderItems').append(html);
         }
     }
     catch (e) {

@@ -317,6 +317,7 @@
     <Content Include="Content\images\OrderDefault.png" />
     <Content Include="Content\images\ProductDefault.png" />
     <Content Include="Content\images\ReorderDefault.jpg" />
+    <Content Include="Content\images\ReorderQty.png" />
     <Content Include="Content\images\texture11.jpg" />
     <Content Include="Content\images\delete.PNG" />
     <Content Include="Content\images\power-button.png" />

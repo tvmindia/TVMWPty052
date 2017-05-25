@@ -99,5 +99,21 @@ namespace PartyEC.UI.Controllers
             }
 
         }
+        [HttpGet]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string GetAllReorderItems()
+        {
+            try
+            {
+                List<ProductDetailViewModel> productDetailList = Mapper.Map<List<ProductDetail>, List<ProductDetailViewModel>>(_productBusiness.GetAllReorderItems());
+
+                return JsonConvert.SerializeObject(new { Result = "OK", Records = productDetailList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+        }
     }
 }

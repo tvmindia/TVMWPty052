@@ -49,6 +49,10 @@ namespace PartyEC.BusinessServices.Services
             return productlist;
         }
 
+        public List<ProductDetail> GetAllReorderItems()
+        {
+            return _productRepository.GetAllReorderItems();
+        }
         public List<Product> GetAllProductswithCategory(string CategoryID)
         {
             List<Product> productlist = null;

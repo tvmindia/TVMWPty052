@@ -318,6 +318,49 @@ namespace PartyEC.RepositoryServices.Services
 
 
         }
+        public List<ProductDetail> GetAllReorderItems()
+        {
+            List<ProductDetail> ProductDetaillist = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetAllReorderItems]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                ProductDetaillist = new List<ProductDetail>();
+                                while (sdr.Read())
+                                {
+                                    ProductDetail proObj = new ProductDetail();
+                                    {
+                                        proObj.ID = sdr["ID"].ToString()!=""?int.Parse(sdr["ID"].ToString()):proObj.ID;
+                                        proObj.ProductName = sdr["Name"].ToString();
+                                    }
+                                    ProductDetaillist.Add(proObj);
+                                }
+                            }//if
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return ProductDetaillist;
+        }
         public OperationsStatus InsertProduct(Product productObj)
         {
             OperationsStatus operationsStatusObjH = null;

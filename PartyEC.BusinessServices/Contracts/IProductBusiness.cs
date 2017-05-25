@@ -11,6 +11,7 @@ namespace PartyEC.BusinessServices.Contracts
     {
         List<Product> GetAllProducts(Product productObj);
         List<Product> GetTop10Products();
+        List<ProductDetail> GetAllReorderItems();
         List<Product> GetAllProductswithCategory(string CategoryID);
         List<Product> GetAssignedPro(string CategoryID);
         List<Product> GetUnAssignedPro(string CategoryID);
