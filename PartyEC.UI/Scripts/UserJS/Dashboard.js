@@ -91,7 +91,7 @@ function BindBarChart()
         var labels = [];
         var BarGraphData = GetWeeklySalesDetails()
         for (var i = 0; i < BarGraphData.length; i++) {
-            labels.push(BarGraphData[i].Label + " st Week");
+            labels.push(BarGraphData[i].Label);
             chartjsData.push(BarGraphData[i].Value);
         }
         var ctx = document.getElementById("myChart");

@@ -7,6 +7,7 @@ using System.Web;
 using PartyEC.DataAccessObject.DTO;
 using System.Data.SqlClient;
 using System.Data;
+using System.Globalization;
 
 namespace PartyEC.BusinessServices.Services
 {
@@ -153,6 +154,16 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 WeeklySalesDeatails = _masterRepository.GetWeeklySalesDetails().OrderBy(p => p.Label).ToList();
+                if(WeeklySalesDeatails!=null)
+                {
+                    foreach (var i in WeeklySalesDeatails)
+                    {
+                        DateTime dt = FirstDateOfWeek(int.Parse(DateTime.Now.Year.ToString()), int.Parse(i.Label));
+                        int weekOfMonth = GenerateWeekNumber(dt) - GenerateWeekNumber(dt.AddDays(1 - dt.Day)) + 1;
+                        string Month = CultureInfo.CurrentCulture.DateTimeFormat.GetMonthName(dt.Month);
+                        i.Label = Month + " Week " + weekOfMonth;
+                    }
+                }             
                 
             }
             catch(Exception ex)
@@ -161,6 +172,29 @@ namespace PartyEC.BusinessServices.Services
             }
             return WeeklySalesDeatails;
         }
+        public static int GenerateWeekNumber(DateTime dt)
+        {
+            return CultureInfo.CurrentCulture.Calendar.GetWeekOfYear(dt, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        }
+
+        public static DateTime FirstDateOfWeek(int year, int weekOfYear)
+        {
+            DateTime jan1 = new DateTime(year, 1, 1);
+            int daysOffset = DayOfWeek.Thursday - jan1.DayOfWeek;
+
+            DateTime firstThursday = jan1.AddDays(daysOffset);
+            var cal = CultureInfo.CurrentCulture.Calendar;
+            int firstWeek = cal.GetWeekOfYear(firstThursday, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+
+            var weekNum = weekOfYear;
+            if (firstWeek <= 1)
+            {
+                weekNum -= 1;
+            }
+            var result = firstThursday.AddDays(weekNum * 7);
+            return result.AddDays(-3);
+        }
+
         public List<Graph> GetRootCategoryWiseSalesDetail()
         {
             List<Graph> GraphList = null;
