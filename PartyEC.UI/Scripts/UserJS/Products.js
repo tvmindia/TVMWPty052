@@ -923,12 +923,7 @@ function ProductSave()
         if ($('.field-validation-error').length > 0) {
             notyAlert('error', 'Need to fill all mandatory fields to save the product info!');
         }
-        $('.Sidebar_Party li a').addClass('error');
-        //$('.field-validation-error').each(function () {
-
-        //    var ab = $(this);
-
-        //}); 
+        Validate();
     }
     catch(e)
     {
@@ -1993,6 +1988,14 @@ function ModelProductsRating(currentObj) {
    
 }
 
+function Validate() {
+    $('.Sidebar_Party li a').removeClass('error');
+    $(".input-validation-error").each(function () {
+      var id= $(this).closest('div[class^="tab-pane fade"]').attr('id'); //this.id
+      $('.Sidebar_Party li a[for^="'+id+'"]').addClass('error');
+    });
+    
+}
 
 //function settagfocus()
 //{
