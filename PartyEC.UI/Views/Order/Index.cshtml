@@ -208,14 +208,30 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6">
-                                        <div class="infoBox panel panel-default" style="min-height:150px">
+                                    <div class="col-md-6" >
+                                        <div class="infoBox panel panel-default" style="min-height:200px">
                                             <div class="infoBoxHeader panel-heading">Payment Information</div>
                                             <div class="panel-body">
-                                                <label class="h5 col-md-6" for="lblPaymentType">Payment Mode:</label>
-                                                <div class="col-md-6">
-                                                    @*style="font-weight:bold"*@
-                                                    <label id="lblPaymentType" class="h5 label-display">-</label>
+                                                <div id="divPayModeDefault" style="padding:0">
+                                                    <label class="h5 col-md-6" for="lblPaymentType">Payment Mode:</label>
+                                                    <div class="col-md-6">
+                                                        @*style="font-weight:bold"*@
+                                                        <label id="lblPaymentType" class="h5 label-display">-</label>
+                                                    </div>
+                                                </div>
+                                                <div id="divPayModeFailed" style="padding:0">
+                                                    <label class="h5 col-md-6" for="lblPaymentType">Payment Mode:</label>
+                                                    <div class="col-md-6">
+                                                       
+                                                        @{
+                                                            List<SelectListItem> listItems1 = new List<SelectListItem>();
+                                                            listItems1.Add(new SelectListItem
+                                                            { Text = "COD", Value = "COD" });
+                                                            listItems1.Add(new SelectListItem
+                                                            { Text = "ONLINE", Value = "ONL" });
+                                                        }
+                                                        @Html.DropDownListFor(model => model.PaymentType, listItems1, "-- Select pay type --", new { @class = "form-control",id="ddlPayType" })
+                                                    </div>
                                                 </div>
                                                 <div class="col-md-12"></div>
                                                 <label class="h5 col-md-6" for="lblCurrencyCode">Currency :</label>
@@ -229,11 +245,14 @@
                                                     @*style="font-weight:bold"*@
                                                     <label id="lblPaymentStatus" class="h5 label-display">-</label>
                                                 </div>
-                                            </div>
+                                                <div class="col-md-12"></div>
+                                                    <a id="btnUpdatePayMethod" onclick="UpdatePayMethod()" style="position:relative;left:69%" class="btn btn-info">Save Changes</a>
+                                                
                                         </div>
                                     </div>
+                                        </div>
                                     <div class="col-md-6">
-                                        <div class="infoBox panel panel-default" style="min-height:150px">
+                                        <div class="infoBox panel panel-default" style="min-height:200px">
                                             <div class="infoBoxHeader panel-heading">Shipping & Handling information</div>
                                             <div class="panel-body">
                                                 <label class="h5 col-md-6" for="lblShippingLocation">Shipping Location:</label>

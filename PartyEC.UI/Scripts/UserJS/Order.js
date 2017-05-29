@@ -1024,9 +1024,66 @@ function BindShippingDetails(Result)
     $('#ShipCountryCode').val(Result.ShipCountryCode);
 }
 function BindPaymentInformation(Result) {
-    $('#lblPaymentType').text(Result.PaymentType)
-    $('#lblCurrencyCode').text(Result.CurrencyCode)
-    $('#lblPaymentStatus').text(Result.PaymentStatus)
+    if(Result.PaymentStatus=="Failed")
+    {
+        $('#divPayModeDefault').hide();
+        $('#divPayModeFailed').show();
+        $('#lblPaymentStatus').text(Result.PaymentStatus)
+        $('#lblPaymentType').text(Result.PaymentType)
+        $('#lblCurrencyCode').text(Result.CurrencyCode)
+        $('#btnUpdatePayMethod').show();
+    }
+    else
+    {
+        $('#divPayModeDefault').show();
+        $('#divPayModeFailed').hide();
+        $('#lblPaymentType').text(Result.PaymentType)
+        $('#lblCurrencyCode').text(Result.CurrencyCode)
+        $('#lblPaymentStatus').text(Result.PaymentStatus)
+        $('#btnUpdatePayMethod').hide();
+    }
+    
+}
+function UpdatePayMethod()
+{
+    debugger;
+    var ID = $('#hdnOrderHID').val();
+    var OrderViewModel = new Object();
+    
+    OrderViewModel.PaymentType = $('#ddlPayType').val();
+    OrderViewModel.ID = ID;
+    if (OrderViewModel.PaymentType == "COD")
+    {
+        var EventsLogViewObj = new Object();
+        var mailViewModelObj = new Object();
+        EventsLogViewObj.Comment = "Your payment through online failed, hence pay while delivery !";
+        EventsLogViewObj.CustomerNotifiedYN = "true";
+        EventsLogViewObj.ParentType = "Order";
+        EventsLogViewObj.ParentID = ID;
+        mailViewModelObj.CustomerEmail = $('#hdnAccountEmailID').val();
+        mailViewModelObj.CustomerName = $('#hdnAccountCustomerName').val();
+
+        OrderViewModel.EventsLogViewObj = EventsLogViewObj;
+        OrderViewModel.mailViewModelObj = mailViewModelObj;
+        var data = "{'orderObj':" + JSON.stringify(OrderViewModel) + "}";
+        PostDataToServer('Order/UpdatePayType/', data, function (JsonResult) {
+            if (JsonResult != '') {
+                switch (JsonResult.Result) {
+                    case "OK":
+                        notyAlert('success', JsonResult.Record.StatusMessage);
+                        BindAllDetails($('#hdnOrderHID').val(), $("#ParentOrderID").val());
+                        
+                        break;
+                    case "ERROR":
+                        notyAlert('error', JsonResult.Record.StatusMessage);
+                        break;
+                    default:
+                        break;
+                }
+            }
+        })
+    }
+    
 }
 function BindShippingHandlingSection(Result)
 {

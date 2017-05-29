@@ -358,6 +358,49 @@ namespace PartyEC.UI.Controllers
         }
         [HttpPost]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
+        public string UpdatePayType(OrderViewModel orderObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            OperationsStatusViewModel OperationStatusViewModelObject = null;
+            bool Mailstatus = false;
+            try
+            {
+                orderObj.commonObj = new LogDetailsViewModel();
+                orderObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
+                orderObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
+                OperationsStatusViewModelObj= Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.UpdatePayType(Mapper.Map<OrderViewModel, Order>(orderObj)));
+                if(OperationsStatusViewModelObj.StatusCode==1)
+                {
+                    orderObj.EventsLogViewObj.commonObj = new LogDetailsViewModel();
+                    orderObj.EventsLogViewObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                    orderObj.EventsLogViewObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    if (orderObj.mailViewModelObj.CustomerEmail != "" && orderObj.EventsLogViewObj.CustomerNotifiedYN == true)
+                    {
+                        orderObj.mailViewModelObj.OrderNo = orderObj.EventsLogViewObj.ParentID;
+                        orderObj.mailViewModelObj.OrderComment = orderObj.EventsLogViewObj.Comment;
+                        Mailstatus = _mailBusiness.Send(Mapper.Map<MailViewModel, Mail>(orderObj.mailViewModelObj));
+                        orderObj.EventsLogViewObj.CustomerNotifiedYN = Mailstatus;
+                    }
+                    OperationStatusViewModelObject = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertEventsLog(Mapper.Map<EventsLogViewModel, EventsLog>(orderObj.EventsLogViewObj)));
+                }
+                
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+            }
+
+            if (OperationsStatusViewModelObj.StatusCode == 1)
+            {
+                return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+            }
+            else
+            {
+                return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+            }
+        }
+        [HttpPost]
+        [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
         public string InsertReviseOrder(OrderDetailViewModel OrderDetailViewModelObj)
         {
             OperationsStatusViewModel OperationsStatusViewModelObj = null;

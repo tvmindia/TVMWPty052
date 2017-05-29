@@ -17,6 +17,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus CancelOrder(Order orderObj);
         OperationsStatus UpdateBillingDetails(Order orderObj);
         OperationsStatus UpdateShipingDetails(Order orderObj);
+        OperationsStatus UpdatePayType(Order orderObj);
         OperationsStatus InsertReviseOrder(OrderDetail orderDetailObj);
         Order GetOrderSummary(int ID);
         List<OrderDetail> GetOrderExcludesShip(int ID);

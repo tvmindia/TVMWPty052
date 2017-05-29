@@ -119,6 +119,10 @@ namespace PartyEC.BusinessServices.Services
         {
             return _orderRepository.UpdateShipingDetails(orderObj);
         }
+        public OperationsStatus UpdatePayType(Order orderObj)
+        {
+            return _orderRepository.UpdatePayType(orderObj);
+        }
         public OperationsStatus  CancelOrder(Order orderObj)
         {
             return _orderRepository.CancelOrder(orderObj);

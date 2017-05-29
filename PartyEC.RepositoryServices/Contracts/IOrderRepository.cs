@@ -18,6 +18,7 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus CancelOrder(Order orderObj);
         OperationsStatus UpdateBillingDetails(Order orderObj);
         OperationsStatus UpdateShipingDetails(Order orderObj);
+        OperationsStatus UpdatePayType(Order orderObj);
         OperationsStatus InsertOrderHeaderForApp(Order orderObj);
         OperationsStatus InsertOrderHeader(Order orderObj);
         OperationsStatus InsertOrderDetail(OrderDetail orderDetailObj); 
