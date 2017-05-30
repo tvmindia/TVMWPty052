@@ -30,6 +30,7 @@ namespace PartyEC.UI.Models
         public string Title { get; set; }
         public bool Visible { get; set; }
         public bool Disable { get; set; }
+        public bool Pause { get; set; }
     }
 
     public class ToolBox

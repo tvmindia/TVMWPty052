@@ -622,6 +622,10 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.sendbtn.Event = "SendOrderConfirmation()";
                     ToolboxViewModelObj.sendbtn.Title = "Send Order";
                     break;
+                case "SendCancel":
+                    ToolboxViewModelObj.sendbtn.Visible = true;
+                    ToolboxViewModelObj.sendbtn.Pause = true;
+                    break;
                 case "InvoiceRegion":
                     ToolboxViewModelObj.backbtn.Visible = true;
                     ToolboxViewModelObj.backbtn.Event = "goback()";

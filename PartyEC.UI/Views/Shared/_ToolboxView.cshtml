@@ -132,6 +132,12 @@
                 <img src="@Url.Content("~/Content/images/sentmail.PNG")">
             </a>
         }
+        else if(Model.sendbtn.Pause)
+        {
+            <a class="thr_btn">
+                <img src="@Url.Content("~/Content/images/loading.gif")">
+            </a>
+        }
         else
         {
             <a title="@Model.sendbtn.Title" class="thr_btn" onclick=@Model.sendbtn.Event>

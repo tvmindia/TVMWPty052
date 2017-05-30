@@ -310,14 +310,17 @@
     <Content Include="Content\images\approve.png" />
     <Content Include="Content\images\back.PNG" />
     <Content Include="Content\images\browse-btn.png" />
+    <Content Include="Content\images\calendarp.png" />
     <Content Include="Content\images\closelt.png" />
     <Content Include="Content\images\closemodel.png" />
+    <Content Include="Content\images\loading.gif" />
     <Content Include="Content\images\preview.png" />
     <Content Include="Content\images\Loader.gif" />
     <Content Include="Content\images\OrderDefault.png" />
     <Content Include="Content\images\ProductDefault.png" />
     <Content Include="Content\images\ReorderDefault.jpg" />
     <Content Include="Content\images\ReorderQty.png" />
+    <Content Include="Content\images\searcht.png" />
     <Content Include="Content\images\texture11.jpg" />
     <Content Include="Content\images\delete.PNG" />
     <Content Include="Content\images\power-button.png" />

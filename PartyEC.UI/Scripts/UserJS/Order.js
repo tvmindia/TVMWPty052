@@ -1539,8 +1539,9 @@ function ShowTemplatePreview()
     $('#PreviewTemplateArea').append(Result);
 }
 function SendOrderConfirmation()
-{
+{    
     debugger;
+    ChangeButtonPatchView("Order", "divTemplateSend", "SendCancel");
     var TemplateBody = $('#PreviewTemplateArea').html();
     var MailViewModel = new Object();
     MailViewModel.CustomerEmail = $("#hdnAccountEmailID").val();
@@ -1554,9 +1555,11 @@ function SendOrderConfirmation()
                 case "OK":
                     notyAlert('success', JsonResult.Records.StatusMessage);
                     BindAllDetails($('#hdnOrderHID').val(), $("#ParentOrderID").val());
+                    ChangeButtonPatchView("Order", "divTemplateSend", "OrderTemplate");
                     break;
                 case "ERROR":
                     notyAlert('error', JsonResult.Records.StatusMessage);
+                    ChangeButtonPatchView("Order", "divTemplateSend", "OrderTemplate");
                     break;
                 default:
                     break;
@@ -1574,6 +1577,7 @@ function ShowTemplatePreviewInvoice() {
 }
 function SendInvoice() {
     debugger;
+    ChangeButtonPatchView("Order", "divTemplateSend", "SendCancel");
     var TemplateBody = $('#PreviewTemplateArea').html();
     var MailViewModel = new Object();
     MailViewModel.CustomerEmail = $("#hdnAccountEmailID").val();
@@ -1586,14 +1590,16 @@ function SendInvoice() {
                 case "OK":
                     notyAlert('success', JsonResult.Records.StatusMessage);
                     BindAllDetails($('#hdnOrderHID').val(), $("#ParentOrderID").val());
-                    //goBackShipping();
+                    ChangeButtonPatchView("Order", "divTemplateSend", "InvoiceTemplate");
                     break;
                 case "ERROR":
                     notyAlert('error', JsonResult.Records.StatusMessage);
+                    ChangeButtonPatchView("Order", "divTemplateSend", "InvoiceTemplate");
                     break;
                 default:
                     break;
             }
         }
     })
+   
 }
