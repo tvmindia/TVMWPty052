@@ -484,9 +484,11 @@
                                                 <label class="h5 col-md-6" for="lblPaymentStatus">Payment Status :</label>
                                                 <div class="col-lg-6">
                                                   
-                                                    @Html.DropDownListFor(model => model.PaymentStatusList, null, "--Select Status--", new { @class = "form-control", @onchange = "PaymentStatusOnChange(this)" })
+                                                    @Html.DropDownListFor(model => model.PaymentStatusList, null, "--Select Status--", new { @class = "form-control" })
                                                    
                                                 </div>
+                                                <div class="col-md-12"></div>
+                                                <input type="submit" onclick="PaymentStatusOnChange()" value="Save Changes" class="btn btn-info btn-right" style="position:relative;left:54%;">
                                             </div>
                                         </div>
                                     </div>

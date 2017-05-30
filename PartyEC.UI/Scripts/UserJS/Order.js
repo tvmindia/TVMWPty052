@@ -1253,14 +1253,14 @@ function TabActionInvoiceRegion()
     }
     
 }
-function PaymentStatusOnChange(this_Obj)
+function PaymentStatusOnChange()
 {
     debugger;
     var ID = $('#hdnOrderHID').val();
-    var Order = new Object();
-    Order.ID = ID;
-    Order.PayStatusCode = $("#PaymentStatusList").val();
-    var data = "{'OrderObj':" + JSON.stringify(Order) + "}";
+    var OrderViewModel = new Object();
+    OrderViewModel.ID = ID;
+    OrderViewModel.PayStatusCode = $("#PaymentStatusList").val();
+    var data = "{'OrderObj':" + JSON.stringify(OrderViewModel) + "}";
     PostDataToServer('Order/UpdateOrderPaymentStatus/', data, function (JsonResult) {
         if (JsonResult != '') {
             switch (JsonResult.Result) {

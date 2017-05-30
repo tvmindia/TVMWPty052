@@ -573,17 +573,25 @@ namespace PartyEC.UI.Controllers
         }
         [HttpPost]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
-        public string UpdateOrderPaymentStatus(Order OrderObj)
+        public string UpdateOrderPaymentStatus(OrderViewModel OrderObj)
         {
             OperationsStatusViewModel OperationsStatusViewModelObj = null;
             try
             {
-                OrderObj.commonObj = new LogDetails();
+                OrderObj.commonObj = new LogDetailsViewModel();
                 OrderObj.commonObj.UpdatedBy = _commonBusiness.GetUA().UserName;
                 OrderObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
 
-                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.UpdateOrderPaymentStatus(OrderObj));
-                return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.UpdateOrderPaymentStatus(Mapper.Map<OrderViewModel, Order>(OrderObj)));
+                if(OperationsStatusViewModelObj.StatusCode==1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Records = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "ERROR", Records = OperationsStatusViewModelObj });
+                }
+                
             }
             catch (Exception ex)
             {

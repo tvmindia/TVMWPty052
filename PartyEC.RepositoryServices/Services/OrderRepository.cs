@@ -594,7 +594,7 @@ namespace PartyEC.RepositoryServices.Services
                             con.Open();
                         }
                         cmd.Connection = con;
-                        cmd.CommandText = "[UpdateOrderPaymentStatus]";
+                        cmd.CommandText = "[UpdatePaymentType]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = orderObj.ID;                     
                         cmd.Parameters.Add("@PaymentType", SqlDbType.NVarChar, 3).Value = orderObj.PaymentType;                  
@@ -1013,7 +1013,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = orderObj.ID;
                         cmd.Parameters.Add("@PaymentStatus", SqlDbType.Int).Value = orderObj.PayStatusCode;
-
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = orderObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.DateTime).Value = orderObj.commonObj.UpdatedDate;
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
