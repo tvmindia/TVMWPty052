@@ -510,7 +510,15 @@ namespace PartyEC.UI.Controllers
                 if((productDeails.ID>0)&&(productDeails.ProductID>0))
                 {
                     OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.DeleteProductsDetails(productDeails.ID, productDeails.ProductID));
-                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                    if(OperationsStatusViewModelObj.StatusCode==1)
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                    }
+                    else
+                    {
+                        return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                    }
+                    
                 }
                 else
                 {

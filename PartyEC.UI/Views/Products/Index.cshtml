@@ -963,7 +963,7 @@
 </div><!-- /.modal -->
 
 @*--------------------------------------DeleteForm------------------------------------------------------------------*@
-@using (Ajax.BeginForm("DeleteRelatedProducts", "Products", new AjaxOptions { HttpMethod = "POST", Confirm = "Are You Sure?...",OnBegin = "return ValidateTableSelection()", OnSuccess = "RelatedproductDeleteSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "" }, new { @class = "form-horizontal", role = "form", id = "relatedproductDeleteform" }))
+@using (Ajax.BeginForm("DeleteRelatedProducts", "Products", new AjaxOptions { HttpMethod = "POST",OnBegin = "return ValidateTableSelection()", OnSuccess = "RelatedproductDeleteSuccess", OnFailure = "productSaveFailure", AllowCache = false, LoadingElementId = "" }, new { @class = "form-horizontal", role = "form", id = "relatedproductDeleteform" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(model => model.IDList, htmlAttributes: new { @class = "control-label col-lg-2 IDList",id="relatedproductlistID", Value = "0" })

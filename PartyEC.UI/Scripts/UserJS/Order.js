@@ -827,6 +827,7 @@ function DeleteDemoOrderData(this_Obj)
 }
 function InsertNewOrder()
 {
+    debugger;
     var newdata = [];
     var r = confirm("Are You Sure ?, This will cancel your Current Order..");
     if (r == true) {
@@ -836,7 +837,7 @@ function InsertNewOrder()
         {
             if ((parseInt(newOrderData[i].Qty)) > newOrderData[i].ProductQty)
             {
-                notyAlert('warning', "We're sorry! Only " + newOrderData.ProductQty + " units for " + ProductSpecXML.split('||')[0]);
+                notyAlert('warning', "We're sorry! Only " + newOrderData[i].ProductQty + " units for " + newOrderData.ProductSpecXML[i].split('||')[0]);
                 return false;
             }
             else {

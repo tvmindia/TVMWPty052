@@ -1788,6 +1788,11 @@ namespace PartyEC.RepositoryServices.Services
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = constObj.DeleteSuccess;
                                 break;
+                            case "2":
+                                //Delete Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
+                                operationsStatusObj.StatusMessage ="Product on processing....";
+                                break;
                             default:
                                 break;
                         }

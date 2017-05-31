@@ -111,13 +111,14 @@
                                                     @*style="font-weight:bold"*@
                                                     <label id="lblSourceIP" class="h5 label-display">-</label>
                                                 </div>
+                                                <div class="col-md-12"></div>
                                                 @Html.LabelFor(model => model.RevNo, htmlAttributes: new { @class = "h5 col-md-4" })
                                                 <div class="col-md-8">
                                                     @*style="font-weight:bold"*@
                                                     <label id="lblRevNo" class="h5 label-display" style="font-weight:bold">-</label>
                                                 </div>
                                                 @Html.LabelFor(model => model.RevisionIDs, htmlAttributes: new { @class = "h5 col-md-4",id="lblRevisionIDs" })
-                                                <div class="col-md-8" id="RevisionLinkBind">
+                                                <div class="col-md-8" style="padding:0;" id="RevisionLinkBind">
 
                                                 </div>
                                             </div>
@@ -982,7 +983,7 @@
                                         @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnOrderHID" })
                                         @Html.HiddenFor(model => model.ParentOrderID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0" })
 
-                                        <input type="submit" value="Save" class="btn btn-default btn-right" />
+                                        <input type="submit" value="Save" class="btn btn-info btn-right" />
                                     </div>
                                 </div>
                             </div>
@@ -1071,7 +1072,7 @@
                         <div class="form-group">
                             <div class="col-md-offset-5 col-md-5">
                                 @Html.HiddenFor(model => model.ID, htmlAttributes: new { @class = "control-label col-md-4", Value = "0", id = "hdnOrderHIDShip" })
-                                <input type="submit" value="Save" class="btn btn-default btn-right" />
+                                <input type="submit" value="Save" class="btn btn-info btn-right" />
                             </div>
                         </div>
                     </div>

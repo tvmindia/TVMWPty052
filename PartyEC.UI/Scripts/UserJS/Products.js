@@ -310,6 +310,9 @@ $(document).ready(function () {
             clearform();
             ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
             DisEnableSectionAdditional();
+            var rowData = DataTables.productTable.row(0).data();
+            var thisproduct = GetProduct(rowData.ID);
+            BindthisProduct(thisproduct);
         });
     }
     catch(e)
@@ -391,75 +394,86 @@ function Edit(currentObj)
         var rowData = DataTables.productTable.row($(currentObj).parents('tr')).data();
         if ((rowData != null) && (rowData.ID != null)) {
             var thisproduct = GetProduct(rowData.ID);
-            if (thisproduct != null) {
-                $("#titleSpanPro").text(thisproduct.Name);
-                $("#spandetailType").text((thisproduct.ProductType == "S" ? 'Simple' : 'Configurable'));
-                $("#spandetailSet").text(((thisproduct.AttributeSetName != null) && (thisproduct.AttributeSetName != "") ? thisproduct.AttributeSetName : 'N/A') + '');
-                $("#AttributeSetID").attr({ 'disabled': 'disabled' });
-                $("#ProductType").attr({ 'disabled': 'disabled' });
-                $("#Name").val(thisproduct.Name);
-                $("#SKU").val(thisproduct.SKU);
-                if (thisproduct.Enabled == true)
-                { $("#Enabled").prop('checked', true); }
-                else { $("#Enabled").prop('checked', false); }
-                $("#Unit").val(thisproduct.Unit);
-                $("#URL").val(thisproduct.URL);
-                $("#ActionType").val(thisproduct.ActionType);
-                $("#SupplierID").val(thisproduct.SupplierID);
-                $("#ManufacturerID").val(thisproduct.ManufacturerID);
-                $("#ProductType").val(thisproduct.ProductType);
-                $("#ProductTypehdf").val(thisproduct.ProductType);
-                $("#AttributeSetID").val(thisproduct.AttributeSetID);
-                $("#AttributeSetIDhdf").val(thisproduct.AttributeSetID);
-                if (thisproduct.FreeDelivery == true)
-                { $("#FreeDelivery").prop('checked', true); }
-                else { $("#FreeDelivery").prop('checked', false); }
-                $("#CostPrice").val(thisproduct.CostPrice);
-                $("#BaseSellingPrice").val(thisproduct.BaseSellingPrice);
-                if (thisproduct.ShowPrice == true)
-                { $("#ShowPrice").prop('checked', true); }
-                else { $("#ShowPrice").prop('checked', false); }
-                $("#DiscountAmount").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountAmount : 0.00));
-                $("#DiscountStartDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountStartDate : ""));
-                $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountEndDate : ""));
-                $("#ShortDescription").val(thisproduct.ShortDescription);
-                $("#LongDescription").val(thisproduct.LongDescription);
-                if (thisproduct.StockAvailable == true) {
-                    $("#StockAvailable").val("true");
-                }
-                else {
-                    $("#StockAvailable").val("false");
-                }
-                $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
-                $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
-                //Tags
-                if (thisproduct.HeaderTags) {
-                    $('.Htags').remove();
-                    var tagar = thisproduct.HeaderTags.split(",");
-                    for (index = 0; index < tagar.length; ++index) {
-                        //Tag creation when binding
-                        $("#keywordsDiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' }));
-                    }
-                }
-                else {
-                    //Removes span tags
-                    $('.Htags').remove();
-                }
-                //ProductID
-                $(".productID").val(thisproduct.ID);
-                //ProductDetailID
-                $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
-                //RefreshRelatedProducts(thisproduct.ID);
-                RefreshUNRelatedProducts(thisproduct.ID);
-                EnableSectionAdditional();
-            }
-
+            BindthisProduct(thisproduct);
         }
     }
     catch(e)
     {
         notyAlert('error', e.message);
     }
+}
+function BindthisProduct(thisproduct)
+{
+    try
+    {
+        if (thisproduct != null) {
+            $("#titleSpanPro").text(thisproduct.Name);
+            $("#spandetailType").text((thisproduct.ProductType == "S" ? 'Simple' : 'Configurable'));
+            $("#spandetailSet").text(((thisproduct.AttributeSetName != null) && (thisproduct.AttributeSetName != "") ? thisproduct.AttributeSetName : 'N/A') + '');
+            $("#AttributeSetID").attr({ 'disabled': 'disabled' });
+            $("#ProductType").attr({ 'disabled': 'disabled' });
+            $("#Name").val(thisproduct.Name);
+            $("#SKU").val(thisproduct.SKU);
+            if (thisproduct.Enabled == true)
+            { $("#Enabled").prop('checked', true); }
+            else { $("#Enabled").prop('checked', false); }
+            $("#Unit").val(thisproduct.Unit);
+            $("#URL").val(thisproduct.URL);
+            $("#ActionType").val(thisproduct.ActionType);
+            $("#SupplierID").val(thisproduct.SupplierID);
+            $("#ManufacturerID").val(thisproduct.ManufacturerID);
+            $("#ProductType").val(thisproduct.ProductType);
+            $("#ProductTypehdf").val(thisproduct.ProductType);
+            $("#AttributeSetID").val(thisproduct.AttributeSetID);
+            $("#AttributeSetIDhdf").val(thisproduct.AttributeSetID);
+            if (thisproduct.FreeDelivery == true)
+            { $("#FreeDelivery").prop('checked', true); }
+            else { $("#FreeDelivery").prop('checked', false); }
+            $("#CostPrice").val(thisproduct.CostPrice);
+            $("#BaseSellingPrice").val(thisproduct.BaseSellingPrice);
+            if (thisproduct.ShowPrice == true)
+            { $("#ShowPrice").prop('checked', true); }
+            else { $("#ShowPrice").prop('checked', false); }
+            $("#DiscountAmount").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountAmount : 0.00));
+            $("#DiscountStartDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountStartDate : ""));
+            $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountEndDate : ""));
+            $("#ShortDescription").val(thisproduct.ShortDescription);
+            $("#LongDescription").val(thisproduct.LongDescription);
+            if (thisproduct.StockAvailable == true) {
+                $("#StockAvailable").val("true");
+            }
+            else {
+                $("#StockAvailable").val("false");
+            }
+            $("#Qty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].Qty : ""));
+            $("#OutOfStockAlertQty").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].OutOfStockAlertQty : ""));
+            //Tags
+            if (thisproduct.HeaderTags) {
+                $('.Htags').remove();
+                var tagar = thisproduct.HeaderTags.split(",");
+                for (index = 0; index < tagar.length; ++index) {
+                    //Tag creation when binding
+                    $("#keywordsDiv").append($("<span/>", { text: tagar[index] }).attr({ 'class': 'label label-primary Htags', 'onclick': 'removeme(this)' }));
+                }
+            }
+            else {
+                //Removes span tags
+                $('.Htags').remove();
+            }
+            //ProductID
+            $(".productID").val(thisproduct.ID);
+            //ProductDetailID
+            $("#productdetailsID").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].ID : 0));
+            //RefreshRelatedProducts(thisproduct.ID);
+            RefreshUNRelatedProducts(thisproduct.ID);
+            EnableSectionAdditional();
+        }
+    }
+    catch(e)
+    {
+
+    }
+   
 }
 function EnableSectionAdditional() {
     try
@@ -1601,13 +1615,14 @@ function AssociatedProductDelete(this_Obj)
 {
     try
     {
-        var rowData = DataTables.AssociatedProductsTable.row($(this_Obj).parents('tr')).data();
-        if (!rowData.DefaultOption) {
-            //rowData.ProductID, rowData.ID
-            var prodetid = rowData.ProductID;//$("#productDetailID").val();
-            var prodid = rowData.ID//$('.productID').val();
-            if ((prodetid) && (prodid)) {
-                if (confirm("Are you Sure!") == true) {
+        if (confirm("Are you Sure!") == true) {
+            var rowData = DataTables.AssociatedProductsTable.row($(this_Obj).parents('tr')).data();
+            if (!rowData.DefaultOption) {
+                //rowData.ProductID, rowData.ID
+                var prodetid = rowData.ProductID;//$("#productDetailID").val();
+                var prodid = rowData.ID//$('.productID').val();
+                if ((prodetid) && (prodid)) {
+
                     var ProductDetailViewModel = new Object();
                     ProductDetailViewModel.ID = prodid;
                     ProductDetailViewModel.ProductID = prodetid;
@@ -1616,7 +1631,6 @@ function AssociatedProductDelete(this_Obj)
                         if (JsonResult != '') {
                             switch (JsonResult.Result) {
                                 case "OK":
-
                                     notyAlert('success', JsonResult.Record.StatusMessage);
                                     RefreshAssociatedProducts(prodetid);
                                     clearAssociatedProductform();
@@ -1629,17 +1643,17 @@ function AssociatedProductDelete(this_Obj)
                             }
                         }
                     })
-                }
 
+
+                }
+                else {
+                    notyAlert('error', 'Please Select a product');
+                }
 
             }
             else {
-                notyAlert('error', 'Please Select a product');
+                notyAlert('error', 'Default Option cant be deleted');
             }
-
-        }
-        else {
-            notyAlert('error', 'Default Option cant be deleted');
         }
     }
     catch(e)
