@@ -532,8 +532,8 @@ namespace PartyEC.BusinessServices.Services
                     if (discount!=null && discount != 0)
                     {
                         DateTime? startdate, enddate,today;
-                        startdate =  product.ProductDetails[i].DiscountStartDate;
-                        enddate =  product.ProductDetails[i].DiscountEndDate;
+                        startdate =  Convert.ToDateTime(product.ProductDetails[i].DiscountStartDate);
+                        enddate = Convert.ToDateTime(product.ProductDetails[i].DiscountEndDate);
                         today = DateTime.Now ;
                         if(startdate!=null && enddate != null)
                         {

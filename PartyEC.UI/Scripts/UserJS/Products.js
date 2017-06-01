@@ -406,6 +406,7 @@ function BindthisProduct(thisproduct)
 {
     try
     {
+        debugger
         if (thisproduct != null) {
             $("#titleSpanPro").text(thisproduct.Name);
             $("#spandetailType").text((thisproduct.ProductType == "S" ? 'Simple' : 'Configurable'));
@@ -1681,8 +1682,8 @@ function EditAssocProduct(currentObj) {
                 }
                 $("#detailDiscountAmount").val(thisproduct.DiscountAmount);
                 $("#detailPriceDifference").val(thisproduct.PriceDifference);
-                $("#detailDiscountStartDate").val(ConvertJsonToDate(thisproduct.DiscountStartDate));
-                $("#detailDiscountEndDate").val(ConvertJsonToDate(thisproduct.DiscountEndDate));
+                $("#detailDiscountStartDate").val(thisproduct.DiscountStartDate);
+                $("#detailDiscountEndDate").val(thisproduct.DiscountEndDate);
                 if (thisproduct.Enabled == true)
                 { $("#detailEnable").prop('checked', true); }
                 else { $("#detailEnable").prop('checked', false); }

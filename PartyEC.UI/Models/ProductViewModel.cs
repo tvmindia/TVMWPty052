@@ -93,15 +93,12 @@ namespace PartyEC.UI.Models
         [Range(0, 9999999999999999.99)]
         public decimal? DiscountAmount { get; set; }
 
-        [DataType(DataType.Date,ErrorMessage ="Must be a Date")]
-        //[DisplayFormat(DataFormatString = "{0:dd-M-yyyy}", ApplyFormatInEditMode = true)]
+       
         [Display(Name = "Discount Start Date")]
-        public DateTime? DiscountStartDate { get; set; }
-
-        [DataType(DataType.Date, ErrorMessage = "Must be a Date")]
-        //[DisplayFormat(DataFormatString = "{0:dd-M-yyyy}", ApplyFormatInEditMode = true)]
+        public string DiscountStartDate { get; set; }
+        
         [Display(Name = "Discount End Date")]
-        public DateTime? DiscountEndDate { get; set; }
+        public string DiscountEndDate { get; set; }
 
         #endregion Prices
 
@@ -194,8 +191,8 @@ namespace PartyEC.UI.Models
         public Boolean StockAvailable { get; set; }
         public Boolean DefaultOption { get; set; }
         public decimal? DiscountAmount { get; set; }
-        public DateTime? DiscountStartDate { get; set; }
-        public DateTime? DiscountEndDate { get; set; }
+        public string DiscountStartDate { get; set; }
+        public string DiscountEndDate { get; set; }
         public LogDetailsViewModel logDetails { get; set; }
         public List<AttributeValuesViewModel> ProductAttributes { get; set; }
         public List<ProductImagesViewModel> ProductDetailImages { get; set; }

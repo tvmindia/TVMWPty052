@@ -69,8 +69,8 @@ namespace PartyEC.DataAccessObject.DTO
         public Boolean StockAvailable { get; set; }
         public Boolean DefaultOption { get; set; }
         public decimal? DiscountAmount { get; set; }
-        public DateTime? DiscountStartDate{ get; set; }
-        public DateTime? DiscountEndDate { get; set; }
+        public string DiscountStartDate{ get; set; }
+        public string DiscountEndDate { get; set; }
         public LogDetails logDetails { get; set; }
         public List<AttributeValues> ProductAttributes { get; set; }
         public List<ProductImages> ProductDetailImages { get; set; }
