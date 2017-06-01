@@ -1,11 +1,12 @@
 ﻿@model PartyEC.UI.Models.CustomerViewModel
+@using PartyEC.UI.App_Start
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 @section styles {
-    @Styles.Render("~/Content/DataTables/css/datatable")
-    @Styles.Render("~/Content/UserCSS/customer")
+    @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/DataTables/css/datatable")
+    @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/UserCSS/customer")
  }
 
 <div class="container-fluid">
@@ -373,7 +374,7 @@
 
 @Html.HiddenFor(model => model.IsActive)
 @section Scripts {
-    @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-    @Scripts.Render("~/bundles/datatable")
-    @Scripts.Render("~/bundles/customer")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jqueryunobtrusiveajaxvalidate")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatable")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/customer")
 }

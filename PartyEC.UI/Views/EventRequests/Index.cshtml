@@ -1,14 +1,14 @@
 ﻿@model PartyEC.UI.Models.EventRequestsViewModel
-
+@using PartyEC.UI.App_Start
 @{
     ViewBag.Title = "EventRequests";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
 @section styles {
-    @Styles.Render("~/Content/DataTables/css/datatable")
-@Styles.Render("~/Content/bootstrapdatepicker")
-@Styles.Render("~/Content/UserCSS/EventRequest")
+@Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/DataTables/css/datatable")
+@Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/bootstrapdatepicker")
+@Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/UserCSS/EventRequest")
 
 } 
 
@@ -346,10 +346,10 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/datatable")
-    @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")   
-    @Scripts.Render("~/bundles/bootstrapdatepicker")
-    @Scripts.Render("~/bundles/EventRequests")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatable")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jqueryunobtrusiveajaxvalidate")   
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/bootstrapdatepicker")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/EventRequests")
 }
 
 

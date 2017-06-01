@@ -1,14 +1,14 @@
 ﻿@model PartyEC.UI.Models.EventViewModel
-
+@using PartyEC.UI.App_Start
 @{
     ViewBag.Title = "Event";
     ViewBag.PageName = "Event Types";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 } 
 @section styles {
-    @Styles.Render("~/Content/DataTables/css/datatable")
-    @Styles.Render("~/Content/Uplodify")
-    @Styles.Render("~/Content/lightbox")
+    @Styles.RenderFormat(SiteKeys.ScriptVersion,"~/Content/DataTables/css/datatable")
+    @Styles.RenderFormat(SiteKeys.ScriptVersion,"~/Content/Uplodify")
+    @Styles.RenderFormat(SiteKeys.ScriptVersion,"~/Content/lightbox")
     <style>
         .uploadify-button {
             background-color: transparent;
@@ -175,11 +175,11 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/datatable")
-    @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-    @Scripts.Render("~/bundles/Event")
-    @Scripts.Render("~/bundles/Uploadify")
-    @Scripts.Render("~/bundles/Lightbox")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatable")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jqueryunobtrusiveajaxvalidate")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/Event")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/Uploadify")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/Lightbox")
     <script type="text/javascript">
     $(function () {
         $('#file_upload').uploadify({

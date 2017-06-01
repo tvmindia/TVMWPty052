@@ -1,5 +1,5 @@
 ﻿@model PartyEC.UI.Models.ManufacturerViewModel
-
+@using PartyEC.UI.App_Start
 @{
     ViewBag.Title = "Manufacturers";
     ViewBag.PageName = "Manufacturers";
@@ -7,7 +7,7 @@
 }
 
 @section styles {
-    @Styles.Render("~/Content/DataTables/css/datatable")
+    @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/DataTables/css/datatable")
 
 }
 <div class="container-fluid">
@@ -122,8 +122,8 @@
 
 
 @section Scripts {
-    @Scripts.Render("~/bundles/datatable")
-    @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-    @Scripts.Render("~/bundles/Manufacturers")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatable")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jqueryunobtrusiveajaxvalidate")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/Manufacturers")
 }
 

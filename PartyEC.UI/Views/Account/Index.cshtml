@@ -1,12 +1,12 @@
 ﻿@model PartyEC.UI.Models.LoginViewModel
-
+@using PartyEC.UI.App_Start
 @{
     Layout = null;
 
 }
 
-@Styles.Render("~/Content/css")
-@Styles.Render("~/Content/UserCSS/Login")
+@Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/css")
+@Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/UserCSS/Login")
 <!DOCTYPE html>
 
 <html>
@@ -47,8 +47,8 @@
     </div><!-- /container -->
 </body>
 </html>
-@Scripts.Render("~/bundles/jquery")
-@Scripts.Render("~/bundles/bootstrap")
-@Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-@Scripts.Render("~/bundles/Login")
+@Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jquery")
+@Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/bootstrap")
+@Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jqueryunobtrusiveajaxvalidate")
+@Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/Login")
 

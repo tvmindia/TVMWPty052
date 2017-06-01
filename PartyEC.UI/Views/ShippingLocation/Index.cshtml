@@ -1,12 +1,12 @@
 ﻿@model PartyEC.UI.Models.ShippingLocationViewModel
-
+@using PartyEC.UI.App_Start
 @{
     ViewBag.Title = "Shipping Location";
     ViewBag.PageName = "Shipping Locations";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 @section styles {
-    @Styles.Render("~/Content/DataTables/css/datatable")
+    @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/DataTables/css/datatable")
 
 }
 <div class="container-fluid">
@@ -113,7 +113,7 @@
 
 
 @section Scripts {
-    @Scripts.Render("~/bundles/datatable")
-    @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-    @Scripts.Render("~/bundles/ShippingLocations")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatable")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jqueryunobtrusiveajaxvalidate")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/ShippingLocations")
 }

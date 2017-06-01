@@ -1,9 +1,27 @@
-﻿using System.Web.Optimization;
+﻿using System.Configuration;
+using System.Web.Optimization;
 
 namespace PartyEC.UI.App_Start
 {
     public class BundleConfig
     {
+        public class SiteKeys
+        {
+            public static string StyleVersion
+            {
+                get
+                {
+                    return "<link href=\"{0}?v=" + ConfigurationManager.AppSettings["version"] + "\" rel=\"stylesheet\"/>";
+                }
+            }
+            public static string ScriptVersion
+            {
+                get
+                {
+                    return "<script src=\"{0}?v=" + ConfigurationManager.AppSettings["version"] + "\"></script>";
+                }
+            }
+        }
         public static void RegisterBundles(BundleCollection bundles)
         {   //css bundles
             

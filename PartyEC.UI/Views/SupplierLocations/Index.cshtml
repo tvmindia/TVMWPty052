@@ -1,5 +1,5 @@
 ﻿@model PartyEC.UI.Models.SupplierLocationsViewModel
-
+@using PartyEC.UI.App_Start
 @{
     ViewBag.Title = "Supplier Delivery Locations";
     ViewBag.PageName = "Shipping Location Charges";
@@ -7,7 +7,7 @@
 }
 
 @section styles {
-    @Styles.Render("~/Content/DataTables/css/datatable")
+    @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/DataTables/css/datatable")
 
 }
 <div class="container-fluid">
@@ -118,8 +118,8 @@
 
 
 @section Scripts {
-    @Scripts.Render("~/bundles/datatable")
-    @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-    @Scripts.Render("~/bundles/SupplierLocations")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatable")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jqueryunobtrusiveajaxvalidate")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/SupplierLocations")
 }
 

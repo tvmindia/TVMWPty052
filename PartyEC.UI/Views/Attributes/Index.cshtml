@@ -1,12 +1,12 @@
 ﻿@model PartyEC.UI.Models.AttributesViewModel
-
+@using PartyEC.UI.App_Start
 @{
     ViewBag.Title = "Attributes";
     ViewBag.PageName = "Attributes";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 @section styles {
-    @Styles.Render("~/Content/DataTables/css/datatable")
+    @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/DataTables/css/datatable")
 
 }
 <div class="container-fluid">
@@ -198,8 +198,8 @@
 </div>
 
 @section Scripts {
-    @Scripts.Render("~/bundles/datatable")
-    @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-    @Scripts.Render("~/bundles/attributes")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatable")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jqueryunobtrusiveajaxvalidate")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/attributes")
 }
 

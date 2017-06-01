@@ -1,4 +1,5 @@
 ﻿<!DOCTYPE html>
+@using PartyEC.UI.App_Start
 
 <html>
 <head>
@@ -17,7 +18,7 @@
     <title>@ViewBag.Title</title>*@
 
     <!-- Bootstrap Core CSS -->
-    @Styles.Render("~/Content/css")
+    @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/css")
     @RenderSection("styles", required: false)
     <link href='http://fonts.googleapis.com/css?family=Raleway:400,100,200,300,500,600,800,700,900' rel='stylesheet' type='text/css'>
     <style>
@@ -177,10 +178,10 @@
     </div>
     
 
-        @Scripts.Render("~/bundles/jquery")
-        @Scripts.Render("~/bundles/bootstrap")
-        @Scripts.Render("~/bundles/bootstrapdatepicker")
-        @Scripts.Render("~/bundles/userpluginjs")
+        @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jquery")
+        @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/bootstrap")
+        @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/bootstrapdatepicker")
+        @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/userpluginjs")
         @RenderSection("scripts", required: false)
        <script type="text/javascript">
         function RedirectToLogin()

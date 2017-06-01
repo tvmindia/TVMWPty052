@@ -1,4 +1,5 @@
 ﻿@model PartyEC.UI.Models.OrderViewModel
+@using PartyEC.UI.App_Start
 @{
     ViewBag.Title = "Invoices";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
@@ -6,7 +7,7 @@
 
 
 @section styles {
-    @Styles.Render("~/Content/DataTables/css/datatable")
+    @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/DataTables/css/datatable")
     
 }
 
@@ -280,8 +281,8 @@
 
 
         @section Scripts {
-            @Scripts.Render("~/bundles/datatable")
-            @Scripts.Render("~/bundles/Invoice")
+            @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatable")
+            @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/Invoice")
         }
 
 

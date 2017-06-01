@@ -1,14 +1,14 @@
 ﻿@model PartyEC.UI.Models.MailNotificationViewModel
-
+@using PartyEC.UI.App_Start
 @{
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_LayoutPage.cshtml";
 }
 
 @section styles {
-    @Styles.Render("~/Content/DataTables/css/datatable")
-    @Styles.Render("~/Content/DataTables/css/datatableSelect")
-    @Styles.Render("~/Content/UserCSS/Mailnotifications")
+    @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/DataTables/css/datatable")
+    @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/DataTables/css/datatableSelect")
+    @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/UserCSS/Mailnotifications")
 }
 
 
@@ -181,10 +181,10 @@
 
 
 @section Scripts {
-    @Scripts.Render("~/bundles/datatable")
-    @Scripts.Render("~/bundles/datatableSelect")
-    @Scripts.Render("~/bundles/jqueryunobtrusiveajaxvalidate")
-    @Scripts.Render("~/bundles/Mailnotifications")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatable")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatableSelect")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jqueryunobtrusiveajaxvalidate")
+    @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/Mailnotifications")
 }
 
 
