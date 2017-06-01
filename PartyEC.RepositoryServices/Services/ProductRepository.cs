@@ -538,8 +538,8 @@ namespace PartyEC.RepositoryServices.Services
                             }
                             cmd.Parameters.Add("@StockAvailableYN", SqlDbType.Bit).Value = detail.StockAvailable;
                             cmd.Parameters.Add("@DiscountAmout", SqlDbType.Decimal).Value = detail.DiscountAmount != null ? detail.DiscountAmount : 0;
-                            cmd.Parameters.Add("@DiscountStDate", SqlDbType.DateTime).Value = detail.DiscountStartDate;
-                            cmd.Parameters.Add("@DiscountEnDate", SqlDbType.DateTime).Value = detail.DiscountEndDate;
+                            cmd.Parameters.Add("@DiscountStDate", SqlDbType.NVarChar,250).Value = detail.DiscountStartDate;
+                            cmd.Parameters.Add("@DiscountEnDate", SqlDbType.NVarChar,250).Value = detail.DiscountEndDate;
                             cmd.Parameters.Add("@DefaultOptionYN", SqlDbType.Bit).Value = detail.DefaultOption;
                             cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = productObj.logDetails.CreatedBy;
                             cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = productObj.logDetails.CreatedDate;
