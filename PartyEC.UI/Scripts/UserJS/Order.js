@@ -1590,7 +1590,6 @@ function SendInvoice() {
             switch (JsonResult.Result) {
                 case "OK":
                     notyAlert('success', JsonResult.Records.StatusMessage);
-                    BindAllDetails($('#hdnOrderHID').val(), $("#ParentOrderID").val());
                     ChangeButtonPatchView("Order", "divTemplateSend", "InvoiceTemplate");
                     break;
                 case "ERROR":

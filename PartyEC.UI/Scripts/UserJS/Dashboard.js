@@ -265,7 +265,7 @@ function BindReorderProducts() {
                                 + '<img src="/Content/images/ReorderQty.png" style="width:60px;height:60px;object-fit:cover;" />'
                             + '</div><div class="col-lg-9">'
                                 + '<div class="col-lg-12" style="min-height: 45px;max-height: 45px;">'
-                                    + '<span>' + ReorderList[i].ID + ": " + ReorderList[i].ProductName + 'has to be reorder</span>'
+                                    + '<span>' + ReorderList[i].ID + ":<b> " + ReorderList[i].ProductName + '</b> has to be reorder</span>'
                                 + '</div><div class="col-lg-12"></div>'
                                 + '<div class="col-lg-12">'
                                     + '<a href="/Order"><i class="fa fa-info-circle"></i></a>'
