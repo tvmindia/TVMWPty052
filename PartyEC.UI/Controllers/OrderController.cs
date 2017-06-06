@@ -87,7 +87,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
             // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
         }
@@ -102,7 +102,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
         }
         [HttpGet]
@@ -116,7 +116,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
         }
         [HttpGet]
@@ -130,7 +130,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
             // return JsonConvert.SerializeObject(new { Result = "OK", Records = productList });
         }
@@ -150,7 +150,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
             //return JsonConvert.SerializeObject(new { Result = "OK", Records = NodeList });
         }
@@ -167,7 +167,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
 
         }
@@ -182,7 +182,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
         }
         [HttpGet]
@@ -196,7 +196,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
         }
         [HttpGet]
@@ -210,7 +210,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
         }
         [HttpGet]
@@ -225,7 +225,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
 
         }
@@ -241,7 +241,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
 
         }
@@ -258,7 +258,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
         }
         [HttpPost]
@@ -290,7 +290,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
         }
         [HttpPost]
@@ -318,7 +318,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
         }
         [HttpPost]
@@ -341,12 +341,6 @@ namespace PartyEC.UI.Controllers
                     orderObj.EventsLogViewObj.CustomerNotifiedYN = Mailstatus;
                 }
                     OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertEventsLog(Mapper.Map<EventsLogViewModel, EventsLog>(orderObj.EventsLogViewObj)));
-                }
-                catch (Exception ex)
-                {
-                    return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
-                }
-
                 if (OperationsStatusViewModelObj.StatusCode == 1)
                 {
                     return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
@@ -355,6 +349,12 @@ namespace PartyEC.UI.Controllers
                 {
                     return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
                 }
+                }
+                catch (Exception ex)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
+                }
+                           
         }
         [HttpPost]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
@@ -383,21 +383,21 @@ namespace PartyEC.UI.Controllers
                     }
                     OperationStatusViewModelObject = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_masterBusiness.InsertEventsLog(Mapper.Map<EventsLogViewModel, EventsLog>(orderObj.EventsLogViewObj)));
                 }
-                
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
+
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
-
-            if (OperationsStatusViewModelObj.StatusCode == 1)
-            {
-                return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
-            }
-            else
-            {
-                return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
-            }
+           
         }
         [HttpPost]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
@@ -411,20 +411,21 @@ namespace PartyEC.UI.Controllers
                 OrderDetailViewModelObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                 OrderDetailViewModelObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_orderBusiness.InsertReviseOrder(Mapper.Map<OrderDetailViewModel, OrderDetail>(OrderDetailViewModelObj)));
+
+                if (OperationsStatusViewModelObj.StatusCode == 1)
+                {
+                    return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
+                }
+                else
+                {
+                    return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
+                }
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
 
-            if (OperationsStatusViewModelObj.StatusCode == 1)
-            {
-                return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
-            }
-            else
-            {
-                return JsonConvert.SerializeObject(new { Result = "Error", Record = OperationsStatusViewModelObj });
-            }
         }
         [HttpPost]
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
@@ -450,7 +451,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
 
         }
@@ -492,7 +493,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
 
         }
@@ -520,7 +521,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
 
         }
@@ -544,7 +545,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
         }
         [HttpPost]
@@ -568,7 +569,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
         }
         [HttpPost]
@@ -595,7 +596,7 @@ namespace PartyEC.UI.Controllers
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = "ERROR", Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = "", Message = ex.Message });
             }
         }
         #region ChangeButtonStyle

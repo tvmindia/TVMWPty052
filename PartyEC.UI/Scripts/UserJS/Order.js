@@ -480,7 +480,11 @@ function GetOrderHeader()
         ds = GetDataFromServer("Order/GetOrderHeader/", data);
         if (ds != '') {ds = JSON.parse(ds);}
         if (ds.Result == "OK") {return ds.Records;}
-        if (ds.Result == "ERROR") {alert(ds.Message);}
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+            var emptyarr = [];
+            return emptyarr;
+        }
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -494,7 +498,11 @@ function GetAllOrdersList(ID) {
         ds = GetDataFromServer("Order/GetAllOrdersList/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
-        if (ds.Result == "ERROR") { alert(ds.Message); }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+            var emptyarr = [];
+            return emptyarr;
+        }
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -507,7 +515,11 @@ function GetAllOrderComments(ID) {
         ds = GetDataFromServer("Order/GetEventsLog/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
-        if (ds.Result == "ERROR") { alert(ds.Message); }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+            var emptyarr = [];
+            return emptyarr;
+        }
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -520,7 +532,11 @@ function GetOrderSummary(ID) {
         ds = GetDataFromServer("Order/GetOrderSummary/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
-        if (ds.Result == "ERROR") { alert(ds.Message); }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+            var emptyarr = [];
+            return emptyarr;
+        }
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -539,7 +555,9 @@ function GetOrderDetails(ID) {
             return ds.Records;
         }
         if (ds.Result == "ERROR") {
-            alert(ds.Message);
+            notyAlert('error', ds.Message);
+            var emptyarr = [];
+            return emptyarr;
         }
 
     }
@@ -561,6 +579,8 @@ function GetProductsListtoAdd(ID)
         }
         if (ds.Result == "ERROR") {
             notyAlert('error', ds.Message);
+            var emptyarr = [];
+            return emptyarr;
         }
     }
     catch (e) {
@@ -575,7 +595,11 @@ function GetShipmentHeader(ID) {
         ds = GetDataFromServer("Order/GetShipmentHeader/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
-        if (ds.Result == "ERROR") { alert(ds.Message); }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+            var emptyarr = [];
+            return emptyarr;
+        }
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -589,7 +613,11 @@ function GetShipmentDetails(ID) {
         ds = GetDataFromServer("Order/GetAllShipmentDetail/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
-        if (ds.Result == "ERROR") { alert(ds.Message); }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+            var emptyarr = [];
+            return emptyarr;
+        }
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -603,7 +631,11 @@ function GetOrderExcludesShip(ID) {
         ds = GetDataFromServer("Order/GetOrderExcludesShip/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
-        if (ds.Result == "ERROR") { alert(ds.Message); }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+            var emptyarr = [];
+            return emptyarr;
+        }
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -617,7 +649,11 @@ function GetMailTemplateData(ID) {
         ds = GetDataFromServer("Order/GetMailTemplate/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
-        if (ds.Result == "ERROR") { alert(ds.Message); }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+            var emptyarr = [];
+            return emptyarr;
+        }
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -631,7 +667,11 @@ function GetInvoiceTemplateData(ID) {
         ds = GetDataFromServer("Order/GetInvoiceTemplate/", data);
         if (ds != '') { ds = JSON.parse(ds); }
         if (ds.Result == "OK") { return ds.Records; }
-        if (ds.Result == "ERROR") { alert(ds.Message); }
+        if (ds.Result == "ERROR") {
+            notyAlert('error', ds.Message);
+            var emptyarr = [];
+            return emptyarr;
+        }
     }
     catch (e) {
         notyAlert('error', e.message);
@@ -746,6 +786,7 @@ function CancelOrder()
                         notyAlert('error', JsonResult.Records.StatusMessage);
                         break;
                     default:
+                        notyAlert('error',JsonResult.Message)
                         break;
                 }
             }
@@ -880,6 +921,7 @@ function InsertNewOrder()
                         notyAlert('error', JsonResult.Record.StatusMessage);
                         break;
                     default:
+                        notyAlert('error',JsonResult.Message);
                         break;
                 }
             }
@@ -958,7 +1000,7 @@ function BindGeneralSection(Result)
         var IDs = Result.RevisionIDs.split(',');
         for (var i = 0; i < IDs.length; i++)
         {
-            $("#RevisionLinkBind").append('<a class="col-md-6" onclick="ShowRevision(' + IDs[i] + ')">Revision ' + (i) + ' </a>');
+            $("#RevisionLinkBind").append('<a class="col-md-6 REVLINK" onclick="ShowRevision(' + IDs[i] + ')">Revision ' + (i) + ' </a>');
         }
         
     }
@@ -1079,6 +1121,7 @@ function UpdatePayMethod()
                         notyAlert('error', JsonResult.Record.StatusMessage);
                         break;
                     default:
+                        notyAlert('error',JsonResult.Message);
                         break;
                 }
             }
@@ -1142,6 +1185,7 @@ function BindRevisionLinkGeneral(Result) {
 }
 function CheckinBillingChanges(data)
 {
+    debugger;
     var i = JSON.parse(data.responseText)
     switch (i.Result) {
         case "OK":
@@ -1151,9 +1195,11 @@ function CheckinBillingChanges(data)
             $('.close').click();
             break;
         case "ERROR":
-            notyAlert('success', i.Records.StatusMessage);
+            notyAlert('error', i.Records.StatusMessage);
             break;
-
+        default:
+            notyAlert('error', i.Message);
+            break;
     }
 }
 function CheckinShipingChanges(data) {
@@ -1167,6 +1213,9 @@ function CheckinShipingChanges(data) {
             break;
         case "ERROR":
             notyAlert('success', i.Records.StatusMessage);
+            break;
+        default:
+            notyAlert('error', i.Message);
             break;
 
     }
@@ -1182,6 +1231,9 @@ function CheckinCommentInsert(data) {
             break;
         case "ERROR":
             notyAlert('success', i.Record.StatusMessage);
+            break;
+        default:
+            notyAlert('error', i.Message);
             break;
 
     }
@@ -1273,6 +1325,7 @@ function PaymentStatusOnChange()
                     notyAlert('error', JsonResult.Records.StatusMessage);
                     break;
                 default:
+                    notyAlert('error', JsonResult.Message);
                     break;
             }
         }
@@ -1323,6 +1376,7 @@ function SubmitInvoice()
                         notyAlert('error', JsonResult.Record.StatusMessage);
                         break;
                     default:
+                        notyAlert('error', JsonResult.Message);
                         break;
                 }
             }
@@ -1462,6 +1516,7 @@ function SaveShippingDetails()
                     notyAlert('error', JsonResult.Record.StatusMessage);
                     break;
                 default:
+                    notyAlert('error', JsonResult.Message);
                     break;
             }
         }
@@ -1487,6 +1542,7 @@ function UpdateDeliveryStatus()
                     notyAlert('error', JsonResult.Record.StatusMessage);
                     break;
                 default:
+                    notyAlert('error', JsonResult.Message);
                     break;
             }
         }
@@ -1563,6 +1619,7 @@ function SendOrderConfirmation()
                     ChangeButtonPatchView("Order", "divTemplateSend", "OrderTemplate");
                     break;
                 default:
+                    notyAlert('error', JsonResult.Message);
                     break;
             }
         }
@@ -1597,6 +1654,7 @@ function SendInvoice() {
                     ChangeButtonPatchView("Order", "divTemplateSend", "InvoiceTemplate");
                     break;
                 default:
+                    notyAlert('error', JsonResult.Message);
                     break;
             }
         }

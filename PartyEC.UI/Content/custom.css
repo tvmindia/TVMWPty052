@@ -517,3 +517,10 @@ input[type=search]
   background-Position : 97% center;
   background-Repeat :no-repeat;
 }
+.REVLINK
+{
+   cursor:pointer;
+}
+td a{
+    cursor:pointer;
+}
