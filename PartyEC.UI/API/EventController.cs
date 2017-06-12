@@ -57,7 +57,7 @@ namespace PartyEC.UI.API
             {
 
                 EventRequestsViewModel EventList = Mapper.Map<EventRequests,EventRequestsViewModel>(_eventRequestBusiness.GetEventRequest(eventObj.CustomerID));
-                
+                if (EventList == null) throw new Exception(constants.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = EventList });
             }
             catch (Exception ex)
