@@ -301,18 +301,22 @@ $(document).ready(function () {
             ChangeButtonPatchView("Products", "ProductToolBox", "Add"); //ControllerName,id of the container div,Name of the action
         });
         $("#tabproductDetails").click(function () {
-            $("#titleSpanPro").text('New Product');
-            $("#spandetailType").text('__');
-            $("#spandetailSet").text('__');
-            $("#AttributeSetID").removeAttr('disabled');
-            $("#ProductType").removeAttr('disabled');
-            $('#tabsettings').trigger('click');
-            clearform();
-            ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
-            DisEnableSectionAdditional();
-            var rowData = DataTables.productTable.row(0).data();
-            var thisproduct = GetProduct(rowData.ID);
-            BindthisProduct(thisproduct);
+            if ($("#AttributeSetID").val() == "")
+            {
+                $("#titleSpanPro").text('New Product');
+                $("#spandetailType").text('__');
+                $("#spandetailSet").text('__');
+                $("#AttributeSetID").removeAttr('disabled');
+                $("#ProductType").removeAttr('disabled');
+                $('#tabsettings').trigger('click');
+                clearform();
+                ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
+                DisEnableSectionAdditional();
+                var rowData = DataTables.productTable.row(0).data();
+                var thisproduct = GetProduct(rowData.ID);
+                BindthisProduct(thisproduct);
+            }
+            
         });
     }
     catch(e)

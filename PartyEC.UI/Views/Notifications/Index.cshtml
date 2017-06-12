@@ -9,6 +9,7 @@
     @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/DataTables/css/datatable")
     @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/DataTables/css/datatableSelect")
     @Styles.RenderFormat(SiteKeys.StyleVersion,"~/Content/UserCSS/Notifications")
+    @Styles.RenderFormat(SiteKeys.StyleVersion, "~/Content/bootstrapdatepicker")
 }
 
 <div class="container-fluid">
@@ -33,9 +34,9 @@
                    
                     <div id="external_filter" class="form-inline">
                         <label><b>Date From</b></label>
-                        <input class="form-control datepicker" onchange="countDays()" style="width:190px" name="fromdate" id="fromdate" type="Date">
+                        <input class="form-control datepicker" onchange="countDays()" style="width:190px" name="fromdate" id="fromdate" type="text">
                         <label><b>To Date</b> </label>
-                        <input class="form-control datepicker" onchange="countDays()" style="width:190px" name="todate" id="todate" type="Date">
+                        <input class="form-control datepicker" onchange="countDays()" style="width:190px" name="todate" id="todate" type="text">
                         <label id="dayscount" style="padding-left:10px"></label>
                         <b><a href="#" style="padding-left:10px" onclick="RefreshNotificationTable()"> APPLY</a></b>
                     </div>
@@ -169,6 +170,7 @@
             @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatable")
             @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/datatableSelect")
             @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/jqueryunobtrusiveajaxvalidate")
+            @Scripts.RenderFormat(SiteKeys.ScriptVersion, "~/bundles/bootstrapdatepicker")
             @Scripts.RenderFormat(SiteKeys.ScriptVersion,"~/bundles/Notifications")
         }
 
