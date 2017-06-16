@@ -60,6 +60,7 @@ namespace PartyEC.UI.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public string ImageURL { get; set; }
+        public string StickerURL { get; set; }
     }
     public class NavigationalCatsOfCategoryAppViewModel
     {
