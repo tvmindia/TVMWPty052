@@ -2127,6 +2127,8 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _productObj.ImageURL);
                                         _productObj.StickerURL= (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : _productObj.StickerURL);
+                                        _productObj.TotalPrice = (sdr["TotalPrice"].ToString() != "" ? Decimal.Parse(sdr["TotalPrice"].ToString()) : _productObj.TotalPrice);
+                                        _productObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? Decimal.Parse(sdr["DiscountAmount"].ToString()) : _productObj.DiscountAmount);
                                     }
                                     productList.Add(_productObj);
                                 }

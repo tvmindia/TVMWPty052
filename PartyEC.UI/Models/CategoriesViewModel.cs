@@ -62,6 +62,8 @@ namespace PartyEC.UI.Models
         public string Name { get; set; }
         public string ImageURL { get; set; }
         public string StickerURL { get; set; }
+        public decimal TotalPrice { get; set; }
+        public decimal DiscountAmount { get; set; }
     }
     public class NavigationalCatsOfCategoryAppViewModel
     {

@@ -31,6 +31,8 @@ namespace PartyEC.DataAccessObject.DTO
         public decimal BaseSellingPrice { get; set; }
         public decimal CostPrice { get; set; }
         public Boolean ShowPrice { get; set; }
+        public decimal TotalPrice { get; set; }
+        public decimal DiscountAmount { get; set; }
 
         public string ShortDescription {get;set;}
         public string LongDescription { get; set; }
