@@ -49,5 +49,8 @@ namespace PartyEC.BusinessServices.Contracts
         Product GetProductSticker(int productID);
         List<ProductImages> GetProductImagesforApp(int ProductID);
         OperationsStatus UpdateWishlist(Wishlist CartWishObj);
+        OperationsStatus UpdateRating(ProductReview ReviewObj);
+        OperationsStatus InsertRating(ProductReview ReviewObj);
+        OperationsStatus InsertReview(ProductReview ReviewObj);
     }
 }
