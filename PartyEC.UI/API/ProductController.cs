@@ -89,6 +89,68 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+       
+        [HttpPost]
+        public object UpdateRating(ProductReview ReviewObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                ReviewObj.commonObj = new LogDetails();
+                ReviewObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                ReviewObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.UpdateRating(ReviewObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public object InsertRating(ProductReview ReviewObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                ReviewObj.commonObj = new LogDetails();
+                ReviewObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                ReviewObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertRating(ReviewObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+       
+
+        [HttpPost]
+        public object InsertReview(ProductReview ReviewObj)
+        {
+            OperationsStatusViewModel OperationsStatusViewModelObj = null;
+            try
+            {
+                ReviewObj.commonObj = new LogDetails();
+                ReviewObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                ReviewObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+
+                OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertReview(ReviewObj));
+                return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+
+
         [HttpPost]
         public object GetRelatedProducts(RelatedProductsAppViewModel productObj)
         {

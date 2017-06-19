@@ -632,7 +632,50 @@ namespace PartyEC.BusinessServices.Services
             return OSatObj;
         }
 
-        
+        public OperationsStatus UpdateRating(ProductReview ReviewObj)
+        {
+            OperationsStatus OSatObj = null;
+            try
+            {
+                OSatObj = _productRepository.UpdateRating(ReviewObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OSatObj;
+        }
+        public OperationsStatus InsertRating(ProductReview ReviewObj)
+        {
+            OperationsStatus OSatObj = null;
+            try
+            {
+                OSatObj = _productRepository.InsertRating(ReviewObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OSatObj;
+        }
+
+        public OperationsStatus InsertReview(ProductReview ReviewObj)
+        {
+            OperationsStatus OSatObj = null;
+            try
+            {
+                OSatObj = _productRepository.InsertReview(ReviewObj);
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return OSatObj;
+        }
+
+
+
+
         #endregion
     }
 }
