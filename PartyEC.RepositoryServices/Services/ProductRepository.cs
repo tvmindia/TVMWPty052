@@ -893,7 +893,7 @@ namespace PartyEC.RepositoryServices.Services
                 
 
                     myProduct = GetProductHeader(ProductID);
-                    myProduct.ProductDetails = GetProductDetail(ProductID);
+                    myProduct.ProductDetails = GetProductDetail(ProductID,DateTime.Now);
               
             }
             catch (Exception e)
@@ -1032,8 +1032,8 @@ namespace PartyEC.RepositoryServices.Services
 
             return myProduct;
         }
-        public List<ProductDetail> GetProductDetail(int ProductID)
-        {
+        public List<ProductDetail> GetProductDetail(int ProductID,DateTime CurrentDate)
+         {
             List<ProductDetail> myProductDetails = null;
            // AttributesRepository myAttributesRepository = new AttributesRepository(_databaseFactory);
             List<AttributeValues> myAttributeStructure = null;
@@ -1048,6 +1048,7 @@ namespace PartyEC.RepositoryServices.Services
                     _cmd = new SqlCommand();
                     _cmd.Connection = _con;
                     _cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                    //_cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = CurrentDate.Date;
                     _cmd.CommandText = "[GetProductDetail]";
                     _cmd.CommandType = CommandType.StoredProcedure;
 
@@ -1075,6 +1076,7 @@ namespace PartyEC.RepositoryServices.Services
                                 myProductDetail.BaseSellingPrice= sdr["BaseSellingPrice"].ToString() != "" ? decimal.Parse(sdr["BaseSellingPrice"].ToString()) : myProductDetail.BaseSellingPrice;
                                 myProductDetail.ActualPrice = (sdr["ActualPrice"].ToString() != "" ? decimal.Parse(sdr["ActualPrice"].ToString()) : myProductDetail.ActualPrice);
                                 myProductDetail.DefaultOption = (sdr["DefaultOptionYN"].ToString() != "" ? bool.Parse(sdr["DefaultOptionYN"].ToString()) : myProductDetail.DefaultOption);
+                                myProductDetail.TotalAmount = (sdr["TotalAmount"].ToString() != "" ? decimal.Parse(sdr["TotalAmount"].ToString()) : myProductDetail.TotalAmount);
                                 myProductDetail.logDetails = new LogDetails();
                                 myProductDetail.logDetails.CreatedBy = sdr["CreatedBy"].ToString();
                                 myProductDetail.logDetails.CreatedDate = (sdr["CreatedDate"].ToString() != "" ? (DateTime.Parse(sdr["CreatedDate"].ToString())) : myProductDetail.logDetails.CreatedDate);
@@ -1119,7 +1121,7 @@ namespace PartyEC.RepositoryServices.Services
                 }
             }
             catch (Exception e)
-            {
+             {
                 throw e;
 
             }

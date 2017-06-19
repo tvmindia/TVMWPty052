@@ -266,8 +266,10 @@ $(document).ready(function () {
                { "data": "BaseSellingPrice", "defaultContent": "<i>-</i>" },
                { "data": "PriceDifference", "defaultContent": "<i>-</i>" },
                { "data": "ActualPrice", "defaultContent": "<i>-</i>" },
+               { "data": "DiscountAmount", "defaultContent": "<i>-</i>" },
+               { "data": "TotalAmount", "defaultContent": "<i>-</i>" },
                { "data": null, "orderable": false, "defaultContent": '<a href="#" onclick="EditAssocProduct(this)"><i class="fa fa-pencil-square-o" aria-hidden="true"></i></a><span> | </span><a href="#" onclick="AssociatedProductDelete(this)"><i class="fa fa-trash-o" aria-hidden="true"></i></a>' }
-          
+               
              ],
              columnDefs: [
               {
@@ -1597,6 +1599,7 @@ function GetProductDetailsByProductId(id)
 {
  
     try {
+        debugger;
         var data = { "id": id };
         var ds = {};
         ds = GetDataFromServer("Products/GetProductDetailByProduct/", data);

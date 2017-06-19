@@ -286,7 +286,7 @@ namespace PartyEC.BusinessServices.Services
             List<ProductDetail> productDetailslist = null;
             try
             {
-                productDetailslist = _productRepository.GetProductDetail(ProductID);
+                productDetailslist = _productRepository.GetProductDetail(ProductID, _commonBusiness.GetCurrentDateTime());
                 productDetailslist = productDetailslist==null?null: productDetailslist.OrderByDescending(prod => prod.logDetails.CreatedDate).ToList();
 
             }

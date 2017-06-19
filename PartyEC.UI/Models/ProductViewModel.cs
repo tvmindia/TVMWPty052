@@ -191,6 +191,7 @@ namespace PartyEC.UI.Models
         public Boolean StockAvailable { get; set; }
         public Boolean DefaultOption { get; set; }
         public decimal? DiscountAmount { get; set; }
+        public decimal? TotalAmount { get; set; }
         public string DiscountStartDate { get; set; }
         public string DiscountEndDate { get; set; }
         public LogDetailsViewModel logDetails { get; set; }
