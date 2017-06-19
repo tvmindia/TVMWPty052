@@ -525,6 +525,8 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 product = _productRepository.GetProduct(ProductID, Status);
+                product.ProductDetails = product.ProductDetails == null ? null : product.ProductDetails.Where(x =>x.Enabled!=false).ToList();
+
                 int count = product.ProductDetails.Count;           
                 for (int i= 0;i< count;i++)
                 {    

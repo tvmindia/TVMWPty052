@@ -1048,7 +1048,7 @@ namespace PartyEC.RepositoryServices.Services
                     _cmd = new SqlCommand();
                     _cmd.Connection = _con;
                     _cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
-                    //_cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = CurrentDate.Date;
+                    _cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = CurrentDate.Date;
                     _cmd.CommandText = "[GetProductDetail]";
                     _cmd.CommandType = CommandType.StoredProcedure;
 
