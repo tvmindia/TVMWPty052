@@ -1015,8 +1015,8 @@ namespace PartyEC.RepositoryServices.Services
                                     myProduct.ProductOtherAttributes = _attributesRepository.GetAttributeFromXML(myProduct.ProductOtherAttributesXML, myProduct.AttributeSetID, "Product", false);
                                     myProduct.ProductOtherAttributes = myProduct.ProductOtherAttributes.FindAll(n => n.Isconfigurable == false);
                                 }
-                                else {
-                                    myProduct.ProductOtherAttributes = _attributesRepository.GetAttributeContainer(myProduct.AttributeSetID, "Product");
+                                else {//no else needed-commented while testing app.
+                                  //  myProduct.ProductOtherAttributes = _attributesRepository.GetAttributeContainer(myProduct.AttributeSetID, "Product");
                                 }
                             }
 
@@ -2400,6 +2400,224 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
 
         }
+
+        public OperationsStatus UpdateRating(ProductReview ReviewObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateRating]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ReviewObj.ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = ReviewObj.CustomerID;
+                        cmd.Parameters.Add("@RatingByAttributeXML", SqlDbType.NVarChar, -1).Value = _attributesRepository.GetAttributeXML(ReviewObj.ProductRatingAttributes);
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = ReviewObj.commonObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = ReviewObj.commonObj.UpdatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
+                                return operationsStatusObj;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                return operationsStatusObj;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return operationsStatusObj;
+        }
+
+        public OperationsStatus InsertRating(ProductReview ReviewObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertRating]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ReviewObj.ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = ReviewObj.CustomerID;
+                        cmd.Parameters.Add("@RatingByAttributeXML", SqlDbType.NVarChar, -1).Value = _attributesRepository.GetAttributeXML(ReviewObj.ProductRatingAttributes);
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = ReviewObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = ReviewObj.commonObj.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
+                                return operationsStatusObj;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                return operationsStatusObj;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return operationsStatusObj;
+        }
+
+
+        public OperationsStatus InsertReview(ProductReview ReviewObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                SqlParameter statusCode = null;
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    if (con.State == ConnectionState.Closed)
+                    {
+                        con.Open();
+                    }
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        cmd.Connection = con;
+                        cmd.CommandText = "[InsertReview]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ReviewObj.ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = ReviewObj.CustomerID;
+                        cmd.Parameters.Add("@Review", SqlDbType.NVarChar, -1).Value = ReviewObj.Review;
+                        cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = ReviewObj.commonObj.CreatedBy;
+                        cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = ReviewObj.commonObj.CreatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        statusCode.Direction = ParameterDirection.Output;
+                        cmd.ExecuteNonQuery();
+                        operationsStatusObj = new OperationsStatus();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
+                                return operationsStatusObj;
+                            case "1":
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                return operationsStatusObj;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+
+            return operationsStatusObj;
+        }
+
+        public List<ProductReview> GetCustomerProductRating(int ProductID, int CustomerID)
+        {
+            List<ProductReview> RatingSummary = null;
+            List<AttributeValues> myAttributeStructure = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetProductRatingByCustomer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CustomerID;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                RatingSummary = new List<ProductReview>();
+                                while (sdr.Read())
+                                {
+                                    ProductReview _pReviewObj = new ProductReview();
+                                    {
+                                        _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
+
+                                        if (myAttributeStructure == null)
+                                        {
+                                            myAttributeStructure = _attributesRepository.GetAttributeContainer(AttributesetId, "Rating");
+                                        }
+
+                                        _pReviewObj.ProductRatingAttributes = new List<AttributeValues>();
+                                        foreach (AttributeValues att in myAttributeStructure)
+                                        {
+                                            att.Value = sdr[att.Caption].ToString();
+                                            _pReviewObj.ProductRatingAttributes.Add(att);
+
+                                        }
+                                    }
+                                    RatingSummary.Add(_pReviewObj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return RatingSummary;
+
+        }
+
+
+
+
 
         #endregion
     }
