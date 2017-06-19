@@ -1098,7 +1098,7 @@ namespace PartyEC.RepositoryServices.Services
                                         {
                                             if (sdr.GetName(i).Equals(att.Caption.ToString(), StringComparison.InvariantCultureIgnoreCase))
                                             {
-                                                myAttribute.Value = sdr[att.Caption].ToString();
+                                                myAttribute.Value = sdr[att.Caption].ToString();                                                
                                                 break;
                                             }
                                         }

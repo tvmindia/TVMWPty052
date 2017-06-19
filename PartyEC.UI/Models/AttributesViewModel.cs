@@ -77,5 +77,6 @@ namespace PartyEC.UI.Models
         public string Value { get; set; }
         public string DataType { get; set; }
         public bool Isconfigurable { get; set; }//false
+        public bool MandatoryYN { get; set; }
     }
 }
