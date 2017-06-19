@@ -99,7 +99,7 @@ namespace PartyEC.UI.API
             try
             {
                 //Get Customer Product Rating
-                List<ProductReviewAppViewModel> productReviews = Mapper.Map<List<ProductReview>, List<ProductReviewAppViewModel>>(_productBusiness.GetCustomerProductRating(productObj.ProductID, productObj.CustomerID));
+                List<ProductReviewAppViewModel> productReviews = Mapper.Map<List<ProductReview>, List<ProductReviewAppViewModel>>(_productBusiness.GetCustomerProductRating(productObj.ProductID, productObj.CustomerID, productObj.AttributeSetID));
                 if (productReviews.Count == 0) throw new Exception(messages.NoItems);
                 return JsonConvert.SerializeObject(new { Result = true, Records = productReviews });
             }

@@ -525,9 +525,9 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 product = _productRepository.GetProduct(ProductID, Status);
-                int count = product.ProductDetails.Count;
+                int count = product.ProductDetails.Count;           
                 for (int i= 0;i< count;i++)
-                {
+                {    
                     decimal? discount = product.ProductDetails[i].DiscountAmount;
                     if (discount!=null && discount != 0)
                     {
@@ -674,12 +674,12 @@ namespace PartyEC.BusinessServices.Services
             return OSatObj;
         }
 
-        public List<ProductReview> GetCustomerProductRating(int ProductID, int CustomerID)
+        public List<ProductReview> GetCustomerProductRating(int ProductID, int CustomerID, int AttributesetId)
         {
             List<ProductReview> productReview = null;
             try
             {
-                productReview = _productRepository.GetCustomerProductRating(ProductID, CustomerID);
+                productReview = _productRepository.GetCustomerProductRating(ProductID, CustomerID, AttributesetId);
              
             }
             catch (Exception ex)

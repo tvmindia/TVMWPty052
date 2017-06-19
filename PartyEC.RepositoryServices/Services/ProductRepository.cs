@@ -2553,7 +2553,7 @@ namespace PartyEC.RepositoryServices.Services
             return operationsStatusObj;
         }
 
-        public List<ProductReview> GetCustomerProductRating(int ProductID, int CustomerID)
+        public List<ProductReview> GetCustomerProductRating(int ProductID, int CustomerID, int AttributesetId)
         {
             List<ProductReview> RatingSummary = null;
             List<AttributeValues> myAttributeStructure = null;

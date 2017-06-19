@@ -292,7 +292,8 @@ namespace PartyEC.UI.Models
         public string ReviewCreatedDate { get; set; }
         public string CustomerName { get; set; }
         public string AvgRating { get; set; }
-        public string ImageUrl { get; set; }        
+        public string ImageUrl { get; set; }
+        public int AttributeSetID { get; set; }
     }
     public class RelatedProductsAppViewModel
     {
