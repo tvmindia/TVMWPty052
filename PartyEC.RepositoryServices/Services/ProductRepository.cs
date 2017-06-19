@@ -1015,8 +1015,8 @@ namespace PartyEC.RepositoryServices.Services
                                     myProduct.ProductOtherAttributes = _attributesRepository.GetAttributeFromXML(myProduct.ProductOtherAttributesXML, myProduct.AttributeSetID, "Product", false);
                                     myProduct.ProductOtherAttributes = myProduct.ProductOtherAttributes.FindAll(n => n.Isconfigurable == false);
                                 }
-                                else {
-                                    myProduct.ProductOtherAttributes = _attributesRepository.GetAttributeContainer(myProduct.AttributeSetID, "Product");
+                                else {//no else needed-commented while testing app.
+                                  //  myProduct.ProductOtherAttributes = _attributesRepository.GetAttributeContainer(myProduct.AttributeSetID, "Product");
                                 }
                             }
 

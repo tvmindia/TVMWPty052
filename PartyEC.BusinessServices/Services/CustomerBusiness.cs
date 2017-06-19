@@ -131,7 +131,7 @@ namespace PartyEC.BusinessServices.Services
             try
             {
                 operationStatus = _customerRepository.InsertCustomer(customer);
-                if (operationStatus.StatusCode == 1)
+                if (operationStatus.StatusCode == 1 && customer.customerAddress!=null)
                 {
                     customer.ID = int.Parse(operationStatus.ReturnValues.ToString());
                     customer.customerAddress.ShipDefaultYN = true;
