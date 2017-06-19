@@ -531,9 +531,11 @@ namespace PartyEC.BusinessServices.Services
                     decimal? discount = product.ProductDetails[i].DiscountAmount;
                     if (discount!=null && discount != 0)
                     {
-                        DateTime? startdate, enddate,today;
-                        startdate =  Convert.ToDateTime(product.ProductDetails[i].DiscountStartDate);
-                        enddate = Convert.ToDateTime(product.ProductDetails[i].DiscountEndDate);
+                        DateTime? startdate=null, enddate=null,today;
+                        if(product.ProductDetails[i].DiscountStartDate!=null)
+                            startdate = DateTime.Parse(product.ProductDetails[i].DiscountStartDate);// Convert.ToDateTime(product.ProductDetails[i].DiscountStartDate);
+                        if(product.ProductDetails[i].DiscountEndDate!=null)
+                            enddate = DateTime.Parse(product.ProductDetails[i].DiscountEndDate);
                         today = DateTime.Now ;
                         if(startdate!=null && enddate != null)
                         {

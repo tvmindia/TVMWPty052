@@ -130,4 +130,26 @@ namespace PartyEC.UI.Models
 
         public List<SelectListItem> OrderList { get; set; }
     }
+    public class EventRequestsAppViewModel
+    {
+
+        public int ID { get; set; }
+        public string EventReqNo { get; set; }
+        public string EventType { get; set; }        
+        public string EventTitle { get; set; }        
+        public string EventDateTime { get; set; }
+        public string EventTime { get; set; }        
+        public string LookingFor { get; set; }
+        public string RequirementSpec { get; set; }        
+        public string Message { get; set; }        
+        public int NoOfPersons { get; set; }        
+        public decimal Budget { get; set; }
+
+        public string EventDesc { get; set; }
+        public string AdminRemarks { get; set; }
+        public int EventStatus { get; set; }
+        public decimal TotalAmt { get; set; }        
+        public decimal TotalTaxAmt { get; set; }
+        public decimal TotalDiscountAmt { get; set; }
+    }
 }

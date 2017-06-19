@@ -64,6 +64,21 @@ namespace PartyEC.BusinessServices.Services
             return EventRequestsObj;
         }
 
+        public List<EventRequests> GetEventRequestsOfCustomer(int customerID)
+        {
+            List<EventRequests> EventRequestsList = null;
+            try
+            {
+                EventRequestsList = _eventRequestsRepositry.GetEventRequestsOfCustomer(customerID);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return EventRequestsList;
+        }
+
         public OperationsStatus UpdateEventRequests(EventRequests eventObj)
         {
             OperationsStatus OperationsStatusObj = null;

@@ -205,6 +205,75 @@ namespace PartyEC.RepositoryServices.Services
             return myEventRequests;
         }
 
+        public List<EventRequests> GetEventRequestsOfCustomer(int customerID)
+        {
+            List<EventRequests> Requestslist = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = customerID;
+                        cmd.CommandText = "[GetEventRequestsOfCustomer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                    Requestslist = new List<EventRequests>();
+                                    while (sdr.Read())
+                                    {
+                                        EventRequests myEventRequests = new EventRequests();
+                                        {
+                                            myEventRequests.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : myEventRequests.ID);
+                                            myEventRequests.EventReqNo = (sdr["EventReqNo"].ToString() != "" ? sdr["EventReqNo"].ToString() : myEventRequests.EventReqNo);
+                                            myEventRequests.EventType = (sdr["EventType"].ToString() != "" ? sdr["EventType"].ToString() : myEventRequests.EventType);
+                                            myEventRequests.EventTitle = (sdr["EventTitle"].ToString() != "" ? sdr["EventTitle"].ToString() : myEventRequests.EventTitle);
+                                            myEventRequests.ContactName = (sdr["ContactName"].ToString() != "" ? sdr["ContactName"].ToString() : myEventRequests.ContactName);
+                                            myEventRequests.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : myEventRequests.Email);
+                                            myEventRequests.Phone = (sdr["Phone"].ToString() != "" ? sdr["Phone"].ToString() : myEventRequests.Phone);
+                                            myEventRequests.EventStatus = (sdr["EventStatus"].ToString() != "" ? int.Parse(sdr["EventStatus"].ToString()) : myEventRequests.EventStatus);
+                                            myEventRequests.EventDesc = (sdr["EventDesc"].ToString() != "" ? sdr["EventDesc"].ToString() : myEventRequests.EventDesc);
+                                            myEventRequests.FollowUpDate = (sdr["FollowUpDate"].ToString() != "" ? DateTime.Parse(sdr["FollowUpDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : myEventRequests.FollowUpDate);
+                                            myEventRequests.EventDateTime = (sdr["EventDateTime"].ToString() != "" ? DateTime.Parse(sdr["EventDateTime"].ToString().ToString()).ToString("dd-MMM-yyyy") : myEventRequests.EventDateTime);
+                                            myEventRequests.EventTime = (sdr["EventTime"].ToString() != "" ? sdr["EventTime"].ToString() : myEventRequests.EventTime);
+                                            myEventRequests.NoOfPersons = (sdr["NoOfPersons"].ToString() != "" ? int.Parse(sdr["NoOfPersons"].ToString()) : myEventRequests.NoOfPersons);
+                                            myEventRequests.Budget = (sdr["Budget"].ToString() != "" ? Decimal.Parse(sdr["Budget"].ToString()) : myEventRequests.Budget);
+                                            myEventRequests.LookingFor = (sdr["LookingFor"].ToString() != "" ? sdr["LookingFor"].ToString() : myEventRequests.LookingFor);
+                                            myEventRequests.RequirementSpec = (sdr["RequirementSpec"].ToString() != "" ? sdr["RequirementSpec"].ToString() : myEventRequests.RequirementSpec);
+                                            myEventRequests.ContactName = (sdr["ContactName"].ToString() != "" ? sdr["ContactName"].ToString() : myEventRequests.ContactName);
+                                            myEventRequests.Email = (sdr["Email"].ToString() != "" ? sdr["Email"].ToString() : myEventRequests.Email);
+                                            myEventRequests.Phone = (sdr["Phone"].ToString() != "" ? sdr["Phone"].ToString() : myEventRequests.Phone);
+                                            myEventRequests.ContactType = (sdr["ContactType"].ToString() != "" ? sdr["ContactType"].ToString() : myEventRequests.ContactType);
+                                            myEventRequests.Message = (sdr["Message"].ToString() != "" ? sdr["Message"].ToString() : myEventRequests.Message);
+                                            myEventRequests.AdminRemarks = (sdr["AdminRemarks"].ToString() != "" ? sdr["AdminRemarks"].ToString() : myEventRequests.AdminRemarks);
+                                            myEventRequests.CurrencyCode = (sdr["CurrencyCode"].ToString() != "" ? sdr["CurrencyCode"].ToString() : myEventRequests.CurrencyCode);
+                                            myEventRequests.CurrencyRate = (sdr["CurrencyRate"].ToString() != "" ? Decimal.Parse(sdr["CurrencyRate"].ToString()) : myEventRequests.CurrencyRate);
+                                            myEventRequests.TotalAmt = (sdr["TotalAmt"].ToString() != "" ? Decimal.Parse(sdr["TotalAmt"].ToString()) : myEventRequests.TotalAmt);
+                                            myEventRequests.TotalTaxAmt = (sdr["TotalTaxAmt"].ToString() != "" ? Decimal.Parse(sdr["TotalTaxAmt"].ToString()) : myEventRequests.TotalTaxAmt);
+                                            myEventRequests.TotalDiscountAmt = (sdr["TotalDiscountAmt"].ToString() != "" ? Decimal.Parse(sdr["TotalDiscountAmt"].ToString()) : myEventRequests.TotalDiscountAmt);
+                                        }
+                                        Requestslist.Add(myEventRequests);
+                                    }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return Requestslist;
+        }
+
         public OperationsStatus UpdateEventRequests(EventRequests eventObj)
         { 
             OperationsStatus operationsStatusObj = null;

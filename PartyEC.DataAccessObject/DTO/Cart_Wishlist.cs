@@ -48,6 +48,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string CreatedDate { get; set; }
         public string ImageURL { get; set; }
         public decimal Price { get; set; }
+        public string StickerURL { get; set; }
         public LogDetails logDetails { get; set; }
         public List<AttributeValues> AttributeValues { get; set; }
     }
