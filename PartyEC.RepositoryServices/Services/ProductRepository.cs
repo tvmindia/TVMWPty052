@@ -1033,7 +1033,7 @@ namespace PartyEC.RepositoryServices.Services
             return myProduct;
         }
         public List<ProductDetail> GetProductDetail(int ProductID,DateTime CurrentDate)
-         {
+          {
             List<ProductDetail> myProductDetails = null;
            // AttributesRepository myAttributesRepository = new AttributesRepository(_databaseFactory);
             List<AttributeValues> myAttributeStructure = null;
