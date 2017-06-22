@@ -384,13 +384,13 @@ namespace PartyEC.RepositoryServices.Services
         }
 
 
-        public string GetAttributeXML(List<AttributeValues> AttributeContainerWithValues) {
+        public string GetAttributeXML(List<AttributeValues> AttributeContainerWithValues,string type= "options") {
            
             string myXML = "";
             try
             {
-                const string start = "<options>";
-                const string end = "</options>";
+                string start = "<"+type+">";
+                string end = "</"+type+">";
 
                 myXML = start;
                 if (AttributeContainerWithValues != null) {

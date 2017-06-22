@@ -2471,7 +2471,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ReviewObj.ProductID;
                         cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = ReviewObj.CustomerID;
-                        cmd.Parameters.Add("@RatingByAttributeXML", SqlDbType.NVarChar, -1).Value = _attributesRepository.GetAttributeXML(ReviewObj.ProductRatingAttributes);
+                        cmd.Parameters.Add("@RatingByAttributeXML", SqlDbType.NVarChar, -1).Value = _attributesRepository.GetAttributeXML(ReviewObj.ProductRatingAttributes,"Ratings");
                         cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = ReviewObj.commonObj.CreatedBy;
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = ReviewObj.commonObj.CreatedDate;
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);

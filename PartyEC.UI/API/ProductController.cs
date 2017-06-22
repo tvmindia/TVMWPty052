@@ -74,7 +74,7 @@ namespace PartyEC.UI.API
                 List<ProductReviewViewModel> productRating = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_productBusiness.GetRatingSummary(productObj.ID,productObj.AttributeSetID));
                 ratingAttributes= Mapper.Map<List<AttributeValues>, List<AttributeValuesViewModel>>(_attributeBusiness.GetAttributeContainer(productObj.AttributeSetID, "Rating"));
                 if (productRating.Count == 0) throw new Exception(messages.NoItems);
-                return JsonConvert.SerializeObject(new { Result = true, Records = productRating , RatingAttributes = ratingAttributes});
+                return JsonConvert.SerializeObject(new { Result = true, Records = new { ProductRatings = productRating, RatingAttributes = ratingAttributes } });
             }
             catch (Exception ex)
             {
@@ -142,6 +142,8 @@ namespace PartyEC.UI.API
                 ReviewObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertRating(ReviewObj));
+                if(ReviewObj.Review!=null)
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertReview(ReviewObj));
                 return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
             }
             catch (Exception ex)

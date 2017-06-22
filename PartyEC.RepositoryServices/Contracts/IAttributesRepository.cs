@@ -9,7 +9,7 @@ namespace PartyEC.RepositoryServices.Contracts
 {
     public interface IAttributesRepository
     {
-        string GetAttributeXML(List<AttributeValues> AttributeContainerWithValues);
+        string GetAttributeXML(List<AttributeValues> AttributeContainerWithValues, string type = "options");
         List<Attributes> GetAllAttributes();
         Attributes GetAttributes(int attributeID, OperationsStatus Status);
         OperationsStatus InsertAttributes(Attributes attributesObj);
