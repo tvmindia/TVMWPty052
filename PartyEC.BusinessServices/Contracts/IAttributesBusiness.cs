@@ -15,8 +15,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus UpdateAttributes(Attributes attributesObj);
         OperationsStatus DeleteAttributes(int AttributeID);
         List<Attributes> GetAllAttributeBySet(int AttributeSetID,bool IsConfigurable, string EntityType = "Product");
-
-
+        List<AttributeValues> GetAttributeContainer(int AttributeSetID, string type);
     }
     public interface IAttributeSetBusiness
     {

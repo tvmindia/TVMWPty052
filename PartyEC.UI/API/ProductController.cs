@@ -19,12 +19,14 @@ namespace PartyEC.UI.API
         ICategoriesBusiness _categoryBusiness;
         ICommonBusiness _commonBusiness;
         IProductBusiness _productBusiness;
+        IAttributesBusiness _attributeBusiness;
 
-        public ProductController(ICategoriesBusiness categoryBusiness, ICommonBusiness commonBusiness, IProductBusiness productBusiness)
+        public ProductController(ICategoriesBusiness categoryBusiness, ICommonBusiness commonBusiness, IProductBusiness productBusiness,IAttributesBusiness attributeBusiness)
         {
             _categoryBusiness = categoryBusiness;
             _commonBusiness = commonBusiness;
             _productBusiness = productBusiness;
+            _attributeBusiness = attributeBusiness;
         }
         #endregion Constructor_Injection
         Const messages = new Const();
@@ -65,16 +67,18 @@ namespace PartyEC.UI.API
         [HttpPost]
         public object GetProductRatings(Product productObj)
         {
+            List<AttributeValuesViewModel> ratingAttributes=null;
             try
             {
                 //Get Product Rating Summary
                 List<ProductReviewViewModel> productRating = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_productBusiness.GetRatingSummary(productObj.ID,productObj.AttributeSetID));
+                ratingAttributes= Mapper.Map<List<AttributeValues>, List<AttributeValuesViewModel>>(_attributeBusiness.GetAttributeContainer(productObj.AttributeSetID, "Rating"));
                 if (productRating.Count == 0) throw new Exception(messages.NoItems);
-                return JsonConvert.SerializeObject(new { Result = true, Records = productRating });
+                return JsonConvert.SerializeObject(new { Result = true, Records = productRating , RatingAttributes = ratingAttributes});
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message , RatingAttributes = ratingAttributes });
             }
         }
         [HttpPost]
