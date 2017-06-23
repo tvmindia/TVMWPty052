@@ -691,6 +691,21 @@ namespace PartyEC.BusinessServices.Services
             return productReview;
         }
 
+        public List<ProductReview> GetCustomerProductReview(int ProductID, int CustomerID)
+        {
+            List<ProductReview> productReview = null;
+            try
+            {
+                productReview = _productRepository.GetCustomerProductReview(ProductID, CustomerID);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productReview;
+        }
+
 
 
         #endregion

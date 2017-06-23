@@ -112,7 +112,23 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
-        
+
+        [HttpPost]
+        public object GetCustomerProductReview(ProductReviewAppViewModel productObj)
+        {
+            try
+            {
+                //Get Customer Product Rating
+                List<ProductReviewAppViewModel> productReviews = Mapper.Map<List<ProductReview>, List<ProductReviewAppViewModel>>(_productBusiness.GetCustomerProductReview(productObj.ProductID, productObj.CustomerID));
+                if (productReviews.Count == 0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = productReviews });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
         [HttpPost]
         public object UpdateRating(ProductReview ReviewObj)
         {

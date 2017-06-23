@@ -294,6 +294,7 @@ namespace PartyEC.UI.Models
         public string CustomerName { get; set; }
         public string AvgRating { get; set; }
         public string ImageUrl { get; set; }
+        public string IsApproved { get; set; }
         public int AttributeSetID { get; set; }
         public List<AttributeValues> ProductRatingAttributes { get; set; }
     }

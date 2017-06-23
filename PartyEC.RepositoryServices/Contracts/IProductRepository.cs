@@ -49,5 +49,7 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertRating(ProductReview ReviewObj);
         OperationsStatus InsertReview(ProductReview ReviewObj);
         List<ProductReview> GetCustomerProductRating(int ProductID, int CustomerID, int AttributesetId);
+        List<ProductReview> GetCustomerProductReview(int ProductID, int CustomerID);
+        
     }
 }

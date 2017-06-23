@@ -2618,6 +2618,55 @@ namespace PartyEC.RepositoryServices.Services
 
 
 
+        public List<ProductReview> GetCustomerProductReview(int ProductID, int CustomerID)
+        {
+            List<ProductReview> RatingSummary = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetProductReviewByCustomer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CustomerID;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                RatingSummary = new List<ProductReview>();
+                                while (sdr.Read())
+                                {
+                                    ProductReview _pReviewObj = new ProductReview();
+                                    {
+                                        _pReviewObj.ID= (sdr["ReviewID"].ToString() != "" ? int.Parse(sdr["ReviewID"].ToString()) : _pReviewObj.ID);
+                                        _pReviewObj.Review = (sdr["Review"].ToString() != "" ? sdr["Review"].ToString() : _pReviewObj.Review);
+                                        _pReviewObj.ReviewCreatedDate = (sdr["ReviewDate"].ToString() != "" ? sdr["ReviewDate"].ToString() : _pReviewObj.ReviewCreatedDate);
+                                        _pReviewObj.IsApproved= (sdr["ApprovedYN"].ToString() != "" ? sdr["ApprovedYN"].ToString() : _pReviewObj.IsApproved);
+                                    }
+                                    RatingSummary.Add(_pReviewObj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return RatingSummary;
+
+        }
+
 
 
         #endregion
