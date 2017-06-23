@@ -295,6 +295,7 @@ namespace PartyEC.UI.Models
         public string AvgRating { get; set; }
         public string ImageUrl { get; set; }
         public int AttributeSetID { get; set; }
+        public List<AttributeValues> ProductRatingAttributes { get; set; }
     }
     public class RelatedProductsAppViewModel
     {
