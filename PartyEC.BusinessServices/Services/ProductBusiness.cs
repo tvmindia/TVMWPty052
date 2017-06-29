@@ -484,10 +484,18 @@ namespace PartyEC.BusinessServices.Services
 
         public List<ProductReview> GetProductReviewsForApp(int ProductID,int count)
         {
-            List<ProductReview> productReview = null;
+            List<ProductReview> productReview = new List<ProductReview>();
+            List<ProductReview> tempAllProductReviews = null;
             try
             {
-                productReview = _productRepository.GetProductReviews(ProductID).OrderByDescending(prodR => prodR.ReviewCreatedDate).ToList();
+                tempAllProductReviews = _productRepository.GetProductReviews(ProductID).OrderByDescending(prodR => prodR.ReviewCreatedDate).ToList();
+                foreach(ProductReview pr in tempAllProductReviews)//To remove unapproved reviews
+                {
+                    if (pr.IsApproved == "True")
+                    {
+                        productReview.Add(pr);
+                    }
+                }
                 if (count != -1 && count<=productReview.Count)  //taking only top reviews sorted by date
                 {
                     productReview = productReview.GetRange(0,count);

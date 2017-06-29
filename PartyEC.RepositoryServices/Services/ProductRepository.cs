@@ -1973,6 +1973,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _pReviewObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _pReviewObj.CustomerName);
                                         _pReviewObj.AvgRating = (sdr["AvgRating"].ToString() != "" ? sdr["AvgRating"].ToString() : _pReviewObj.AvgRating);
                                         _pReviewObj.ImageUrl = (sdr["ImageUrl"].ToString() != "" ? sdr["ImageUrl"].ToString() : _pReviewObj.ImageUrl);
+                                        _pReviewObj.IsApproved = (sdr["ApprovedYN"].ToString() != "" ? sdr["ApprovedYN"].ToString() : _pReviewObj.IsApproved);
                                     }
                                     productReviewList.Add(_pReviewObj);
                                 }
