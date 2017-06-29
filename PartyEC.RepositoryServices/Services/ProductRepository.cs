@@ -2648,7 +2648,7 @@ namespace PartyEC.RepositoryServices.Services
                                     {
                                         _pReviewObj.ID= (sdr["ReviewID"].ToString() != "" ? int.Parse(sdr["ReviewID"].ToString()) : _pReviewObj.ID);
                                         _pReviewObj.Review = (sdr["Review"].ToString() != "" ? sdr["Review"].ToString() : _pReviewObj.Review);
-                                        _pReviewObj.ReviewCreatedDate = (sdr["ReviewDate"].ToString() != "" ? sdr["ReviewDate"].ToString() : _pReviewObj.ReviewCreatedDate);
+                                        _pReviewObj.ReviewCreatedDate = (sdr["ReviewDate"].ToString() != "" ? DateTime.Parse(sdr["ReviewDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _pReviewObj.ReviewCreatedDate);
                                         _pReviewObj.IsApproved= (sdr["ApprovedYN"].ToString() != "" ? sdr["ApprovedYN"].ToString() : _pReviewObj.IsApproved);
                                     }
                                     RatingSummary.Add(_pReviewObj);
