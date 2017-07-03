@@ -445,7 +445,7 @@ namespace PartyEC.BusinessServices.Services
             List<Product> productlist = null;
             try
             {
-                productlist = _productRepository.GetProductsOfCategory(categoryObj);
+                productlist = _productRepository.GetProductsOfCategory(categoryObj, _commonBusiness.GetCurrentDateTime());
             }
             catch (Exception ex)
             {
@@ -459,7 +459,7 @@ namespace PartyEC.BusinessServices.Services
             List<Product> productlist = null;
             try
             {
-                productlist = _productRepository.GetProductsByFiltering(filterCriteria);
+                productlist = _productRepository.GetProductsByFiltering(filterCriteria, _commonBusiness.GetCurrentDateTime());
             }
             catch (Exception ex)
             {

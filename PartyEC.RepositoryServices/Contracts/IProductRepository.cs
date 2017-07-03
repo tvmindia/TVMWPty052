@@ -39,8 +39,8 @@ namespace PartyEC.RepositoryServices.Contracts
         List<ProductReview> GetRatingSummary(int ProductID, int AttributesetId);
 
         List<Product> GetTopProductsOfCategory(Categories categoryObj);
-        List<Product> GetProductsOfCategory(Categories categoryObj);
-        List<Product> GetProductsByFiltering(FilterCriteria filterCritiria);
+        List<Product> GetProductsOfCategory(Categories categoryObj, DateTime currentDateTime);
+        List<Product> GetProductsByFiltering(FilterCriteria filterCritiria, DateTime currentDateTime);
         Product GetProductDetailsForApp(int productID, DateTime currentDateTime, int customerID);
         Product GetProductSticker(int productID);
         List<ProductImages> GetProductImagesforApp(int ProductID);

@@ -2100,7 +2100,7 @@ namespace PartyEC.RepositoryServices.Services
             return productList;
         }
 
-        public List<Product> GetProductsOfCategory(Categories categoryObj)
+        public List<Product> GetProductsOfCategory(Categories categoryObj, DateTime currentDateTime)
         {
             List<Product> productList = null;
             try
@@ -2115,6 +2115,7 @@ namespace PartyEC.RepositoryServices.Services
                         }
                         cmd.Connection = con;
                         cmd.Parameters.Add("@CategoryID", SqlDbType.Int).Value = categoryObj.ID;
+                        cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = currentDateTime.Date;
                         cmd.CommandText = "[GetProductsOfCategoryForApp]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -2132,6 +2133,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.StickerURL= (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : _productObj.StickerURL);
                                         _productObj.TotalPrice = (sdr["TotalPrice"].ToString() != "" ? Decimal.Parse(sdr["TotalPrice"].ToString()) : _productObj.TotalPrice);
                                         _productObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? Decimal.Parse(sdr["DiscountAmount"].ToString()) : _productObj.DiscountAmount);
+                                        _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.Name);
                                     }
                                     productList.Add(_productObj);
                                 }
@@ -2148,7 +2150,7 @@ namespace PartyEC.RepositoryServices.Services
             return productList;
         }
 
-        public List<Product> GetProductsByFiltering(FilterCriteria filterCritiria)
+        public List<Product> GetProductsByFiltering(FilterCriteria filterCritiria, DateTime currentDateTime)
         {
             List<Product> productList = null;
             try
@@ -2163,6 +2165,7 @@ namespace PartyEC.RepositoryServices.Services
                         }
                         cmd.Connection = con;
                         cmd.Parameters.Add("@FilterCategories", SqlDbType.NVarChar,500).Value = filterCritiria.filterCriteriaCSV;
+                        cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = currentDateTime.Date;
                         cmd.CommandText = "[GetProductsByFilteringForApp]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -2177,7 +2180,11 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.ID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _productObj.ID);
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _productObj.ImageURL);
-                                        _productObj.CategoryID = (sdr["CategoryID"].ToString() != "" ? int.Parse(sdr["CategoryID"].ToString()) : _productObj.CategoryID);                                        
+                                        _productObj.CategoryID = (sdr["CategoryID"].ToString() != "" ? int.Parse(sdr["CategoryID"].ToString()) : _productObj.CategoryID);
+                                        _productObj.StickerURL = (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : _productObj.StickerURL);
+                                        _productObj.TotalPrice = (sdr["TotalPrice"].ToString() != "" ? Decimal.Parse(sdr["TotalPrice"].ToString()) : _productObj.TotalPrice);
+                                        _productObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? Decimal.Parse(sdr["DiscountAmount"].ToString()) : _productObj.DiscountAmount);
+                                        _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.Name);
                                     }
                                     productList.Add(_productObj);
                                 }
