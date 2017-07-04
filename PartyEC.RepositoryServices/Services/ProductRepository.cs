@@ -2134,6 +2134,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.TotalPrice = (sdr["TotalPrice"].ToString() != "" ? Decimal.Parse(sdr["TotalPrice"].ToString()) : _productObj.TotalPrice);
                                         _productObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? Decimal.Parse(sdr["DiscountAmount"].ToString()) : _productObj.DiscountAmount);
                                         _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.Name);
+                                        _productObj.StockAvailable = (sdr["StockAvailableYN"].ToString() != "" ? (sdr["StockAvailableYN"].ToString() == "0" ? false : true) : _productObj.StockAvailable);
                                     }
                                     productList.Add(_productObj);
                                 }
@@ -2185,6 +2186,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.TotalPrice = (sdr["TotalPrice"].ToString() != "" ? Decimal.Parse(sdr["TotalPrice"].ToString()) : _productObj.TotalPrice);
                                         _productObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? Decimal.Parse(sdr["DiscountAmount"].ToString()) : _productObj.DiscountAmount);
                                         _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.Name);
+                                        _productObj.StockAvailable = (sdr["StockAvailableYN"].ToString() != "" ? (sdr["StockAvailableYN"].ToString() == "0" ? false : true) : _productObj.StockAvailable);
                                     }
                                     productList.Add(_productObj);
                                 }

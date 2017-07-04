@@ -65,6 +65,7 @@ namespace PartyEC.UI.Models
         public decimal TotalPrice { get; set; }
         public decimal DiscountAmount { get; set; }
         public string SupplierName { get; set; }
+        public Boolean StockAvailable { get; set; }
     }
     public class NavigationalCatsOfCategoryAppViewModel
     {
