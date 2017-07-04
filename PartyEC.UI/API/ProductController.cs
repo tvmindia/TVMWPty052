@@ -56,6 +56,8 @@ namespace PartyEC.UI.API
                 productApp.AttributeSetID = product.AttributeSetID;
                 productApp.IsFav = product.IsFav;
                 productApp.ProductOtherAttributes = product.ProductOtherAttributes;
+                productApp.ProductDetails = Mapper.Map < List<ProductDetail>, List < ProductDetailViewModel >>( product.ProductDetails);
+
                 return JsonConvert.SerializeObject(new { Result = true, Records = productApp });
             }
             catch (Exception ex)

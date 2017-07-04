@@ -2259,6 +2259,7 @@ namespace PartyEC.RepositoryServices.Services
                         }
                     }
                 }
+                productObj.ProductDetails = GetProductDetail(productID, DateTime.Now);
             }
 
             catch (Exception ex)
