@@ -265,5 +265,20 @@ namespace PartyEC.UI.API
             }
         }
 
+        [HttpPost]
+        public object ProductsGloablSearching(FilterCriteria filterCritiria)
+        {
+            try
+            {
+                List<ProductsOfCategoryAppViewModel> ProductList = Mapper.Map<List<Product>, List<ProductsOfCategoryAppViewModel>>(_productBusiness.ProductsGlobalSearch(filterCritiria));
+                if (ProductList.Count == 0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = ProductList });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
     }
 }

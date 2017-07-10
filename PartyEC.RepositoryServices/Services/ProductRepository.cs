@@ -2203,6 +2203,57 @@ namespace PartyEC.RepositoryServices.Services
             return productList;
         }
 
+        public List<Product> ProductsGlobalSearching(FilterCriteria filterCritiria, DateTime currentDateTime)
+        {
+            List<Product> productList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@FilterWords", SqlDbType.NVarChar, 500).Value = filterCritiria.filterCriteriaCSV;
+                        cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = currentDateTime.Date;
+                        cmd.CommandText = "[GlobalProductsSearch]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                productList = new List<Product>();
+                                while (sdr.Read())
+                                {
+                                    Product _productObj = new Product();
+                                    {
+                                        _productObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _productObj.ID);
+                                        _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
+                                        _productObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _productObj.ImageURL);
+                                        _productObj.StickerURL = (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : _productObj.StickerURL);
+                                        _productObj.TotalPrice = (sdr["TotalPrice"].ToString() != "" ? Decimal.Parse(sdr["TotalPrice"].ToString()) : _productObj.TotalPrice);
+                                        _productObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? Decimal.Parse(sdr["DiscountAmount"].ToString()) : _productObj.DiscountAmount);
+                                        _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.Name);
+                                        _productObj.StockAvailable = (sdr["StockAvailableYN"].ToString() != "" ? (sdr["StockAvailableYN"].ToString() == "0" ? false : true) : _productObj.StockAvailable);
+                                    }
+                                    productList.Add(_productObj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productList;
+        }
+
         public Product GetProductDetailsForApp(int productID, DateTime currentDateTime,int customerID)
         {
             Product productObj=new Product();

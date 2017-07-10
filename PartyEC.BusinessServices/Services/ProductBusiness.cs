@@ -468,6 +468,20 @@ namespace PartyEC.BusinessServices.Services
             return productlist;
         }
 
+        public List<Product> ProductsGlobalSearch(FilterCriteria filterCriteria)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.ProductsGlobalSearching(filterCriteria, _commonBusiness.GetCurrentDateTime());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productlist;
+        }
+
         public Product GetProductDetailsForApp(int productID, DateTime currentDateTime, int customerID)
         {
             Product product = null;
