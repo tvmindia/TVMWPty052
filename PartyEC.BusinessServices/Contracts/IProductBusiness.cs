@@ -42,6 +42,7 @@ namespace PartyEC.BusinessServices.Contracts
         List<Product> GetTopProductsOfCategory(Categories categoryObj);
         List<Product> GetProductsOfCategory(Categories categoryObj);
         List<Product> GetProductsByFiltering(FilterCriteria filterCriteria);
+        List<Product> ProductsGlobalSearch(FilterCriteria filterCriteria);
         Product GetProductDetailsForApp(int productID, DateTime currentDateTime, int customerID);
         List<ProductReview> GetProductReviewsForApp(int ProductID, int count);
         List<Product> GetRelatedProductsForApp(int productID, int count);
@@ -53,5 +54,7 @@ namespace PartyEC.BusinessServices.Contracts
         OperationsStatus InsertRating(ProductReview ReviewObj);
         OperationsStatus InsertReview(ProductReview ReviewObj);
         List<ProductReview> GetCustomerProductRating(int ProductID, int CustomerID, int AttributesetId);
+        List<ProductReview> GetCustomerProductReview(int ProductID, int CustomerID);
+        
     }
 }

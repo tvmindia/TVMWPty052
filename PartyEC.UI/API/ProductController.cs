@@ -19,12 +19,14 @@ namespace PartyEC.UI.API
         ICategoriesBusiness _categoryBusiness;
         ICommonBusiness _commonBusiness;
         IProductBusiness _productBusiness;
+        IAttributesBusiness _attributeBusiness;
 
-        public ProductController(ICategoriesBusiness categoryBusiness, ICommonBusiness commonBusiness, IProductBusiness productBusiness)
+        public ProductController(ICategoriesBusiness categoryBusiness, ICommonBusiness commonBusiness, IProductBusiness productBusiness,IAttributesBusiness attributeBusiness)
         {
             _categoryBusiness = categoryBusiness;
             _commonBusiness = commonBusiness;
             _productBusiness = productBusiness;
+            _attributeBusiness = attributeBusiness;
         }
         #endregion Constructor_Injection
         Const messages = new Const();
@@ -54,6 +56,8 @@ namespace PartyEC.UI.API
                 productApp.AttributeSetID = product.AttributeSetID;
                 productApp.IsFav = product.IsFav;
                 productApp.ProductOtherAttributes = product.ProductOtherAttributes;
+                productApp.ProductDetails = Mapper.Map < List<ProductDetail>, List < ProductDetailViewModel >>( product.ProductDetails);
+
                 return JsonConvert.SerializeObject(new { Result = true, Records = productApp });
             }
             catch (Exception ex)
@@ -65,16 +69,18 @@ namespace PartyEC.UI.API
         [HttpPost]
         public object GetProductRatings(Product productObj)
         {
+            List<AttributeValuesViewModel> ratingAttributes=null;
             try
             {
                 //Get Product Rating Summary
                 List<ProductReviewViewModel> productRating = Mapper.Map<List<ProductReview>, List<ProductReviewViewModel>>(_productBusiness.GetRatingSummary(productObj.ID,productObj.AttributeSetID));
+                ratingAttributes= Mapper.Map<List<AttributeValues>, List<AttributeValuesViewModel>>(_attributeBusiness.GetAttributeContainer(productObj.AttributeSetID, "Rating"));
                 if (productRating.Count == 0) throw new Exception(messages.NoItems);
-                return JsonConvert.SerializeObject(new { Result = true, Records = productRating });
+                return JsonConvert.SerializeObject(new { Result = true, Records = new { ProductRatings = productRating, RatingAttributes = ratingAttributes } });
             }
             catch (Exception ex)
             {
-                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message , RatingAttributes = ratingAttributes });
             }
         }
         [HttpPost]
@@ -108,7 +114,23 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
-        
+
+        [HttpPost]
+        public object GetCustomerProductReview(ProductReviewAppViewModel productObj)
+        {
+            try
+            {
+                //Get Customer Product Rating
+                List<ProductReviewAppViewModel> productReviews = Mapper.Map<List<ProductReview>, List<ProductReviewAppViewModel>>(_productBusiness.GetCustomerProductReview(productObj.ProductID, productObj.CustomerID));
+                if (productReviews.Count == 0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = productReviews });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
         [HttpPost]
         public object UpdateRating(ProductReview ReviewObj)
         {
@@ -138,6 +160,8 @@ namespace PartyEC.UI.API
                 ReviewObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertRating(ReviewObj));
+                if(ReviewObj.Review!=null)
+                    OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertReview(ReviewObj));
                 return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
             }
             catch (Exception ex)
@@ -234,6 +258,21 @@ namespace PartyEC.UI.API
 
                 OperationsStatusViewModelObj = Mapper.Map<OperationsStatus,OperationsStatusViewModel>(_productBusiness.UpdateWishlist(wishlistObj));
                 return JsonConvert.SerializeObject(new { Result = true, Records = OperationsStatusViewModelObj });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+
+        [HttpPost]
+        public object ProductsGloablSearching(FilterCriteria filterCritiria)
+        {
+            try
+            {
+                List<ProductsOfCategoryAppViewModel> ProductList = Mapper.Map<List<Product>, List<ProductsOfCategoryAppViewModel>>(_productBusiness.ProductsGlobalSearch(filterCritiria));
+                if (ProductList.Count == 0) throw new Exception(messages.NoItems);
+                return JsonConvert.SerializeObject(new { Result = true, Records = ProductList });
             }
             catch (Exception ex)
             {

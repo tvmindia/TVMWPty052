@@ -39,8 +39,9 @@ namespace PartyEC.RepositoryServices.Contracts
         List<ProductReview> GetRatingSummary(int ProductID, int AttributesetId);
 
         List<Product> GetTopProductsOfCategory(Categories categoryObj);
-        List<Product> GetProductsOfCategory(Categories categoryObj);
-        List<Product> GetProductsByFiltering(FilterCriteria filterCritiria);
+        List<Product> GetProductsOfCategory(Categories categoryObj, DateTime currentDateTime);
+        List<Product> GetProductsByFiltering(FilterCriteria filterCritiria, DateTime currentDateTime);
+        List<Product> ProductsGlobalSearching(FilterCriteria filterCritiria, DateTime currentDateTime);
         Product GetProductDetailsForApp(int productID, DateTime currentDateTime, int customerID);
         Product GetProductSticker(int productID);
         List<ProductImages> GetProductImagesforApp(int ProductID);
@@ -49,5 +50,7 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus InsertRating(ProductReview ReviewObj);
         OperationsStatus InsertReview(ProductReview ReviewObj);
         List<ProductReview> GetCustomerProductRating(int ProductID, int CustomerID, int AttributesetId);
+        List<ProductReview> GetCustomerProductReview(int ProductID, int CustomerID);
+        
     }
 }

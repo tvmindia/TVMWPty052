@@ -445,7 +445,7 @@ namespace PartyEC.BusinessServices.Services
             List<Product> productlist = null;
             try
             {
-                productlist = _productRepository.GetProductsOfCategory(categoryObj);
+                productlist = _productRepository.GetProductsOfCategory(categoryObj, _commonBusiness.GetCurrentDateTime());
             }
             catch (Exception ex)
             {
@@ -459,7 +459,21 @@ namespace PartyEC.BusinessServices.Services
             List<Product> productlist = null;
             try
             {
-                productlist = _productRepository.GetProductsByFiltering(filterCriteria);
+                productlist = _productRepository.GetProductsByFiltering(filterCriteria, _commonBusiness.GetCurrentDateTime());
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productlist;
+        }
+
+        public List<Product> ProductsGlobalSearch(FilterCriteria filterCriteria)
+        {
+            List<Product> productlist = null;
+            try
+            {
+                productlist = _productRepository.ProductsGlobalSearching(filterCriteria, _commonBusiness.GetCurrentDateTime());
             }
             catch (Exception ex)
             {
@@ -484,10 +498,18 @@ namespace PartyEC.BusinessServices.Services
 
         public List<ProductReview> GetProductReviewsForApp(int ProductID,int count)
         {
-            List<ProductReview> productReview = null;
+            List<ProductReview> productReview = new List<ProductReview>();
+            List<ProductReview> tempAllProductReviews = null;
             try
             {
-                productReview = _productRepository.GetProductReviews(ProductID).OrderByDescending(prodR => prodR.ReviewCreatedDate).ToList();
+                tempAllProductReviews = _productRepository.GetProductReviews(ProductID).OrderByDescending(prodR => prodR.ReviewCreatedDate).ToList();
+                foreach(ProductReview pr in tempAllProductReviews)//To remove unapproved reviews
+                {
+                    if (pr.IsApproved == "True")
+                    {
+                        productReview.Add(pr);
+                    }
+                }
                 if (count != -1 && count<=productReview.Count)  //taking only top reviews sorted by date
                 {
                     productReview = productReview.GetRange(0,count);
@@ -683,6 +705,21 @@ namespace PartyEC.BusinessServices.Services
             {
                 productReview = _productRepository.GetCustomerProductRating(ProductID, CustomerID, AttributesetId);
              
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productReview;
+        }
+
+        public List<ProductReview> GetCustomerProductReview(int ProductID, int CustomerID)
+        {
+            List<ProductReview> productReview = null;
+            try
+            {
+                productReview = _productRepository.GetCustomerProductReview(ProductID, CustomerID);
+
             }
             catch (Exception ex)
             {

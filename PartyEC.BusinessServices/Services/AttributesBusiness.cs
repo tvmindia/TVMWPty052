@@ -108,6 +108,20 @@ namespace PartyEC.BusinessServices.Services
             return attributelist;
         }
 
+        public List<AttributeValues> GetAttributeContainer(int AttributeSetID, string type)
+        {//Used for web api to get rating attributes
+            List<AttributeValues> myattribute = null;
+            try
+            {
+                myattribute = _attributesRepository.GetAttributeContainer(AttributeSetID, type);
+
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return myattribute;
+        }
     }
     public class AttributeSetBusiness:IAttributeSetBusiness
     {

@@ -64,6 +64,8 @@ namespace PartyEC.UI.Models
         public string StickerURL { get; set; }
         public decimal TotalPrice { get; set; }
         public decimal DiscountAmount { get; set; }
+        public string SupplierName { get; set; }
+        public Boolean StockAvailable { get; set; }
     }
     public class NavigationalCatsOfCategoryAppViewModel
     {

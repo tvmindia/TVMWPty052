@@ -1980,6 +1980,7 @@ namespace PartyEC.RepositoryServices.Services
                                         _pReviewObj.CustomerName = (sdr["CustomerName"].ToString() != "" ? sdr["CustomerName"].ToString() : _pReviewObj.CustomerName);
                                         _pReviewObj.AvgRating = (sdr["AvgRating"].ToString() != "" ? sdr["AvgRating"].ToString() : _pReviewObj.AvgRating);
                                         _pReviewObj.ImageUrl = (sdr["ImageUrl"].ToString() != "" ? sdr["ImageUrl"].ToString() : _pReviewObj.ImageUrl);
+                                        _pReviewObj.IsApproved = (sdr["ApprovedYN"].ToString() != "" ? sdr["ApprovedYN"].ToString() : _pReviewObj.IsApproved);
                                     }
                                     productReviewList.Add(_pReviewObj);
                                 }
@@ -2106,7 +2107,7 @@ namespace PartyEC.RepositoryServices.Services
             return productList;
         }
 
-        public List<Product> GetProductsOfCategory(Categories categoryObj)
+        public List<Product> GetProductsOfCategory(Categories categoryObj, DateTime currentDateTime)
         {
             List<Product> productList = null;
             try
@@ -2121,6 +2122,7 @@ namespace PartyEC.RepositoryServices.Services
                         }
                         cmd.Connection = con;
                         cmd.Parameters.Add("@CategoryID", SqlDbType.Int).Value = categoryObj.ID;
+                        cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = currentDateTime.Date;
                         cmd.CommandText = "[GetProductsOfCategoryForApp]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -2138,6 +2140,8 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.StickerURL= (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : _productObj.StickerURL);
                                         _productObj.TotalPrice = (sdr["TotalPrice"].ToString() != "" ? Decimal.Parse(sdr["TotalPrice"].ToString()) : _productObj.TotalPrice);
                                         _productObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? Decimal.Parse(sdr["DiscountAmount"].ToString()) : _productObj.DiscountAmount);
+                                        _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.Name);
+                                        _productObj.StockAvailable = (sdr["StockAvailableYN"].ToString() != "" ? (sdr["StockAvailableYN"].ToString() == "0" ? false : true) : _productObj.StockAvailable);
                                     }
                                     productList.Add(_productObj);
                                 }
@@ -2154,7 +2158,7 @@ namespace PartyEC.RepositoryServices.Services
             return productList;
         }
 
-        public List<Product> GetProductsByFiltering(FilterCriteria filterCritiria)
+        public List<Product> GetProductsByFiltering(FilterCriteria filterCritiria, DateTime currentDateTime)
         {
             List<Product> productList = null;
             try
@@ -2169,6 +2173,7 @@ namespace PartyEC.RepositoryServices.Services
                         }
                         cmd.Connection = con;
                         cmd.Parameters.Add("@FilterCategories", SqlDbType.NVarChar,500).Value = filterCritiria.filterCriteriaCSV;
+                        cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = currentDateTime.Date;
                         cmd.CommandText = "[GetProductsByFilteringForApp]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         using (SqlDataReader sdr = cmd.ExecuteReader())
@@ -2183,7 +2188,63 @@ namespace PartyEC.RepositoryServices.Services
                                         _productObj.ID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _productObj.ID);
                                         _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
                                         _productObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _productObj.ImageURL);
-                                        _productObj.CategoryID = (sdr["CategoryID"].ToString() != "" ? int.Parse(sdr["CategoryID"].ToString()) : _productObj.CategoryID);                                        
+                                        _productObj.CategoryID = (sdr["CategoryID"].ToString() != "" ? int.Parse(sdr["CategoryID"].ToString()) : _productObj.CategoryID);
+                                        _productObj.StickerURL = (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : _productObj.StickerURL);
+                                        _productObj.TotalPrice = (sdr["TotalPrice"].ToString() != "" ? Decimal.Parse(sdr["TotalPrice"].ToString()) : _productObj.TotalPrice);
+                                        _productObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? Decimal.Parse(sdr["DiscountAmount"].ToString()) : _productObj.DiscountAmount);
+                                        _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.Name);
+                                        _productObj.StockAvailable = (sdr["StockAvailableYN"].ToString() != "" ? (sdr["StockAvailableYN"].ToString() == "0" ? false : true) : _productObj.StockAvailable);
+                                    }
+                                    productList.Add(_productObj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return productList;
+        }
+
+        public List<Product> ProductsGlobalSearching(FilterCriteria filterCritiria, DateTime currentDateTime)
+        {
+            List<Product> productList = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.Parameters.Add("@FilterWords", SqlDbType.NVarChar, 500).Value = filterCritiria.filterCriteriaCSV;
+                        cmd.Parameters.Add("@CurrentDate", SqlDbType.DateTime).Value = currentDateTime.Date;
+                        cmd.CommandText = "[GlobalProductsSearch]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                productList = new List<Product>();
+                                while (sdr.Read())
+                                {
+                                    Product _productObj = new Product();
+                                    {
+                                        _productObj.ID = (sdr["ID"].ToString() != "" ? int.Parse(sdr["ID"].ToString()) : _productObj.ID);
+                                        _productObj.Name = (sdr["Name"].ToString() != "" ? sdr["Name"].ToString() : _productObj.Name);
+                                        _productObj.ImageURL = (sdr["ImageURL"].ToString() != "" ? sdr["ImageURL"].ToString() : _productObj.ImageURL);
+                                        _productObj.StickerURL = (sdr["StickerURL"].ToString() != "" ? sdr["StickerURL"].ToString() : _productObj.StickerURL);
+                                        _productObj.TotalPrice = (sdr["TotalPrice"].ToString() != "" ? Decimal.Parse(sdr["TotalPrice"].ToString()) : _productObj.TotalPrice);
+                                        _productObj.DiscountAmount = (sdr["DiscountAmount"].ToString() != "" ? Decimal.Parse(sdr["DiscountAmount"].ToString()) : _productObj.DiscountAmount);
+                                        _productObj.SupplierName = (sdr["SupplierName"].ToString() != "" ? sdr["SupplierName"].ToString() : _productObj.Name);
+                                        _productObj.StockAvailable = (sdr["StockAvailableYN"].ToString() != "" ? (sdr["StockAvailableYN"].ToString() == "0" ? false : true) : _productObj.StockAvailable);
                                     }
                                     productList.Add(_productObj);
                                 }
@@ -2256,6 +2317,7 @@ namespace PartyEC.RepositoryServices.Services
                         }
                     }
                 }
+                productObj.ProductDetails = GetProductDetail(productID, DateTime.Now);
             }
 
             catch (Exception ex)
@@ -2478,7 +2540,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ReviewObj.ProductID;
                         cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = ReviewObj.CustomerID;
-                        cmd.Parameters.Add("@RatingByAttributeXML", SqlDbType.NVarChar, -1).Value = _attributesRepository.GetAttributeXML(ReviewObj.ProductRatingAttributes);
+                        cmd.Parameters.Add("@RatingByAttributeXML", SqlDbType.NVarChar, -1).Value = _attributesRepository.GetAttributeXML(ReviewObj.ProductRatingAttributes,"Ratings");
                         cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = ReviewObj.commonObj.CreatedBy;
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = ReviewObj.commonObj.CreatedDate;
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
@@ -2501,10 +2563,10 @@ namespace PartyEC.RepositoryServices.Services
                     }
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
 
-                throw;
+                throw ex;
             }
 
             return operationsStatusObj;
@@ -2591,6 +2653,7 @@ namespace PartyEC.RepositoryServices.Services
                                     ProductReview _pReviewObj = new ProductReview();
                                     {
                                         _pReviewObj.ProductID = (sdr["ProductID"].ToString() != "" ? int.Parse(sdr["ProductID"].ToString()) : _pReviewObj.ProductID);
+                                     
 
                                         if (myAttributeStructure == null)
                                         {
@@ -2623,6 +2686,55 @@ namespace PartyEC.RepositoryServices.Services
         }
 
 
+
+        public List<ProductReview> GetCustomerProductReview(int ProductID, int CustomerID)
+        {
+            List<ProductReview> RatingSummary = null;
+            try
+            {
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[GetProductReviewByCustomer]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.Parameters.Add("@ProductID", SqlDbType.Int).Value = ProductID;
+                        cmd.Parameters.Add("@CustomerID", SqlDbType.Int).Value = CustomerID;
+                        using (SqlDataReader sdr = cmd.ExecuteReader())
+                        {
+                            if ((sdr != null) && (sdr.HasRows))
+                            {
+                                RatingSummary = new List<ProductReview>();
+                                while (sdr.Read())
+                                {
+                                    ProductReview _pReviewObj = new ProductReview();
+                                    {
+                                        _pReviewObj.ID= (sdr["ReviewID"].ToString() != "" ? int.Parse(sdr["ReviewID"].ToString()) : _pReviewObj.ID);
+                                        _pReviewObj.Review = (sdr["Review"].ToString() != "" ? sdr["Review"].ToString() : _pReviewObj.Review);
+                                        _pReviewObj.ReviewCreatedDate = (sdr["ReviewDate"].ToString() != "" ? DateTime.Parse(sdr["ReviewDate"].ToString().ToString()).ToString("dd-MMM-yyyy") : _pReviewObj.ReviewCreatedDate);
+                                        _pReviewObj.IsApproved= (sdr["ApprovedYN"].ToString() != "" ? sdr["ApprovedYN"].ToString() : _pReviewObj.IsApproved);
+                                    }
+                                    RatingSummary.Add(_pReviewObj);
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+
+            return RatingSummary;
+
+        }
 
 
 
