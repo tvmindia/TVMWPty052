@@ -271,7 +271,8 @@
                 'onUploadSuccess': function (file, data, response) {
                   //data is whatever you return from the server
                   //we're sending the URL from the server so we append this as an image to the #uploaded div
-                //$('#URL').val(data);
+                    //$('#URL').val(data);
+                    if(data)
                     $('#imgCategory').attr({ 'src': (data + '?' + new Date().getTime()), 'width': '100%' });
                 $('#alinkUpload').hide();
                 }

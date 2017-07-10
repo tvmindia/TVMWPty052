@@ -641,12 +641,12 @@ namespace PartyEC.UI.Controllers
             OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
 
             var file = Request.Files["Filedata"];
-            var FileNameCustom = (ProductViewObj.Name).Replace("%", "_").Replace(" ","").Replace("*","").Replace("\\"," ") + ".png";
+            var FileNameCustom = Guid.NewGuid()+ ".png";
             string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
             file.SaveAs(savePath);
             ProductViewObj.ImageURL = "/Content/ProductImages/" + FileNameCustom;
-            if (ProductViewObj.ImageID==0)
-            {
+            //if (ProductViewObj.ImageID==0)
+            // {
                 ProductViewObj.logDetails = new LogDetailsViewModel();
                 ProductViewObj.logDetails.CreatedBy = _commonBusiness.GetUA().UserName;
                 ProductViewObj.logDetails.CreatedDate = _commonBusiness.GetCurrentDateTime();
@@ -655,7 +655,7 @@ namespace PartyEC.UI.Controllers
                 ProductViewObj.MainImage = true;
                 operationsStatus = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_productBusiness.InsertImageProduct(Mapper.Map<ProductViewModel, Product>(ProductViewObj)));
 
-            }
+           // }
             return Content(Url.Content(@"~\Content\ProductImages\" + FileNameCustom));
         }
         [AuthorizeRoles(RoleContants.SuperAdminRole, RoleContants.AdministratorRole, RoleContants.ManagerRole)]
@@ -664,7 +664,7 @@ namespace PartyEC.UI.Controllers
             OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
             Random rnd = new Random();
             var file = Request.Files["Filedata"];
-            var FileNameCustom = ((ProductViewObj.Name).Replace("%", "_").Replace(" ", "").Replace("*", "").Replace("\\", " ")) + "Other"+rnd.Next(111,9999).ToString()+ ".png";
+            var FileNameCustom = Guid.NewGuid()+".png";
             string savePath = Server.MapPath(@"~\Content\ProductImages\" + FileNameCustom);
             file.SaveAs(savePath);
             ProductViewObj.ImageURL = "/Content/ProductImages/" + FileNameCustom;
@@ -682,7 +682,7 @@ namespace PartyEC.UI.Controllers
 
             Random rnd = new Random();
             var file = Request.Files["Filedata"];
-            var FileNameCustom ="Sticker" + rnd.Next(111, 9999).ToString() + ".png";
+            var FileNameCustom =Guid.NewGuid()+".png";
             string savePath = Server.MapPath(@"~\Content\OtherImages\" + FileNameCustom);
             file.SaveAs(savePath);
             ProductViewObj.StickerURL = "/Content/OtherImages/" + FileNameCustom;

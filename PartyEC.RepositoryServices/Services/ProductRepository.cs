@@ -1886,6 +1886,7 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter statusCode = null;
+                SqlParameter OldImageURL = null;
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
                     if (con.State == ConnectionState.Closed)
@@ -1909,6 +1910,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Parameters.Add("@CreatedDate", SqlDbType.SmallDateTime).Value = productObj.logDetails.CreatedDate;
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
+                        OldImageURL = cmd.Parameters.Add("@OldImageURL", SqlDbType.NVarChar,250);
+                        OldImageURL.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (statusCode.Value.ToString())
@@ -1922,6 +1925,10 @@ namespace PartyEC.RepositoryServices.Services
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
                                 operationsStatusObj.StatusMessage = constObj.InsertSuccess;
+                                if(OldImageURL.Value.ToString()!=""&& OldImageURL.Value.ToString()!=null)
+                                {
+                                    System.IO.File.Delete(HttpContext.Current.Server.MapPath(OldImageURL.Value.ToString()));
+                                }
                                 return operationsStatusObj;
                             default:
                                 break;

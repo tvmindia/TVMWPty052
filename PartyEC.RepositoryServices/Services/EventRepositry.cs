@@ -173,6 +173,7 @@ namespace PartyEC.RepositoryServices.Services
             try
             {
                 SqlParameter outparameter = null;
+                SqlParameter outOldURL = null;
                 using (SqlConnection con = _databaseFactory.GetDBConnection())
                 {
                     using (SqlCommand cmd = new SqlCommand())
@@ -196,6 +197,8 @@ namespace PartyEC.RepositoryServices.Services
 
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
+                        outOldURL = cmd.Parameters.Add("@OldURI", SqlDbType.NVarChar, 250);
+                        outOldURL.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
                         operationsStatusObj = new OperationsStatus();
                         switch (outparameter.Value.ToString())
@@ -207,6 +210,10 @@ namespace PartyEC.RepositoryServices.Services
                             case "1":                               
                                 operationsStatusObj.StatusCode = Int16.Parse(outparameter.Value.ToString());
                                 operationsStatusObj.StatusMessage = ConstObj.UpdateSuccess;
+                                if (outOldURL.Value.ToString() != null && outparameter.Value.ToString() != "")
+                                {
+                                    System.IO.File.Delete(HttpContext.Current.Server.MapPath(outOldURL.Value.ToString()));
+                                }
                                 break;
                             default:
                                 break;

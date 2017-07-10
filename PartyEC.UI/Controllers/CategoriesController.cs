@@ -234,12 +234,12 @@ namespace PartyEC.UI.Controllers
            OperationsStatusViewModel operationsStatus = new OperationsStatusViewModel();
            
             var file = Request.Files["Filedata"];
-            var FileNameCustom = (categoryObj.Name).Replace("%", "_").Replace(" ", "").Replace("*", "").Replace("\\", " ") + "Cat.png";
+            var FileNameCustom = Guid.NewGuid()+ ".png";
             string savePath = Server.MapPath(@"~\Content\OtherImages\" + FileNameCustom);
             file.SaveAs(savePath);
             categoryObj.URL= "/Content/OtherImages/" + FileNameCustom;
-            if (categoryObj.ImageID==null)
-            {
+            //if (categoryObj.ImageID==null)
+            //{
                 categoryObj.commonObj = new LogDetailsViewModel();
                 categoryObj.commonObj.CreatedBy = _commonBusiness.GetUA().UserName;
                 categoryObj.commonObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
@@ -247,7 +247,7 @@ namespace PartyEC.UI.Controllers
                 categoryObj.commonObj.UpdatedDate = _commonBusiness.GetCurrentDateTime();
                 operationsStatus = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_categoryBusiness.InsertImageCategory(Mapper.Map < CategoriesViewModel, Categories > (categoryObj)));
                
-            }
+           // }
             return Content(Url.Content(@"~\Content\OtherImages\" + FileNameCustom));
         }
 
