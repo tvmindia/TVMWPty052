@@ -107,13 +107,13 @@ namespace PartyEC.BusinessServices.Services
                 {
                     //call customer detail
                     //call notificatoin cloud system
-                    if (notification.CustomerID == 0)
+                    if (notification.customer.ID == 0)
                     {
                         SendToFCM(notification.Title, notification.Message, true);
                     }
                     else
                     {
-                        SendToFCM(notification.Title, notification.Message, true, notification.CustomerID.ToString());
+                        SendToFCM(notification.Title, notification.Message, false, notification.customer.ID.ToString());
                     }
                 }
             }
