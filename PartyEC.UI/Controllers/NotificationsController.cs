@@ -86,14 +86,19 @@ namespace PartyEC.UI.Controllers
                     //Getting UA
                     notification.logDetailsObj.CreatedBy = _commonBusiness.GetUA().UserName;
                     notification.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
-                    string[] CustomerIDList= notification.CustomerIDList!=null?notification.CustomerIDList.Split(','):null;
-                    foreach(string cid in CustomerIDList)
+                    if (notification.CustomerName == "All")
                     {
-                        notification.customer.ID = int.Parse(cid);
                         OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_notificationBusiness.NotificationMobilePush(Mapper.Map<NotifiationViewModel, Notification>(notification)));
                     }
-                          
-                 
+                    else
+                    {
+                        string[] CustomerIDList = notification.CustomerIDList != null ? notification.CustomerIDList.Split(',') : null;
+                        foreach (string cid in CustomerIDList)
+                        {
+                            notification.customer.ID = int.Parse(cid);
+                            OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_notificationBusiness.NotificationMobilePush(Mapper.Map<NotifiationViewModel, Notification>(notification)));
+                        }
+                    }                  
                     return JsonConvert.SerializeObject(new { Result = "OK", Record = OperationsStatusViewModelObj });
                  }
                 catch (Exception ex)
