@@ -85,6 +85,7 @@
     <Compile Include="DTO\Bookings.cs" />
     <Compile Include="DTO\Cart_Wishlist.cs" />
     <Compile Include="DTO\Categories.cs" />
+    <Compile Include="DTO\ErrorLog.cs" />
     <Compile Include="DTO\Common.cs" />
     <Compile Include="DTO\Customer.cs" />
     <Compile Include="DTO\Event.cs" />

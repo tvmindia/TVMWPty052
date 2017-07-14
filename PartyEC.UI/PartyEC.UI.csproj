@@ -82,6 +82,8 @@
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.3\lib\net45\System.Net.Http.Formatting.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="System.Runtime.Serialization" />
+    <Reference Include="System.Security" />
     <Reference Include="System.Web.Cors, Version=5.2.3.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.AspNet.Cors.5.2.3\lib\net45\System.Web.Cors.dll</HintPath>
       <Private>True</Private>
@@ -526,6 +528,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API\CategoryController.cs" />
+    <Compile Include="API\CommonController.cs" />
     <Compile Include="API\CustomerController.cs" />
     <Compile Include="API\EventController.cs" />
     <Compile Include="API\OrderController.cs" />
@@ -578,6 +581,7 @@
     <Compile Include="Models\CommonViewModel.cs" />
     <Compile Include="Models\CustomerViewModel.cs" />
     <Compile Include="Models\DynamicUIViewModel.cs" />
+    <Compile Include="Models\ErrorLogViewModel.cs" />
     <Compile Include="Models\EventRequestsViewModel.cs" />
     <Compile Include="Models\EventViewModel.cs" />
     <Compile Include="Models\FileUploadViewModel.cs" />
