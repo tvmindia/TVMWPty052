@@ -348,7 +348,7 @@ namespace PartyEC.UI.API
                 {
                     throw new Exception(constants.UpdateFailure);
                 }
-                return JsonConvert.SerializeObject(new { Result = false, Message = constants.UpdateSuccess });
+                return JsonConvert.SerializeObject(new { Result = false, Message = constants.UpdateSuccess , FilePath = customer.ImageUrl });
             }
             catch (Exception ex)
             {
