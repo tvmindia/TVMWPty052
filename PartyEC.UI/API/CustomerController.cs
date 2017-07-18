@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Net;
-using System.Net.Http;
 using System.Web.Http;
 using PartyEC.UI.Models;
 using PartyEC.BusinessServices.Contracts;
@@ -11,6 +9,8 @@ using AutoMapper;
 using Newtonsoft.Json;
 using System.Threading.Tasks;
 using PartyEC.UI.CustomAttributes;
+using System.Web;
+using System.IO;
 
 namespace PartyEC.UI.API
 {
@@ -312,6 +312,49 @@ namespace PartyEC.UI.API
             catch (Exception ex)
             {
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
+                
+        [HttpPost]
+        public string UploadProfileImage()
+        {
+            try
+            {
+                //Getting other details on object
+                Customer customer = new Customer();
+
+                HttpFileCollection MyFileCollection = HttpContext.Current.Request.Files;
+                //Getting file dettails from http request
+                if (MyFileCollection.Count > 0 && !string.IsNullOrEmpty(HttpContext.Current.Request.Form["CustomerID"]))
+                {
+                    string ImageID = Guid.NewGuid().ToString();
+                    string imagePath = ImageID + "." + MyFileCollection[0].FileName;//.Split('.').Last();
+                    string FilePath = System.Web.Hosting.HostingEnvironment.MapPath(@"~\Content\CustomerImages\") + imagePath;
+                    MyFileCollection[0].SaveAs(FilePath); //to save incoming image to server folder
+               
+                    customer.ID = int.Parse(HttpContext.Current.Request.Form["CustomerID"]);
+                    customer.ImageUrl = "/Content/CustomerImages/" + imagePath;
+                    customer.ProfileImageID = Guid.Parse(ImageID);
+
+                    customer.logDetailsObj = new LogDetails();
+                    customer.logDetailsObj.CreatedBy = _commonBusiness.GetUA().UserName;
+                    customer.logDetailsObj.CreatedDate = _commonBusiness.GetCurrentDateTime();
+                    customer.logDetailsObj.UpdatedBy = customer.logDetailsObj.CreatedBy;
+                    customer.logDetailsObj.UpdatedDate = customer.logDetailsObj.CreatedDate;
+
+                    OperationsStatusViewModel OperationsStatusViewModelObj = Mapper.Map<OperationsStatus, OperationsStatusViewModel>(_customerBusiness.InsertCustomerImage(customer));
+                }
+                else
+                {
+                    throw new Exception(constants.UpdateFailure);
+                }
+                return JsonConvert.SerializeObject(new { Result = false, Message = constants.UpdateSuccess });
+            }
+            catch (Exception ex)
+            {
+                //Return error message
+                //File.WriteAllText(System.Web.Hosting.HostingEnvironment.MapPath(@"~\Content\CustomerImages\file.txt"), ex.Message);
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });                
             }
         }
         #endregion User

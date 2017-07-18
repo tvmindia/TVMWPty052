@@ -43,6 +43,8 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[InsertOtherImage]";
                         cmd.CommandType = CommandType.StoredProcedure;
+                        if(otherimgObj.ID!=null && otherimgObj.ID!=Guid.Empty)
+                            cmd.Parameters.Add("@ImageID", SqlDbType.UniqueIdentifier).Value = otherimgObj.ID;
                         cmd.Parameters.Add("@ImageType", SqlDbType.NVarChar, 250).Value = otherimgObj.ImageType;
                         cmd.Parameters.Add("@URL", SqlDbType.NVarChar, -1).Value = otherimgObj.URL;
                         cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 250).Value = otherimgObj.LogDetails.CreatedBy;

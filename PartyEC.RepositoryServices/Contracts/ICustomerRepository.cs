@@ -20,6 +20,6 @@ namespace PartyEC.RepositoryServices.Contracts
         OperationsStatus SetDefaultAddress(int CustomerID, int AddressID);
         OperationsStatus InsertCustomer(Customer customer);
         OperationsStatus UpdateCustomer(Customer customer);
-
+        OperationsStatus UpdateCustomerImage(Customer customer);
     }
 }

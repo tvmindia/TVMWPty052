@@ -16,6 +16,7 @@ namespace PartyEC.DataAccessObject.DTO
         public string Language { get; set; }
         public string Gender { get; set; }
         public Guid? ProfileImageID { get; set; }
+        public string ImageUrl { get; set; }
         public int? OrdersCount { get; set; }
         public int? BookingsCount { get; set; }
         public int? QuotationsCount { get; set; }

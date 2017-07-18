@@ -1,9 +1,6 @@
 ﻿using PartyEC.RepositoryServices.Contracts;
-using PartyEC.RepositoryServices.Services;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Web;
 using PartyEC.DataAccessObject.DTO;
 using System.Data.SqlClient;
 using System.Data;
@@ -601,6 +598,64 @@ namespace PartyEC.RepositoryServices.Services
                             case "1":
                                 //Insert Successfull
                                 operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                operationsStatusObj.StatusMessage = ex.Message;
+                throw ex;
+            }
+
+            return operationsStatusObj;
+        }
+
+        public OperationsStatus UpdateCustomerImage(Customer customer)
+        {
+            OperationsStatus operationsStatusObj = new OperationsStatus();
+            try
+            {
+                SqlParameter statusCode = null;
+                SqlParameter oldImageUrl = null;
+
+                using (SqlConnection con = _databaseFactory.GetDBConnection())
+                {
+                    using (SqlCommand cmd = new SqlCommand())
+                    {
+                        if (con.State == ConnectionState.Closed)
+                        {
+                            con.Open();
+                        }
+                        cmd.Connection = con;
+                        cmd.CommandText = "[UpdateCustomerProfileImage]";
+                        cmd.CommandType = CommandType.StoredProcedure;
+
+                        cmd.Parameters.Add("@ID", SqlDbType.NVarChar, 250).Value = customer.ID;
+                        cmd.Parameters.Add("@ProfileImageID", SqlDbType.UniqueIdentifier).Value = customer.ProfileImageID;
+
+                        cmd.Parameters.Add("@UpdatedBy", SqlDbType.NVarChar, 250).Value = customer.logDetailsObj.UpdatedBy;
+                        cmd.Parameters.Add("@UpdatedDate", SqlDbType.SmallDateTime).Value = customer.logDetailsObj.UpdatedDate;
+                        statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
+                        oldImageUrl = cmd.Parameters.Add("@OldImgUrl", SqlDbType.NVarChar, -1);
+                        statusCode.Direction = ParameterDirection.Output;
+                        oldImageUrl.Direction = ParameterDirection.Output;//For deletion of old image file
+                        cmd.ExecuteNonQuery();
+                        switch (statusCode.Value.ToString())
+                        {
+                            case "0":
+                                // not Successfull                                
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.StatusMessage = constObj.UpdateFailure;
+                                break;
+                            case "1":
+                                //Insert Successfull
+                                operationsStatusObj.StatusCode = Int16.Parse(statusCode.Value.ToString());
+                                operationsStatusObj.ReturnValues = oldImageUrl.Value.ToString();
                                 operationsStatusObj.StatusMessage = constObj.UpdateSuccess;
                                 break;
                             default:

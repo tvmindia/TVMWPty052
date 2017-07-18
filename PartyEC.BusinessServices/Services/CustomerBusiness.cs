@@ -14,11 +14,13 @@ namespace PartyEC.BusinessServices.Services
     {
         private ICustomerRepository _customerRepository;
         private IMailBusiness _mailBusiness;
+        private IMasterRepository _masterRepository;
 
-        public CustomerBusiness(ICustomerRepository customerRepository,IMailBusiness mailBusiness)
+        public CustomerBusiness(ICustomerRepository customerRepository,IMailBusiness mailBusiness, IMasterRepository masterRepository)
         {
             _customerRepository = customerRepository;
             _mailBusiness = mailBusiness;
+            _masterRepository = masterRepository;
         }
 
 
@@ -247,7 +249,34 @@ namespace PartyEC.BusinessServices.Services
             return sendsuccess;
         }
 
-
+        public OperationsStatus InsertCustomerImage(Customer customerObj)
+        {
+            OperationsStatus operationsStatusObj = null;
+            try
+            {
+                if (customerObj.ImageUrl != "" && customerObj.ImageUrl != null)
+                {
+                    OtherImages otherImgObj = new OtherImages();
+                    otherImgObj.URL = customerObj.ImageUrl;
+                    otherImgObj.ID = customerObj.ProfileImageID.Value;
+                    otherImgObj.ImageType = ImageTypesPreffered.ProfileImage;
+                    otherImgObj.LogDetails = customerObj.logDetailsObj;
+                    operationsStatusObj = _masterRepository.InsertImage(otherImgObj);
+                    if (operationsStatusObj.StatusCode == 1) {//Image id insertion success
+                        operationsStatusObj = _customerRepository.UpdateCustomerImage(customerObj);//Updates customer image id and deletes old image from other images
+                        if (operationsStatusObj.ReturnValues != null && operationsStatusObj.ReturnValues.ToString()!="")
+                        {//Deletes old image file
+                            File.Delete(HttpContext.Current.Server.MapPath(operationsStatusObj.ReturnValues.ToString()));
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+            return operationsStatusObj;
+        }
 
         #endregion Methods
     }

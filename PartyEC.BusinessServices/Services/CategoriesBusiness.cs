@@ -89,7 +89,7 @@ namespace PartyEC.BusinessServices.Services
                 {
                     OtherImages otherImgObj = new OtherImages();
                     otherImgObj.URL = CategoryObj.URL;
-                    otherImgObj.ImageType = "Category";
+                    otherImgObj.ImageType = ImageTypesPreffered.CategoryImage;
                     otherImgObj.LogDetails = CategoryObj.commonObj;
                     operationsStatusObj = _masterRepository.InsertImage(otherImgObj);
                     CategoryObj.ImageID = operationsStatusObj.ReturnValues.ToString();
