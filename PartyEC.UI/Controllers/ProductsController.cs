@@ -616,7 +616,7 @@ namespace PartyEC.UI.Controllers
                     ToolboxViewModelObj.backbtn.Title = "Back";
                     ToolboxViewModelObj.backbtn.Event = "goback()";
                     ToolboxViewModelObj.addbtn.Visible = true;
-                    ToolboxViewModelObj.addbtn.Title = "Addproductoption";
+                    ToolboxViewModelObj.addbtn.Title = "Add Product Option";
                     ToolboxViewModelObj.addbtn.Event = "clearAssociatedProductform()";
                     break;
                 case "OASave":

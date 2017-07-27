@@ -164,20 +164,25 @@ function GetAllMailNotifications() {
 }
 
 
-function AddNotification() {
+function AddNotification(addclick) {
     try {
         $("#RadioSelected").prop('checked', true);
         ClearForm();
         DataTables.customerinNotificaton.rows().deselect();
         ChangeButtonPatchView("Notifications", "NotificationToolBox", "Push"); //ControllerName,id of the container div,Name of the action
-        $("#tabNotificationsDetails a").click();
+
+        if (addclick == undefined)
+        {
+            $("#tabNotificationsDetails a").click();
+
+        }
     }
     catch (e) {
         notyAlert('error', e.Message);
     }
-
-
 }
+
+
 function GetAllCustomers() {
     try {
         var data = "";

@@ -80,7 +80,7 @@ namespace PartyEC.BusinessServices.Services
                 userList = _authenticationRepository.GetAllUsers();
                 userList = userList == null ? null : userList.Where(us => us.LoginName.ToLower() == user.LoginName.ToLower() && Decrypt(us.Password)==user.Password).ToList();
 
-                _user = userList == null ? null : userList[0];
+                _user = userList != null && userList.Count >0? userList[0]:null;
             }
             catch (Exception ex)
             {

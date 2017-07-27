@@ -143,7 +143,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[InsertAttributes]";
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = attributesObj.Name;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 50).Value = attributesObj.Name;
                         cmd.Parameters.Add("@Caption", SqlDbType.NVarChar, 250).Value = attributesObj.Caption  ;
                         cmd.Parameters.Add("@AttributeType", SqlDbType.NVarChar, 10).Value = attributesObj.AttributeType ;
                         cmd.Parameters.Add("@ConfigurableYN", SqlDbType.Bit).Value = attributesObj.ConfigurableYN;
@@ -210,7 +210,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandText = "[UpdateAttributes]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ID", SqlDbType.VarChar, 50).Value = attributesObj.ID;
-                        cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = attributesObj.Name;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 50).Value = attributesObj.Name;
                         cmd.Parameters.Add("@Caption", SqlDbType.NVarChar, 250).Value = attributesObj.Caption;
                         cmd.Parameters.Add("@AttributeType", SqlDbType.NVarChar, 10).Value = attributesObj.AttributeType;
                         cmd.Parameters.Add("@ConfigurableYN", SqlDbType.Bit).Value = attributesObj.ConfigurableYN;

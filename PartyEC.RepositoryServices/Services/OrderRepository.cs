@@ -463,7 +463,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateBillingDetails(Order orderObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -491,7 +491,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (statusCode.Value.ToString())
                         {
                             case "0":                              
@@ -521,7 +521,7 @@ namespace PartyEC.RepositoryServices.Services
         }
         public OperationsStatus UpdateShipingDetails(Order orderObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -549,7 +549,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -580,7 +580,7 @@ namespace PartyEC.RepositoryServices.Services
         }
         public OperationsStatus UpdatePayType(Order orderObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -603,7 +603,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -632,7 +632,7 @@ namespace PartyEC.RepositoryServices.Services
         }
         public OperationsStatus InsertOrderHeaderForApp(Order orderObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null,ID=null;
@@ -694,7 +694,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode.Direction = ParameterDirection.Output;
                         ID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (statusCode.Value.ToString())
                         {
                             case "0":                          
@@ -724,7 +724,7 @@ namespace PartyEC.RepositoryServices.Services
         }
         public OperationsStatus InsertOrderHeader(Order orderObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null, ID = null;
@@ -781,7 +781,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode.Direction = ParameterDirection.Output;
                         ID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -808,7 +808,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus CancelOrder(Order orderObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -829,7 +829,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -855,7 +855,7 @@ namespace PartyEC.RepositoryServices.Services
         }
         public OperationsStatus InsertOrderDetail(OrderDetail orderDetailsObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -890,7 +890,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                        
                         switch (statusCode.Value.ToString())
                         {
                             case "0":          
@@ -995,7 +995,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateOrderPaymentStatus(Order orderObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -1018,7 +1018,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (statusCode.Value.ToString())
                         {
                             case "0":

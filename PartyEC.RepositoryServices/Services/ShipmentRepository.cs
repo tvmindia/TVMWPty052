@@ -125,7 +125,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertShipmentHeader(Shipment shipmentObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null, ID = null;
@@ -150,7 +150,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode.Direction = ParameterDirection.Output;
                         ID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -180,7 +180,7 @@ namespace PartyEC.RepositoryServices.Services
         }
         public OperationsStatus InsertShipmentDetail(ShipmentDetail shipmentDetailObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -204,7 +204,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                     
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -231,7 +231,7 @@ namespace PartyEC.RepositoryServices.Services
         
         public OperationsStatus UpdateDeliveryStatus(Shipment shipmentObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -255,7 +255,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (statusCode.Value.ToString())
                         {
                             case "0":

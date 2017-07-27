@@ -115,7 +115,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertEventTypes(Event EventObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter outparameter,outparameter1 = null;
@@ -131,7 +131,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.Connection = con;
                         cmd.CommandText = "[InsertEventTypes]";
                         cmd.CommandType = CommandType.StoredProcedure;
-                        cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = EventObj.Name;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 50).Value = EventObj.Name;
                         cmd.Parameters.Add("@RelatedCategoriesCSV", SqlDbType.NVarChar, 250).Value = EventObj.RelatedCategoriesCSV;
                         cmd.Parameters.Add("@EventImageID", SqlDbType.UniqueIdentifier).Value = null;//EventObj.EventImageID;
                         cmd.Parameters.Add("@CreatedBy", SqlDbType.NVarChar, 50).Value = EventObj.commonObj.CreatedBy;
@@ -142,7 +142,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter1 = cmd.Parameters.Add("@ID", SqlDbType.Int);
                         outparameter1.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -169,7 +169,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateEvent(Event EventObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter outparameter = null;
@@ -186,7 +186,7 @@ namespace PartyEC.RepositoryServices.Services
                         cmd.CommandText = "[UpdateEvents]";
                         cmd.CommandType = CommandType.StoredProcedure;
                         cmd.Parameters.Add("@ID", SqlDbType.Int).Value = EventObj.ID;
-                        cmd.Parameters.Add("@Name", SqlDbType.VarChar, 50).Value = EventObj.Name;
+                        cmd.Parameters.Add("@Name", SqlDbType.NVarChar, 50).Value = EventObj.Name;
                         cmd.Parameters.Add("@RelatedCategoriesCSV", SqlDbType.NVarChar, 250).Value = EventObj.RelatedCategoriesCSV;
                         if(EventObj.EventImageID!=""&&EventObj.EventImageID!=null)
                         {
@@ -200,7 +200,7 @@ namespace PartyEC.RepositoryServices.Services
                         outOldURL = cmd.Parameters.Add("@OldURI", SqlDbType.NVarChar, 250);
                         outOldURL.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":                                
@@ -230,7 +230,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus DeleteEvent(int EventID)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter outparameter = null;
@@ -253,7 +253,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter.Direction = ParameterDirection.Output;
                         OutparameterURL.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":

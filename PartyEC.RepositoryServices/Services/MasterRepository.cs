@@ -27,7 +27,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertImage(OtherImages otherimgObj)
         {
-            OperationsStatus operationstatusObj = null;
+            OperationsStatus operationstatusObj = new OperationsStatus();
             try
             {
                 SqlParameter outparameter = null;
@@ -54,7 +54,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter.Direction = ParameterDirection.Output;
                         outparameterID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationstatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -81,7 +81,7 @@ namespace PartyEC.RepositoryServices.Services
         }
         public OperationsStatus InsertEventsLog(EventsLog eventLogObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -108,7 +108,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -691,7 +691,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertSupplier(Supplier supplierObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -717,7 +717,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameterID = cmd.Parameters.Add("@ID", SqlDbType.Int);
                         outparameterID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                        
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -755,7 +755,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateSupplier(Supplier supplierObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -779,7 +779,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -959,7 +959,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertShippingLocation(ShippingLocations shipping_locObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -985,7 +985,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameterID = cmd.Parameters.Add("@ID", SqlDbType.Int);
                         outparameterID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                        
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -1019,7 +1019,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateShippingLocation(ShippingLocations shipping_locObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -1043,7 +1043,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -1231,7 +1231,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertSupplierLocations(SupplierLocations supplier_locObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -1259,7 +1259,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameterID = cmd.Parameters.Add("@ID", SqlDbType.Int);
                         outparameterID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -1293,7 +1293,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateSupplierLocations(SupplierLocations supplier_locObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -1319,7 +1319,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -1501,7 +1501,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertManufacturer(Manufacturer ManufacturerObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -1528,7 +1528,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameterID = cmd.Parameters.Add("@ID", SqlDbType.Int);
                         outparameterID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -1566,7 +1566,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateManufacturer(Manufacturer ManufacturerObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -1591,7 +1591,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -1677,7 +1677,7 @@ namespace PartyEC.RepositoryServices.Services
         #region DeleteOtherImage
         public OperationsStatus DeleteOtherImage(string imageID,string type)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter outparameter = null;
@@ -1700,7 +1700,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter.Direction = ParameterDirection.Output;
                         OutparameterURL.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":

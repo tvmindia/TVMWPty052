@@ -192,7 +192,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus AddProductToCart(ShoppingCart cartObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -220,7 +220,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -247,7 +247,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus RemoveProductFromCart(int CartID)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -266,7 +266,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -294,7 +294,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateShoppingCartStatus(int CartID)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -313,7 +313,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                        
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -341,7 +341,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateShoppingCartQuantity(int CartID, int Qty)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -361,7 +361,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@StatusOut", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (statusCode.Value.ToString())
                         {
                             case "0":

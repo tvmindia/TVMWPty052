@@ -147,7 +147,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus CustomerEnableORDisable(Customer customer)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -173,7 +173,7 @@ namespace PartyEC.RepositoryServices.Services
                         OutFlag.Direction = ParameterDirection.Output;
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -202,7 +202,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertUpdateCustomerAddress(Customer customer)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -247,7 +247,7 @@ namespace PartyEC.RepositoryServices.Services
                                 addressID.Direction= ParameterDirection.Output;
                                 statusCode.Direction = ParameterDirection.Output;
                                 cmd.ExecuteNonQuery();
-                                operationsStatusObj = new OperationsStatus();
+                              
                                 switch (statusCode.Value.ToString())
                                 {
                                     case "0":
@@ -443,7 +443,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus DeleteAddress(CustomerAddress customerAddress)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -463,7 +463,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -494,7 +494,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertCustomer(Customer customer)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -526,7 +526,7 @@ namespace PartyEC.RepositoryServices.Services
                         ID = cmd.Parameters.Add("@ID", SqlDbType.SmallInt);
                         ID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -557,7 +557,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateCustomer(Customer customer)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -587,7 +587,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                    
                         switch (statusCode.Value.ToString())
                         {
                             case "0":
@@ -735,7 +735,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus SetDefaultAddress(int CustomerID, int AddressID)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter statusCode = null;
@@ -756,7 +756,7 @@ namespace PartyEC.RepositoryServices.Services
                         statusCode = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         statusCode.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (statusCode.Value.ToString())
                         {
                             case "0":

@@ -326,7 +326,7 @@ function goback() {
     ChangeButtonPatchView("Notifications", "NotificationToolBox", "Add"); //ControllerName,id of the container div,Name of the action
 }
 
-function AddNotification()
+function AddNotification(addclick)
 {
 try
 {
@@ -334,7 +334,9 @@ try
     ClearForm();                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                          
     DataTables.customerinNotificaton.rows().deselect();
     ChangeButtonPatchView("Notifications", "NotificationToolBox", "Push"); //ControllerName,id of the container div,Name of the action
-    $("#tabNotificationsDetails a").click();
+    if (addclick == undefined) {
+        $("#tabNotificationsDetails a").click();
+    }
 }
 catch(e)
 {

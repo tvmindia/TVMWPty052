@@ -28,7 +28,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertEventRequests(EventRequests eventObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -64,7 +64,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -276,7 +276,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateEventRequests(EventRequests eventObj)
         { 
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -315,7 +315,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -341,7 +341,7 @@ namespace PartyEC.RepositoryServices.Services
       
         public OperationsStatus InsertEventsLog(EventRequests eventObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -369,7 +369,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":

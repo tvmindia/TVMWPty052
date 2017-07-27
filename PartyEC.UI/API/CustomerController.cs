@@ -429,5 +429,20 @@ namespace PartyEC.UI.API
                 return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
             }
         }
+
+        [HttpPost]
+        public async Task<object> SendCustomerContactUsEmailConfirmation(ContactUs MailObj)
+        {
+            bool MailStatus = false;
+            try
+            {
+                MailStatus = await _customerBusiness.SendCustomerContactUsEmailConfirmation(MailObj);
+                return JsonConvert.SerializeObject(new { Result = true, Records = MailStatus });
+            }
+            catch (Exception ex)
+            {
+                return JsonConvert.SerializeObject(new { Result = false, Message = ex.Message });
+            }
+        }
     }
 }

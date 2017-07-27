@@ -306,8 +306,8 @@ $(document).ready(function () {
             if ($("#AttributeSetID").val() == "")
             {
                 $("#titleSpanPro").text('New Product');
-                $("#spandetailType").text('__');
-                $("#spandetailSet").text('__');
+                $("#spandetailType").text('Not Selected');
+                $("#spandetailSet").text('Not Selected');
                 $("#AttributeSetID").removeAttr('disabled');
                 $("#ProductType").removeAttr('disabled');
                 $('#tabsettings').trigger('click');
@@ -343,8 +343,8 @@ function btnAddNewProduct() {
         $('#tabproductDetails a').trigger('click');
         $('.Sidebar_Party li a').removeClass('error');
         $("#titleSpanPro").text('New Product');
-        $("#spandetailType").text('__');
-        $("#spandetailSet").text('__');
+        $("#spandetailType").text('Not Selected');
+        $("#spandetailSet").text('Not Selected');
         $("#AttributeSetID").removeAttr('disabled');
         $("#ProductType").removeAttr('disabled');
         $('#tabsettings').trigger('click');
@@ -424,6 +424,7 @@ function BindthisProduct(thisproduct)
             if (thisproduct.Enabled == true)
             { $("#Enabled").prop('checked', true); }
             else { $("#Enabled").prop('checked', false); }
+            
             $("#Unit").val(thisproduct.Unit);
             $("#URL").val(thisproduct.URL);
             $("#ActionType").val(thisproduct.ActionType);
@@ -926,6 +927,13 @@ function productSaveSuccess(data, status, xhr)
         notyAlert('error', e.message);
     }
    
+}
+function ChangeText()
+{
+    debugger;
+    $("#spandetailType").text(($("#ProductTypehdf").val() == "S" ? 'Simple' : 'Configurable'));
+   
+    $("#spandetailSet").text($('#AttributeSetID').find('option:selected').text());
 }
 function productSaveFailure()
 {
@@ -2024,3 +2032,4 @@ function Validate() {
 //    window.clearTimeout(tm);
 //    document.getElementById('detailTagsPicker').focus();
 //}
+

@@ -130,7 +130,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertCategory(Categories CategoryObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -163,7 +163,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter.Direction = ParameterDirection.Output;
                         outparameterID.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -201,7 +201,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdateCategory(Categories CategoryObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -239,7 +239,7 @@ namespace PartyEC.RepositoryServices.Services
                         outOldURL = cmd.Parameters.Add("@OldURI", SqlDbType.NVarChar, 250);
                         outOldURL.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                      
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -274,7 +274,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus UpdatePositionNo(Categories CategoryObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
 
             try
             {
@@ -298,7 +298,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter = cmd.Parameters.Add("@Status", SqlDbType.SmallInt);
                         outparameter.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":
@@ -329,7 +329,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus DeleteCategory(int CategoryID)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                     SqlParameter outparameter = null;
@@ -351,7 +351,7 @@ namespace PartyEC.RepositoryServices.Services
                             outparameter.Direction = ParameterDirection.Output;
                             OutparameterURL.Direction = ParameterDirection.Output;
                             cmd.ExecuteNonQuery();
-                            operationsStatusObj = new OperationsStatus();
+                           
                             switch (outparameter.Value.ToString())
                             {
                                 case "0":

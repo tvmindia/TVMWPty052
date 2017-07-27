@@ -153,7 +153,7 @@
                                 <span> </span>
                                 <span id="titleSpanPro" class="Spantitle"></span>                                
                                 </h4>
-                                <span style="position: relative;width: 50%;left: 2%;font-weight: 300;color: #ab8571;"><span style="font-weight:700">Type: </span><span id="spandetailType">__</span><span>&nbsp;&nbsp;</span><span style="font-weight:700">Attribute Set: </span><span id="spandetailSet">__</span></span>
+                                <span style="position: relative;width: 50%;left: 2%;font-weight: 300;color: #ab8571;"><span style="font-weight:700">Type: </span><span id="spandetailType">Not Selected</span><span>&nbsp;&nbsp;</span><span style="font-weight:700">Attribute Set: </span><span id="spandetailSet">Not Selected</span></span>
                                 @*<span id="spandetailSet" style="position: relative;width: 50%;left: 2%;font-weight: 300;color: #ab8571;"></span>*@
                                 <hr />
 
@@ -168,7 +168,7 @@
                                                 @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                                               
                                                 <div class="form-group">
-                                                    <label for="ProductType" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ProductType)<span class="required">*</span></label>
+                                                    <label for="ProductType" class="control-label col-lg-2">@Html.DisplayNameFor(model => model.ProductType)<span class="required" ,onblur="ChangeText()">*</span></label>
                                                     <div class="col-lg-4">
                                                         @{
                                                             List<SelectListItem> productTypeList = new List<SelectListItem>();
@@ -178,17 +178,17 @@
                                                             { Text = "Simple", Value = "S" });
                                                         }
 
-                                                        @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange(this)", value = -1 })
+                                                        @Html.DropDownListFor(model => model.ProductType, productTypeList, "-- Select Product Type --", new { @class = "form-control", @onchange = "ProductTypeOnChange(this)", value = -1 , onblur = "ChangeText()" })
                                                         @Html.HiddenFor(model => model.ProductType, htmlAttributes: new { @class = "control-label col-lg-2", id = "ProductTypehdf", Value = "" })
                                                         @Html.ValidationMessageFor(model => model.ProductType, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
 
                                                 <div class="form-group">
-                                                    @Html.LabelFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2" })
+                                                    @Html.LabelFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2", @onblur = "ChangeText()" })
                                                     <div class="col-lg-4">
                                                         @*@Html.EditorFor(model => model.AttributeSetID, new { htmlAttributes = new { @class = "form-control" } })*@
-                                                        @Html.DropDownListFor(model => model.AttributeSetID, Model.AttributeSets, "--Select AttributeSets--", new { @class = "form-control", @onchange = "attributeSetOnChange(this)" })
+                                                        @Html.DropDownListFor(model => model.AttributeSetID, Model.AttributeSets, "--Select AttributeSets--", new { @class = "form-control", @onchange = "attributeSetOnChange(this)" , onblur = "ChangeText()" })
                                                         @Html.HiddenFor(model => model.AttributeSetID, htmlAttributes: new { @class = "control-label col-lg-2", id = "AttributeSetIDhdf", Value = "" })
                                                         @Html.ValidationMessageFor(model => model.AttributeSetID, "", new { @class = "text-danger" })
                                                     </div>

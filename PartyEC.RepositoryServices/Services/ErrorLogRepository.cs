@@ -28,7 +28,7 @@ namespace PartyEC.RepositoryServices.Services
 
         public OperationsStatus InsertErrorLog(ErrorLog ErrorObj)
         {
-            OperationsStatus operationsStatusObj = null;
+            OperationsStatus operationsStatusObj = new OperationsStatus();
             try
             {
                 SqlParameter outparameter, outparameter1 = null;
@@ -62,7 +62,7 @@ namespace PartyEC.RepositoryServices.Services
                         outparameter1 = cmd.Parameters.Add("@OutErrorID", SqlDbType.UniqueIdentifier);
                         outparameter1.Direction = ParameterDirection.Output;
                         cmd.ExecuteNonQuery();
-                        operationsStatusObj = new OperationsStatus();
+                       
                         switch (outparameter.Value.ToString())
                         {
                             case "0":

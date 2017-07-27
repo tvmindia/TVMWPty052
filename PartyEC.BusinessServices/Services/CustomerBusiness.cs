@@ -238,7 +238,37 @@ namespace PartyEC.BusinessServices.Services
                 string EmailToAddress = System.Web.Configuration.WebConfigurationManager.AppSettings["EmailFromAddress"];
                 _mail.To = EmailToAddress;
                 sendsuccess = await _mailBusiness.MailSendAsync(_mail);
+                sendsuccess = await SendCustomerContactUsEmailConfirmation(MailObj);
                 //quotationsObj.EventsLogViewObj.CustomerNotifiedYN = Mailstatus;
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+                //return sendsuccess;
+            }
+
+            return sendsuccess;
+        }
+
+        public async Task<bool> SendCustomerContactUsEmailConfirmation(ContactUs MailObj)
+        {
+            bool sendsuccess = false;
+            try
+            {
+                Mail _mail = new Mail();
+                using (StreamReader reader = new StreamReader(HttpContext.Current.Server.MapPath("~/PartyEcTemplates/CustomerContactUs.html")))
+                {
+                    _mail.Body = reader.ReadToEnd();
+                }
+                _mail.Body = _mail.Body.Replace("{Name}", MailObj.Name);
+                _mail.Body = _mail.Body.Replace("{Email}", MailObj.Email);
+                _mail.Body = _mail.Body.Replace("{Phone}", MailObj.Phone);
+                _mail.Body = _mail.Body.Replace("{Comments}", MailObj.Comments);
+                _mail.IsBodyHtml = true;
+                _mail.Subject = "Contact US Requests";
+                string EmailToAddress = System.Web.Configuration.WebConfigurationManager.AppSettings["EmailFromAddress"];
+                _mail.To = MailObj.Email;
+                sendsuccess = await _mailBusiness.MailSendAsync(_mail);
 
             }
             catch (Exception ex)
