@@ -64,6 +64,7 @@ namespace PartyEC.UI.App_Start
             bundles.Add(new ScriptBundle("~/bundles/Bookings").Include("~/Scripts/UserJS/Bookings.js"));
             bundles.Add(new ScriptBundle("~/bundles/Invoice").Include("~/Scripts/UserJS/Invoice.js"));
             bundles.Add(new ScriptBundle("~/bundles/Shipment").Include("~/Scripts/UserJS/Shipment.js"));
+            bundles.Add(new ScriptBundle("~/ bundles / jqueryval").Include("~/Scripts/tinymce/themes/advanced/js/about.js", "~/Scripts/tinymce/themes/advanced/js/anchor.js", "~/Scripts/tinymce/themes/advanced/js/charmap.js","~/Scripts/tinymce/themes/advanced/js/color_picker.js", "~/Scripts/tinymce/themes/advanced/js/image.js", "~/Scripts/tinymce/themes/advanced/js/link.js", "~/Scripts/tinymce/themes/advanced/js/source_editor.js"));
         }
     }
 }

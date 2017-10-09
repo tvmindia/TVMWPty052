@@ -127,11 +127,12 @@ namespace PartyEC.UI.Models
         [Display(Name = "Short Description")]
         [MaxLength(250)]
         public string ShortDescription { get; set; }
-        [Required(ErrorMessage = "Please enter Long Description")]
-        [Display(Name = "Long Description")]
-      
-        [DataType(DataType.MultilineText)]
+        
+        //[Display(Name = "Long Description")]
+        //[DataType(DataType.MultilineText)]
         [AllowHtml]
+        [UIHint("tinymce_full")]
+        [Required(ErrorMessage = "Please enter Long Description")]
         public string LongDescription { get; set; }
         #endregion Description
 

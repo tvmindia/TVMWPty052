@@ -348,6 +348,7 @@ function btnAddNewProduct() {
         $("#AttributeSetID").removeAttr('disabled');
         $("#ProductType").removeAttr('disabled');
         $('#tabsettings').trigger('click');
+        tinyMCE.get('LongDescription').setContent("");
         clearform();
         ChangeButtonPatchView("Products", "ProductToolBox", "Save"); //ControllerName,id of the container div,Name of the action
         DisEnableSectionAdditional();
@@ -447,6 +448,7 @@ function BindthisProduct(thisproduct)
             $("#DiscountEndDate").val((thisproduct.ProductDetails.length != 0 ? thisproduct.ProductDetails[0].DiscountEndDate : ""));
             $("#ShortDescription").val(thisproduct.ShortDescription);
             $("#LongDescription").val(thisproduct.LongDescription);
+            tinyMCE.get('LongDescription').setContent(thisproduct.LongDescription);
             if (thisproduct.StockAvailable == true) {
                 $("#StockAvailable").val("true");
             }
